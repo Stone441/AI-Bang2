@@ -65,3 +65,6 @@ C-01 已实际发布，native page ID `98564`，URL https://ssy44199.atlassian.n
 精确接续：用独立普通用户会话先验证 eng_b 可读 C-01、product_ops 被拒绝，再用管理员撤回 eng_b 页面访问，原会话重读应拒绝；之后恢复测试基线。未取得普通用户会话时继续 C-02/C-03 种植及只读连接器实现，权限合同测试保持 not_run。
 
 2026-10-05 继续种植 C-02：真实页面 `164283`，URL https://ssy44199.atlassian.net/wiki/spaces/AIBANG2/pages/164283/C-02+Payment-retry+capability 。在 AIBANG2 受限空间内继承访问，两个 Viewer 可读的原生配置已保存；未开启公网匿名访问。正文与本地 seed 核对一致，包含合成警示与 fixture ID。截图 ignored `confluence-c02-published.png`。fixture 中 contractor/security 等身份仍未映射；不宣称完整权限矩阵。C-03 及其安全身份未种植/未映射。
+
+
+2026-10-05最新接续：Confluence eng_b scoped token配置、真实query及同会话撤权已通过operator子集，证据见CONFLUENCE_PILOT及live-confluence；原权限已恢复。新增operator网页已mock/HTTP测试、真实网页结果待用户执行。Jira J-02已在KAN创建为KAN-4并将原生状态设Done，Assignee=Unassigned，其他示例工单保留；native issue/project ID未知。J-01/J-03/安全评论、Jira应用访问/具体scope与token、完整ACL矩阵仍待落实，详情JIRA_PILOT。仅填私有manifest已知key/URL与UI状态，不把它当Jira API通过。

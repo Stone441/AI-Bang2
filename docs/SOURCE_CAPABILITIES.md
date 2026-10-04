@@ -25,3 +25,6 @@
 2026-10-05 query 增量：首个 live operator query 已实际检查本地持久DB，eng_b 的 C-01 v1 核心原文/引用及逐阶段授权通过，C-02亦获准刷新；11事件本地链有效，无独立签名锚点。5新增撤权runner mock测试，全回归101；真实同会话撤权正在测试，不能提前标通过。Jira/Slack/Drive runtime仍fixture，前端仍fake身份，live model未运行。
 
 2026-10-05 撤权结果：Confluence同一operator pilot/Actor/逻辑会话，原生移除eng_b Can view后，query/历史/引用均明确native deny（C-02仍allow），没有重建/删除本地C-01索引。7 runner checks + 7 DB核验通过，18事件链有效。已在UI恢复原有Can view；不声称传播延迟/HTTP登录/真实模型/四源撤权/独立签名已验收。
+
+
+2026-10-05 Jira增量：reader每次GET myself→白名单issue字段，评论另GET并先确认父issue访问；指定源端permissions为权威，不使用本地模拟group名单授予native权限。14 reader+10跨源+6CLI mock验证，真实Jira API not_run。KAN-4为已种植J-02，UI原生Done读回；native issue/project ID、普通员工Jira访问和token、评论ACL及权限矩阵待落实。Jira Free的issue-security/角色能力不能由mock补成live；需要具体账户实测。未申请新的scope。Confluence网页入口新增8 mock/HTTP验证，不扩大既有真实CLI结果到浏览器/SSO。

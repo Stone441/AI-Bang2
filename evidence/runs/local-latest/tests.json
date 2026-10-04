@@ -1,33 +1,40 @@
 {
-  "started_at": "2026-10-04T18:04:09.006061+00:00",
-  "finished_at": "2026-10-04T18:04:13.290593+00:00",
+  "started_at": "2026-10-04T18:28:06.734414+00:00",
+  "finished_at": "2026-10-04T18:28:13.099756+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "d75473f762c6c3d5d023928e6f1073d9c63a8e2d",
+  "commit": "283eaf5e959ae1cc437f85251ad5fdf03a0eeadc",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
-    "brain/confluence_query.py": "3029ae250917582cd1374e5721e6bc832692cc376437638dc2be0280287afa66",
-    "brain/server.py": "70376b32a387bf8e161a631ca242c353c276a83e2f95bd5ed4b15d8dd296c6b9",
+    "brain/operator_web.py": "acce16ca23f5b740e4931b32ab9f693a495bc7395b2e3a55e9140fd52713afb7",
+    "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
+    "brain/server.py": "dbfa02c563c85d81730e6edcc04f2e89fc9ec8142741bb259cf78b0cf1ffb805",
     "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
     "brain/confluence.py": "b7126a318f4e314c8c6239edb26d7052d17354fff53195e39634ef90d317c480",
+    "brain/delegated_query.py": "bd0ba82a13a19e686290fcc5532ae9a20f77e760def33839e57e2a03267c639b",
     "brain/budget.py": "1c4e8852b986e9edc7dfaef89aa296f7695037374ee7c68b6870afe3f956af6b",
     "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
     "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
     "brain/engine.py": "97620896289e1fb3790c6e3c64fdabe7cf7e41c1df764f963d4a81612f8e1348",
     "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
+    "brain/jira.py": "8ec073626c20f00547876515e4bc0d760191a7e2bb0dd72e19807063955afdf4",
     "brain/audit_query.py": "837254cdc8a235044dae523c0b9f35c87765a66e91e9215304dc9ad09c77622b",
     "tests/test_contracts.py": "c6c4ad82ce9cce7505296745a7f824ca216edf5a31f3adc9b2d9d4468d652c56",
+    "tests/test_jira_query.py": "f7d6a4e2459fd880782bc52e61ea08fd6d9a6dca51df692b2aff0a28f6003667",
     "tests/test_engine.py": "0449d5240af821d03545f9fcec1672ef7c0bd5e18149ae40ded97228834b322e",
     "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
     "tests/test_confluence_revocation.py": "85658ba53f7865528ea62e57880d13d5ef0cafb8db877c636a721e2410ab73d2",
     "tests/test_confluence_probe.py": "6c4865f4a504ea49b73c3a776d64f399bfb3a5e0500861c9a27c26c7246c5d10",
+    "tests/test_jira.py": "6138a1a49e70b76db71aafb489cb72de400d69a70a69d2cbc6fbdaa493e1f6b3",
     "tests/test_live_seed.py": "df2ba1d2daa3e7f1016527830de12f3ad2f748633ad01c778819a088db0b19d0",
     "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
     "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8",
     "tests/test_budget.py": "09e70b7fc17c2ce34787668a28183f88a1ae539dcf94f5255e0fd135ff7f8f7c",
+    "tests/test_operator_web.py": "c4e9e68d81ca87cc005edc93d5d7f4f3f2a807bdfdc17eb26aac66964d3ade38",
     "tests/test_confluence_query.py": "2c80af908f7cd44eb3b1fcbaa23366ed17da60e656f38a123e430b8d6c333986",
+    "tests/test_delegated_query.py": "42f10b3c06de35449b5f3a64a5e9b6a290044bdff46817eb9b0056c2fddb9963",
     "tests/test_confluence.py": "1e271772c77cd41262ac515b3da01913864b158c01689b3ec2a66be41092666a",
     "tests/codebuddy/test_audit_verifier.py": "4121d5f4e688ff7d7d5a8b1921810785d39cc3c082b684882356c7c3ed339e8f",
     "tests/codebuddy/__init__.py": "aa1f7dd33a54dd5e7ca68439ee45d953eb4c6bf1358c809c7300308583e7f47a",
@@ -35,20 +42,21 @@
     "scripts/confluence_query.py": "c22c084a15321f54fb343d15e006e0a34588c8f338432c8ed2c51f6071cfa62c",
     "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
     "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
-    "scripts/test_report.py": "33d1a90c2a40bcecc1ec44d538f593113b194e15663832b839784b7fa41e43af",
-    "scripts/confluence_probe.py": "48e3729acd36932d1dd04ff934f119a503e751f1ce20be8aac1f7c605bc1eb9c",
+    "scripts/test_report.py": "cddaf2c8d65a6b6ed9b32881fe6e1e4525fcbd6e239039778aae3a2af4c038bf",
+    "scripts/confluence_probe.py": "129b5a5e13a1b60f144084835d4638bd1fb20d1a5c1ebf2df0c0459ac850cc2d",
     "scripts/prepare_live_seed.py": "dcd3307e679b3f1d96affc7a65ba9be7af48ed84b258db64366a7bd494fa2eff",
-    "scripts/evaluate.py": "1bb058888f3c0be50a07f3bf07f2d6dfb5b1581140169fefa92ba1802e301fbf",
+    "scripts/evaluate.py": "f98bd282a1e1352a85276b8742201fcb1c3eeff0715752ecdeabe30fdeeb6f46",
+    "scripts/jira_query.py": "f15c144ea53add1caccb76e4033f829f2a779f4a71053f9577365d6474323a74",
     "scripts/confluence_revocation.py": "81f35cd2643049dedd02afec214e231ef82a69edb2fa55cf8ac1c5d4687a1a17",
-    "web/index.html": "72adc3d005163a3091666372cbe3193511513459c653751060a901e364187df0",
+    "web/index.html": "c38d18e234ad57a68c7c23cedf96d6f4b6728672c2e1489dced2ae818fd49300",
     "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
-    "web/app.js": "7ce618466220ed67d781d76abb3086c143c35e4910ad5d2e39f457e8c876278e",
+    "web/app.js": "62fe81a9def01e3c84e9031601d416b2fe51f1fbc2b8983fdd9b95b6a10db3f7",
     "tools/audit_verifier/checkpoint.py": "4bfb0c522680c22e52558827a385b832ddc296aa1727c1b376ea32107019cd96",
     "tools/audit_verifier/chain.py": "59ff077fbcb8673f323e9687458b0d6f8ccf667e1b4f291480df78e4db41f00d",
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 101,
+  "tests_run": 139,
   "successful": true,
   "results": [
     {
@@ -422,6 +430,56 @@
       "mode": "local_synthetic"
     },
     {
+      "test": "test_delegated_query.CombinedQuery.test_comment_scope_is_separate_and_revocation_protects_old_citation",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_delegated_query.CombinedQuery.test_jira_revocation_preserves_allowed_confluence_but_invalidates_old_answer",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_delegated_query.CombinedQuery.test_jira_update_switches_object_and_hides_old_evidence_without_rebuild",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_delegated_query.CombinedQuery.test_one_source_unknown_never_discards_other_source_or_uses_stale_content",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_delegated_query.CombinedQuery.test_other_identity_cannot_reuse_two_source_index_or_history",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_delegated_query.CombinedQuery.test_restart_rechecks_native_history_and_preserves_content_fingerprint",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_delegated_query.CombinedQuery.test_revoke_at_model_dispatch_stops_entire_model_call",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_delegated_query.CombinedQuery.test_short_version_collision_fails_transaction_and_full_payload_recheck",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_delegated_query.CombinedQuery.test_two_sources_share_answer_citations_and_audit",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_delegated_query.CombinedQuery.test_unconfigured_tenant_source_or_live_transport_rejected_before_network",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
       "test": "test_engine.Core.test_audit_connection_rejects_mutation",
       "status": "passed",
       "mode": "local_synthetic"
@@ -552,9 +610,149 @@
       "mode": "local_synthetic"
     },
     {
+      "test": "test_jira.JiraBoundary.test_adf_depth_and_node_bounds",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_comment_edit_changes_fingerprint_and_old_version_is_unavailable",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_content_fingerprint_changes_even_if_timestamp_does_not",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_credential_substitution_or_disabled_identity_never_fetches_issue",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_current_fields_and_backend_link_without_embedded_subresources",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_missing_mapping_wrong_tenant_unapproved_id_never_calls",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_missing_required_field_and_embedded_media_do_not_return_partial_answer",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_moved_reused_or_wrong_project_issue_fails_closed",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_null_description_unassigned_and_empty_document",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_origin_gateway_and_whitelist_validation",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_parent_visibility_never_grants_comment_access",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_rate_limit_token_expired_transport_error_and_redirect_are_unknown",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_revoked_parent_blocks_comment_endpoint",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira.JiraBoundary.test_second_read_rechecks_native_access",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_query.JiraOperatorConfiguration.test_confluence_token_reference_and_inline_secret_are_rejected",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_query.JiraOperatorConfiguration.test_hidden_entry_does_not_save_or_export_credential",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_query.JiraOperatorConfiguration.test_missing_credentials_do_not_call_api",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_query.JiraOperatorConfiguration.test_no_live_flag_never_loads_config_or_credentials",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_query.JiraOperatorConfiguration.test_probe_outputs_no_title_text_or_authorization",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_query.JiraOperatorConfiguration.test_query_cannot_write_database_outside_ignored_runtime",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
       "test": "test_live_seed.LiveSeed.test_complete_plan_preserves_restricted_child_and_unverified_state",
       "status": "passed",
       "mode": "local_synthetic"
+    },
+    {
+      "test": "test_operator_web.OperatorHTTP.test_browser_session_binds_verified_identity_and_never_returns_api_credential",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_web.OperatorHTTP.test_host_csrf_origin_and_identity_field_forgery_are_blocked",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_web.OperatorHTTP.test_logout_invalidates_session_and_consumed_link_does_not_log_in_again",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_web.OperatorHTTP.test_same_http_session_revocation_protects_history_export_and_citation",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_web.OperatorIdentity.test_default_cli_and_real_transport_guard_do_not_contact_source",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_web.OperatorIdentity.test_expired_ticket_is_not_accepted",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_web.OperatorIdentity.test_startup_substitution_fails_before_page_read_or_session",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_web.OperatorIdentity.test_ticket_is_one_use_and_server_actor_cannot_be_chosen",
+      "status": "passed",
+      "mode": "mock_http_contract"
     }
   ],
   "failures": [],

@@ -1,6 +1,6 @@
 # Local contracts v1
 
-状态：实现基线，模式固定 fixture_fake_model。`brain/contracts.py` 是类型入口。
+状态：实现基线，默认演示模式 fixture_fake_model；委托operator模式另列。`brain/contracts.py` 是类型入口。
 
 - 身份：仅服务端 opaque session → Actor；仅显式 loopback demo 登录允许从六个固定合成用户选取。业务 API 拒绝额外 user_id/role/tenant 字段。
 - 稳定资源 ID 为 demo 内逻辑 ID；tenant/workspace/native_id 单独保存。真实模式未启用，fixture 链接用 `fixture://`，绝不冒充平台 URL。
@@ -11,6 +11,14 @@
 - 审计事件 v1：seq, previous_hash, event_type, actor, request_id, timestamp, payload, hash。规范化 JSON 为 ensure_ascii=False, sort_keys=True, separators=(',', ':')；hash = SHA256(b'ContextLedger.audit.v1\0' + canonical event excluding hash)。起始 previous_hash 为 64 个 0。
 - 审计 payload 保存问题、逐资源授权、实际模型输入证据 ID、最终回答和 dispatch 阶段；受限审计员只有 eng_a/eng_b/product_ops 范围。端点无任意 SQL。应用 SQL authorizer 是逻辑防护，不宣称独立 DB role。
 - CodeBuddy 独立签名验证器以导出的 JSON 数组为输入，签名 trusted checkpoint 的 schema/编码须与此契约一致；其路径由任务包独占。
+
+## Delegated operator reader contract · 2026-10-05
+
+新增多源操作员 pilot 的 reader 返回 `(Decision, content | None)`，每次读均验证凭据的原生员工身份；tenant、源与 native ID 白名单不可由问答扩大。content沿用Evidence字段；评论为单独资源，不并入父工单。Jira固定issue ID→key、project ID及comment ID→parent ID，只请求选定字段与单条评论，不请求附件/列表/任意JQL。unknown不出正文。
+
+Jira没有可依赖的工单整数正文版本：locator保存完整SHA-256（正文/标题/状态/负责人/updated/原生ID），兼容索引的version为其前15个hex转整数，**非原生revision/非单调版本**。最终授权另外比较完整content payload，短ID碰撞不得继续放行；旧内容不凭当前可读而恢复。按对象事务切换，权限更新不改变正文版本。固定白名单请求刷新不是后台增量worker。模式逐源注明mock/live且model明确fake，禁止真实传输被标mock。
+
+默认前端仍fixture；另有服务端核对native身份/一次性bootstrap的operator网页，不是员工SSO。此合同不授权新token/scope或外部调用。
 
 ## Signed checkpoint v1（DEV-09-CB 实现）
 

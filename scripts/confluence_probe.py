@@ -35,19 +35,25 @@ def load_reader(path, prompt_actor=None, discovery_only=False):
     if prompt_actor is not None:
         if not sys.stdin.isatty() or prompt_actor not in config['delegations']:
             raise ValueError('Interactive mapped operator required')
-        try:
-            with warnings.catch_warnings():
-                warnings.simplefilter('error',getpass.GetPassWarning)
-                email=getpass.getpass('Atlassian email (hidden): ').strip()
-                token=getpass.getpass('Scoped API token (hidden; not saved): ').strip()
-        except getpass.GetPassWarning:
-            raise ValueError('Secure hidden input unavailable') from None
-        if (not re.fullmatch(r'[^\s:@]+@[^\s:@]+',email) or not token or len(token)>4096
-                or '\r' in token or '\n' in token):
-            raise ValueError('Invalid credential input')
-        authorization='Basic '+base64.b64encode((email+':'+token).encode()).decode()
-        reader.delegations[prompt_actor]=Delegation(config['delegations'][prompt_actor]['account_id'],authorization)
+        reader.delegations[prompt_actor]=hidden_delegation(config['delegations'][prompt_actor]['account_id'])
     return reader
+
+
+def hidden_delegation(account_id):
+    if not sys.stdin.isatty():
+        raise ValueError('Interactive mapped operator required')
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter('error',getpass.GetPassWarning)
+            email=getpass.getpass('Atlassian email (hidden): ').strip()
+            token=getpass.getpass('Scoped API token (hidden; not saved): ').strip()
+    except getpass.GetPassWarning:
+        raise ValueError('Secure hidden input unavailable') from None
+    if (not re.fullmatch(r'[^\s:@]+@[^\s:@]+',email) or not token or len(token)>4096
+            or '\r' in token or '\n' in token):
+        raise ValueError('Invalid credential input')
+    authorization='Basic '+base64.b64encode((email+':'+token).encode()).decode()
+    return Delegation(account_id,authorization)
 
 
 def main(argv=None):

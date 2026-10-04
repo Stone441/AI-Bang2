@@ -1,4 +1,4 @@
-# Backlog · 2026-10-04
+# Backlog · 2026-10-05
 
 | ID | 状态 | 已完成 / 仍需推进 / 验收 |
 |---|---|---|
@@ -9,10 +9,10 @@
 | DEV-05 | verified local | 请求驱动增量/去重/重试/原子版本/删除 F组；真实 worker/scheduler 待做 |
 | DEV-06 | blocked live | 四源 fixture 可运行；专用合成空间操作已批准，账号/站点及用户委托待配置；本地 seed exporter 已测试 |
 | DEV-07 | verified local | stale ACL/撤权/unknown/历史/预览/导出/生成中撤权；P组部分真实机制待测 |
-| DEV-08 | in_progress | 关键词+授权一跳、exact extractive support；DeepSeek 首轮 US$20 上限已批准；预算控制/模型适配与语义检索未实现 |
+| DEV-08 | in_progress | 关键词+授权一跳、exact extractive support；DeepSeek 首轮 US$20 上限已批准；预算账本已测试；模型适配/真实计价与语义检索待实现 |
 | DEV-09 | in_progress | 事件链/精确 scope/分页/有限 NL；生产 role/加密未实现 |
 | DEV-09-CB | verified local | 真实 CodeBuddy Ed25519 检查点/独立 CLI；20 新测试+52 全回归；A-03/04 本地签名子集，A-11 缺锚点/尾部已测，密钥轮换待做；依赖 DEV-09 导出契约 |
-| DEV-10 | in_progress | 英文 Workspace/History/Sources/Audit 已联通；浏览器视觉工具阻挡 |
+| DEV-10 | in_progress | 英文 Workspace/History/Sources/Audit及Confluence operator入口已联通（mock HTTP验证）；真实网页/SSO待做，浏览器视觉工具阻挡 |
 | DEV-11 | verified local subset | 五场景回放+安全测试；不是完整 P0/G1 通过 |
 | DEV-12 | blocked | live model / 非作者人工任务测量未运行 |
 | DEV-13 | in_progress | 本地候选审查包、运行指南；真实腾讯对话/7截图已本地留存；封面/视频/材料提交待做 |
@@ -25,3 +25,7 @@
 | DEV-06-CF-REVOKE | verified mock / live operator subset | 5 mock测试；真实原生C-01 eng_b撤权后7 runner检查+7独立DB检查通过，18事件链，追问/模型/旧历史/引用不泄露且保留旧索引。已恢复原Can view，Notify关闭；不等于P组四源/真实前端/真实模型完整通过 |
 
 | DEV-08-BUDGET | verified local | SQLite micro-USD durable reservations；7 安全/故障测试；模型请求和官方计价尚未接线，live model not_run |
+
+
+| DEV-06-JIRA | verified mock / blocked live | 14 reader + 10跨源 + 6CLI测试；逐用户myself、项目/工单/评论白名单、内容指纹、独立评论授权、撤权/旧历史/引用。KAN-4(J-02)已UI种植为Done，native ID/token/员工Jira访问及矩阵待落实；P-03/04/05/07/09、F-03、Q-03子集，非live通过 |
+| DEV-10-OPERATOR | verified mock HTTP / live browser not_run | 8新增测试：先验证native身份，一次性bootstrap→opaque session，API secret不入浏览器，同会话撤权保护query/history/export/citation。现有英文UI共享；JS语法通过，自动浏览器被ERR_BLOCKED_BY_CLIENT阻挡。用户正待运行已提供命令；不是OAuth/SSO完成 |

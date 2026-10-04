@@ -60,3 +60,12 @@ DeepSeek 直连首轮总预算上限等值 US$20，仅处理合成资料，不�
 ## 2026-10-05 · AUTH-005 · eng_b scoped token 配置
 
 用户在具体行动时选择“批准此范围”：eng_b 的 `AI-Bang2 eng_b read-only pilot` token，2026-10-20 到期，拟选 `read:page:confluence` 与 `read:content-details:confluence`，程序只读白名单合成页面；最终创建和密钥保存由用户亲自完成。此批准不覆盖 product_ops token、写入/admin scope、既有个人资料或新增收费。先前自动审批拒绝配置动作；得到这次具体批准后方继续，不绕过拒绝。
+
+
+## ADR-009 · 2026-10-05 · 多源委托与Jira内容版本
+
+证据：官方Jira Get issue/current user/Get comment约束、现有Engine整数version契约、Jira字段/评论无可依赖整数正文revision。采用固定native ID/key/project白名单、每次myself验证员工、评论单独GET，不将父权限推广到子资源。Jira locator保存完整SHA-256；兼容version为前15hex整数，非原生revision/非单调序号。事务中碰撞检测，最终当前读取还比较完整payload，不能因短hash相同复用旧正文。共同DelegatedAuthority保留Confluence接口/CLI兼容；不足：白名单按请求刷新、无后台worker/原子ACL事务/附件。可回滚Jira/general pilot改动，保留原Confluence基线。
+
+## ADR-010 · 2026-10-05 · 本机操作员网页会话
+
+为尽早联通真实reader与现有产品UI，提供单一已映射操作员的loopback入口：TTY隐藏输入→服务端验证native账户→随机一次性10分钟ticket→HttpOnly/SameSite/CSRF session。浏览器不接API token、user/role选择；每次业务读取仍验证源身份/权限。ticket是本机入口凭证，不入Git或截图，消费后不可复用；退出/重启需新入口。此方式只满足本机操作员试点，不能宣称员工OAuth/SSO或多用户生产鉴权；网页真实验收仍需实际执行。保持fixture demo独立路径，避免bootstrap入口让fixture身份转入真实API。无新增平台scope、费用或公开监听。

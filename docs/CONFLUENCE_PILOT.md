@@ -1,6 +1,6 @@
 # Confluence delegated read pilot
 
-2026-10-05：委托读取已通过独立 operator pilot 接到共享 Engine / Store / Audit；41 个模拟 HTTP 合同测试。真实 query 和同会话撤权的 operator子集已运行并实际查DB；核心原文/引用/模型前和返回前授权、撤权后追问/历史/引用/模型保护通过。native space ID `131227`。未接到浏览器登录，不改变 LOCAL DEMO / FAKE MODEL 模式。
+2026-10-05：委托读取已通过独立 operator pilot 接到共享 Engine / Store / Audit；41 个模拟 HTTP 合同测试。真实 query 和同会话撤权的 operator子集已运行并实际查DB；核心原文/引用/模型前和返回前授权、撤权后追问/历史/引用/模型保护通过。native space ID `131227`。新增本机operator网页入口，通过mock源/HTTP安全测试，真实网页验收待用户执行；不改变默认LOCAL DEMO或将operator当SSO。
 
 ## 边界
 
@@ -10,15 +10,15 @@
 
 operator pilot 每次查询清空该用户的本地允许快照，再读取两份白名单页面；只有对应用户此次获准的内容参与关键词检索。逐对象写入单独 SQLite 索引，并记录当前读取决策。已接入模型 dispatch 前、返回前及历史/引用访问重查。源端撤权、删除、429/未知不能复用索引中的允许结论；内容版本变化拒绝旧回答。仍存在多次 HTTP 请求之间的源端并发窗口，不宣称原子 ACL 事务。模块返回的 `policy_version=0` 表示平台未提供 ACL revision，不把内容版本当权限版本。
 
-没有实现：用户 OAuth/SSO 登录、前端 live 路由、同步 worker、完整宏/附件/子资源、源端撤权传播延迟测量与真实模型。CLI actor 是本机操作员选择的映射，不能当作已验证员工登录。默认关闭网络；共享 fixture HTTP 应用仍仅使用 fake source。
+没有实现：用户 OAuth/SSO 登录、同步 worker、完整宏/附件/子资源、源端撤权传播延迟测量与真实模型。CLI actor 是本机操作员选择的映射，不能当作已验证员工登录。默认关闭网络；共享 fixture HTTP 应用仍仅使用 fake source。
 
 ## 配置与执行
 
-先复制 `config/confluence-pilot.example.json` 到 ignored `.runtime/confluence-pilot.json`，填入实际核验的 native space ID 和独立测试用户 account ID。真实身份映射已保存在 ignored `.runtime/live-identities.json`；模板不包含邮箱或凭据。授权 header 从对应 `AIBANG2_CONFLUENCE_*` 环境变量读取，不保存到 JSON。当前没有申请/创建 token 或 OAuth scope，不读取其他项目凭据；凭据接入方式须另行落实最小授权。不要把密码/API key 发到聊天、命令历史或 Git。
+先复制 `config/confluence-pilot.example.json` 到 ignored `.runtime/confluence-pilot.json`，填入实际核验的 native space ID 和独立测试用户 account ID。真实身份映射已保存在 ignored `.runtime/live-identities.json`；模板不包含邮箱或凭据。授权 header 从对应 `AIBANG2_CONFLUENCE_*` 环境变量读取，不保存到 JSON。eng_b token已按AUTH-005创建/保管并通过真实API子集；其他账号token/OAuth仍待明确批准，不读取其他项目凭据。不要把密码/API key 发到聊天、命令历史或 Git。
 
-scoped API token 使用配置中的 cloud_id，经固定 `https://api.atlassian.com/ex/confluence/{cloudId}` 调用；页面引用仍返回原站点。已核对 current-user 所需 granular scope 为 `read:content-details:confluence`，页面读取为 `read:page:confluence`，不是凭印象选择 `read:user:confluence`。实际 token 管理 UI 的可选 scope 及请求成功仍待核验，不申请 write/admin 权限。
+scoped API token 使用配置中的 cloud_id，经固定 `https://api.atlassian.com/ex/confluence/{cloudId}` 调用；页面引用仍返回原站点。已核对 current-user 所需 granular scope 为 `read:content-details:confluence`，页面读取为 `read:page:confluence`，不是凭印象选择 `read:user:confluence`。上述两个scope已在token UI和eng_b真实query/撤权中核验，不申请 write/admin 权限。
 
-本轮已实际核对两个 scope 在 eng_b token UI 可选；用户批准名称 `AI-Bang2 eng_b read-only pilot` 与 2026-10-20 到期，最终创建/保管由用户操作；配置探针成功不代表正文或查询已成功。提供 `--prompt-credential`：只在真实 TTY 隐藏输入邮箱/token，内存组装 Basic header，不存文件/环境变量/命令历史；无隐藏输入能力则拒绝，不回退到 echo。可用密码管理器保管原始 token，不能覆盖实际账号登录密码。
+本轮已实际核对两个 scope 在 eng_b token UI 可选；用户批准名称 `AI-Bang2 eng_b read-only pilot` 与 2026-10-20 到期，最终创建/保管由用户操作；已完成真实正文/query及撤权operator子集，范围见文首；探针本身不替代这些验收。提供 `--prompt-credential`：只在真实 TTY 隐藏输入邮箱/token，内存组装 Basic header，不存文件/环境变量/命令历史；无隐藏输入能力则拒绝，不回退到 echo。可用密码管理器保管原始 token，不能覆盖实际账号登录密码。
 
 native space ID 不明时可先执行 metadata-only 配置诊断：
 
@@ -48,7 +48,7 @@ python3 -m scripts.confluence_probe --config .runtime/confluence-pilot.json --ac
 python3 -m scripts.confluence_query --config .runtime/confluence-pilot.json --actor eng_b --question "Show the payment-service runbook" --live
 ```
 
-输出模式 `confluence_live_api_fake_model`，模型为本地 extractive，不调用收费模型。`--history-id` 支持在同一逻辑会话追问，重新检查所有依赖。没有 `--live` 时不加载凭据/创建数据库/联网。其他用户无权页面的正文、标题、路径不进入响应或模型。撤权与内容更新后的历史/引用 API 由 `ConfluenceQueryPilot.history/evidence` 验证，尚无 live HTTP 端点。重启后保留索引也必须重新委托读取，不由持久库授予权限。
+输出模式 `confluence_live_api_fake_model`，模型为本地 extractive，不调用收费模型。`--history-id` 支持在同一逻辑会话追问，重新检查所有依赖。没有 `--live` 时不加载凭据/创建数据库/联网。其他用户无权页面的正文、标题、路径不进入响应或模型。撤权与内容更新后的历史/引用 API 由 `ConfluenceQueryPilot.history/evidence` 验证，新增operator HTTP入口已mock验证，真实HTTP验收尚not_run。重启后保留索引也必须重新委托读取，不由持久库授予权限。
 
 也可追加 `--prompt-credential` 用隐藏输入执行查询，不要求持久保存凭据到仓库。
 
@@ -68,3 +68,8 @@ python3 -m scripts.confluence_revocation --config .runtime/confluence-pilot.json
 - [Current user](https://developer.atlassian.com/cloud/confluence/rest/v1/api-group-users/#api-user-current-get)：当前凭据对应 accountId。
 - [Authentication](https://developer.atlassian.com/cloud/confluence/basic-auth-for-rest-apis/)：API 身份认证方式。生产用户授权方案仍优先委托 OAuth，不因支持 Basic 而默认申请全权限 token。
 - [Scoped API tokens](https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/)：scoped token 的 API gateway、有效期与安全验证流程。
+
+
+### 本机操作员网页增量
+
+`python3 -m brain.operator_web --config .runtime/confluence-pilot.json --actor eng_b --live`：TTY隐藏输入现有已批准token，启动前native identity核对，终端输出一次性10分钟link，浏览器不接API secret、不能选user/role。共享UI、query/history/export/preview逐读授权；mock HTTP检查包括撤权和CSRF。数据单独`.runtime/confluence-web.sqlite`。仅操作员试点，非SSO；实际网页结果待核验，视觉自动化ERR_BLOCKED_BY_CLIENT，不伪称通过。

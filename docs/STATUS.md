@@ -2,9 +2,9 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**最新验证：101/101 测试通过（60 local synthetic + 41 mock HTTP），五场景仍为 passed_local_subset。Confluence 真实 API + fake model 的 operator query 和同会话撤权子集已由用户执行、Codex操作原生ACL并检查DB验证；live model尚not_run，前端仍fixture，其他三源runtime尚未live。接续点见文末。**
+**最新验证：139/139回归通过（60 local synthetic + 79 mock HTTP）；新增Jira委托只读、独立受限评论、多源共享Engine及Confluence本机操作员网页入口。Jira和网页源检查为mock HTTP，真实网页验收待用户运行；既有Confluence真实API+fake model查询/撤权证据不变。其他源/live model/SSO/G1/G2未完成。**
 
-**G0 仅本地完整开发已批准**；已批准专用四源空间的合成资料写入/测试权限调整，以及 DeepSeek 合成资料首轮等值 US$20 上限；真实空间、账号映射、凭据和预算控制尚未落实。G1/G2 未通过。原型已推送并通过 PR #1 合并至 main（81df3ef）；未部署、未调用真实知识平台/应用运行时模型。
+**G0 仅本地完整开发已批准**；已批准专用四源空间的合成资料写入/测试权限调整，以及 DeepSeek 合成资料首轮等值 US$20 上限；已落实Confluence测试空间、eng_b账号映射/只读token、真实查询/撤权；预算账本已测试但尚未接模型。其他源凭据/完整身份矩阵仍待落实。G1/G2未通过。既有原型/CodeBuddy通过PR #1/#2合并main；本轮仅本地分支，未部署/调用应用运行时模型。
 
 ## 已实现与验证
 
@@ -70,3 +70,12 @@
 真实撤权进行中：run `.runtime/confluence-revocation-037bcdb06b9d4a8087b8069495a4ef7a/report.json` 已实读 awaiting_source_revocation，用户也确认暂停。管理员 UI 仅移除 C-01 的 Kyle6745/eng_b Can view，保存后具体名单只剩管理种植者；未删除用户或改变空间权限。截图 private/onboarding-20261005/confluence-c01-live-revoked.png；已请用户按回车继续，未见最终 report 前不报通过。验收后需恢复原有 eng_b Can view，product_ops继续排除。
 
 真实撤权已完成：上述 run 最终 `passed_operator_subset`，mode=confluence_live_api_fake_model。7项runner检查全通过；Codex另以只读DB核对 baseline `0c3b4a72be374136af8301aaa3b9acd1` / followup `acc85a5299ed4083950472e1ceb3c345` 的持久输出及18事件链，7项DB检查也通过。C-01查询/两次preview均原生deny，C-02仍allow；追问无claims/evidence及C-01 sent_to_model，旧历史/引用不可用，旧索引v1仍保留。证据 `evidence/runs/live-confluence/revocation-037bcdb06b9d4a8087b8069495a4ef7a.json`，不扩大到真实模型、浏览器SSO/HTTP、四源/缓存/附件或独立签名锚点。测试后已恢复 eng_b Can view（Notify them关闭），Restricted名单仅种植管理员+eng_b，product_ops仍排除；原生UI读回和恢复截图已保存。恢复后的API读取未另跑，不伪称复验。下一步：真实前端身份与委托、Jira/Slack/Drive只读适配/种植、DeepSeek provider/计价/预算接线；G1/G2仍待定。
+
+
+2026-10-05 DEV-06-JIRA / DEV-10-OPERATOR：从283eaf5建立codex/jira-operator-web分支。Jira固定原生issue ID/key/project ID白名单；逐读myself核对员工；工单字段与评论分开委托GET，受限评论不能并入父正文。ADF宏/媒体/缺字段/网络异常unknown；hash snapshot非平台版本，旧状态/负责人/正文变动阻断历史与引用。DelegatedAuthority将Confluence/Jira接同一Engine，逐对象事务发布，完整payload碰撞保护。24新增边界/跨源测试通过；Jira真实API尚not_run。
+
+Confluence operator网页入口：终端隐藏输入已批准eng_b token，服务端先核对native identity；一次性10分钟bootstrap link换取HttpOnly/SameSite/CSRF session，浏览器无API token，无可选user/role。仍是本机操作员，不是OAuth/员工SSO。8新增身份/HTTP测试通过，覆盖同会话撤权后追问、模型、历史、导出与引用；前端JS语法检查通过。浏览器访问mock临时8081仍ERR_BLOCKED_BY_CLIENT，已停临时服务，不绕过保护；视觉/真实网页验收not_run，已给用户隐藏输入启动命令。
+
+Jira CLI诊断/问答、专用凭据env namespace及隐藏输入已实现，6配置测试通过；Confluence隐藏输入共用helper的6回归通过。真实UI在KAN项目创建J-02：KAN-4，正文与seed核心一致，原生Done/Unassigned已读回，截图private/jira-j02-done.png。native issue/project ID未知，Jira普通身份/token/ACL矩阵和J-01/J-03/受限评论种植仍待做；未将UI结果当API通过。精确接续：用户网页query后查.runtime/confluence-web.sqlite；为KAN-4核对native ID并完成具体Jira只读scope批准/用户凭据交接；其余Slack/Drive只读适配与DeepSeek报价/provider接线可独立继续。DeepSeek官方pricing再次超时，未使用猜测价格启动收费调用。
+
+最终检查：make setup、node --check web/app.js、make verify、make test-report实际成功；139/139，source_hashes零差异，五场景passed_local_subset。未产生收费/外部模型调用，未推送main。用户网页验收问题仍待回复，不预填运行结果。
