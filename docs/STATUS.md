@@ -98,3 +98,5 @@ Jira 平台只读核验：Billing Console 显示 Premium FREE 30-DAY TRIAL，202
 eng_b token 管理页邮箱安全验证已完成（页面直接进入 API Tokens，agent 未再次输入验证码）。已准备 Jira scoped token 审核页：AI-Bang2 eng_b Jira read-only pilot，Oct20 到期，只选 read:jira-user/read:jira-work，无其他 scope；Create token 尚未点击。已交用户最终创建、保存并关闭密钥弹窗。接续仅在用户确认弹窗关闭后检查非秘密 token 元数据，并请用户隐藏 TTY 运行 KAN-4 ID discovery。验证码/密钥不写证据。
 
 2026-10-05 用户确认 Jira token“保存好了”，保存步骤采用密码应用独立标签 eng_b-jira-token 避免覆盖既有 Atlassian/Confluence 记录；终端实际 Atlassian email 仍为 eng_b 已核验邮箱。创建/保存为 user_reported，agent 未读取密钥或密码应用。下一步用户在真实 TTY 执行 --discover-ids KAN-4 --prompt-credential --live，将只含 IDs/Decision 的输出保存到 ignored .runtime/jira-id-discovery.json；在真实 allow 核验前不替换正式数字 ID 白名单，不声称 Jira API 已接通。
+
+2026-10-05 Jira ID discovery：实读用户执行的 .runtime/jira-id-discovery.json，jira_live_api_configuration_probe / allow，UTC18:56:00（SGT10月5日02:56），KAN-4 issue_id10013/project KAN id10001，无正文返回。原生 identity 与 exact key/project 已由 reader 检查；仅 metadata 配置诊断，不是正文/问答/ACL矩阵验收。已将这两个实测数字 IDs 写入 ignored .runtime/jira-pilot.json（0600），保留 comment_ids 空白。下一步隐藏 TTY 真问答，检查 actual model inputs/claims/citations 与审计 DB。
