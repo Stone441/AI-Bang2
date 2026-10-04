@@ -84,9 +84,13 @@ def main(argv=None):
     parser.add_argument('--source', choices=['confluence', 'jira', 'slack', 'drive', 'multi'], default='confluence')
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
+    parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive only; browser consent instead of hidden token')
     args = parser.parse_args(argv)
     if not args.live:
         print('not_run: --live required; no credentials or platform calls performed.')
+        return 2
+    if args.oauth_client and args.source != 'drive':
+        print('not_run: --oauth-client is supported only for Drive; no credential or platform calls performed.')
         return 2
     store = server = None
     stage = 'bind'
@@ -105,7 +109,11 @@ def main(argv=None):
             from scripts.jira_query import load_reader
         else:
             from scripts.confluence_probe import load_reader
-        reader = load_reader(args.config, prompt_actor=args.actor)
+        if args.oauth_client:
+            from scripts.drive_query import load_oauth_reader
+            reader = load_oauth_reader(args.config,args.oauth_client,args.actor)
+        else:
+            reader = load_reader(args.config, prompt_actor=args.actor)
         stage = 'local_store'
         runtime = Path('.runtime'); runtime.mkdir(mode=0o700, exist_ok=True)
         db = runtime / (args.source + '-web.sqlite')

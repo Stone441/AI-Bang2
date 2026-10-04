@@ -56,3 +56,5 @@ Slack native setup接续：已停止app创建，A0C6F96HFNX user-confirmed grant
 | DEV-06-DRIVE-LIVE-SETUP | in_progress / user action pending | AUTH-009账号/scope已批准；专用无Billing启动项目与Drive API Enabled原生UI核验；OAuth testing branding待用户接受Data Policy并Create；client/token/原生IDs/合成种植/问答/撤权仍not_run |
 
 DEV-06-DRIVE-LIVE-SETUP增量：OAuth branding/Data Policy user_confirmed+UI verified；单一drive.readonly/External Testing/1test user均保存。Desktop client准备待用户Create/Download/关闭密钥页；PKCE loopback与原生permissionId metadata-only绑定尚待实现，源数据/API/撤权not_run。
+
+| DEV-10-DRIVE-OAUTH | verified mock / live grant waiting user | 11 PKCE/固定scope/loopback/metadata账号绑定/配置CLI守卫测试，218完整通过；已读回Desktop client与AUTH-010三文本种植。真实Googlegrant等待用户，原生reader/撤权与ACL矩阵not_run |

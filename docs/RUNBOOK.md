@@ -106,3 +106,15 @@ python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.j
 The loader validates all configurations and matching tenants before prompting for any missing credential. Approved environment references can supply already-configured credentials; otherwise each source asks once using its existing hidden-input helper. Every configured native identity is checked before the browser bootstrap is issued. Each later read still checks current source rights. The local database is `.runtime/multi-web.sqlite`; no secret is stored in it or sent to the browser. Keep existing single-source processes running. Do not extract their in-memory tokens or reuse an identity mapping that belongs to another persona.
 
 Four-source HTTP integration and one-source revocation are mock-verified. The current live Slack eng_a and Confluence/Jira eng_b configurations are not a reviewed same-persona bundle. Real unified integration, Drive OAuth, SSO, live model and G1 remain pending; no restart/input is requested for this new feature yet.
+
+### Drive Google desktop consent (no manual token copy)
+
+After the approved Google desktop client and exact synthetic files are configured:
+
+```sh
+python3 -m brain.operator_web --source drive --config .runtime/drive-oauth-pilot.json --oauth-client .runtime/drive-oauth-client.json --actor eng_a --port 8085 --live
+```
+
+The downloaded desktop client JSON is private, ignored by Git and must be owned by the local user with mode 0600, not a symlink. Use `config/drive-oauth-pilot.example.json` as the configuration shape; all placeholders are deliberately invalid. Review the Google client ID, operator email and exact file→parent IDs. The server reserves 8085 before consent; leave other source processes running. It prints a Google authorization URL with one-use state and S256 challenge. Open it and complete only the approved Drive read-only consent yourself. Do not share the authorization URL, callback code, client JSON or bootstrap ticket. The callback listener is loopback-only and waits up to 10 minutes.
+
+The program exchanges the one-use code, checks the exact granted scope and native Google account metadata, then serves the same operator UI. It does not ask for email/token input. Tokens are in process memory; no refresh is persisted or used, so expiration fails closed and a later start requires browser consent again. The callback page says received before native account verification: only successful operator startup confirms that verification passed. This is not employee SSO, and Drive native read/revocation acceptance remains separate.

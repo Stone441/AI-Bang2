@@ -38,3 +38,26 @@ def load_reader(path, prompt_actor=None):
         if prompt_actor not in config['delegations']: raise ValueError('Mapped operator required')
         reader.delegations[prompt_actor] = hidden_token(config['delegations'][prompt_actor]['account_id'])
     return reader
+
+
+def load_oauth_reader(path, client_path, actor):
+    from brain.drive import DriveTransport
+    from brain.drive_oauth import load_client, authorize, verify_account
+    config = json.loads(Path(path).read_text())
+    if (set(config) != {'approved_synthetic_only','tenant','files','oauth_operator','oauth_client_id'}
+            or config['approved_synthetic_only'] is not True
+            or not isinstance(config['oauth_operator'], dict)
+            or set(config['oauth_operator']) != {'actor','email'}
+            or config['oauth_operator']['actor'] != actor
+            or not isinstance(config['oauth_operator']['email'], str)
+            or not re.fullmatch(r'[^\s:@]+@[^\s:@]+',config['oauth_operator']['email'])):
+        raise ValueError('Reviewed OAuth operator configuration required')
+    reader = DriveReader(config['tenant'],config['files'],{},DriveTransport())
+    client = load_client(client_path,config['oauth_client_id'])
+    email = config['oauth_operator']['email']
+    def notify(url):
+        print('Open this Google authorization link. Review the account and Drive read-only scope yourself:',flush=True)
+        print(url,flush=True)
+    token = authorize(client,email,notify)
+    reader.delegations[actor] = verify_account(token,email,reader.transport)
+    return reader

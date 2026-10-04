@@ -1,14 +1,14 @@
 {
-  "started_at": "2026-10-04T19:42:53.521096+00:00",
-  "finished_at": "2026-10-04T19:43:04.577886+00:00",
+  "started_at": "2026-10-04T19:56:13.556962+00:00",
+  "finished_at": "2026-10-04T19:56:25.140979+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "7764c7dc2fba2e160b97b2a15d0c3a1219065787",
+  "commit": "79ff0245a4b330c2d3f8a50c481f7e3d4922e72d",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
-    "brain/operator_web.py": "65d090c625e993acfb3dba933da69a47456684aa708d3c1bd99d65107227d76b",
+    "brain/operator_web.py": "065060187ee8b601a25edd81c7477a2f85f6a3ed868b1ddd6ed3e5d4e0c31332",
     "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
     "brain/server.py": "585c7fd45e1c67002ab9147023e12096726784c1c6d59740fa3c001bc202cf65",
     "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
@@ -16,6 +16,7 @@
     "brain/delegated_query.py": "f15e270d3e17a9561c5f760e5f3864081dbdc3d439b1f660be9e63a054fab8eb",
     "brain/budget.py": "1c4e8852b986e9edc7dfaef89aa296f7695037374ee7c68b6870afe3f956af6b",
     "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
+    "brain/drive_oauth.py": "8e3b7101524bc3e3945064f7b5848572df1fbccb8f972581e8c97b2e69f98584",
     "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
     "brain/engine.py": "97620896289e1fb3790c6e3c64fdabe7cf7e41c1df764f963d4a81612f8e1348",
     "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
@@ -39,6 +40,7 @@
     "tests/test_live_seed.py": "df2ba1d2daa3e7f1016527830de12f3ad2f748633ad01c778819a088db0b19d0",
     "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
     "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8",
+    "tests/test_drive_oauth.py": "4eeb92673992eecd64971776fe328ca06fc94ef1f5c471adff4e2133b45b3534",
     "tests/test_budget.py": "09e70b7fc17c2ce34787668a28183f88a1ae539dcf94f5255e0fd135ff7f8f7c",
     "tests/test_operator_web.py": "7e49edb4ab4678826dac1185274904659ef0efbafa0b33183756a1c83e8a7956",
     "tests/frontend_operator_security.js": "e9c524a9374ef4abefb2a44ac928e74cdd0a4a207b09df3569691aa3581eddef",
@@ -52,8 +54,8 @@
     "scripts/confluence_query.py": "c22c084a15321f54fb343d15e006e0a34588c8f338432c8ed2c51f6071cfa62c",
     "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
     "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
-    "scripts/drive_query.py": "37de06e21e550de96d75d1ac9f557e72aa851c138a7f44fda05f507f66681cb2",
-    "scripts/test_report.py": "698578537bfdafa4a304eb21af216b239d456597b4cb774369c964a833b54a1e",
+    "scripts/drive_query.py": "dc055a211cfa29d471a1d886cb31a56d1f453cfe33a4d53e002b231182e165c0",
+    "scripts/test_report.py": "555906002b32db48335f6571d5feeab225027aa7feae66f6ed8bb363a3111ea1",
     "scripts/confluence_probe.py": "129b5a5e13a1b60f144084835d4638bd1fb20d1a5c1ebf2df0c0459ac850cc2d",
     "scripts/slack_query.py": "0206a3c733ecf9c374847f73ecf71e28610459f504ae0e229c2a5a9e5af9a136",
     "scripts/prepare_live_seed.py": "dcd3307e679b3f1d96affc7a65ba9be7af48ed84b258db64366a7bd494fa2eff",
@@ -69,7 +71,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 207,
+  "tests_run": 218,
   "successful": true,
   "results": [
     {
@@ -569,6 +571,61 @@
     },
     {
       "test": "test_drive.FourSourceEngine.test_four_sources_share_query_and_drive_revoke_preserves_other_evidence",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthBoundary.test_callback_rejects_forgery_duplicates_wrong_path_host_origin_and_replay",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthBoundary.test_client_permissions_and_endpoint_substitution_rejected_without_secret_output",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthBoundary.test_exchange_checks_exact_granted_scope_type_lifetime_and_one_use_code",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthBoundary.test_expired_and_denied_consent_never_exchanges",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthBoundary.test_native_email_and_permission_id_binding_cannot_be_substituted",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthBoundary.test_pkce_fixed_endpoints_scope_and_no_secret_in_authorization_url",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthLoopback.test_actual_http_callback_has_no_secret_reflection_and_exchanges_once",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthOperatorConfiguration.test_invalid_config_stops_before_credentials_or_consent",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthOperatorConfiguration.test_oauth_cli_requires_live_and_drive_before_loading_any_client",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthOperatorConfiguration.test_operator_binds_only_verified_google_account_without_manual_token_prompt",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthOperatorConfiguration.test_reserved_port_conflict_prevents_google_consent_or_credential_read",
       "status": "passed",
       "mode": "mock_http_contract"
     },

@@ -128,3 +128,11 @@ ADR-015实测补充（2026-10-05）：用户重启后，受限父消息响应兼
 用户明确选择“批准此只读范围，使用现有个人 Google 账号”，账号ssy44199@gmail.com；创建比赛专用Google Cloud项目，不启用Billing，仅启用Drive API，OAuth测试模式申请drive.readonly。该scope本身可读授权账号全部Drive文件，程序仅白名单合成文件；不读取个人资料，不扩scope，不付费。最终Google授权由用户点击，凭据按现有本地隐藏输入/进程内复用，不入Git/日志/浏览器。授权不证明项目/OAuth/原生ID/API/ACL完成。新条款或安全敏感持久凭据最终创建按页面另确认/交用户，不自行绕过。
 
 AUTH-009执行补充（2026-10-05）：用户已亲自完成Google Data Policy确认/Create，UI核验OAuth配置成功；唯一drive.readonly配置保存、External Testing和单一test user已核验，尚未授权任何token。Desktop客户端在审核页准备，按UI AI-agent分类help标记agent用途，不创建standard-user第二客户端。最终Create/Download JSON交用户；不读取生成密钥页面，不新增write/profile/email scope或Publish/Billing。
+
+## 2026-10-05 · AUTH-010 · exact Drive synthetic seed writes
+
+用户明确“批准创建文件夹并上传这三份合成文件”，覆盖ssy44199@gmail.com个人Drive根目录AI-Bang2 Synthetic Read-only Pilot和D-01.txt/D-02.txt/D-03.txt，内容来自baseline fixture并标记SYNTHETIC，不修改已有文件/共享权限/公开分享。此前自动审批因只读scope授权未明确覆盖持久写入拒绝create_folder；这次具体确认后工具允许创建与上传。Google Drive plugin确认账号及种植读回，应用runtime仍只读。
+
+## ADR-017 · 2026-10-05 · Drive Desktop PKCE loopback
+
+为减少手动token复制，--oauth-client仅Drive/live入口支持，先预留operator端口并验证全配置，再读取用户下载的0600/no-symlink桌面client JSON。固定Google授权与token端点、唯一drive.readonly/S256/random state/10分钟/随机loopback端口，callback不记录URL/code，不反射秘密，拒绝错Host/Origin/state/重复/扩展参数，code单次交换。验证实际授予scope与Bearer/寿命，再about metadata-only核对me/emailAddress/permissionId，按可信配置绑定actor；login_hint不作为身份依据。秘密只进进程，忽略refresh token，不持久化、不读个人文件列表、无写权限/自动打开浏览器。代价：当前access token过期需重新Google授权，非员工SSO或后台refresh。11新模拟测试/全218通过，真实Google最终grant仍待用户，不能称live OAuth验收通过。可回滚--oauth-client分支，保留hidden token路径。
