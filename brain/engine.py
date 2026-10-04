@@ -97,7 +97,10 @@ class Engine:
                     raise PermissionError('Evidence changed; please ask again')
             for e in selected:
                 self.audit.append('evidence_used',actor.user_id,rid,{'evidence_id':e.evidence_id,'resource_id':e.resource_id,'source':e.source,'version':e.version,'stage':'sent_to_model','resource_scope':'payment-service'})
-            draft=self.model.generate(question,selected)
+            if hasattr(self.model,'generate_for_request'):
+                draft=self.model.generate_for_request(question,selected,rid)
+            else:
+                draft=self.model.generate(question,selected)
             by_id={e.evidence_id:e for e in selected}
             # Exact extractive support is intentionally strict for this provider.
             claims=[]
@@ -107,7 +110,9 @@ class Engine:
                 if not isinstance(claim.get('text'),str) or not any(claim['text']==by_id[i].text for i in ids):
                     raise ValueError('Unsupported model claim')
                 claims.append({'text':claim['text'],'evidence_ids':ids})
-            self.audit.append('generation_completed',actor.user_id,rid,{'model':self.model.name,'cited':[i for c in claims for i in c['evidence_ids']]})
+            generation={'model':self.model.name,'cited':[i for c in claims for i in c['evidence_ids']]}
+            if 'model_call' in draft: generation['model_call']=draft['model_call']
+            self.audit.append('generation_completed',actor.user_id,rid,generation)
             if self.before_dispatch: self.before_dispatch()
             for e in selected:
                 resource=self.store.get(e.resource_id)

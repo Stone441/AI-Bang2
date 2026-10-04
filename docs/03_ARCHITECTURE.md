@@ -364,6 +364,20 @@ checkpoint = Sign(separate_signing_key, stream_id || through_seq || head_hash ||
 
 审计保留策略、删除策略与企业治理要求由人确认；不要默认无限保留所有文件，更不要宣称满足未验证的法规。普通文档已撤权不代表任何人都可以借“审计”读取旧答案；审计访问需要独立明确授权。
 
+### Implemented model call receipt contract (2026-10-05 increment)
+
+For budgeted providers, Engine supplies its server-generated request ID through
+`generate_for_request(question, evidence, request_id)`. The provider atomically
+reserves budget with a `model_calls` row linked to that request before dispatch.
+Validated token counts and conservative accounting settle in one transaction;
+unknown usage retains the reservation. Outcomes are fixed enums, never upstream
+error text. A successful `generation_completed` event carries the same sanitized
+receipt; failed calls remain joinable from budget to the audit request ID.
+No credential, question, source text, raw completion or vendor error body enters
+the budget receipt. Existing reservations without a receipt remain legacy and
+must not be retroactively attributed. Empty evidence records no external call.
+This local receipt is not an independent signature or vendor invoice.
+
 ## 11. 自然语言审计查询：结构化工具，不另建小型RAG
 
 ```json

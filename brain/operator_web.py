@@ -9,6 +9,7 @@ import getpass
 import os
 import secrets
 import time
+import warnings
 from pathlib import Path
 
 from .contracts import Actor
@@ -140,8 +141,11 @@ def main(argv=None):
             # One durable budget across all source operators. Never delete/reset
             # this file to repeat the pilot or bypass prior unknown charges.
             ledger = BudgetLedger(str(ledger_path)); os.chmod(ledger_path, 0o600)
-            model = DeepSeekEvidenceModel(getpass.getpass('DeepSeek API key (hidden; not saved): '),
-                                         ledger, synthetic_only=True)
+            with warnings.catch_warnings():
+                warnings.simplefilter('error', getpass.GetPassWarning)
+                key = getpass.getpass('DeepSeek API key (hidden; not saved): ')
+            model = DeepSeekEvidenceModel(key, ledger, synthetic_only=True)
+            del key
             app.engine.model = model
             app.engine.mode = app.engine.mode.removesuffix('_fake_model') + '_live_model_selection'
         server.application = app

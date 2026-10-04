@@ -64,3 +64,5 @@ DEV-06-DRIVE-LIVE-SETUP增量：OAuth branding/Data Policy user_confirmed+UI ver
 | DEV-10-DEEPSEEK | verified mock contract / live blocked credential | 13新增预算/输出/真实本机HTTP模型mock接线及同session撤权测试；233完整通过。--model deepseek已就绪，首轮仅证据选择/非自由综合；用户8086隐藏key与Google授权后实读调用/费用上界/引用审计，语义完整性、统一四源live仍待验收 |
 
 DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query/preview/history已verified（1514ff318e964f3e94b9080e57eef84d，14 DB checks，61unsigned事件）；USD20账本243 micro-USD保守记账。credential blocker解除；自由综合/完整语义效果/四源persona live仍not_run。后续需调用receipt与query持久关联，而非只按单一reservation现场关联。
+
+| DEV-10-MODEL-RECEIPT | verified local/mock; live not_run | 原子预算+query ID关联、validated usage/固定失败enum、审计可join；10新增模拟测试/完整243通过；旧live不重启，新receipt真实运行待后续一次集成启动 |

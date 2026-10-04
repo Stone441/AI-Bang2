@@ -5,6 +5,7 @@ Peak/cache-miss cost is a conservative accounting upper bound, not an invoice.
 """
 import json
 import re
+import uuid
 from datetime import date, datetime
 from zoneinfo import ZoneInfo
 from urllib.request import Request
@@ -64,9 +65,13 @@ class DeepSeekEvidenceModel:
         self._today = lambda: today or datetime.now(ZoneInfo('Asia/Singapore')).date()
         self.transport = transport or JsonTransport(timeout=30, max_bytes=100_000)
 
-    def generate(self, question, evidence):
+    def generate_for_request(self, question, evidence, request_id):
+        return self.generate(question, evidence, request_id=request_id)
+
+    def generate(self, question, evidence, *, request_id=None):
         if not evidence:
-            return {'claims': [], 'uncertainties': ['Insufficient evidence in the currently accessible material.']}
+            return {'claims': [], 'uncertainties': ['Insufficient evidence in the currently accessible material.'],
+                    'model_call': {'called': False, 'reason': 'no_authorized_evidence'}}
         check_price_review(self._today())
         if (not isinstance(question, str) or not question.strip() or len(question) > 4000
                 or len(evidence) > 24 or len({e.evidence_id for e in evidence}) != len(evidence)
@@ -86,7 +91,7 @@ class DeepSeekEvidenceModel:
             raise ModelUnavailable('Model input exceeds pilot limit')
         request = Request(ENDPOINT, data=body, headers={'Authorization': 'Bearer ' + self._key,
                           'Content-Type': 'application/json', 'Accept': 'application/json'}, method='POST')
-        reservation_id = self.ledger.reserve(self.reservation)
+        reservation_id = self.ledger.reserve(self.reservation, query_id=request_id if request_id is not None else uuid.uuid4().hex, model=MODEL)
         self.ledger.dispatch(reservation_id)  # Crash/timeout preserves the full reservation.
         try:
             status, response = self.transport._send(request)
@@ -98,11 +103,16 @@ class DeepSeekEvidenceModel:
                 raise ValueError()
             if p > CONTEXT_TOKENS or o > OUTPUT_TOKENS:
                 self.ledger.freeze_for_review()
+                self.ledger.model_outcome(reservation_id, 'usage_exceeded')
                 raise ValueError()
         except Exception:
+            receipt = self.ledger.model_receipt(reservation_id)
+            if receipt['outcome'] == 'pending':
+                self.ledger.model_outcome(reservation_id, 'usage_unavailable')
             raise ModelUnavailable('Model request unavailable; budget reservation retained') from None
         # Known usage is charged conservatively even if its answer is rejected.
-        self.ledger.settle(reservation_id, cost_upper(p, o))
+        self.ledger.settle(reservation_id, cost_upper(p, o), usage={
+            'prompt_tokens':p, 'completion_tokens':o, 'total_tokens':total})
         try:
             if response['model'] not in (MODEL, 'DeepSeek-V4.1-Flash'):
                 raise ValueError()
@@ -121,7 +131,10 @@ class DeepSeekEvidenceModel:
                     or any(not isinstance(i, str) or i not in by_id for i in ids)
                     or len(set(ids)) != len(ids)):
                 raise ValueError()
-            return {'claims': [{'text': by_id[i].text, 'evidence_ids': [i]} for i in ids],
-                    'uncertainties': [self.answer_notice]}
+            claims = [{'text': by_id[i].text, 'evidence_ids': [i]} for i in ids]
         except Exception:
+            self.ledger.model_outcome(reservation_id, 'output_rejected')
             raise ModelUnavailable('Model output could not be supported by current evidence') from None
+        self.ledger.model_outcome(reservation_id, 'accepted')
+        return {'claims': claims, 'uncertainties': [self.answer_notice],
+                'model_call': self.ledger.model_receipt(reservation_id)}

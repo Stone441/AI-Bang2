@@ -146,3 +146,7 @@ AUTH-003批准的DeepSeek直连/合成-only/总USD20保持不变。实读官方p
 Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从当前授权证据组装完整原文，不允许模型输出新事实/URL/自授权限；重复/未知ID、额外字段、工具调用、截断/错模型均失败，已知usage仍结算。这个阶段是live model evidence selection接口，不是自由综合回答或效果已验收；遗漏相反/限制证据的语义完整性仍需真实效果验收，不能用引用校验代替。仅显式标记[SYNTHETIC的源正文可发送，不将该标记当身份/源ACL。价格复核限定SGT2026-10-05，启动与每次非空调用均校验；以后先复核官方价格再更新，不静默沿用。key一次hidden TTY进内存，不写文件/浏览器/日志，默认fake不变；旧服务不热注入或读取其进程秘密。独立新8086 Drive OAuth进程用于真实模型验收。
 
 预算SQLite新增进程内RLock/check_same_thread=False以支持Web worker；跨进程仍BEGIN IMMEDIATE保证预算预留。回滚provider/--model入口不影响四源reader，必须保留既有账本用于核销。G1/G2仍待批准。
+
+## ADR-019 · 2026-10-05 · Model budget receipt linked to server request
+
+为解决首轮live只能按单一reservation现场关联的证据缺口，增量model_calls表与reservation/query_id关联在同一预留事务落库；Engine传服务端UUID，provider不从Prompt取identity/request ID。validated usage与保守成本结算原子提交，失败状态固定enum，无原始vendor body/key/问题/资料正文。成功generation_completed审计事件保存同一receipt；失败通过query_id连接request_failed。dispatched只代表持久化发送意图：called=None，不冒充已收到供应商回复；settled/validated usage才called=True，空证据called=False且不建reservation。旧reservation保持unlinked，不能事后猜测添加query_id。本地账本不是独立签名或供应商发票。新增getpass warning-as-error，不能降级为终端明文输入。迁移不修改已有预算/额度，回滚Engine/provider接线仍保留table/既有支出。

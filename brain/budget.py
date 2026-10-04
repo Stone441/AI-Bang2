@@ -6,6 +6,7 @@ with unknown consumption retains its entire reservation until reconciled.
 import sqlite3
 import uuid
 import threading
+import re
 from contextlib import contextmanager
 
 
@@ -21,8 +22,10 @@ class BudgetLedger:
             raise ValueError('Pilot limit must be within approved USD 20 ceiling')
         self.lock = threading.RLock()
         self.db = sqlite3.connect(path, timeout=10, isolation_level=None, check_same_thread=False)
+        self.db.execute('PRAGMA foreign_keys=ON')
         self.db.execute('CREATE TABLE IF NOT EXISTS budget (id INTEGER PRIMARY KEY CHECK(id=1), ceiling INTEGER NOT NULL, blocked INTEGER NOT NULL DEFAULT 0)')
         self.db.execute('CREATE TABLE IF NOT EXISTS reservations (id TEXT PRIMARY KEY, reserved INTEGER NOT NULL, state TEXT NOT NULL, actual INTEGER)')
+        self.db.execute('CREATE TABLE IF NOT EXISTS model_calls (reservation_id TEXT PRIMARY KEY REFERENCES reservations(id), query_id TEXT NOT NULL, model TEXT NOT NULL, prompt_tokens INTEGER, completion_tokens INTEGER, total_tokens INTEGER, outcome TEXT NOT NULL)')
         with self.transaction():
             row = self.db.execute('SELECT ceiling FROM budget WHERE id=1').fetchone()
             if row and row[0] != limit:
@@ -44,14 +47,22 @@ class BudgetLedger:
     def _used(self):
         return self.db.execute("SELECT COALESCE(SUM(CASE WHEN state='settled' THEN actual WHEN state='cancelled' THEN 0 ELSE reserved END),0) FROM reservations").fetchone()[0]
 
-    def reserve(self, upper_bound):
+    def reserve(self, upper_bound, *, query_id=None, model=None):
         if type(upper_bound) is not int or upper_bound <= 0:
             raise ValueError('Positive integer upper bound required')
+        if ((query_id is None) != (model is None) or
+                (query_id is not None and (not isinstance(query_id, str)
+                 or not re.fullmatch(r'[0-9a-f]{32}', query_id)
+                 or not isinstance(model, str) or not re.fullmatch(r'[a-z0-9-]{1,80}', model)))):
+            raise ValueError('Server request ID and model required together')
         with self.transaction():
             if self.db.execute('SELECT blocked FROM budget WHERE id=1').fetchone()[0] or self._used() + upper_bound > self.limit:
                 raise BudgetExceeded('Pilot budget unavailable')
             request_id = uuid.uuid4().hex
             self.db.execute('INSERT INTO reservations VALUES(?,?,?,NULL)', (request_id, upper_bound, 'prepared'))
+            if query_id is not None:
+                self.db.execute('INSERT INTO model_calls VALUES(?,?,?,NULL,NULL,NULL,?)',
+                                (request_id, query_id, model, 'pending'))
         return request_id
 
     def dispatch(self, request_id):
@@ -69,14 +80,26 @@ class BudgetLedger:
                 raise ValueError('Dispatched consumption cannot be released')
             self.db.execute("UPDATE reservations SET state='cancelled' WHERE id=?", (request_id,))
 
-    def settle(self, request_id, actual):
+    def settle(self, request_id, actual, *, usage=None):
         if type(actual) is not int or actual < 0:
             raise ValueError('Nonnegative integer actual cost required')
+        if usage is not None and (not isinstance(usage, dict)
+                or set(usage) != {'prompt_tokens','completion_tokens','total_tokens'}
+                or any(type(v) is not int or v < 0 for v in usage.values())
+                or usage['total_tokens'] != usage['prompt_tokens'] + usage['completion_tokens']):
+            raise ValueError('Validated token usage required')
         exceeded = False
         with self.transaction():
             row = self.db.execute('SELECT reserved,state,actual FROM reservations WHERE id=?', (request_id,)).fetchone()
             if not row or row[1] not in ('dispatched', 'settled'):
                 raise ValueError('No dispatched request to settle')
+            if usage is not None:
+                call = self.db.execute('SELECT prompt_tokens,completion_tokens,total_tokens FROM model_calls WHERE reservation_id=?', (request_id,)).fetchone()
+                if not call: raise ValueError('No linked model call')
+                counts = tuple(usage[k] for k in ('prompt_tokens','completion_tokens','total_tokens'))
+                if call[0] is not None and tuple(call) != counts:
+                    raise ValueError('Conflicting token reconciliation')
+                self.db.execute('UPDATE model_calls SET prompt_tokens=?,completion_tokens=?,total_tokens=? WHERE reservation_id=?', (*counts, request_id))
             if row[1] == 'settled':
                 if row[2] != actual: raise ValueError('Conflicting reconciliation')
                 return
@@ -87,6 +110,26 @@ class BudgetLedger:
         if exceeded:
             # Keep the real charge durable even when the estimation contract failed.
             raise BudgetExceeded('Actual charge exceeded reservation; review billing')
+
+    def model_outcome(self, reservation_id, outcome):
+        if outcome not in ('accepted','output_rejected','usage_unavailable','usage_exceeded'):
+            raise ValueError('Unsupported model outcome')
+        with self.transaction():
+            row = self.db.execute('SELECT c.outcome,r.state FROM model_calls c JOIN reservations r ON r.id=c.reservation_id WHERE reservation_id=?', (reservation_id,)).fetchone()
+            expected_state = 'settled' if outcome in ('accepted','output_rejected') else 'dispatched'
+            if not row or row[0] not in ('pending', outcome) or row[1] != expected_state:
+                raise ValueError('Conflicting model outcome')
+            self.db.execute('UPDATE model_calls SET outcome=? WHERE reservation_id=?', (outcome, reservation_id))
+
+    def model_receipt(self, reservation_id):
+        with self.lock:
+            cursor = self.db.execute('SELECT c.query_id,c.model,c.prompt_tokens,c.completion_tokens,c.total_tokens,c.outcome,r.id AS reservation_id,r.reserved AS reserved_micro_usd,r.state,r.actual AS accounted_upper_micro_usd FROM model_calls c JOIN reservations r ON r.id=c.reservation_id WHERE r.id=?', (reservation_id,))
+            row = cursor.fetchone()
+            if not row: return None
+            receipt = dict(zip((d[0] for d in cursor.description), row))
+        return dict(receipt, called=True if receipt['state']=='settled' else None if receipt['state']=='dispatched' else False,
+                    dispatch_recorded=receipt['state'] in ('dispatched','settled'),
+                    accounting_basis='conservative peak/cache-miss upper estimate; not vendor invoice')
 
     def summary(self):
         with self.transaction():

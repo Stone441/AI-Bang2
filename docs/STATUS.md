@@ -155,3 +155,5 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 真实模型接口首轮subset已verified，先前credential blocked已解除；不代表自由综合回答、语义完整性/全五场景模型效果或统一四源live通过。现有8086/8085及其他服务保留，重启才加载之后的代码；live进程模块hash未独立抓取，不把最终233回归源码hash当其已加载证明。下一项：模型调用receipt持久关联/综合回答契约与测试；四源persona审核、Slack/Drive独立reader native撤权仍not_run，G1/G2未批准。
 
 2026-10-05 no-evidence真实验证：新问答request7f2acc6df3d24473b8396dce8c8fcbed询问无资料的合成NeptuneBank收入，claims/evidence为空、明确Insufficient evidence、无evidence_used，账本仍唯一settled243 micro-USD。接口配置model名不表示实际调用；修正UI空证据结果为NO MODEL CALL，刷新后真实history已显示zero-call/live/fake三种标识。evidence/runs/deepseek/live-insufficient-evidence.json/private/deepseek-live-with-insufficient-history.jpg。最终源码回归233/233及frontend三种模型标记检查均通过；无追加收费调用。
+
+2026-10-05 DEV-10-MODEL-RECEIPT本地verified：10新增模拟测试覆盖成功usage/request关联、失败重启持久、输出拒绝仍记账、写receipt失败整笔预留回滚且不发网络、legacy不归因、冲突核销回滚、未知called=None、空证据不调用及Engine审计join。最终243/243（60local/183mock），sourcehash零差异；未调用真实模型/平台、现有8086不重启。旧live记录仍旧实现，不能宣称新receipt真实部署/验收。下一项统一multi入口支持已批准Drive PKCE，身份映射未review不能开始真实统一连接；不读取现有进程密钥。
