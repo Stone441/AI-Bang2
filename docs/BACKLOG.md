@@ -7,9 +7,9 @@
 | DEV-02 | verified | 合成数据/授权 oracle/SourceAdapter，78 权限组合 |
 | DEV-03/04 | verified local | HTTP/UI/持久库/fake model/身份→证据→回答→审计，Q-01/P-01/A-01 本地子集 |
 | DEV-05 | verified local | 请求驱动增量/去重/重试/原子版本/删除 F组；真实 worker/scheduler 待做 |
-| DEV-06 | blocked live | 四源 fixture 可运行；真实 API/用户委托/事件授权待定 |
+| DEV-06 | blocked live | 四源 fixture 可运行；专用合成空间操作已批准，账号/站点及用户委托待配置；本地 seed exporter 已测试 |
 | DEV-07 | verified local | stale ACL/撤权/unknown/历史/预览/导出/生成中撤权；P组部分真实机制待测 |
-| DEV-08 | in_progress | 关键词+授权一跳、exact extractive support；语义检索与 live 模型未实现 |
+| DEV-08 | in_progress | 关键词+授权一跳、exact extractive support；DeepSeek 首轮 US$20 上限已批准；预算控制/模型适配与语义检索未实现 |
 | DEV-09 | in_progress | 事件链/精确 scope/分页/有限 NL；生产 role/加密未实现 |
 | DEV-09-CB | verified local | 真实 CodeBuddy Ed25519 检查点/独立 CLI；20 新测试+52 全回归；A-03/04 本地签名子集，A-11 缺锚点/尾部已测，密钥轮换待做；依赖 DEV-09 导出契约 |
 | DEV-10 | in_progress | 英文 Workspace/History/Sources/Audit 已联通；浏览器视觉工具阻挡 |

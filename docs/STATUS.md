@@ -1,8 +1,8 @@
 # Current status
 
-更新：2026-10-04（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
+更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**G0 仅本地完整开发已批准**；外部数据、账号/scope、运行时模型/预算仍待定。G1/G2 未通过。原型已推送并通过 PR #1 合并至 main（81df3ef）；未部署、未调用真实知识平台/应用运行时模型。
+**G0 仅本地完整开发已批准**；已批准专用四源空间的合成资料写入/测试权限调整，以及 DeepSeek 合成资料首轮等值 US$20 上限；真实空间、账号映射、凭据和预算控制尚未落实。G1/G2 未通过。原型已推送并通过 PR #1 合并至 main（81df3ef）；未部署、未调用真实知识平台/应用运行时模型。
 
 ## 已实现与验证
 
@@ -21,7 +21,7 @@
 
 | 项目 | 状态 |
 |---|---|
-| 四源 | fixture_only；live blocked（真实测试空间与委托用户授权未获批准） |
+| 四源 | fixture_only；live blocked（专用合成空间范围已批准，账号/站点及委托配置尚未建立） |
 | 模型 | fake-extractive-v1；live not_run，无 embedding/reranker/compressor |
 | 审计完整性 | partial；离线签名/篡改检测 verified local；独立 DB role / 加密 / 外部签名保管未实现 |
 | 腾讯工具 | verified local：真实 CodeBuddy 实现 + 审查修正；20 新测试/全仓库 52 测试通过；7 截图及原生 conversation history 已本地保存，未上传 |
@@ -30,9 +30,9 @@
 
 ## 精确接续点
 
-1. DEV-09-CB 已完成：原始提交 `4165ee6`，集成提交 `8cd5088`，位于 `codex/dev-09-codebuddy-integration`；本轮未推送/合并 main。证据索引 `evidence/tool-usage/README.md`。后续推进密钥轮换、检查点生成节奏及独立保管；当前单公钥离线验证，不扩大 A-11 覆盖声明。
-2. DEV-06：按 SOURCE_CAPABILITIES 核对获批四源测试空间/用户/scope，实施真实委托读取、分页/变更流/撤权合同测试；授权前不得碰现有凭据。
-3. DEV-08/09：批准 runtime 后接入真实模型与语义支持评测；生产 DB/身份/HTTP 栈和独立审计边界仍需工程实现及运行验证。
+1. DEV-09-CB 已完成：原始提交 `4165ee6`，集成提交 `8cd5088`，位于 `codex/dev-09-codebuddy-integration`；已通过 PR #2 合并至 main（71ad99b）。证据索引 `evidence/tool-usage/README.md`。后续推进密钥轮换、检查点生成节奏及独立保管；当前单公钥离线验证，不扩大 A-11 覆盖声明。
+2. DEV-06：先完成 docs/LIVE_ONBOARDING.md 的注册交接。已生成本地 13 对象/6 身份 seed manifest，新增权限保留/禁止覆盖测试通过；没有平台写入。映射真实用户后才实施委托读取与撤权合同测试。
+3. DEV-08/09：DeepSeek 首轮预算已批准；本地凭据配置、预算预留/故障记账和模型输出契约实现后才能调用，再做真实模型与语义支持评测；生产 DB/身份/HTTP 栈和独立审计边界仍需工程实现及运行验证。
 4. 浏览器可访问后按 RUNBOOK 完成 UI/键盘/移动布局检查，并组织 G1 人工核验；完善候选材料，最后 G2。
 
 本轮只交付本地候选，不宣称完整项目完成；没有承诺会话结束后继续运行。
