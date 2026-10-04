@@ -1,10 +1,10 @@
 {
-  "started_at": "2026-10-04T19:25:56.560984+00:00",
-  "finished_at": "2026-10-04T19:26:07.331401+00:00",
+  "started_at": "2026-10-04T19:35:17.144632+00:00",
+  "finished_at": "2026-10-04T19:35:27.703991+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "ec61b27ba0d3a7531e8c4e6d8a48200f79a8f50f",
+  "commit": "c9283cb364c879a308ac47e5c306f73850fa1c7d",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
@@ -22,7 +22,7 @@
     "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
     "brain/audit_query.py": "837254cdc8a235044dae523c0b9f35c87765a66e91e9215304dc9ad09c77622b",
     "brain/drive.py": "e2fe84429b34ef2b2ad496188ed20beaf9e6442e5cef625a8f6edc085548f41d",
-    "brain/slack.py": "cc55f3313438729da45b87673c22280f836d3b3dd117721186a2a3f48c7a7404",
+    "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
     "tests/test_contracts.py": "c6c4ad82ce9cce7505296745a7f824ca216edf5a31f3adc9b2d9d4468d652c56",
     "tests/test_jira_query.py": "f7d6a4e2459fd880782bc52e61ea08fd6d9a6dca51df692b2aff0a28f6003667",
     "tests/test_jira_discovery.py": "de2ca86f330bb9bb13cfa66645b0c674e1112a4c2e52e8de54c469d3852739c5",
@@ -30,7 +30,7 @@
     "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
     "tests/test_confluence_revocation.py": "85658ba53f7865528ea62e57880d13d5ef0cafb8db877c636a721e2410ab73d2",
     "tests/test_confluence_probe.py": "6c4865f4a504ea49b73c3a776d64f399bfb3a5e0500861c9a27c26c7246c5d10",
-    "tests/test_slack.py": "5623a3fba2183056fd17cd950e4351d53fcaf1238ac9d0356493c4b554e0a4bd",
+    "tests/test_slack.py": "1aa80ba198b076b4d0b6c1a7a6523fe268bd2f61e839bc99b8c5c8d78ed2151a",
     "tests/test_drive.py": "720e7f8ac31d17c7178ed6ec74dfe810149685b6ff87ae8436d62cb896a2403c",
     "tests/test_jira_operator.py": "2cb7ffe6d6fb92379b7bcb860170d15cd8ca9e12cda5742ec48cbff23f8e6bf9",
     "tests/test_drive_operator.py": "f7629bcc64169731c703243d7aa900e26c1ab81fba7c90b2291931fe3daf92d1",
@@ -67,7 +67,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 197,
+  "tests_run": 199,
   "successful": true,
   "results": [
     {
@@ -991,7 +991,17 @@
       "mode": "mock_http_contract"
     },
     {
+      "test": "test_slack.SlackBoundary.test_safe_diagnostic_codes_never_include_upstream_payload",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
       "test": "test_slack.SlackBoundary.test_shared_dm_wrong_channel_and_unknown_membership_fail_closed",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_slack.SlackBoundary.test_thread_parent_envelope_selects_only_allowlisted_target",
       "status": "passed",
       "mode": "mock_http_contract"
     },

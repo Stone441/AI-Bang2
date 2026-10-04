@@ -50,8 +50,31 @@ class SlackBoundary(unittest.TestCase):
             self.assertEqual(c['source_url'],'https://test.slack.com/archives/C123/p'+native.split('/')[1].replace('.',''))
             q=parse_qs(urlsplit(self.transport.calls[-1]).query)
             self.assertIn(endpoint,self.transport.calls[-1]);self.assertEqual(q['oldest'],q['latest'])
-            self.assertEqual(q['limit'],['1']);self.assertNotIn('synthetic-test',self.transport.calls[-1])
+            self.assertEqual(q['limit'],['2' if native == REPLY else '1']);self.assertNotIn('synthetic-test',self.transport.calls[-1])
         self.assertIn('ts=',self.transport.calls[-1])
+
+    def test_thread_parent_envelope_selects_only_allowlisted_target(self):
+        original=self.transport.get
+        def envelope(url,authorization):
+            status,data=original(url,authorization)
+            if 'conversations.replies?' in url:
+                data['messages'].insert(0,copy.deepcopy(self.transport.messages[ROOT]))
+            return status,data
+        with patch.object(self.transport,'get',side_effect=envelope):
+            d,c=self.reader.read(self.actor,REPLY)
+            self.assertEqual(d.result,'allow');self.assertEqual(c['text'],self.transport.messages[REPLY]['text'])
+            self.assertEqual(c['locator']['message_ts'],REPLY.split('/')[1])
+        from brain.slack import select_message, SlackUnavailable
+        target=copy.deepcopy(self.transport.messages[REPLY]);parent=copy.deepcopy(self.transport.messages[ROOT])
+        for invalid in [[target,target],[dict(target,ts='1791150002.000003')], [parent], [parent,target,parent]]:
+            with self.assertRaises(SlackUnavailable):select_message(invalid,REPLY.split('/')[1],ROOT.split('/')[1])
+
+    def test_safe_diagnostic_codes_never_include_upstream_payload(self):
+        self.transport.error='missing_scope'
+        d,c=self.reader.read(self.actor,REPLY)
+        self.assertEqual(d.method,'slack-api-missing-scope');self.assertIsNone(c)
+        self.transport.error='token-secret-should-never-appear'
+        self.assertEqual(self.reader.read(self.actor,REPLY)[0].method,'slack-api-unknown')
 
     def test_private_revocation_stops_before_message_request(self):
         self.transport.channel['is_member']=False

@@ -12,6 +12,28 @@ from .store import canonical
 TS = r'[1-9][0-9]{9}\.[0-9]{6}'
 
 
+class SlackUnavailable(SourceUnavailable):
+    """Fixed diagnostic codes only; never upstream body or credential text."""
+    def __init__(self, code):
+        self.code = code
+
+
+def select_message(messages, ts, parent):
+    # Slack threads can include the parent alongside the time-filtered reply.
+    # Only that already allowlisted parent may accompany the exact target.
+    if not isinstance(messages, list) or len(messages) > (2 if parent else 1):
+        raise SlackUnavailable('slack-message-selection-unknown')
+    if any(not isinstance(m, dict) for m in messages):
+        raise SlackUnavailable('slack-message-selection-unknown')
+    stamps = [m.get('ts') for m in messages]
+    if len(set(stamps)) != len(stamps) or any(s not in (ts, parent) for s in stamps):
+        raise SlackUnavailable('slack-message-selection-unknown')
+    exact = [m for m in messages if m.get('ts') == ts]
+    if not exact:
+        raise SlackUnavailable('slack-message-target-unavailable')
+    return exact[0]
+
+
 def timestamp(value):
     if not isinstance(value, str) or not re.fullmatch(TS, value):
         raise SourceUnavailable()
@@ -83,13 +105,16 @@ class SlackReader:
         if params: url += '?' + urlencode(params)
         status, data = self.transport.get(url, credential.authorization)
         if status in (403, 404): return None
+        if status == 429: raise SlackUnavailable('slack-api-rate-limited')
         if status != 200 or not isinstance(data, dict): raise SourceUnavailable()
         if data.get('ok') is not True:
             if data.get('ok') is False and data.get('error') in (
                     'channel_not_found', 'not_in_channel', 'access_denied', 'no_permission',
                     'message_not_found', 'thread_not_found'):
                 return None
-            raise SourceUnavailable()
+            codes = {'ratelimited':'slack-api-rate-limited', 'missing_scope':'slack-api-missing-scope',
+                     'invalid_auth':'slack-api-invalid-auth', 'invalid_arguments':'slack-api-invalid-arguments'}
+            raise SlackUnavailable(codes.get(data.get('error'), 'slack-api-unknown'))
         return data
 
     def _credential(self, actor):
@@ -126,13 +151,12 @@ class SlackReader:
                 if channel.get('is_member') is not True: raise SourceUnavailable()
             parent = self.messages[native_id]
             params = {'channel': channel_id, 'oldest': ts, 'latest': ts, 'inclusive': 'true', 'limit': '1'}
-            if parent is not None: params['ts'] = parent
+            if parent is not None: params.update(ts=parent, limit='2')
             data = self._get('conversations.replies' if parent else 'conversations.history', credential, **params)
             if data is None: return Decision('deny', now(), method, 0), None
             messages = data['messages']
             if messages == []: return Decision('deny', now(), 'slack-message-unavailable', 0), None
-            if not isinstance(messages, list) or len(messages) != 1: raise SourceUnavailable()
-            message = messages[0]
+            message = select_message(messages, ts, parent)
             if (message.get('ts') != ts or message.get('type') != 'message'
                     or message.get('subtype') is not None or message.get('files')
                     or message.get('attachments') or message.get('bot_id')
@@ -158,5 +182,7 @@ class SlackReader:
             return Decision('allow', now(), method, 0), {'source': 'slack', 'native_id': native_id,
                 'version': version, 'title': title, 'text': text, 'locator': locator,
                 'source_updated_at': updated, 'source_url': self.site + '/archives/' + channel_id + '/p' + ts.replace('.', '')}
+        except SlackUnavailable as error:
+            return Decision('unknown', now(), error.code, 0), None
         except (SourceUnavailable, KeyError, ValueError, TypeError, AttributeError, RecursionError, OverflowError, OSError):
             return Decision('unknown', now(), method, 0), None
