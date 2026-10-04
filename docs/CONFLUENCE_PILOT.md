@@ -1,6 +1,6 @@
 # Confluence delegated read pilot
 
-2026-10-05：委托读取已通过独立 operator pilot 接到共享 Engine / Store / Audit；31 个模拟 HTTP 合同测试，真实 API `not_run`。未接到浏览器登录，不改变 LOCAL DEMO / FAKE MODEL 模式。
+2026-10-05：委托读取已通过独立 operator pilot 接到共享 Engine / Store / Audit；36 个模拟 HTTP 合同测试，真实 API `not_run`。未接到浏览器登录，不改变 LOCAL DEMO / FAKE MODEL 模式。
 
 ## 边界
 
@@ -17,6 +17,16 @@ operator pilot 每次查询清空该用户的本地允许快照，再读取两�
 先复制 `config/confluence-pilot.example.json` 到 ignored `.runtime/confluence-pilot.json`，填入实际核验的 native space ID 和独立测试用户 account ID。真实身份映射已保存在 ignored `.runtime/live-identities.json`；模板不包含邮箱或凭据。授权 header 从对应 `AIBANG2_CONFLUENCE_*` 环境变量读取，不保存到 JSON。当前没有申请/创建 token 或 OAuth scope，不读取其他项目凭据；凭据接入方式须另行落实最小授权。不要把密码/API key 发到聊天、命令历史或 Git。
 
 scoped API token 使用配置中的 cloud_id，经固定 `https://api.atlassian.com/ex/confluence/{cloudId}` 调用；页面引用仍返回原站点。已核对 current-user 所需 granular scope 为 `read:content-details:confluence`，页面读取为 `read:page:confluence`，不是凭印象选择 `read:user:confluence`。实际 token 管理 UI 的可选 scope 及请求成功仍待核验，不申请 write/admin 权限。
+
+本轮已实际核对两个 scope 在 eng_b token UI 可选；用户批准名称 `AI-Bang2 eng_b read-only pilot` 与 2026-10-20 到期，最终创建/保管由用户操作，尚无 API 成功记录。提供 `--prompt-credential`：只在真实 TTY 隐藏输入邮箱/token，内存组装 Basic header，不存文件/环境变量/命令历史；无隐藏输入能力则拒绝，不回退到 echo。可用密码管理器保管原始 token，不能覆盖实际账号登录密码。
+
+native space ID 不明时可先执行 metadata-only 配置诊断：
+
+```sh
+python3 -m scripts.confluence_probe --config .runtime/confluence-pilot.json --actor eng_b --page 98564 --discover-space --prompt-credential --live
+```
+
+该模式只验证当前凭据身份并请求白名单页面 metadata，输出 native space ID，不读取 storage 正文、入库或回答问题。discovery-only reader 不允许内容读取；不能把发现空间的结果当成查询或撤权验收。将实际成功输出的 space_id 填入私有配置 space_ids 后才执行正式读取。若账户/scope/API gateway 不匹配，明确 deny/unknown，不使用管理员回退。
 
 先检查没有 live flag 的默认阻止路径：
 
@@ -39,6 +49,8 @@ python3 -m scripts.confluence_query --config .runtime/confluence-pilot.json --ac
 ```
 
 输出模式 `confluence_live_api_fake_model`，模型为本地 extractive，不调用收费模型。`--history-id` 支持在同一逻辑会话追问，重新检查所有依赖。没有 `--live` 时不加载凭据/创建数据库/联网。其他用户无权页面的正文、标题、路径不进入响应或模型。撤权与内容更新后的历史/引用 API 由 `ConfluenceQueryPilot.history/evidence` 验证，尚无 live HTTP 端点。重启后保留索引也必须重新委托读取，不由持久库授予权限。
+
+也可追加 `--prompt-credential` 用隐藏输入执行查询，不要求持久保存凭据到仓库。
 
 ## 已核对的官方接口
 

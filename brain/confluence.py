@@ -97,7 +97,8 @@ class StorageText(HTMLParser):
 
 
 class ConfluenceReader:
-    def __init__(self, site, tenant, page_ids, space_ids, delegations, transport=None, cloud_id=None):
+    def __init__(self, site, tenant, page_ids, space_ids, delegations, transport=None, cloud_id=None,
+                 discovery_only=False):
         parsed = urlsplit(site)
         if (parsed.scheme != 'https' or not parsed.hostname
                 or not re.fullmatch(r'[a-z0-9-]+\.atlassian\.net', parsed.hostname)
@@ -114,12 +115,33 @@ class ConfluenceReader:
                 raise ValueError('Canonical cloud UUID required') from None
             self.api_base = 'https://api.atlassian.com/ex/confluence/' + cloud_id
         self.page_ids, self.space_ids = frozenset(page_ids), frozenset(space_ids)
-        if (not tenant or not self.page_ids or not self.space_ids
+        self.discovery_only=discovery_only
+        if (type(discovery_only) is not bool or not tenant or not self.page_ids
+                or (not self.space_ids and not discovery_only)
                 or any(not isinstance(i, str) or not i.isdecimal()
                        for i in self.page_ids | self.space_ids)):
             raise ValueError('Explicit page and space ID allowlists required')
         self.delegations = dict(delegations)
         self.transport = transport or JsonTransport()
+
+    def discover_space_id(self, actor, page_id):
+        """Operator setup only: metadata of an approved page, no body retrieval."""
+        method='confluence-allowlisted-page-space-discovery'
+        try:
+            if not self.discovery_only:
+                raise SourceUnavailable()
+            credential=self._credential(actor,page_id)
+            status,data=self.transport.get(self.api_base+'/wiki/api/v2/pages/'+page_id,
+                                           credential.authorization)
+            if status in (403,404):
+                return Decision('deny',now(),method,0),None
+            if (status!=200 or not isinstance(data,dict) or data.get('id')!=page_id
+                    or data.get('status')!='current' or not isinstance(data.get('spaceId'),str)
+                    or not data['spaceId'].isdecimal()):
+                raise SourceUnavailable()
+            return Decision('allow',now(),method,0),data['spaceId']
+        except (SourceUnavailable,KeyError,TypeError,AttributeError,ValueError):
+            return Decision('unknown',now(),method,0),None
 
     def _credential(self, actor, page_id):
         if actor.tenant != self.tenant or page_id not in self.page_ids:
@@ -149,6 +171,8 @@ class ConfluenceReader:
         """Return decision and authorized content together; no positive ACL cache."""
         method = 'confluence-delegated-current-read'
         try:
+            if self.discovery_only:
+                raise SourceUnavailable()
             credential = self._credential(actor, page_id)
             endpoint = self.api_base + '/wiki/api/v2/pages/' + page_id
             status, metadata = self.transport.get(endpoint, credential.authorization)

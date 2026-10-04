@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**最新验证：91/91 测试通过（60 local synthetic + 31 mock HTTP），五场景仍为 passed_local_subset。Confluence operator query pilot 已接通共享引擎、索引、引用、历史与审计；真实 API/model 尚 not_run，前端仍 fixture。接续点见文末。**
+**最新验证：96/96 测试通过（60 local synthetic + 36 mock HTTP），五场景仍为 passed_local_subset。Confluence operator query pilot 已接通共享引擎、索引、引用、历史与审计；真实 API/model 尚 not_run，前端仍 fixture。接续点见文末。**
 
 **G0 仅本地完整开发已批准**；已批准专用四源空间的合成资料写入/测试权限调整，以及 DeepSeek 合成资料首轮等值 US$20 上限；真实空间、账号映射、凭据和预算控制尚未落实。G1/G2 未通过。原型已推送并通过 PR #1 合并至 main（81df3ef）；未部署、未调用真实知识平台/应用运行时模型。
 
@@ -56,3 +56,5 @@
 2026-10-05 DEV-06-CF-QUERY：新增独立操作员查询 pilot，复用 Engine/Store/Audit。逐次用户委托读取构建预过滤快照；dispatch 前、返回前、历史/引用重查；版本更新、删除、unknown 和撤权不能复用旧允许。14 个新增模拟测试；scoped token gateway 的固定 cloud UUID 验证另增加 1 测试。修复空证据历史也必须验证租户/身份。make test-report 91/91 passed（31 mock HTTP + 60 local synthetic），源码哈希一致；make verify S-01…05 passed_local_subset。没有真实 API/模型调用或新费用。
 
 当前精确接续：浏览器 tab 996082519 为 eng_b 的 scoped API token 配置第一页；普通登录与额外邮箱 step-up 已由用户完成，并在管理页核对测试邮箱。尚未创建 token。自动审批拒绝填写具体 token 名称/有效期，要求行动时确认；已集中询问 `AI-Bang2 eng_b read-only pilot`、2026-10-20 到期、拟用 `read:content-details:confluence` / `read:page:confluence`。待具体批准后配置，由用户最终创建/保管凭据；不得使用管理员回退。native space ID 仍待核验。浏览器直开只读 API metadata 被 ERR_BLOCKED_BY_CLIENT 阻止，未绕过。真实前端身份/OAuth、四源联通、DeepSeek provider 与计价仍待完成；官方 DeepSeek 文档本轮再次 timeout，不凭旧模型名计价。
+
+接续更新（覆盖上一段 token 配置状态）：用户已具体批准 AUTH-005，token 最终 Review 页已实测核对名称、2026-10-20 到期、两个 read scope，截图本地留存；最终 Create token 和保管交给用户。用户询问密码管理器位置，已给出 Mac Passwords 独立条目说明；尚未确认创建/保存，不读取可能正在显示密钥的弹窗。独立私有配置 `.runtime/confluence-pilot.json` 已准备（0600，仅 account ID/env reference，无凭据），native space ID 尚占位。新增 TTY 隐藏输入（拒绝 echo fallback）及白名单页面 metadata-only space discovery；5 新测试，全回归96/96，哈希核对一致。先前接线里程碑本地 commit `0a12481`，无远端推送。下一步用户保存 token 后，在本机终端运行 CONFLUENCE_PILOT 的 --discover-space --prompt-credential 命令，拿到实际 space_id 再配置正式读取；不将配置发现当端到端验收。

@@ -119,6 +119,31 @@ class DelegatedReads(unittest.TestCase):
             ConfluenceReader('https://test.atlassian.net', 'pilot', ['98564'], ['123'], {},
                              cloud_id='other-site/../../private')
 
+    def test_space_discovery_is_metadata_only_and_cannot_query_content(self):
+        reader=ConfluenceReader('https://test.atlassian.net','pilot',['98564'],[],
+                                {'eng_b':Delegation('employee','Bearer test-only')},
+                                self.transport,discovery_only=True)
+        self.responses((200,PAGE))
+        decision,space_id=reader.discover_space_id(self.actor,'98564')
+        self.assertEqual(decision.result,'allow');self.assertEqual(space_id,'123')
+        self.assertEqual(self.transport.get.call_count,2)
+        self.assertFalse(any('body-format' in c.args[0] for c in self.transport.get.call_args_list))
+        self.transport.reset_mock()
+        self.assertEqual(reader.read(self.actor,'98564')[0].result,'unknown')
+        self.transport.get.assert_not_called()
+        self.assertEqual(self.reader.discover_space_id(self.actor,'98564')[0].result,'unknown')
+
+    def test_space_discovery_rejects_wrong_account_or_unapproved_page(self):
+        reader=ConfluenceReader('https://test.atlassian.net','pilot',['98564'],[],
+                                {'eng_b':Delegation('employee','Bearer test-only')},
+                                self.transport,discovery_only=True)
+        self.responses(account='admin')
+        self.assertEqual(reader.discover_space_id(self.actor,'98564')[0].result,'unknown')
+        self.assertEqual(self.transport.get.call_count,1)
+        self.transport.reset_mock()
+        self.assertEqual(reader.discover_space_id(self.actor,'999')[0].result,'unknown')
+        self.transport.get.assert_not_called()
+
 
 class TransportLimits(unittest.TestCase):
     def test_error_body_not_read_and_redirect_not_followed(self):

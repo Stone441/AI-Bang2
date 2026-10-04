@@ -18,6 +18,7 @@ def main(argv=None):
     parser.add_argument('--db',default='.runtime/confluence-query.sqlite')
     parser.add_argument('--history-id')
     parser.add_argument('--live',action='store_true')
+    parser.add_argument('--prompt-credential',action='store_true',help='Hidden TTY input; no secret is saved')
     args=parser.parse_args(argv)
     if not args.live:
         print(json.dumps({'mode':'not_run','reason':'live_flag_required'}))
@@ -25,7 +26,7 @@ def main(argv=None):
     store=None
     query_started=False
     try:
-        reader=load_reader(args.config)
+        reader=load_reader(args.config,prompt_actor=args.actor) if args.prompt_credential else load_reader(args.config)
         # Persist only inside the ignored local runtime directory.
         path=Path(args.db).resolve()
         runtime=Path('.runtime').resolve()
@@ -38,7 +39,7 @@ def main(argv=None):
         result=pilot.query(Actor(args.actor,reader.tenant),args.question,args.history_id)
         print(json.dumps(result,ensure_ascii=False))
         return 0
-    except (OSError,ValueError,KeyError,TypeError,PermissionError,RuntimeError,sqlite3.Error):
+    except (OSError,ValueError,KeyError,TypeError,PermissionError,RuntimeError,sqlite3.Error,EOFError):
         print(json.dumps({'mode':'confluence_live_api_fake_model' if query_started else 'not_run',
                           'status':'failed','reason':'query_stopped'}))
         return 2

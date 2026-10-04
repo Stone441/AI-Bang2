@@ -18,7 +18,7 @@
 | DEV-13 | in_progress | 本地候选审查包、运行指南；真实腾讯对话/7截图已本地留存；封面/视频/材料提交待做 |
 | DEV-14 | in_progress | 本地小步提交及候选重建；G2/publish 未批准 |
 
-| DEV-06-CF | verified mock contract / blocked live | 白名单站点/page/space、逐读取验证凭据身份、403/404 deny、未知拒绝、版本保护、scoped gateway 与受限诊断 CLI；17 模拟 HTTP/配置测试；真实凭据与 native space ID 待做；P/Q 组 live not_run |
+| DEV-06-CF | verified mock contract / blocked live | 白名单站点/page/space、逐读取验证凭据身份、403/404 deny、未知拒绝、版本保护、scoped gateway 与受限诊断 CLI；22 模拟 HTTP/配置测试含 TTY 不保存凭据与 metadata-only discovery；真实凭据与 native space ID 待做；P/Q 组 live not_run |
 
 | DEV-06-CF-QUERY | verified mock contract / blocked live | 独立 operator pilot 复用 Engine/索引/审计；14 模拟查询测试覆盖跨身份索引、同会话撤权、旧引用/历史、更新/删除/unknown、dispatch 撤权、空证据历史租户和错误模式。无前端身份/live HTTP 路由，需真实凭据后集中验收；P/Q/F/A 组 live not_run |
 
