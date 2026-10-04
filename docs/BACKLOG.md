@@ -30,4 +30,4 @@
 | DEV-06-JIRA | verified mock / blocked live | 14 reader + 10跨源 + 6CLI测试；逐用户myself、项目/工单/评论白名单、内容指纹、独立评论授权、撤权/旧历史/引用。KAN-4(J-02)已UI种植为Done，native ID/token/员工Jira访问及矩阵待落实；P-03/04/05/07/09、F-03、Q-03子集，非live通过 |
 | DEV-10-OPERATOR | verified mock HTTP / live operator subset | 11测试（含3新增启动诊断/cleanup）：先验证native身份，一次性bootstrap→opaque session，API secret不入浏览器，同会话撤权保护query/history/export/citation。现有英文UI共享；JS语法通过，自动浏览器被ERR_BLOCKED_BY_CLIENT阻挡。真实 HTTP query 已持久化核验；用户确认引用/历史正常，14 事件链通过；不是OAuth/SSO完成 |
 
-| DEV-06-JIRA-IDS | verified mock / blocked live credential | 7 metadata-only setup 测试；native 身份+显式 KAN-4→KAN→数字 IDs；setup 禁止正文读取/DB/模型。AUTH-006 已批准凭据准备，用户创建保存、真实 ID 发现待完成 |
+| DEV-06-JIRA-IDS | verified mock / blocked live credential | 7 metadata-only setup 测试；native 身份+显式 KAN-4→KAN→数字 IDs；setup 禁止正文读取/DB/模型。AUTH-006 已批准凭据准备，eng_b Jira User 已于 AUTH-007 保存；用户邮箱安全验证/创建保存、真实 ID 发现待完成 |

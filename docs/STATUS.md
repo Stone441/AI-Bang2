@@ -92,3 +92,5 @@ Jira CLI诊断/问答、专用凭据env namespace及隐藏输入已实现，6配
 2026-10-05：Jira metadata-only ID discovery 已实现，7 新 mock 测试，完整回归 149/149（60 local synthetic、89 mock HTTP），无真实 API/模型调用。AUTH-006 已获明确批准；尚未创建 Jira token 或发现真实数字 IDs。下一步平台普通 User 配置→用户创建/保存只读 token→隐藏 TTY ID 诊断→白名单真实问答。
 
 Jira 平台只读核验：Billing Console 显示 Premium FREE 30-DAY TRIAL，2026-11-04 到期，1 user、next estimate USD18.30、Payment info None，提示无付款方式将停用。这是现有计划，不能声称 Free。eng_b 当前只有 Confluence User，已准备 Jira User 选项但未保存；自动审批拒绝 Grant access，理由为现有免费额度批准不足以覆盖 Premium 试用收费预估，已向用户请求具体试用范围确认。未新增访问、token、费用或真实 API 调用。接续：收到确认后保存普通 User，再准备 eng_b token；拒绝/暂无答复时不提交。
+
+2026-10-05 AUTH-007：用户具体批准现有 Jira 免费试用期内普通 User；自动审批已允许保存。Admin 用户详情已显示 eng_b 的 Jira User，未授管理员。Teamwork Collection 升级推广关闭未下单，未填写付款方式。原生 API/token/数字 IDs 仍 not_run。token 管理页确认 eng_b 邮箱，要求额外 8 位安全验证，已交给用户输入；接续验证完成→准备已批准 scope/name/expiry→用户 Create token/保存/关闭→隐藏 TTY ID discovery。本轮未改代码，无新增测试运行；149/149 是此前本地回归。

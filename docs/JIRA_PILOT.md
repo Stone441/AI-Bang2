@@ -51,3 +51,5 @@ python3 -m scripts.jira_query --config .runtime/jira-pilot.json --actor eng_b --
 此独立 setup reader 验证 native 身份，只 GET KAN-4 的 project 字段，stdout 只返回 issue/project ID 和 key，不返回标题/正文，不创建 DB，不调用模型。allow 后将 IDs 填入正式 issues/project_ids 白名单，再运行 resource/query；不能把 discovery reader 用于问答。7 新 mock 测试验证这一边界。
 
 当前实际 Billing Console 显示 Jira Premium **FREE 30-DAY TRIAL**，至 2026-11-04，未配置付款方式；不能标为 Free。AUTH-006 后 User 提交被自动审批阻止（试用收费预估），新增访问未保存，另待具体确认。无付费续订授权。
+
+AUTH-007 后用户明确批准现有免费试用期内 Jira User，已保存并 UI 确认。原先 Grant access 拒绝已解决；API 仍 not_run。当前 token 管理页待 eng_b 邮箱额外安全验证，未创建新凭据。
