@@ -1,0 +1,471 @@
+{
+  "schema_version": 1,
+  "synthetic": true,
+  "users": {
+    "eng_a": {
+      "groups": [
+        "engineering",
+        "staff"
+      ],
+      "channels": [
+        "incident",
+        "release",
+        "external"
+      ]
+    },
+    "eng_b": {
+      "groups": [
+        "engineering",
+        "staff"
+      ],
+      "channels": [
+        "release"
+      ]
+    },
+    "product_ops": {
+      "groups": [
+        "product",
+        "staff"
+      ],
+      "channels": [
+        "release"
+      ]
+    },
+    "contractor": {
+      "groups": [
+        "external"
+      ],
+      "channels": [
+        "external"
+      ]
+    },
+    "security": {
+      "groups": [
+        "engineering",
+        "security",
+        "staff"
+      ],
+      "channels": [
+        "incident",
+        "release"
+      ]
+    },
+    "auditor": {
+      "groups": [],
+      "channels": []
+    }
+  },
+  "resources": [
+    {
+      "id": "C-01",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-C-01",
+      "parent": "eng",
+      "version": 1,
+      "title": "Payment-service runbook",
+      "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+      "locator": {
+        "section": "Failover procedure",
+        "paragraph": 1
+      },
+      "links": [
+        "J-01",
+        "D-01"
+      ],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "engineering"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-01"
+    },
+    {
+      "id": "C-02",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-C-02",
+      "parent": "capability",
+      "version": 1,
+      "title": "Payment-retry capability",
+      "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+      "locator": {
+        "section": "Supported rollout",
+        "paragraph": 1
+      },
+      "links": [
+        "D-02"
+      ],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff",
+          "external"
+        ],
+        "page_groups": [
+          "staff",
+          "external"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-02"
+    },
+    {
+      "id": "C-03",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-C-03",
+      "parent": "sec",
+      "version": 1,
+      "title": "Q3 security incident report",
+      "text": "Restricted security investigation. CANARY_SEC_7Q9.",
+      "locator": {
+        "section": "Restricted findings",
+        "paragraph": 1
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-03"
+    },
+    {
+      "id": "J-01",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-01",
+      "parent": "eng",
+      "version": 1,
+      "title": "PAY-101 Payment-service incident",
+      "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+      "locator": {
+        "field": "description"
+      },
+      "links": [
+        "S-01",
+        "C-01",
+        "D-01"
+      ],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "engineering"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-01"
+    },
+    {
+      "id": "J-02",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-02",
+      "parent": "staff",
+      "version": 1,
+      "title": "PAY-102 Retry configuration fix",
+      "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "locator": {
+        "field": "status and description"
+      },
+      "links": [
+        "J-01",
+        "D-02"
+      ],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-02"
+    },
+    {
+      "id": "J-03",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-03",
+      "parent": "staff",
+      "version": 1,
+      "title": "PAY-103 Protective measures",
+      "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+      "locator": {
+        "field": "status and assignee"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-03"
+    },
+    {
+      "id": "S-01",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-S-01",
+      "parent": "incident",
+      "version": 1,
+      "title": "Private incident discussion",
+      "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "locator": {
+        "channel": "incident",
+        "thread": "1790816400.000001",
+        "messages": [
+          "1790816400.000001",
+          "1790817300.000001",
+          "1790820000.000001"
+        ]
+      },
+      "links": [
+        "D-01"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/S-01"
+    },
+    {
+      "id": "S-02",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-S-02",
+      "parent": "release",
+      "version": 1,
+      "title": "Release coordination",
+      "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+      "locator": {
+        "channel": "release",
+        "thread": "1790823600.000001"
+      },
+      "links": [
+        "C-02",
+        "D-02"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "release",
+        "private": true,
+        "members": [
+          "eng_a",
+          "eng_b",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/S-02"
+    },
+    {
+      "id": "S-03",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-S-03",
+      "parent": "external",
+      "version": 1,
+      "title": "External collaboration",
+      "text": "External partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+      "locator": {
+        "channel": "external",
+        "thread": "1790827200.000001"
+      },
+      "links": [
+        "C-02"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "external",
+        "private": true,
+        "members": [
+          "eng_a",
+          "contractor"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/S-03"
+    },
+    {
+      "id": "D-01",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-D-01",
+      "parent": "eng",
+      "version": 1,
+      "title": "Final payment-service postmortem",
+      "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "locator": {
+        "section": "Confirmed root cause",
+        "paragraph": 1
+      },
+      "links": [
+        "J-02",
+        "J-03"
+      ],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "engineering"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/D-01"
+    },
+    {
+      "id": "D-02",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-D-02",
+      "parent": "staff",
+      "version": 1,
+      "title": "Payment-retry release approval",
+      "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+      "locator": {
+        "section": "Approval decision",
+        "paragraph": 1
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/D-02"
+    },
+    {
+      "id": "D-03",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-D-03",
+      "parent": "staff",
+      "version": 1,
+      "title": "Operations readiness",
+      "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+      "locator": {
+        "section": "Customer communication",
+        "paragraph": 1
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/D-03"
+    },
+    {
+      "id": "J-01-comment-sec",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-01-comment-sec",
+      "parent": "J-01",
+      "version": 1,
+      "title": "PAY-101 restricted comment",
+      "text": "Security-only follow-up. CANARY_COMMENT_8P3.",
+      "locator": {
+        "comment_id": "comment-security-1"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "security"
+        ],
+        "comment_groups": [
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-01-comment-sec"
+    }
+  ],
+  "updates": {
+    "C-01": {
+      "version": 2,
+      "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook.",
+      "source_updated_at": "2026-10-01T13:00:00+08:00"
+    }
+  }
+}
