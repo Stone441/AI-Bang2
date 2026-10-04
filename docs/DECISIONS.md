@@ -118,3 +118,11 @@ AUTH-008 补充（2026-10-05）：原生OAuth审核另显示基础identify与应
 真实root问答通过但reply为统一unknown，尚未得到具体失败原因。增加只由固定枚举组成的unknown method，区别rate/scope/identity/argument和message selection，不存上游错误body/秘密。回复limit2且只允许exact target与预先allowlisted parent出现，父消息不替代目标、非白名单/重复/缺目标unknown；补两项边界测试，199全回归通过。此兼容只是候选修正，非实测原因结论；需重启原生API复验才能判断。代价为诊断需加载新代码/一次重新输入秘密，后续仍凭据进程内复用。四源安全要求不变。
 
 ADR-015实测补充（2026-10-05）：用户重启后，受限父消息响应兼容实现的root/reply问答、引用与历史已native验证通过（web-thread-query.json），可保留此实现。未记录旧unknown响应内容，不把本次成功当旧失败原因的确定证明。未扩大scope或消息白名单，真实频道撤权仍待独立reader。
+
+## ADR-016 · 2026-10-05 · 统一操作员多源入口
+
+复用DelegatedQueryPilot与现有HTTP路由，使2–4来源在同一tenant/actor会话中检索。可信本地manifest记录身份映射已核对；该标记不是账号所有权证明，也不授予权限。所有source配置/actor映射/tenant先验证，缺少凭据才隐藏输入一次；全部native身份通过后才签发bootstrap，任一失败停止启动，查询时各源unknown/deny只隔离该源。同一历史含撤权依赖则不展示，新的独立查询仍可用其他授权源。代价是尚需人工核对跨平台persona，不能将现有eng_a和eng_b直接改名拼接；每进程独立credential/session/DB，SSO/OAuth refresh另行实现。可回滚停用multi入口，不改变单源行为。
+
+## 2026-10-05 · AUTH-009 · Drive personal-account read-only pilot
+
+用户明确选择“批准此只读范围，使用现有个人 Google 账号”，账号ssy44199@gmail.com；创建比赛专用Google Cloud项目，不启用Billing，仅启用Drive API，OAuth测试模式申请drive.readonly。该scope本身可读授权账号全部Drive文件，程序仅白名单合成文件；不读取个人资料，不扩scope，不付费。最终Google授权由用户点击，凭据按现有本地隐藏输入/进程内复用，不入Git/日志/浏览器。授权不证明项目/OAuth/原生ID/API/ACL完成。新条款或安全敏感持久凭据最终创建按页面另确认/交用户，不自行绕过。

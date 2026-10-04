@@ -440,3 +440,7 @@ checkpoint = Sign(separate_signing_key, stream_id || through_seq || head_hash ||
 - **T11** OpenAI，AGENTS.md项目指令（原开发者文档链接已重定向）：<https://developers.openai.com/codex/guides/agents-md>
 - **T12** CodeBuddy官方Rules文档，项目规则和CODEBUDDY.md/AGENTS.md读取机制；此页描述IDE，VS Code插件实际支持需验证：<https://www.codebuddy.ai/docs/ide/User-guide/Rules>
 - **T13** OpenAI，Billing settings in ChatGPT vs Platform：<https://help.openai.com/en/articles/9039756-billing-settings-in-chatgpt-vs-platform>
+
+### Implemented operator multi-source boundary — 2026-10-05
+
+The local operator pilot now accepts a reviewed bundle of 2–4 delegated readers. Configuration is trusted administrator input: a common tenant/actor plus explicitly reviewed native account mappings. A review flag is an assertion, not identity proof. Each platform verifies its mapped current account before bootstrap, and every source read checks current effective access before evidence reaches the fake model. No browser actor/role/source field selects a credential. Missing/mismatched source mappings fail startup; later source deny/unknown cannot supply evidence, while independently authorized sources remain usable. Mixed historical answers with any unavailable dependency are withheld. This is mock HTTP verified, not live unified integration or employee SSO. Existing separate live eng_a/eng_b pilots must not be combined without a persona mapping review.

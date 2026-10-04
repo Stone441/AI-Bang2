@@ -63,7 +63,7 @@ python3 -m brain.operator_web --config .runtime/confluence-pilot.json --actor en
 
 在真实TTY隐藏输入邮箱和token（不保存），打开终端输出的一次性本机链接。链接10分钟有效，消费后不能复用；它是会话入口凭据，不要截图/分享。启动时服务端核对token的native account ID；浏览器仅获opaque cookie/CSRF，不能选择用户或role。问 `Show the payment-service runbook`，核对引用、Recent answers。DB在ignored `.runtime/confluence-web.sqlite`，退出Ctrl+C；不要与8081已有服务冲突，可用`--port 8082`。
 
-这是LOCAL OPERATOR / LIVE API / FAKE MODEL试点，不是员工SSO/OAuth。只有白名单合成Confluence页面，不发收费模型请求；源授权在查询、模型前、返回前及history/export/preview仍重查。默认不带`--live`不读凭据/联网。代码已mock HTTP验证；实际浏览器视觉/真实网页验收仍not_run，自动浏览器被环境阻挡。
+这是LOCAL OPERATOR / LIVE API / FAKE MODEL试点，不是员工SSO/OAuth。只有白名单合成Confluence页面，不发收费模型请求；源授权在查询、模型前、返回前及history/export/preview仍重查。默认不带`--live`不读凭据/联网。代码已mock HTTP验证，C-01真实网页问答已记录，引用/历史获用户确认；不是完整Confluence权限矩阵或G1通过。
 
 Jira只读诊断/问答命令、原生ID配置与权限缺口见 [JIRA_PILOT.md](JIRA_PILOT.md)，不能复用Confluence token或将模板中的占位ID当真实ID。
 
@@ -88,9 +88,21 @@ python3 -m brain.operator_web --source jira --config .runtime/jira-pilot.json --
 
 ### Slack operator pilot
 
-见 [SLACK_PILOT.md](SLACK_PILOT.md)。一次隐藏输入 USER OAuth token，不需要邮箱；配置 native IDs 后可使用 `--source slack --actor eng_a --port 8084`。当前应用创建被平台限流，真实配置/启动尚未就绪；不要直接运行含占位 ID 的模板。已批准范围不等于安装/API 通过。
+见 [SLACK_PILOT.md](SLACK_PILOT.md)。一次隐藏输入 USER OAuth token，不需要邮箱；配置 native IDs 后可使用 `--source slack --actor eng_a --port 8084`。既有app已由用户授权并保存token，真实root/reply问答、引用与历史已核验；频道撤权仍待独立reader。不要直接运行含占位ID的模板，当前结果仅live API + fake model。
 
 
 ### Drive operator preparation
 
 见 [DRIVE_PILOT.md](DRIVE_PILOT.md)，本地mock已接同一Engine/网页入口，首版personal Drive UTF-8 text/plain；真实scope、OAuth、原生IDs/种植尚未批准配置。准备的`--source drive --port8085`命令不可用占位模板直接当live启动。
+
+### Unified multi-source operator
+
+`--source multi` supports two to four reviewed source configurations under one tenant and one operator actor. Copy `config/operator-bundle.example.json` into ignored `.runtime/operator-bundle.json`; include only approved/configured sources. Paths are relative to the bundle. Keep the example review flag false until each source account is verified as belonging to the intended operator persona, then set `identity_mapping_reviewed` to true. This local flag records a trusted configuration review; it does not verify ownership or grant source rights. Do not rename existing eng_a/eng_b mappings merely to make a bundle load.
+
+```sh
+python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --port 8086 --live
+```
+
+The loader validates all configurations and matching tenants before prompting for any missing credential. Approved environment references can supply already-configured credentials; otherwise each source asks once using its existing hidden-input helper. Every configured native identity is checked before the browser bootstrap is issued. Each later read still checks current source rights. The local database is `.runtime/multi-web.sqlite`; no secret is stored in it or sent to the browser. Keep existing single-source processes running. Do not extract their in-memory tokens or reuse an identity mapping that belongs to another persona.
+
+Four-source HTTP integration and one-source revocation are mock-verified. The current live Slack eng_a and Confluence/Jira eng_b configurations are not a reviewed same-persona bundle. Real unified integration, Drive OAuth, SSO, live model and G1 remain pending; no restart/input is requested for this new feature yet.

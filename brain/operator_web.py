@@ -1,4 +1,4 @@
-"""Loopback operator UI for approved synthetic Confluence/Jira/Slack resources and fake model.
+"""Loopback operator UI for approved synthetic delegated resources and fake model.
 
 Token stays in this process, never goes to the browser. A short-lived one-use
 bootstrap ticket attaches a browser to the verified operator, not employee SSO.
@@ -27,6 +27,28 @@ class OperatorApp:
     session = App.session
 
     def __init__(self, reader, store, actor_id, *, live=False):
+        if isinstance(reader, dict):
+            self.pilot = DelegatedQueryPilot(reader, store, live=live)
+            self.actor = Actor(actor_id, self.pilot.authority.tenant)
+            # All mappings must exist before any native identity call. A missing
+            # source cannot silently become another user's delegation.
+            if any(actor_id not in r.delegations for r in reader.values()):
+                raise ValueError('Mapped operator required on every source')
+            if any(getattr(r, 'discovery_only', False) for r in reader.values()):
+                raise ValueError('Content readers required')
+            for source, configured in sorted(reader.items()):
+                if source == 'confluence':
+                    configured._credential(self.actor, sorted(configured.page_ids)[0])
+                else:
+                    configured._credential(self.actor)
+        else:
+            self._single_source(reader, store, actor_id, live)
+        self.engine, self.world, self.audit = self.pilot.engine, self.pilot.authority, self.pilot.audit
+        self.store, self.sessions = store, {}
+        self._ticket = secrets.token_urlsafe(32)
+        self._ticket_expires = time.monotonic() + 600
+
+    def _single_source(self, reader, store, actor_id, live):
         self.actor = Actor(actor_id, reader.tenant)
         # This verifies the token's current native identity, even if a page is denied.
         if isinstance(reader, ConfluenceReader):
@@ -39,10 +61,6 @@ class OperatorApp:
             reader._credential(self.actor)
         else:
             raise ValueError('Configured content reader required')
-        self.engine, self.world, self.audit = self.pilot.engine, self.pilot.authority, self.pilot.audit
-        self.store, self.sessions = store, {}
-        self._ticket = secrets.token_urlsafe(32)
-        self._ticket_expires = time.monotonic() + 600
 
     def bootstrap_ticket(self):
         return self._ticket
@@ -63,7 +81,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', required=True)
     parser.add_argument('--actor', default='eng_b')
-    parser.add_argument('--source', choices=['confluence', 'jira', 'slack', 'drive'], default='confluence')
+    parser.add_argument('--source', choices=['confluence', 'jira', 'slack', 'drive', 'multi'], default='confluence')
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
     args = parser.parse_args(argv)
@@ -77,7 +95,9 @@ def main(argv=None):
         # the verified application is attached; no race-prone bind/release probe.
         server = create_server(None, args.port)
         stage = 'configuration_or_hidden_input'
-        if args.source == 'drive':
+        if args.source == 'multi':
+            from scripts.operator_bundle import load_reader
+        elif args.source == 'drive':
             from scripts.drive_query import load_reader
         elif args.source == 'slack':
             from scripts.slack_query import load_reader

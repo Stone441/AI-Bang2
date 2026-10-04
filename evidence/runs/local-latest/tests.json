@@ -1,14 +1,14 @@
 {
-  "started_at": "2026-10-04T19:35:17.144632+00:00",
-  "finished_at": "2026-10-04T19:35:27.703991+00:00",
+  "started_at": "2026-10-04T19:42:53.521096+00:00",
+  "finished_at": "2026-10-04T19:43:04.577886+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "c9283cb364c879a308ac47e5c306f73850fa1c7d",
+  "commit": "7764c7dc2fba2e160b97b2a15d0c3a1219065787",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
-    "brain/operator_web.py": "a8c8f266f1b45a65774737019e9a55113e04ee336c232a7bce87019b29e42f46",
+    "brain/operator_web.py": "65d090c625e993acfb3dba933da69a47456684aa708d3c1bd99d65107227d76b",
     "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
     "brain/server.py": "585c7fd45e1c67002ab9147023e12096726784c1c6d59740fa3c001bc202cf65",
     "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
@@ -24,6 +24,7 @@
     "brain/drive.py": "e2fe84429b34ef2b2ad496188ed20beaf9e6442e5cef625a8f6edc085548f41d",
     "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
     "tests/test_contracts.py": "c6c4ad82ce9cce7505296745a7f824ca216edf5a31f3adc9b2d9d4468d652c56",
+    "tests/test_operator_bundle.py": "57e77a6e4c01a972aefd199180f879ca0281b665ccb7bd509bba057345e58202",
     "tests/test_jira_query.py": "f7d6a4e2459fd880782bc52e61ea08fd6d9a6dca51df692b2aff0a28f6003667",
     "tests/test_jira_discovery.py": "de2ca86f330bb9bb13cfa66645b0c674e1112a4c2e52e8de54c469d3852739c5",
     "tests/test_engine.py": "0449d5240af821d03545f9fcec1672ef7c0bd5e18149ae40ded97228834b322e",
@@ -52,10 +53,11 @@
     "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
     "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
     "scripts/drive_query.py": "37de06e21e550de96d75d1ac9f557e72aa851c138a7f44fda05f507f66681cb2",
-    "scripts/test_report.py": "69e5e5d00d790b5a02f05228f3c10a17207a4e3cd0644baa6c4a13cb6cce5a87",
+    "scripts/test_report.py": "698578537bfdafa4a304eb21af216b239d456597b4cb774369c964a833b54a1e",
     "scripts/confluence_probe.py": "129b5a5e13a1b60f144084835d4638bd1fb20d1a5c1ebf2df0c0459ac850cc2d",
     "scripts/slack_query.py": "0206a3c733ecf9c374847f73ecf71e28610459f504ae0e229c2a5a9e5af9a136",
     "scripts/prepare_live_seed.py": "dcd3307e679b3f1d96affc7a65ba9be7af48ed84b258db64366a7bd494fa2eff",
+    "scripts/operator_bundle.py": "6bd716e35e8047f621747860157507a57b2c27f3dabe440bb466f5c87b83ad8e",
     "scripts/evaluate.py": "f98bd282a1e1352a85276b8742201fcb1c3eeff0715752ecdeabe30fdeeb6f46",
     "scripts/jira_query.py": "d41e562a026c0529fc5136bd3c096a51e294f927cdc8096c7e150550646b12fe",
     "scripts/confluence_revocation.py": "81f35cd2643049dedd02afec214e231ef82a69edb2fa55cf8ac1c5d4687a1a17",
@@ -67,7 +69,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 199,
+  "tests_run": 207,
   "successful": true,
   "results": [
     {
@@ -889,6 +891,46 @@
       "test": "test_live_seed.LiveSeed.test_complete_plan_preserves_restricted_child_and_unverified_state",
       "status": "passed",
       "mode": "local_synthetic"
+    },
+    {
+      "test": "test_operator_bundle.BundleConfiguration.test_bundle_prompts_missing_secrets_once_without_saving_and_reuses_environment",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_bundle.BundleConfiguration.test_invalid_later_config_or_tenant_rejected_before_any_prompt",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_bundle.BundleConfiguration.test_unreviewed_or_unsupported_bundle_and_no_live_cli_do_not_load_credentials",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_bundle.BundleHTTP.test_browser_cannot_select_actor_or_add_source_or_use_revoked_history_in_followup",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_bundle.BundleHTTP.test_one_verified_http_session_four_sources_and_single_source_revocation",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_bundle.BundleStartup.test_every_native_identity_verified_before_bootstrap_without_content",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_bundle.BundleStartup.test_missing_mapping_wrong_source_and_cross_tenant_fail_before_network",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_bundle.BundleStartup.test_native_identity_mismatch_does_not_issue_browser_ticket_or_read_content",
+      "status": "passed",
+      "mode": "mock_http_contract"
     },
     {
       "test": "test_operator_web.OperatorHTTP.test_browser_session_binds_verified_identity_and_never_returns_api_credential",
