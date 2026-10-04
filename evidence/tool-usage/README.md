@@ -28,3 +28,6 @@
 | `codebuddy-original.patch` | 原始提交完整补丁 |
 
 原始截图没有重绘或拼接。开发 credits 与应用 runtime 预算分离；未购买资源或新订阅。证据公开、上传比赛仍需团队审批和脱敏检查。
+
+
+2026-10-05 Slack onboarding：只读 manifest 审核与用户最终点击限流截图仅存 `private/onboarding-20261005/slack-app-readonly-review.jpg` / `slack-app-rate-limit.jpg`。无密钥截图，非 CodeBuddy 贡献。非敏感状态索引 `../runs/live-slack/installation-blocked.json`；安装/OAuth/API 尚未通过，截图不默认上传。

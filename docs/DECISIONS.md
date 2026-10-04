@@ -94,3 +94,13 @@ AUTH-006 执行限制：只读账单核验显示 Jira 已为 Premium 免费试�
 ## ADR-012 · 2026-10-05 · 导航时清除旧答案视图
 
 真实Jira撤权后，后端query/citation/history正确deny，但Workspace导航复用之前渲染DOM，违反新访问不恢复旧内容的产品要求。选择导航清除答案/隐藏历史、query开始清除旧答案、preview失败清除相关视图；继续保存historyId以便服务端重查追问依赖。代价是返回Workspace需新问答或Recent answers获取重新鉴权的历史，不能保留不经检查的旧视图便利。不声称能消除用户已看到/截图保存的内容，也不承诺平台ACL变更瞬时推送。node frontend安全验证及真实会话重载后UI验证通过，无服务器重启/凭据重输。
+
+
+## 2026-10-05 · AUTH-008 · Slack user read-only pilot
+
+用户明确“批准此只读试点范围”：AI-Bang2 workspace T0C6FQ246TF 准备/安装 AI-Bang2 Read-only Pilot app，user scopes channels:read/channels:history/groups:read/groups:history；无 Bot/write/DM/files scope。首轮使用个人Google登录身份，程序另限合成频道/消息白名单，不接NTU Slack。10月20日前人工撤销试点 token；最终授权/密钥保存由用户完成，新条款/费用另确认。批准不证明实际安装或API/ACL验证完成。
+
+
+## ADR-013 · 2026-10-05 · Slack 原生用户读权限与精确消息试点
+
+采用固定 workspace、user delegation、channel type 与 exact message/root mapping；每读先 auth.test/info，再正文，无 bot/admin fallback。公开频道不以 is_member=false 伪造撤权，真实撤权使用 private channel；不支持的共享频道/附件/富文本 unknown，不静默剥离后声称完整覆盖。成本是首轮对象覆盖有限且重复原生检查可能遇限流，后续仍须 native root/reply/API 验证；可单独停用 Slack reader，不改变其他源。错配 source/reader 在构造时明确拒绝。用户最终安装遇应用创建限流，未创建成功/取得 token；保留审核页面，相关 live 任务 blocked，其他本地工作继续。

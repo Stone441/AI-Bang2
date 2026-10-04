@@ -33,3 +33,9 @@
 | DEV-06-JIRA-IDS | verified mock / live metadata subset | 7 metadata-only setup 测试；native 身份+显式 KAN-4→KAN→数字 IDs；setup 禁止正文读取/DB/模型。AUTH-006 已批准凭据准备，eng_b Jira User 已于 AUTH-007 保存；用户邮箱安全验证/创建保存、KAN-4 native ID10013/project10001 已 metadata-only allow；真实正文/网页问答已verified subset，评论矩阵仍待完成 |
 
 | DEV-10-JIRA-OPERATOR | verified mock HTTP / live subset | 4新增测试；一次启动输入凭据、重复查询逐次身份检查、同会话撤权及历史/导出/引用阻断，独立 DB；真实网页query/preview/history与同会话issue撤权11 DB checks通过，21事件unsigned链；权限已恢复，前端旧视图复用已修正；非SSO/完整矩阵 |
+
+
+| DEV-06-SLACK | verified mock contract / blocked live installation | 16 reader/Engine/跨源测试；exact root/reply、native用户/team、private ACL、编辑/删除/unknown；AUTH-008 manifest最终安装被Slack创建限流，OAuth/native IDs/API尚未验证。对应P-03/04/05/07/09、F更新/删除、Q工程/产品证据子集，非完整验收 |
+| DEV-10-SLACK-OPERATOR | verified mock HTTP / blocked live | 6配置/HTTP测试；一次隐藏USER token、不需邮箱、逐次native身份与权限、同会话撤权保护模型/历史/导出/引用。依赖DEV-06-SLACK真实安装和原生白名单；SSO及统一多源网页仍待做 |
+
+2026-10-05接续优先级：P0 Slack平台创建冷却后用户最终授权→合成private root/reply种植及原生白名单→一次启动真实operator验收；P0 Drive最小只读reader与授权包（可独立本地实现）；P1多源统一operator配置及DeepSeek已批准预算接线。安装限流只阻塞Slack live，无需重复已通过的Confluence/Jira凭据诊断。最新全回归175/175，模拟与真实分列；旧表的not_run历史记录由后续条目补充。

@@ -1,4 +1,4 @@
-"""Loopback operator UI for approved synthetic Confluence/Jira resources and fake model.
+"""Loopback operator UI for approved synthetic Confluence/Jira/Slack resources and fake model.
 
 Token stays in this process, never goes to the browser. A short-lived one-use
 bootstrap ticket attaches a browser to the verified operator, not employee SSO.
@@ -15,6 +15,7 @@ from .confluence_query import ConfluenceQueryPilot
 from .confluence import ConfluenceReader
 from .delegated_query import DelegatedQueryPilot
 from .jira import JiraReader
+from .slack import SlackReader
 from .server import App, create_server
 from .store import Store
 
@@ -30,8 +31,10 @@ class OperatorApp:
         if isinstance(reader, ConfluenceReader):
             self.pilot = ConfluenceQueryPilot(reader, store, live=live)
             reader._credential(self.actor, sorted(reader.page_ids)[0])
-        elif isinstance(reader, JiraReader) and not reader.discovery_only:
-            self.pilot = DelegatedQueryPilot({'jira': reader}, store, live=live)
+        elif ((isinstance(reader, JiraReader) and not reader.discovery_only)
+              or isinstance(reader, SlackReader)):
+            source = 'slack' if isinstance(reader, SlackReader) else 'jira'
+            self.pilot = DelegatedQueryPilot({source: reader}, store, live=live)
             reader._credential(self.actor)
         else:
             raise ValueError('Configured content reader required')
@@ -59,7 +62,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', required=True)
     parser.add_argument('--actor', default='eng_b')
-    parser.add_argument('--source', choices=['confluence', 'jira'], default='confluence')
+    parser.add_argument('--source', choices=['confluence', 'jira', 'slack'], default='confluence')
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
     args = parser.parse_args(argv)
@@ -73,7 +76,9 @@ def main(argv=None):
         # the verified application is attached; no race-prone bind/release probe.
         server = create_server(None, args.port)
         stage = 'configuration_or_hidden_input'
-        if args.source == 'jira':
+        if args.source == 'slack':
+            from scripts.slack_query import load_reader
+        elif args.source == 'jira':
             from scripts.jira_query import load_reader
         else:
             from scripts.confluence_probe import load_reader

@@ -32,3 +32,6 @@ v1 事件不含 stream_id；该字段只绑定检查点的外部期望，不能�
 Jira ID setup discovery 独立于正文读取：显式 discovery_only reader 只接受预先批准 issue key→project key，验证 native 身份后 GET 单工单 `?fields=project`，仅返回 issue/project ID 与 key。该 reader 不允许 read/模型/索引；正常 reader 仍要求不可变数字 ID 白名单。错误身份、移动项目、非法 key 和未知结果均不出元数据。
 
 Operator web 支持显式 --source jira（默认仍 confluence），独立 .runtime/{source}-web.sqlite。每个服务进程隐藏输入一次，内存复用 Delegation，每个业务请求仍重验 native identity/当前源权限；不持久化 token，不从密码管理器自动提取，不提供浏览器角色授权。Jira discovery_only reader 不允许绑定网页。
+
+
+Slack delegated reader：固定 workspace team ID/site、channel ID/public-private 类型、message ts→thread parent 白名单；每读 auth.test 核对 user_id/team_id 且拒 bot/app credential。private channel 要当前 is_member=true，public 权利由原生 API 决定（退群不是撤权）。conversations.info 禁止 DM/跨workspace共享，随后 history/replies 只取指定 ts，子回复独立证据，禁止附件/隐藏 rich content 进入模型。消息删改/受限/unknown不出正文，指纹 version/full payload保护旧历史/引用；限流不默认放行。

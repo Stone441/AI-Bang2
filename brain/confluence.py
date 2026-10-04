@@ -34,6 +34,9 @@ class JsonTransport:
     def get(self, url, authorization):
         request = Request(url, headers={'Accept': 'application/json',
                                        'Authorization': authorization}, method='GET')
+        return self._send(request)
+
+    def _send(self, request):
         try:
             with self.opener.open(request, timeout=self.timeout) as response:
                 if response.status != 200:

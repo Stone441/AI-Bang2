@@ -24,7 +24,7 @@ async function boot(){
     health=await api('/api/health');
     if(health.auth_kind==='operator'){
       $('modeBadge').textContent=health.mode.includes('mock_http')?'MOCK API PILOT':'LIVE API PILOT';
-      $('modeDescription').textContent='Synthetic allowlisted pages · Fake model · Local operator';
+      $('modeDescription').textContent='Synthetic allowlisted resources · Fake model · Local operator';
       $('modeFooter').textContent='Operator pilot · not employee SSO';
       $('user').hidden=true;$('loginForm').querySelector('label').hidden=true;
       $('loginForm').querySelector('button').hidden=true;

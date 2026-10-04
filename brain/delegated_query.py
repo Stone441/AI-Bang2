@@ -4,7 +4,9 @@ import threading
 from dataclasses import asdict
 
 from .audit import Audit
-from .confluence import JsonTransport
+from .confluence import ConfluenceReader, JsonTransport
+from .jira import JiraReader
+from .slack import SlackReader
 from .contracts import Decision, now
 from .engine import Engine
 from .store import canonical
@@ -13,8 +15,11 @@ from .store import canonical
 class DelegatedAuthority:
     def __init__(self, readers):
         self.readers = dict(readers)
-        if not self.readers or set(self.readers) - {'confluence', 'jira'}:
+        if not self.readers or set(self.readers) - {'confluence', 'jira', 'slack'}:
             raise ValueError('Supported readers required')
+        types = {'confluence': ConfluenceReader, 'jira': JiraReader, 'slack': SlackReader}
+        if any(not isinstance(reader, types[source]) for source, reader in self.readers.items()):
+            raise ValueError('Reader source mapping mismatch')
         tenants = {r.tenant for r in self.readers.values()}
         if len(tenants) != 1:
             raise ValueError('Readers must belong to one tenant')
