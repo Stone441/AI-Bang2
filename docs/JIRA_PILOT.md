@@ -38,3 +38,16 @@ resource诊断stdout仅decision/指纹version/是否有内容，不打印标题�
 仍缺：真实ID发现、Jira普通账号访问/委托token、真实评论/issue-security与权限矩阵、附件、分页/后台同步、跨源关联链接、真实模型、SSO。Free计划实际能力需核验；不能用mock冒充Free支持完整issue security。J-01/J-03及安全评论尚未种植；不虚构Maya原生负责人账号。
 
 核对官方文档（2026-10-05）：[Get current user](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-myself/#api-rest-api-3-myself-get)、[Get issue](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issues/#api-rest-api-3-issue-issueidorkey-get)、[Get comment](https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-comments/#api-rest-api-3-issue-issueidorkey-comment-id-get)、[ADF structure](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/)。完整granular scope列表尚未核齐/批准，不按印象申请scope。
+
+
+## ID setup discovery · 2026-10-05
+
+AUTH-006 已批准 eng_b Jira 只读凭据准备，最终创建/保存由用户完成；不是 live 验收。配置先保留数字 ID 占位符，设置 `discovery_keys: {"KAN-4": "KAN"}` 和已核验 accountId，然后：
+
+```sh
+python3 -m scripts.jira_query --config .runtime/jira-pilot.json --actor eng_b --discover-ids KAN-4 --prompt-credential --live
+```
+
+此独立 setup reader 验证 native 身份，只 GET KAN-4 的 project 字段，stdout 只返回 issue/project ID 和 key，不返回标题/正文，不创建 DB，不调用模型。allow 后将 IDs 填入正式 issues/project_ids 白名单，再运行 resource/query；不能把 discovery reader 用于问答。7 新 mock 测试验证这一边界。
+
+当前实际 Billing Console 显示 Jira Premium **FREE 30-DAY TRIAL**，至 2026-11-04，未配置付款方式；不能标为 Free。AUTH-006 后 User 提交被自动审批阻止（试用收费预估），新增访问未保存，另待具体确认。无付费续订授权。

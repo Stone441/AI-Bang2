@@ -15,7 +15,7 @@ from brain.store import Store
 from scripts.confluence_probe import hidden_delegation
 
 
-def load_reader(path, prompt_actor=None):
+def load_reader(path, prompt_actor=None, discovery_only=False):
     config = json.loads(Path(path).read_text())
     if config.get('approved_synthetic_only') is not True:
         raise ValueError('Synthetic approval required')
@@ -29,9 +29,11 @@ def load_reader(path, prompt_actor=None):
         value = os.environ.get(key)
         if value:
             delegations[uid] = Delegation(mapping['account_id'], value)
-    reader = JiraReader(config['site'], config['tenant'], config['issues'],
-                        config['project_ids'], delegations, comment_ids=config.get('comment_ids'),
-                        cloud_id=config.get('cloud_id'))
+    reader = JiraReader(config['site'], config['tenant'], {} if discovery_only else config['issues'],
+                        [] if discovery_only else config['project_ids'], delegations,
+                        comment_ids={} if discovery_only else config.get('comment_ids'),
+                        cloud_id=config.get('cloud_id'), discovery_only=discovery_only,
+                        discovery_keys=config.get('discovery_keys'))
     if prompt_actor is not None:
         if prompt_actor not in config['delegations']:
             raise ValueError('Mapped operator required')
@@ -45,6 +47,7 @@ def main(argv=None):
     parser.add_argument('--actor', required=True)
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--resource', help='Allowlisted native issue ID or issue/comment/ID; metadata-only stdout')
+    group.add_argument('--discover-ids', help='Metadata-only ID setup for an explicitly allowlisted issue key')
     group.add_argument('--question', help='Print authorized synthetic answer and references')
     parser.add_argument('--history-id')
     parser.add_argument('--db', default='.runtime/jira-query.sqlite')
@@ -55,8 +58,16 @@ def main(argv=None):
         print(json.dumps({'mode': 'not_run', 'reason': 'live_flag_required'})); return 2
     store = None; started = False
     try:
-        reader = load_reader(args.config, args.actor if args.prompt_credential else None)
+        reader = load_reader(args.config, args.actor if args.prompt_credential else None,
+                             discovery_only=bool(args.discover_ids))
         actor = Actor(args.actor, reader.tenant)
+        if args.discover_ids:
+            started = True
+            decision, ids = reader.discover_ids(actor, args.discover_ids)
+            print(json.dumps({'mode': 'jira_live_api_configuration_probe' if isinstance(reader.transport, JsonTransport) else 'jira_mock_http_configuration_probe',
+                              'decision': asdict(decision), 'ids': ids,
+                              'content_returned_to_probe': False}))
+            return 0 if decision.result == 'allow' else 1
         if args.resource:
             started = True
             decision, content = reader.read(actor, args.resource)

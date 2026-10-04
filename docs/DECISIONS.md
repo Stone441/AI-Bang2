@@ -72,3 +72,10 @@ DeepSeek 直连首轮总预算上限等值 US$20，仅处理合成资料，不�
 
 
 2026-10-05 ADR-010修正：8081实际已有operator服务，复现启动端口冲突；将监听socket预留移到隐藏输入前，避免重复输入token后才发现端口不可用。使用同一reserved listener，identity通过后才挂接application和serve，避免预检查释放端口的竞争窗口。固定阶段错误码代替统一失败，禁止异常原文/上游响应日志；不终止未知归属的已有服务，不改变身份/ACL验证。新增失败路径与资源释放验证；无新增外部调用。
+
+
+## 2026-10-05 · AUTH-006 · eng_b Jira read-only pilot
+
+用户明确“批准此范围”：必要时仅在免费额度内启用 eng_b 普通 Jira User；token `AI-Bang2 eng_b Jira read-only pilot`，2026-10-20 到期，拟用 `read:jira-user` 与 `read:jira-work`，无 write/admin scope。scope 覆盖账号可读 Jira 内容，程序另限 KAN 合成工单白名单。最终创建、密钥保存由用户完成；收费、条款或不同 scope 需要另外确认。授权不等于凭据已创建、API 已验证或 G1/G2 通过。
+
+AUTH-006 执行限制：只读账单核验显示 Jira 已为 Premium 免费试用而非 Free；2026-11-04 到期，付款方式 None、未来估价 USD18.30/1 user。自动审批拒绝保存新增 Jira User，要求具体试用范围确认；配置仍未提交，不将拟选 User 当已授权访问，不自行购买或接受新条款。

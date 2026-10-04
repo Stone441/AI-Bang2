@@ -48,7 +48,8 @@ def adf_text(document):
 
 class JiraReader:
     def __init__(self, site, tenant, issues, project_ids, delegations,
-                 transport=None, *, comment_ids=None, cloud_id=None):
+                 transport=None, *, comment_ids=None, cloud_id=None,
+                 discovery_only=False, discovery_keys=None):
         parsed = urlsplit(site)
         if (parsed.scheme != 'https' or not parsed.hostname
                 or not re.fullmatch(r'[a-z0-9-]+\.atlassian\.net', parsed.hostname)
@@ -67,7 +68,17 @@ class JiraReader:
         self.issues = dict(issues)
         self.project_ids = frozenset(project_ids)
         self.comment_ids = dict(comment_ids or {})
-        if (not isinstance(tenant, str) or not tenant or not self.issues or not self.project_ids
+        self.discovery_only = discovery_only
+        self.discovery_keys = dict(discovery_keys or {})
+        if (type(discovery_only) is not bool
+                or (discovery_only and (self.issues or self.project_ids or self.comment_ids
+                                       or not self.discovery_keys))
+                or (not discovery_only and (not self.issues or not self.project_ids))
+                or any(not isinstance(k, str) or not re.fullmatch(r'[A-Z][A-Z0-9_]*-[1-9][0-9]*', k)
+                       or not isinstance(v, str) or not re.fullmatch(r'[A-Z][A-Z0-9_]*', v)
+                       for k, v in self.discovery_keys.items())):
+            raise ValueError('Explicit isolated discovery mapping required')
+        if (not isinstance(tenant, str) or not tenant
                 or any(not isinstance(i, str) or not re.fullmatch(r'[0-9]+', i)
                        for i in set(self.issues) | self.project_ids | set(self.comment_ids))
                 or any(not isinstance(key, str) or not re.fullmatch(r'[A-Z][A-Z0-9_]*-[1-9][0-9]*', key)
@@ -86,6 +97,39 @@ class JiraReader:
         if status != 200 or not isinstance(data, dict):
             raise SourceUnavailable()
         return data
+
+    def _credential(self, actor):
+        if actor.tenant != self.tenant:
+            raise SourceUnavailable()
+        credential = self.delegations.get(actor.user_id)
+        if not isinstance(credential, Delegation):
+            raise SourceUnavailable()
+        user = self._get('/rest/api/3/myself', credential)
+        if (not user or user.get('accountId') != credential.account_id
+                or user.get('active') is not True or user.get('accountType') != 'atlassian'):
+            raise SourceUnavailable()
+        return credential
+
+    def discover_ids(self, actor, issue_key):
+        method = 'jira-allowlisted-issue-project-discovery'
+        try:
+            if not self.discovery_only or issue_key not in self.discovery_keys:
+                raise SourceUnavailable()
+            credential = self._credential(actor)
+            data = self._get('/rest/api/3/issue/' + issue_key + '?fields=project', credential)
+            if data is None:
+                return Decision('deny', now(), method, 0), None
+            project = data['fields']['project']
+            issue_id, project_id = data['id'], project['id']
+            if (data['key'] != issue_key or project['key'] != self.discovery_keys[issue_key]
+                    or any(not isinstance(i, str) or not re.fullmatch(r'[0-9]+', i)
+                           for i in (issue_id, project_id))):
+                raise SourceUnavailable()
+            return Decision('allow', now(), method, 0), {
+                'issue_id': issue_id, 'issue_key': issue_key,
+                'project_id': project_id, 'project_key': project['key']}
+        except (SourceUnavailable, KeyError, TypeError, ValueError, AttributeError):
+            return Decision('unknown', now(), method, 0), None
 
     def _issue(self, issue_id, credential):
         data = self._get('/rest/api/3/issue/' + issue_id
@@ -111,15 +155,9 @@ class JiraReader:
     def read(self, actor, native_id, expected_version=None):
         method = 'jira-delegated-current-read'
         try:
-            if actor.tenant != self.tenant or native_id not in self.native_ids:
+            if self.discovery_only or actor.tenant != self.tenant or native_id not in self.native_ids:
                 raise SourceUnavailable()
-            credential = self.delegations.get(actor.user_id)
-            if not isinstance(credential, Delegation):
-                raise SourceUnavailable()
-            user = self._get('/rest/api/3/myself', credential)
-            if (not user or user.get('accountId') != credential.account_id
-                    or user.get('active') is not True or user.get('accountType') != 'atlassian'):
-                raise SourceUnavailable()
+            credential = self._credential(actor)
             issue_id, *comment = native_id.split('/comment/')
             fields = self._issue(issue_id, credential)
             if fields is None:

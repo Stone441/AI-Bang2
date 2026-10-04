@@ -1,10 +1,10 @@
 {
-  "started_at": "2026-10-04T18:34:22.178797+00:00",
-  "finished_at": "2026-10-04T18:34:28.620018+00:00",
+  "started_at": "2026-10-04T18:46:15.331805+00:00",
+  "finished_at": "2026-10-04T18:46:21.656487+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "4d6b92441a784a44d438f7efd6046eac2789da22",
+  "commit": "97b9422694526646f139136f981c356ee56b3ed0",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
@@ -19,10 +19,11 @@
     "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
     "brain/engine.py": "97620896289e1fb3790c6e3c64fdabe7cf7e41c1df764f963d4a81612f8e1348",
     "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
-    "brain/jira.py": "8ec073626c20f00547876515e4bc0d760191a7e2bb0dd72e19807063955afdf4",
+    "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
     "brain/audit_query.py": "837254cdc8a235044dae523c0b9f35c87765a66e91e9215304dc9ad09c77622b",
     "tests/test_contracts.py": "c6c4ad82ce9cce7505296745a7f824ca216edf5a31f3adc9b2d9d4468d652c56",
     "tests/test_jira_query.py": "f7d6a4e2459fd880782bc52e61ea08fd6d9a6dca51df692b2aff0a28f6003667",
+    "tests/test_jira_discovery.py": "de2ca86f330bb9bb13cfa66645b0c674e1112a4c2e52e8de54c469d3852739c5",
     "tests/test_engine.py": "0449d5240af821d03545f9fcec1672ef7c0bd5e18149ae40ded97228834b322e",
     "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
     "tests/test_confluence_revocation.py": "85658ba53f7865528ea62e57880d13d5ef0cafb8db877c636a721e2410ab73d2",
@@ -42,11 +43,11 @@
     "scripts/confluence_query.py": "c22c084a15321f54fb343d15e006e0a34588c8f338432c8ed2c51f6071cfa62c",
     "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
     "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
-    "scripts/test_report.py": "cddaf2c8d65a6b6ed9b32881fe6e1e4525fcbd6e239039778aae3a2af4c038bf",
+    "scripts/test_report.py": "0e9b08ae4773d68a38293a337ab63d766352f84a60933b7f3f378ab21066c621",
     "scripts/confluence_probe.py": "129b5a5e13a1b60f144084835d4638bd1fb20d1a5c1ebf2df0c0459ac850cc2d",
     "scripts/prepare_live_seed.py": "dcd3307e679b3f1d96affc7a65ba9be7af48ed84b258db64366a7bd494fa2eff",
     "scripts/evaluate.py": "f98bd282a1e1352a85276b8742201fcb1c3eeff0715752ecdeabe30fdeeb6f46",
-    "scripts/jira_query.py": "f15c144ea53add1caccb76e4033f829f2a779f4a71053f9577365d6474323a74",
+    "scripts/jira_query.py": "d41e562a026c0529fc5136bd3c096a51e294f927cdc8096c7e150550646b12fe",
     "scripts/confluence_revocation.py": "81f35cd2643049dedd02afec214e231ef82a69edb2fa55cf8ac1c5d4687a1a17",
     "web/index.html": "c38d18e234ad57a68c7c23cedf96d6f4b6728672c2e1489dced2ae818fd49300",
     "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
@@ -56,7 +57,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 142,
+  "tests_run": 149,
   "successful": true,
   "results": [
     {
@@ -676,6 +677,41 @@
     },
     {
       "test": "test_jira.JiraBoundary.test_second_read_rechecks_native_access",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_discovery.JiraDiscovery.test_cli_discovery_has_no_database_or_content",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_discovery.JiraDiscovery.test_denied_and_unavailable_results_are_distinct",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_discovery.JiraDiscovery.test_live_flag_and_constructor_boundaries",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_discovery.JiraDiscovery.test_moved_wrong_key_or_malformed_metadata_never_returns_ids",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_discovery.JiraDiscovery.test_only_selected_metadata_and_isolated_from_content_reads",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_discovery.JiraDiscovery.test_substituted_native_identity_never_fetches_issue",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_discovery.JiraDiscovery.test_unapproved_key_tenant_or_unmapped_actor_never_calls_source",
       "status": "passed",
       "mode": "mock_http_contract"
     },

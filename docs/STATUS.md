@@ -86,3 +86,9 @@ Jira CLI诊断/问答、专用凭据env namespace及隐藏输入已实现，6配
 启动修复全回归：make test-report 142/142，源码SHA-256零差异；真实网页query仍待用户换8082启动后完成。
 
 2026-10-05真实网页查询：用户报告页面可见；实读confluence-web.sqlite request26995601e7634d2191de4a69ee7c1c2d，eng_b/Confluence live API/fake model，问工程事故全链路问题，本次仅返回C-01 runbook v1，不声明完整事故回答。8项DB核验通过（精确摘录、模型/返回前allow、HTTP dispatch、12事件链有效），证据live-confluence/web-query-26995601e7634d2191de4a69ee7c1c2d.json。预览/History网页点击仍待用户，SSO/其他源/真实模型未完成。
+
+2026-10-05用户确认“引用和历史正常”：网页点击结果为user_confirmed；独立实读DB新增seq13/14两次C-01 native preview allow，14事件链有效。记录web-preview-history-user-confirmed.json；审计preview本身不区分历史重查/证据预览，不伪称自动视觉验收或G1通过。接续推进Jira账号访问/具体只读scope及原生ID核验。
+
+2026-10-05：Jira metadata-only ID discovery 已实现，7 新 mock 测试，完整回归 149/149（60 local synthetic、89 mock HTTP），无真实 API/模型调用。AUTH-006 已获明确批准；尚未创建 Jira token 或发现真实数字 IDs。下一步平台普通 User 配置→用户创建/保存只读 token→隐藏 TTY ID 诊断→白名单真实问答。
+
+Jira 平台只读核验：Billing Console 显示 Premium FREE 30-DAY TRIAL，2026-11-04 到期，1 user、next estimate USD18.30、Payment info None，提示无付款方式将停用。这是现有计划，不能声称 Free。eng_b 当前只有 Confluence User，已准备 Jira User 选项但未保存；自动审批拒绝 Grant access，理由为现有免费额度批准不足以覆盖 Premium 试用收费预估，已向用户请求具体试用范围确认。未新增访问、token、费用或真实 API 调用。接续：收到确认后保存普通 User，再准备 eng_b token；拒绝/暂无答复时不提交。

@@ -27,3 +27,6 @@ Jira没有可依赖的工单整数正文版本：locator保存完整SHA-256（�
 验证器显式接收外部可信 checkpoint、公钥和 expected stream ID，使用 OpenSSL 校验 Ed25519 密钥类型与签名，独立重算导出链。退出码 0 仅表示已覆盖段通过，未覆盖尾部始终单列；1 失败；2 无检查点、不可信。签名不保护 wrapper 的说明文本。
 
 v1 事件不含 stream_id；该字段只绑定检查点的外部期望，不能据此宣称事件原生跨流隔离。选择最新可信检查点、独立保管、密钥轮换仍由后续机制保证；同机同账号的测试不提供这些生产边界。
+
+
+Jira ID setup discovery 独立于正文读取：显式 discovery_only reader 只接受预先批准 issue key→project key，验证 native 身份后 GET 单工单 `?fields=project`，仅返回 issue/project ID 与 key。该 reader 不允许 read/模型/索引；正常 reader 仍要求不可变数字 ID 白名单。错误身份、移动项目、非法 key 和未知结果均不出元数据。
