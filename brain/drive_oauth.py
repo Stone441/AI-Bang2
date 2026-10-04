@@ -18,6 +18,7 @@ from .drive import BASE
 SCOPE = 'https://www.googleapis.com/auth/drive.readonly'
 AUTH = 'https://accounts.google.com/o/oauth2/v2/auth'
 TOKEN = 'https://oauth2.googleapis.com/token'
+ISSUER = 'https://accounts.google.com'
 
 
 @dataclass(frozen=True)
@@ -67,6 +68,7 @@ class Consent:
         self.expires = time.monotonic() + timeout
         self.code = None
         self.finished = False
+        self.reason = 'awaiting_callback'
 
     def url(self, email):
         if not isinstance(email, str) or not re.fullmatch(r'[^\s:@]+@[^\s:@]+', email):
@@ -78,28 +80,39 @@ class Consent:
             'include_granted_scopes':'false'})
 
     def callback(self, target, host, origin=None):
-        if (self.finished or time.monotonic() >= self.expires
-                or host != f'127.0.0.1:{self.port}' or origin or len(target) > 8192):
-            return 400
+        def reject(reason, status=400):
+            self.reason = reason
+            return status
+        if self.finished: return reject('callback_already_consumed')
+        if time.monotonic() >= self.expires: return reject('callback_expired')
+        if host != f'127.0.0.1:{self.port}': return reject('callback_host_mismatch')
+        if origin: return reject('callback_origin_rejected')
+        if len(target) > 8192: return reject('callback_malformed')
         parsed = urlsplit(target)
         if parsed.path != '/oauth/callback' or parsed.scheme or parsed.netloc or parsed.fragment:
-            return 400
+            return reject('callback_path_rejected')
         try:
             query = parse_qs(parsed.query, keep_blank_values=True, max_num_fields=12)
         except ValueError:
-            return 400
+            return reject('callback_malformed')
         returned_state = query.get('state', [''])[0]
-        if (any(len(v) != 1 for v in query.values())
-                or not secrets.compare_digest(returned_state.encode(), self.state.encode())
-                or set(query) - {'state','code','scope','error','authuser','prompt'}):
-            return 400
+        if any(len(v) != 1 for v in query.values()): return reject('callback_duplicate_parameter')
+        if not secrets.compare_digest(returned_state.encode(), self.state.encode()):
+            return reject('callback_state_mismatch')
+        if set(query) - {'state','code','scope','error','authuser','prompt','iss'}:
+            return reject('callback_unsupported_parameter')
+        # Google discovery advertises RFC 9207 support. Issuer is required and
+        # compared exactly; accepting an arbitrary issuer would enable mix-up.
+        if query.get('iss') != [ISSUER]: return reject('callback_issuer_mismatch')
         if 'error' in query:
-            if 'code' in query: return 400
+            if 'code' in query: return reject('callback_malformed')
             self.finished = True
-            return 403
+            return reject('consent_denied', 403)
         code = query.get('code', [''])[0]
-        if not code or len(code) > 4096 or any(c.isspace() for c in code): return 400
+        if not code or len(code) > 4096 or any(c.isspace() for c in code):
+            return reject('callback_code_unavailable')
         self.code, self.finished = code, True
+        self.reason = 'callback_received'
         return 200
 
     def exchange(self, transport):
@@ -129,7 +142,10 @@ def authorize(client, email, notify_url, *, timeout=600, transport=None):
         def do_GET(self):
             status = consent.callback(self.path, self.headers.get('Host'), self.headers.get('Origin'))
             text = ('Google authorization received. Return to the terminal; account verification is next.'
-                    if status == 200 else 'Authorization unavailable. Return to the terminal.')
+                    if status == 200 else f'Authorization unavailable [{consent.reason}]. Return to the terminal.')
+            if status != 200 and consent.reason not in diagnostics:
+                diagnostics.add(consent.reason)
+                print(f'OAuth callback stopped [{consent.reason}]. No callback URL or code is logged.',flush=True)
             body = text.encode()
             self.send_response(status)
             self.send_header('Content-Type','text/plain; charset=utf-8')
@@ -139,6 +155,7 @@ def authorize(client, email, notify_url, *, timeout=600, transport=None):
             self.send_header('Content-Security-Policy',"default-src 'none'; frame-ancestors 'none'")
             self.end_headers(); self.wfile.write(body)
     with HTTPServer(('127.0.0.1',0),Callback) as server:
+        diagnostics = set()
         consent = Consent(client,server.server_port,timeout)
         server.timeout = 1
         notify_url(consent.url(email))

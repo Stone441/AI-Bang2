@@ -12,7 +12,7 @@ from pathlib import Path
 from unittest.mock import Mock,patch
 from urllib.parse import parse_qs,urlsplit,urlencode
 
-from brain.drive_oauth import DesktopClient,load_client,Consent,authorize,verify_account,SCOPE,AUTH,TOKEN
+from brain.drive_oauth import DesktopClient,load_client,Consent,authorize,verify_account,SCOPE,AUTH,TOKEN,ISSUER
 from brain.confluence import SourceUnavailable
 from scripts.drive_query import load_oauth_reader
 
@@ -23,7 +23,7 @@ EMAIL='fixture@example.com'
 class OAuthBoundary(unittest.TestCase):
     def setUp(self):self.client=DesktopClient(CLIENT,'fixture-secret');self.flow=Consent(self.client,12345)
     def target(self,**changes):
-        return '/oauth/callback?'+urlencode(dict(state=self.flow.state,code='fixture-code',**changes))
+        return '/oauth/callback?'+urlencode(dict(state=self.flow.state,code='fixture-code',iss=ISSUER,**changes))
     def test_pkce_fixed_endpoints_scope_and_no_secret_in_authorization_url(self):
         q=parse_qs(urlsplit(self.flow.url(EMAIL)).query)
         expected=base64.urlsafe_b64encode(hashlib.sha256(self.flow.verifier.encode()).digest()).decode().rstrip('=')
@@ -48,15 +48,32 @@ class OAuthBoundary(unittest.TestCase):
         with self.assertRaises(SourceUnavailable):self.flow.exchange(transport)
         transport.exchange.assert_not_called()
         denied=Consent(self.client,12345)
-        self.assertEqual(denied.callback('/oauth/callback?'+urlencode({'state':denied.state,'error':'access_denied'}),
+        self.assertEqual(denied.callback('/oauth/callback?'+urlencode({'state':denied.state,'error':'access_denied','iss':ISSUER}),
                                         '127.0.0.1:12345'),403)
         with self.assertRaises(SourceUnavailable):denied.exchange(transport)
         transport.exchange.assert_not_called()
+    def test_google_issuer_is_required_exact_and_not_duplicated(self):
+        host='127.0.0.1:12345'
+        for issuer in (None,'https://evil.example','https://accounts.google.com/','accounts.google.com'):
+            query={'state':self.flow.state,'code':'fixture-code'}
+            if issuer is not None: query['iss']=issuer
+            self.assertEqual(self.flow.callback('/oauth/callback?'+urlencode(query),host),400)
+            self.assertEqual(self.flow.reason,'callback_issuer_mismatch')
+            self.assertFalse(self.flow.finished);self.assertIsNone(self.flow.code)
+        self.assertEqual(self.flow.callback(self.target()+'&iss='+ISSUER,host),400)
+        self.assertEqual(self.flow.reason,'callback_duplicate_parameter')
+        self.assertEqual(self.flow.callback(self.target(),host),200)
+    def test_diagnostic_reason_never_reflects_callback_values(self):
+        host='127.0.0.1:12345'
+        target='/oauth/callback?'+urlencode({'state':'secret-looking-state','code':'secret-looking-code','iss':ISSUER})
+        self.assertEqual(self.flow.callback(target,host),400)
+        self.assertEqual(self.flow.reason,'callback_state_mismatch')
+        self.assertNotIn('secret-looking',self.flow.reason)
     def test_exchange_checks_exact_granted_scope_type_lifetime_and_one_use_code(self):
         valid={'token_type':'Bearer','scope':SCOPE,'expires_in':3600,'access_token':'fixture-token','refresh_token':'ignored-fixture-refresh'}
         for changes in ({'scope':SCOPE+' other'},{'scope':''},{'token_type':'other'},{'expires_in':0},
                         {'expires_in':True},{'access_token':'bad token'},{}):
-            flow=Consent(self.client,12345);flow.callback('/oauth/callback?'+urlencode({'state':flow.state,'code':'fixture-code'}),'127.0.0.1:12345')
+            flow=Consent(self.client,12345);flow.callback('/oauth/callback?'+urlencode({'state':flow.state,'code':'fixture-code','iss':ISSUER}),'127.0.0.1:12345')
             transport=Mock();transport.exchange.return_value=(200,dict(valid,**changes))
             if changes:
                 with self.assertRaises(SourceUnavailable):flow.exchange(transport)
@@ -94,7 +111,7 @@ class OAuthLoopback(unittest.TestCase):
         def notify(url):
             q=parse_qs(urlsplit(url).query)
             def request():
-                with urllib.request.urlopen(q['redirect_uri'][0]+'?'+urlencode({'state':q['state'][0],'code':'fixture-code'}),timeout=5) as response:
+                with urllib.request.urlopen(q['redirect_uri'][0]+'?'+urlencode({'state':q['state'][0],'code':'fixture-code','iss':ISSUER}),timeout=5) as response:
                     results.append((response.status,response.read().decode(),dict(response.headers)))
             thread=threading.Thread(target=request);threads.append(thread);thread.start()
         result=authorize(DesktopClient(CLIENT,'fixture-secret'),EMAIL,notify,transport=transport)

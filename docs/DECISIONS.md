@@ -136,3 +136,5 @@ AUTH-009执行补充（2026-10-05）：用户已亲自完成Google Data Policy�
 ## ADR-017 · 2026-10-05 · Drive Desktop PKCE loopback
 
 为减少手动token复制，--oauth-client仅Drive/live入口支持，先预留operator端口并验证全配置，再读取用户下载的0600/no-symlink桌面client JSON。固定Google授权与token端点、唯一drive.readonly/S256/random state/10分钟/随机loopback端口，callback不记录URL/code，不反射秘密，拒绝错Host/Origin/state/重复/扩展参数，code单次交换。验证实际授予scope与Bearer/寿命，再about metadata-only核对me/emailAddress/permissionId，按可信配置绑定actor；login_hint不作为身份依据。秘密只进进程，忽略refresh token，不持久化、不读个人文件列表、无写权限/自动打开浏览器。代价：当前access token过期需重新Google授权，非员工SSO或后台refresh。11新模拟测试/全218通过，真实Google最终grant仍待用户，不能称live OAuth验收通过。可回滚--oauth-client分支，保留hidden token路径。
+
+ADR-017修正（2026-10-05）：Google官方discovery声明authorization_response_iss_parameter_supported=true/issuer=https://accounts.google.com；旧callback未知参数过滤会将含标准iss的合成合法响应拒绝400，已复现。新增iss且必须精确Google issuer，缺失/错误/重复仍拒绝；不放宽state/PKCE/scope/账号。固定枚举诊断仅记录reason，不记录请求URL/code/上游body。旧真实callback未记录原因，因此此项是确定兼容缺陷，不是旧现场根因的已证实结论。参考https://accounts.google.com/.well-known/openid-configuration 与RFC9207。

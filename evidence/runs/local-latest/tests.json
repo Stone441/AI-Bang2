@@ -1,10 +1,10 @@
 {
-  "started_at": "2026-10-04T19:56:13.556962+00:00",
-  "finished_at": "2026-10-04T19:56:25.140979+00:00",
+  "started_at": "2026-10-04T20:03:15.708906+00:00",
+  "finished_at": "2026-10-04T20:03:27.315223+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "79ff0245a4b330c2d3f8a50c481f7e3d4922e72d",
+  "commit": "bbeedc2236876201044cb41fb9658d4b9f8086ef",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
@@ -16,7 +16,7 @@
     "brain/delegated_query.py": "f15e270d3e17a9561c5f760e5f3864081dbdc3d439b1f660be9e63a054fab8eb",
     "brain/budget.py": "1c4e8852b986e9edc7dfaef89aa296f7695037374ee7c68b6870afe3f956af6b",
     "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
-    "brain/drive_oauth.py": "8e3b7101524bc3e3945064f7b5848572df1fbccb8f972581e8c97b2e69f98584",
+    "brain/drive_oauth.py": "d01fdb5a345a598cfb02957fdbc2282519bb8be33236c1a51c6405247202eafc",
     "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
     "brain/engine.py": "97620896289e1fb3790c6e3c64fdabe7cf7e41c1df764f963d4a81612f8e1348",
     "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
@@ -40,7 +40,7 @@
     "tests/test_live_seed.py": "df2ba1d2daa3e7f1016527830de12f3ad2f748633ad01c778819a088db0b19d0",
     "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
     "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8",
-    "tests/test_drive_oauth.py": "4eeb92673992eecd64971776fe328ca06fc94ef1f5c471adff4e2133b45b3534",
+    "tests/test_drive_oauth.py": "900b1a6d8b6313dee7e1f0bdcc9d4a49a1727e58dee962776c9f4e9fa9bc6cb7",
     "tests/test_budget.py": "09e70b7fc17c2ce34787668a28183f88a1ae539dcf94f5255e0fd135ff7f8f7c",
     "tests/test_operator_web.py": "7e49edb4ab4678826dac1185274904659ef0efbafa0b33183756a1c83e8a7956",
     "tests/frontend_operator_security.js": "e9c524a9374ef4abefb2a44ac928e74cdd0a4a207b09df3569691aa3581eddef",
@@ -71,7 +71,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 218,
+  "tests_run": 220,
   "successful": true,
   "results": [
     {
@@ -585,12 +585,22 @@
       "mode": "mock_http_contract"
     },
     {
+      "test": "test_drive_oauth.OAuthBoundary.test_diagnostic_reason_never_reflects_callback_values",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
       "test": "test_drive_oauth.OAuthBoundary.test_exchange_checks_exact_granted_scope_type_lifetime_and_one_use_code",
       "status": "passed",
       "mode": "mock_http_contract"
     },
     {
       "test": "test_drive_oauth.OAuthBoundary.test_expired_and_denied_consent_never_exchanges",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_drive_oauth.OAuthBoundary.test_google_issuer_is_required_exact_and_not_duplicated",
       "status": "passed",
       "mode": "mock_http_contract"
     },
