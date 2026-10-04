@@ -19,3 +19,5 @@
 - [Python HTTP server security considerations](https://docs.python.org/3/library/http.server.html#security-considerations)：本地演示用途，非生产服务器。
 
 2026-10-05 增量：Confluence reader/probe 已实现并通过 16 个 mock HTTP/配置合同测试，见 CONFLUENCE_PILOT。注册和 C-01 种植已完成，不再称账号全未创建；四源 runtime 仍 fixture_only，真实 API/委托/模型未运行。
+
+2026-10-05 最新增量：Confluence mock 合同共36项（包括14 query），全回归96。用户提供 metadata-only live configuration probe：eng_b/page98564 allow、space_id131227、未返回正文；证据 provenance 为 user_supplied_cli_output。普通凭据 current-user 比对及白名单页面 metadata 此次成功不代表正文/问答/撤权通过。独立 operator query pilot 已接共享 Engine；前端仍 fixture，live model not_run。

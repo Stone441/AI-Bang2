@@ -1,6 +1,6 @@
 # Confluence delegated read pilot
 
-2026-10-05：委托读取已通过独立 operator pilot 接到共享 Engine / Store / Audit；36 个模拟 HTTP 合同测试，真实 API `not_run`。未接到浏览器登录，不改变 LOCAL DEMO / FAKE MODEL 模式。
+2026-10-05：委托读取已通过独立 operator pilot 接到共享 Engine / Store / Audit；36 个模拟 HTTP 合同测试。用户提供首个 metadata-only live API allow，native space ID `131227` 已配置；正文/问答/撤权仍 `not_run`。未接到浏览器登录，不改变 LOCAL DEMO / FAKE MODEL 模式。
 
 ## 边界
 
@@ -18,7 +18,7 @@ operator pilot 每次查询清空该用户的本地允许快照，再读取两�
 
 scoped API token 使用配置中的 cloud_id，经固定 `https://api.atlassian.com/ex/confluence/{cloudId}` 调用；页面引用仍返回原站点。已核对 current-user 所需 granular scope 为 `read:content-details:confluence`，页面读取为 `read:page:confluence`，不是凭印象选择 `read:user:confluence`。实际 token 管理 UI 的可选 scope 及请求成功仍待核验，不申请 write/admin 权限。
 
-本轮已实际核对两个 scope 在 eng_b token UI 可选；用户批准名称 `AI-Bang2 eng_b read-only pilot` 与 2026-10-20 到期，最终创建/保管由用户操作，尚无 API 成功记录。提供 `--prompt-credential`：只在真实 TTY 隐藏输入邮箱/token，内存组装 Basic header，不存文件/环境变量/命令历史；无隐藏输入能力则拒绝，不回退到 echo。可用密码管理器保管原始 token，不能覆盖实际账号登录密码。
+本轮已实际核对两个 scope 在 eng_b token UI 可选；用户批准名称 `AI-Bang2 eng_b read-only pilot` 与 2026-10-20 到期，最终创建/保管由用户操作；配置探针成功不代表正文或查询已成功。提供 `--prompt-credential`：只在真实 TTY 隐藏输入邮箱/token，内存组装 Basic header，不存文件/环境变量/命令历史；无隐藏输入能力则拒绝，不回退到 echo。可用密码管理器保管原始 token，不能覆盖实际账号登录密码。
 
 native space ID 不明时可先执行 metadata-only 配置诊断：
 

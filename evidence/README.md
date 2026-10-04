@@ -8,5 +8,6 @@
 - `runs/first-scenario-failure.json`：首次 S-01 失败，后续增加授权关联检索修复；不是预期内容充当实际输出。
 - 本轮初期：DEV-02 3 tests；DEV-04 18 tests；增量扩展后 26、30，当前数字看 tests.json。
 - 环境限制：首次沙箱 HTTP bind 失败，获准 loopback 执行后通过；IAB 不可用、Chrome localhost ERR_BLOCKED_BY_CLIENT，视觉验收 blocked。
-- Live API/model：not_run / blocked；G1/G2：not_run。
+- Live API：仅 metadata-only 配置探针有用户提供的成功结果；正文/query/撤权/model blocked或not_run；G1/G2：not_run。
+- 首个真实配置探针结果：`runs/live-confluence/space-discovery-user-reported.json`，用户提供的 eng_b / page98564 metadata-only allow、space_id131227、无正文；不是 Codex 独立复跑，不覆盖问答或撤权。正文/live query/model 仍 not_run。
 - CodeBuddy：verified local。真实贡献、原生会话导出、7张截图、提交与文件哈希见 `tool-usage/README.md` / `dev09-manifest.json`。实际对话/截图只能来自真实工具，敏感原始记录放 ignored `tool-usage/private/`，未批准不上传。

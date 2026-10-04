@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**最新验证：96/96 测试通过（60 local synthetic + 36 mock HTTP），五场景仍为 passed_local_subset。Confluence operator query pilot 已接通共享引擎、索引、引用、历史与审计；真实 API/model 尚 not_run，前端仍 fixture。接续点见文末。**
+**最新验证：96/96 测试通过（60 local synthetic + 36 mock HTTP），五场景仍为 passed_local_subset。Confluence operator query pilot 已接通共享引擎、索引、引用、历史与审计；用户提供真实 metadata-only API allow 结果，正文/问答/撤权及 live model 尚 not_run，前端仍 fixture。接续点见文末。**
 
 **G0 仅本地完整开发已批准**；已批准专用四源空间的合成资料写入/测试权限调整，以及 DeepSeek 合成资料首轮等值 US$20 上限；真实空间、账号映射、凭据和预算控制尚未落实。G1/G2 未通过。原型已推送并通过 PR #1 合并至 main（81df3ef）；未部署、未调用真实知识平台/应用运行时模型。
 
@@ -60,3 +60,5 @@
 接续更新（覆盖上一段 token 配置状态）：用户已具体批准 AUTH-005，token 最终 Review 页已实测核对名称、2026-10-20 到期、两个 read scope，截图本地留存；最终 Create token 和保管交给用户。用户询问密码管理器位置，已给出 Mac Passwords 独立条目说明；尚未确认创建/保存，不读取可能正在显示密钥的弹窗。独立私有配置 `.runtime/confluence-pilot.json` 已准备（0600，仅 account ID/env reference，无凭据），native space ID 尚占位。新增 TTY 隐藏输入（拒绝 echo fallback）及白名单页面 metadata-only space discovery；5 新测试，全回归96/96，哈希核对一致。先前接线里程碑本地 commit `0a12481`，无远端推送。下一步用户保存 token 后，在本机终端运行 CONFLUENCE_PILOT 的 --discover-space --prompt-credential 命令，拿到实际 space_id 再配置正式读取；不将配置发现当端到端验收。
 
 2026-10-05 凭据交接：用户回复“保存好了”，标记 token 已创建/保管（user_reported），未由程序读取或验证。不打开可能显示密钥的页面。私有配置 0600、两页面白名单已核对；下一步用户在本机真实 TTY 隐藏输入，运行 metadata-only discovery，将不含密钥/正文的结果 JSON 返回。收到实际结果前，live API 仍 not_run；不能把 token 保存等同 API 授权成功。
+
+2026-10-05 首个 live API 结果（用户提供 CLI JSON）：eng_b / page 98564，current-user 与 metadata-only discovery 为 allow，space_id=131227，checked_at=2026-10-04T17:57:23.450014Z（新加坡 10-05 01:57），content_returned_to_probe=false，policy_version=0。原始结果及 user_supplied provenance 已存 evidence/runs/live-confluence/space-discovery-user-reported.json，不标 Codex 独立复跑或 live ACL 全通过。私有配置与模板 space_ids 已更新，credential-free 配置加载通过，无追加网络调用。下一步在用户 TTY 执行正式 query + --prompt-credential；完成后 Codex 可直接读本地 .runtime/confluence-query.sqlite 的回答/审计，无需贴长正文。仍需正文处理、查询、跨身份拒绝、撤权/历史/引用的真实验收。
