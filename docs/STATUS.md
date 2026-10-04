@@ -179,3 +179,9 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 2026-10-05 Slack独立reader合成private成员已添加：切换已授权主账号后，选择已在工作区的Kyle（邮箱此前核对），频道原生事件1791147372.136469确认added by Kyle SHI；未使用Slack Connect/付费功能。existing app分发页要求HTTPS Redirect URL，未发布/新增redirect；继续检查原生Install App流程，OAuth/token/API撤权仍not_run。
 
 2026-10-05 Slack reader grant审核页就绪：现有app原生Reinstall链接install_redirect=install-on-team可用，无需新HTTPS callback/public distribution/client-secret交换。浏览器仅切换比赛账号，不leave workspace，现有本机服务保留；读者Google重新登录已核对邮箱。四项user读scope+identify原生展开一致，最终Allow/秘密保存交用户；目前grant/token API仍not_run。用户保存后仅将密钥从Mac密码粘贴至终端hidden prompt一次，agent不读取token页。
+
+2026-10-05 Slack reader在用户点击Allow后出现“Contact a member of your team who is a Collaborator of this app and they can add you.”应用开发后台权限提示。既有工作区/合成private频道成员核验仍有效；不能据此认定OAuth失败，grant outcome unknown，reader token取得/API auth.test/撤权仍blocked/not_run。未添加app Collaborator，未扩大scope、读取token或改变公共分发；拟请求用户明确批准仅现有app A0C6F96HFNX的临时开发协作者权限，保存读者自己的token后移除。已有248项本地/mock回归沿用，本轮无代码或模型调用。
+
+2026-10-05 AUTH-012临时Slack app Collaborator已native UI添加并核对reader U0C66B76TE3；读者Google重新登录后可进入Install App。原四项user读scope+identify展开审核一致，等待用户最终Allow与保存eng_b-slack-token；之后移除临时Collaborator。无secret读取/API问答/模型调用，新reader auth.test和撤权仍not_run。证据private/slack-reader-collaborator-added.jpg；原有248回归未重复运行（仅文档/平台setup）。
+
+2026-10-05 用户报告eng_b Slack token保存并离开密钥页；agent未读取秘密。按AUTH-012从已核对U0C66B76TE3自己的Collaborators页面Leave，native确认移除后Your Apps不再列出该app；未退出工作区/频道、未卸载业务OAuth grant。截图private/slack-reader-collaborator-removed.jpg。四源public配置均加载校验同tenant/actor，Drive映射kyle000909@gmail.com、SlackU0C66B76TE3与既有QQ Atlassian对应用户已确认persona；创建ignored0600 operator-bundle.json（mapping reviewed仅表示账号映射审查，非API验收）。下一步一次启动8088 multi+Drive PKCE+DeepSeek并逐source native identity强制核对。reader Slack API/统一live问答/撤权仍not_run；没有新模型调用。

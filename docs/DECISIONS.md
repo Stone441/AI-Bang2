@@ -168,3 +168,9 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 AUTH-011 Slack amendment：用户明确批准eng_b Slack也用kyle000909@gmail.com，限AI-Bang2工作区和合成私有频道，原四项user只读scope+identify，不接NTU、不新增付款或写scope，最终terms/OAuth用户点击。QQ邀请失败原因未知，新Google邮箱邀请UI显示You’ve invited 1 person/Invited as a colleague/Expires in30days；仅邀请成功，尚未入组或授权。
 
 2026-10-05 Slack reader OAuth准备：保留既有私有app原生install_redirect流程，未启用public distribution、未新增redirect或读取client/signing secret。用户既有Google登录用于主账号添加已批准的内部reader成员，随后仅Sign out切回reader，明确未选择leave workspace。只有最终Allow授予读权限，由用户操作；固定eng_b原生ID映射将在启动auth.test再次校验。参考Slack官方OAuth说明：https://docs.slack.dev/authentication/installing-with-oauth/。
+
+2026-10-05 AUTH-011边界补充：普通Slack reader成员与只读OAuth批准不包括app Collaborator开发后台权限。平台在Allow后要求Collaborator，采用grant未知/token后台blocked记录，不默认新增权限。临时协作者候选仅kyle000909@gmail.com与app A0C6F96HFNX；其可管理app设置，因此另行征求明确授权，未批准前不执行。
+
+2026-10-05 AUTH-012：用户对上一项明确候选回复“好的，可以”，批准kyle000909@gmail.com临时成为existing app A0C6F96HFNX Collaborator，token保存后移除。native UI候选及名单均确认U0C66B76TE3。平台明确可edit/submit/delete app、full member可管理collaborators；本次未修改scope/public distribution/付费/工作区admin。移除尚pending，不把临时developer访问视为业务资料可读证明。
+
+2026-10-05 用户报告eng_b Slack token保存并离开密钥页；agent未读取秘密。按AUTH-012从已核对U0C66B76TE3自己的Collaborators页面Leave，native确认移除后Your Apps不再列出该app；未退出工作区/频道、未卸载业务OAuth grant。截图private/slack-reader-collaborator-removed.jpg。四源public配置均加载校验同tenant/actor，Drive映射kyle000909@gmail.com、SlackU0C66B76TE3与既有QQ Atlassian对应用户已确认persona；创建ignored0600 operator-bundle.json（mapping reviewed仅表示账号映射审查，非API验收）。下一步一次启动8088 multi+Drive PKCE+DeepSeek并逐source native identity强制核对。reader Slack API/统一live问答/撤权仍not_run；没有新模型调用。
