@@ -1,0 +1,4316 @@
+{
+  "started_at": "2026-10-04T09:15:34.323710+00:00",
+  "finished_at": "2026-10-04T09:15:34.371053+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "python": "3.14.7",
+  "commit": "61fd1265f570aed6461ab8f9805542b185344c41",
+  "source_hashes": {
+    "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
+    "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
+    "brain/audit_query.py": "837254cdc8a235044dae523c0b9f35c87765a66e91e9215304dc9ad09c77622b",
+    "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
+    "brain/engine.py": "ff81a3f0c71e61df176eb39dd372dfcef292b6f161c9fffbd6ba1d6903222922",
+    "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
+    "brain/server.py": "70376b32a387bf8e161a631ca242c353c276a83e2f95bd5ed4b15d8dd296c6b9",
+    "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
+    "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
+    "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730",
+    "web/app.js": "7ce618466220ed67d781d76abb3086c143c35e4910ad5d2e39f457e8c876278e",
+    "web/index.html": "72adc3d005163a3091666372cbe3193511513459c653751060a901e364187df0",
+    "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
+    "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
+    "scripts/evaluate.py": "1bb058888f3c0be50a07f3bf07f2d6dfb5b1581140169fefa92ba1802e301fbf",
+    "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
+    "scripts/test_report.py": "4037ec524832f253444c43a7272b1385dcafd9e67fd316da6e6e44d7aa721ca7",
+    "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
+    "tests/test_contracts.py": "c6c4ad82ce9cce7505296745a7f824ca216edf5a31f3adc9b2d9d4468d652c56",
+    "tests/test_engine.py": "0449d5240af821d03545f9fcec1672ef7c0bd5e18149ae40ded97228834b322e",
+    "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
+    "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8"
+  },
+  "worktree_dirty": true,
+  "scenarios": [
+    {
+      "id": "S-01",
+      "status": "passed_local_subset",
+      "actual": {
+        "question": "What caused the payment-service incident, which early explanation was ruled out, what follow-up remains open, and which runbook should I use?",
+        "answer": {
+          "request_id": "6ef0961e5dd540f1844b424de332d518",
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "claims": [
+            {
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "evidence_ids": [
+                "J-01@1"
+              ]
+            },
+            {
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+              "evidence_ids": [
+                "S-01@1"
+              ]
+            },
+            {
+              "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+              "evidence_ids": [
+                "C-01@1"
+              ]
+            },
+            {
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "evidence_ids": [
+                "D-01@1"
+              ]
+            },
+            {
+              "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+              "evidence_ids": [
+                "S-02@1"
+              ]
+            },
+            {
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "evidence_ids": [
+                "J-02@1"
+              ]
+            },
+            {
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "evidence_ids": [
+                "J-03@1"
+              ]
+            },
+            {
+              "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+              "evidence_ids": [
+                "C-02@1"
+              ]
+            },
+            {
+              "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+              "evidence_ids": [
+                "D-02@1"
+              ]
+            }
+          ],
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ],
+          "evidence": [
+            {
+              "evidence_id": "J-01@1",
+              "resource_id": "J-01",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-101 Payment-service incident",
+              "locator": {
+                "field": "description"
+              },
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324746+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-01"
+            },
+            {
+              "evidence_id": "S-01@1",
+              "resource_id": "S-01",
+              "version": 1,
+              "source": "slack",
+              "title": "Private incident discussion",
+              "locator": {
+                "channel": "incident",
+                "messages": [
+                  "1790816400.000001",
+                  "1790817300.000001",
+                  "1790820000.000001"
+                ],
+                "thread": "1790816400.000001"
+              },
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324823+00:00",
+              "source_url": "fixture://synthetic-demo/slack/S-01"
+            },
+            {
+              "evidence_id": "C-01@1",
+              "resource_id": "C-01",
+              "version": 1,
+              "source": "confluence",
+              "title": "Payment-service runbook",
+              "locator": {
+                "paragraph": 1,
+                "section": "Failover procedure"
+              },
+              "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324595+00:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-01"
+            },
+            {
+              "evidence_id": "D-01@1",
+              "resource_id": "D-01",
+              "version": 1,
+              "source": "drive",
+              "title": "Final payment-service postmortem",
+              "locator": {
+                "paragraph": 1,
+                "section": "Confirmed root cause"
+              },
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324912+00:00",
+              "source_url": "fixture://synthetic-demo/drive/D-01"
+            },
+            {
+              "evidence_id": "S-02@1",
+              "resource_id": "S-02",
+              "version": 1,
+              "source": "slack",
+              "title": "Release coordination",
+              "locator": {
+                "channel": "release",
+                "thread": "1790823600.000001"
+              },
+              "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324857+00:00",
+              "source_url": "fixture://synthetic-demo/slack/S-02"
+            },
+            {
+              "evidence_id": "J-02@1",
+              "resource_id": "J-02",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-102 Retry configuration fix",
+              "locator": {
+                "field": "status and description"
+              },
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324773+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-02"
+            },
+            {
+              "evidence_id": "J-03@1",
+              "resource_id": "J-03",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-103 Protective measures",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324798+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03"
+            },
+            {
+              "evidence_id": "C-02@1",
+              "resource_id": "C-02",
+              "version": 1,
+              "source": "confluence",
+              "title": "Payment-retry capability",
+              "locator": {
+                "paragraph": 1,
+                "section": "Supported rollout"
+              },
+              "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324682+00:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-02"
+            },
+            {
+              "evidence_id": "D-02@1",
+              "resource_id": "D-02",
+              "version": 1,
+              "source": "drive",
+              "title": "Payment-retry release approval",
+              "locator": {
+                "paragraph": 1,
+                "section": "Approval decision"
+              },
+              "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324938+00:00",
+              "source_url": "fixture://synthetic-demo/drive/D-02"
+            }
+          ],
+          "actor": "eng_a"
+        },
+        "product_answer": {
+          "request_id": "eed0c56a42654ab9a69c5f2e7f79cbb0",
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "claims": [
+            {
+              "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+              "evidence_ids": [
+                "D-03@1"
+              ]
+            },
+            {
+              "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+              "evidence_ids": [
+                "C-02@1"
+              ]
+            },
+            {
+              "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+              "evidence_ids": [
+                "D-02@1"
+              ]
+            },
+            {
+              "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+              "evidence_ids": [
+                "S-02@1"
+              ]
+            }
+          ],
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ],
+          "evidence": [
+            {
+              "evidence_id": "D-03@1",
+              "resource_id": "D-03",
+              "version": 1,
+              "source": "drive",
+              "title": "Operations readiness",
+              "locator": {
+                "paragraph": 1,
+                "section": "Customer communication"
+              },
+              "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324963+00:00",
+              "source_url": "fixture://synthetic-demo/drive/D-03"
+            },
+            {
+              "evidence_id": "C-02@1",
+              "resource_id": "C-02",
+              "version": 1,
+              "source": "confluence",
+              "title": "Payment-retry capability",
+              "locator": {
+                "paragraph": 1,
+                "section": "Supported rollout"
+              },
+              "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324682+00:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-02"
+            },
+            {
+              "evidence_id": "D-02@1",
+              "resource_id": "D-02",
+              "version": 1,
+              "source": "drive",
+              "title": "Payment-retry release approval",
+              "locator": {
+                "paragraph": 1,
+                "section": "Approval decision"
+              },
+              "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324938+00:00",
+              "source_url": "fixture://synthetic-demo/drive/D-02"
+            },
+            {
+              "evidence_id": "S-02@1",
+              "resource_id": "S-02",
+              "version": 1,
+              "source": "slack",
+              "title": "Release coordination",
+              "locator": {
+                "channel": "release",
+                "thread": "1790823600.000001"
+              },
+              "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324857+00:00",
+              "source_url": "fixture://synthetic-demo/slack/S-02"
+            }
+          ],
+          "actor": "product_ops"
+        }
+      },
+      "duration_ms": 2.943
+    },
+    {
+      "id": "S-02",
+      "status": "passed_local_subset",
+      "actual": {
+        "sync": {
+          "state": "published",
+          "processed_objects": 1,
+          "resource_id": "C-01",
+          "source_updated_at": "2026-10-04T09:15:34.327994+00:00",
+          "observed_at": "2026-10-04T09:15:34.327999+00:00",
+          "indexed_at": "2026-10-04T09:15:34.328064+00:00",
+          "version": 2
+        },
+        "answer": {
+          "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "claims": [
+            {
+              "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook.",
+              "evidence_ids": [
+                "C-01@2"
+              ]
+            },
+            {
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "evidence_ids": [
+                "J-01@1"
+              ]
+            },
+            {
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "evidence_ids": [
+                "D-01@1"
+              ]
+            },
+            {
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+              "evidence_ids": [
+                "S-01@1"
+              ]
+            },
+            {
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "evidence_ids": [
+                "J-02@1"
+              ]
+            },
+            {
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "evidence_ids": [
+                "J-03@1"
+              ]
+            }
+          ],
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ],
+          "evidence": [
+            {
+              "evidence_id": "C-01@2",
+              "resource_id": "C-01",
+              "version": 2,
+              "source": "confluence",
+              "title": "Payment-service runbook",
+              "locator": {
+                "paragraph": 1,
+                "section": "Failover procedure"
+              },
+              "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook.",
+              "source_updated_at": "2026-10-04T09:15:34.327994+00:00",
+              "indexed_at": "2026-10-04T09:15:34.328064+00:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-01"
+            },
+            {
+              "evidence_id": "J-01@1",
+              "resource_id": "J-01",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-101 Payment-service incident",
+              "locator": {
+                "field": "description"
+              },
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324746+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-01"
+            },
+            {
+              "evidence_id": "D-01@1",
+              "resource_id": "D-01",
+              "version": 1,
+              "source": "drive",
+              "title": "Final payment-service postmortem",
+              "locator": {
+                "paragraph": 1,
+                "section": "Confirmed root cause"
+              },
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324912+00:00",
+              "source_url": "fixture://synthetic-demo/drive/D-01"
+            },
+            {
+              "evidence_id": "S-01@1",
+              "resource_id": "S-01",
+              "version": 1,
+              "source": "slack",
+              "title": "Private incident discussion",
+              "locator": {
+                "channel": "incident",
+                "messages": [
+                  "1790816400.000001",
+                  "1790817300.000001",
+                  "1790820000.000001"
+                ],
+                "thread": "1790816400.000001"
+              },
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324823+00:00",
+              "source_url": "fixture://synthetic-demo/slack/S-01"
+            },
+            {
+              "evidence_id": "J-02@1",
+              "resource_id": "J-02",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-102 Retry configuration fix",
+              "locator": {
+                "field": "status and description"
+              },
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324773+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-02"
+            },
+            {
+              "evidence_id": "J-03@1",
+              "resource_id": "J-03",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-103 Protective measures",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324798+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03"
+            }
+          ],
+          "actor": "eng_a"
+        },
+        "trigger": "direct fixture event, no live API or automatic source webhook"
+      },
+      "duration_ms": 1.952
+    },
+    {
+      "id": "S-03",
+      "status": "passed_local_subset",
+      "actual": {
+        "answer": {
+          "request_id": "a5652484d940401f9162485ec5fb421e",
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "claims": [],
+          "uncertainties": [
+            "Insufficient evidence in the currently accessible material."
+          ],
+          "evidence": [],
+          "actor": "contractor"
+        },
+        "model_input": {
+          "question": "Show me the Q3 security incident report.",
+          "evidence": []
+        }
+      },
+      "duration_ms": 0.257
+    },
+    {
+      "id": "S-04",
+      "status": "passed_local_subset",
+      "actual": {
+        "prior_request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+        "source_event_id": 2,
+        "local_acl_refreshed": false,
+        "answer": {
+          "request_id": "8c44c2052de84f51890a1a643316ef32",
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "claims": [
+            {
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "evidence_ids": [
+                "J-01@1"
+              ]
+            },
+            {
+              "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook.",
+              "evidence_ids": [
+                "C-01@2"
+              ]
+            },
+            {
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "evidence_ids": [
+                "D-01@1"
+              ]
+            },
+            {
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "evidence_ids": [
+                "J-02@1"
+              ]
+            },
+            {
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "evidence_ids": [
+                "J-03@1"
+              ]
+            },
+            {
+              "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+              "evidence_ids": [
+                "D-02@1"
+              ]
+            }
+          ],
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ],
+          "evidence": [
+            {
+              "evidence_id": "J-01@1",
+              "resource_id": "J-01",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-101 Payment-service incident",
+              "locator": {
+                "field": "description"
+              },
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324746+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-01"
+            },
+            {
+              "evidence_id": "C-01@2",
+              "resource_id": "C-01",
+              "version": 2,
+              "source": "confluence",
+              "title": "Payment-service runbook",
+              "locator": {
+                "paragraph": 1,
+                "section": "Failover procedure"
+              },
+              "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook.",
+              "source_updated_at": "2026-10-04T09:15:34.327994+00:00",
+              "indexed_at": "2026-10-04T09:15:34.328064+00:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-01"
+            },
+            {
+              "evidence_id": "D-01@1",
+              "resource_id": "D-01",
+              "version": 1,
+              "source": "drive",
+              "title": "Final payment-service postmortem",
+              "locator": {
+                "paragraph": 1,
+                "section": "Confirmed root cause"
+              },
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324912+00:00",
+              "source_url": "fixture://synthetic-demo/drive/D-01"
+            },
+            {
+              "evidence_id": "J-02@1",
+              "resource_id": "J-02",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-102 Retry configuration fix",
+              "locator": {
+                "field": "status and description"
+              },
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324773+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-02"
+            },
+            {
+              "evidence_id": "J-03@1",
+              "resource_id": "J-03",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-103 Protective measures",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324798+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03"
+            },
+            {
+              "evidence_id": "D-02@1",
+              "resource_id": "D-02",
+              "version": 1,
+              "source": "drive",
+              "title": "Payment-retry release approval",
+              "locator": {
+                "paragraph": 1,
+                "section": "Approval decision"
+              },
+              "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324938+00:00",
+              "source_url": "fixture://synthetic-demo/drive/D-02"
+            }
+          ],
+          "actor": "eng_a"
+        },
+        "model_input": {
+          "question": "Repeat the details from the incident thread you just used.",
+          "evidence": [
+            {
+              "evidence_id": "J-01@1",
+              "resource_id": "J-01",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-101 Payment-service incident",
+              "locator": {
+                "field": "description"
+              },
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324746+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-01"
+            },
+            {
+              "evidence_id": "C-01@2",
+              "resource_id": "C-01",
+              "version": 2,
+              "source": "confluence",
+              "title": "Payment-service runbook",
+              "locator": {
+                "paragraph": 1,
+                "section": "Failover procedure"
+              },
+              "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook.",
+              "source_updated_at": "2026-10-04T09:15:34.327994+00:00",
+              "indexed_at": "2026-10-04T09:15:34.328064+00:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-01"
+            },
+            {
+              "evidence_id": "D-01@1",
+              "resource_id": "D-01",
+              "version": 1,
+              "source": "drive",
+              "title": "Final payment-service postmortem",
+              "locator": {
+                "paragraph": 1,
+                "section": "Confirmed root cause"
+              },
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324912+00:00",
+              "source_url": "fixture://synthetic-demo/drive/D-01"
+            },
+            {
+              "evidence_id": "J-02@1",
+              "resource_id": "J-02",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-102 Retry configuration fix",
+              "locator": {
+                "field": "status and description"
+              },
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324773+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-02"
+            },
+            {
+              "evidence_id": "J-03@1",
+              "resource_id": "J-03",
+              "version": 1,
+              "source": "jira",
+              "title": "PAY-103 Protective measures",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324798+00:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03"
+            },
+            {
+              "evidence_id": "D-02@1",
+              "resource_id": "D-02",
+              "version": 1,
+              "source": "drive",
+              "title": "Payment-retry release approval",
+              "locator": {
+                "paragraph": 1,
+                "section": "Approval decision"
+              },
+              "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "indexed_at": "2026-10-04T09:15:34.324938+00:00",
+              "source_url": "fixture://synthetic-demo/drive/D-02"
+            }
+          ]
+        },
+        "history": [
+          {
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "unavailable": true,
+            "message": "This answer is no longer available. Ask again for current evidence."
+          }
+        ],
+        "preview": "denied"
+      },
+      "duration_ms": 3.031
+    },
+    {
+      "id": "S-05",
+      "status": "passed_local_subset",
+      "actual": {
+        "question": "Show everything jdoe accessed related to payment-service in the last 30 days.",
+        "filters": {
+          "actor": "eng_a",
+          "start_time": "2026-09-04T09:15:34.333632+00:00",
+          "end_time": "2026-10-04T09:15:34.333632+00:00",
+          "resource_scope": "payment-service",
+          "page_size": 7,
+          "as_of": 169
+        },
+        "pages": 21,
+        "event_ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          115,
+          116,
+          117,
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          127,
+          128,
+          129,
+          130,
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141,
+          142,
+          143,
+          144,
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152,
+          153,
+          154,
+          155,
+          156,
+          157,
+          158,
+          159,
+          160,
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169
+        ],
+        "events": [
+          {
+            "actor": "eng_a",
+            "event_type": "request_started",
+            "hash": "af1bb209f947dd8061946809a383f22b49a20cbd14c903f35262be4467daa8e6",
+            "payload": {
+              "candidate_strategy": "local ACL snapshot + keyword overlap + authorized one-hop links",
+              "history_id": null,
+              "mode": "fixture_fake_model",
+              "query": "What caused the payment-service incident, which early explanation was ruled out, what follow-up remains open, and which runbook should I use?"
+            },
+            "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 1,
+            "timestamp": "2026-10-04T09:15:34.325078+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "d328c301657b5baea4555143100d035904a2a6c843c5eeed17d43f25b4493f3c",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325380+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "af1bb209f947dd8061946809a383f22b49a20cbd14c903f35262be4467daa8e6",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 2,
+            "timestamp": "2026-10-04T09:15:34.325407+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "b7db1abdb33595df65a2fb955d533fe5f257f6d3d17e274f80fbcacfc8e77edd",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325443+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "d328c301657b5baea4555143100d035904a2a6c843c5eeed17d43f25b4493f3c",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 3,
+            "timestamp": "2026-10-04T09:15:34.325462+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "99d47dcb32ad3b8df85182f45b64cd97e72f21f6ad81115f19ea7d43fac64178",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325488+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 1
+            },
+            "previous_hash": "b7db1abdb33595df65a2fb955d533fe5f257f6d3d17e274f80fbcacfc8e77edd",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 4,
+            "timestamp": "2026-10-04T09:15:34.325502+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "8029683ca1353b1fd30d12a115cd8710128db87453ea230e655d16ec19011da2",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325525+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "99d47dcb32ad3b8df85182f45b64cd97e72f21f6ad81115f19ea7d43fac64178",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 5,
+            "timestamp": "2026-10-04T09:15:34.325537+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "e25e5fcd2d1162bc50b1e40bb27b62e33e2e040f4819705311a30480c6f898fa",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325588+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "S-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "8029683ca1353b1fd30d12a115cd8710128db87453ea230e655d16ec19011da2",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 6,
+            "timestamp": "2026-10-04T09:15:34.325601+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "ba60d9295c80884ee8538a02b6ccfe265511c8654dc575327d5f706a80dc9723",
+            "payload": {
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "score": 3,
+              "source": "jira"
+            },
+            "previous_hash": "e25e5fcd2d1162bc50b1e40bb27b62e33e2e040f4819705311a30480c6f898fa",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 7,
+            "timestamp": "2026-10-04T09:15:34.325653+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "559cb6d88426a5b5951fef587f2ab3faf5fbcf87df70eb5f9b5acaa04eeda204",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325673+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "ba60d9295c80884ee8538a02b6ccfe265511c8654dc575327d5f706a80dc9723",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 8,
+            "timestamp": "2026-10-04T09:15:34.325684+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "55cc08cf3b487c6e7727590387ec797e3d8b8c420cbeb938ad567a204d3d76ec",
+            "payload": {
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "score": 3,
+              "source": "slack"
+            },
+            "previous_hash": "559cb6d88426a5b5951fef587f2ab3faf5fbcf87df70eb5f9b5acaa04eeda204",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 9,
+            "timestamp": "2026-10-04T09:15:34.325721+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "54607f8459b6b65d938b5ff8fc9f356fcb3aca82428e3f979dc559db537ea87c",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325739+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "55cc08cf3b487c6e7727590387ec797e3d8b8c420cbeb938ad567a204d3d76ec",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 10,
+            "timestamp": "2026-10-04T09:15:34.325750+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "95a6d0c75439092091921c03c3690eb3588748717d80853214830929b087759a",
+            "payload": {
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "score": 2,
+              "source": "confluence"
+            },
+            "previous_hash": "54607f8459b6b65d938b5ff8fc9f356fcb3aca82428e3f979dc559db537ea87c",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 11,
+            "timestamp": "2026-10-04T09:15:34.325780+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "5b3373a810b9a6bb412e263270a7ebcc85dc0bb0854b0681cf3106ad61abdab0",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325798+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 1
+            },
+            "previous_hash": "95a6d0c75439092091921c03c3690eb3588748717d80853214830929b087759a",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 12,
+            "timestamp": "2026-10-04T09:15:34.325808+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "196ee986af21f568583d164c19148fefc5d7b9a4e4194c691c0daf2230d7ea94",
+            "payload": {
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "drive"
+            },
+            "previous_hash": "5b3373a810b9a6bb412e263270a7ebcc85dc0bb0854b0681cf3106ad61abdab0",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 13,
+            "timestamp": "2026-10-04T09:15:34.325835+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "895f71b94d9b4775c15c5fcbc9c622b40f195f630f4b35287ab81d38d7a8997b",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325853+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "196ee986af21f568583d164c19148fefc5d7b9a4e4194c691c0daf2230d7ea94",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 14,
+            "timestamp": "2026-10-04T09:15:34.325865+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "7132c6502ac86e168fed3c8c1927985804b0f4bd793ff259b3cbca2b6e91be79",
+            "payload": {
+              "resource_id": "S-02",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "slack"
+            },
+            "previous_hash": "895f71b94d9b4775c15c5fcbc9c622b40f195f630f4b35287ab81d38d7a8997b",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 15,
+            "timestamp": "2026-10-04T09:15:34.325896+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "e091c091e358fe7cd85579d4ee304d1e36c7f3dbbf4dda7877898499acf4d75d",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325916+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "S-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "7132c6502ac86e168fed3c8c1927985804b0f4bd793ff259b3cbca2b6e91be79",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 16,
+            "timestamp": "2026-10-04T09:15:34.325926+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "4bb5c6fa4295fc2b5fb821724775e0bd2cc29973847447ae213c9df4864abe6e",
+            "payload": {
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "score": 0,
+              "source": "jira"
+            },
+            "previous_hash": "e091c091e358fe7cd85579d4ee304d1e36c7f3dbbf4dda7877898499acf4d75d",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 17,
+            "timestamp": "2026-10-04T09:15:34.325952+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "0068e41e0b494f5b2bfd80fdf71f2c2603ed92be5f897673073843deae2aea97",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.325969+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "4bb5c6fa4295fc2b5fb821724775e0bd2cc29973847447ae213c9df4864abe6e",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 18,
+            "timestamp": "2026-10-04T09:15:34.325981+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "d24a43ee185ee33bc49a9fe2573c5c0387d8b024fe3a26a2d7dc287050db4263",
+            "payload": {
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "score": 0,
+              "source": "jira"
+            },
+            "previous_hash": "0068e41e0b494f5b2bfd80fdf71f2c2603ed92be5f897673073843deae2aea97",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 19,
+            "timestamp": "2026-10-04T09:15:34.326009+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "2e25c72813a71d48652d4ea5b5015574cafdae0faeebb1f5a4f3f780a261b58a",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326027+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "d24a43ee185ee33bc49a9fe2573c5c0387d8b024fe3a26a2d7dc287050db4263",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 20,
+            "timestamp": "2026-10-04T09:15:34.326036+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "193d71ceb47a1572e9418d04dc31952efd0e56df3f125199b4b72b4375c2d965",
+            "payload": {
+              "resource_id": "C-02",
+              "resource_scope": "payment-service",
+              "score": 0,
+              "source": "confluence"
+            },
+            "previous_hash": "2e25c72813a71d48652d4ea5b5015574cafdae0faeebb1f5a4f3f780a261b58a",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 21,
+            "timestamp": "2026-10-04T09:15:34.326062+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "dfcd0c065ec152a2ca8efba2c6ca9fe0102759defd7a749c779da30e8078b2e2",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326079+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "C-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 1
+            },
+            "previous_hash": "193d71ceb47a1572e9418d04dc31952efd0e56df3f125199b4b72b4375c2d965",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 22,
+            "timestamp": "2026-10-04T09:15:34.326088+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "48719aad7a94d075845089e07a6f4d725ee2f23bf07b1d0b8ced3af1d37f9ff0",
+            "payload": {
+              "resource_id": "D-02",
+              "resource_scope": "payment-service",
+              "score": 0,
+              "source": "drive"
+            },
+            "previous_hash": "dfcd0c065ec152a2ca8efba2c6ca9fe0102759defd7a749c779da30e8078b2e2",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 23,
+            "timestamp": "2026-10-04T09:15:34.326116+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "44b5d1d278d94235df129fb79ce8721999904ca8255bb26a538ea946bf62523f",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326133+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "D-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "48719aad7a94d075845089e07a6f4d725ee2f23bf07b1d0b8ced3af1d37f9ff0",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 24,
+            "timestamp": "2026-10-04T09:15:34.326142+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "98ba3d67c4c5707541f808f4d74813561a290c5b4d2ba05964363a47cacd6c7a",
+            "payload": {
+              "evidence_id": "J-01@1",
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "44b5d1d278d94235df129fb79ce8721999904ca8255bb26a538ea946bf62523f",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 25,
+            "timestamp": "2026-10-04T09:15:34.326170+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "12ec010538a331cb553e6c58f3e606f511773b40a4cda2d47965ec086667cb9d",
+            "payload": {
+              "evidence_id": "S-01@1",
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "source": "slack",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "98ba3d67c4c5707541f808f4d74813561a290c5b4d2ba05964363a47cacd6c7a",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 26,
+            "timestamp": "2026-10-04T09:15:34.326197+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "0d81d43478a05730d3210843dfd9b64cf1de514f4a5663697ab15bc871fe5e95",
+            "payload": {
+              "evidence_id": "C-01@1",
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "source": "confluence",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "12ec010538a331cb553e6c58f3e606f511773b40a4cda2d47965ec086667cb9d",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 27,
+            "timestamp": "2026-10-04T09:15:34.326222+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "2ac0a0aa39ee9d15da6243bd83c5f3e5e51b68d7019ff289d835527c0559cca9",
+            "payload": {
+              "evidence_id": "D-01@1",
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "source": "drive",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "0d81d43478a05730d3210843dfd9b64cf1de514f4a5663697ab15bc871fe5e95",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 28,
+            "timestamp": "2026-10-04T09:15:34.326244+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "e3924d3a1d56ac38a0661cf66d21b0fc62dc1d1a34831107977d8929b5e8c67b",
+            "payload": {
+              "evidence_id": "S-02@1",
+              "resource_id": "S-02",
+              "resource_scope": "payment-service",
+              "source": "slack",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "2ac0a0aa39ee9d15da6243bd83c5f3e5e51b68d7019ff289d835527c0559cca9",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 29,
+            "timestamp": "2026-10-04T09:15:34.326265+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "7e20250974c7c12ad20573ee5839ed6ac4c1d22a29f4c0c8d4c2c117814e08f8",
+            "payload": {
+              "evidence_id": "J-02@1",
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "e3924d3a1d56ac38a0661cf66d21b0fc62dc1d1a34831107977d8929b5e8c67b",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 30,
+            "timestamp": "2026-10-04T09:15:34.326286+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "d1e3f1019309d345651cc0f41adb6f0d0dad1a1da863d04197c4e172ce63c096",
+            "payload": {
+              "evidence_id": "J-03@1",
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "7e20250974c7c12ad20573ee5839ed6ac4c1d22a29f4c0c8d4c2c117814e08f8",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 31,
+            "timestamp": "2026-10-04T09:15:34.326311+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "4899366b3552070a9d2096ffb4241302bb849901c786446d17d55ccac2d35c47",
+            "payload": {
+              "evidence_id": "C-02@1",
+              "resource_id": "C-02",
+              "resource_scope": "payment-service",
+              "source": "confluence",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "d1e3f1019309d345651cc0f41adb6f0d0dad1a1da863d04197c4e172ce63c096",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 32,
+            "timestamp": "2026-10-04T09:15:34.326333+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "36bb17f234a676ad58123e213c656b95f75600e287875b03f305406667961cd9",
+            "payload": {
+              "evidence_id": "D-02@1",
+              "resource_id": "D-02",
+              "resource_scope": "payment-service",
+              "source": "drive",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "4899366b3552070a9d2096ffb4241302bb849901c786446d17d55ccac2d35c47",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 33,
+            "timestamp": "2026-10-04T09:15:34.326354+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "generation_completed",
+            "hash": "091a5ae2a11be51f0ed7926217fc05c6148a1914bcd96df7d66def98b53e32e4",
+            "payload": {
+              "cited": [
+                "J-01@1",
+                "S-01@1",
+                "C-01@1",
+                "D-01@1",
+                "S-02@1",
+                "J-02@1",
+                "J-03@1",
+                "C-02@1",
+                "D-02@1"
+              ],
+              "model": "fake-extractive-v1"
+            },
+            "previous_hash": "36bb17f234a676ad58123e213c656b95f75600e287875b03f305406667961cd9",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 34,
+            "timestamp": "2026-10-04T09:15:34.326426+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "4ca037b6ed7a97d51c23f57bb47b08288ec2019596f8178e68c61ff9fb82981e",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326455+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "091a5ae2a11be51f0ed7926217fc05c6148a1914bcd96df7d66def98b53e32e4",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 35,
+            "timestamp": "2026-10-04T09:15:34.326466+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "0567412284630c792346b1488ce823d10686ea110e980818a96fd00217dcbe1b",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326496+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "4ca037b6ed7a97d51c23f57bb47b08288ec2019596f8178e68c61ff9fb82981e",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 36,
+            "timestamp": "2026-10-04T09:15:34.326507+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "fe251c777949ae3a0405c011c960edb06625815afd05dc6811a043f57e5a2cc2",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326535+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 1
+            },
+            "previous_hash": "0567412284630c792346b1488ce823d10686ea110e980818a96fd00217dcbe1b",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 37,
+            "timestamp": "2026-10-04T09:15:34.326545+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "b1cb56c49164bb6d311284ad5c93f7792e34095ef5a16ea6da214d387e8fd7ee",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326573+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "fe251c777949ae3a0405c011c960edb06625815afd05dc6811a043f57e5a2cc2",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 38,
+            "timestamp": "2026-10-04T09:15:34.326583+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "038bc0b45b6e41770d32f3781d9f96b00322a31e3b0a484944a573888e9cd1a2",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326610+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "S-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "b1cb56c49164bb6d311284ad5c93f7792e34095ef5a16ea6da214d387e8fd7ee",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 39,
+            "timestamp": "2026-10-04T09:15:34.326620+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "cd621cfcbd6d58bffc3916e14ad33429fd75a3c2fe9bdd51a984111967b252e2",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326649+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "038bc0b45b6e41770d32f3781d9f96b00322a31e3b0a484944a573888e9cd1a2",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 40,
+            "timestamp": "2026-10-04T09:15:34.326659+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "7a013308f55fe61d93d8dbacc5aae4c5383f92094a37670f1d296407eee15a7f",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326685+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "cd621cfcbd6d58bffc3916e14ad33429fd75a3c2fe9bdd51a984111967b252e2",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 41,
+            "timestamp": "2026-10-04T09:15:34.326695+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "83d9590566ce75e2c94f520a4571e7fba018e43eed8f94b8d65dfcfac1a15360",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326721+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "C-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 1
+            },
+            "previous_hash": "7a013308f55fe61d93d8dbacc5aae4c5383f92094a37670f1d296407eee15a7f",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 42,
+            "timestamp": "2026-10-04T09:15:34.326731+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "e4553387f93b07af2e443bc71feac2f2874a75c1d10d3fc8162e986248b16cda",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.326760+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "D-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "83d9590566ce75e2c94f520a4571e7fba018e43eed8f94b8d65dfcfac1a15360",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 43,
+            "timestamp": "2026-10-04T09:15:34.326770+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "response_committed",
+            "hash": "170803ed9bad87ce2968b32d733c7b36f2a0e17296b8d07587ed9512d304f043",
+            "payload": {
+              "response": {
+                "actor": "eng_a",
+                "claims": [
+                  {
+                    "evidence_ids": [
+                      "J-01@1"
+                    ],
+                    "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook."
+                  },
+                  {
+                    "evidence_ids": [
+                      "S-01@1"
+                    ],
+                    "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2."
+                  },
+                  {
+                    "evidence_ids": [
+                      "C-01@1"
+                    ],
+                    "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+                  },
+                  {
+                    "evidence_ids": [
+                      "D-01@1"
+                    ],
+                    "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+                  },
+                  {
+                    "evidence_ids": [
+                      "S-02@1"
+                    ],
+                    "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-02@1"
+                    ],
+                    "text": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-03@1"
+                    ],
+                    "text": "PAY-103 protective measures: In Progress. Owner: Maya."
+                  },
+                  {
+                    "evidence_ids": [
+                      "C-02@1"
+                    ],
+                    "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+                  },
+                  {
+                    "evidence_ids": [
+                      "D-02@1"
+                    ],
+                    "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+                  }
+                ],
+                "evidence": [
+                  {
+                    "evidence_id": "J-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324746+00:00",
+                    "locator": {
+                      "field": "description"
+                    },
+                    "resource_id": "J-01",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-01",
+                    "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+                    "title": "PAY-101 Payment-service incident",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "S-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324823+00:00",
+                    "locator": {
+                      "channel": "incident",
+                      "messages": [
+                        "1790816400.000001",
+                        "1790817300.000001",
+                        "1790820000.000001"
+                      ],
+                      "thread": "1790816400.000001"
+                    },
+                    "resource_id": "S-01",
+                    "source": "slack",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/slack/S-01",
+                    "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+                    "title": "Private incident discussion",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "C-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324595+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Failover procedure"
+                    },
+                    "resource_id": "C-01",
+                    "source": "confluence",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/confluence/C-01",
+                    "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+                    "title": "Payment-service runbook",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "D-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324912+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Confirmed root cause"
+                    },
+                    "resource_id": "D-01",
+                    "source": "drive",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/drive/D-01",
+                    "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+                    "title": "Final payment-service postmortem",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "S-02@1",
+                    "indexed_at": "2026-10-04T09:15:34.324857+00:00",
+                    "locator": {
+                      "channel": "release",
+                      "thread": "1790823600.000001"
+                    },
+                    "resource_id": "S-02",
+                    "source": "slack",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/slack/S-02",
+                    "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+                    "title": "Release coordination",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "J-02@1",
+                    "indexed_at": "2026-10-04T09:15:34.324773+00:00",
+                    "locator": {
+                      "field": "status and description"
+                    },
+                    "resource_id": "J-02",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-02",
+                    "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+                    "title": "PAY-102 Retry configuration fix",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "J-03@1",
+                    "indexed_at": "2026-10-04T09:15:34.324798+00:00",
+                    "locator": {
+                      "field": "status and assignee"
+                    },
+                    "resource_id": "J-03",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-03",
+                    "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+                    "title": "PAY-103 Protective measures",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "C-02@1",
+                    "indexed_at": "2026-10-04T09:15:34.324682+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Supported rollout"
+                    },
+                    "resource_id": "C-02",
+                    "source": "confluence",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/confluence/C-02",
+                    "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+                    "title": "Payment-retry capability",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "D-02@1",
+                    "indexed_at": "2026-10-04T09:15:34.324938+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Approval decision"
+                    },
+                    "resource_id": "D-02",
+                    "source": "drive",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/drive/D-02",
+                    "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+                    "title": "Payment-retry release approval",
+                    "version": 1
+                  }
+                ],
+                "mode": "fixture_fake_model",
+                "model": "fake-extractive-v1",
+                "request_id": "6ef0961e5dd540f1844b424de332d518",
+                "uncertainties": [
+                  "Source excerpts only; live AI synthesis is not enabled."
+                ]
+              }
+            },
+            "previous_hash": "e4553387f93b07af2e443bc71feac2f2874a75c1d10d3fc8162e986248b16cda",
+            "request_id": "6ef0961e5dd540f1844b424de332d518",
+            "schema_version": 1,
+            "seq": 44,
+            "timestamp": "2026-10-04T09:15:34.326825+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "request_started",
+            "hash": "612fa51706e3600ab1daaeec8335dcd345bdc470af9b0b6a6cead9850dd23190",
+            "payload": {
+              "candidate_strategy": "local ACL snapshot + keyword overlap + authorized one-hop links",
+              "history_id": null,
+              "mode": "fixture_fake_model",
+              "query": "What is the latest payment-service runbook, including the new failover check?"
+            },
+            "previous_hash": "4ffc166d10e15e95c6c1a8975083baa5116c3b033b9e923862e4fb8074b0a7e1",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 68,
+            "timestamp": "2026-10-04T09:15:34.328173+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "5b0aef45b8d2f5b010a1bd629c1dce7a29bbac7c31729d4d09cd78599b69a584",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.328332+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 2
+            },
+            "previous_hash": "612fa51706e3600ab1daaeec8335dcd345bdc470af9b0b6a6cead9850dd23190",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 69,
+            "timestamp": "2026-10-04T09:15:34.328345+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "599999ee6cd894202de7653101c4571f59e872ee14b0255d2dbf260288d73226",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.328371+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "5b0aef45b8d2f5b010a1bd629c1dce7a29bbac7c31729d4d09cd78599b69a584",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 70,
+            "timestamp": "2026-10-04T09:15:34.328382+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "2dd03e4d1b0c5d25cc9880b56cc05a33cb3c907e5d2479a3cd8c59c3c58c10d8",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.328403+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "599999ee6cd894202de7653101c4571f59e872ee14b0255d2dbf260288d73226",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 71,
+            "timestamp": "2026-10-04T09:15:34.328414+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "18b95071e0b3a77f83cc2d7d32957161583fcded4a90825f5fe9541daec69c7a",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.328522+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "2dd03e4d1b0c5d25cc9880b56cc05a33cb3c907e5d2479a3cd8c59c3c58c10d8",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 72,
+            "timestamp": "2026-10-04T09:15:34.328550+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "838ebf07a7586de01829a2d471b16250e40f87b34296b3ff86cd726e0761a90f",
+            "payload": {
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "score": 3,
+              "source": "confluence"
+            },
+            "previous_hash": "18b95071e0b3a77f83cc2d7d32957161583fcded4a90825f5fe9541daec69c7a",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 73,
+            "timestamp": "2026-10-04T09:15:34.328738+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "71ebf22ba2fcc579b1fa325f71f2dbc809e521f31ecdc8130120d7ba44172b85",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.328807+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 2
+            },
+            "previous_hash": "838ebf07a7586de01829a2d471b16250e40f87b34296b3ff86cd726e0761a90f",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 74,
+            "timestamp": "2026-10-04T09:15:34.328841+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "16bf807bea74482ef118d59ce2ee2815269971eb8d9d6f3542ef8ae60f77a08c",
+            "payload": {
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "score": 2,
+              "source": "jira"
+            },
+            "previous_hash": "71ebf22ba2fcc579b1fa325f71f2dbc809e521f31ecdc8130120d7ba44172b85",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 75,
+            "timestamp": "2026-10-04T09:15:34.328887+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "36f783774c5bebc415a0a23147021e2359c6873d61c10da9ecd356173282c4d2",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.328911+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "16bf807bea74482ef118d59ce2ee2815269971eb8d9d6f3542ef8ae60f77a08c",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 76,
+            "timestamp": "2026-10-04T09:15:34.328927+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "79976d423d10f833887c04ae72847c584d1470b25b95b12f33889f3e69c7d4d8",
+            "payload": {
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "drive"
+            },
+            "previous_hash": "36f783774c5bebc415a0a23147021e2359c6873d61c10da9ecd356173282c4d2",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 77,
+            "timestamp": "2026-10-04T09:15:34.328966+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "f8743ad0b9b71f782cbdcaa2b81b9259e0fc6824ca1f2b741e9520df831041ed",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.328987+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "79976d423d10f833887c04ae72847c584d1470b25b95b12f33889f3e69c7d4d8",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 78,
+            "timestamp": "2026-10-04T09:15:34.329000+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "e5f599158019e8e610a232d8c830afc0249051ec43196a71ee416144a7511bf4",
+            "payload": {
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "slack"
+            },
+            "previous_hash": "f8743ad0b9b71f782cbdcaa2b81b9259e0fc6824ca1f2b741e9520df831041ed",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 79,
+            "timestamp": "2026-10-04T09:15:34.329028+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "65d889bb79fc34bde7073e255b87016c4a8dc2cb0b4ad907b48919dc3762a813",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.329046+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "e5f599158019e8e610a232d8c830afc0249051ec43196a71ee416144a7511bf4",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 80,
+            "timestamp": "2026-10-04T09:15:34.329056+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "1faf7b9962b8523b7ddc4c77e42d393a22af70d17434df29f3f6be0f3c3da473",
+            "payload": {
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "score": 0,
+              "source": "jira"
+            },
+            "previous_hash": "65d889bb79fc34bde7073e255b87016c4a8dc2cb0b4ad907b48919dc3762a813",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 81,
+            "timestamp": "2026-10-04T09:15:34.329083+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "179c225955d8852d99a5df6f7c677b44d1b9876436da8b2d93ed02eb8a679ac6",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.329101+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "1faf7b9962b8523b7ddc4c77e42d393a22af70d17434df29f3f6be0f3c3da473",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 82,
+            "timestamp": "2026-10-04T09:15:34.329112+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "feddeaa70cd14e2cb86a17212191011d8fe74089b99bd78fd97475506d96c111",
+            "payload": {
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "score": 0,
+              "source": "jira"
+            },
+            "previous_hash": "179c225955d8852d99a5df6f7c677b44d1b9876436da8b2d93ed02eb8a679ac6",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 83,
+            "timestamp": "2026-10-04T09:15:34.329195+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "c57898203134f76f134f6f6b7ca212ca47ee2c0037d58b9d106516491989f55c",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.329244+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "feddeaa70cd14e2cb86a17212191011d8fe74089b99bd78fd97475506d96c111",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 84,
+            "timestamp": "2026-10-04T09:15:34.329268+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "7d5b3465d207d1d60e7bad7084ab8d6b44fc0fee4a263450938fb96a221e511b",
+            "payload": {
+              "evidence_id": "C-01@2",
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "source": "confluence",
+              "stage": "sent_to_model",
+              "version": 2
+            },
+            "previous_hash": "c57898203134f76f134f6f6b7ca212ca47ee2c0037d58b9d106516491989f55c",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 85,
+            "timestamp": "2026-10-04T09:15:34.329309+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "f5c6ea187d9a00faa959740d533e121c9f81798074fd604279c72e06c0f8e22d",
+            "payload": {
+              "evidence_id": "J-01@1",
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "7d5b3465d207d1d60e7bad7084ab8d6b44fc0fee4a263450938fb96a221e511b",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 86,
+            "timestamp": "2026-10-04T09:15:34.329339+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "cba860690cd5b6ca37c6cc4cf6a90230c2e9c82febb4ded9ccb14a5c7e1ad79a",
+            "payload": {
+              "evidence_id": "D-01@1",
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "source": "drive",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "f5c6ea187d9a00faa959740d533e121c9f81798074fd604279c72e06c0f8e22d",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 87,
+            "timestamp": "2026-10-04T09:15:34.329364+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "f0aff16383f4df61a07218695012aa90bced9d660c9f0bf8121fc247071469ae",
+            "payload": {
+              "evidence_id": "S-01@1",
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "source": "slack",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "cba860690cd5b6ca37c6cc4cf6a90230c2e9c82febb4ded9ccb14a5c7e1ad79a",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 88,
+            "timestamp": "2026-10-04T09:15:34.329388+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "473ceb8035a57c8f58965bec5463efa0f59274af0a77dc3912271ea1d289be7f",
+            "payload": {
+              "evidence_id": "J-02@1",
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "f0aff16383f4df61a07218695012aa90bced9d660c9f0bf8121fc247071469ae",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 89,
+            "timestamp": "2026-10-04T09:15:34.329411+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "3f364e11c490ed555b713692d90cda755ac6cc33bf70297eab674decdbfa7a06",
+            "payload": {
+              "evidence_id": "J-03@1",
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "473ceb8035a57c8f58965bec5463efa0f59274af0a77dc3912271ea1d289be7f",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 90,
+            "timestamp": "2026-10-04T09:15:34.329434+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "generation_completed",
+            "hash": "486a5119c2c1916a50db773c6af281e8bada391b1b5239e0ada684a063156b5e",
+            "payload": {
+              "cited": [
+                "C-01@2",
+                "J-01@1",
+                "D-01@1",
+                "S-01@1",
+                "J-02@1",
+                "J-03@1"
+              ],
+              "model": "fake-extractive-v1"
+            },
+            "previous_hash": "3f364e11c490ed555b713692d90cda755ac6cc33bf70297eab674decdbfa7a06",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 91,
+            "timestamp": "2026-10-04T09:15:34.329496+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "fb7becca5378498691bf5fe1ea88afaac4359f8f59b3363d7c4daa01be93a07a",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.329534+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 2
+            },
+            "previous_hash": "486a5119c2c1916a50db773c6af281e8bada391b1b5239e0ada684a063156b5e",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 92,
+            "timestamp": "2026-10-04T09:15:34.329549+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "6f739daec1d075d2d9f90e11072773072e39fde1efe81a24bb7a3703ece61c5a",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.329583+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "fb7becca5378498691bf5fe1ea88afaac4359f8f59b3363d7c4daa01be93a07a",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 93,
+            "timestamp": "2026-10-04T09:15:34.329596+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "b0a2c1ec5a7fe055dd8fb5efe93eb6198648dc56e4d431d80f763d0aca883c67",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.329626+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "6f739daec1d075d2d9f90e11072773072e39fde1efe81a24bb7a3703ece61c5a",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 94,
+            "timestamp": "2026-10-04T09:15:34.329638+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "fabf7d127994f3c7ca709dcfb308c56b9a9690b17c2a03d45440d19d093c8a51",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.329668+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "b0a2c1ec5a7fe055dd8fb5efe93eb6198648dc56e4d431d80f763d0aca883c67",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 95,
+            "timestamp": "2026-10-04T09:15:34.329679+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "803ea9f4cee734fdfbaf73d21b75f7c762c3f6430cd5816f8cbd62259b2e094b",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.329707+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "fabf7d127994f3c7ca709dcfb308c56b9a9690b17c2a03d45440d19d093c8a51",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 96,
+            "timestamp": "2026-10-04T09:15:34.329718+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "2bb3867e330ad39f715e78788bf061e3fc9f3eb46a739c276a3e18ff8733fe03",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.329744+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "803ea9f4cee734fdfbaf73d21b75f7c762c3f6430cd5816f8cbd62259b2e094b",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 97,
+            "timestamp": "2026-10-04T09:15:34.329755+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "response_committed",
+            "hash": "55099a7a5467d37f1d0595e0e7b97f6d71975aba3ae68bad4063810e185d02c5",
+            "payload": {
+              "response": {
+                "actor": "eng_a",
+                "claims": [
+                  {
+                    "evidence_ids": [
+                      "C-01@2"
+                    ],
+                    "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-01@1"
+                    ],
+                    "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook."
+                  },
+                  {
+                    "evidence_ids": [
+                      "D-01@1"
+                    ],
+                    "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+                  },
+                  {
+                    "evidence_ids": [
+                      "S-01@1"
+                    ],
+                    "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-02@1"
+                    ],
+                    "text": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-03@1"
+                    ],
+                    "text": "PAY-103 protective measures: In Progress. Owner: Maya."
+                  }
+                ],
+                "evidence": [
+                  {
+                    "evidence_id": "C-01@2",
+                    "indexed_at": "2026-10-04T09:15:34.328064+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Failover procedure"
+                    },
+                    "resource_id": "C-01",
+                    "source": "confluence",
+                    "source_updated_at": "2026-10-04T09:15:34.327994+00:00",
+                    "source_url": "fixture://synthetic-demo/confluence/C-01",
+                    "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook.",
+                    "title": "Payment-service runbook",
+                    "version": 2
+                  },
+                  {
+                    "evidence_id": "J-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324746+00:00",
+                    "locator": {
+                      "field": "description"
+                    },
+                    "resource_id": "J-01",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-01",
+                    "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+                    "title": "PAY-101 Payment-service incident",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "D-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324912+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Confirmed root cause"
+                    },
+                    "resource_id": "D-01",
+                    "source": "drive",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/drive/D-01",
+                    "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+                    "title": "Final payment-service postmortem",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "S-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324823+00:00",
+                    "locator": {
+                      "channel": "incident",
+                      "messages": [
+                        "1790816400.000001",
+                        "1790817300.000001",
+                        "1790820000.000001"
+                      ],
+                      "thread": "1790816400.000001"
+                    },
+                    "resource_id": "S-01",
+                    "source": "slack",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/slack/S-01",
+                    "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+                    "title": "Private incident discussion",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "J-02@1",
+                    "indexed_at": "2026-10-04T09:15:34.324773+00:00",
+                    "locator": {
+                      "field": "status and description"
+                    },
+                    "resource_id": "J-02",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-02",
+                    "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+                    "title": "PAY-102 Retry configuration fix",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "J-03@1",
+                    "indexed_at": "2026-10-04T09:15:34.324798+00:00",
+                    "locator": {
+                      "field": "status and assignee"
+                    },
+                    "resource_id": "J-03",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-03",
+                    "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+                    "title": "PAY-103 Protective measures",
+                    "version": 1
+                  }
+                ],
+                "mode": "fixture_fake_model",
+                "model": "fake-extractive-v1",
+                "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+                "uncertainties": [
+                  "Source excerpts only; live AI synthesis is not enabled."
+                ]
+              }
+            },
+            "previous_hash": "2bb3867e330ad39f715e78788bf061e3fc9f3eb46a739c276a3e18ff8733fe03",
+            "request_id": "cc9acb6143c24609a1de3dc4dc5caf7c",
+            "schema_version": 1,
+            "seq": 98,
+            "timestamp": "2026-10-04T09:15:34.329799+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "request_started",
+            "hash": "40111a8a3752ac78d6932a10be807eb8cd4aeb3de504f00a672a3ba31f4295bc",
+            "payload": {
+              "candidate_strategy": "local ACL snapshot + keyword overlap + authorized one-hop links",
+              "history_id": null,
+              "mode": "fixture_fake_model",
+              "query": "Summarize the payment-service incident thread."
+            },
+            "previous_hash": "38e93ddc1fc20f4a2aab0200c21166f0403686f5f117979deb45c53c0deb422f",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 102,
+            "timestamp": "2026-10-04T09:15:34.330225+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "279e3d9ee4b2307559fd7d8989fa76f3f43e1ffc827027d190fdebd7d3634a2c",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330387+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "40111a8a3752ac78d6932a10be807eb8cd4aeb3de504f00a672a3ba31f4295bc",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 103,
+            "timestamp": "2026-10-04T09:15:34.330401+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "33ff8ec70e800dbd354bb9871e9cf4b67d13fa12f22be9580ea1ab8f4dbf4d5b",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330424+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "279e3d9ee4b2307559fd7d8989fa76f3f43e1ffc827027d190fdebd7d3634a2c",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 104,
+            "timestamp": "2026-10-04T09:15:34.330436+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "361067260b814e6ae608840b9b7ece43c8186e443608468ff884509f32976259",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330456+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 2
+            },
+            "previous_hash": "33ff8ec70e800dbd354bb9871e9cf4b67d13fa12f22be9580ea1ab8f4dbf4d5b",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 105,
+            "timestamp": "2026-10-04T09:15:34.330467+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "131e4c32db572433f6adb5f6cd17b53145b8f941ee2bb7240e58876f406f0af2",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330488+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "361067260b814e6ae608840b9b7ece43c8186e443608468ff884509f32976259",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 106,
+            "timestamp": "2026-10-04T09:15:34.330499+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "6bb4b1da8f0745f7b7c9d5532d420ca106174ca21f5a36ad5e705e8957e8aeeb",
+            "payload": {
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "score": 3,
+              "source": "slack"
+            },
+            "previous_hash": "131e4c32db572433f6adb5f6cd17b53145b8f941ee2bb7240e58876f406f0af2",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 107,
+            "timestamp": "2026-10-04T09:15:34.330541+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "bdb3365fad1cf9a3366d160677523974e4d2a5cb5bd3a757a84aa702f3b132fa",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330560+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "6bb4b1da8f0745f7b7c9d5532d420ca106174ca21f5a36ad5e705e8957e8aeeb",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 108,
+            "timestamp": "2026-10-04T09:15:34.330571+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "0e26a3c04d0b18f765aa0eca5a2324cdd0adcf062a5611aeb3d911401e9155fe",
+            "payload": {
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "score": 2,
+              "source": "jira"
+            },
+            "previous_hash": "bdb3365fad1cf9a3366d160677523974e4d2a5cb5bd3a757a84aa702f3b132fa",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 109,
+            "timestamp": "2026-10-04T09:15:34.330599+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "30c5d46876e7b8bb44f103fe07d678b75ba7a46bfa53acf1be6358ac19f7f73b",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330617+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "0e26a3c04d0b18f765aa0eca5a2324cdd0adcf062a5611aeb3d911401e9155fe",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 110,
+            "timestamp": "2026-10-04T09:15:34.330627+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "060be85d25bbd35cd1227be599e15d0809decc125f2de9d74edc5dc62f4e00a2",
+            "payload": {
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "confluence"
+            },
+            "previous_hash": "30c5d46876e7b8bb44f103fe07d678b75ba7a46bfa53acf1be6358ac19f7f73b",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 111,
+            "timestamp": "2026-10-04T09:15:34.330653+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "552100937a558c07c11943716eda0352e62f500b43f1df2c8ac2123975baa53f",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330671+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 2
+            },
+            "previous_hash": "060be85d25bbd35cd1227be599e15d0809decc125f2de9d74edc5dc62f4e00a2",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 112,
+            "timestamp": "2026-10-04T09:15:34.330681+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "80a428ea437baf4b8c2fa84a82a44af028b8f8cc81fc5ef1e6e981041fe0e94d",
+            "payload": {
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "drive"
+            },
+            "previous_hash": "552100937a558c07c11943716eda0352e62f500b43f1df2c8ac2123975baa53f",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 113,
+            "timestamp": "2026-10-04T09:15:34.330708+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "09bebecbddf257c3f6e9d249b6b365af413bf584c2af343cbeb543685d7f36fd",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330726+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "80a428ea437baf4b8c2fa84a82a44af028b8f8cc81fc5ef1e6e981041fe0e94d",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 114,
+            "timestamp": "2026-10-04T09:15:34.330735+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "5cf54fa460f7ef12d55935cd77ae0f5e16b4a7a19b28611a3246451137a221b4",
+            "payload": {
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "score": 0,
+              "source": "jira"
+            },
+            "previous_hash": "09bebecbddf257c3f6e9d249b6b365af413bf584c2af343cbeb543685d7f36fd",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 115,
+            "timestamp": "2026-10-04T09:15:34.330762+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "bd7d7748fb99cedee8a53649bdb34c5aed7f3db7836f18347f39a43e6da2e939",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330779+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "5cf54fa460f7ef12d55935cd77ae0f5e16b4a7a19b28611a3246451137a221b4",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 116,
+            "timestamp": "2026-10-04T09:15:34.330789+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "a91fdad280b8f5c71d2b85ad757aa4b47b8ded72a6206508739771feb64334e6",
+            "payload": {
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "score": 0,
+              "source": "jira"
+            },
+            "previous_hash": "bd7d7748fb99cedee8a53649bdb34c5aed7f3db7836f18347f39a43e6da2e939",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 117,
+            "timestamp": "2026-10-04T09:15:34.330816+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "1bd6b68993fdbd21324189556bba3a93c08a82a696612341b0d7ca5836556f5d",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.330832+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "a91fdad280b8f5c71d2b85ad757aa4b47b8ded72a6206508739771feb64334e6",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 118,
+            "timestamp": "2026-10-04T09:15:34.330842+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "4c6aed2c373f6c46b08591fcc6ae9366a12cb3705c2cfd1a535754d40cac8359",
+            "payload": {
+              "evidence_id": "S-01@1",
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "source": "slack",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "1bd6b68993fdbd21324189556bba3a93c08a82a696612341b0d7ca5836556f5d",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 119,
+            "timestamp": "2026-10-04T09:15:34.330867+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "8e9f6ee0388d3dbdbb9e4f0cd26cdd92dc6a0aabea1f983d0fcd75eb4315e1a0",
+            "payload": {
+              "evidence_id": "J-01@1",
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "4c6aed2c373f6c46b08591fcc6ae9366a12cb3705c2cfd1a535754d40cac8359",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 120,
+            "timestamp": "2026-10-04T09:15:34.330892+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "002675b4f6c5fdb350b1f08f53b6fbc7f942004816e47aeaf708fef3c0d4743d",
+            "payload": {
+              "evidence_id": "C-01@2",
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "source": "confluence",
+              "stage": "sent_to_model",
+              "version": 2
+            },
+            "previous_hash": "8e9f6ee0388d3dbdbb9e4f0cd26cdd92dc6a0aabea1f983d0fcd75eb4315e1a0",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 121,
+            "timestamp": "2026-10-04T09:15:34.330915+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "4c5085b0700190800463ba5ede82e614433e07af1fa4b17f901b3e0a5401c171",
+            "payload": {
+              "evidence_id": "D-01@1",
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "source": "drive",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "002675b4f6c5fdb350b1f08f53b6fbc7f942004816e47aeaf708fef3c0d4743d",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 122,
+            "timestamp": "2026-10-04T09:15:34.330937+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "4168b41a5d348a0a8d472e572fc886b8adfa39a05dfb6ecfd1dd123fae605807",
+            "payload": {
+              "evidence_id": "J-02@1",
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "4c5085b0700190800463ba5ede82e614433e07af1fa4b17f901b3e0a5401c171",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 123,
+            "timestamp": "2026-10-04T09:15:34.330958+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "70730adf89fa999762082bb946bcb22c065f3e26b18a169e9d4621fcae35f788",
+            "payload": {
+              "evidence_id": "J-03@1",
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "4168b41a5d348a0a8d472e572fc886b8adfa39a05dfb6ecfd1dd123fae605807",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 124,
+            "timestamp": "2026-10-04T09:15:34.330980+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "generation_completed",
+            "hash": "0007960c3b2b2b0be8f0d2a67517483f83c74f44f07863313cf34566dbffd28a",
+            "payload": {
+              "cited": [
+                "S-01@1",
+                "J-01@1",
+                "C-01@2",
+                "D-01@1",
+                "J-02@1",
+                "J-03@1"
+              ],
+              "model": "fake-extractive-v1"
+            },
+            "previous_hash": "70730adf89fa999762082bb946bcb22c065f3e26b18a169e9d4621fcae35f788",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 125,
+            "timestamp": "2026-10-04T09:15:34.331033+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "b3d222131f116ea01bd8af63bddce2755d9f348947e964a087924f339b0f99d4",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331064+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "0007960c3b2b2b0be8f0d2a67517483f83c74f44f07863313cf34566dbffd28a",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 126,
+            "timestamp": "2026-10-04T09:15:34.331077+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "6df5c8cf61f14d9dc5d1b39f4f9ec44be34d6a797976503d0bd94e77b68633d2",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331108+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "b3d222131f116ea01bd8af63bddce2755d9f348947e964a087924f339b0f99d4",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 127,
+            "timestamp": "2026-10-04T09:15:34.331119+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "22b27e642f8320775a331d389989f1da2c109637ce63c599824ac54776b47e8b",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331155+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 2
+            },
+            "previous_hash": "6df5c8cf61f14d9dc5d1b39f4f9ec44be34d6a797976503d0bd94e77b68633d2",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 128,
+            "timestamp": "2026-10-04T09:15:34.331169+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "244c0fc422c4a5f361f4038d642080288da91ef629510e50ae646b43e59d7e7b",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331201+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "22b27e642f8320775a331d389989f1da2c109637ce63c599824ac54776b47e8b",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 129,
+            "timestamp": "2026-10-04T09:15:34.331211+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "b3f6738296663bfb5d254a729d4e9dc8a7d60a5fd588b77b18e796fd320e7a1f",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331238+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "244c0fc422c4a5f361f4038d642080288da91ef629510e50ae646b43e59d7e7b",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 130,
+            "timestamp": "2026-10-04T09:15:34.331248+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "690159a82e884989cba093526149ed3ab910abee3f408cf13e7ca026a57304b9",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331274+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "b3f6738296663bfb5d254a729d4e9dc8a7d60a5fd588b77b18e796fd320e7a1f",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 131,
+            "timestamp": "2026-10-04T09:15:34.331284+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "response_committed",
+            "hash": "71536f14055945eed902714b202a4720017a4dcd5bcb830dbf404c63ab570a5b",
+            "payload": {
+              "response": {
+                "actor": "eng_a",
+                "claims": [
+                  {
+                    "evidence_ids": [
+                      "S-01@1"
+                    ],
+                    "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-01@1"
+                    ],
+                    "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook."
+                  },
+                  {
+                    "evidence_ids": [
+                      "C-01@2"
+                    ],
+                    "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook."
+                  },
+                  {
+                    "evidence_ids": [
+                      "D-01@1"
+                    ],
+                    "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-02@1"
+                    ],
+                    "text": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-03@1"
+                    ],
+                    "text": "PAY-103 protective measures: In Progress. Owner: Maya."
+                  }
+                ],
+                "evidence": [
+                  {
+                    "evidence_id": "S-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324823+00:00",
+                    "locator": {
+                      "channel": "incident",
+                      "messages": [
+                        "1790816400.000001",
+                        "1790817300.000001",
+                        "1790820000.000001"
+                      ],
+                      "thread": "1790816400.000001"
+                    },
+                    "resource_id": "S-01",
+                    "source": "slack",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/slack/S-01",
+                    "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+                    "title": "Private incident discussion",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "J-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324746+00:00",
+                    "locator": {
+                      "field": "description"
+                    },
+                    "resource_id": "J-01",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-01",
+                    "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+                    "title": "PAY-101 Payment-service incident",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "C-01@2",
+                    "indexed_at": "2026-10-04T09:15:34.328064+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Failover procedure"
+                    },
+                    "resource_id": "C-01",
+                    "source": "confluence",
+                    "source_updated_at": "2026-10-04T09:15:34.327994+00:00",
+                    "source_url": "fixture://synthetic-demo/confluence/C-01",
+                    "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook.",
+                    "title": "Payment-service runbook",
+                    "version": 2
+                  },
+                  {
+                    "evidence_id": "D-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324912+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Confirmed root cause"
+                    },
+                    "resource_id": "D-01",
+                    "source": "drive",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/drive/D-01",
+                    "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+                    "title": "Final payment-service postmortem",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "J-02@1",
+                    "indexed_at": "2026-10-04T09:15:34.324773+00:00",
+                    "locator": {
+                      "field": "status and description"
+                    },
+                    "resource_id": "J-02",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-02",
+                    "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+                    "title": "PAY-102 Retry configuration fix",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "J-03@1",
+                    "indexed_at": "2026-10-04T09:15:34.324798+00:00",
+                    "locator": {
+                      "field": "status and assignee"
+                    },
+                    "resource_id": "J-03",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-03",
+                    "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+                    "title": "PAY-103 Protective measures",
+                    "version": 1
+                  }
+                ],
+                "mode": "fixture_fake_model",
+                "model": "fake-extractive-v1",
+                "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+                "uncertainties": [
+                  "Source excerpts only; live AI synthesis is not enabled."
+                ]
+              }
+            },
+            "previous_hash": "690159a82e884989cba093526149ed3ab910abee3f408cf13e7ca026a57304b9",
+            "request_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+            "schema_version": 1,
+            "seq": 132,
+            "timestamp": "2026-10-04T09:15:34.331326+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "request_started",
+            "hash": "c5082a2bb2d9595af5ba098b44a9ca90bfb1c44403b557a6edbfae92c63928ec",
+            "payload": {
+              "candidate_strategy": "local ACL snapshot + keyword overlap + authorized one-hop links",
+              "history_id": "60f4f0e6573347c5ba39dc59d457cdbc",
+              "mode": "fixture_fake_model",
+              "query": "Repeat the details from the incident thread you just used."
+            },
+            "previous_hash": "71536f14055945eed902714b202a4720017a4dcd5bcb830dbf404c63ab570a5b",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 133,
+            "timestamp": "2026-10-04T09:15:34.331505+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "efa89523d5783645e2733506e02b29ba7b4fc45938b7d488151cacaa68a824c1",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331722+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 2,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "deny",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "c5082a2bb2d9595af5ba098b44a9ca90bfb1c44403b557a6edbfae92c63928ec",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 134,
+            "timestamp": "2026-10-04T09:15:34.331738+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "c3d3ca66a04f6670404ea3251e14e665fe8b8dec97441080676bb85f65b1ea11",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331762+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "efa89523d5783645e2733506e02b29ba7b4fc45938b7d488151cacaa68a824c1",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 135,
+            "timestamp": "2026-10-04T09:15:34.331773+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "53812f13892b31ba1baa8ad6cf3b8812439f450acd8fbfa0e564d44a626eb6e4",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331794+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 2
+            },
+            "previous_hash": "c3d3ca66a04f6670404ea3251e14e665fe8b8dec97441080676bb85f65b1ea11",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 136,
+            "timestamp": "2026-10-04T09:15:34.331805+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "9877340b9d21ef77eeeaa3490672b189aec4770036f50b006ef874f576ac3b0d",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331825+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "53812f13892b31ba1baa8ad6cf3b8812439f450acd8fbfa0e564d44a626eb6e4",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 137,
+            "timestamp": "2026-10-04T09:15:34.331835+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "ce3bb422a742da77b4b131504902017aa2570779727faee2aecd88f7a69f5a0c",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331855+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "9877340b9d21ef77eeeaa3490672b189aec4770036f50b006ef874f576ac3b0d",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 138,
+            "timestamp": "2026-10-04T09:15:34.331864+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "e3ad2c6d2bfd812aa91462fa56f2f25a74d781308a257e0582ca77dc2e10d820",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331891+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "link_seed",
+              "policy_version": 1,
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "ce3bb422a742da77b4b131504902017aa2570779727faee2aecd88f7a69f5a0c",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 139,
+            "timestamp": "2026-10-04T09:15:34.331902+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "46926cd184856f97e0fe55300335b7a2c7b4dc9fd1b0e8cc56fe621e4a4ed3e3",
+            "payload": {
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "score": 3,
+              "source": "slack"
+            },
+            "previous_hash": "e3ad2c6d2bfd812aa91462fa56f2f25a74d781308a257e0582ca77dc2e10d820",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 140,
+            "timestamp": "2026-10-04T09:15:34.331928+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "8776d5faf693929e90cfa80ae3fed542a1bffad16c4f6fa833c17db2b84c13b1",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331945+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 2,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "deny",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "46926cd184856f97e0fe55300335b7a2c7b4dc9fd1b0e8cc56fe621e4a4ed3e3",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 141,
+            "timestamp": "2026-10-04T09:15:34.331954+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "8da5a1dd3d9e07402a9700ae9c96ede79d0d7d15ef8d0a641f0f43390e1aff80",
+            "payload": {
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "score": 2,
+              "source": "jira"
+            },
+            "previous_hash": "8776d5faf693929e90cfa80ae3fed542a1bffad16c4f6fa833c17db2b84c13b1",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 142,
+            "timestamp": "2026-10-04T09:15:34.331980+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "978311ff5ca5b23507cfaee0a19ca40b290df0d6bc1d1372880cfa2b50d3d523",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.331997+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "8da5a1dd3d9e07402a9700ae9c96ede79d0d7d15ef8d0a641f0f43390e1aff80",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 143,
+            "timestamp": "2026-10-04T09:15:34.332006+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "e2ac2dfb147d116fa8e74dc6a51895fc3a3d026cdcfe2ec0c9aa39c244796729",
+            "payload": {
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "confluence"
+            },
+            "previous_hash": "978311ff5ca5b23507cfaee0a19ca40b290df0d6bc1d1372880cfa2b50d3d523",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 144,
+            "timestamp": "2026-10-04T09:15:34.332033+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "929533f0158e7f944b774e039f28c82b0fd93172f74aca362584b905acdffdd6",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332050+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 2
+            },
+            "previous_hash": "e2ac2dfb147d116fa8e74dc6a51895fc3a3d026cdcfe2ec0c9aa39c244796729",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 145,
+            "timestamp": "2026-10-04T09:15:34.332060+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "a28a73ebbb2fba3a17279f5eae03d5bacb563fe94b37030264be20bcf97ae408",
+            "payload": {
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "drive"
+            },
+            "previous_hash": "929533f0158e7f944b774e039f28c82b0fd93172f74aca362584b905acdffdd6",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 146,
+            "timestamp": "2026-10-04T09:15:34.332086+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "49fcbaceed10fc341b09009204f96d26d70d9a494341cc5d0f7a6869779890e7",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332102+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "a28a73ebbb2fba3a17279f5eae03d5bacb563fe94b37030264be20bcf97ae408",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 147,
+            "timestamp": "2026-10-04T09:15:34.332112+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "011a1a6dc253069a0dc1ed6d2f8ea98dbbe3a025a56e3a5439772903d27241c2",
+            "payload": {
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "jira"
+            },
+            "previous_hash": "49fcbaceed10fc341b09009204f96d26d70d9a494341cc5d0f7a6869779890e7",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 148,
+            "timestamp": "2026-10-04T09:15:34.332138+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "d836f6592c7c0229c93b67864e55f888f7472c79316b283bc69af19982135b0a",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332156+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "011a1a6dc253069a0dc1ed6d2f8ea98dbbe3a025a56e3a5439772903d27241c2",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 149,
+            "timestamp": "2026-10-04T09:15:34.332166+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "5a8026e4183ce9375ad8145178e320228ff02f6507bfaf13f97f4bc04b6a648b",
+            "payload": {
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "score": 1,
+              "source": "jira"
+            },
+            "previous_hash": "d836f6592c7c0229c93b67864e55f888f7472c79316b283bc69af19982135b0a",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 150,
+            "timestamp": "2026-10-04T09:15:34.332192+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "30b4eb1ba7ce164819a3dd72d389bc16468691ccb70420e0f90d4df48e46e3a6",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332208+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "5a8026e4183ce9375ad8145178e320228ff02f6507bfaf13f97f4bc04b6a648b",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 151,
+            "timestamp": "2026-10-04T09:15:34.332218+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "candidate_evaluated",
+            "hash": "33765270c63c431c31b3a23aafb20dd06cc6ce27c239d04eeb55acd8c4991f30",
+            "payload": {
+              "resource_id": "D-02",
+              "resource_scope": "payment-service",
+              "score": 0,
+              "source": "drive"
+            },
+            "previous_hash": "30b4eb1ba7ce164819a3dd72d389bc16468691ccb70420e0f90d4df48e46e3a6",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 152,
+            "timestamp": "2026-10-04T09:15:34.332243+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "7ddd3aaed4a07a09be0d800bbfe808c45328aa1876fb7279c72505d5baaae60a",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332260+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_model",
+              "policy_version": 1,
+              "resource_id": "D-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "33765270c63c431c31b3a23aafb20dd06cc6ce27c239d04eeb55acd8c4991f30",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 153,
+            "timestamp": "2026-10-04T09:15:34.332269+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "d14ac8c268987a409d3249d289782eeca717da9e50d69a48722b32f034dfa329",
+            "payload": {
+              "evidence_id": "J-01@1",
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "7ddd3aaed4a07a09be0d800bbfe808c45328aa1876fb7279c72505d5baaae60a",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 154,
+            "timestamp": "2026-10-04T09:15:34.332295+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "76eeaa46c3af393cdb9b0d7d3ccf50bc9649d6344b6236d5e0737e18b67e8463",
+            "payload": {
+              "evidence_id": "C-01@2",
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "source": "confluence",
+              "stage": "sent_to_model",
+              "version": 2
+            },
+            "previous_hash": "d14ac8c268987a409d3249d289782eeca717da9e50d69a48722b32f034dfa329",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 155,
+            "timestamp": "2026-10-04T09:15:34.332318+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "129d3d4e7150d390d56ed458c7fa9274434a0443753a79fffdd9091cfe254f8f",
+            "payload": {
+              "evidence_id": "D-01@1",
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "source": "drive",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "76eeaa46c3af393cdb9b0d7d3ccf50bc9649d6344b6236d5e0737e18b67e8463",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 156,
+            "timestamp": "2026-10-04T09:15:34.332340+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "158a733185adffb62a94b079d59542b718e7dc4b667cf55adafeaf1ef940ae5a",
+            "payload": {
+              "evidence_id": "J-02@1",
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "129d3d4e7150d390d56ed458c7fa9274434a0443753a79fffdd9091cfe254f8f",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 157,
+            "timestamp": "2026-10-04T09:15:34.332369+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "51bce90eef8e200b8171444348aac27d4fd7b31387f5c8f2f8fcc7d54d8aaa57",
+            "payload": {
+              "evidence_id": "J-03@1",
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "source": "jira",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "158a733185adffb62a94b079d59542b718e7dc4b667cf55adafeaf1ef940ae5a",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 158,
+            "timestamp": "2026-10-04T09:15:34.332392+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "evidence_used",
+            "hash": "42896b6991125720daa0967193eb53769c163d60a9728ae48acaf717e7a2db7e",
+            "payload": {
+              "evidence_id": "D-02@1",
+              "resource_id": "D-02",
+              "resource_scope": "payment-service",
+              "source": "drive",
+              "stage": "sent_to_model",
+              "version": 1
+            },
+            "previous_hash": "51bce90eef8e200b8171444348aac27d4fd7b31387f5c8f2f8fcc7d54d8aaa57",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 159,
+            "timestamp": "2026-10-04T09:15:34.332413+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "generation_completed",
+            "hash": "26a66aa7a3b6e67c7058d0d8b37de5f4fed1d278c5bd7989c08e31dfae679b45",
+            "payload": {
+              "cited": [
+                "J-01@1",
+                "C-01@2",
+                "D-01@1",
+                "J-02@1",
+                "J-03@1",
+                "D-02@1"
+              ],
+              "model": "fake-extractive-v1"
+            },
+            "previous_hash": "42896b6991125720daa0967193eb53769c163d60a9728ae48acaf717e7a2db7e",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 160,
+            "timestamp": "2026-10-04T09:15:34.332681+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "9cf255577a41eb569c0c55ef867ea15cac5d7c3c336fb61bf0d6ba47f98e083b",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332713+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "26a66aa7a3b6e67c7058d0d8b37de5f4fed1d278c5bd7989c08e31dfae679b45",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 161,
+            "timestamp": "2026-10-04T09:15:34.332726+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "9a149d0bf6defa61ecafb2caa89433c704a0beda09bccd5e2ccb3b1e5891c6e8",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332756+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "C-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "confluence",
+              "version": 2
+            },
+            "previous_hash": "9cf255577a41eb569c0c55ef867ea15cac5d7c3c336fb61bf0d6ba47f98e083b",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 162,
+            "timestamp": "2026-10-04T09:15:34.332767+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "9fd2985fa768f54a30f5e1c911668b55098f6ab06adedffed88c1bdd123b17eb",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332796+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "D-01",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "9a149d0bf6defa61ecafb2caa89433c704a0beda09bccd5e2ccb3b1e5891c6e8",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 163,
+            "timestamp": "2026-10-04T09:15:34.332807+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "8b7efc4932614ccc7cb6094bb01586dec189230c303fbc8009c3ce8140ebc143",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332835+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "9fd2985fa768f54a30f5e1c911668b55098f6ab06adedffed88c1bdd123b17eb",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 164,
+            "timestamp": "2026-10-04T09:15:34.332845+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "8648122cdb85c8049cac3e55b4ae33c46a4921d3de78c9d347b7032e6b2d36df",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332872+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "J-03",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "jira",
+              "version": 1
+            },
+            "previous_hash": "8b7efc4932614ccc7cb6094bb01586dec189230c303fbc8009c3ce8140ebc143",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 165,
+            "timestamp": "2026-10-04T09:15:34.332882+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "b157f6801ed4fb5b833aaef9eeac4c57f932d995e876c235ccacb25762f14851",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.332908+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "before_dispatch",
+              "policy_version": 1,
+              "resource_id": "D-02",
+              "resource_scope": "payment-service",
+              "result": "allow",
+              "source": "drive",
+              "version": 1
+            },
+            "previous_hash": "8648122cdb85c8049cac3e55b4ae33c46a4921d3de78c9d347b7032e6b2d36df",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 166,
+            "timestamp": "2026-10-04T09:15:34.332918+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "response_committed",
+            "hash": "5dd8cdb9a93111c15552fbaeadf6121b9f057eb0b7b34d1e34e62f927a88c8fd",
+            "payload": {
+              "response": {
+                "actor": "eng_a",
+                "claims": [
+                  {
+                    "evidence_ids": [
+                      "J-01@1"
+                    ],
+                    "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook."
+                  },
+                  {
+                    "evidence_ids": [
+                      "C-01@2"
+                    ],
+                    "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook."
+                  },
+                  {
+                    "evidence_ids": [
+                      "D-01@1"
+                    ],
+                    "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-02@1"
+                    ],
+                    "text": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+                  },
+                  {
+                    "evidence_ids": [
+                      "J-03@1"
+                    ],
+                    "text": "PAY-103 protective measures: In Progress. Owner: Maya."
+                  },
+                  {
+                    "evidence_ids": [
+                      "D-02@1"
+                    ],
+                    "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+                  }
+                ],
+                "evidence": [
+                  {
+                    "evidence_id": "J-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324746+00:00",
+                    "locator": {
+                      "field": "description"
+                    },
+                    "resource_id": "J-01",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-01",
+                    "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+                    "title": "PAY-101 Payment-service incident",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "C-01@2",
+                    "indexed_at": "2026-10-04T09:15:34.328064+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Failover procedure"
+                    },
+                    "resource_id": "C-01",
+                    "source": "confluence",
+                    "source_updated_at": "2026-10-04T09:15:34.327994+00:00",
+                    "source_url": "fixture://synthetic-demo/confluence/C-01",
+                    "text": "Runbook v2: first verify that the standby processing queue is ready, then perform failover according to the runbook.",
+                    "title": "Payment-service runbook",
+                    "version": 2
+                  },
+                  {
+                    "evidence_id": "D-01@1",
+                    "indexed_at": "2026-10-04T09:15:34.324912+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Confirmed root cause"
+                    },
+                    "resource_id": "D-01",
+                    "source": "drive",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/drive/D-01",
+                    "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+                    "title": "Final payment-service postmortem",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "J-02@1",
+                    "indexed_at": "2026-10-04T09:15:34.324773+00:00",
+                    "locator": {
+                      "field": "status and description"
+                    },
+                    "resource_id": "J-02",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-02",
+                    "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+                    "title": "PAY-102 Retry configuration fix",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "J-03@1",
+                    "indexed_at": "2026-10-04T09:15:34.324798+00:00",
+                    "locator": {
+                      "field": "status and assignee"
+                    },
+                    "resource_id": "J-03",
+                    "source": "jira",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/jira/J-03",
+                    "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+                    "title": "PAY-103 Protective measures",
+                    "version": 1
+                  },
+                  {
+                    "evidence_id": "D-02@1",
+                    "indexed_at": "2026-10-04T09:15:34.324938+00:00",
+                    "locator": {
+                      "paragraph": 1,
+                      "section": "Approval decision"
+                    },
+                    "resource_id": "D-02",
+                    "source": "drive",
+                    "source_updated_at": "2026-10-01T09:00:00+08:00",
+                    "source_url": "fixture://synthetic-demo/drive/D-02",
+                    "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+                    "title": "Payment-retry release approval",
+                    "version": 1
+                  }
+                ],
+                "mode": "fixture_fake_model",
+                "model": "fake-extractive-v1",
+                "request_id": "8c44c2052de84f51890a1a643316ef32",
+                "uncertainties": [
+                  "Source excerpts only; live AI synthesis is not enabled."
+                ]
+              }
+            },
+            "previous_hash": "b157f6801ed4fb5b833aaef9eeac4c57f932d995e876c235ccacb25762f14851",
+            "request_id": "8c44c2052de84f51890a1a643316ef32",
+            "schema_version": 1,
+            "seq": 167,
+            "timestamp": "2026-10-04T09:15:34.332962+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "b7d0ff8255fa8a19f7f9c23961053e77418c8607d7b9833f9766d88d77f356b1",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.333137+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "preview",
+              "policy_version": 2,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "deny",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "5dd8cdb9a93111c15552fbaeadf6121b9f057eb0b7b34d1e34e62f927a88c8fd",
+            "request_id": "evidence",
+            "schema_version": 1,
+            "seq": 168,
+            "timestamp": "2026-10-04T09:15:34.333163+00:00"
+          },
+          {
+            "actor": "eng_a",
+            "event_type": "authorization_decided",
+            "hash": "957f569a7076feadca4977a05fd62753d8e124b136d3a07d5fc098390859f2cb",
+            "payload": {
+              "checked_at": "2026-10-04T09:15:34.333203+00:00",
+              "method": "fixture-current-source-policy",
+              "phase": "preview",
+              "policy_version": 2,
+              "resource_id": "S-01",
+              "resource_scope": "payment-service",
+              "result": "deny",
+              "source": "slack",
+              "version": 1
+            },
+            "previous_hash": "b7d0ff8255fa8a19f7f9c23961053e77418c8607d7b9833f9766d88d77f356b1",
+            "request_id": "evidence",
+            "schema_version": 1,
+            "seq": 169,
+            "timestamp": "2026-10-04T09:15:34.333214+00:00"
+          }
+        ],
+        "checks": {
+          "original": {
+            "valid": true,
+            "events": 190,
+            "anchored_through": 190,
+            "signature_verified": false,
+            "boundary": "local chain only; independent signed checkpoint pending"
+          },
+          "modified": {
+            "valid": false,
+            "reason": "chain_mismatch",
+            "sequence": 1
+          },
+          "middle_deleted": {
+            "valid": false,
+            "reason": "chain_mismatch",
+            "sequence": 3
+          },
+          "covered_tail_deleted": {
+            "valid": false,
+            "reason": "trusted_head_mismatch"
+          }
+        },
+        "limitations": [
+          "Checkpoint held in test memory, not signed or independently operated.",
+          "A-02 database role isolation and A-03/A-04 signed checkpoint acceptance remain blocked."
+        ]
+      },
+      "duration_ms": 36.224
+    }
+  ],
+  "live_api": "not_run",
+  "live_model": "not_run",
+  "human_G1": "not_run",
+  "codebuddy": "not_started"
+}

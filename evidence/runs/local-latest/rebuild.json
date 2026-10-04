@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-10-04T09:15:36.954552+00:00",
+  "commit": "61fd1265f570aed6461ab8f9805542b185344c41",
+  "mode": "clean_git_archive_fixture",
+  "destination": "/tmp/ai-bang2-final-rebuild-s976ern1",
+  "checks": [
+    {
+      "scope": "working checkout",
+      "command": [
+        "make",
+        "test-report"
+      ],
+      "exit_code": 0
+    },
+    {
+      "scope": "working checkout",
+      "command": [
+        "make",
+        "verify"
+      ],
+      "exit_code": 0
+    },
+    {
+      "scope": "git archive",
+      "command": [
+        "make",
+        "setup"
+      ],
+      "exit_code": 0,
+      "output": "python3 -c \"import sqlite3; import sys; assert sys.version_info >= (3, 11); print('Standard-library runtime ready')\"\nStandard-library runtime ready\n"
+    },
+    {
+      "scope": "git archive",
+      "command": [
+        "make",
+        "test-report"
+      ],
+      "exit_code": 0,
+      "output": "python3 -m scripts.test_report\ntest_concurrent_append_and_tamper_boundaries (test_audit_more.AuditIntegrity.test_concurrent_append_and_tamper_boundaries) ... ok\ntest_parser_timezone_range_and_rejection (test_audit_more.AuditIntegrity.test_parser_timezone_range_and_rejection) ... ok\ntest_comment_cannot_outlive_parent_access (test_contracts.Contracts.test_comment_cannot_outlive_parent_access) ... ok\ntest_complete_matrix (test_contracts.Contracts.test_complete_matrix) ... ok\ntest_fixture_schema_and_locators (test_contracts.Contracts.test_fixture_schema_and_locators) ... ok\ntest_pagination_and_identity_boundary (test_contracts.Contracts.test_pagination_and_identity_boundary) ... ok\ntest_audit_connection_rejects_mutation (test_engine.Core.test_audit_connection_rejects_mutation) ... ok\ntest_audit_failure_blocks_answer (test_engine.Core.test_audit_failure_blocks_answer) ... ok\ntest_audit_scope_and_pagination (test_engine.Core.test_audit_scope_and_pagination) ... ok\ntest_cross_source_claims_and_audit (test_engine.Core.test_cross_source_claims_and_audit) ... ok\ntest_evidence_injection_remains_data_and_restricted_links_deny (test_engine.Core.test_evidence_injection_remains_data_and_restricted_links_deny) ... ok\ntest_history_followup_and_export_after_revoke (test_engine.Core.test_history_followup_and_export_after_revoke) ... ok\ntest_invalid_citation_and_unsupported_claim_rejected (test_engine.Core.test_invalid_citation_and_unsupported_claim_rejected) ... ok\ntest_mid_generation_audit_failure_never_returns_success (test_engine.Core.test_mid_generation_audit_failure_never_returns_success) ... ok\ntest_mid_generation_revoke_blocks_dispatch (test_engine.Core.test_mid_generation_revoke_blocks_dispatch) ... ok\ntest_natural_worked_example_link_followups (test_engine.Core.test_natural_worked_example_link_followups) ... ok\ntest_product_and_contractor_useful (test_engine.Core.test_product_and_contractor_useful) ... ok\ntest_prompt_injection_does_not_grant_access (test_engine.Core.test_prompt_injection_does_not_grant_access) ... ok\ntest_restricted_and_missing_same_visible_answer (test_engine.Core.test_restricted_and_missing_same_visible_answer) ... ok\ntest_same_role_private_membership (test_engine.Core.test_same_role_private_membership) ... ok\ntest_source_revoke_stale_local_all_four (test_engine.Core.test_source_revoke_stale_local_all_four) ... ok\ntest_unknown_all_sources_fail_closed (test_engine.Core.test_unknown_all_sources_fail_closed) ... ok\ntest_csrf_host_and_evidence_protection (test_http.HTTP.test_csrf_host_and_evidence_protection) ... ok\ntest_http_frontend_identity_and_query (test_http.HTTP.test_http_frontend_identity_and_query) ... ok\ntest_local_authority_file_update_and_restart (test_http.HTTP.test_local_authority_file_update_and_restart) ... ok\ntest_source_file_revocation_during_generation_is_seen (test_http.HTTP.test_source_file_revocation_during_generation_is_seen) ... ok\ntest_create_each_source_and_delete_without_rebuild (test_ingestion.Incremental.test_create_each_source_and_delete_without_rebuild) ... ok\ntest_duplicate_out_of_order_retry_atomic (test_ingestion.Incremental.test_duplicate_out_of_order_retry_atomic) ... ok\ntest_failed_poll_resumes_from_checkpoint (test_ingestion.Incremental.test_failed_poll_resumes_from_checkpoint) ... ok\ntest_four_source_update_one_object_only (test_ingestion.Incremental.test_four_source_update_one_object_only) ... ok\ntest_out_of_order_success_cannot_skip_failed_job (test_ingestion.Incremental.test_out_of_order_success_cannot_skip_failed_job) ... ok\ntest_revoke_no_reindex_delete_immediate_and_history_version (test_ingestion.Incremental.test_revoke_no_reindex_delete_immediate_and_history_version) ... ok\n\n----------------------------------------------------------------------\nRan 32 tests in 2.126s\n\nOK\n"
+    },
+    {
+      "scope": "git archive",
+      "command": [
+        "make",
+        "verify"
+      ],
+      "exit_code": 0,
+      "output": "python3 -m scripts.evaluate\n{\n  \"mode\": \"fixture_fake_model\",\n  \"scenarios\": [\n    {\n      \"id\": \"S-01\",\n      \"status\": \"passed_local_subset\"\n    },\n    {\n      \"id\": \"S-02\",\n      \"status\": \"passed_local_subset\"\n    },\n    {\n      \"id\": \"S-03\",\n      \"status\": \"passed_local_subset\"\n    },\n    {\n      \"id\": \"S-04\",\n      \"status\": \"passed_local_subset\"\n    },\n    {\n      \"id\": \"S-05\",\n      \"status\": \"passed_local_subset\"\n    }\n  ],\n  \"report\": \"evidence/runs/local-latest/scenarios.json\"\n}\n"
+    },
+    {
+      "scope": "git archive",
+      "command": [
+        "node",
+        "--check",
+        "web/app.js"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ]
+}
