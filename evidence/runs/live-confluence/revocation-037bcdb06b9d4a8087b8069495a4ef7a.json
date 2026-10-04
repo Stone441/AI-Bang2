@@ -1,0 +1,467 @@
+{
+  "provenance": "user_executed_live_runner_agent_operated_native_acl_and_inspected_database",
+  "report": {
+    "mode": "confluence_live_api_fake_model",
+    "started_at": "2026-10-04T18:05:29.416613+00:00",
+    "actor": "eng_b",
+    "page_id": "98564",
+    "status": "passed_operator_subset",
+    "baseline_request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+    "evidence_id": "confluence:98564@1",
+    "checks": {
+      "source_returns_deny_not_unknown": true,
+      "followup_excludes_revoked_resource": true,
+      "model_input_excludes_revoked_resource": true,
+      "old_answer_unavailable": true,
+      "old_citation_unavailable": true,
+      "indexed_copy_retained_without_rebuild": true,
+      "audit_chain_valid": true
+    },
+    "followup_request_id": "acc85a5299ed4083950472e1ceb3c345",
+    "audit_events": 18,
+    "signature_verified": false,
+    "boundary": "Confluence API + fake model; trusted local operator, not frontend SSO; no independent signature checkpoint",
+    "finished_at": "2026-10-04T18:07:57.329027+00:00"
+  },
+  "agent_database_checks": {
+    "baseline_contains_c01": true,
+    "followup_no_c01_evidence_or_claims": true,
+    "no_followup_sent_to_model_c01": true,
+    "native_deny_for_query": true,
+    "history_and_citation_checks_native_deny": true,
+    "indexed_v1_retained": true,
+    "chain_valid": true
+  },
+  "responses": [
+    {
+      "actor": "eng_b",
+      "claims": [
+        {
+          "evidence_ids": [
+            "confluence:98564@1"
+          ],
+          "text": "SYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+        }
+      ],
+      "evidence": [
+        {
+          "evidence_id": "confluence:98564@1",
+          "indexed_at": "2026-10-04T18:05:31.278709+00:00",
+          "locator": {
+            "page_id": "98564",
+            "version": 1
+          },
+          "resource_id": "confluence:98564",
+          "source": "confluence",
+          "source_updated_at": "2026-10-04T17:21:59.651Z",
+          "source_url": "https://ssy44199.atlassian.net/wiki/pages/viewpage.action?pageId=98564",
+          "text": "SYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+          "title": "C-01 · Payment-service runbook",
+          "version": 1
+        }
+      ],
+      "mode": "confluence_live_api_fake_model",
+      "model": "fake-extractive-v1",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "uncertainties": [
+        "Source excerpts only; live AI synthesis is not enabled."
+      ]
+    },
+    {
+      "actor": "eng_b",
+      "claims": [],
+      "evidence": [],
+      "mode": "confluence_live_api_fake_model",
+      "model": "fake-extractive-v1",
+      "request_id": "acc85a5299ed4083950472e1ceb3c345",
+      "uncertainties": [
+        "Insufficient evidence in the currently accessible material."
+      ]
+    }
+  ],
+  "audit_events": [
+    {
+      "actor": "eng_b",
+      "event_type": "request_started",
+      "hash": "ef72dededad10f69cc735fc24228f8b71e3a3c7470126f4a314d02365fb10257",
+      "payload": {
+        "candidate_strategy": "authority prefilter + keyword overlap + authorized one-hop links",
+        "history_id": null,
+        "mode": "confluence_live_api_fake_model",
+        "query": "Show the payment-service runbook"
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 1,
+      "timestamp": "2026-10-04T18:05:29.417202+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "52612bc176bb3b5cf5b249185c4dfcbce52f5adab22bad51db27ad77de9d4bf9",
+      "payload": {
+        "checked_at": "2026-10-04T18:05:30.466135+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "source_refresh",
+        "policy_version": 0,
+        "resource_id": "confluence:164283",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "ef72dededad10f69cc735fc24228f8b71e3a3c7470126f4a314d02365fb10257",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 2,
+      "timestamp": "2026-10-04T18:05:30.466277+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "07a14f38136defd7feedd2094bce1e04a0b07fad22ec33d766143cef3cb0a796",
+      "payload": {
+        "checked_at": "2026-10-04T18:05:31.274559+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "source_refresh",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "52612bc176bb3b5cf5b249185c4dfcbce52f5adab22bad51db27ad77de9d4bf9",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 3,
+      "timestamp": "2026-10-04T18:05:31.274873+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "a4f89e8420a81785ddc546d154d762c5b1a05b3ef84be3fdfa45fb11460b9e33",
+      "payload": {
+        "checked_at": "2026-10-04T18:05:32.064392+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "link_seed",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "07a14f38136defd7feedd2094bce1e04a0b07fad22ec33d766143cef3cb0a796",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 4,
+      "timestamp": "2026-10-04T18:05:32.064603+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "candidate_evaluated",
+      "hash": "c7a265dba6846402fd6b44de46a462f5acffbfef650ec54ef01f02b6d9bdea83",
+      "payload": {
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "score": 2,
+        "source": "confluence"
+      },
+      "previous_hash": "a4f89e8420a81785ddc546d154d762c5b1a05b3ef84be3fdfa45fb11460b9e33",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 5,
+      "timestamp": "2026-10-04T18:05:32.065537+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "6d730986dba6bbf6f3ffc2ab97a405e5d402cb5896b1a57d02f7f82c8abd1f6f",
+      "payload": {
+        "checked_at": "2026-10-04T18:05:32.684672+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "before_model",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "c7a265dba6846402fd6b44de46a462f5acffbfef650ec54ef01f02b6d9bdea83",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 6,
+      "timestamp": "2026-10-04T18:05:32.685089+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "0414816ba99abf47acca3f4884008e8b5b75ced0e979021b37a34aa7c3443aab",
+      "payload": {
+        "checked_at": "2026-10-04T18:05:33.315334+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "model_dispatch",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "6d730986dba6bbf6f3ffc2ab97a405e5d402cb5896b1a57d02f7f82c8abd1f6f",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 7,
+      "timestamp": "2026-10-04T18:05:33.315687+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "evidence_used",
+      "hash": "f5ced7d2b632782ae5d7848c119da02bae1616d4d32fba230b1910a48043246b",
+      "payload": {
+        "evidence_id": "confluence:98564@1",
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "source": "confluence",
+        "stage": "sent_to_model",
+        "version": 1
+      },
+      "previous_hash": "0414816ba99abf47acca3f4884008e8b5b75ced0e979021b37a34aa7c3443aab",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 8,
+      "timestamp": "2026-10-04T18:05:33.317132+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "generation_completed",
+      "hash": "14f25b65fdb4851c2a7a18dcf2c6293957da5740903ffa189b9bd5f88e51daf8",
+      "payload": {
+        "cited": [
+          "confluence:98564@1"
+        ],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "f5ced7d2b632782ae5d7848c119da02bae1616d4d32fba230b1910a48043246b",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 9,
+      "timestamp": "2026-10-04T18:05:33.318511+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "5703683fc500c771b890941723ff04d289a41734434b7d8f2ad83b3fb88a741d",
+      "payload": {
+        "checked_at": "2026-10-04T18:05:34.078656+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "before_dispatch",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "14f25b65fdb4851c2a7a18dcf2c6293957da5740903ffa189b9bd5f88e51daf8",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 10,
+      "timestamp": "2026-10-04T18:05:34.078796+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "response_committed",
+      "hash": "9fa86f5532fa125867d77cb544efb088b80744db626877c6669f66bab7e3c005",
+      "payload": {
+        "response": {
+          "actor": "eng_b",
+          "claims": [
+            {
+              "evidence_ids": [
+                "confluence:98564@1"
+              ],
+              "text": "SYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "confluence:98564@1",
+              "indexed_at": "2026-10-04T18:05:31.278709+00:00",
+              "locator": {
+                "page_id": "98564",
+                "version": 1
+              },
+              "resource_id": "confluence:98564",
+              "source": "confluence",
+              "source_updated_at": "2026-10-04T17:21:59.651Z",
+              "source_url": "https://ssy44199.atlassian.net/wiki/pages/viewpage.action?pageId=98564",
+              "text": "SYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+              "title": "C-01 · Payment-service runbook",
+              "version": 1
+            }
+          ],
+          "mode": "confluence_live_api_fake_model",
+          "model": "fake-extractive-v1",
+          "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ]
+        }
+      },
+      "previous_hash": "5703683fc500c771b890941723ff04d289a41734434b7d8f2ad83b3fb88a741d",
+      "request_id": "0c3b4a72be374136af8301aaa3b9acd1",
+      "schema_version": 1,
+      "seq": 11,
+      "timestamp": "2026-10-04T18:05:34.079924+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "request_started",
+      "hash": "d414881c908924e32f5242b7cc86dd6a3e6bdce2897debf319e1b007b8b6ed07",
+      "payload": {
+        "candidate_strategy": "authority prefilter + keyword overlap + authorized one-hop links",
+        "history_id": "0c3b4a72be374136af8301aaa3b9acd1",
+        "mode": "confluence_live_api_fake_model",
+        "query": "Show that runbook again with details"
+      },
+      "previous_hash": "9fa86f5532fa125867d77cb544efb088b80744db626877c6669f66bab7e3c005",
+      "request_id": "acc85a5299ed4083950472e1ceb3c345",
+      "schema_version": 1,
+      "seq": 12,
+      "timestamp": "2026-10-04T18:07:54.480107+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "b2584d3c0f1bb26aa219f65451f70871ab7ffb21c076959b6ff44a342c19e4cf",
+      "payload": {
+        "checked_at": "2026-10-04T18:07:55.536858+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "source_refresh",
+        "policy_version": 0,
+        "resource_id": "confluence:164283",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "d414881c908924e32f5242b7cc86dd6a3e6bdce2897debf319e1b007b8b6ed07",
+      "request_id": "acc85a5299ed4083950472e1ceb3c345",
+      "schema_version": 1,
+      "seq": 13,
+      "timestamp": "2026-10-04T18:07:55.537030+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "5c89bd573fd5d64edb29c50d0a656782a968f481bead8aee177b513c13540011",
+      "payload": {
+        "checked_at": "2026-10-04T18:07:56.071906+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "source_refresh",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "deny",
+        "source": "confluence",
+        "version": null
+      },
+      "previous_hash": "b2584d3c0f1bb26aa219f65451f70871ab7ffb21c076959b6ff44a342c19e4cf",
+      "request_id": "acc85a5299ed4083950472e1ceb3c345",
+      "schema_version": 1,
+      "seq": 14,
+      "timestamp": "2026-10-04T18:07:56.072163+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "generation_completed",
+      "hash": "f87d115efa879fd0079eb14ee731fa0baab2963927140b8a95065d5dc6ad439d",
+      "payload": {
+        "cited": [],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "5c89bd573fd5d64edb29c50d0a656782a968f481bead8aee177b513c13540011",
+      "request_id": "acc85a5299ed4083950472e1ceb3c345",
+      "schema_version": 1,
+      "seq": 15,
+      "timestamp": "2026-10-04T18:07:56.073785+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "response_committed",
+      "hash": "ca42159276ff3ec7cd577ed783ef5917a3ef874b5ad2719bf98b9fe872b756dd",
+      "payload": {
+        "response": {
+          "actor": "eng_b",
+          "claims": [],
+          "evidence": [],
+          "mode": "confluence_live_api_fake_model",
+          "model": "fake-extractive-v1",
+          "request_id": "acc85a5299ed4083950472e1ceb3c345",
+          "uncertainties": [
+            "Insufficient evidence in the currently accessible material."
+          ]
+        }
+      },
+      "previous_hash": "f87d115efa879fd0079eb14ee731fa0baab2963927140b8a95065d5dc6ad439d",
+      "request_id": "acc85a5299ed4083950472e1ceb3c345",
+      "schema_version": 1,
+      "seq": 16,
+      "timestamp": "2026-10-04T18:07:56.074535+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "8fab50d55c923ac15249953cdf4fa4fd6005892b7877433146d0ee2d107062d8",
+      "payload": {
+        "checked_at": "2026-10-04T18:07:56.643537+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "preview",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "deny",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "ca42159276ff3ec7cd577ed783ef5917a3ef874b5ad2719bf98b9fe872b756dd",
+      "request_id": "evidence",
+      "schema_version": 1,
+      "seq": 17,
+      "timestamp": "2026-10-04T18:07:56.643787+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "03bf5906c8264657280849bc261e50db30e24a74b96e0086871c656180b5fb06",
+      "payload": {
+        "checked_at": "2026-10-04T18:07:57.327201+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "preview",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "deny",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "8fab50d55c923ac15249953cdf4fa4fd6005892b7877433146d0ee2d107062d8",
+      "request_id": "evidence",
+      "schema_version": 1,
+      "seq": 18,
+      "timestamp": "2026-10-04T18:07:57.327413+00:00"
+    }
+  ],
+  "audit_verification": {
+    "valid": true,
+    "events": 18,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "boundary": "Confluence live API + fake model, same operator pilot conversation; no frontend SSO, external model, four-source claim or independent signature checkpoint"
+}

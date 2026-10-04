@@ -20,6 +20,8 @@
 
 | DEV-06-CF | verified mock contract / live configuration partial | 22 模拟 HTTP/配置测试；用户提供 eng_b / page 98564 的 metadata-only API allow，native space ID 131227 已配置；正文/双身份/撤权及 P/Q 组 live not_run |
 
-| DEV-06-CF-QUERY | verified mock contract / blocked live | 独立 operator pilot 复用 Engine/索引/审计；14 模拟查询测试覆盖跨身份索引、同会话撤权、旧引用/历史、更新/删除/unknown、dispatch 撤权、空证据历史租户和错误模式。无前端身份/live HTTP 路由，需真实凭据后集中验收；P/Q/F/A 组 live not_run |
+| DEV-06-CF-QUERY | verified mock / live query partial | 14模拟查询测试；首个 eng_b C-01 v1 真实 query 的正文/引用/逐阶段授权/11事件链已实际检查 DB，9 checks通过。前端身份/live HTTP、双身份拒绝与撤权待做；非P/Q/F/A组完整通过 |
+
+| DEV-06-CF-REVOKE | verified mock / live operator subset | 5 mock测试；真实原生C-01 eng_b撤权后7 runner检查+7独立DB检查通过，18事件链，追问/模型/旧历史/引用不泄露且保留旧索引。已恢复原Can view，Notify关闭；不等于P组四源/真实前端/真实模型完整通过 |
 
 | DEV-08-BUDGET | verified local | SQLite micro-USD durable reservations；7 安全/故障测试；模型请求和官方计价尚未接线，live model not_run |

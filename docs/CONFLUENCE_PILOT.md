@@ -1,6 +1,6 @@
 # Confluence delegated read pilot
 
-2026-10-05：委托读取已通过独立 operator pilot 接到共享 Engine / Store / Audit；36 个模拟 HTTP 合同测试。用户提供首个 metadata-only live API allow，native space ID `131227` 已配置；正文/问答/撤权仍 `not_run`。未接到浏览器登录，不改变 LOCAL DEMO / FAKE MODEL 模式。
+2026-10-05：委托读取已通过独立 operator pilot 接到共享 Engine / Store / Audit；41 个模拟 HTTP 合同测试。真实 query 和同会话撤权的 operator子集已运行并实际查DB；核心原文/引用/模型前和返回前授权、撤权后追问/历史/引用/模型保护通过。native space ID `131227`。未接到浏览器登录，不改变 LOCAL DEMO / FAKE MODEL 模式。
 
 ## 边界
 
@@ -51,6 +51,16 @@ python3 -m scripts.confluence_query --config .runtime/confluence-pilot.json --ac
 输出模式 `confluence_live_api_fake_model`，模型为本地 extractive，不调用收费模型。`--history-id` 支持在同一逻辑会话追问，重新检查所有依赖。没有 `--live` 时不加载凭据/创建数据库/联网。其他用户无权页面的正文、标题、路径不进入响应或模型。撤权与内容更新后的历史/引用 API 由 `ConfluenceQueryPilot.history/evidence` 验证，尚无 live HTTP 端点。重启后保留索引也必须重新委托读取，不由持久库授予权限。
 
 也可追加 `--prompt-credential` 用隐藏输入执行查询，不要求持久保存凭据到仓库。
+
+## 同一会话撤权验收
+
+```sh
+python3 -m scripts.confluence_revocation --config .runtime/confluence-pilot.json --live
+```
+
+只需一次隐藏输入，保持同一 pilot/Actor/逻辑会话。先验证 C-01 获准回答，写出 `awaiting_source_revocation` 和 report 路径；此时不要按回车。管理员在已批准的合成 C-01 页面撤销 eng_b 的 Can view，保存后操作员再按回车。脚本连续检查当前源 deny（不能用 token 过期/unknown 代替）、后续查询及模型输入不含该对象、旧回答/引用不可用、索引仍保留且未重建、审计链有效。未撤权或 baseline 无证据会明确失败，不生成预填成功。
+
+报告/完整回答/审计保存在 ignored `.runtime/confluence-revocation-<runid>/`，目录0700、DB/报告0600；报告不含凭据/正文，完整正文仅在合成 query DB。默认无 --live 时不读凭据/建文件/联网。测试脚本不修改平台权限；管理修改与恢复在用户批准的合成空间单独执行。`passed_operator_subset` 要结合 mode：本次 live 为 confluence_live_api_fake_model；unit tests 为 confluence_mock_http_fake_model。CLI不是前端身份验收，不覆盖四源或独立审计签名根。
 
 ## 已核对的官方接口
 

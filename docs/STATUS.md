@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**最新验证：96/96 测试通过（60 local synthetic + 36 mock HTTP），五场景仍为 passed_local_subset。Confluence operator query pilot 已接通共享引擎、索引、引用、历史与审计；用户提供真实 metadata-only API allow 结果，正文/问答/撤权及 live model 尚 not_run，前端仍 fixture。接续点见文末。**
+**最新验证：101/101 测试通过（60 local synthetic + 41 mock HTTP），五场景仍为 passed_local_subset。Confluence 真实 API + fake model 的 operator query 和同会话撤权子集已由用户执行、Codex操作原生ACL并检查DB验证；live model尚not_run，前端仍fixture，其他三源runtime尚未live。接续点见文末。**
 
 **G0 仅本地完整开发已批准**；已批准专用四源空间的合成资料写入/测试权限调整，以及 DeepSeek 合成资料首轮等值 US$20 上限；真实空间、账号映射、凭据和预算控制尚未落实。G1/G2 未通过。原型已推送并通过 PR #1 合并至 main（81df3ef）；未部署、未调用真实知识平台/应用运行时模型。
 
@@ -62,3 +62,11 @@
 2026-10-05 凭据交接：用户回复“保存好了”，标记 token 已创建/保管（user_reported），未由程序读取或验证。不打开可能显示密钥的页面。私有配置 0600、两页面白名单已核对；下一步用户在本机真实 TTY 隐藏输入，运行 metadata-only discovery，将不含密钥/正文的结果 JSON 返回。收到实际结果前，live API 仍 not_run；不能把 token 保存等同 API 授权成功。
 
 2026-10-05 首个 live API 结果（用户提供 CLI JSON）：eng_b / page 98564，current-user 与 metadata-only discovery 为 allow，space_id=131227，checked_at=2026-10-04T17:57:23.450014Z（新加坡 10-05 01:57），content_returned_to_probe=false，policy_version=0。原始结果及 user_supplied provenance 已存 evidence/runs/live-confluence/space-discovery-user-reported.json，不标 Codex 独立复跑或 live ACL 全通过。私有配置与模板 space_ids 已更新，credential-free 配置加载通过，无追加网络调用。下一步在用户 TTY 执行正式 query + --prompt-credential；完成后 Codex 可直接读本地 .runtime/confluence-query.sqlite 的回答/审计，无需贴长正文。仍需正文处理、查询、跨身份拒绝、撤权/历史/引用的真实验收。
+
+2026-10-05 首个真实 query 验证：用户执行后 Codex 以只读 SQLite 实查 request `864b1c6c23ce43ae9b05586ab8a27b0d`，eng_b、C-01 page98564 v1 核心正文与 fixture oracle 相符，证据定位及 canonical URL 正确，source_refresh/before_model/model_dispatch/before_dispatch 均 native allow；C-02 refresh 同样 allow。11事件链有效但无独立签名锚点。9项实际核验通过，证据 `evidence/runs/live-confluence/query-864b1c6c23ce43ae9b05586ab8a27b0d.json`，provenance=user_executed_cli_and_agent_inspected_persisted_database。模型仍 fake-extractive-v1，不宣称浏览器 SSO/双身份拒绝/撤权/四源 live 已通过。
+
+新增 scripts.confluence_revocation：一次隐藏输入、同 pilot/Actor/逻辑会话，先获准 baseline，再暂停等待原生页面撤权；继续验证追问/模型/历史/引用/保留索引/审计，unknown 不冒充 native deny。5 mock runner 测试覆盖实际撤权模拟、未撤权、401、baseline缺证据、默认断网；全回归101/101，live撤权尚未运行。已请用户启动脚本并在 awaiting_source_revocation 停住；必须先确认 report 中 baseline 已获准，再移除 C-01 的 eng_b Can view，待回车后读 report与DB。当前管理员 C-01 Share dialog 已打开，尚未改权限；后续恢复原有 Can view并记录。脚本不写平台，截图仅 private。
+
+真实撤权进行中：run `.runtime/confluence-revocation-037bcdb06b9d4a8087b8069495a4ef7a/report.json` 已实读 awaiting_source_revocation，用户也确认暂停。管理员 UI 仅移除 C-01 的 Kyle6745/eng_b Can view，保存后具体名单只剩管理种植者；未删除用户或改变空间权限。截图 private/onboarding-20261005/confluence-c01-live-revoked.png；已请用户按回车继续，未见最终 report 前不报通过。验收后需恢复原有 eng_b Can view，product_ops继续排除。
+
+真实撤权已完成：上述 run 最终 `passed_operator_subset`，mode=confluence_live_api_fake_model。7项runner检查全通过；Codex另以只读DB核对 baseline `0c3b4a72be374136af8301aaa3b9acd1` / followup `acc85a5299ed4083950472e1ceb3c345` 的持久输出及18事件链，7项DB检查也通过。C-01查询/两次preview均原生deny，C-02仍allow；追问无claims/evidence及C-01 sent_to_model，旧历史/引用不可用，旧索引v1仍保留。证据 `evidence/runs/live-confluence/revocation-037bcdb06b9d4a8087b8069495a4ef7a.json`，不扩大到真实模型、浏览器SSO/HTTP、四源/缓存/附件或独立签名锚点。测试后已恢复 eng_b Can view（Notify them关闭），Restricted名单仅种植管理员+eng_b，product_ops仍排除；原生UI读回和恢复截图已保存。恢复后的API读取未另跑，不伪称复验。下一步：真实前端身份与委托、Jira/Slack/Drive只读适配/种植、DeepSeek provider/计价/预算接线；G1/G2仍待定。

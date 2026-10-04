@@ -1,10 +1,10 @@
 {
-  "started_at": "2026-10-04T17:49:56.264071+00:00",
-  "finished_at": "2026-10-04T17:50:00.530564+00:00",
+  "started_at": "2026-10-04T18:04:09.006061+00:00",
+  "finished_at": "2026-10-04T18:04:13.290593+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "0a12481e0ed08623a36f37e3c62823701d9d8a59",
+  "commit": "d75473f762c6c3d5d023928e6f1073d9c63a8e2d",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
@@ -21,6 +21,7 @@
     "tests/test_contracts.py": "c6c4ad82ce9cce7505296745a7f824ca216edf5a31f3adc9b2d9d4468d652c56",
     "tests/test_engine.py": "0449d5240af821d03545f9fcec1672ef7c0bd5e18149ae40ded97228834b322e",
     "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
+    "tests/test_confluence_revocation.py": "85658ba53f7865528ea62e57880d13d5ef0cafb8db877c636a721e2410ab73d2",
     "tests/test_confluence_probe.py": "6c4865f4a504ea49b73c3a776d64f399bfb3a5e0500861c9a27c26c7246c5d10",
     "tests/test_live_seed.py": "df2ba1d2daa3e7f1016527830de12f3ad2f748633ad01c778819a088db0b19d0",
     "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
@@ -34,10 +35,11 @@
     "scripts/confluence_query.py": "c22c084a15321f54fb343d15e006e0a34588c8f338432c8ed2c51f6071cfa62c",
     "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
     "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
-    "scripts/test_report.py": "713a01eb39f062a0ffeece31e23044fc1d0a006121a0356953a86ee534d692d3",
+    "scripts/test_report.py": "33d1a90c2a40bcecc1ec44d538f593113b194e15663832b839784b7fa41e43af",
     "scripts/confluence_probe.py": "48e3729acd36932d1dd04ff934f119a503e751f1ce20be8aac1f7c605bc1eb9c",
     "scripts/prepare_live_seed.py": "dcd3307e679b3f1d96affc7a65ba9be7af48ed84b258db64366a7bd494fa2eff",
     "scripts/evaluate.py": "1bb058888f3c0be50a07f3bf07f2d6dfb5b1581140169fefa92ba1802e301fbf",
+    "scripts/confluence_revocation.py": "81f35cd2643049dedd02afec214e231ef82a69edb2fa55cf8ac1c5d4687a1a17",
     "web/index.html": "72adc3d005163a3091666372cbe3193511513459c653751060a901e364187df0",
     "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
     "web/app.js": "7ce618466220ed67d781d76abb3086c143c35e4910ad5d2e39f457e8c876278e",
@@ -46,7 +48,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 96,
+  "tests_run": 101,
   "successful": true,
   "results": [
     {
@@ -371,6 +373,31 @@
     },
     {
       "test": "test_confluence_query.QueryBoundary.test_wrong_tenant_history_is_denied_even_without_evidence",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence_revocation.RevocationRunner.test_baseline_unavailable_never_enters_revoke_stage",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence_revocation.RevocationRunner.test_cli_requires_live_flag_before_credentials",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence_revocation.RevocationRunner.test_expired_token_not_mistaken_for_source_revocation",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence_revocation.RevocationRunner.test_no_revoke_does_not_report_pass",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence_revocation.RevocationRunner.test_revoke_checks_all_paths_without_rebuilding",
       "status": "passed",
       "mode": "mock_http_contract"
     },

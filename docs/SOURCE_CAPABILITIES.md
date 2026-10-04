@@ -21,3 +21,7 @@
 2026-10-05 增量：Confluence reader/probe 已实现并通过 16 个 mock HTTP/配置合同测试，见 CONFLUENCE_PILOT。注册和 C-01 种植已完成，不再称账号全未创建；四源 runtime 仍 fixture_only，真实 API/委托/模型未运行。
 
 2026-10-05 最新增量：Confluence mock 合同共36项（包括14 query），全回归96。用户提供 metadata-only live configuration probe：eng_b/page98564 allow、space_id131227、未返回正文；证据 provenance 为 user_supplied_cli_output。普通凭据 current-user 比对及白名单页面 metadata 此次成功不代表正文/问答/撤权通过。独立 operator query pilot 已接共享 Engine；前端仍 fixture，live model not_run。
+
+2026-10-05 query 增量：首个 live operator query 已实际检查本地持久DB，eng_b 的 C-01 v1 核心原文/引用及逐阶段授权通过，C-02亦获准刷新；11事件本地链有效，无独立签名锚点。5新增撤权runner mock测试，全回归101；真实同会话撤权正在测试，不能提前标通过。Jira/Slack/Drive runtime仍fixture，前端仍fake身份，live model未运行。
+
+2026-10-05 撤权结果：Confluence同一operator pilot/Actor/逻辑会话，原生移除eng_b Can view后，query/历史/引用均明确native deny（C-02仍allow），没有重建/删除本地C-01索引。7 runner checks + 7 DB核验通过，18事件链有效。已在UI恢复原有Can view；不声称传播延迟/HTTP登录/真实模型/四源撤权/独立签名已验收。
