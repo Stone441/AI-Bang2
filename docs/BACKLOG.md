@@ -44,3 +44,5 @@
 | DEV-10-DRIVE-OPERATOR | verified mock HTTP / blocked native setup | 6配置/HTTP测试，一次hidden access token，逐次源身份及撤权query/history/export/citation；准备--source drive入口，不是OAuth/refresh/SSO |
 
 Slack安装状态更正：Chrome更新后已见四个同名app，选A0C6F96HFNX既有app进入Allow；user_confirmed四scope+identify+条款，等待用户保存/离开密钥页，native API仍not_run。停止新建，其他重复app保留。最新全回归197/197，60local/137mock。
+
+Slack native setup接续：已停止app创建，A0C6F96HFNX user-confirmed grant/token保存且已离开密钥页。S-01 private频道/root/reply/native user由原生UI核对并配置0600白名单；真实API仍not_run，当前等待一次hidden token启动8084，无需邮箱。真实频道撤权需独立reader身份；不将种植/UI或mock作为通过。

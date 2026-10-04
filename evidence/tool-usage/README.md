@@ -31,3 +31,5 @@
 
 
 2026-10-05 Slack onboarding：只读 manifest 审核与用户最终点击限流截图仅存 `private/onboarding-20261005/slack-app-readonly-review.jpg` / `slack-app-rate-limit.jpg`。无密钥截图，非 CodeBuddy 贡献。非敏感状态索引 `../runs/live-slack/installation-blocked.json`；安装/OAuth/API 尚未通过，截图不默认上传。
+
+2026-10-05 Chrome更新后Slack原生证据：private/onboarding-20261005/slack-existing-apps-after-update.jpg显示四个同名app；slack-existing-app-oauth-review.jpg显示已选A0C6F96HFNX的原生权限/身份/条款审核；slack-s01-private-thread-seeded.jpg显示新private合成root/reply。用户完成Allow和密钥保存，agent未读取OAuth token。种植非敏感索引live-slack/native-seed.json。截图未上传，不是CodeBuddy贡献。

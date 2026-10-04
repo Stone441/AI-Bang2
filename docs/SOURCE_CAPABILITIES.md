@@ -28,3 +28,17 @@
 
 
 2026-10-05 Jira增量：reader每次GET myself→白名单issue字段，评论另GET并先确认父issue访问；指定源端permissions为权威，不使用本地模拟group名单授予native权限。14 reader+10跨源+6CLI mock验证，真实Jira API not_run。KAN-4为已种植J-02，UI原生Done读回；native issue/project ID、普通员工Jira访问和token、评论ACL及权限矩阵待落实。Jira Free的issue-security/角色能力不能由mock补成live；需要具体账户实测。未申请新的scope。Confluence网页入口新增8 mock/HTTP验证，不扩大既有真实CLI结果到浏览器/SSO。
+
+
+## Current incremental capability status — 2026-10-05
+
+Earlier fixture-only/not_run entries are historical; current evidence is split below. Operator sessions are native-verified local sessions, not employee SSO. Models remain fake-extractive. Fixed-whitelist request refresh is not a background changes worker.
+
+| Source | Implemented and actually checked | Still not_run / blocked |
+|---|---|---|
+| Confluence | eng_b native API query, local web/history/citation user confirmation, actual C-01 native revoke + retained index/old history/preview protection, restored permission; precise evidence under live-confluence | Full identity/space/page inheritance matrix, attachments/macros, SSO |
+| Jira | KAN-4 exact native ID/project discovery, live local web query/preview/history, Administrator-only restriction followed by same-session native deny/no model evidence; restored original restriction; evidence under live-jira | Restricted comments and full multi-identity/security matrix, attachments, SSO |
+| Slack | 22 mock tests; existing app A0C6F96HFNX four user scopes, no bot; user-confirmed Allow including identity/terms and secret save; actual private synthetic root/reply and native IDs seeded | Native API/query/reply result and same-session channel revoke still not_run; one-member channel needs separate reader identity for removal; full rich content/Connect/DM unsupported |
+| Drive | 22 mock tests; fixed personal Drive UTF-8 text/plain native-user/file/canDownload/body+metadata-race boundary; shared four-source Engine query and Drive revoke retaining other authorized sources | OAuth scope/account/real IDs/seed/API not approved/configured, Docs/PDF/shared drives/changes and full inheritance matrix unsupported |
+
+All four readers use exact resource native IDs and current delegated reads before model use; failures/unknown supply no evidence. No permissions-list reconstruction or collector/admin authority is substituted for current user access. Complete four-source live integration remains unverified; current unified four-source evidence is mock HTTP only. Latest Python full regression197/197 (60local/137mock), no live source/model calls during tests.
