@@ -48,3 +48,5 @@ Slack安装状态更正：Chrome更新后已见四个同名app，选A0C6F96HFNX�
 Slack native setup接续：已停止app创建，A0C6F96HFNX user-confirmed grant/token保存且已离开密钥页。S-01 private频道/root/reply/native user由原生UI核对并配置0600白名单；真实API仍not_run，当前等待一次hidden token启动8084，无需邮箱。真实频道撤权需独立reader身份；不将种植/UI或mock作为通过。
 
 2026-10-05 Slack root真实web/preview/history verified subset，reply unknown/not_used，完整线程仍blocked debugging。增加固定无敏感诊断与allowlisted parent envelope候选兼容，全199/199；接续用户重启8084一次，重复实际query并据新method诊断，不能将root通过当完整Slack/四源通过。
+
+| DEV-06-SLACK-THREAD-LIVE | verified live API / fake model subset | 重启后root+exact reply、引用与历史实际通过；14 DB checks/36 unsigned事件，web-thread-query.json；原先unknown原因未确定，native private channel撤权仍not_run，需独立reader |

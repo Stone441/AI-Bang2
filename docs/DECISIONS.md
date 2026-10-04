@@ -116,3 +116,5 @@ AUTH-008 补充（2026-10-05）：原生OAuth审核另显示基础identify与应
 ## ADR-015 · 2026-10-05 · Slack reply诊断与受限父消息响应
 
 真实root问答通过但reply为统一unknown，尚未得到具体失败原因。增加只由固定枚举组成的unknown method，区别rate/scope/identity/argument和message selection，不存上游错误body/秘密。回复limit2且只允许exact target与预先allowlisted parent出现，父消息不替代目标、非白名单/重复/缺目标unknown；补两项边界测试，199全回归通过。此兼容只是候选修正，非实测原因结论；需重启原生API复验才能判断。代价为诊断需加载新代码/一次重新输入秘密，后续仍凭据进程内复用。四源安全要求不变。
+
+ADR-015实测补充（2026-10-05）：用户重启后，受限父消息响应兼容实现的root/reply问答、引用与历史已native验证通过（web-thread-query.json），可保留此实现。未记录旧unknown响应内容，不把本次成功当旧失败原因的确定证明。未扩大scope或消息白名单，真实频道撤权仍待独立reader。
