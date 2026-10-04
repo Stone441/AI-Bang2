@@ -120,3 +120,17 @@ The downloaded desktop client JSON is private, ignored by Git and must be owned 
 The program exchanges the one-use code, checks the exact granted scope and native Google account metadata, then serves the same operator UI. It does not ask for email/token input. Tokens are in process memory; no refresh is persisted or used, so expiration fails closed and a later start requires browser consent again. The callback page says received before native account verification: only successful operator startup confirms that verification passed. This is not employee SSO, and Drive native read/revocation acceptance remains separate.
 
 OAuth callback成功页是临时页面：看到Google authorization received后不要reload。账号检查通过后临时listener关闭，旧callback URL重载可出现ERR_CONNECTION_REFUSED；这不等于Drive服务退出。使用终端后续8085应用入口即可，不发送ticket/code。若Chrome拦截agent自动打开localhost（ERR_BLOCKED_BY_CLIENT），由用户在应用入口地址栏Enter，不关闭安全设置、不重复Google授权。health显示drive_live_api_fake_model/operator才确认正式服务启动；应用查询仍单独验收。
+
+### Approved DeepSeek pilot (price reviewed 2026-10-05 Singapore)
+
+Keep the existing port 8085 process. In a new local VS Code terminal:
+
+```sh
+python3 -m brain.operator_web --source drive --config .runtime/drive-oauth-pilot.json --oauth-client .runtime/drive-oauth-client.json --actor eng_a --port 8086 --live --model deepseek
+```
+
+Complete the existing Google read-only consent through the terminal URL, then enter the DeepSeek API key at the hidden prompt. Do not paste the key or bootstrap URL into chat. Open the application link after startup. Google callback is temporary: do not reload it. Subsequent questions reuse credentials held in this process. Default commands without `--model deepseek` remain fake-model pilots. No live model call occurs during startup.
+
+Only explicitly marked synthetic evidence is sent. The model selects evidence; the server renders original excerpts. Free-form synthesis is not enabled. `.runtime/deepseek-budget.sqlite` is the shared USD20 ledger across all operators: never delete, reset, replace or change working directories to bypass pending charges. Peak/cache-miss accounting is conservative, not a billing invoice. Unknown consumption keeps its full reservation. Price review expires at the end of the reviewed Singapore date; future startup or nonempty model use stops until prices are reviewed again. Existing fake services continue running. Real DeepSeek results remain not_run until actual call/output/ledger/audit are inspected.
+
+Actual first DeepSeek checkpoint: [live-drive-query.json](../evidence/runs/deepseek/live-drive-query.json), native Drive + real model selection, query/preview/history verified. Original fake commands and comprehensive live acceptance are separate. Keep port8086 running; no further key input is required during its lifetime.

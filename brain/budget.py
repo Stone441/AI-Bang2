@@ -5,6 +5,7 @@ with unknown consumption retains its entire reservation until reconciled.
 """
 import sqlite3
 import uuid
+import threading
 from contextlib import contextmanager
 
 
@@ -18,7 +19,8 @@ class BudgetLedger:
     def __init__(self, path, limit=APPROVED_MAX):
         if type(limit) is not int or not 0 < limit <= self.APPROVED_MAX:
             raise ValueError('Pilot limit must be within approved USD 20 ceiling')
-        self.db = sqlite3.connect(path, timeout=10, isolation_level=None)
+        self.lock = threading.RLock()
+        self.db = sqlite3.connect(path, timeout=10, isolation_level=None, check_same_thread=False)
         self.db.execute('CREATE TABLE IF NOT EXISTS budget (id INTEGER PRIMARY KEY CHECK(id=1), ceiling INTEGER NOT NULL, blocked INTEGER NOT NULL DEFAULT 0)')
         self.db.execute('CREATE TABLE IF NOT EXISTS reservations (id TEXT PRIMARY KEY, reserved INTEGER NOT NULL, state TEXT NOT NULL, actual INTEGER)')
         with self.transaction():
@@ -30,13 +32,14 @@ class BudgetLedger:
 
     @contextmanager
     def transaction(self):
-        self.db.execute('BEGIN IMMEDIATE')
-        try:
-            yield
-            self.db.execute('COMMIT')
-        except Exception:
-            self.db.execute('ROLLBACK')
-            raise
+        with self.lock:
+            self.db.execute('BEGIN IMMEDIATE')
+            try:
+                yield
+                self.db.execute('COMMIT')
+            except BaseException:
+                self.db.execute('ROLLBACK')
+                raise
 
     def _used(self):
         return self.db.execute("SELECT COALESCE(SUM(CASE WHEN state='settled' THEN actual WHEN state='cancelled' THEN 0 ELSE reserved END),0) FROM reservations").fetchone()[0]
@@ -94,6 +97,11 @@ class BudgetLedger:
         return {'ceiling_micro_usd': self.limit, 'accounted_micro_usd': used,
                 'settled_micro_usd': spent, 'available_micro_usd': max(0, self.limit - used),
                 'pending_requests': pending, 'blocked_for_review': blocked}
+
+    def freeze_for_review(self):
+        """Keep reservations intact when the provider exceeds its token contract."""
+        with self.transaction():
+            self.db.execute('UPDATE budget SET blocked=1 WHERE id=1')
 
     def close(self):
         self.db.close()

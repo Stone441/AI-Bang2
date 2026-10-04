@@ -115,7 +115,7 @@ class Engine:
                         or self.world.resources[e.resource_id]['version']!=e.version):
                     raise PermissionError('Evidence changed; please ask again')
             response={'request_id':rid,'mode':self.mode,'model':self.model.name,'claims':claims,
-                      'uncertainties':['Source excerpts only; live AI synthesis is not enabled.'] if selected else ['Insufficient evidence in the currently accessible material.'],
+                      'uncertainties':[getattr(self.model,'answer_notice','Source excerpts only; live AI synthesis is not enabled.')] if claims else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
             self.audit.append('response_committed',actor.user_id,rid,{'response':response})
             self.store.save_run(rid,actor.user_id,response)

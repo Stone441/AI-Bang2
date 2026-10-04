@@ -5,6 +5,7 @@ bootstrap ticket attaches a browser to the verified operator, not employee SSO.
 """
 import argparse
 import errno
+import getpass
 import os
 import secrets
 import time
@@ -85,6 +86,7 @@ def main(argv=None):
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
     parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive only; browser consent instead of hidden token')
+    parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
     args = parser.parse_args(argv)
     if not args.live:
         print('not_run: --live required; no credentials or platform calls performed.')
@@ -92,7 +94,14 @@ def main(argv=None):
     if args.oauth_client and args.source != 'drive':
         print('not_run: --oauth-client is supported only for Drive; no credential or platform calls performed.')
         return 2
-    store = server = None
+    if args.model == 'deepseek':
+        from .deepseek import check_price_review
+        try:
+            check_price_review()
+        except ValueError:
+            print('not_run: current model price review required; no credentials or platform calls performed.')
+            return 2
+    store = server = ledger = None
     stage = 'bind'
     try:
         # Reserve the listener before asking for a credential. Do not serve until
@@ -120,9 +129,25 @@ def main(argv=None):
         store = Store(str(db)); os.chmod(db, 0o600)
         stage = 'native_identity'
         app = OperatorApp(reader, store, args.actor, live=True)
+        if args.model == 'deepseek':
+            from .budget import BudgetLedger
+            from .deepseek import DeepSeekEvidenceModel
+            import sys
+            stage = 'model_configuration'
+            if not sys.stdin.isatty():
+                raise ValueError('Hidden model input requires a local TTY')
+            ledger_path = runtime / 'deepseek-budget.sqlite'
+            # One durable budget across all source operators. Never delete/reset
+            # this file to repeat the pilot or bypass prior unknown charges.
+            ledger = BudgetLedger(str(ledger_path)); os.chmod(ledger_path, 0o600)
+            model = DeepSeekEvidenceModel(getpass.getpass('DeepSeek API key (hidden; not saved): '),
+                                         ledger, synthetic_only=True)
+            app.engine.model = model
+            app.engine.mode = app.engine.mode.removesuffix('_fake_model') + '_live_model_selection'
         server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
-        print(f'{args.source.title()} LIVE API / FAKE MODEL / LOCAL OPERATOR (not SSO)', flush=True)
+        label = 'LIVE MODEL EVIDENCE SELECTION' if args.model == 'deepseek' else 'FAKE MODEL'
+        print(f'{args.source.title()} LIVE API / {label} / LOCAL OPERATOR (not SSO)', flush=True)
         print(f'Open once within 10 minutes: http://127.0.0.1:{server.server_port}/#ticket={app.bootstrap_ticket()}', flush=True)
         stage = 'runtime'
         server.serve_forever()
@@ -138,12 +163,14 @@ def main(argv=None):
                 'configuration_or_hidden_input': 'Check the approved configuration, mapped actor and secure TTY input.',
                 'local_store': 'Could not open the local database. Check .runtime access and database locks.',
                 'native_identity': 'Could not verify the mapped native account. Check token, account mapping and network access.',
+                'model_configuration': 'Check the reviewed model price date, secure TTY and durable budget. No model request was sent.',
                 'runtime': 'The running service stopped unexpectedly.',
             }
             print(f'Operator service stopped [{stage}_unavailable]: {messages[stage]} '
                   'No credential or upstream error details are logged.')
         return 2
     finally:
+        if ledger is not None: ledger.close()
         if server is not None: server.server_close()
         if store is not None: store.db.close()
 

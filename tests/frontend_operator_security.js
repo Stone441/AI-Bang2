@@ -30,5 +30,14 @@ function seed(){for(const id of ['answer','other','previewBody'])get(id).append(
   assert.equal(get('answer').children.length,0);assert.equal(get('other').children.length,0);
   seed();get('historyNav').onclick();
   assert.equal(get('answer').children.length,0);
+  function visibleText(element){return [element.textContent,...element.children.map(visibleText)].join(' ');}
+  vm.runInContext("renderAnswer({model:'deepseek-flash-evidence-selection-v1',claims:[],evidence:[{source:'drive',title:'Synthetic',evidence_id:'drive:test@1',version:1,locator:{},source_updated_at:'2026-10-05',indexed_at:'2026-10-05'}],uncertainties:[],request_id:'synthetic'})",context);
+  assert.match(visibleText(get('answer')),/LIVE MODEL · SOURCE EXCERPTS/);
+  assert.doesNotMatch(visibleText(get('answer')),/FAKE MODEL/);
+  vm.runInContext("renderAnswer({model:'deepseek-flash-evidence-selection-v1',claims:[],evidence:[],uncertainties:[],request_id:'synthetic'})",context);
+  assert.match(visibleText(get('answer')),/NO MODEL CALL/);
+  assert.doesNotMatch(visibleText(get('answer')),/LIVE MODEL · SOURCE EXCERPTS/);
+  vm.runInContext("renderAnswer({model:'fake-extractive-v1',claims:[],evidence:[],uncertainties:[],request_id:'synthetic'})",context);
+  assert.match(visibleText(get('answer')),/FAKE MODEL/);
   console.log('PASS: workspace navigation, denied preview, pending query and history navigation discard stale views');
 })().catch(e=>{console.error(e);process.exitCode=1;});

@@ -26,3 +26,8 @@
 
 - `runs/live-jira/web-query-and-revocation.json`：真实浏览器/HTTP、持久DB核验，KAN-4问答及临时原生role restriction撤权；11 checks/21事件unsigned链。索引保留、query/model/history/citation不提供撤权内容；权限恢复原No restrictions。前端旧DOM复用发现修复及边界明确记录。private/onboarding-20261005/jira-live-query-history.jpg、jira-kan4-restricted.jpg、jira-revoked-history.jpg、jira-kan4-restored.jpg仅本地未上传。
 - `node tests/frontend_operator_security.js`：4前端视图安全检查实际通过，独立于153项Python回归；不计成真实平台权限测试。
+
+- `runs/deepseek/price-review.json`: official pricing/API read-only review, 2026-10-05 Singapore; no credentials or model call in this document check.
+- `runs/deepseek/verification.json` and `runs/local-latest/tests.json`: 233 actual local tests (60 synthetic/local, 173 mock contracts), 13 new model tests. Real API/model execution is separate.
+- `runs/deepseek/live-drive-query.json`: real Drive + DeepSeek evidence selection, original synthetic excerpts, browser citation/history, 14 DB/budget checks; 61-event unsigned audit snapshot. One live model request, conservative upper accounting243 micro-USD, not vendor invoice. No free-form synthesis/full matrix claim.
+- `runs/deepseek/live-insufficient-evidence.json`: actual no-evidence refusal, no additional external model request/reservation/cost. UI separates NO MODEL CALL, LIVE MODEL and FAKE MODEL. Screenshots stay under ignored `tool-usage/private/onboarding-20261005/`; not uploaded.

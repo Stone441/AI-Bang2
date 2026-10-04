@@ -60,3 +60,7 @@ DEV-06-DRIVE-LIVE-SETUP增量：OAuth branding/Data Policy user_confirmed+UI ver
 | DEV-10-DRIVE-OAUTH | verified mock / live grant waiting user | 11 PKCE/固定scope/loopback/metadata账号绑定/配置CLI守卫测试，218完整通过；已读回Desktop client与AUTH-010三文本种植。真实Googlegrant等待用户，原生reader/撤权与ACL矩阵not_run |
 
 | DEV-10-DRIVE-OAUTH / DEV-06-DRIVE-LIVE | verified live API / fake model subset | Google固定scope交换与原生账号绑定、三文件query/preview/history，15 DB checks/29 unsigned事件；完整220回归。Drive/Slack独立reader撤权、统一live persona、SSO及live model仍not_run；下一项DeepSeek预算/provider本地接线 |
+
+| DEV-10-DEEPSEEK | verified mock contract / live blocked credential | 13新增预算/输出/真实本机HTTP模型mock接线及同session撤权测试；233完整通过。--model deepseek已就绪，首轮仅证据选择/非自由综合；用户8086隐藏key与Google授权后实读调用/费用上界/引用审计，语义完整性、统一四源live仍待验收 |
+
+DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query/preview/history已verified（1514ff318e964f3e94b9080e57eef84d，14 DB checks，61unsigned事件）；USD20账本243 micro-USD保守记账。credential blocker解除；自由综合/完整语义效果/四源persona live仍not_run。后续需调用receipt与query持久关联，而非只按单一reservation现场关联。

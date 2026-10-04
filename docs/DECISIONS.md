@@ -138,3 +138,11 @@ AUTH-009执行补充（2026-10-05）：用户已亲自完成Google Data Policy�
 为减少手动token复制，--oauth-client仅Drive/live入口支持，先预留operator端口并验证全配置，再读取用户下载的0600/no-symlink桌面client JSON。固定Google授权与token端点、唯一drive.readonly/S256/random state/10分钟/随机loopback端口，callback不记录URL/code，不反射秘密，拒绝错Host/Origin/state/重复/扩展参数，code单次交换。验证实际授予scope与Bearer/寿命，再about metadata-only核对me/emailAddress/permissionId，按可信配置绑定actor；login_hint不作为身份依据。秘密只进进程，忽略refresh token，不持久化、不读个人文件列表、无写权限/自动打开浏览器。代价：当前access token过期需重新Google授权，非员工SSO或后台refresh。11新模拟测试/全218通过，真实Google最终grant仍待用户，不能称live OAuth验收通过。可回滚--oauth-client分支，保留hidden token路径。
 
 ADR-017修正（2026-10-05）：Google官方discovery声明authorization_response_iss_parameter_supported=true/issuer=https://accounts.google.com；旧callback未知参数过滤会将含标准iss的合成合法响应拒绝400，已复现。新增iss且必须精确Google issuer，缺失/错误/重复仍拒绝；不放宽state/PKCE/scope/账号。固定枚举诊断仅记录reason，不记录请求URL/code/上游body。旧真实callback未记录原因，因此此项是确定兼容缺陷，不是旧现场根因的已证实结论。参考https://accounts.google.com/.well-known/openid-configuration 与RFC9207。
+
+## ADR-018 · 2026-10-05 · DeepSeek evidence selection and conservative accounting
+
+AUTH-003批准的DeepSeek直连/合成-only/总USD20保持不变。实读官方pricing与chat-completions页面（evidence/runs/deepseek/price-review.json），采用deepseek-flash/非thinking/JSON/1024输出tokens；固定HTTPS端点，无redirect、tools、stream或自动retry。价格按peak/cache-miss输入USD0.30/百万和输出USD1.20/百万保守记账，不冒充发票实际费用；每请求预留整个1M上下文上限+输出上限，不将字节误当token。未知usage/timeout保持全额预留，使用既有持久USD20账本；所有operator共用.runtime/deepseek-budget.sqlite，不能换目录/删账本重置预算。账本只限制本程序，不控制账号其他客户端。
+
+Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从当前授权证据组装完整原文，不允许模型输出新事实/URL/自授权限；重复/未知ID、额外字段、工具调用、截断/错模型均失败，已知usage仍结算。这个阶段是live model evidence selection接口，不是自由综合回答或效果已验收；遗漏相反/限制证据的语义完整性仍需真实效果验收，不能用引用校验代替。仅显式标记[SYNTHETIC的源正文可发送，不将该标记当身份/源ACL。价格复核限定SGT2026-10-05，启动与每次非空调用均校验；以后先复核官方价格再更新，不静默沿用。key一次hidden TTY进内存，不写文件/浏览器/日志，默认fake不变；旧服务不热注入或读取其进程秘密。独立新8086 Drive OAuth进程用于真实模型验收。
+
+预算SQLite新增进程内RLock/check_same_thread=False以支持Web worker；跨进程仍BEGIN IMMEDIATE保证预算预留。回滚provider/--model入口不影响四源reader，必须保留既有账本用于核销。G1/G2仍待批准。

@@ -1,0 +1,18 @@
+{
+  "mode": "local_synthetic_and_mock_contract",
+  "tests_run": 233,
+  "successful": true,
+  "new_deepseek_tests": 13,
+  "frontend": "node --check and frontend_operator_security.js passed (four stale-data protections plus live/fake per-answer badges)",
+  "live_model_called": false,
+  "live_source_called": false,
+  "failures_and_resolution": [
+    "Initial full run: 230 tests, 19 loopback bind PermissionErrors under sandbox; rerun with local networking permission, no assertion removed",
+    "New Engine test used unconfigured outsider; corrected to existing eng_b with every source revoked",
+    "New HTTP test hit 100ms rate limit; reset only fixture session last_query",
+    "Export contract returns 200 unavailable; assert absence of old text instead of erroneous 403 expectation"
+  ],
+  "full_results": "evidence/runs/local-latest/tests.json",
+  "live_model": "separately verified first native Drive + real DeepSeek selection query, not covered by local regression",
+  "live_evidence": "evidence/runs/deepseek/live-drive-query.json"
+}
