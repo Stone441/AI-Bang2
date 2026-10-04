@@ -35,3 +35,6 @@ Operator web 支持显式 --source jira（默认仍 confluence），独立 .runt
 
 
 Slack delegated reader：固定 workspace team ID/site、channel ID/public-private 类型、message ts→thread parent 白名单；每读 auth.test 核对 user_id/team_id 且拒 bot/app credential。private channel 要当前 is_member=true，public 权利由原生 API 决定（退群不是撤权）。conversations.info 禁止 DM/跨workspace共享，随后 history/replies 只取指定 ts，子回复独立证据，禁止附件/隐藏 rich content 进入模型。消息删改/受限/unknown不出正文，指纹 version/full payload保护旧历史/引用；限流不默认放行。
+
+
+Drive delegated reader：固定file ID→parent ID、tenant、原生permissionId身份映射；about(user.permissionId,me)逐读验证，不使用email/Prompt授予权限。personal Drive text/plain UTF-8，原生文件GET和canDownload当前读取权威；alt=media固定HTTPS源、无redirect，metadata前后相同/字节size与checksum一致才返回。locator存file/headRevision/native version/SHA256，不推断旧revision授权。trash/403/404/下载禁止deny；未知/unsupported类型、共享盘、shortcut、父目录变动、竞态unknown；其他同Engine边界不变。

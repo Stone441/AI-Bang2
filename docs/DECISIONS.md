@@ -104,3 +104,10 @@ AUTH-006 执行限制：只读账单核验显示 Jira 已为 Premium 免费试�
 ## ADR-013 · 2026-10-05 · Slack 原生用户读权限与精确消息试点
 
 采用固定 workspace、user delegation、channel type 与 exact message/root mapping；每读先 auth.test/info，再正文，无 bot/admin fallback。公开频道不以 is_member=false 伪造撤权，真实撤权使用 private channel；不支持的共享频道/附件/富文本 unknown，不静默剥离后声称完整覆盖。成本是首轮对象覆盖有限且重复原生检查可能遇限流，后续仍须 native root/reply/API 验证；可单独停用 Slack reader，不改变其他源。错配 source/reader 在构造时明确拒绝。用户最终安装遇应用创建限流，未创建成功/取得 token；保留审核页面，相关 live 任务 blocked，其他本地工作继续。
+
+
+AUTH-008 补充（2026-10-05）：原生OAuth审核另显示基础identify与应用隐私/条款，已明确交用户审核；用户回复“授权完成”。授权/接受为user_confirmed，agent未点击Allow或读取token。Chrome更新后的列表实际已有四个同名app，选择A0C6F96HFNX继续，其他保留；早先“未观察创建成功”不代表未创建，停止重复新建。等待用户保存并离开token页。
+
+## ADR-014 · 2026-10-05 · Drive 最小委托文本文件边界
+
+先支持固定file→parent白名单的personal Drive text/plain UTF-8文件；about.user.permissionId/me验证当前用户，文件原生GET与canDownload而非本地permission列表授予权利，正文前后重复metadata排除读写竞态。验证size/MD5传输一致性，另保存SHA256证据指纹和headRevisionId/native version，不编造页码。缺点为暂不支持Google Docs/PDF/shortcut/shared drive、后台changes与完整继承传播矩阵；这是覆盖范围限制，不能当四源live通过。移出白名单目录unknown、删除/原生deny停止，网络/过期未知不放行。尚未申请Drive scope或使用凭据；真实OAuth/平台种植需具体授权。本地可回滚停用drive reader。

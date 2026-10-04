@@ -16,6 +16,7 @@ from .confluence import ConfluenceReader
 from .delegated_query import DelegatedQueryPilot
 from .jira import JiraReader
 from .slack import SlackReader
+from .drive import DriveReader
 from .server import App, create_server
 from .store import Store
 
@@ -32,8 +33,8 @@ class OperatorApp:
             self.pilot = ConfluenceQueryPilot(reader, store, live=live)
             reader._credential(self.actor, sorted(reader.page_ids)[0])
         elif ((isinstance(reader, JiraReader) and not reader.discovery_only)
-              or isinstance(reader, SlackReader)):
-            source = 'slack' if isinstance(reader, SlackReader) else 'jira'
+              or isinstance(reader, (SlackReader, DriveReader))):
+            source = 'drive' if isinstance(reader, DriveReader) else 'slack' if isinstance(reader, SlackReader) else 'jira'
             self.pilot = DelegatedQueryPilot({source: reader}, store, live=live)
             reader._credential(self.actor)
         else:
@@ -62,7 +63,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', required=True)
     parser.add_argument('--actor', default='eng_b')
-    parser.add_argument('--source', choices=['confluence', 'jira', 'slack'], default='confluence')
+    parser.add_argument('--source', choices=['confluence', 'jira', 'slack', 'drive'], default='confluence')
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
     args = parser.parse_args(argv)
@@ -76,7 +77,9 @@ def main(argv=None):
         # the verified application is attached; no race-prone bind/release probe.
         server = create_server(None, args.port)
         stage = 'configuration_or_hidden_input'
-        if args.source == 'slack':
+        if args.source == 'drive':
+            from scripts.drive_query import load_reader
+        elif args.source == 'slack':
             from scripts.slack_query import load_reader
         elif args.source == 'jira':
             from scripts.jira_query import load_reader

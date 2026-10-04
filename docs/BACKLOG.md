@@ -39,3 +39,8 @@
 | DEV-10-SLACK-OPERATOR | verified mock HTTP / blocked live | 6配置/HTTP测试；一次隐藏USER token、不需邮箱、逐次native身份与权限、同会话撤权保护模型/历史/导出/引用。依赖DEV-06-SLACK真实安装和原生白名单；SSO及统一多源网页仍待做 |
 
 2026-10-05接续优先级：P0 Slack平台创建冷却后用户最终授权→合成private root/reply种植及原生白名单→一次启动真实operator验收；P0 Drive最小只读reader与授权包（可独立本地实现）；P1多源统一operator配置及DeepSeek已批准预算接线。安装限流只阻塞Slack live，无需重复已通过的Confluence/Jira凭据诊断。最新全回归175/175，模拟与真实分列；旧表的not_run历史记录由后续条目补充。
+
+| DEV-06-DRIVE | verified mock / blocked native approval | 16 reader/Engine测试含四源mock统一检索、单源撤权保留其他有权证据、旧混合答案阻断；personal Drive text/plain/native identity+canDownload+metadata race/version/revision。Drive OAuth/scope/账号/合成种植/live矩阵未批准配置；P-03/04/05/07/09、F更新/删除、Q子集，非完整通过 |
+| DEV-10-DRIVE-OPERATOR | verified mock HTTP / blocked native setup | 6配置/HTTP测试，一次hidden access token，逐次源身份及撤权query/history/export/citation；准备--source drive入口，不是OAuth/refresh/SSO |
+
+Slack安装状态更正：Chrome更新后已见四个同名app，选A0C6F96HFNX既有app进入Allow；user_confirmed四scope+identify+条款，等待用户保存/离开密钥页，native API仍not_run。停止新建，其他重复app保留。最新全回归197/197，60local/137mock。

@@ -89,3 +89,8 @@ python3 -m brain.operator_web --source jira --config .runtime/jira-pilot.json --
 ### Slack operator pilot
 
 见 [SLACK_PILOT.md](SLACK_PILOT.md)。一次隐藏输入 USER OAuth token，不需要邮箱；配置 native IDs 后可使用 `--source slack --actor eng_a --port 8084`。当前应用创建被平台限流，真实配置/启动尚未就绪；不要直接运行含占位 ID 的模板。已批准范围不等于安装/API 通过。
+
+
+### Drive operator preparation
+
+见 [DRIVE_PILOT.md](DRIVE_PILOT.md)，本地mock已接同一Engine/网页入口，首版personal Drive UTF-8 text/plain；真实scope、OAuth、原生IDs/种植尚未批准配置。准备的`--source drive --port8085`命令不可用占位模板直接当live启动。

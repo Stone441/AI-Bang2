@@ -7,6 +7,7 @@ from .audit import Audit
 from .confluence import ConfluenceReader, JsonTransport
 from .jira import JiraReader
 from .slack import SlackReader
+from .drive import DriveReader
 from .contracts import Decision, now
 from .engine import Engine
 from .store import canonical
@@ -15,9 +16,9 @@ from .store import canonical
 class DelegatedAuthority:
     def __init__(self, readers):
         self.readers = dict(readers)
-        if not self.readers or set(self.readers) - {'confluence', 'jira', 'slack'}:
+        if not self.readers or set(self.readers) - {'confluence', 'jira', 'slack', 'drive'}:
             raise ValueError('Supported readers required')
-        types = {'confluence': ConfluenceReader, 'jira': JiraReader, 'slack': SlackReader}
+        types = {'confluence': ConfluenceReader, 'jira': JiraReader, 'slack': SlackReader, 'drive': DriveReader}
         if any(not isinstance(reader, types[source]) for source, reader in self.readers.items()):
             raise ValueError('Reader source mapping mismatch')
         tenants = {r.tenant for r in self.readers.values()}

@@ -2,7 +2,9 @@
 
 ## Actual state — 2026-10-05
 
-AUTH-008 approves only the competition workspace `T0C6FQ246TF`, synthetic allowlisted messages and the four user scopes in `config/slack-app-manifest.json`. The user attempted Create and Install; Slack returned **“You’re creating apps too quickly. Wait a moment and try again.”** The review page remains open. Installation, OAuth grant, token, native user/channel/message IDs and live reads are **blocked / not_run**. No creation success or app ID has been observed. Do not rapidly retry, create duplicate apps or claim the mock results as native integration.
+AUTH-008 approves the competition workspace `T0C6FQ246TF`, synthetic allowlisted messages and four user scopes. Earlier installation retries returned creation-rate and incomplete-install messages. After Chrome was updated, the actual app list showed four same-name apps: `A0C6F96HFNX`, `A0C6R6B4V7E`, `A0C6MAR8FUJ`, `A0C6G6EN3SR`. Failed installation did not mean creation failed. Do not create further duplicates or delete these without separate approval.
+
+Selected existing app `A0C6F96HFNX`: OAuth settings verified no bot scopes and the four approved user scopes. The native review also displayed basic identity `identify` and application privacy/terms. The user explicitly confirmed final Allow (user_confirmed); the agent did not click Allow or inspect the post-authorization token. Await user secret storage and leaving the token page before checking non-secret installation state. Native API/query/ACL remain not_run.
 
 The manifest contains user scopes `channels:read`, `channels:history`, `groups:read`, `groups:history`; no bot, write, DM or files scopes. The platform grant covers channels the authorizing user can read; the application further restricts workspace, channel types and exact message IDs. This does not connect the NTU workspace. The user completes final grant and secret storage. Manually revoke the pilot token by 2026-10-20; no paid plan or new terms are approved here.
 
