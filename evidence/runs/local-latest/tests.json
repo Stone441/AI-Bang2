@@ -1,16 +1,16 @@
 {
-  "started_at": "2026-10-04T18:28:06.734414+00:00",
-  "finished_at": "2026-10-04T18:28:13.099756+00:00",
+  "started_at": "2026-10-04T18:34:22.178797+00:00",
+  "finished_at": "2026-10-04T18:34:28.620018+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "283eaf5e959ae1cc437f85251ad5fdf03a0eeadc",
+  "commit": "4d6b92441a784a44d438f7efd6046eac2789da22",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
-    "brain/operator_web.py": "acce16ca23f5b740e4931b32ab9f693a495bc7395b2e3a55e9140fd52713afb7",
+    "brain/operator_web.py": "f89de11b24745c8df87804bdb0734f14f65c89a7e62f8a29edb31d1a91e1c169",
     "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
-    "brain/server.py": "dbfa02c563c85d81730e6edcc04f2e89fc9ec8142741bb259cf78b0cf1ffb805",
+    "brain/server.py": "585c7fd45e1c67002ab9147023e12096726784c1c6d59740fa3c001bc202cf65",
     "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
     "brain/confluence.py": "b7126a318f4e314c8c6239edb26d7052d17354fff53195e39634ef90d317c480",
     "brain/delegated_query.py": "bd0ba82a13a19e686290fcc5532ae9a20f77e760def33839e57e2a03267c639b",
@@ -32,7 +32,7 @@
     "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
     "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8",
     "tests/test_budget.py": "09e70b7fc17c2ce34787668a28183f88a1ae539dcf94f5255e0fd135ff7f8f7c",
-    "tests/test_operator_web.py": "c4e9e68d81ca87cc005edc93d5d7f4f3f2a807bdfdc17eb26aac66964d3ade38",
+    "tests/test_operator_web.py": "7e49edb4ab4678826dac1185274904659ef0efbafa0b33183756a1c83e8a7956",
     "tests/test_confluence_query.py": "2c80af908f7cd44eb3b1fcbaa23366ed17da60e656f38a123e430b8d6c333986",
     "tests/test_delegated_query.py": "42f10b3c06de35449b5f3a64a5e9b6a290044bdff46817eb9b0056c2fddb9963",
     "tests/test_confluence.py": "1e271772c77cd41262ac515b3da01913864b158c01689b3ec2a66be41092666a",
@@ -56,7 +56,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 139,
+  "tests_run": 142,
   "successful": true,
   "results": [
     {
@@ -735,12 +735,27 @@
       "mode": "mock_http_contract"
     },
     {
+      "test": "test_operator_web.OperatorIdentity.test_configuration_failure_releases_listener_without_serving",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
       "test": "test_operator_web.OperatorIdentity.test_default_cli_and_real_transport_guard_do_not_contact_source",
       "status": "passed",
       "mode": "mock_http_contract"
     },
     {
       "test": "test_operator_web.OperatorIdentity.test_expired_ticket_is_not_accepted",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_web.OperatorIdentity.test_native_identity_failure_has_safe_stage_and_releases_reserved_listener",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_operator_web.OperatorIdentity.test_port_conflict_is_reported_before_any_credential_request",
       "status": "passed",
       "mode": "mock_http_contract"
     },

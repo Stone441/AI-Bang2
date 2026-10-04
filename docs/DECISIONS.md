@@ -69,3 +69,6 @@ DeepSeek 直连首轮总预算上限等值 US$20，仅处理合成资料，不�
 ## ADR-010 · 2026-10-05 · 本机操作员网页会话
 
 为尽早联通真实reader与现有产品UI，提供单一已映射操作员的loopback入口：TTY隐藏输入→服务端验证native账户→随机一次性10分钟ticket→HttpOnly/SameSite/CSRF session。浏览器不接API token、user/role选择；每次业务读取仍验证源身份/权限。ticket是本机入口凭证，不入Git或截图，消费后不可复用；退出/重启需新入口。此方式只满足本机操作员试点，不能宣称员工OAuth/SSO或多用户生产鉴权；网页真实验收仍需实际执行。保持fixture demo独立路径，避免bootstrap入口让fixture身份转入真实API。无新增平台scope、费用或公开监听。
+
+
+2026-10-05 ADR-010修正：8081实际已有operator服务，复现启动端口冲突；将监听socket预留移到隐藏输入前，避免重复输入token后才发现端口不可用。使用同一reserved listener，identity通过后才挂接application和serve，避免预检查释放端口的竞争窗口。固定阶段错误码代替统一失败，禁止异常原文/上游响应日志；不终止未知归属的已有服务，不改变身份/ACL验证。新增失败路径与资源释放验证；无新增外部调用。

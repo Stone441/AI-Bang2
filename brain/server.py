@@ -79,11 +79,13 @@ def create_server(app, port=0):
                 raise PermissionError('Unavailable')
 
         def auth(self):
+            app=self.server.application
             cookie=SimpleCookie(); cookie.load(self.headers.get('Cookie',''))
             token=cookie['session'].value if 'session' in cookie else ''
             return app.session(token),token
 
         def dispatch(self, method):
+            app=self.server.application
             try:
                 self.gate()
                 app.refresh()
@@ -147,10 +149,12 @@ def create_server(app, port=0):
                 self.send(503,{'error':'Request could not be completed safely. Please try again.'})
 
         def do_GET(self):
-            with app.store.lock: self.dispatch('GET')
+            with self.server.application.store.lock: self.dispatch('GET')
         def do_POST(self):
-            with app.store.lock: self.dispatch('POST')
-    return ThreadingHTTPServer(('127.0.0.1',port),Handler)
+            with self.server.application.store.lock: self.dispatch('POST')
+    server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
+    server.application=app
+    return server
 
 
 def main():

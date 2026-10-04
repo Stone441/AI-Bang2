@@ -1,6 +1,6 @@
 # Acceptance coverage · local candidate
 
-当前有139个unittest方法（60 local synthetic + 79 mock HTTP，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；新增Confluence真实API/operator+fake model的查询及撤权子集，证据另列。真实模型/完整四源/前端身份/G1仍未通过。以下未覆盖部分保留，不改写05的oracle。
+当前有142个unittest方法（60 local synthetic + 82 mock HTTP，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；新增Confluence真实API/operator+fake model的查询及撤权子集，证据另列。真实模型/完整四源/前端身份/G1仍未通过。以下未覆盖部分保留，不改写05的oracle。
 
 | IDs | 当前状态与实际证据 / 缺口 |
 |---|---|

@@ -4,6 +4,7 @@ Token stays in this process, never goes to the browser. A short-lived one-use
 bootstrap ticket attaches a browser to the verified operator, not employee SSO.
 """
 import argparse
+import errno
 import os
 import secrets
 import time
@@ -56,22 +57,42 @@ def main(argv=None):
         print('not_run: --live required; no credentials or platform calls performed.')
         return 2
     store = server = None
+    stage = 'bind'
     try:
+        # Reserve the listener before asking for a credential. Do not serve until
+        # the verified application is attached; no race-prone bind/release probe.
+        server = create_server(None, args.port)
+        stage = 'configuration_or_hidden_input'
         from scripts.confluence_probe import load_reader
         reader = load_reader(args.config, prompt_actor=args.actor)
+        stage = 'local_store'
         runtime = Path('.runtime'); runtime.mkdir(mode=0o700, exist_ok=True)
         db = runtime / 'confluence-web.sqlite'
         store = Store(str(db)); os.chmod(db, 0o600)
+        stage = 'native_identity'
         app = OperatorApp(reader, store, args.actor, live=True)
-        server = create_server(app, args.port)
+        server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
         print('Confluence LIVE API / FAKE MODEL / LOCAL OPERATOR (not SSO)', flush=True)
         print(f'Open once within 10 minutes: http://127.0.0.1:{server.server_port}/#ticket={app.bootstrap_ticket()}', flush=True)
+        stage = 'runtime'
         server.serve_forever()
     except KeyboardInterrupt:
         return 0
-    except Exception:
-        print('Operator service could not start or continue safely. No credential details are logged.')
+    except Exception as error:
+        if stage == 'bind' and isinstance(error, OSError) and error.errno == errno.EADDRINUSE:
+            print(f'Startup stopped [port_in_use]: port {args.port} is already in use. '
+                  'Keep the existing service, or retry with --port 8082. No credentials were requested.')
+        else:
+            messages = {
+                'bind': 'Could not bind the loopback listener. Check local port permissions.',
+                'configuration_or_hidden_input': 'Check the approved configuration, mapped actor and secure TTY input.',
+                'local_store': 'Could not open the local database. Check .runtime access and database locks.',
+                'native_identity': 'Could not verify the mapped native account. Check token, account mapping and network access.',
+                'runtime': 'The running service stopped unexpectedly.',
+            }
+            print(f'Operator service stopped [{stage}_unavailable]: {messages[stage]} '
+                  'No credential or upstream error details are logged.')
         return 2
     finally:
         if server is not None: server.server_close()

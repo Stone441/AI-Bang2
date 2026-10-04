@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**最新验证：139/139回归通过（60 local synthetic + 79 mock HTTP）；新增Jira委托只读、独立受限评论、多源共享Engine及Confluence本机操作员网页入口。Jira和网页源检查为mock HTTP，真实网页验收待用户运行；既有Confluence真实API+fake model查询/撤权证据不变。其他源/live model/SSO/G1/G2未完成。**
+**最新验证：142/142回归通过（60 local synthetic + 82 mock HTTP）；新增Jira委托只读、独立受限评论、多源共享Engine及Confluence本机操作员网页入口。Jira和网页源检查为mock HTTP，真实网页验收待用户运行；既有Confluence真实API+fake model查询/撤权证据不变。其他源/live model/SSO/G1/G2未完成。**
 
 **G0 仅本地完整开发已批准**；已批准专用四源空间的合成资料写入/测试权限调整，以及 DeepSeek 合成资料首轮等值 US$20 上限；已落实Confluence测试空间、eng_b账号映射/只读token、真实查询/撤权；预算账本已测试但尚未接模型。其他源凭据/完整身份矩阵仍待落实。G1/G2未通过。既有原型/CodeBuddy通过PR #1/#2合并main；本轮仅本地分支，未部署/调用应用运行时模型。
 
@@ -79,3 +79,8 @@ Confluence operator网页入口：终端隐藏输入已批准eng_b token，服�
 Jira CLI诊断/问答、专用凭据env namespace及隐藏输入已实现，6配置测试通过；Confluence隐藏输入共用helper的6回归通过。真实UI在KAN项目创建J-02：KAN-4，正文与seed核心一致，原生Done/Unassigned已读回，截图private/jira-j02-done.png。native issue/project ID未知，Jira普通身份/token/ACL矩阵和J-01/J-03/受限评论种植仍待做；未将UI结果当API通过。精确接续：用户网页query后查.runtime/confluence-web.sqlite；为KAN-4核对native ID并完成具体Jira只读scope批准/用户凭据交接；其余Slack/Drive只读适配与DeepSeek报价/provider接线可独立继续。DeepSeek官方pricing再次超时，未使用猜测价格启动收费调用。
 
 最终检查：make setup、node --check web/app.js、make verify、make test-report实际成功；139/139，source_hashes零差异，五场景passed_local_subset。未产生收费/外部模型调用，未推送main。用户网页验收问题仍待回复，不预填运行结果。
+
+
+2026-10-05 operator启动故障：用户报告隐藏输入后统一失败。当前8081实读health为confluence_live_api_fake_model/operator；本机bind复现EADDRINUSE(errno48)，8082无监听，未停止已有服务/读取凭据/调用外部API。原统一提示不能追溯证明用户那次异常仅为端口冲突。修复为先预留监听socket再读凭据，native身份通过后挂接application并serve；失败关闭listener/DB，输出固定阶段码，不打印异常原文。当前端口冲突路径已实跑，明确port_in_use且未请求凭据；新增3诊断/cleanup测试，相关11项通过。接续：用户用--port8082运行已有命令；网页/模型实际结果仍待核验。
+
+启动修复全回归：make test-report 142/142，源码SHA-256零差异；真实网页query仍待用户换8082启动后完成。

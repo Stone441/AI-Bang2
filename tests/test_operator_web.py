@@ -1,4 +1,5 @@
 import contextlib
+import errno
 import io
 import json
 import threading
@@ -55,6 +56,46 @@ class OperatorIdentity(unittest.TestCase):
         with patch.object(reader.transport, 'get') as get:
             with self.assertRaises(ValueError): OperatorApp(reader, self.app.store, 'eng_b')
             get.assert_not_called()
+
+    def test_port_conflict_is_reported_before_any_credential_request(self):
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output), \
+             patch('brain.operator_web.create_server', side_effect=OSError(errno.EADDRINUSE, 'private detail')), \
+             patch('scripts.confluence_probe.load_reader') as load:
+            self.assertEqual(main(['--config', 'missing', '--live']), 2)
+            load.assert_not_called()
+        self.assertIn('[port_in_use]', output.getvalue())
+        self.assertIn('--port 8082', output.getvalue())
+        self.assertNotIn('private detail', output.getvalue())
+
+    def test_native_identity_failure_has_safe_stage_and_releases_reserved_listener(self):
+        output = io.StringIO()
+        from unittest.mock import Mock
+        server = Mock()
+        reader = self.app.pilot.authority.readers['confluence']
+        with contextlib.redirect_stdout(output), \
+             patch('brain.operator_web.create_server', return_value=server), \
+             patch('scripts.confluence_probe.load_reader', return_value=reader), \
+             patch('brain.operator_web.Store', return_value=self.app.store), \
+             patch('brain.operator_web.OperatorApp', side_effect=SourceUnavailable('secret upstream response')):
+            self.assertEqual(main(['--config', 'mock', '--live']), 2)
+        server.serve_forever.assert_not_called()
+        server.server_close.assert_called_once()
+        self.assertIn('[native_identity_unavailable]', output.getvalue())
+        self.assertNotIn('secret upstream response', output.getvalue())
+
+    def test_configuration_failure_releases_listener_without_serving(self):
+        output = io.StringIO()
+        from unittest.mock import Mock
+        server = Mock()
+        with contextlib.redirect_stdout(output), \
+             patch('brain.operator_web.create_server', return_value=server), \
+             patch('scripts.confluence_probe.load_reader', side_effect=ValueError('secret input')):
+            self.assertEqual(main(['--config', 'mock', '--live']), 2)
+        server.serve_forever.assert_not_called()
+        server.server_close.assert_called_once()
+        self.assertIn('[configuration_or_hidden_input_unavailable]', output.getvalue())
+        self.assertNotIn('secret input', output.getvalue())
 
 
 class OperatorHTTP(unittest.TestCase):
