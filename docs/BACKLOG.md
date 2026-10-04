@@ -19,3 +19,5 @@
 | DEV-14 | in_progress | 本地小步提交及候选重建；G2/publish 未批准 |
 
 | DEV-06-CF | verified mock contract / blocked live | 白名单站点/page/space、逐读取验证凭据身份、403/404 deny、未知拒绝、版本保护、受限诊断 CLI；16 模拟 HTTP/配置测试，真实凭据及 Engine 接线待做；P/Q 组 live not_run |
+
+| DEV-08-BUDGET | verified local | SQLite micro-USD durable reservations；7 安全/故障测试；模型请求和官方计价尚未接线，live model not_run |

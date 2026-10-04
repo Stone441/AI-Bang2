@@ -46,3 +46,7 @@
 2026-10-05 DEV-06-CF：实现白名单 Confluence delegated reader 与 operator-only probe，16 个模拟 HTTP/配置测试。完整 69 测试在允许 loopback 的环境通过；首次沙箱运行 4 项 HTTP bind 被阻止，未跳过断言。无真实 API 调用；尚未连接 Engine、OAuth/用户 session、索引/审计同步。精确接续见 CONFLUENCE_PILOT，先取得原生 space ID 与各用户最小委托凭据，再集中跑端到端撤权。
 
 2026-10-05 C-02 已真实发布（page 164283），核心能力原文已读取核对。C-01/C-02 native ID 本地 manifest 已映射，页面配置不当作 live ACL 通过；剩余 C-03 和其他三源资料、委托及 runtime 接线继续待做。当前开发分支 codex/live-onboarding，无远端推送。
+
+2026-10-05 DEV-08-BUDGET：持久化预算 reservation ledger 已实现，7 测试通过，覆盖跨连接预留、重启后未知消耗占用、禁止已发送请求退款、结算幂等、估计超支冻结和 US$20 上限。尚未接入模型 provider，因此不宣称运行时费用已受控或 live model 已启用。官方 DeepSeek API/pricing/JSON 文档本次读取 timeout；接口与计价须实际核对后再写适配。
+
+本轮最终验证：make test-report 在获准 loopback 环境 76/76 passed（16 mock HTTP 合同 + 60 local synthetic），被测源码哈希逐项核对一致，证据 tests.json；live_api_called=false。已保存 C-02 真实发布截图，仍不以模拟合同/后台配置替代 live 全链路。

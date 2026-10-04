@@ -1,16 +1,17 @@
 {
-  "started_at": "2026-10-04T17:30:54.175690+00:00",
-  "finished_at": "2026-10-04T17:30:58.422910+00:00",
+  "started_at": "2026-10-04T17:33:52.240325+00:00",
+  "finished_at": "2026-10-04T17:33:56.484704+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "71dd4110ca3424ff4b9db8fbc337c572f4751b5e",
+  "commit": "4f68e04e6ca48b35d32270dad82a688d0b04085c",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
     "brain/server.py": "70376b32a387bf8e161a631ca242c353c276a83e2f95bd5ed4b15d8dd296c6b9",
     "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
     "brain/confluence.py": "31a5c28bf135ae27492aa34e854a2ea97623e8980aa42f1b6e595baba939e6c4",
+    "brain/budget.py": "1c4e8852b986e9edc7dfaef89aa296f7695037374ee7c68b6870afe3f956af6b",
     "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
     "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
     "brain/engine.py": "ff81a3f0c71e61df176eb39dd372dfcef292b6f161c9fffbd6ba1d6903222922",
@@ -23,6 +24,7 @@
     "tests/test_live_seed.py": "df2ba1d2daa3e7f1016527830de12f3ad2f748633ad01c778819a088db0b19d0",
     "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
     "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8",
+    "tests/test_budget.py": "09e70b7fc17c2ce34787668a28183f88a1ae539dcf94f5255e0fd135ff7f8f7c",
     "tests/test_confluence.py": "ed28d8d75813d8638cd82952f123d30104b1a9065bbbbd4840484d0d175c2bd4",
     "tests/codebuddy/test_audit_verifier.py": "4121d5f4e688ff7d7d5a8b1921810785d39cc3c082b684882356c7c3ed339e8f",
     "tests/codebuddy/__init__.py": "aa1f7dd33a54dd5e7ca68439ee45d953eb4c6bf1358c809c7300308583e7f47a",
@@ -41,7 +43,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 69,
+  "tests_run": 76,
   "successful": true,
   "results": [
     {
@@ -151,6 +153,41 @@
     },
     {
       "test": "test_audit_more.AuditIntegrity.test_parser_timezone_range_and_rejection",
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_budget.BudgetReservations.test_cancel_only_before_dispatch_and_no_double_dispatch",
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_budget.BudgetReservations.test_dispatched_unknown_charge_survives_restart_and_cannot_cancel",
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_budget.BudgetReservations.test_estimate_overrun_is_durable_and_budget_blocks_further_spending",
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_budget.BudgetReservations.test_estimate_violation_freezes_even_if_total_below_ceiling",
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_budget.BudgetReservations.test_no_limit_increase_or_bool_amounts",
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_budget.BudgetReservations.test_settle_idempotent_but_conflicting_actual_not_allowed",
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_budget.BudgetReservations.test_two_connections_cannot_double_allocate_remaining_budget",
       "status": "passed",
       "mode": "local_synthetic"
     },
