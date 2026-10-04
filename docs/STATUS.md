@@ -11,7 +11,9 @@
 - 当前源授权在模型前和返回前检查；未知拒绝；四源撤权、旧历史/导出/引用保护。模型、HTTP 均有实际回归。
 - 持久 fake source 与 SQLite 索引分离；对象级事务发布、创建/更新/删除、去重/乱序/重试、失败任务不被游标越过、重启恢复。请求触发处理，不宣称真实自动同步。
 - 完整问答审计、逐资料决策、sent_to_model/cited/dispatch 区分、scope 查询与稳定分页；60 并发追加链测试。本地 hash-chain 不等于独立签名完整性。
-- `make test-report` 当前目标 32 tests；最新实际数字见证据 JSON。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
+- `make test-report` 32/32 tests passed；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
+
+已通过从提交导出的独立临时目录 `make setup` / `make test` / JS 语法检查。
 
 证据：`evidence/runs/local-latest/tests.json`、`scenarios.json`、`audit.json`；包含运行时间、模式、基准 commit 与精确源码 SHA-256。验收映射见 ACCEPTANCE_STATUS。
 

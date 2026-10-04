@@ -30,7 +30,7 @@
 | A-03/04 | partial：本地链和保存在测试内存的 trusted head 检查；独立签名留给 CodeBuddy |
 | A-05/06/07 | local verified：有限 NL 模板、白名单参数、scope、带时区范围、稳定分页；任意 NL 不支持 |
 | A-11 | blocked：CodeBuddy 签名/轮换/可信检查点任务 |
-| U-01 | local verified：标准库可启动、显式 demo、HTTP 实际请求；干净 checkout 待最终验证 |
+| U-01 | local verified：标准库可启动、显式 demo、HTTP 实际请求；独立 git archive 目录 setup/test 已通过 |
 | U-02 | partial：前端分区 + server role enforcement、无 HTTP ACL 管理入口；非公开部署 |
 | U-03 | not_run visual：英文 UI/labels/focus/CSP 已实现；浏览器自动化被 ERR_BLOCKED_BY_CLIENT 阻挡 |
 | U-04 | not_run：无真实模型性能/成本；场景耗时只为本机 fake 调用时间 |

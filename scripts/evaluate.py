@@ -8,6 +8,7 @@ import tempfile
 import time
 from pathlib import Path
 from brain.audit import Audit,verify_chain
+from scripts.build_metadata import revision,dirty
 from brain.contracts import Actor,MODE,now
 from brain.engine import Engine
 from brain.ingestion import Ingestion
@@ -86,8 +87,8 @@ def run(output):
     finally:
         tracked={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for folder in ['brain','fixtures','web','scripts','tests'] for p in sorted(Path(folder).rglob('*')) if p.is_file() and '__pycache__' not in str(p)}
         report={'started_at':started,'finished_at':now(),'mode':MODE,'model':engine.model.name,'python':platform.python_version(),
-                'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'source_hashes':tracked,
-                'worktree_dirty':bool(subprocess.check_output(['git','status','--porcelain'],text=True).strip()),
+                'commit':revision(),'source_hashes':tracked,
+                'worktree_dirty':dirty(),
                 'scenarios':scenarios,'live_api':'not_run','live_model':'not_run','human_G1':'not_run','codebuddy':'not_started'}
         output.mkdir(parents=True,exist_ok=True)
         (output/'scenarios.json').write_text(json.dumps(report,indent=2)+'\n')
