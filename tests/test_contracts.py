@@ -40,3 +40,8 @@ class Contracts(unittest.TestCase):
             self.assertTrue(r['locator'])
             self.assertTrue(r['source_url'].startswith('fixture://'))
             self.assertEqual(r['tenant'],'synthetic-demo')
+    def test_comment_cannot_outlive_parent_access(self):
+        world=FixtureWorld();adapter=world.adapter('jira')
+        self.assertEqual(adapter.check_read(Actor('security'),'J-01-comment-sec').result,'allow')
+        world.mutate('J-01','revoke',user_id='security')
+        self.assertEqual(adapter.check_read(Actor('security'),'J-01-comment-sec').result,'deny')

@@ -42,3 +42,36 @@ class HTTP(unittest.TestCase):
         self.assertEqual(self.request('/api/evidence/C-03@1'),self.request('/api/evidence/missing@1'))
         self.assertEqual(self.request('/api/sources/status')[0],403)
         self.assertEqual(self.request('/api/admin/sync',{})[0],404)
+    def test_local_authority_file_update_and_restart(self):
+        import tempfile
+        from pathlib import Path
+        from brain.sources import FixtureWorld
+        from brain.contracts import now,Actor
+        from brain.store import Store
+        with tempfile.TemporaryDirectory() as directory:
+            source=Path(directory)/'source.json'; db=Path(directory)/'state.sqlite'
+            app=App(Store(str(db)),source)
+            world=FixtureWorld();world.refresh(source)
+            world.mutate('C-01','content',version=2,text='Runbook payment-service revised',source_updated_at=now());world.save(source)
+            app.refresh()
+            self.assertEqual(app.store.get('C-01')['version'],2)
+            world.mutate('S-01','revoke',user_id='eng_a');world.save(source);app.refresh()
+            with self.assertRaises(PermissionError):app.engine.evidence(Actor('eng_a'),'S-01@1')
+            app.store.db.close()
+            resumed=App(Store(str(db)),source);resumed.refresh()
+            self.assertEqual(resumed.store.get('C-01')['version'],2)
+            with self.assertRaises(PermissionError):resumed.engine.evidence(Actor('eng_a'),'S-01@1')
+            resumed.store.db.close()
+    def test_source_file_revocation_during_generation_is_seen(self):
+        import tempfile
+        from pathlib import Path
+        from brain.sources import FixtureWorld
+        from brain.contracts import Actor
+        with tempfile.TemporaryDirectory() as directory:
+            source=Path(directory)/'source.json';app=App(source_path=source)
+            def revoke_on_disk():
+                world=FixtureWorld();world.refresh(source);world.mutate('S-01','revoke',user_id='eng_a');world.save(source)
+            app.engine.before_dispatch=revoke_on_disk
+            with self.assertRaises(PermissionError):app.engine.query(Actor('eng_a'),'payment-service incident')
+            self.assertFalse(any(e['event_type']=='response_committed' for e in app.audit.export()))
+            app.store.db.close()

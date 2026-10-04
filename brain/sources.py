@@ -33,11 +33,43 @@ class FixtureWorld:
         self.events = []
         self.faults = set()
         self.revoked = set()
+        self.authority_path = None
+
+    def save(self, path):
+        """Local synthetic authority file; no tokens or real source content."""
+        import os
+        import tempfile
+        target=Path(path)
+        data={'synthetic':True,'users':self.users,'resources':list(self.resources.values()),
+              'events':self.events,'revoked':[list(x) for x in sorted(self.revoked)],'faults':sorted(self.faults)}
+        fd,tmp=tempfile.mkstemp(prefix='.source-',dir=target.parent)
+        try:
+            with os.fdopen(fd,'w') as stream:
+                json.dump(data,stream); stream.flush(); os.fsync(stream.fileno())
+            os.replace(tmp,target)
+        finally:
+            if os.path.exists(tmp): os.unlink(tmp)
+
+    def refresh(self, path):
+        data=json.loads(Path(path).read_text())
+        if data.get('synthetic') is not True: raise ValueError('Synthetic only')
+        self.users=data['users']; self.resources={r['id']:r for r in data['resources']}
+        self.events=data.get('events',[]);self.revoked={tuple(x) for x in data.get('revoked',[])}
+        self.faults=set(data.get('faults',[]))
 
     def adapter(self, source):
         if source not in SOURCES:
             raise ValueError('Unknown source')
         return FixtureAdapter(self, source)
+
+    def create(self, resource):
+        r=copy.deepcopy(resource)
+        if r['id'] in self.resources or r['tenant']!=TENANT or r['source'] not in SOURCES:
+            raise ValueError('Invalid synthetic resource')
+        if not r['source_url'].startswith('fixture://'):
+            raise ValueError('Only fixture URLs are allowed')
+        self.resources[r['id']]=r
+        return self.mutate(r['id'],'content')
 
     def mutate(self, rid, kind, **changes):
         """Test management only; never reachable from the employee API."""
@@ -83,6 +115,10 @@ class FixtureAdapter:
         return copy.deepcopy(r)
 
     def check_read(self, actor: Actor, rid):
+        if self.world.authority_path:
+            try: self.world.refresh(self.world.authority_path)
+            except (OSError,ValueError,KeyError):
+                return Decision('unknown',now(),'fixture-authority-unavailable',0)
         r = self.world.resources.get(rid)
         result = 'deny'
         if self.source in self.world.faults or actor.user_id not in self.world.users:
@@ -91,6 +127,9 @@ class FixtureAdapter:
             if r['active'] and (actor.user_id,rid) not in self.world.revoked:
                 if policy_allows(actor.user_id, self.world.users[actor.user_id], r['policy']):
                     result = 'allow'
+                    if r['source']=='jira' and r.get('parent') in self.world.resources:
+                        parent=self.check_read(actor,r['parent'])
+                        if parent.result!='allow': result=parent.result
         return Decision(result, now(), 'fixture-current-source-policy', r['policy_version'] if r else 0)
 
     def source_link(self, rid):

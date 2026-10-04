@@ -7,3 +7,5 @@ demo:
 	python3 -m brain.server --demo
 verify:
 	python3 -m scripts.evaluate
+test-report:
+	python3 -m scripts.test_report

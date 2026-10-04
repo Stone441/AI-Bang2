@@ -84,8 +84,14 @@ class Audit:
             head=self.store.db.execute('SELECT coalesce(max(seq),0) FROM audit').fetchone()[0]
             as_of=filters.get('as_of',head)
             if type(as_of)!=int or as_of<0 or as_of>head: raise ValueError('Invalid snapshot')
-            rows=self.store.db.execute('SELECT body FROM audit WHERE seq<=? ORDER BY seq',(as_of,)).fetchall()
+            rows=self.store.db.execute("SELECT body FROM audit WHERE seq<=? AND json_extract(body,'$.actor')=? ORDER BY seq",(as_of,uid)).fetchall()
         # Scoped exact filtering. SQL never comes from the model or request.
+        # Scope matches exact resource events and includes the surrounding request lifecycle,
+        # so the inquiry can reconstruct the question and final answer as well as checks.
+        decoded=[json.loads(row[0]) for row in rows]
+        scoped_requests={e['request_id'] for e in decoded if e['actor']==uid
+                         and (not filters.get('source') or e['payload'].get('source')==filters['source'])
+                         and (not filters.get('resource_scope') or e['payload'].get('resource_scope')==filters['resource_scope'])}
         events=[]
         for row in rows:
             e=json.loads(row[0])
@@ -93,8 +99,7 @@ class Audit:
             stamp=datetime.fromisoformat(e['timestamp'])
             if filters.get('start_time') and stamp<datetime.fromisoformat(filters['start_time']): continue
             if filters.get('end_time') and stamp>=datetime.fromisoformat(filters['end_time']): continue
-            if filters.get('source') and e['payload'].get('source')!=filters['source']: continue
-            if filters.get('resource_scope') and e['payload'].get('resource_scope')!=filters['resource_scope']: continue
+            if (filters.get('source') or filters.get('resource_scope')) and e['request_id'] not in scoped_requests: continue
             events.append(e)
         page=[e for e in events if e['seq']>after][:size]
         normalized=dict(filters,actor=uid,as_of=as_of,page_size=size)

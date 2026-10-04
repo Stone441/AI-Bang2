@@ -1,19 +1,19 @@
-# Backlog
+# Backlog · 2026-10-04
 
-| ID | 状态 | 依赖 / 交付 / 验收 |
+| ID | 状态 | 已完成 / 仍需推进 / 验收 |
 |---|---|---|
 | DEV-00 | verified | 仓库/环境盘点，基准 68e65c8 |
-| DEV-01 | in_progress | 官方 API 文档核对完成；四源 live spike blocked，见 SOURCE_CAPABILITIES |
-| DEV-02 | verified | fixture、六用户、权限 oracle、SourceAdapter；3 tests |
-| DEV-03/04 | in_progress | DEV-02；服务、端到端、Q-01/P-01/A-01 |
-| DEV-05 | not_started | DEV-03；增量/原子发布 F组，Codex 主线 |
-| DEV-06 | blocked | 真实源授权；本地四源 policy 已实现但非 live |
-| DEV-07 | not_started | DEV-04；撤权/历史/引用 P组 |
-| DEV-08 | not_started | 检索/业务回答 Q组；live 模型待授权 |
-| DEV-09 | not_started | 审计与精确查询 A组 |
-| DEV-09-CB | blocked | 人工转交真实 CodeBuddy：签名检查点/独立验证器，保留实现路径 |
-| DEV-10 | not_started | 英文产品 UI / U组 |
-| DEV-11 | not_started | 五场景回归；G1 人工未运行 |
-| DEV-12 | blocked | 非作者业务测量 / 模型预算 |
-| DEV-13 | not_started | 候选材料、真实腾讯工具证明 |
-| DEV-14 | not_started | 可重建候选，G2 待批准 |
+| DEV-01 | in_progress | 官方 API 文档核对；真实 spike blocked，SOURCE_CAPABILITIES |
+| DEV-02 | verified | 合成数据/授权 oracle/SourceAdapter，78 权限组合 |
+| DEV-03/04 | verified local | HTTP/UI/持久库/fake model/身份→证据→回答→审计，Q-01/P-01/A-01 本地子集 |
+| DEV-05 | verified local | 请求驱动增量/去重/重试/原子版本/删除 F组；真实 worker/scheduler 待做 |
+| DEV-06 | blocked live | 四源 fixture 可运行；真实 API/用户委托/事件授权待定 |
+| DEV-07 | verified local | stale ACL/撤权/unknown/历史/预览/导出/生成中撤权；P组部分真实机制待测 |
+| DEV-08 | in_progress | 关键词+授权一跳、exact extractive support；语义检索与 live 模型未实现 |
+| DEV-09 | in_progress | 事件链/精确 scope/分页/有限 NL；生产 role/加密未实现 |
+| DEV-09-CB | blocked handoff | 独立签名检查点/验证器，真实 CodeBuddy 实现路径已预留 |
+| DEV-10 | in_progress | 英文 Workspace/History/Sources/Audit 已联通；浏览器视觉工具阻挡 |
+| DEV-11 | verified local subset | 五场景回放+安全测试；不是完整 P0/G1 通过 |
+| DEV-12 | blocked | live model / 非作者人工任务测量未运行 |
+| DEV-13 | in_progress | 本地候选审查包、运行指南；封面/视频/真实腾讯证据缺失 |
+| DEV-14 | in_progress | 本地小步提交及候选重建；G2/publish 未批准 |

@@ -17,11 +17,24 @@ WEB=Path(__file__).resolve().parents[1]/'web'
 
 
 class App:
-    def __init__(self, store=None):
+    def __init__(self, store=None, source_path=None):
         self.world=FixtureWorld(); self.store=store or Store()
+        self.source_path=source_path
+        self.world.authority_path=source_path
+        if source_path:
+            if Path(source_path).exists(): self.world.refresh(source_path)
+            else: self.world.save(source_path)
         self.store.initialize(self.world)
         self.audit=Audit(self.store); self.engine=Engine(self.store,self.world,self.audit)
         self.sessions={}
+        from .ingestion import Ingestion
+        self.ingestion=Ingestion(self.store,self.world)
+
+    def refresh(self):
+        if self.source_path:
+            self.world.refresh(self.source_path)
+            for source in ('confluence','jira','slack','drive'):
+                self.ingestion.poll(source)
 
     def session(self, token):
         value=self.sessions.get(token)
@@ -65,6 +78,7 @@ def create_server(app, port=0):
         def dispatch(self, method):
             try:
                 self.gate()
+                app.refresh()
                 path=unquote(urlparse(self.path).path)
                 data={}
                 if method=='POST':
@@ -123,8 +137,10 @@ def create_server(app, port=0):
             except Exception:
                 self.send(503,{'error':'Request could not be completed safely. Please try again.'})
 
-        def do_GET(self): self.dispatch('GET')
-        def do_POST(self): self.dispatch('POST')
+        def do_GET(self):
+            with app.store.lock: self.dispatch('GET')
+        def do_POST(self):
+            with app.store.lock: self.dispatch('POST')
     return ThreadingHTTPServer(('127.0.0.1',port),Handler)
 
 
@@ -133,7 +149,7 @@ def main():
     args=parser.parse_args()
     if not args.demo: parser.error('Only --demo synthetic loopback mode is implemented. Live mode is disabled.')
     runtime=Path('.runtime'); runtime.mkdir(mode=0o700,exist_ok=True)
-    app=App(Store(str(runtime/'demo.sqlite')))
+    app=App(Store(str(runtime/'demo.sqlite')),runtime/'source.json')
     server=create_server(app,args.port)
     print(f'ContextLedger — SYNTHETIC / FAKE MODEL — http://127.0.0.1:{server.server_port}',flush=True)
     try: server.serve_forever()
