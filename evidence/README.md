@@ -31,3 +31,5 @@
 - `runs/deepseek/verification.json` and `runs/local-latest/tests.json`: 233 actual local tests (60 synthetic/local, 173 mock contracts), 13 new model tests. Real API/model execution is separate.
 - `runs/deepseek/live-drive-query.json`: real Drive + DeepSeek evidence selection, original synthetic excerpts, browser citation/history, 14 DB/budget checks; 61-event unsigned audit snapshot. One live model request, conservative upper accounting243 micro-USD, not vendor invoice. No free-form synthesis/full matrix claim.
 - `runs/deepseek/live-insufficient-evidence.json`: actual no-evidence refusal, no additional external model request/reservation/cost. UI separates NO MODEL CALL, LIVE MODEL and FAKE MODEL. Screenshots stay under ignored `tool-usage/private/onboarding-20261005/`; not uploaded.
+
+- Drive独立reader原生问答、引用、历史及同会话撤权：[reader-query-and-revocation.json](runs/live-drive/reader-query-and-revocation.json)。fake model；恢复权限只UI，export/full ACL/unified not_run。截图留本地private。

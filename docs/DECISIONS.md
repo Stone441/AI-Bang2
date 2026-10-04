@@ -162,3 +162,5 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 AUTH-011 amendment: user confirmed kyle000909@gmail.com as eng_b Google/Drive identity, replacing QQ Google registration; existing Atlassian identity retained. Cloud test user saved and exact synthetic folder Viewer sharing read back; general access remains Restricted, notification unchecked. This does not establish API identity or grant. Slack still uses the specifically approved QQ email pending membership.
 
 2026-10-05 Slack reader invitation: native UI returned Unable to send / Couldn’t invite for 674544786@qq.com; cause not established, no membership claimed. Drive reader process started on8087 (fake model), OAuth waiting user final grant, credentials not entered or copied. Private screenshot reader-slack-invite-failed.jpg.
+
+2026-10-05 AUTH-003权限测试执行：仅在已批准合成folder移除eng_b Reader以验证同会话撤权，再恢复相同Viewer/Restricted范围，无公开share、正文编辑或新scope。原生Drive版本因权限分享从3至4变化但正文hash相同，按保守原生版本校验处理，不把权限引起的version变化记为新企业事实。
