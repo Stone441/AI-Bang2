@@ -171,3 +171,5 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 2026-10-05 Reader权限恢复：native sharing readback再次确认kyle000909@gmail.com Viewer、Restricted；无恢复API问答，旧version不保证再开放。下一个接续：Slack独立成员邀请地址选择等待用户，之后独立grant/native ID核验，四源mapping仍不得提前标reviewed。
 
 2026-10-05 Slack独立reader：获批改用kyle000909@gmail.com后native邀请成功（colleague，30days expiry），等待用户邮件接受/Google登录/条款；native user ID、私有channel membership、reader OAuth/live撤权仍not_run。不得复用eng_a token或提前identity_mapping_reviewed=true。下一步用户加入后核对实际身份和频道成员，再交用户最终OAuth。
+
+2026-10-05 Slack读者加入：用户报告已加入；浏览器库存有AI-Bang2新标签。核验前Chrome明确阻止自动化，要求关闭其他扩展UI；已交用户关闭扩展弹窗/侧栏。native身份、频道成员、OAuth仍pending/not_run，不把user_reported当APIverified。接续标签996083332，工作区T0C6FQ246TF，核验kyle000909@gmail.com后再准备既有app A0C6F96HFNX读者grant。
