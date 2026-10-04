@@ -55,3 +55,5 @@ python3 -m scripts.jira_query --config .runtime/jira-pilot.json --actor eng_b --
 AUTH-007 后用户明确批准现有免费试用期内 Jira User，已保存并 UI 确认。原先 Grant access 拒绝已解决；API 仍 not_run。当前 token 管理页待 eng_b 邮箱额外安全验证，未创建新凭据。
 
 持久网页入口现支持 `brain.operator_web --source jira`，命令见 RUNBOOK。一次服务启动隐藏输入凭据，此后进程内复用、每次源端身份与权限重查；四项新增 mock HTTP 测试覆盖两次查询无再次隐藏输入、身份替换、同会话撤权及 history/export/citation。真实 Jira 网页/正文验收仍 not_run。
+
+真实operator网页子集已运行：KAN-4正文问答、当前引用预览、Recent answers、临时Administrator-only原生限制后同会话追问/历史/引用拒绝。11 DB核验通过，21事件链。恢复原No restrictions（UI确认）。见evidence/runs/live-jira/web-query-and-revocation.json；不是评论权限矩阵/所有Jira对象/真实LLM通过。

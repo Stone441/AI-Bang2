@@ -89,3 +89,8 @@ AUTH-006 执行限制：只读账单核验显示 Jira 已为 Premium 免费试�
 ## ADR-011 · 2026-10-05 · 复用操作员进程中的 Jira 凭据
 
 用户指出独立诊断命令反复要求邮箱/token 造成操作负担。每次权限重查不要求重复人工输入凭据，因此扩展现有 operator web 到 Jira，并保留默认 Confluence 兼容。token 只驻留服务进程，固定 source/actor、独立数据库、一用 ticket/opaque session，查询仍 native identity/current access 检查；不缓存允许决定、不读取密码应用、不持久化秘密。代价：进程停止后再次输入，当前每进程单源/单操作员，SSO/多源同入口后续实施。可单独回滚 --source Jira 分支。
+
+
+## ADR-012 · 2026-10-05 · 导航时清除旧答案视图
+
+真实Jira撤权后，后端query/citation/history正确deny，但Workspace导航复用之前渲染DOM，违反新访问不恢复旧内容的产品要求。选择导航清除答案/隐藏历史、query开始清除旧答案、preview失败清除相关视图；继续保存historyId以便服务端重查追问依赖。代价是返回Workspace需新问答或Recent answers获取重新鉴权的历史，不能保留不经检查的旧视图便利。不声称能消除用户已看到/截图保存的内容，也不承诺平台ACL变更瞬时推送。node frontend安全验证及真实会话重载后UI验证通过，无服务器重启/凭据重输。

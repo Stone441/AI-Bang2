@@ -104,3 +104,7 @@ eng_b token 管理页邮箱安全验证已完成（页面直接进入 API Tokens
 2026-10-05 凭据复用体验修正：Jira 接入 operator web，显式 --source jira / --port8083 / 独立 jira-web.sqlite。一次启动输入，后续网页不要求反复邮箱/token，仍逐请求源端身份/当前权限检查。4 新 mock HTTP 测试；首轮 153 中1项失败为登录后不存在 demo route 预期403错误，按真实 router 修正为404并加不可切换 actor 断言，复跑153/153（60 synthetic/93 mock）、源码hash零差异。保留同会话撤权、模型输入、history/export/citation有效断言。真实 Jira query/web仍not_run；先前单次query命令暂停，下一步用户启动持久网页一次，再由agent检查真实DB。
 
 2026-10-05 用户报告 Jira operator 启动完成；agent 实际只读 localhost8083/api/health 返回 jira_live_api_fake_model/live_enabled true/operator 身份入口，.runtime/jira-web.sqlite audit/runs 均0。服务启动已验证，非问答验收；Chrome 尚无8083 tab，已请用户打开终端完整一次性入口链接，不再输入凭据。不记录 ticket，不 kill 现有服务。接续页面打开→英文问答→真实DB证据/当前授权/引用/历史检查。
+
+2026-10-05 Jira real HTTP/web verified subset：agent 在已验证eng_b会话实际问答，request c49ecf7131024e219ad69b963ddcab7a，KAN-4 Done/Unassigned/不批准general release的真实合成正文，fake-extractive，当前模型前/返回前allow，原生引用和历史实际点击显示。按AUTH-003把KAN-4临时限Administrator后，同会话e1c79f06134e4d229141967ab4a137c8追问native source_refresh deny，模型无撤权证据，旧引用deny、history unavailable，旧索引仍保留。11项独立DB checks通过，21事件unsigned链有效，证据live-jira/web-query-and-revocation.json。限制已恢复原No restrictions（UI验证，无额外恢复API问答）。
+
+发现并修复前端旧视图复用：Workspace切回会显示已渲染旧答案；现在导航/新查询清除旧答案，preview失败同时清除answer/history/preview。node tests/frontend_operator_security.js 4边界检查通过，node --check通过，同一真实会话刷新无需凭据，历史deny/Workspace不复用已视觉复测；完整153/153（60local/93mock），源码hash零差异。所有截图只存ignored本地，不上传。Jira评论权限矩阵/完整种植/多源统一前端/Slack/Drive/live LLM/SSO/G1/G2未完成。接续优先实现/授权Slack和Drive最小读取，以及统一多源operator配置；不可把本轮当四源全部通过。

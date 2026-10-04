@@ -23,3 +23,6 @@
 2026-10-05启动诊断修复：全回归142/142（60local+82mock），相关HTTP/identity 11项。8081已有operator服务；bind实际errno48复现，修复后port_in_use在隐藏输入之前报告，不请求凭据/访问平台。旧统一错误无法还原用户那次失败阶段；本轮保留现有进程、不声称真实网页问答已通过。
 
 `runs/live-confluence/web-query-26995601e7634d2191de4a69ee7c1c2d.json`：首个真实operator HTTP query，8项持久DB核验通过，12事件未签名链。工程事故问题仅得runbook；不扩大为多源事故/真实模型/SSO或UI点击验收。
+
+- `runs/live-jira/web-query-and-revocation.json`：真实浏览器/HTTP、持久DB核验，KAN-4问答及临时原生role restriction撤权；11 checks/21事件unsigned链。索引保留、query/model/history/citation不提供撤权内容；权限恢复原No restrictions。前端旧DOM复用发现修复及边界明确记录。private/onboarding-20261005/jira-live-query-history.jpg、jira-kan4-restricted.jpg、jira-revoked-history.jpg、jira-kan4-restored.jpg仅本地未上传。
+- `node tests/frontend_operator_security.js`：4前端视图安全检查实际通过，独立于153项Python回归；不计成真实平台权限测试。

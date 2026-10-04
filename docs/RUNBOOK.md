@@ -82,3 +82,5 @@ python3 -m brain.operator_web --source jira --config .runtime/jira-pilot.json --
 启动时隐藏输入实际 eng_b 邮箱与密码管理器 Jira token 一次，打开输出的一次性入口链接（不要截图/分享 ticket）。同一运行进程中，网页 query/history/citation 不再请求输入 API 凭据，但每次仍重查源身份及当前权限。不是将授权结果缓存成永久 allow。DB 独立为 `.runtime/jira-web.sqlite`；Ctrl+C 停止后内存凭据消失，下次启动需重新输入。默认不读取系统密码应用，不保存 token 文件。保留已有 Confluence 服务，不 kill 端口占用者。网页是操作员 pilot/fake model，不是 SSO 或 live LLM。
 
 可问 `What is the status of the payment-service retry configuration fix, and does completion approve general customer release?`，点击引用及 Recent answers；实际结果由 DB 验证，不能把 mock 测试当 live 问答通过。
+
+前端安全视图回归：`node tests/frontend_operator_security.js`（需Node，独立于标准库Python运行时）与 `node --check web/app.js`。验证导航/preview拒绝/待返回query/history请求清除旧视图。页面跨视图不复用旧答案；请用Recent answers重新鉴权访问。前端静态文件修正可直接刷新当前网页，session仍有效，无需重启或重新输入API凭据。
