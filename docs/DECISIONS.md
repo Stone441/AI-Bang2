@@ -166,3 +166,5 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 AUTH-003权限测试执行：仅在已批准合成folder移除eng_b Reader以验证同会话撤权，再恢复相同Viewer/Restricted范围，无公开share、正文编辑或新scope。原生Drive版本因权限分享从3至4变化但正文hash相同，按保守原生版本校验处理，不把权限引起的version变化记为新企业事实。
 
 2026-10-05 AUTH-011 Slack amendment：用户明确批准eng_b Slack也用kyle000909@gmail.com，限AI-Bang2工作区和合成私有频道，原四项user只读scope+identify，不接NTU、不新增付款或写scope，最终terms/OAuth用户点击。QQ邀请失败原因未知，新Google邮箱邀请UI显示You’ve invited 1 person/Invited as a colleague/Expires in30days；仅邀请成功，尚未入组或授权。
+
+2026-10-05 Slack reader OAuth准备：保留既有私有app原生install_redirect流程，未启用public distribution、未新增redirect或读取client/signing secret。用户既有Google登录用于主账号添加已批准的内部reader成员，随后仅Sign out切回reader，明确未选择leave workspace。只有最终Allow授予读权限，由用户操作；固定eng_b原生ID映射将在启动auth.test再次校验。参考Slack官方OAuth说明：https://docs.slack.dev/authentication/installing-with-oauth/。

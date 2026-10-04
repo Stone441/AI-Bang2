@@ -173,3 +173,9 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 2026-10-05 Slack独立reader：获批改用kyle000909@gmail.com后native邀请成功（colleague，30days expiry），等待用户邮件接受/Google登录/条款；native user ID、私有channel membership、reader OAuth/live撤权仍not_run。不得复用eng_a token或提前identity_mapping_reviewed=true。下一步用户加入后核对实际身份和频道成员，再交用户最终OAuth。
 
 2026-10-05 Slack读者加入：用户报告已加入；浏览器库存有AI-Bang2新标签。核验前Chrome明确阻止自动化，要求关闭其他扩展UI；已交用户关闭扩展弹窗/侧栏。native身份、频道成员、OAuth仍pending/not_run，不把user_reported当APIverified。接续标签996083332，工作区T0C6FQ246TF，核验kyle000909@gmail.com后再准备既有app A0C6F96HFNX读者grant。
+
+2026-10-05 Slack browser blocker解除；native own profile邮箱kyle000909@gmail.com/avatar公开URL memberID U0C66B76TE3已核对，本地ignored slack-reader.json按eng_b配置。该读者当前频道列表无合成private频道，尚未用token auth.test验证；正在切换主账号管理membership，reader OAuth/live测试pending。
+
+2026-10-05 Slack独立reader合成private成员已添加：切换已授权主账号后，选择已在工作区的Kyle（邮箱此前核对），频道原生事件1791147372.136469确认added by Kyle SHI；未使用Slack Connect/付费功能。existing app分发页要求HTTPS Redirect URL，未发布/新增redirect；继续检查原生Install App流程，OAuth/token/API撤权仍not_run。
+
+2026-10-05 Slack reader grant审核页就绪：现有app原生Reinstall链接install_redirect=install-on-team可用，无需新HTTPS callback/public distribution/client-secret交换。浏览器仅切换比赛账号，不leave workspace，现有本机服务保留；读者Google重新登录已核对邮箱。四项user读scope+identify原生展开一致，最终Allow/秘密保存交用户；目前grant/token API仍not_run。用户保存后仅将密钥从Mac密码粘贴至终端hidden prompt一次，agent不读取token页。
