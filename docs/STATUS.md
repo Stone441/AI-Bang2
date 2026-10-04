@@ -96,3 +96,5 @@ Jira 平台只读核验：Billing Console 显示 Premium FREE 30-DAY TRIAL，202
 2026-10-05 AUTH-007：用户具体批准现有 Jira 免费试用期内普通 User；自动审批已允许保存。Admin 用户详情已显示 eng_b 的 Jira User，未授管理员。Teamwork Collection 升级推广关闭未下单，未填写付款方式。原生 API/token/数字 IDs 仍 not_run。token 管理页确认 eng_b 邮箱，要求额外 8 位安全验证，已交给用户输入；接续验证完成→准备已批准 scope/name/expiry→用户 Create token/保存/关闭→隐藏 TTY ID discovery。本轮未改代码，无新增测试运行；149/149 是此前本地回归。
 
 eng_b token 管理页邮箱安全验证已完成（页面直接进入 API Tokens，agent 未再次输入验证码）。已准备 Jira scoped token 审核页：AI-Bang2 eng_b Jira read-only pilot，Oct20 到期，只选 read:jira-user/read:jira-work，无其他 scope；Create token 尚未点击。已交用户最终创建、保存并关闭密钥弹窗。接续仅在用户确认弹窗关闭后检查非秘密 token 元数据，并请用户隐藏 TTY 运行 KAN-4 ID discovery。验证码/密钥不写证据。
+
+2026-10-05 用户确认 Jira token“保存好了”，保存步骤采用密码应用独立标签 eng_b-jira-token 避免覆盖既有 Atlassian/Confluence 记录；终端实际 Atlassian email 仍为 eng_b 已核验邮箱。创建/保存为 user_reported，agent 未读取密钥或密码应用。下一步用户在真实 TTY 执行 --discover-ids KAN-4 --prompt-credential --live，将只含 IDs/Decision 的输出保存到 ignored .runtime/jira-id-discovery.json；在真实 allow 核验前不替换正式数字 ID 白名单，不声称 Jira API 已接通。
