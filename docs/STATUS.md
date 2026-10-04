@@ -14,3 +14,9 @@ DEV-00 仓库与环境盘点；DEV-02 合成 fixture/SourceAdapter/用户权限�
 DEV-03/04：loopback 服务、服务端 session、检索/当前源权限、fake extractive model、引用、持久审计与 UI；随后同步/撤权与五场景回放。
 
 四源 live blocked；模型 live not_run；腾讯工具贡献 not_started。无可调用腾讯工具连接，PATH 未找到 CLI。独立签名校验器预留 CodeBuddy。
+
+## 纵向链路更新
+
+DEV-03/04 本地闭环 verified：英文静态前端 + loopback HTTP、opaque session/CSRF、四源 fixture 检索、模型前及返回前权限复核、严格摘录 fake model、引用/历史/导出保护、持久审计与 scoped query。`make test` 18/18 通过，含真实 loopback HTTP（沙箱内绑定初次失败；授权执行后通过）。`node --check web/app.js` 通过。未启用 reranker/compressor/答案缓存；浏览器视觉核对待运行。
+
+当前 hash-chain 没有独立签名 checkpoint；SQLite authorizer/trigger 仅为逻辑演示，A-02/A-03/A-04 不完整。增量和五场景记录下一步。
