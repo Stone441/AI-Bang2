@@ -84,3 +84,8 @@ AUTH-006 执行限制：只读账单核验显示 Jira 已为 Premium 免费试�
 ## 2026-10-05 · AUTH-007 · existing Jira free trial User access
 
 用户明确选择“批准仅现有免费试用期内添加 User”，覆盖当前 Jira Premium 免费试用内 eng_b 普通 User，至 2026-11-04；不添加付款方式、不购买、不授权付费续订，到期前人工降级或停用。解决 AUTH-006 执行时的自动审批范围拒绝后已保存，页面核验 Jira User。随后平台显示 Teamwork Collection upgrade 推广，关闭且未下单；不据此扩大资源/收费授权。Jira token 仍按 AUTH-006：用户最终创建/保存。
+
+
+## ADR-011 · 2026-10-05 · 复用操作员进程中的 Jira 凭据
+
+用户指出独立诊断命令反复要求邮箱/token 造成操作负担。每次权限重查不要求重复人工输入凭据，因此扩展现有 operator web 到 Jira，并保留默认 Confluence 兼容。token 只驻留服务进程，固定 source/actor、独立数据库、一用 ticket/opaque session，查询仍 native identity/current access 检查；不缓存允许决定、不读取密码应用、不持久化秘密。代价：进程停止后再次输入，当前每进程单源/单操作员，SSO/多源同入口后续实施。可单独回滚 --source Jira 分支。

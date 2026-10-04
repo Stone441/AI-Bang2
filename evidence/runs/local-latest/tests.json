@@ -1,14 +1,14 @@
 {
-  "started_at": "2026-10-04T18:46:15.331805+00:00",
-  "finished_at": "2026-10-04T18:46:21.656487+00:00",
+  "started_at": "2026-10-04T18:59:10.154145+00:00",
+  "finished_at": "2026-10-04T18:59:18.622785+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "97b9422694526646f139136f981c356ee56b3ed0",
+  "commit": "274c3c7943e51a5b3306d1b2999f7739b5ac280a",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
-    "brain/operator_web.py": "f89de11b24745c8df87804bdb0734f14f65c89a7e62f8a29edb31d1a91e1c169",
+    "brain/operator_web.py": "b81b0ab48f4619ad091ed2ee78cbf9ef662f94617f827858f071c4c9e6f83440",
     "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
     "brain/server.py": "585c7fd45e1c67002ab9147023e12096726784c1c6d59740fa3c001bc202cf65",
     "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
@@ -28,6 +28,7 @@
     "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
     "tests/test_confluence_revocation.py": "85658ba53f7865528ea62e57880d13d5ef0cafb8db877c636a721e2410ab73d2",
     "tests/test_confluence_probe.py": "6c4865f4a504ea49b73c3a776d64f399bfb3a5e0500861c9a27c26c7246c5d10",
+    "tests/test_jira_operator.py": "2cb7ffe6d6fb92379b7bcb860170d15cd8ca9e12cda5742ec48cbff23f8e6bf9",
     "tests/test_jira.py": "6138a1a49e70b76db71aafb489cb72de400d69a70a69d2cbc6fbdaa493e1f6b3",
     "tests/test_live_seed.py": "df2ba1d2daa3e7f1016527830de12f3ad2f748633ad01c778819a088db0b19d0",
     "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
@@ -43,7 +44,7 @@
     "scripts/confluence_query.py": "c22c084a15321f54fb343d15e006e0a34588c8f338432c8ed2c51f6071cfa62c",
     "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
     "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
-    "scripts/test_report.py": "0e9b08ae4773d68a38293a337ab63d766352f84a60933b7f3f378ab21066c621",
+    "scripts/test_report.py": "8e6f2762542aa27c810e98b482cc87767be5569970f5007a4de00bcd25982355",
     "scripts/confluence_probe.py": "129b5a5e13a1b60f144084835d4638bd1fb20d1a5c1ebf2df0c0459ac850cc2d",
     "scripts/prepare_live_seed.py": "dcd3307e679b3f1d96affc7a65ba9be7af48ed84b258db64366a7bd494fa2eff",
     "scripts/evaluate.py": "f98bd282a1e1352a85276b8742201fcb1c3eeff0715752ecdeabe30fdeeb6f46",
@@ -57,7 +58,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 149,
+  "tests_run": 153,
   "successful": true,
   "results": [
     {
@@ -712,6 +713,26 @@
     },
     {
       "test": "test_jira_discovery.JiraDiscovery.test_unapproved_key_tenant_or_unmapped_actor_never_calls_source",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_operator.JiraOperatorHTTP.test_cli_selects_jira_loader_and_prompts_once_per_service_start",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_operator.JiraOperatorHTTP.test_native_identity_substitution_stops_startup_and_discovery_reader_cannot_serve",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_operator.JiraOperatorHTTP.test_one_input_session_reuses_delegation_but_rechecks_source_identity",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_jira_operator.JiraOperatorHTTP.test_same_jira_session_revocation_blocks_query_history_export_and_citation",
       "status": "passed",
       "mode": "mock_http_contract"
     },

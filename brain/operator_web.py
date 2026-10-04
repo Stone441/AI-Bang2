@@ -1,4 +1,4 @@
-"""Loopback operator UI for approved synthetic Confluence pages and fake model.
+"""Loopback operator UI for approved synthetic Confluence/Jira resources and fake model.
 
 Token stays in this process, never goes to the browser. A short-lived one-use
 bootstrap ticket attaches a browser to the verified operator, not employee SSO.
@@ -12,6 +12,9 @@ from pathlib import Path
 
 from .contracts import Actor
 from .confluence_query import ConfluenceQueryPilot
+from .confluence import ConfluenceReader
+from .delegated_query import DelegatedQueryPilot
+from .jira import JiraReader
 from .server import App, create_server
 from .store import Store
 
@@ -24,8 +27,14 @@ class OperatorApp:
     def __init__(self, reader, store, actor_id, *, live=False):
         self.actor = Actor(actor_id, reader.tenant)
         # This verifies the token's current native identity, even if a page is denied.
-        self.pilot = ConfluenceQueryPilot(reader, store, live=live)
-        reader._credential(self.actor, sorted(reader.page_ids)[0])
+        if isinstance(reader, ConfluenceReader):
+            self.pilot = ConfluenceQueryPilot(reader, store, live=live)
+            reader._credential(self.actor, sorted(reader.page_ids)[0])
+        elif isinstance(reader, JiraReader) and not reader.discovery_only:
+            self.pilot = DelegatedQueryPilot({'jira': reader}, store, live=live)
+            reader._credential(self.actor)
+        else:
+            raise ValueError('Configured content reader required')
         self.engine, self.world, self.audit = self.pilot.engine, self.pilot.authority, self.pilot.audit
         self.store, self.sessions = store, {}
         self._ticket = secrets.token_urlsafe(32)
@@ -50,6 +59,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', required=True)
     parser.add_argument('--actor', default='eng_b')
+    parser.add_argument('--source', choices=['confluence', 'jira'], default='confluence')
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
     args = parser.parse_args(argv)
@@ -63,17 +73,20 @@ def main(argv=None):
         # the verified application is attached; no race-prone bind/release probe.
         server = create_server(None, args.port)
         stage = 'configuration_or_hidden_input'
-        from scripts.confluence_probe import load_reader
+        if args.source == 'jira':
+            from scripts.jira_query import load_reader
+        else:
+            from scripts.confluence_probe import load_reader
         reader = load_reader(args.config, prompt_actor=args.actor)
         stage = 'local_store'
         runtime = Path('.runtime'); runtime.mkdir(mode=0o700, exist_ok=True)
-        db = runtime / 'confluence-web.sqlite'
+        db = runtime / (args.source + '-web.sqlite')
         store = Store(str(db)); os.chmod(db, 0o600)
         stage = 'native_identity'
         app = OperatorApp(reader, store, args.actor, live=True)
         server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
-        print('Confluence LIVE API / FAKE MODEL / LOCAL OPERATOR (not SSO)', flush=True)
+        print(f'{args.source.title()} LIVE API / FAKE MODEL / LOCAL OPERATOR (not SSO)', flush=True)
         print(f'Open once within 10 minutes: http://127.0.0.1:{server.server_port}/#ticket={app.bootstrap_ticket()}', flush=True)
         stage = 'runtime'
         server.serve_forever()

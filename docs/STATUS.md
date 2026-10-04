@@ -100,3 +100,5 @@ eng_b token 管理页邮箱安全验证已完成（页面直接进入 API Tokens
 2026-10-05 用户确认 Jira token“保存好了”，保存步骤采用密码应用独立标签 eng_b-jira-token 避免覆盖既有 Atlassian/Confluence 记录；终端实际 Atlassian email 仍为 eng_b 已核验邮箱。创建/保存为 user_reported，agent 未读取密钥或密码应用。下一步用户在真实 TTY 执行 --discover-ids KAN-4 --prompt-credential --live，将只含 IDs/Decision 的输出保存到 ignored .runtime/jira-id-discovery.json；在真实 allow 核验前不替换正式数字 ID 白名单，不声称 Jira API 已接通。
 
 2026-10-05 Jira ID discovery：实读用户执行的 .runtime/jira-id-discovery.json，jira_live_api_configuration_probe / allow，UTC18:56:00（SGT10月5日02:56），KAN-4 issue_id10013/project KAN id10001，无正文返回。原生 identity 与 exact key/project 已由 reader 检查；仅 metadata 配置诊断，不是正文/问答/ACL矩阵验收。已将这两个实测数字 IDs 写入 ignored .runtime/jira-pilot.json（0600），保留 comment_ids 空白。下一步隐藏 TTY 真问答，检查 actual model inputs/claims/citations 与审计 DB。
+
+2026-10-05 凭据复用体验修正：Jira 接入 operator web，显式 --source jira / --port8083 / 独立 jira-web.sqlite。一次启动输入，后续网页不要求反复邮箱/token，仍逐请求源端身份/当前权限检查。4 新 mock HTTP 测试；首轮 153 中1项失败为登录后不存在 demo route 预期403错误，按真实 router 修正为404并加不可切换 actor 断言，复跑153/153（60 synthetic/93 mock）、源码hash零差异。保留同会话撤权、模型输入、history/export/citation有效断言。真实 Jira query/web仍not_run；先前单次query命令暂停，下一步用户启动持久网页一次，再由agent检查真实DB。

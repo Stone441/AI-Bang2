@@ -31,3 +31,5 @@
 | DEV-10-OPERATOR | verified mock HTTP / live operator subset | 11测试（含3新增启动诊断/cleanup）：先验证native身份，一次性bootstrap→opaque session，API secret不入浏览器，同会话撤权保护query/history/export/citation。现有英文UI共享；JS语法通过，自动浏览器被ERR_BLOCKED_BY_CLIENT阻挡。真实 HTTP query 已持久化核验；用户确认引用/历史正常，14 事件链通过；不是OAuth/SSO完成 |
 
 | DEV-06-JIRA-IDS | verified mock / blocked live credential | 7 metadata-only setup 测试；native 身份+显式 KAN-4→KAN→数字 IDs；setup 禁止正文读取/DB/模型。AUTH-006 已批准凭据准备，eng_b Jira User 已于 AUTH-007 保存；用户邮箱安全验证/创建保存、KAN-4 native ID10013/project10001 已 metadata-only allow；真实正文/问答待完成 |
+
+| DEV-10-JIRA-OPERATOR | verified mock HTTP / live not_run | 4新增测试；一次启动输入凭据、重复查询逐次身份检查、同会话撤权及历史/导出/引用阻断，独立 DB；待用户真实启动/问答 |
