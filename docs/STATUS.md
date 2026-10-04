@@ -163,3 +163,5 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 2026-10-05 Independent reader preparation: user confirmed existing kyle000909@gmail.com for Drive, retaining QQ Atlassian. Cloud test user and synthetic-folder Reader UI readback verified; reader native API/grant/revocation and unified live remain not_run. Slack invitation preparation uses approved QQ email; outcome recorded separately.
 
 2026-10-05 Slack reader invitation: native UI returned Unable to send / Couldn’t invite for 674544786@qq.com; cause not established, no membership claimed. Drive reader process started on8087 (fake model), OAuth waiting user final grant, credentials not entered or copied. Private screenshot reader-slack-invite-failed.jpg.
+
+2026-10-05 Drive独立reader：用户已完成Google只读授权，程序完成token交换及kyle000909@gmail.com原生about身份绑定，并启动8087 live API/fake model服务。Chrome自动导航ERR_BLOCKED_BY_CLIENT，已交用户地址栏Enter；问答/撤权尚not_run，未新增模型调用或费用。

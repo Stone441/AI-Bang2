@@ -72,3 +72,5 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 2026-10-05 DEV-10-MULTI-OAUTH reader increment: Google test-user + synthetic-folder Viewer setup verified UI; Google reader account substitution user_confirmed. Native binding/grant/revocation and unified model receipts still pending.
 
 2026-10-05 Slack reader invitation: native UI returned Unable to send / Couldn’t invite for 674544786@qq.com; cause not established, no membership claimed. Drive reader process started on8087 (fake model), OAuth waiting user final grant, credentials not entered or copied. Private screenshot reader-slack-invite-failed.jpg.
+
+2026-10-05 Drive独立reader：用户已完成Google只读授权，程序完成token交换及kyle000909@gmail.com原生about身份绑定，并启动8087 live API/fake model服务。Chrome自动导航ERR_BLOCKED_BY_CLIENT，已交用户地址栏Enter；问答/撤权尚not_run，未新增模型调用或费用。
