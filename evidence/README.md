@@ -33,3 +33,5 @@
 - `runs/deepseek/live-insufficient-evidence.json`: actual no-evidence refusal, no additional external model request/reservation/cost. UI separates NO MODEL CALL, LIVE MODEL and FAKE MODEL. Screenshots stay under ignored `tool-usage/private/onboarding-20261005/`; not uploaded.
 
 - Drive独立reader原生问答、引用、历史及同会话撤权：[reader-query-and-revocation.json](runs/live-drive/reader-query-and-revocation.json)。fake model；恢复权限只UI，export/full ACL/unified not_run。截图留本地private。
+
+2026-10-05 阶段收尾：local-latest当前248/248（60 local /188 mock），五场景passed_local_subset；首次sandbox loopback失败后相同测试获准重跑通过。最新真实能力及not_run以STATUS收尾段为准；本轮未调用真实API或模型，私有截图/工具对话/凭据未纳入push。

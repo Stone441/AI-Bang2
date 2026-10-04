@@ -2,9 +2,9 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**最新验证：142/142回归通过（60 local synthetic + 82 mock HTTP）；新增Jira委托只读、独立受限评论、多源共享Engine及Confluence本机操作员网页入口。Jira和网页源检查为mock HTTP，真实网页验收待用户运行；既有Confluence真实API+fake model查询/撤权证据不变。其他源/live model/SSO/G1/G2未完成。**
+**阶段收尾（2026-10-05）：248/248 回归通过（60 local synthetic + 188 mock HTTP）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/撤权及统一四源 live 仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
 
-**G0 仅本地完整开发已批准**；已批准专用四源空间的合成资料写入/测试权限调整，以及 DeepSeek 合成资料首轮等值 US$20 上限；已落实Confluence测试空间、eng_b账号映射/只读token、真实查询/撤权；预算账本已测试但尚未接模型。其他源凭据/完整身份矩阵仍待落实。G1/G2未通过。既有原型/CodeBuddy通过PR #1/#2合并main；本轮仅本地分支，未部署/调用应用运行时模型。
+**授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
 ## 已实现与验证
 
@@ -13,7 +13,7 @@
 - 当前源授权在模型前和返回前检查；未知拒绝；四源撤权、旧历史/导出/引用保护。模型、HTTP 均有实际回归。
 - 持久 fake source 与 SQLite 索引分离；对象级事务发布、创建/更新/删除、去重/乱序/重试、失败任务不被游标越过、重启恢复。请求触发处理，不宣称真实自动同步。
 - 完整问答审计、逐资料决策、sent_to_model/cited/dispatch 区分、scope 查询与稳定分页；60 并发追加链测试。已接入离线 Ed25519 检查点 CLI；同机同账号仍不等于生产独立签名边界。
-- `make test-report` 52/52 tests passed（32 原有 + 20 CodeBuddy）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
+- `make test-report` 最新248/248 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
 
 原型 32 测试阶段已通过从提交导出的独立临时目录 `make setup` / `make test` / JS 语法检查；本轮签名集成验证为当前 checkout 的 52 测试回归。
 
@@ -23,11 +23,11 @@
 
 | 项目 | 状态 |
 |---|---|
-| 四源 | fixture_only；live blocked（专用合成空间范围已批准，Slack/Jira/Confluence 已建立；Confluence Premium 试用至 2026-11-04、无付款方式，Drive/委托配置未完成） |
-| 模型 | fake-extractive-v1；live not_run，无 embedding/reranker/compressor |
+| 四源 | 各源 live query verified subset；统一 live / Slack独立reader API与撤权 not_run；试用无付款方式，未授权收费续订 |
+| 模型 | fake-extractive与DeepSeek真实证据选择分列；自由综合回答、embedding/reranker/compressor未实现 |
 | 审计完整性 | partial；离线签名/篡改检测 verified local；独立 DB role / 加密 / 外部签名保管未实现 |
 | 腾讯工具 | verified local：真实 CodeBuddy 实现 + 审查修正；20 新测试/全仓库 52 测试通过；7 截图及原生 conversation history 已本地保存，未上传 |
-| 浏览器视觉 | blocked：IAB 不可用，Chrome localhost ERR_BLOCKED_BY_CLIENT；HTTP 集成通过不替代视觉检查 |
+| 浏览器视觉 | 各源原生/应用问答、引用、历史有真实子集证据；统一四源视觉仍not_run |
 | 部署与人工 | local only；G1/G2 / 非作者质量与 ROI not_run |
 
 ## 精确接续点
@@ -185,3 +185,11 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 2026-10-05 AUTH-012临时Slack app Collaborator已native UI添加并核对reader U0C66B76TE3；读者Google重新登录后可进入Install App。原四项user读scope+identify展开审核一致，等待用户最终Allow与保存eng_b-slack-token；之后移除临时Collaborator。无secret读取/API问答/模型调用，新reader auth.test和撤权仍not_run。证据private/slack-reader-collaborator-added.jpg；原有248回归未重复运行（仅文档/平台setup）。
 
 2026-10-05 用户报告eng_b Slack token保存并离开密钥页；agent未读取秘密。按AUTH-012从已核对U0C66B76TE3自己的Collaborators页面Leave，native确认移除后Your Apps不再列出该app；未退出工作区/频道、未卸载业务OAuth grant。截图private/slack-reader-collaborator-removed.jpg。四源public配置均加载校验同tenant/actor，Drive映射kyle000909@gmail.com、SlackU0C66B76TE3与既有QQ Atlassian对应用户已确认persona；创建ignored0600 operator-bundle.json（mapping reviewed仅表示账号映射审查，非API验收）。下一步一次启动8088 multi+Drive PKCE+DeepSeek并逐source native identity强制核对。reader Slack API/统一live问答/撤权仍not_run；没有新模型调用。
+
+## 2026-10-05 · 阶段收尾与下次接续
+
+- 基准c3cfade，本轮`make setup`通过；首次248回归因沙箱loopback限制20 errors，获准相同本地测试重跑后248/248、无skip/断言降级；`make verify`五场景passed_local_subset。证据local-latest记录UTC时间、commit、源码hash，未调用真实平台或模型。
+- Slack读者token保存为user_reported，临时app Collaborator已native移除。四源ignored0600 manifest已准备；启动前仍须每源native身份验证，不能用已审查映射替代API验收。
+- 下次直接按UNIFIED_LIVE_PILOT.md启动8088统一operator（各secret隐藏输入一次、Drive选kyle000909@gmail.com、DeepSeek既有预算）；先核验四源问答/引用/历史与model receipt，再做Slack私有频道撤权及统一混合历史/导出保护，恢复测试权限。
+- 后续：完善有证据的模型综合回答、补齐官方五场景live矩阵、非作者人工G1验收及提交候选。G2/公开部署/比赛提交未授权。
+- 现有本机服务未停止；机器休眠/进程退出后需按文档重新启动，凭据仅内存，不承诺夜间继续。队友Analysis&Planning未跟踪文件保留，不纳入提交。

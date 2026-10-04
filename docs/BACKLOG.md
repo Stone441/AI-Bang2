@@ -88,3 +88,5 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 2026-10-05 AUTH-012临时Slack app Collaborator已native UI添加并核对reader U0C66B76TE3；读者Google重新登录后可进入Install App。原四项user读scope+identify展开审核一致，等待用户最终Allow与保存eng_b-slack-token；之后移除临时Collaborator。无secret读取/API问答/模型调用，新reader auth.test和撤权仍not_run。证据private/slack-reader-collaborator-added.jpg；原有248回归未重复运行（仅文档/平台setup）。
 
 2026-10-05 用户报告eng_b Slack token保存并离开密钥页；agent未读取秘密。按AUTH-012从已核对U0C66B76TE3自己的Collaborators页面Leave，native确认移除后Your Apps不再列出该app；未退出工作区/频道、未卸载业务OAuth grant。截图private/slack-reader-collaborator-removed.jpg。四源public配置均加载校验同tenant/actor，Drive映射kyle000909@gmail.com、SlackU0C66B76TE3与既有QQ Atlassian对应用户已确认persona；创建ignored0600 operator-bundle.json（mapping reviewed仅表示账号映射审查，非API验收）。下一步一次启动8088 multi+Drive PKCE+DeepSeek并逐source native identity强制核对。reader Slack API/统一live问答/撤权仍not_run；没有新模型调用。
+
+2026-10-05 阶段收尾：248/248回归与五场景local subset重跑通过；统一8088真实验收/Slack reader API和撤权not_run，用户休息前不再要求凭据。下一P0统一reader启动与native identity→跨源问答→Slack/混合历史撤权；P1有证据模型综合及完整live矩阵。
