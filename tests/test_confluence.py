@@ -104,6 +104,21 @@ class DelegatedReads(unittest.TestCase):
         self.assertNotIn('secret-test', repr(credential))
         with self.assertRaises(ValueError): Delegation('employee', 'Bearer test\nX: y')
 
+    def test_scoped_token_gateway_is_pinned_and_site_links_stay_local(self):
+        cloud_id = 'f8382509-310f-447e-be39-f8a59d03da27'
+        reader = ConfluenceReader('https://test.atlassian.net', 'pilot', ['98564'], ['123'],
+                                 {'eng_b': Delegation('employee', 'Basic test-only')},
+                                 self.transport, cloud_id=cloud_id)
+        self.responses((200, PAGE), (200, PAGE))
+        d, c = reader.read(self.actor, '98564')
+        self.assertEqual(d.result, 'allow')
+        for call in self.transport.get.call_args_list:
+            self.assertTrue(call.args[0].startswith('https://api.atlassian.com/ex/confluence/' + cloud_id + '/wiki/'))
+        self.assertTrue(c['source_url'].startswith('https://test.atlassian.net/'))
+        with self.assertRaises(ValueError):
+            ConfluenceReader('https://test.atlassian.net', 'pilot', ['98564'], ['123'], {},
+                             cloud_id='other-site/../../private')
+
 
 class TransportLimits(unittest.TestCase):
     def test_error_body_not_read_and_redirect_not_followed(self):

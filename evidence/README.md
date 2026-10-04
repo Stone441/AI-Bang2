@@ -2,7 +2,7 @@
 
 全部为合成数据，不含真实凭据/企业内容；没有上传外部证据。
 
-- `runs/local-latest/tests.json`：unittest 实际结果、运行时间、Python 版本、被测 commit 和逐文件 SHA-256；2026-10-05 为 76 个测试方法（含 16 个 Confluence 模拟 HTTP/配置合同案例、7 个预算账本案例和 seed exporter），额外权限矩阵 subtests。逐案例区分 local_synthetic / mock_http_contract，未调用真实 API。
+- `runs/local-latest/tests.json`：unittest 实际结果、运行时间、Python 版本、被测 commit 和逐文件 SHA-256；2026-10-05 为 91 个测试方法（含 31 个 Confluence 模拟 HTTP/配置/查询合同案例、7 个预算账本案例和 seed exporter），额外权限矩阵 subtests。逐案例区分 local_synthetic / mock_http_contract，未调用真实 API。
 - `runs/local-latest/scenarios.json`：S-01…S-05 的实际输入/输出/引用/断言与部分覆盖边界。状态 passed_local_subset 不等于完整官方场景验收通过。
 - `runs/local-latest/audit.json`：五场景执行的原始合成日志链，问答正文与每次授权保留。
 - `runs/first-scenario-failure.json`：首次 S-01 失败，后续增加授权关联检索修复；不是预期内容充当实际输出。

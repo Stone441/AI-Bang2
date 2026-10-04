@@ -22,10 +22,20 @@ class FakeExtractiveModel:
 
 
 class Engine:
-    def __init__(self, store, world, audit, model=None):
+    def __init__(self, store, world, audit, model=None, *, tenant=TENANT, mode=MODE):
         self.store,self.world,self.audit=store,world,audit
         self.model=model or FakeExtractiveModel()
+        self.tenant,self.mode=tenant,mode
         self.before_dispatch=None
+
+    def prefilter(self, actor, resource):
+        if hasattr(self.world, 'prefilter'):
+            return self.world.prefilter(actor, resource)
+        return policy_allows(actor.user_id,self.world.users[actor.user_id],resource['policy'])
+
+    def validate_actor(self, actor):
+        if actor.tenant!=self.tenant or actor.user_id not in self.world.users:
+            raise PermissionError('Unavailable')
 
     def check(self, actor, resource, request_id, phase):
         decision=self.world.adapter(resource['source']).check_read(actor,resource['id'])
@@ -35,13 +45,14 @@ class Engine:
         return decision.result=='allow'
 
     def query(self, actor:Actor, question, history_id=None):
-        if actor.tenant!=TENANT or actor.user_id not in self.world.users:
-            raise PermissionError('Unavailable')
+        self.validate_actor(actor)
         if not isinstance(question,str) or not question.strip() or len(question)>4000:
             raise ValueError('Question must contain 1–4000 characters')
         rid=uuid.uuid4().hex
-        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':MODE,'candidate_strategy':'local ACL snapshot + keyword overlap + authorized one-hop links','history_id':history_id})
+        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + keyword overlap + authorized one-hop links','history_id':history_id})
         try:
+            if hasattr(self.world, 'prepare'):
+                self.world.prepare(actor,self.store,self.audit,rid)
             query_tokens=tokens(question)
             # No previous assistant prose enters retrieval or a model. Only reauthorized dependency IDs can supplement a follow-up.
             previous=self.store.run(history_id,actor.user_id) if history_id else None
@@ -49,7 +60,7 @@ class Engine:
             candidates=[]
             for resource in self.store.resources():
                 if resource['tenant']!=actor.tenant: continue
-                if not policy_allows(actor.user_id,self.world.users[actor.user_id],resource['policy']): continue
+                if not self.prefilter(actor,resource): continue
                 score=len(query_tokens & tokens(resource['title']+' '+resource['text']))
                 if resource['id'] in dependency_ids: score+=1
                 if score: candidates.append((score,resource))
@@ -65,7 +76,7 @@ class Engine:
                     if target_id in seed_ids: continue
                     target=self.store.get(target_id)
                     if (target and target['tenant']==actor.tenant
-                            and policy_allows(actor.user_id,self.world.users[actor.user_id],target['policy'])):
+                            and self.prefilter(actor,target)):
                         expansions.append((0,target));seed_ids.add(target_id)
             candidates=candidates[:16]+expansions[:8]
             selected=[]; budget=16000
@@ -77,6 +88,13 @@ class Engine:
                 if len(r['text'])>budget: continue
                 budget-=len(r['text'])
                 selected.append(Evidence(r['id']+'@'+str(r['version']),r['id'],r['version'],r['source'],r['title'],r['locator'],r['text'],r['source_updated_at'],r['indexed_at'],r['source_url']))
+            # Recheck the complete selected set immediately before model dispatch.
+            # A later candidate read may have observed a permission/content change.
+            for e in selected:
+                resource=self.store.get(e.resource_id)
+                if (not resource or not self.check(actor,resource,rid,'model_dispatch')
+                        or self.world.resources[e.resource_id]['version']!=e.version):
+                    raise PermissionError('Evidence changed; please ask again')
             for e in selected:
                 self.audit.append('evidence_used',actor.user_id,rid,{'evidence_id':e.evidence_id,'resource_id':e.resource_id,'source':e.source,'version':e.version,'stage':'sent_to_model','resource_scope':'payment-service'})
             draft=self.model.generate(question,selected)
@@ -96,7 +114,7 @@ class Engine:
                 if (not resource or resource['version']!=e.version or not self.check(actor,resource,rid,'before_dispatch')
                         or self.world.resources[e.resource_id]['version']!=e.version):
                     raise PermissionError('Evidence changed; please ask again')
-            response={'request_id':rid,'mode':MODE,'model':self.model.name,'claims':claims,
+            response={'request_id':rid,'mode':self.mode,'model':self.model.name,'claims':claims,
                       'uncertainties':['Source excerpts only; live AI synthesis is not enabled.'] if selected else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
             self.audit.append('response_committed',actor.user_id,rid,{'response':response})
@@ -107,6 +125,7 @@ class Engine:
             raise
 
     def evidence(self, actor, eid):
+        self.validate_actor(actor)
         try:
             resource_id,version=eid.rsplit('@',1)
             r=self.store.get(resource_id)
@@ -118,6 +137,7 @@ class Engine:
         return {'evidence_id':eid,'title':r['title'],'text':r['text'],'locator':r['locator'],'version':r['version'],'source_url':r['source_url']}
 
     def safe_history(self, actor, request_id=None):
+        self.validate_actor(actor)
         records=[self.store.run(request_id,actor.user_id)] if request_id else self.store.history(actor.user_id)
         result=[]
         for record in records:

@@ -1,10 +1,11 @@
 """Read-only, allowlisted Confluence pilot. No credential or response logging.
 
-This boundary is not yet the demo Engine's SourceAdapter. Each read verifies the
-credential identity and current page access; it never falls back to an admin.
+The separate operator query pilot uses this boundary with the shared Engine.
+Each read verifies credential identity and access; no admin fallback exists.
 """
 import json
 import re
+import uuid
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
@@ -96,7 +97,7 @@ class StorageText(HTMLParser):
 
 
 class ConfluenceReader:
-    def __init__(self, site, tenant, page_ids, space_ids, delegations, transport=None):
+    def __init__(self, site, tenant, page_ids, space_ids, delegations, transport=None, cloud_id=None):
         parsed = urlsplit(site)
         if (parsed.scheme != 'https' or not parsed.hostname
                 or not re.fullmatch(r'[a-z0-9-]+\.atlassian\.net', parsed.hostname)
@@ -104,6 +105,14 @@ class ConfluenceReader:
                 or parsed.query or parsed.fragment):
             raise ValueError('An explicit HTTPS Atlassian site is required')
         self.site, self.tenant = site.rstrip('/'), tenant
+        self.api_base = self.site
+        if cloud_id is not None:
+            try:
+                if str(uuid.UUID(cloud_id)) != cloud_id:
+                    raise ValueError('Invalid cloud ID')
+            except (ValueError, TypeError, AttributeError):
+                raise ValueError('Canonical cloud UUID required') from None
+            self.api_base = 'https://api.atlassian.com/ex/confluence/' + cloud_id
         self.page_ids, self.space_ids = frozenset(page_ids), frozenset(space_ids)
         if (not tenant or not self.page_ids or not self.space_ids
                 or any(not isinstance(i, str) or not i.isdecimal()
@@ -118,7 +127,7 @@ class ConfluenceReader:
         credential = self.delegations.get(actor.user_id)
         if not isinstance(credential, Delegation):
             raise SourceUnavailable()
-        status, user = self.transport.get(self.site + '/wiki/rest/api/user/current',
+        status, user = self.transport.get(self.api_base + '/wiki/rest/api/user/current',
                                           credential.authorization)
         if (status != 200 or not isinstance(user, dict)
                 or user.get('accountId') != credential.account_id
@@ -141,7 +150,7 @@ class ConfluenceReader:
         method = 'confluence-delegated-current-read'
         try:
             credential = self._credential(actor, page_id)
-            endpoint = self.site + '/wiki/api/v2/pages/' + page_id
+            endpoint = self.api_base + '/wiki/api/v2/pages/' + page_id
             status, metadata = self.transport.get(endpoint, credential.authorization)
             if status in (403, 404):
                 return Decision('deny', now(), method, 0), None

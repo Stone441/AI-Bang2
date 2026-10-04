@@ -2,6 +2,8 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
+**最新验证：91/91 测试通过（60 local synthetic + 31 mock HTTP），五场景仍为 passed_local_subset。Confluence operator query pilot 已接通共享引擎、索引、引用、历史与审计；真实 API/model 尚 not_run，前端仍 fixture。接续点见文末。**
+
 **G0 仅本地完整开发已批准**；已批准专用四源空间的合成资料写入/测试权限调整，以及 DeepSeek 合成资料首轮等值 US$20 上限；真实空间、账号映射、凭据和预算控制尚未落实。G1/G2 未通过。原型已推送并通过 PR #1 合并至 main（81df3ef）；未部署、未调用真实知识平台/应用运行时模型。
 
 ## 已实现与验证
@@ -50,3 +52,7 @@
 2026-10-05 DEV-08-BUDGET：持久化预算 reservation ledger 已实现，7 测试通过，覆盖跨连接预留、重启后未知消耗占用、禁止已发送请求退款、结算幂等、估计超支冻结和 US$20 上限。尚未接入模型 provider，因此不宣称运行时费用已受控或 live model 已启用。官方 DeepSeek API/pricing/JSON 文档本次读取 timeout；接口与计价须实际核对后再写适配。
 
 本轮最终验证：make test-report 在获准 loopback 环境 76/76 passed（16 mock HTTP 合同 + 60 local synthetic），被测源码哈希逐项核对一致，证据 tests.json；live_api_called=false。已保存 C-02 真实发布截图，仍不以模拟合同/后台配置替代 live 全链路。
+
+2026-10-05 DEV-06-CF-QUERY：新增独立操作员查询 pilot，复用 Engine/Store/Audit。逐次用户委托读取构建预过滤快照；dispatch 前、返回前、历史/引用重查；版本更新、删除、unknown 和撤权不能复用旧允许。14 个新增模拟测试；scoped token gateway 的固定 cloud UUID 验证另增加 1 测试。修复空证据历史也必须验证租户/身份。make test-report 91/91 passed（31 mock HTTP + 60 local synthetic），源码哈希一致；make verify S-01…05 passed_local_subset。没有真实 API/模型调用或新费用。
+
+当前精确接续：浏览器 tab 996082519 为 eng_b 的 scoped API token 配置第一页；普通登录与额外邮箱 step-up 已由用户完成，并在管理页核对测试邮箱。尚未创建 token。自动审批拒绝填写具体 token 名称/有效期，要求行动时确认；已集中询问 `AI-Bang2 eng_b read-only pilot`、2026-10-20 到期、拟用 `read:content-details:confluence` / `read:page:confluence`。待具体批准后配置，由用户最终创建/保管凭据；不得使用管理员回退。native space ID 仍待核验。浏览器直开只读 API metadata 被 ERR_BLOCKED_BY_CLIENT 阻止，未绕过。真实前端身份/OAuth、四源联通、DeepSeek provider 与计价仍待完成；官方 DeepSeek 文档本轮再次 timeout，不凭旧模型名计价。

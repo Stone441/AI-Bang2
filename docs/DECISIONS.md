@@ -50,3 +50,13 @@ DeepSeek 直连首轮总预算上限等值 US$20，仅处理合成资料，不�
 ## ADR-007 · 2026-10-05 · 未知模型消耗保留预算
 
 预算使用 integer micro-USD（总上限 20,000,000），SQLite BEGIN IMMEDIATE 串行预留。网络发送前持久化 dispatched；超时/进程崩溃不自动退款，未知用量继续占用全部预留。只可取消未发送请求。真实费用结算超过预留时先记录实际值，再冻结后续发送并报错，不能把超支隐藏为成功。账本不控制供应商账户其他调用；需固定模型价格/token 上界与官方计价后接入 provider，未接入时不声称预算保证。
+
+## ADR-008 · 2026-10-05 · 共享问答引擎的操作员 pilot
+
+保留 fixture 应用默认身份和模式；为 Engine 增加显式 tenant/mode 与 authority prepare/prefilter 接口，Confluence 每次查询重新委托读取白名单页面，用本次获准快照过滤持久索引。model_dispatch 增加整组证据重查；历史无证据时也验证 actor/tenant。操作员 CLI 没有前端登录路由，不能将 --actor 当员工认证。native 读取/索引/审计使用同一问答引擎，避免另写一套绕开安全测试的展示逻辑。
+
+依据官方 scoped token 文档，API base 固定到 api.atlassian.com/ex/confluence/{cloudId}，而引用仍由后端构造站点 URL；UUID 与站点分别严格校验。代价：小范围每次读取并非后台同步，多轮 HTTP 无原子撤权保证，真实身份/前端及传播延迟仍待测。14 新 mock query 测试与全回归 91 测试通过；无真实 API 调用。回滚可移除 query pilot/CLI，恢复 Engine 的默认 fixture 路径，保留新增租户校验。
+
+## 2026-10-05 · AUTH-005 · eng_b scoped token 配置
+
+用户在具体行动时选择“批准此范围”：eng_b 的 `AI-Bang2 eng_b read-only pilot` token，2026-10-20 到期，拟选 `read:page:confluence` 与 `read:content-details:confluence`，程序只读白名单合成页面；最终创建和密钥保存由用户亲自完成。此批准不覆盖 product_ops token、写入/admin scope、既有个人资料或新增收费。先前自动审批拒绝配置动作；得到这次具体批准后方继续，不绕过拒绝。

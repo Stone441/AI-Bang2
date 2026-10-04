@@ -26,7 +26,7 @@ def load_reader(path):
         if value:
             delegations[user_id] = Delegation(mapping['account_id'], value)
     return ConfluenceReader(config['site'], config['tenant'], config['page_ids'],
-                            config['space_ids'], delegations)
+                            config['space_ids'], delegations, cloud_id=config.get('cloud_id'))
 
 
 def main(argv=None):

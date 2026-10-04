@@ -45,7 +45,7 @@ make test-report
 
 ## 故障与边界
 
-Confluence 只读 API pilot 的配置和诊断命令见 [CONFLUENCE_PILOT.md](CONFLUENCE_PILOT.md)。当前仍独立于 demo Engine，真实凭据未配置、API not_run；不改变以上 fixture 演示命令。
+Confluence 只读 API pilot 的配置、诊断及共享 Engine 查询命令见 [CONFLUENCE_PILOT.md](CONFLUENCE_PILOT.md)。独立操作员入口已接通本地索引/检索/引用/审计，真实凭据未配置、API not_run；前端仍 fixture，不改变以上演示命令。
 
 - 沙箱报 `Operation not permitted` at socket.bind：是 loopback 执行权限，不是测试通过；在获准环境运行同一测试，不跳过 HTTP 测试。
 - 浏览器 `ERR_BLOCKED_BY_CLIENT`：本次自动化环境阻止 localhost 浏览器访问，视觉/交互验收未完成。不要关闭安全设置来绕过。
