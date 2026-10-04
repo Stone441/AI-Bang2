@@ -40,20 +40,26 @@ def load_reader(path, prompt_actor=None):
     return reader
 
 
-def load_oauth_reader(path, client_path, actor):
+def prepare_oauth_reader(path, actor):
     from brain.drive import DriveTransport
-    from brain.drive_oauth import load_client, authorize, verify_account
     config = json.loads(Path(path).read_text())
     if (set(config) != {'approved_synthetic_only','tenant','files','oauth_operator','oauth_client_id'}
             or config['approved_synthetic_only'] is not True
             or not isinstance(config['oauth_operator'], dict)
             or set(config['oauth_operator']) != {'actor','email'}
             or config['oauth_operator']['actor'] != actor
+            or not isinstance(config['oauth_client_id'], str)
+            or not re.fullmatch(r'[A-Za-z0-9_-]+\.apps\.googleusercontent\.com',config['oauth_client_id'])
             or not isinstance(config['oauth_operator']['email'], str)
             or not re.fullmatch(r'[^\s:@]+@[^\s:@]+',config['oauth_operator']['email'])):
         raise ValueError('Reviewed OAuth operator configuration required')
     reader = DriveReader(config['tenant'],config['files'],{},DriveTransport())
-    client = load_client(client_path,config['oauth_client_id'])
+    return reader, config
+
+
+def complete_oauth_reader(reader, config, client_path, actor, *, client=None):
+    from brain.drive_oauth import load_client, authorize, verify_account
+    client = client or load_client(client_path,config['oauth_client_id'])
     email = config['oauth_operator']['email']
     def notify(url):
         print('Open this Google authorization link. Review the account and Drive read-only scope yourself:',flush=True)
@@ -61,3 +67,8 @@ def load_oauth_reader(path, client_path, actor):
     token = authorize(client,email,notify)
     reader.delegations[actor] = verify_account(token,email,reader.transport)
     return reader
+
+
+def load_oauth_reader(path, client_path, actor):
+    reader, config = prepare_oauth_reader(path, actor)
+    return complete_oauth_reader(reader, config, client_path, actor)

@@ -1,14 +1,14 @@
 {
-  "started_at": "2026-10-04T20:29:26.021691+00:00",
-  "finished_at": "2026-10-04T20:29:38.306994+00:00",
+  "started_at": "2026-10-04T20:32:28.623493+00:00",
+  "finished_at": "2026-10-04T20:32:40.326326+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "f93cce2cfea6784c73ad2f33b67308fafe30e481",
+  "commit": "1adcdeb5d1b51e2eaef88cab98c1dda828e7f01f",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
-    "brain/operator_web.py": "2097edd882262cea6114c0bcd427a2d3c79d1e27477f8f2c176132b7ced707c9",
+    "brain/operator_web.py": "96af33671c6790ecc5a8c0a85ebbcb6b10b5e0e103e1e5be84cc95de8f4f3e70",
     "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
     "brain/server.py": "585c7fd45e1c67002ab9147023e12096726784c1c6d59740fa3c001bc202cf65",
     "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
@@ -34,6 +34,7 @@
     "tests/test_confluence_revocation.py": "85658ba53f7865528ea62e57880d13d5ef0cafb8db877c636a721e2410ab73d2",
     "tests/test_confluence_probe.py": "6c4865f4a504ea49b73c3a776d64f399bfb3a5e0500861c9a27c26c7246c5d10",
     "tests/test_model_receipts.py": "c20cc42446274e037e06ae3de7c4e26c10e006a0c2f7f723f4e66d34d37ee726",
+    "tests/test_bundle_oauth.py": "e1468f4cea703c173d83b9cead2fd13f9699ea66ca8a97b984bba54723808cd4",
     "tests/test_slack.py": "1aa80ba198b076b4d0b6c1a7a6523fe268bd2f61e839bc99b8c5c8d78ed2151a",
     "tests/test_drive.py": "720e7f8ac31d17c7178ed6ec74dfe810149685b6ff87ae8436d62cb896a2403c",
     "tests/test_jira_operator.py": "2cb7ffe6d6fb92379b7bcb860170d15cd8ca9e12cda5742ec48cbff23f8e6bf9",
@@ -57,12 +58,12 @@
     "scripts/confluence_query.py": "c22c084a15321f54fb343d15e006e0a34588c8f338432c8ed2c51f6071cfa62c",
     "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
     "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
-    "scripts/drive_query.py": "dc055a211cfa29d471a1d886cb31a56d1f453cfe33a4d53e002b231182e165c0",
-    "scripts/test_report.py": "96037aa1b0d16f98ba22a71e25966f00e81c8e85875af4e33519dc7715d22629",
+    "scripts/drive_query.py": "397a913b53067bc682e216fdcb27113f9c54702af86c9fea414ca7a9458c786e",
+    "scripts/test_report.py": "5b9df3c4b999e345317a75aa4d6d504b13ec2c6c6da373a0ce085f0ff7943b7d",
     "scripts/confluence_probe.py": "129b5a5e13a1b60f144084835d4638bd1fb20d1a5c1ebf2df0c0459ac850cc2d",
     "scripts/slack_query.py": "0206a3c733ecf9c374847f73ecf71e28610459f504ae0e229c2a5a9e5af9a136",
     "scripts/prepare_live_seed.py": "dcd3307e679b3f1d96affc7a65ba9be7af48ed84b258db64366a7bd494fa2eff",
-    "scripts/operator_bundle.py": "6bd716e35e8047f621747860157507a57b2c27f3dabe440bb466f5c87b83ad8e",
+    "scripts/operator_bundle.py": "8315d12bc3ae8ae70f49c05483d12bf7a424d29437bcc42268afe216c15e57f5",
     "scripts/evaluate.py": "f98bd282a1e1352a85276b8742201fcb1c3eeff0715752ecdeabe30fdeeb6f46",
     "scripts/jira_query.py": "d41e562a026c0529fc5136bd3c096a51e294f927cdc8096c7e150550646b12fe",
     "scripts/confluence_revocation.py": "81f35cd2643049dedd02afec214e231ef82a69edb2fa55cf8ac1c5d4687a1a17",
@@ -74,7 +75,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 243,
+  "tests_run": 248,
   "successful": true,
   "results": [
     {
@@ -221,6 +222,31 @@
       "test": "test_budget.BudgetReservations.test_two_connections_cannot_double_allocate_remaining_budget",
       "status": "passed",
       "mode": "local_synthetic"
+    },
+    {
+      "test": "test_bundle_oauth.BundleOAuth.test_all_mapping_and_tenant_errors_precede_private_client_and_input",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_bundle_oauth.BundleOAuth.test_missing_drive_or_denied_consent_never_becomes_partial_bundle",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_bundle_oauth.BundleOAuth.test_oauth_and_manual_sources_share_reviewed_actor_without_manual_drive_token",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_bundle_oauth.BundleOAuth.test_operator_cli_routes_multi_oauth_and_verifies_all_native_identities",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_bundle_oauth.BundleOAuth.test_private_client_failure_precedes_other_source_prompts",
+      "status": "passed",
+      "mode": "mock_http_contract"
     },
     {
       "test": "test_confluence.DelegatedReads.test_admin_credential_substitution_never_fetches_page",

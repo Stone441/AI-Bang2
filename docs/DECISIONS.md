@@ -150,3 +150,11 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 ## ADR-019 · 2026-10-05 · Model budget receipt linked to server request
 
 为解决首轮live只能按单一reservation现场关联的证据缺口，增量model_calls表与reservation/query_id关联在同一预留事务落库；Engine传服务端UUID，provider不从Prompt取identity/request ID。validated usage与保守成本结算原子提交，失败状态固定enum，无原始vendor body/key/问题/资料正文。成功generation_completed审计事件保存同一receipt；失败通过query_id连接request_failed。dispatched只代表持久化发送意图：called=None，不冒充已收到供应商回复；settled/validated usage才called=True，空证据called=False且不建reservation。旧reservation保持unlinked，不能事后猜测添加query_id。本地账本不是独立签名或供应商发票。新增getpass warning-as-error，不能降级为终端明文输入。迁移不修改已有预算/额度，回滚Engine/provider接线仍保留table/既有支出。
+
+## AUTH-011 · 2026-10-05 · unified eng_b reader preparation
+
+用户明确“批准按推荐范围准备独立读者”，账号674544786@qq.com，保留CF/Jira既有eng_b；准备该邮箱Google免费注册/登录、仅比赛AI-Bang2 Slack普通reader成员、现有三合成Drive文件folder Reader共享。后续Drive drive.readonly（该新reader账号全Drive平台范围但程序三文件白名单）、Slack channels:read/channels:history/groups:read/groups:history+identify同试点scope；不接NTU/DM/bot/write/Billing/公开sharing或增模型预算。最终password/OTP/terms/OAuth由用户亲自操作，新收费或不同权限另确认。授权范围已获批，不代表reader账户、membership、native权限/API或完整四源验收已完成。具体候选与接口见UNIFIED_LIVE_PILOT.md。
+
+## ADR-020 · 2026-10-05 · multi-source Drive PKCE
+
+统一入口--source multi允许--oauth-client；先读public OAuth mapping构造无credential reader，再全部source actor/tenant验证，才读取private desktop client并按需hidden其他source；Drive不手工复制access token。客户端无效先于人工输入，Google拒绝不能返回partial bundle，全部native身份通过才bootstrap。load_oauth_reader单源接口保持，拆分prepare/complete共享实现，无扩scope/自动persona合并。example默认identity_mapping_reviewed=false；AUTH-011未完成native身份确认前不改为true。5新mock配置/CLI测试通过；此前新增测试缺续行SyntaxError已复现修复，单独OAuth HTTP测试在沙箱bind拒绝，完整许可本机回归248/248通过（60local/188mock）。本轮未调用真实平台/模型、不重启旧服务。

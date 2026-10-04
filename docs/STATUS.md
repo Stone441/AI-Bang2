@@ -157,3 +157,5 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 2026-10-05 no-evidence真实验证：新问答request7f2acc6df3d24473b8396dce8c8fcbed询问无资料的合成NeptuneBank收入，claims/evidence为空、明确Insufficient evidence、无evidence_used，账本仍唯一settled243 micro-USD。接口配置model名不表示实际调用；修正UI空证据结果为NO MODEL CALL，刷新后真实history已显示zero-call/live/fake三种标识。evidence/runs/deepseek/live-insufficient-evidence.json/private/deepseek-live-with-insufficient-history.jpg。最终源码回归233/233及frontend三种模型标记检查均通过；无追加收费调用。
 
 2026-10-05 DEV-10-MODEL-RECEIPT本地verified：10新增模拟测试覆盖成功usage/request关联、失败重启持久、输出拒绝仍记账、写receipt失败整笔预留回滚且不发网络、legacy不归因、冲突核销回滚、未知called=None、空证据不调用及Engine审计join。最终243/243（60local/183mock），sourcehash零差异；未调用真实模型/平台、现有8086不重启。旧live记录仍旧实现，不能宣称新receipt真实部署/验收。下一项统一multi入口支持已批准Drive PKCE，身份映射未review不能开始真实统一连接；不读取现有进程密钥。
+
+2026-10-05 DEV-10-MULTI-OAUTH本地verified：统一2–4源支持Drive PKCE/private客户端先全配置校验，再按需隐藏其他secret，无手工Drive token；5新增配置/CLI守卫测试，248/248完整（60local/188mock）、sourcehash零差异。真实persona/source pipeline仍not_run。用户AUTH-011已批准674544786@qq.com作为跨四源eng_b真实reader准备；接续Google账号检查/必要用户注册、比赛Slack成员与OAuth、synthetic Drive Reader及Cloud test user；不自动使用eng_a权限、不停止8086旧live模型。

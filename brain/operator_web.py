@@ -86,14 +86,14 @@ def main(argv=None):
     parser.add_argument('--source', choices=['confluence', 'jira', 'slack', 'drive', 'multi'], default='confluence')
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
-    parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive only; browser consent instead of hidden token')
+    parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive or multi; browser consent instead of hidden Drive token')
     parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
     args = parser.parse_args(argv)
     if not args.live:
         print('not_run: --live required; no credentials or platform calls performed.')
         return 2
-    if args.oauth_client and args.source != 'drive':
-        print('not_run: --oauth-client is supported only for Drive; no credential or platform calls performed.')
+    if args.oauth_client and args.source not in ('drive','multi'):
+        print('not_run: --oauth-client requires Drive or multi; no credential or platform calls performed.')
         return 2
     if args.model == 'deepseek':
         from .deepseek import check_price_review
@@ -119,7 +119,9 @@ def main(argv=None):
             from scripts.jira_query import load_reader
         else:
             from scripts.confluence_probe import load_reader
-        if args.oauth_client:
+        if args.oauth_client and args.source == 'multi':
+            reader = load_reader(args.config, prompt_actor=args.actor, oauth_client=args.oauth_client)
+        elif args.oauth_client:
             from scripts.drive_query import load_oauth_reader
             reader = load_oauth_reader(args.config,args.oauth_client,args.actor)
         else:
