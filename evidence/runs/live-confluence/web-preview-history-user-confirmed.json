@@ -1,0 +1,63 @@
+{
+  "mode": "confluence_live_api_fake_model",
+  "transport": "http",
+  "recorded_at": "2026-10-04T18:40:33.816249+00:00",
+  "provenance": "user_reported_ui_clicks_and_agent_verified_persisted_native_read_checks",
+  "user_confirmation": "引用和历史正常",
+  "preview_checks": [
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "f5a81947a2c5e1907700f53ea567a0e61af8354a96d0a5474cae5ca9885b9e30",
+      "payload": {
+        "checked_at": "2026-10-04T18:39:09.120673+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "preview",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "5c764ec0a8d6c74ae41cabe7372bcc318c11afb0e138dbdd200a464dcb9cda83",
+      "request_id": "evidence",
+      "schema_version": 1,
+      "seq": 13,
+      "timestamp": "2026-10-04T18:39:09.121406+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "c0d05e0871b0d1550df627f362d32369d8e94798f15affb719acccaa0bf37d01",
+      "payload": {
+        "checked_at": "2026-10-04T18:39:16.794996+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "preview",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "f5a81947a2c5e1907700f53ea567a0e61af8354a96d0a5474cae5ca9885b9e30",
+      "request_id": "evidence",
+      "schema_version": 1,
+      "seq": 14,
+      "timestamp": "2026-10-04T18:39:16.795489+00:00"
+    }
+  ],
+  "chain": {
+    "valid": true,
+    "events": 14,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "boundaries": [
+    "UI click success is user-confirmed; no automated screenshot/visual verification.",
+    "Audit preview records cannot independently distinguish preview from history reauthorization.",
+    "Does not approve G1/G2, SSO, live model or other source integration."
+  ]
+}

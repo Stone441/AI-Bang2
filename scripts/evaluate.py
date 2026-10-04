@@ -89,7 +89,7 @@ def run(output):
         report={'started_at':started,'finished_at':now(),'mode':MODE,'model':engine.model.name,'python':platform.python_version(),
                 'commit':revision(),'source_hashes':tracked,
                 'worktree_dirty':dirty(),
-                'scenarios':scenarios,'live_api':'not_run','live_model':'not_run','human_G1':'not_run','codebuddy':'not_started'}
+                'scenarios':scenarios,'live_api':'not_run','live_model':'not_run','human_G1':'not_run','codebuddy':'verified_local_delivery_separate_from_scenario_run','codebuddy_evidence_index':'evidence/tool-usage/README.md'}
         output.mkdir(parents=True,exist_ok=True)
         (output/'scenarios.json').write_text(json.dumps(report,indent=2)+'\n')
         (output/'audit.json').write_text(json.dumps(audit.export(),indent=2)+'\n')

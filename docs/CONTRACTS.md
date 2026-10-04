@@ -1,6 +1,6 @@
 # Local contracts v1
 
-状态：实现基线，模式固定 fixture_fake_model。`brain/contracts.py` 是类型入口。
+状态：实现基线，默认演示模式 fixture_fake_model；委托operator模式另列。`brain/contracts.py` 是类型入口。
 
 - 身份：仅服务端 opaque session → Actor；仅显式 loopback demo 登录允许从六个固定合成用户选取。业务 API 拒绝额外 user_id/role/tenant 字段。
 - 稳定资源 ID 为 demo 内逻辑 ID；tenant/workspace/native_id 单独保存。真实模式未启用，fixture 链接用 `fixture://`，绝不冒充平台 URL。
@@ -12,6 +12,14 @@
 - 审计 payload 保存问题、逐资源授权、实际模型输入证据 ID、最终回答和 dispatch 阶段；受限审计员只有 eng_a/eng_b/product_ops 范围。端点无任意 SQL。应用 SQL authorizer 是逻辑防护，不宣称独立 DB role。
 - CodeBuddy 独立签名验证器以导出的 JSON 数组为输入，签名 trusted checkpoint 的 schema/编码须与此契约一致；其路径由任务包独占。
 
+## Delegated operator reader contract · 2026-10-05
+
+新增多源操作员 pilot 的 reader 返回 `(Decision, content | None)`，每次读均验证凭据的原生员工身份；tenant、源与 native ID 白名单不可由问答扩大。content沿用Evidence字段；评论为单独资源，不并入父工单。Jira固定issue ID→key、project ID及comment ID→parent ID，只请求选定字段与单条评论，不请求附件/列表/任意JQL。unknown不出正文。
+
+Jira没有可依赖的工单整数正文版本：locator保存完整SHA-256（正文/标题/状态/负责人/updated/原生ID），兼容索引的version为其前15个hex转整数，**非原生revision/非单调版本**。最终授权另外比较完整content payload，短ID碰撞不得继续放行；旧内容不凭当前可读而恢复。按对象事务切换，权限更新不改变正文版本。固定白名单请求刷新不是后台增量worker。模式逐源注明mock/live且model明确fake，禁止真实传输被标mock。
+
+默认前端仍fixture；另有服务端核对native身份/一次性bootstrap的operator网页，不是员工SSO。此合同不授权新token/scope或外部调用。
+
 ## Signed checkpoint v1（DEV-09-CB 实现）
 
 离线 CLI 位于 `tools/audit_verifier/`。JSON wrapper 包含 `schema_version:1`、`algorithm:"ed25519"`、`checkpoint`、base64 `signature`；`signing_backend` 仅为说明。签名消息为上述 canonical 编码的 checkpoint UTF-8 字节。checkpoint 包含 `schema_version:1, stream_id, through_seq, head_hash, timestamp`。序号/版本必须是整数，bool 不被接受。
@@ -19,3 +27,14 @@
 验证器显式接收外部可信 checkpoint、公钥和 expected stream ID，使用 OpenSSL 校验 Ed25519 密钥类型与签名，独立重算导出链。退出码 0 仅表示已覆盖段通过，未覆盖尾部始终单列；1 失败；2 无检查点、不可信。签名不保护 wrapper 的说明文本。
 
 v1 事件不含 stream_id；该字段只绑定检查点的外部期望，不能据此宣称事件原生跨流隔离。选择最新可信检查点、独立保管、密钥轮换仍由后续机制保证；同机同账号的测试不提供这些生产边界。
+
+
+Jira ID setup discovery 独立于正文读取：显式 discovery_only reader 只接受预先批准 issue key→project key，验证 native 身份后 GET 单工单 `?fields=project`，仅返回 issue/project ID 与 key。该 reader 不允许 read/模型/索引；正常 reader 仍要求不可变数字 ID 白名单。错误身份、移动项目、非法 key 和未知结果均不出元数据。
+
+Operator web 支持显式 --source jira（默认仍 confluence），独立 .runtime/{source}-web.sqlite。每个服务进程隐藏输入一次，内存复用 Delegation，每个业务请求仍重验 native identity/当前源权限；不持久化 token，不从密码管理器自动提取，不提供浏览器角色授权。Jira discovery_only reader 不允许绑定网页。
+
+
+Slack delegated reader：固定 workspace team ID/site、channel ID/public-private 类型、message ts→thread parent 白名单；每读 auth.test 核对 user_id/team_id 且拒 bot/app credential。private channel 要当前 is_member=true，public 权利由原生 API 决定（退群不是撤权）。conversations.info 禁止 DM/跨workspace共享，随后 history/replies 只取指定 ts，子回复独立证据，禁止附件/隐藏 rich content 进入模型。消息删改/受限/unknown不出正文，指纹 version/full payload保护旧历史/引用；限流不默认放行。
+
+
+Drive delegated reader：固定file ID→parent ID、tenant、原生permissionId身份映射；about(user.permissionId,me)逐读验证，不使用email/Prompt授予权限。personal Drive text/plain UTF-8，原生文件GET和canDownload当前读取权威；alt=media固定HTTPS源、无redirect，metadata前后相同/字节size与checksum一致才返回。locator存file/headRevision/native version/SHA256，不推断旧revision授权。trash/403/404/下载禁止deny；未知/unsupported类型、共享盘、shortcut、父目录变动、竞态unknown；其他同Engine边界不变。

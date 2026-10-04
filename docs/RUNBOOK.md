@@ -45,9 +45,92 @@ make test-report
 
 ## 故障与边界
 
+Confluence 只读 API pilot 的配置、诊断及共享 Engine 查询命令见 [CONFLUENCE_PILOT.md](CONFLUENCE_PILOT.md)。独立操作员入口已接通本地索引/检索/引用/审计，Confluence API操作员查询/撤权已实际运行；新网页入口已通过mock源+真实loopback HTTP测试，真实网页运行待用户完成。以上demo命令仍fixture。
+
 - 沙箱报 `Operation not permitted` at socket.bind：是 loopback 执行权限，不是测试通过；在获准环境运行同一测试，不跳过 HTTP 测试。
 - 浏览器 `ERR_BLOCKED_BY_CLIENT`：本次自动化环境阻止 localhost 浏览器访问，视觉/交互验收未完成。不要关闭安全设置来绕过。
 - 端口被占用：`python3 -m brain.server --demo --port 8081`。
 - 审计不可写、授权 unknown、源/索引版本不一致：不返回无法安全完成的成功答案。
 - 无跨用户答案缓存，无 reranker/compressor，因而这两类真实模型入口尚无效果验证。
 - 仅 loopback、无 TLS/SSO、无独立数据库权限身份，不能作为公开部署方案。G1/G2 由团队验收。
+
+
+## Confluence 操作员网页（已批准eng_b只读token）
+
+```sh
+python3 -m brain.operator_web --config .runtime/confluence-pilot.json --actor eng_b --live
+```
+
+在真实TTY隐藏输入邮箱和token（不保存），打开终端输出的一次性本机链接。链接10分钟有效，消费后不能复用；它是会话入口凭据，不要截图/分享。启动时服务端核对token的native account ID；浏览器仅获opaque cookie/CSRF，不能选择用户或role。问 `Show the payment-service runbook`，核对引用、Recent answers。DB在ignored `.runtime/confluence-web.sqlite`，退出Ctrl+C；不要与8081已有服务冲突，可用`--port 8082`。
+
+这是LOCAL OPERATOR / LIVE API / FAKE MODEL试点，不是员工SSO/OAuth。只有白名单合成Confluence页面，不发收费模型请求；源授权在查询、模型前、返回前及history/export/preview仍重查。默认不带`--live`不读凭据/联网。代码已mock HTTP验证，C-01真实网页问答已记录，引用/历史获用户确认；不是完整Confluence权限矩阵或G1通过。
+
+Jira只读诊断/问答命令、原生ID配置与权限缺口见 [JIRA_PILOT.md](JIRA_PILOT.md)，不能复用Confluence token或将模板中的占位ID当真实ID。
+
+
+操作员启动故障（2026-10-05修复）：先预留loopback端口，再隐藏输入凭据；服务只在native identity验证后开始处理HTTP。`[port_in_use]`表示监听端口已有服务，不请求凭据、不调用平台；保留已有服务或在命令末追加`--port 8082`（不要擅自kill占用者）。其他安全诊断分为configuration_or_hidden_input、local_store、native_identity、runtime；不会打印异常原文、token或上游body。身份未知仍停止，不能靠诊断降低授权要求。
+
+
+### Jira operator web（一次启动输入，进程内复用）
+
+已批准 Jira 凭据、核验 native IDs 并配置 `.runtime/jira-pilot.json` 后：
+
+```sh
+python3 -m brain.operator_web --source jira --config .runtime/jira-pilot.json --actor eng_b --port 8083 --live
+```
+
+启动时隐藏输入实际 eng_b 邮箱与密码管理器 Jira token 一次，打开输出的一次性入口链接（不要截图/分享 ticket）。同一运行进程中，网页 query/history/citation 不再请求输入 API 凭据，但每次仍重查源身份及当前权限。不是将授权结果缓存成永久 allow。DB 独立为 `.runtime/jira-web.sqlite`；Ctrl+C 停止后内存凭据消失，下次启动需重新输入。默认不读取系统密码应用，不保存 token 文件。保留已有 Confluence 服务，不 kill 端口占用者。网页是操作员 pilot/fake model，不是 SSO 或 live LLM。
+
+可问 `What is the status of the payment-service retry configuration fix, and does completion approve general customer release?`，点击引用及 Recent answers；实际结果由 DB 验证，不能把 mock 测试当 live 问答通过。
+
+前端安全视图回归：`node tests/frontend_operator_security.js`（需Node，独立于标准库Python运行时）与 `node --check web/app.js`。验证导航/preview拒绝/待返回query/history请求清除旧视图。页面跨视图不复用旧答案；请用Recent answers重新鉴权访问。前端静态文件修正可直接刷新当前网页，session仍有效，无需重启或重新输入API凭据。
+
+
+### Slack operator pilot
+
+见 [SLACK_PILOT.md](SLACK_PILOT.md)。一次隐藏输入 USER OAuth token，不需要邮箱；配置 native IDs 后可使用 `--source slack --actor eng_a --port 8084`。既有app已由用户授权并保存token，真实root/reply问答、引用与历史已核验；频道撤权仍待独立reader。不要直接运行含占位ID的模板，当前结果仅live API + fake model。
+
+
+### Drive operator preparation
+
+见 [DRIVE_PILOT.md](DRIVE_PILOT.md)，本地mock已接同一Engine/网页入口，首版personal Drive UTF-8 text/plain；真实scope、OAuth、原生IDs/种植尚未批准配置。准备的`--source drive --port8085`命令不可用占位模板直接当live启动。
+
+### Unified multi-source operator
+
+`--source multi` supports two to four reviewed source configurations under one tenant and one operator actor. Copy `config/operator-bundle.example.json` into ignored `.runtime/operator-bundle.json`; include only approved/configured sources. Paths are relative to the bundle. Keep the example review flag false until each source account is verified as belonging to the intended operator persona, then set `identity_mapping_reviewed` to true. This local flag records a trusted configuration review; it does not verify ownership or grant source rights. Do not rename existing eng_a/eng_b mappings merely to make a bundle load.
+
+```sh
+python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --port 8086 --live
+```
+
+The loader validates all configurations and matching tenants before prompting for any missing credential. Approved environment references can supply already-configured credentials; otherwise each source asks once using its existing hidden-input helper. Every configured native identity is checked before the browser bootstrap is issued. Each later read still checks current source rights. The local database is `.runtime/multi-web.sqlite`; no secret is stored in it or sent to the browser. Keep existing single-source processes running. Do not extract their in-memory tokens or reuse an identity mapping that belongs to another persona.
+
+Four-source HTTP integration and one-source revocation are mock-verified. The current live Slack eng_a and Confluence/Jira eng_b configurations are not a reviewed same-persona bundle. Real unified integration, Drive OAuth, SSO, live model and G1 remain pending; no restart/input is requested for this new feature yet.
+
+### Drive Google desktop consent (no manual token copy)
+
+After the approved Google desktop client and exact synthetic files are configured:
+
+```sh
+python3 -m brain.operator_web --source drive --config .runtime/drive-oauth-pilot.json --oauth-client .runtime/drive-oauth-client.json --actor eng_a --port 8085 --live
+```
+
+The downloaded desktop client JSON is private, ignored by Git and must be owned by the local user with mode 0600, not a symlink. Use `config/drive-oauth-pilot.example.json` as the configuration shape; all placeholders are deliberately invalid. Review the Google client ID, operator email and exact file→parent IDs. The server reserves 8085 before consent; leave other source processes running. It prints a Google authorization URL with one-use state and S256 challenge. Open it and complete only the approved Drive read-only consent yourself. Do not share the authorization URL, callback code, client JSON or bootstrap ticket. The callback listener is loopback-only and waits up to 10 minutes.
+
+The program exchanges the one-use code, checks the exact granted scope and native Google account metadata, then serves the same operator UI. It does not ask for email/token input. Tokens are in process memory; no refresh is persisted or used, so expiration fails closed and a later start requires browser consent again. The callback page says received before native account verification: only successful operator startup confirms that verification passed. This is not employee SSO, and Drive native read/revocation acceptance remains separate.
+
+OAuth callback成功页是临时页面：看到Google authorization received后不要reload。账号检查通过后临时listener关闭，旧callback URL重载可出现ERR_CONNECTION_REFUSED；这不等于Drive服务退出。使用终端后续8085应用入口即可，不发送ticket/code。若Chrome拦截agent自动打开localhost（ERR_BLOCKED_BY_CLIENT），由用户在应用入口地址栏Enter，不关闭安全设置、不重复Google授权。health显示drive_live_api_fake_model/operator才确认正式服务启动；应用查询仍单独验收。
+
+### Approved DeepSeek pilot (price reviewed 2026-10-05 Singapore)
+
+Keep the existing port 8085 process. In a new local VS Code terminal:
+
+```sh
+python3 -m brain.operator_web --source drive --config .runtime/drive-oauth-pilot.json --oauth-client .runtime/drive-oauth-client.json --actor eng_a --port 8086 --live --model deepseek
+```
+
+Complete the existing Google read-only consent through the terminal URL, then enter the DeepSeek API key at the hidden prompt. Do not paste the key or bootstrap URL into chat. Open the application link after startup. Google callback is temporary: do not reload it. Subsequent questions reuse credentials held in this process. Default commands without `--model deepseek` remain fake-model pilots. No live model call occurs during startup.
+
+Only explicitly marked synthetic evidence is sent. The model selects evidence; the server renders original excerpts. Free-form synthesis is not enabled. `.runtime/deepseek-budget.sqlite` is the shared USD20 ledger across all operators: never delete, reset, replace or change working directories to bypass pending charges. Peak/cache-miss accounting is conservative, not a billing invoice. Unknown consumption keeps its full reservation. Price review expires at the end of the reviewed Singapore date; future startup or nonempty model use stops until prices are reviewed again. Existing fake services continue running. Real DeepSeek results remain not_run until actual call/output/ledger/audit are inspected.
+
+Actual first DeepSeek checkpoint: [live-drive-query.json](../evidence/runs/deepseek/live-drive-query.json), native Drive + real model selection, query/preview/history verified. Original fake commands and comprehensive live acceptance are separate. Keep port8086 running; no further key input is required during its lifetime.

@@ -1,6 +1,6 @@
 # Acceptance coverage · local candidate
 
-当前是 fixture_fake_model 的 52 个 unittest 方法（另含参数化 subtests），不是 51 个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；真实平台、真实模型、人工验收均未通过。以下未覆盖部分保留，不改写 05 的 oracle。
+当前有142个unittest方法（60 local synthetic + 82 mock HTTP，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；新增Confluence真实API/operator+fake model的查询及撤权子集，证据另列。真实模型/完整四源/前端身份/G1仍未通过。以下未覆盖部分保留，不改写05的oracle。
 
 | IDs | 当前状态与实际证据 / 缺口 |
 |---|---|
@@ -38,3 +38,8 @@
 | U-06 | blocked：非作者人工对照尚未组织 |
 
 失败改进记录：首次自然 S-01 未检索到 PAY-103，原失败见 `evidence/runs/first-scenario-failure.json`。保留断言，新增逐目标授权的一跳检索后回放通过。未硬编码展示答案。
+
+2026-10-05 live增量：Confluence C-01 v1 query 的原文/定位/引用/逐阶段授权已查DB，9checks通过；实际撤权后同一pilot/Actor/逻辑会话追问、模型输入、旧历史和引用均保护，7runnerchecks+7DB核验通过。映射Q-03/06/07、P-03/04/05/07、F-03、A-01的Confluence操作员子集，不将上述整体ID标live passed。无跨用户答案缓存、附件或真实前端登录，不能扩大P-07/01；18事件链无独立检查点，不能扩大A-03/04。实际结果见 evidence/runs/live-confluence/；已恢复原生Can view，仅UI读回，未追加API复验。
+
+
+2026-10-05新增mock覆盖：Jira当前字段、父工单/受限评论独立授权、跨Confluence/Jira答案、更新/撤权/unknown/旧历史/引用及碰撞停止；operator网页登录含native identity匹配、ticket单次/过期、CSRF/Host/伪role、同HTTP session撤权后的query/history/export/preview。对应Q-03/06/07/08、P-01/03/04/05/07/09、F-03本地或mock子集，未将完整ID升级passed。网页入口不是SSO，真实网页和JiraAPI仍not_run。J-02/KAN-4 UI种植证据仅原生Done/正文，不能等同源权限通过。前一增量中的Q-04（Slack撤回猜测）映射已纠正，不用Confluence runbook验收替代Slack线程场景。

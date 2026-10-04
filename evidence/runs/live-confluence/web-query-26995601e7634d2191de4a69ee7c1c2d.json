@@ -1,0 +1,320 @@
+{
+  "mode": "confluence_live_api_fake_model",
+  "transport": "http",
+  "inspected_at": "2026-10-04T18:38:36.155755+00:00",
+  "provenance": "user_operated_web_ui_agent_inspected_persisted_database",
+  "checks": {
+    "live_confluence_fake_model": true,
+    "mapped_actor": true,
+    "runbook_evidence_present": true,
+    "exact_excerpt_support": true,
+    "model_dispatch_allow": true,
+    "before_dispatch_allow": true,
+    "http_dispatch_attempted": true,
+    "chain_valid": true
+  },
+  "response": {
+    "actor": "eng_b",
+    "claims": [
+      {
+        "evidence_ids": [
+          "confluence:98564@1"
+        ],
+        "text": "SYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "confluence:98564@1",
+        "indexed_at": "2026-10-04T18:37:03.147822+00:00",
+        "locator": {
+          "page_id": "98564",
+          "version": 1
+        },
+        "resource_id": "confluence:98564",
+        "source": "confluence",
+        "source_updated_at": "2026-10-04T17:21:59.651Z",
+        "source_url": "https://ssy44199.atlassian.net/wiki/pages/viewpage.action?pageId=98564",
+        "text": "SYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "title": "C-01 · Payment-service runbook",
+        "version": 1
+      }
+    ],
+    "mode": "confluence_live_api_fake_model",
+    "model": "fake-extractive-v1",
+    "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+    "uncertainties": [
+      "Source excerpts only; live AI synthesis is not enabled."
+    ]
+  },
+  "request_events": [
+    {
+      "actor": "eng_b",
+      "event_type": "request_started",
+      "hash": "0f8bd39ab8175678d8e6c7d0d30bac24e12d6961e6496ab923db356ef0644970",
+      "payload": {
+        "candidate_strategy": "authority prefilter + keyword overlap + authorized one-hop links",
+        "history_id": null,
+        "mode": "confluence_live_api_fake_model",
+        "query": "What caused the payment-service incident, which early explanation was ruled out, what follow-up remains open, and which runbook should I use?"
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 1,
+      "timestamp": "2026-10-04T18:37:01.147883+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "4765c4967775489449e9d85fa85968c6a8a45bbd972e6163c94fd5974b8f28da",
+      "payload": {
+        "checked_at": "2026-10-04T18:37:02.223914+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "source_refresh",
+        "policy_version": 0,
+        "resource_id": "confluence:164283",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "source_mode": "live_api",
+        "version": 1
+      },
+      "previous_hash": "0f8bd39ab8175678d8e6c7d0d30bac24e12d6961e6496ab923db356ef0644970",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 2,
+      "timestamp": "2026-10-04T18:37:02.224638+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "6bfd69018fc61c4b1fd6679d6670655fd45f6808ac11f06c8a31cfbe69a2368d",
+      "payload": {
+        "checked_at": "2026-10-04T18:37:03.144972+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "source_refresh",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "source_mode": "live_api",
+        "version": 1
+      },
+      "previous_hash": "4765c4967775489449e9d85fa85968c6a8a45bbd972e6163c94fd5974b8f28da",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 3,
+      "timestamp": "2026-10-04T18:37:03.145385+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "b62f70271d11c87e18fc2108fddb3ae7962208211a72eb1009b8bb617439b56f",
+      "payload": {
+        "checked_at": "2026-10-04T18:37:04.171804+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "link_seed",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "6bfd69018fc61c4b1fd6679d6670655fd45f6808ac11f06c8a31cfbe69a2368d",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 4,
+      "timestamp": "2026-10-04T18:37:04.172350+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "candidate_evaluated",
+      "hash": "92923e6ce6bdacfe441581aceffaeb54a8d2309a73dd4f0aed7d8b408c3c28ac",
+      "payload": {
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "score": 2,
+        "source": "confluence"
+      },
+      "previous_hash": "b62f70271d11c87e18fc2108fddb3ae7962208211a72eb1009b8bb617439b56f",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 5,
+      "timestamp": "2026-10-04T18:37:04.174518+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "c795d97171ac31cb6c1897a714b0085042311bafd47cccd89b6fba4df8e497fe",
+      "payload": {
+        "checked_at": "2026-10-04T18:37:05.135301+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "before_model",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "92923e6ce6bdacfe441581aceffaeb54a8d2309a73dd4f0aed7d8b408c3c28ac",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 6,
+      "timestamp": "2026-10-04T18:37:05.135758+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "ecb5d79de3e0b1fa3490b7b911d53bdea2ff50de8ea16a23bf72141452d54614",
+      "payload": {
+        "checked_at": "2026-10-04T18:37:06.009899+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "model_dispatch",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "c795d97171ac31cb6c1897a714b0085042311bafd47cccd89b6fba4df8e497fe",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 7,
+      "timestamp": "2026-10-04T18:37:06.010163+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "evidence_used",
+      "hash": "3e600ed25f0512097e6cf827d0bc757e7619d3832d991173e5e8ea8eab287710",
+      "payload": {
+        "evidence_id": "confluence:98564@1",
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "source": "confluence",
+        "stage": "sent_to_model",
+        "version": 1
+      },
+      "previous_hash": "ecb5d79de3e0b1fa3490b7b911d53bdea2ff50de8ea16a23bf72141452d54614",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 8,
+      "timestamp": "2026-10-04T18:37:06.012992+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "generation_completed",
+      "hash": "cda5d01571d60c53a30e9820c9253a88793c46d6491b35057373d95abe20635a",
+      "payload": {
+        "cited": [
+          "confluence:98564@1"
+        ],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "3e600ed25f0512097e6cf827d0bc757e7619d3832d991173e5e8ea8eab287710",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 9,
+      "timestamp": "2026-10-04T18:37:06.013997+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "20e01c0b0e07870ed98a0af9ba0427d2535aa24ed2c04a7825346b04e96c2b3f",
+      "payload": {
+        "checked_at": "2026-10-04T18:37:06.988383+00:00",
+        "method": "confluence-delegated-current-read",
+        "phase": "before_dispatch",
+        "policy_version": 0,
+        "resource_id": "confluence:98564",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "cda5d01571d60c53a30e9820c9253a88793c46d6491b35057373d95abe20635a",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 10,
+      "timestamp": "2026-10-04T18:37:06.988519+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "response_committed",
+      "hash": "c2f16d2a8dec161ba0834d3185635b96bd9203cbdb75653989f44db5f2de7aef",
+      "payload": {
+        "response": {
+          "actor": "eng_b",
+          "claims": [
+            {
+              "evidence_ids": [
+                "confluence:98564@1"
+              ],
+              "text": "SYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "confluence:98564@1",
+              "indexed_at": "2026-10-04T18:37:03.147822+00:00",
+              "locator": {
+                "page_id": "98564",
+                "version": 1
+              },
+              "resource_id": "confluence:98564",
+              "source": "confluence",
+              "source_updated_at": "2026-10-04T17:21:59.651Z",
+              "source_url": "https://ssy44199.atlassian.net/wiki/pages/viewpage.action?pageId=98564",
+              "text": "SYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+              "title": "C-01 · Payment-service runbook",
+              "version": 1
+            }
+          ],
+          "mode": "confluence_live_api_fake_model",
+          "model": "fake-extractive-v1",
+          "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ]
+        }
+      },
+      "previous_hash": "20e01c0b0e07870ed98a0af9ba0427d2535aa24ed2c04a7825346b04e96c2b3f",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 11,
+      "timestamp": "2026-10-04T18:37:06.989757+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "response_dispatch_attempted",
+      "hash": "5c764ec0a8d6c74ae41cabe7372bcc318c11afb0e138dbdd200a464dcb9cda83",
+      "payload": {
+        "meaning": "server attempted dispatch, not user read",
+        "transport": "http"
+      },
+      "previous_hash": "c2f16d2a8dec161ba0834d3185635b96bd9203cbdb75653989f44db5f2de7aef",
+      "request_id": "26995601e7634d2191de4a69ee7c1c2d",
+      "schema_version": 1,
+      "seq": 12,
+      "timestamp": "2026-10-04T18:37:06.991518+00:00"
+    }
+  ],
+  "chain": {
+    "valid": true,
+    "events": 12,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "limitations": [
+    "Only Confluence allowlisted synthetic pages; incident multi-source completeness not demonstrated.",
+    "Fake extractive model, not live LLM.",
+    "Operator bootstrap, not employee SSO.",
+    "UI preview/history clicks and visual QA not yet verified.",
+    "No independently signed audit anchor."
+  ]
+}

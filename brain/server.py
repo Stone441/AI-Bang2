@@ -8,7 +8,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse, unquote
 from .audit import Audit
-from .contracts import Actor, MODE
+from .contracts import Actor
+from .confluence import JsonTransport
 from .engine import Engine
 from .sources import FixtureWorld
 from .store import Store
@@ -17,6 +18,8 @@ WEB=Path(__file__).resolve().parents[1]/'web'
 
 
 class App:
+    login_path='/api/demo/login'
+    auth_kind='demo'
     def __init__(self, store=None, source_path=None):
         self.world=FixtureWorld(); self.store=store or Store()
         self.source_path=source_path
@@ -29,6 +32,11 @@ class App:
         self.sessions={}
         from .ingestion import Ingestion
         self.ingestion=Ingestion(self.store,self.world)
+
+    def authenticate(self, data):
+        if set(data)!={'user'} or data['user'] not in self.world.users:
+            raise ValueError('Unknown demo user')
+        return Actor(data['user'])
 
     def refresh(self):
         if self.source_path:
@@ -71,11 +79,13 @@ def create_server(app, port=0):
                 raise PermissionError('Unavailable')
 
         def auth(self):
+            app=self.server.application
             cookie=SimpleCookie(); cookie.load(self.headers.get('Cookie',''))
             token=cookie['session'].value if 'session' in cookie else ''
             return app.session(token),token
 
         def dispatch(self, method):
+            app=self.server.application
             try:
                 self.gate()
                 app.refresh()
@@ -92,17 +102,18 @@ def create_server(app, port=0):
                     mime={'/':'text/html; charset=utf-8','/app.js':'text/javascript; charset=utf-8','/style.css':'text/css; charset=utf-8'}[path]
                     return self.send(200,(WEB/filename).read_bytes(),mime)
                 if method=='GET' and path=='/api/health':
-                    return self.send(200,{'mode':MODE,'live_enabled':False})
-                if method=='POST' and path=='/api/demo/login':
-                    if set(data)!={'user'} or data['user'] not in app.world.users: raise ValueError('Unknown demo user')
+                    return self.send(200,{'mode':app.engine.mode,'live_enabled':any(isinstance(r.transport, JsonTransport) for r in getattr(app.world,'readers',{}).values()),
+                                          'auth_kind':app.auth_kind,'login_path':app.login_path})
+                if method=='POST' and path==app.login_path:
+                    actor=app.authenticate(data)
                     token=secrets.token_urlsafe(32); csrf=secrets.token_urlsafe(32)
-                    app.sessions[token]={'actor':Actor(data['user']),'csrf':csrf,'expires':time.monotonic()+3600,'last_query':0}
-                    return self.send(200,{'actor':data['user'],'csrf':csrf,'mode':MODE},cookie=f'session={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=3600')
+                    app.sessions[token]={'actor':actor,'csrf':csrf,'expires':time.monotonic()+3600,'last_query':0}
+                    return self.send(200,{'actor':actor.user_id,'csrf':csrf,'mode':app.engine.mode},cookie=f'session={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=3600')
                 session,token=self.auth(); actor=session['actor']
                 if method=='POST' and not secrets.compare_digest(self.headers.get('X-CSRF-Token',''),session['csrf']):
                     raise PermissionError('Unavailable')
                 if method=='GET' and path=='/api/session':
-                    return self.send(200,{'actor':actor.user_id,'csrf':session['csrf'],'mode':MODE})
+                    return self.send(200,{'actor':actor.user_id,'csrf':session['csrf'],'mode':app.engine.mode})
                 if method=='POST' and path=='/api/logout':
                     del app.sessions[token]
                     return self.send(200,{'ok':True},cookie='session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0')
@@ -138,10 +149,12 @@ def create_server(app, port=0):
                 self.send(503,{'error':'Request could not be completed safely. Please try again.'})
 
         def do_GET(self):
-            with app.store.lock: self.dispatch('GET')
+            with self.server.application.store.lock: self.dispatch('GET')
         def do_POST(self):
-            with app.store.lock: self.dispatch('POST')
-    return ThreadingHTTPServer(('127.0.0.1',port),Handler)
+            with self.server.application.store.lock: self.dispatch('POST')
+    server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
+    server.application=app
+    return server
 
 
 def main():

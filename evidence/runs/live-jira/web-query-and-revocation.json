@@ -1,0 +1,523 @@
+{
+  "recorded_at": "2026-10-04T19:06:14.451224+00:00",
+  "mode": "jira_live_api_fake_model",
+  "provenance": "agent_operated_browser_and_verified_persisted_native_checks",
+  "first_query": {
+    "actor": "eng_b",
+    "claims": [
+      {
+        "evidence_ids": [
+          "jira:10013@681437382681593605"
+        ],
+        "text": "KAN-4\nStatus: Done\nAssignee: Unassigned\nSYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: J-02\nPAY-102 code fix: Done. Code completion does not approve general customer release."
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "jira:10013@681437382681593605",
+        "indexed_at": "2026-10-04T19:02:47.683120+00:00",
+        "locator": {
+          "content_sha256": "974f3b06b6887053d6523fe0dc349b7d828e5a8ebbeabac3f28c70f443c075b8",
+          "issue_id": "10013",
+          "issue_key": "KAN-4"
+        },
+        "resource_id": "jira:10013",
+        "source": "jira",
+        "source_updated_at": "2026-10-05T02:24:49.848+0800",
+        "source_url": "https://ssy44199.atlassian.net/browse/KAN-4",
+        "text": "KAN-4\nStatus: Done\nAssignee: Unassigned\nSYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: J-02\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "title": "PAY-102 Retry configuration fix [SYNTHETIC J-02]",
+        "version": 681437382681593605
+      }
+    ],
+    "mode": "jira_live_api_fake_model",
+    "model": "fake-extractive-v1",
+    "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+    "uncertainties": [
+      "Source excerpts only; live AI synthesis is not enabled."
+    ]
+  },
+  "post_revocation_query": {
+    "actor": "eng_b",
+    "claims": [],
+    "evidence": [],
+    "mode": "jira_live_api_fake_model",
+    "model": "fake-extractive-v1",
+    "request_id": "e1c79f06134e4d229141967ab4a137c8",
+    "uncertainties": [
+      "Insufficient evidence in the currently accessible material."
+    ]
+  },
+  "audit": [
+    {
+      "actor": "eng_b",
+      "event_type": "request_started",
+      "hash": "e1473160848270a4e94c0dd4071b29f86fcf15cd71a2f89f23d9d4359924fe88",
+      "payload": {
+        "candidate_strategy": "authority prefilter + keyword overlap + authorized one-hop links",
+        "history_id": null,
+        "mode": "jira_live_api_fake_model",
+        "query": "What is the status of the payment-service retry configuration fix, and does completion approve general customer release?"
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 1,
+      "timestamp": "2026-10-04T19:02:46.813855+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "534e909014c65edbfb265aa38d6dfa71a6bd12d928143c21f4c626a261fff42a",
+      "payload": {
+        "checked_at": "2026-10-04T19:02:47.681141+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "source_refresh",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "source_mode": "live_api",
+        "version": 681437382681593605
+      },
+      "previous_hash": "e1473160848270a4e94c0dd4071b29f86fcf15cd71a2f89f23d9d4359924fe88",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 2,
+      "timestamp": "2026-10-04T19:02:47.681862+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "6b4010cb177466f0a4cb116722134bc303dc41266adc5bb90e2a04a1614f11cd",
+      "payload": {
+        "checked_at": "2026-10-04T19:02:48.390353+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "link_seed",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 681437382681593605
+      },
+      "previous_hash": "534e909014c65edbfb265aa38d6dfa71a6bd12d928143c21f4c626a261fff42a",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 3,
+      "timestamp": "2026-10-04T19:02:48.390808+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "candidate_evaluated",
+      "hash": "a9b244b1d41365b8ac30b8b2e105343393053763529fb30445ec81f498753d3e",
+      "payload": {
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "score": 9,
+        "source": "jira"
+      },
+      "previous_hash": "6b4010cb177466f0a4cb116722134bc303dc41266adc5bb90e2a04a1614f11cd",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 4,
+      "timestamp": "2026-10-04T19:02:48.393314+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "f6db2cf51422847dc3405fa3da968d4587118ab49a4af38f70b1e3358d58fd09",
+      "payload": {
+        "checked_at": "2026-10-04T19:02:49.128954+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "before_model",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 681437382681593605
+      },
+      "previous_hash": "a9b244b1d41365b8ac30b8b2e105343393053763529fb30445ec81f498753d3e",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 5,
+      "timestamp": "2026-10-04T19:02:49.129367+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "74c587a1284c2bfb6742fee47de5dfce8aae99343884e4488495bbbda6c26a5c",
+      "payload": {
+        "checked_at": "2026-10-04T19:02:49.696286+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "model_dispatch",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 681437382681593605
+      },
+      "previous_hash": "f6db2cf51422847dc3405fa3da968d4587118ab49a4af38f70b1e3358d58fd09",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 6,
+      "timestamp": "2026-10-04T19:02:49.696738+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "evidence_used",
+      "hash": "85bb0cac2b8ecce61200ccea07e3a5768b013ed1c76b06300f7a0ced5b15d8af",
+      "payload": {
+        "evidence_id": "jira:10013@681437382681593605",
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "source": "jira",
+        "stage": "sent_to_model",
+        "version": 681437382681593605
+      },
+      "previous_hash": "74c587a1284c2bfb6742fee47de5dfce8aae99343884e4488495bbbda6c26a5c",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 7,
+      "timestamp": "2026-10-04T19:02:49.699191+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "generation_completed",
+      "hash": "a228d3d2ef019e49da8e582fac481a7f1d029759120c0754f9c403599ef07c4a",
+      "payload": {
+        "cited": [
+          "jira:10013@681437382681593605"
+        ],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "85bb0cac2b8ecce61200ccea07e3a5768b013ed1c76b06300f7a0ced5b15d8af",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 8,
+      "timestamp": "2026-10-04T19:02:49.699999+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "581a3f28bcc767b4cd88ca13c7cae39914099ae5835e924484f560cc9bb60d75",
+      "payload": {
+        "checked_at": "2026-10-04T19:02:50.381231+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "before_dispatch",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 681437382681593605
+      },
+      "previous_hash": "a228d3d2ef019e49da8e582fac481a7f1d029759120c0754f9c403599ef07c4a",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 9,
+      "timestamp": "2026-10-04T19:02:50.381835+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "response_committed",
+      "hash": "c0fbb6fec41cc23c572e6a0666e1e07e38c6afbe711f5f692ce6ba377452b3fe",
+      "payload": {
+        "response": {
+          "actor": "eng_b",
+          "claims": [
+            {
+              "evidence_ids": [
+                "jira:10013@681437382681593605"
+              ],
+              "text": "KAN-4\nStatus: Done\nAssignee: Unassigned\nSYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: J-02\nPAY-102 code fix: Done. Code completion does not approve general customer release."
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "jira:10013@681437382681593605",
+              "indexed_at": "2026-10-04T19:02:47.683120+00:00",
+              "locator": {
+                "content_sha256": "974f3b06b6887053d6523fe0dc349b7d828e5a8ebbeabac3f28c70f443c075b8",
+                "issue_id": "10013",
+                "issue_key": "KAN-4"
+              },
+              "resource_id": "jira:10013",
+              "source": "jira",
+              "source_updated_at": "2026-10-05T02:24:49.848+0800",
+              "source_url": "https://ssy44199.atlassian.net/browse/KAN-4",
+              "text": "KAN-4\nStatus: Done\nAssignee: Unassigned\nSYNTHETIC COMPETITION TEST DATA — not an actual company record.\nFixture ID: J-02\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "title": "PAY-102 Retry configuration fix [SYNTHETIC J-02]",
+              "version": 681437382681593605
+            }
+          ],
+          "mode": "jira_live_api_fake_model",
+          "model": "fake-extractive-v1",
+          "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ]
+        }
+      },
+      "previous_hash": "581a3f28bcc767b4cd88ca13c7cae39914099ae5835e924484f560cc9bb60d75",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 10,
+      "timestamp": "2026-10-04T19:02:50.384186+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "response_dispatch_attempted",
+      "hash": "ec1b2feca896c6309022e67d3fdf9c7bb64f4afef80d4ace57425d6d68693c12",
+      "payload": {
+        "meaning": "server attempted dispatch, not user read",
+        "transport": "http"
+      },
+      "previous_hash": "c0fbb6fec41cc23c572e6a0666e1e07e38c6afbe711f5f692ce6ba377452b3fe",
+      "request_id": "c49ecf7131024e219ad69b963ddcab7a",
+      "schema_version": 1,
+      "seq": 11,
+      "timestamp": "2026-10-04T19:02:50.386526+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "171addd5764ba9ba3103634791777f68e7da02b5538a465f5601bbfb3c2f6099",
+      "payload": {
+        "checked_at": "2026-10-04T19:02:56.836667+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "preview",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 681437382681593605
+      },
+      "previous_hash": "ec1b2feca896c6309022e67d3fdf9c7bb64f4afef80d4ace57425d6d68693c12",
+      "request_id": "evidence",
+      "schema_version": 1,
+      "seq": 12,
+      "timestamp": "2026-10-04T19:02:56.837056+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "2016bfd02eb44e72248b3c52dbc64dc0c843e0b58e03611f89ffef533f9d5a54",
+      "payload": {
+        "checked_at": "2026-10-04T19:03:10.174267+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "preview",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 681437382681593605
+      },
+      "previous_hash": "171addd5764ba9ba3103634791777f68e7da02b5538a465f5601bbfb3c2f6099",
+      "request_id": "evidence",
+      "schema_version": 1,
+      "seq": 13,
+      "timestamp": "2026-10-04T19:03:10.174914+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "16bea8ffc4452ca52d2ccb6d479a28c825873ad31810988af8143e695d84f4ce",
+      "payload": {
+        "checked_at": "2026-10-04T19:04:04.216234+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "preview",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "deny",
+        "source": "jira",
+        "version": 681437382681593605
+      },
+      "previous_hash": "2016bfd02eb44e72248b3c52dbc64dc0c843e0b58e03611f89ffef533f9d5a54",
+      "request_id": "evidence",
+      "schema_version": 1,
+      "seq": 14,
+      "timestamp": "2026-10-04T19:04:04.216672+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "request_started",
+      "hash": "ca1183a67f0fd8077d87773ed8ca6b98704bc08896e1fe036fd033ebfa13e193",
+      "payload": {
+        "candidate_strategy": "authority prefilter + keyword overlap + authorized one-hop links",
+        "history_id": "c49ecf7131024e219ad69b963ddcab7a",
+        "mode": "jira_live_api_fake_model",
+        "query": "What is the status of the payment-service retry configuration fix, and does completion approve general customer release?Show the current payment-service retry fix status and release decision."
+      },
+      "previous_hash": "16bea8ffc4452ca52d2ccb6d479a28c825873ad31810988af8143e695d84f4ce",
+      "request_id": "e1c79f06134e4d229141967ab4a137c8",
+      "schema_version": 1,
+      "seq": 15,
+      "timestamp": "2026-10-04T19:04:16.776011+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "dd007a3ac84c0d7f31df432b564c1a1c239122280917f71c232a4d459da3c123",
+      "payload": {
+        "checked_at": "2026-10-04T19:04:17.284639+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "source_refresh",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "deny",
+        "source": "jira",
+        "source_mode": "live_api",
+        "version": null
+      },
+      "previous_hash": "ca1183a67f0fd8077d87773ed8ca6b98704bc08896e1fe036fd033ebfa13e193",
+      "request_id": "e1c79f06134e4d229141967ab4a137c8",
+      "schema_version": 1,
+      "seq": 16,
+      "timestamp": "2026-10-04T19:04:17.285042+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "generation_completed",
+      "hash": "e0978898007438fa4b85c7da65140aab3f45ae352e93ff88fe3127cf7e76f812",
+      "payload": {
+        "cited": [],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "dd007a3ac84c0d7f31df432b564c1a1c239122280917f71c232a4d459da3c123",
+      "request_id": "e1c79f06134e4d229141967ab4a137c8",
+      "schema_version": 1,
+      "seq": 17,
+      "timestamp": "2026-10-04T19:04:17.287786+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "response_committed",
+      "hash": "766de2e01d49f6c4ba9fb3a27c6a7a2ffc9224446e3674eeae579775c71ed359",
+      "payload": {
+        "response": {
+          "actor": "eng_b",
+          "claims": [],
+          "evidence": [],
+          "mode": "jira_live_api_fake_model",
+          "model": "fake-extractive-v1",
+          "request_id": "e1c79f06134e4d229141967ab4a137c8",
+          "uncertainties": [
+            "Insufficient evidence in the currently accessible material."
+          ]
+        }
+      },
+      "previous_hash": "e0978898007438fa4b85c7da65140aab3f45ae352e93ff88fe3127cf7e76f812",
+      "request_id": "e1c79f06134e4d229141967ab4a137c8",
+      "schema_version": 1,
+      "seq": 18,
+      "timestamp": "2026-10-04T19:04:17.288665+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "response_dispatch_attempted",
+      "hash": "f1e1c7a4e2a63c9f2ec78b68d12440776e034792f08de0259bf72e4767d5b81d",
+      "payload": {
+        "meaning": "server attempted dispatch, not user read",
+        "transport": "http"
+      },
+      "previous_hash": "766de2e01d49f6c4ba9fb3a27c6a7a2ffc9224446e3674eeae579775c71ed359",
+      "request_id": "e1c79f06134e4d229141967ab4a137c8",
+      "schema_version": 1,
+      "seq": 19,
+      "timestamp": "2026-10-04T19:04:17.289929+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "d886508424f98dcd09a480f914e6248db2edecaf8dde9e6ddae7bc3ca7511563",
+      "payload": {
+        "checked_at": "2026-10-04T19:04:33.866422+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "preview",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "deny",
+        "source": "jira",
+        "version": 681437382681593605
+      },
+      "previous_hash": "f1e1c7a4e2a63c9f2ec78b68d12440776e034792f08de0259bf72e4767d5b81d",
+      "request_id": "evidence",
+      "schema_version": 1,
+      "seq": 20,
+      "timestamp": "2026-10-04T19:04:33.867076+00:00"
+    },
+    {
+      "actor": "eng_b",
+      "event_type": "authorization_decided",
+      "hash": "84b1ca6c9fe394940c02e5beb677d0e51059ba91afc95c786c4c80b366b8a414",
+      "payload": {
+        "checked_at": "2026-10-04T19:05:17.250460+00:00",
+        "method": "jira-delegated-current-read",
+        "phase": "preview",
+        "policy_version": 0,
+        "resource_id": "jira:10013",
+        "resource_scope": "payment-service",
+        "result": "deny",
+        "source": "jira",
+        "version": 681437382681593605
+      },
+      "previous_hash": "d886508424f98dcd09a480f914e6248db2edecaf8dde9e6ddae7bc3ca7511563",
+      "request_id": "evidence",
+      "schema_version": 1,
+      "seq": 21,
+      "timestamp": "2026-10-04T19:05:17.251007+00:00"
+    }
+  ],
+  "chain": {
+    "valid": true,
+    "events": 21,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "actual_checks": {
+    "real_api_fake_model": true,
+    "exact_extract_and_canonical_source": true,
+    "current_before_model_and_dispatch": true,
+    "http_response_dispatched": true,
+    "revocation_denied_native_refresh": true,
+    "same_conversation": true,
+    "revoked_content_not_sent_to_model": true,
+    "no_revoked_evidence_or_claim": true,
+    "old_preview_denied": true,
+    "chain_valid": true,
+    "retained_index_without_full_rebuild": true
+  },
+  "ui_checks": {
+    "query": true,
+    "preview_before_revocation": true,
+    "history_before_revocation": true,
+    "preview_denied_after_revocation": true,
+    "history_unavailable_after_revocation": true,
+    "workspace_navigation_clears_previous_view_after_fix": true
+  },
+  "native_permission": {
+    "baseline": "No restrictions",
+    "temporary": "Administrator only",
+    "restored": "No restrictions UI verified",
+    "authorization": "AUTH-003 synthetic ACL testing"
+  },
+  "initial_defect": "Workspace navigation redisplayed previously rendered answer without a new check; cleared on navigation/query/preview denial, standalone frontend tests passed",
+  "limitations": [
+    "Single synthetic issue and one employee; secure comments/matrix not tested",
+    "Fake extractive model; no live LLM",
+    "UI restoration verified, no extra post-restore API query",
+    "Local unsigned chain; no independent anchoring",
+    "No G1/G2 approval",
+    "Already seen material cannot be erased from user memory or external screenshots"
+  ]
+}
