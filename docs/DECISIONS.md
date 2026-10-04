@@ -164,3 +164,5 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 Slack reader invitation: native UI returned Unable to send / Couldn’t invite for 674544786@qq.com; cause not established, no membership claimed. Drive reader process started on8087 (fake model), OAuth waiting user final grant, credentials not entered or copied. Private screenshot reader-slack-invite-failed.jpg.
 
 2026-10-05 AUTH-003权限测试执行：仅在已批准合成folder移除eng_b Reader以验证同会话撤权，再恢复相同Viewer/Restricted范围，无公开share、正文编辑或新scope。原生Drive版本因权限分享从3至4变化但正文hash相同，按保守原生版本校验处理，不把权限引起的version变化记为新企业事实。
+
+2026-10-05 AUTH-011 Slack amendment：用户明确批准eng_b Slack也用kyle000909@gmail.com，限AI-Bang2工作区和合成私有频道，原四项user只读scope+identify，不接NTU、不新增付款或写scope，最终terms/OAuth用户点击。QQ邀请失败原因未知，新Google邮箱邀请UI显示You’ve invited 1 person/Invited as a colleague/Expires in30days；仅邀请成功，尚未入组或授权。

@@ -11,8 +11,8 @@ four-source live execution is not_run. The local operator is not employee SSO.
 | Drive | eng_a, primary Google account, file owner | Separate Google reader and Reader sharing on the three synthetic files |
 
 Do not rename eng_a's existing Slack/Drive delegation to eng_b or borrow owner
-access. The reviewed reader preparation uses existing Atlassian/Slack email
-`674544786@qq.com` and existing Google/Drive account `kyle000909@gmail.com`.
+access. The reviewed reader preparation uses existing Atlassian email
+`674544786@qq.com` and existing Google/Drive/Slack account `kyle000909@gmail.com`.
 The user explicitly confirmed this account substitution on 2026-10-05. Join only
 AI-Bang2 Slack, and share only the approved synthetic Drive folder as Reader.
 This enables actual removal of the reader while owner seeding access remains.
@@ -37,7 +37,7 @@ After identities and native read permissions are reviewed, a fresh loopback
 operator can start with:
 
 ```sh
-python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --oauth-client .runtime/drive-oauth-client.json --port 8087 --live --model deepseek
+python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --oauth-client .runtime/drive-oauth-client.json --port 8088 --live --model deepseek
 ```
 
 Complete config and tenant validation precede private client loading and manual
@@ -55,3 +55,7 @@ Mocks, native owner queries and a signed local chain do not replace this matrix.
 AUTH-011 update: user approved the exact reader preparation on 2026-10-05. Native account, membership, sharing and consent are pending; identity mapping remains unreviewed until actually checked. Local full regression248/248; 5 new bundle OAuth contract tests.
 
 2026-10-05 native setup: Google reported no account for the QQ email; user chose the existing kyle000909@gmail.com instead. Cloud Audience now shows two test users, and the synthetic folder sharing readback shows this account as Viewer with general access Restricted. Reader API identity, OAuth grant and revocation remain not_run.
+
+2026-10-05 Slack account substitution explicitly approved; invitation to kyle000909@gmail.com succeeded in native UI. Acceptance, member ID, private-channel membership and OAuth still pending. Drive reader query/revocation subset is now verified (reader-query-and-revocation.json); permission restored as Viewer/Restricted by UI readback.
+
+Port allocation update:8087 is occupied by the running independent Drive reader; keep it running and use8088 for the eventual unified operator. The unified manifest must reference `.runtime/drive-oauth-reader.json` for eng_b, not the eng_a owner config `.runtime/drive-oauth-pilot.json`. Slack reader config can be prepared only after its real user ID is verified. No new live operator should be started from the example with unreviewed identity mapping.

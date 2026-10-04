@@ -76,3 +76,5 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 2026-10-05 Drive独立reader：用户已完成Google只读授权，程序完成token交换及kyle000909@gmail.com原生about身份绑定，并启动8087 live API/fake model服务。Chrome自动导航ERR_BLOCKED_BY_CLIENT，已交用户地址栏Enter；问答/撤权尚not_run，未新增模型调用或费用。
 
 2026-10-05 Drive独立reader真实subset verified：eng_b问答30376d91652d4f7ab7ba32bfe64f3fca，三份原生文件版本4（共享后版本变化，正文hash未变），引用/历史可用。移除folder Reader后同会话70bcbe2030c34427a990eae47862e246引用原history_id，三source_refresh deny，claims/evidence空、无evidence_used；旧preview deny、history unavailable、三资料索引保留。6项前置+8项后置DB检查，unsigned chain有效；evidence/runs/live-drive/reader-query-and-revocation.json。fake model，无收费调用；真实export/全继承ACL/统一四源仍not_run。权限恢复保存已成功，角色readback另记录。Slack邀请失败仍需处理。
+
+2026-10-05 Slack独立reader：获批改用kyle000909@gmail.com后native邀请成功（colleague，30days expiry），等待用户邮件接受/Google登录/条款；native user ID、私有channel membership、reader OAuth/live撤权仍not_run。不得复用eng_a token或提前identity_mapping_reviewed=true。下一步用户加入后核对实际身份和频道成员，再交用户最终OAuth。
