@@ -158,3 +158,7 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 ## ADR-020 · 2026-10-05 · multi-source Drive PKCE
 
 统一入口--source multi允许--oauth-client；先读public OAuth mapping构造无credential reader，再全部source actor/tenant验证，才读取private desktop client并按需hidden其他source；Drive不手工复制access token。客户端无效先于人工输入，Google拒绝不能返回partial bundle，全部native身份通过才bootstrap。load_oauth_reader单源接口保持，拆分prepare/complete共享实现，无扩scope/自动persona合并。example默认identity_mapping_reviewed=false；AUTH-011未完成native身份确认前不改为true。5新mock配置/CLI测试通过；此前新增测试缺续行SyntaxError已复现修复，单独OAuth HTTP测试在沙箱bind拒绝，完整许可本机回归248/248通过（60local/188mock）。本轮未调用真实平台/模型、不重启旧服务。
+
+2026-10-05 AUTH-011 amendment: user confirmed kyle000909@gmail.com as eng_b Google/Drive identity, replacing QQ Google registration; existing Atlassian identity retained. Cloud test user saved and exact synthetic folder Viewer sharing read back; general access remains Restricted, notification unchecked. This does not establish API identity or grant. Slack still uses the specifically approved QQ email pending membership.
+
+2026-10-05 Slack reader invitation: native UI returned Unable to send / Couldn’t invite for 674544786@qq.com; cause not established, no membership claimed. Drive reader process started on8087 (fake model), OAuth waiting user final grant, credentials not entered or copied. Private screenshot reader-slack-invite-failed.jpg.

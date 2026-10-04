@@ -11,8 +11,9 @@ four-source live execution is not_run. The local operator is not employee SSO.
 | Drive | eng_a, primary Google account, file owner | Separate Google reader and Reader sharing on the three synthetic files |
 
 Do not rename eng_a's existing Slack/Drive delegation to eng_b or borrow owner
-access. Suggested genuine reader is the existing eng_b email
-`674544786@qq.com`: use a Google account associated with that email, join only
+access. The reviewed reader preparation uses existing Atlassian/Slack email
+`674544786@qq.com` and existing Google/Drive account `kyle000909@gmail.com`.
+The user explicitly confirmed this account substitution on 2026-10-05. Join only
 AI-Bang2 Slack, and share only the approved synthetic Drive folder as Reader.
 This enables actual removal of the reader while owner seeding access remains.
 These additional registrations, memberships and sharing require explicit approval.
@@ -52,3 +53,5 @@ protection, retained index, and other authorized sources remaining usable.
 Mocks, native owner queries and a signed local chain do not replace this matrix.
 
 AUTH-011 update: user approved the exact reader preparation on 2026-10-05. Native account, membership, sharing and consent are pending; identity mapping remains unreviewed until actually checked. Local full regression248/248; 5 new bundle OAuth contract tests.
+
+2026-10-05 native setup: Google reported no account for the QQ email; user chose the existing kyle000909@gmail.com instead. Cloud Audience now shows two test users, and the synthetic folder sharing readback shows this account as Viewer with general access Restricted. Reader API identity, OAuth grant and revocation remain not_run.
