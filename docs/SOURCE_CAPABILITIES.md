@@ -17,3 +17,5 @@
 - [Slack conversations.history / token access](https://docs.slack.dev/reference/methods/conversations.history/)
 - [Drive changes](https://developers.google.com/workspace/drive/api/guides/manage-changes)
 - [Python HTTP server security considerations](https://docs.python.org/3/library/http.server.html#security-considerations)：本地演示用途，非生产服务器。
+
+2026-10-05 增量：Confluence reader/probe 已实现并通过 16 个 mock HTTP/配置合同测试，见 CONFLUENCE_PILOT。注册和 C-01 种植已完成，不再称账号全未创建；四源 runtime 仍 fixture_only，真实 API/委托/模型未运行。

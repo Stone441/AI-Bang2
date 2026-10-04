@@ -1,14 +1,16 @@
 {
-  "started_at": "2026-10-04T10:30:48.547066+00:00",
-  "finished_at": "2026-10-04T10:30:53.994582+00:00",
-  "mode": "fixture_fake_model",
+  "started_at": "2026-10-04T17:30:54.175690+00:00",
+  "finished_at": "2026-10-04T17:30:58.422910+00:00",
+  "mode": "local_synthetic_and_mock_http",
+  "live_api_called": false,
   "python": "3.14.7",
-  "commit": "8cd5088cf244bf96cedf293ae68b1d3eb5cfe2ee",
+  "commit": "71dd4110ca3424ff4b9db8fbc337c572f4751b5e",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
     "brain/server.py": "70376b32a387bf8e161a631ca242c353c276a83e2f95bd5ed4b15d8dd296c6b9",
     "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
+    "brain/confluence.py": "31a5c28bf135ae27492aa34e854a2ea97623e8980aa42f1b6e595baba939e6c4",
     "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
     "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
     "brain/engine.py": "ff81a3f0c71e61df176eb39dd372dfcef292b6f161c9fffbd6ba1d6903222922",
@@ -17,14 +19,19 @@
     "tests/test_contracts.py": "c6c4ad82ce9cce7505296745a7f824ca216edf5a31f3adc9b2d9d4468d652c56",
     "tests/test_engine.py": "0449d5240af821d03545f9fcec1672ef7c0bd5e18149ae40ded97228834b322e",
     "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
+    "tests/test_confluence_probe.py": "16a890720fd8b91e20c1be6f628f74d2f3a998543a26881b25dca7cc85b33e60",
+    "tests/test_live_seed.py": "df2ba1d2daa3e7f1016527830de12f3ad2f748633ad01c778819a088db0b19d0",
     "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
     "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8",
+    "tests/test_confluence.py": "ed28d8d75813d8638cd82952f123d30104b1a9065bbbbd4840484d0d175c2bd4",
     "tests/codebuddy/test_audit_verifier.py": "4121d5f4e688ff7d7d5a8b1921810785d39cc3c082b684882356c7c3ed339e8f",
     "tests/codebuddy/__init__.py": "aa1f7dd33a54dd5e7ca68439ee45d953eb4c6bf1358c809c7300308583e7f47a",
     "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730",
     "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
     "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
-    "scripts/test_report.py": "2ab86120af1a02186c548f2fa6c737b91e1a795f1f15c8ddffa068c583ca64aa",
+    "scripts/test_report.py": "070a9712a823fd0eaad09dd58a94dec9e89f311ec9f4a0bf68cccdb2312bbbdd",
+    "scripts/confluence_probe.py": "76ec9cb7f67c59fddae44d2a44fca7dd3ca96b796b5961465dd200ad7e00a1f7",
+    "scripts/prepare_live_seed.py": "dcd3307e679b3f1d96affc7a65ba9be7af48ed84b258db64366a7bd494fa2eff",
     "scripts/evaluate.py": "1bb058888f3c0be50a07f3bf07f2d6dfb5b1581140169fefa92ba1802e301fbf",
     "web/index.html": "72adc3d005163a3091666372cbe3193511513459c653751060a901e364187df0",
     "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
@@ -34,216 +41,353 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 52,
+  "tests_run": 69,
   "successful": true,
   "results": [
     {
       "test": "codebuddy.test_audit_verifier.CheckpointGeneration.test_refuses_to_sign_broken_chain",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.CheckpointGeneration.test_signs_full_chain_and_reports_coverage",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.HashContractCompatibility.test_independent_recomputation_matches_brain_v1",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.NonEd25519KeyRejection.test_generator_rejects_rsa_and_ec_signing_keys",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.NonEd25519KeyRejection.test_verifier_rejects_ec_public_key",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.NonEd25519KeyRejection.test_verifier_rejects_rsa_public_key",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.StrictIntegerTypes.test_bool_seq_and_schema_version_rejected_in_chain",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.StrictIntegerTypes.test_bool_through_seq_rejected_by_verifier",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a03_body_modification_inside_coverage_fails",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a03_middle_deletion_inside_coverage_fails",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a03_middle_deletion_partial_coverage_breaks_chain",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a04_signed_tail_deletion_fails",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a04_whole_chain_recomputation_fails",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a11_tampering_inside_unanchored_tail_reported",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a11_unanchored_tail_reported_separately",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_corrupted_signature_rejected",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_missing_checkpoint_reports_untrusted",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_original_chain_with_trusted_signature_passes",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_stream_id_checked_as_external_expectation",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_wrong_public_key_rejected",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_audit_more.AuditIntegrity.test_concurrent_append_and_tamper_boundaries",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_audit_more.AuditIntegrity.test_parser_timezone_range_and_rejection",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_admin_credential_substitution_never_fetches_page",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_authorized_read_and_backend_link",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_denied_metadata_never_requests_body",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_origin_and_credential_validation",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_rate_limit_expired_token_and_network_fail_closed",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_revoke_between_metadata_and_body_returns_no_content",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_second_read_rechecks_access_no_positive_cache",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_unmapped_tenant_or_unapproved_page_never_calls_source",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_unsupported_macro_and_deleted_page_not_used",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_update_during_fetch_and_wrong_space_fail_closed",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.DelegatedReads.test_version_mismatch_blocks_old_history_without_body",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.TransportLimits.test_error_body_not_read_and_redirect_not_followed",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence.TransportLimits.test_payload_limits_and_non_json",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence_probe.ProbeConfiguration.test_configuration_errors_do_not_print_secret",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence_probe.ProbeConfiguration.test_missing_credentials_do_not_make_network_request",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_confluence_probe.ProbeConfiguration.test_without_live_flag_never_loads_configuration",
+      "status": "passed",
+      "mode": "mock_http_contract"
     },
     {
       "test": "test_contracts.Contracts.test_comment_cannot_outlive_parent_access",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_contracts.Contracts.test_complete_matrix",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_contracts.Contracts.test_fixture_schema_and_locators",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_contracts.Contracts.test_pagination_and_identity_boundary",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_audit_connection_rejects_mutation",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_audit_failure_blocks_answer",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_audit_scope_and_pagination",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_cross_source_claims_and_audit",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_evidence_injection_remains_data_and_restricted_links_deny",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_history_followup_and_export_after_revoke",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_invalid_citation_and_unsupported_claim_rejected",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_mid_generation_audit_failure_never_returns_success",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_mid_generation_revoke_blocks_dispatch",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_natural_worked_example_link_followups",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_product_and_contractor_useful",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_prompt_injection_does_not_grant_access",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_restricted_and_missing_same_visible_answer",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_same_role_private_membership",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_source_revoke_stale_local_all_four",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_engine.Core.test_unknown_all_sources_fail_closed",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_http.HTTP.test_csrf_host_and_evidence_protection",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_http.HTTP.test_http_frontend_identity_and_query",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_http.HTTP.test_local_authority_file_update_and_restart",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_http.HTTP.test_source_file_revocation_during_generation_is_seen",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_ingestion.Incremental.test_create_each_source_and_delete_without_rebuild",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_ingestion.Incremental.test_duplicate_out_of_order_retry_atomic",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_ingestion.Incremental.test_failed_poll_resumes_from_checkpoint",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_ingestion.Incremental.test_four_source_update_one_object_only",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_ingestion.Incremental.test_out_of_order_success_cannot_skip_failed_job",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
     },
     {
       "test": "test_ingestion.Incremental.test_revoke_no_reindex_delete_immediate_and_history_version",
-      "status": "passed"
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_live_seed.LiveSeed.test_complete_plan_preserves_restricted_child_and_unverified_state",
+      "status": "passed",
+      "mode": "local_synthetic"
     }
   ],
   "failures": [],

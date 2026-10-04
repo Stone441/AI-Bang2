@@ -21,7 +21,7 @@
 
 | 项目 | 状态 |
 |---|---|
-| 四源 | fixture_only；live blocked（专用合成空间范围已批准，账号/站点及委托配置尚未建立） |
+| 四源 | fixture_only；live blocked（专用合成空间范围已批准，Slack/Jira/Confluence 已建立；Confluence Premium 试用至 2026-11-04、无付款方式，Drive/委托配置未完成） |
 | 模型 | fake-extractive-v1；live not_run，无 embedding/reranker/compressor |
 | 审计完整性 | partial；离线签名/篡改检测 verified local；独立 DB role / 加密 / 外部签名保管未实现 |
 | 腾讯工具 | verified local：真实 CodeBuddy 实现 + 审查修正；20 新测试/全仓库 52 测试通过；7 截图及原生 conversation history 已本地保存，未上传 |
@@ -36,3 +36,13 @@
 4. 浏览器可访问后按 RUNBOOK 完成 UI/键盘/移动布局检查，并组织 G1 人工核验；完善候选材料，最后 G2。
 
 本轮只交付本地候选，不宣称完整项目完成；没有承诺会话结束后继续运行。
+
+2026-10-05 接入增量：Confluence `AIBANG2` 专用受限空间已建立（主页 131286），仅验证管理员可打开；独立身份访问/撤权、项目 seed 种植及 API 仍 not_run。等待队员测试邮箱映射，接续见 LIVE_ONBOARDING。
+
+2026-10-05 身份增量：两个本人控制的测试邮箱已收到 Confluence 邀请，分别映射 eng_b/product_ops；后台 Invited。首次注册/登录待用户完成，native identity 只保存在 ignored 配置；真实 ACL not_run。
+
+2026-10-05 原生配置增量：用户报告两测试账号注册完成；Confluence 空间两成员设 Viewer。首份 C-01 合成资料已发布（page 98564），原生 Restricted 名单仅管理种植者及 eng_b；核心原文已发布后核对。仅配置验证，普通用户允许/拒绝与撤权 not_run；等待独立用户会话。
+
+2026-10-05 DEV-06-CF：实现白名单 Confluence delegated reader 与 operator-only probe，16 个模拟 HTTP/配置测试。完整 69 测试在允许 loopback 的环境通过；首次沙箱运行 4 项 HTTP bind 被阻止，未跳过断言。无真实 API 调用；尚未连接 Engine、OAuth/用户 session、索引/审计同步。精确接续见 CONFLUENCE_PILOT，先取得原生 space ID 与各用户最小委托凭据，再集中跑端到端撤权。
+
+2026-10-05 C-02 已真实发布（page 164283），核心能力原文已读取核对。C-01/C-02 native ID 本地 manifest 已映射，页面配置不当作 live ACL 通过；剩余 C-03 和其他三源资料、委托及 runtime 接线继续待做。当前开发分支 codex/live-onboarding，无远端推送。
