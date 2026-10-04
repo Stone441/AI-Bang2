@@ -11,3 +11,11 @@
 - 审计事件 v1：seq, previous_hash, event_type, actor, request_id, timestamp, payload, hash。规范化 JSON 为 ensure_ascii=False, sort_keys=True, separators=(',', ':')；hash = SHA256(b'ContextLedger.audit.v1\0' + canonical event excluding hash)。起始 previous_hash 为 64 个 0。
 - 审计 payload 保存问题、逐资源授权、实际模型输入证据 ID、最终回答和 dispatch 阶段；受限审计员只有 eng_a/eng_b/product_ops 范围。端点无任意 SQL。应用 SQL authorizer 是逻辑防护，不宣称独立 DB role。
 - CodeBuddy 独立签名验证器以导出的 JSON 数组为输入，签名 trusted checkpoint 的 schema/编码须与此契约一致；其路径由任务包独占。
+
+## Signed checkpoint v1（DEV-09-CB 实现）
+
+离线 CLI 位于 `tools/audit_verifier/`。JSON wrapper 包含 `schema_version:1`、`algorithm:"ed25519"`、`checkpoint`、base64 `signature`；`signing_backend` 仅为说明。签名消息为上述 canonical 编码的 checkpoint UTF-8 字节。checkpoint 包含 `schema_version:1, stream_id, through_seq, head_hash, timestamp`。序号/版本必须是整数，bool 不被接受。
+
+验证器显式接收外部可信 checkpoint、公钥和 expected stream ID，使用 OpenSSL 校验 Ed25519 密钥类型与签名，独立重算导出链。退出码 0 仅表示已覆盖段通过，未覆盖尾部始终单列；1 失败；2 无检查点、不可信。签名不保护 wrapper 的说明文本。
+
+v1 事件不含 stream_id；该字段只绑定检查点的外部期望，不能据此宣称事件原生跨流隔离。选择最新可信检查点、独立保管、密钥轮换仍由后续机制保证；同机同账号的测试不提供这些生产边界。

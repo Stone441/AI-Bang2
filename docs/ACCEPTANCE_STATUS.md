@@ -1,6 +1,6 @@
 # Acceptance coverage · local candidate
 
-当前是 fixture_fake_model 的 32 个 unittest 方法（另含参数化 subtests），不是 51 个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；真实平台、真实模型、人工验收均未通过。以下未覆盖部分保留，不改写 05 的 oracle。
+当前是 fixture_fake_model 的 52 个 unittest 方法（另含参数化 subtests），不是 51 个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；真实平台、真实模型、人工验收均未通过。以下未覆盖部分保留，不改写 05 的 oracle。
 
 | IDs | 当前状态与实际证据 / 缺口 |
 |---|---|
@@ -27,14 +27,14 @@
 | F-08 | not_started：真实 change-token 失效/定期对账 |
 | A-01/08/09/10 | local verified：问答正文、逐对象检查、模型输入/引用/dispatch，失败关闭，60 并发追加链 |
 | A-02 | blocked：SQLite connection authorizer/trigger 已测试；独立数据库角色未实现 |
-| A-03/04 | partial：本地链和保存在测试内存的 trusted head 检查；独立签名留给 CodeBuddy |
+| A-03/04 | local signature subset verified：CodeBuddy 离线 Ed25519 检查点/独立 CLI；正文、中间/已覆盖尾部删除、整链重算、错误公钥/签名拒绝。独立保管运营边界尚未建立 |
 | A-05/06/07 | local verified：有限 NL 模板、白名单参数、scope、带时区范围、稳定分页；任意 NL 不支持 |
-| A-11 | blocked：CodeBuddy 签名/轮换/可信检查点任务 |
+| A-11 | partial：缺检查点显式不可信、未覆盖尾部单列、非 Ed25519 密钥拒绝已测试；当前单公钥，密钥轮换未实现 |
 | U-01 | local verified：标准库可启动、显式 demo、HTTP 实际请求；独立 git archive 目录 setup/test 已通过 |
 | U-02 | partial：前端分区 + server role enforcement、无 HTTP ACL 管理入口；非公开部署 |
 | U-03 | not_run visual：英文 UI/labels/focus/CSP 已实现；浏览器自动化被 ERR_BLOCKED_BY_CLIENT 阻挡 |
 | U-04 | not_run：无真实模型性能/成本；场景耗时只为本机 fake 调用时间 |
-| U-05 | partial：五场景自动记录/架构/源码；真实腾讯对话截图、签名及 live 记录缺失 |
+| U-05 | partial：五场景自动记录/架构/源码；真实腾讯对话/7截图及离线签名已完成；live 记录缺失，最终材料未提交 |
 | U-06 | blocked：非作者人工对照尚未组织 |
 
 失败改进记录：首次自然 S-01 未检索到 PAY-103，原失败见 `evidence/runs/first-scenario-failure.json`。保留断言，新增逐目标授权的一跳检索后回放通过。未硬编码展示答案。

@@ -1,8 +1,8 @@
 # DEV-09-CB · 可直接转交 CodeBuddy
 
-状态：未执行；没有任何腾讯工具贡献证明。当前未发现已授权 callable tool/CLI，由团队在实际 CodeBuddy 入口运行。
+状态：2026-10-04 已获用户授权，由 Codex 操作真实 VS Code CodeBuddy 插件执行，verified local。插件版本 4.12.38765564；未额外安装 CLI。原始产物提交 `4165ee6`，集成 `8cd5088`；Codex 独立复跑新增 20 项及全仓库 52 项均通过。原生对话导出和 7 张截图见 evidence/tool-usage/README.md。
 
-基准 commit：`889773c`。独立分支 `codebuddy/dev-09-audit-verifier`，独立工作目录；建议团队从该 commit 建立 worktree，不在 Codex 当前工作区编辑。后续契约变更须先与集成人核对。
+基准 commit：`81df3ef`（已合并主线；替代原 `889773c`）。独立分支 `codebuddy/dev-09-audit-verifier`，独立工作目录；已建立 `.runtime/codebuddy-dev09` 独立 worktree，不在 Codex 当前工作区编辑。后续契约变更须先与集成人核对。
 
 允许新建/修改：`tools/audit_verifier/**`、`tests/codebuddy/**`、`docs/CODEBUDDY_AUDIT_DELIVERY.md`。
 禁止修改：`brain/**`、`web/**`、`fixtures/**`、现有 tests、AGENTS、01–05、任何凭据和旧材料。
