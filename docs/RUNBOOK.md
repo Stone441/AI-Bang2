@@ -1,6 +1,6 @@
 # 安装、启动、测试与演示
 
-要求 Python >=3.11（本次实际 3.14.7）、可绑定 loopback 端口。应用零第三方依赖，无 npm/pip 安装步骤；无需 API key。Node 仅用于 `node --check web/app.js`。在仓库根目录执行。
+要求 Python >=3.11（本次实际 3.14.7）、可绑定 loopback 端口。应用零第三方 Python 依赖，无 npm/pip 安装步骤；无需 API key。签名工具及完整测试另需 PATH 中的 OpenSSL（已验证 3.6.3，需支持 Ed25519 pkeyutl -rawin）。Node 仅用于 `node --check web/app.js`。在仓库根目录执行。
 
 ```sh
 make setup
@@ -39,9 +39,9 @@ make verify
 make test-report
 ```
 
-输出 `evidence/runs/local-latest/scenarios.json`、`audit.json`、`tests.json`。S-05 检查仅是内存保留 trusted head 的本地演示，未具备独立签名根。CodeBuddy 任务验收后才扩展对应声明。
+输出 `evidence/runs/local-latest/scenarios.json`、`audit.json`、`tests.json`。S-05 检查仅是内存保留 trusted head 的本地演示，未具备独立签名根。离线签名另由真实 CodeBuddy 实现并经 20 项测试验证；命令见 CODEBUDDY_AUDIT_DELIVERY.md，同机同账号不代表生产独立保管。
 
-要重新开始人工演示，停止服务后把整个 `.runtime` **改名保留**，再启动，例如 `mv .runtime .runtime-saved-01`（先确认该备份名称不存在）。不要为重新演示删除旧审计。自动测试均使用自己的临时/内存状态。
+要重新开始人工演示，停止服务后仅将 demo 数据文件改名备份，再启动；先确认备份名称不存在。不要整体移动 `.runtime`：目前其中有 `.runtime/codebuddy-dev09` Git worktree。不要删除旧审计。自动测试均使用自己的临时/内存状态。
 
 ## 故障与边界
 

@@ -2,7 +2,7 @@
 
 更新：2026-10-04（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**G0 仅本地完整开发已批准**；外部数据、账号/scope、运行时模型/预算仍待定。G1/G2 未通过。未推送远端、未部署、未调用真实平台/模型。
+**G0 仅本地完整开发已批准**；外部数据、账号/scope、运行时模型/预算仍待定。G1/G2 未通过。原型已推送并通过 PR #1 合并至 main（81df3ef）；未部署、未调用真实知识平台/应用运行时模型。
 
 ## 已实现与验证
 
@@ -10,10 +10,10 @@
 - loopback 服务、opaque session/CSRF、英文 UI、四源关键词 + 授权一跳检索、fake extractive model、逐结论引用。
 - 当前源授权在模型前和返回前检查；未知拒绝；四源撤权、旧历史/导出/引用保护。模型、HTTP 均有实际回归。
 - 持久 fake source 与 SQLite 索引分离；对象级事务发布、创建/更新/删除、去重/乱序/重试、失败任务不被游标越过、重启恢复。请求触发处理，不宣称真实自动同步。
-- 完整问答审计、逐资料决策、sent_to_model/cited/dispatch 区分、scope 查询与稳定分页；60 并发追加链测试。本地 hash-chain 不等于独立签名完整性。
-- `make test-report` 32/32 tests passed；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
+- 完整问答审计、逐资料决策、sent_to_model/cited/dispatch 区分、scope 查询与稳定分页；60 并发追加链测试。已接入离线 Ed25519 检查点 CLI；同机同账号仍不等于生产独立签名边界。
+- `make test-report` 52/52 tests passed（32 原有 + 20 CodeBuddy）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
 
-已通过从提交导出的独立临时目录 `make setup` / `make test` / JS 语法检查。
+原型 32 测试阶段已通过从提交导出的独立临时目录 `make setup` / `make test` / JS 语法检查；本轮签名集成验证为当前 checkout 的 52 测试回归。
 
 证据：`evidence/runs/local-latest/tests.json`、`scenarios.json`、`audit.json`；包含运行时间、模式、基准 commit 与精确源码 SHA-256。验收映射见 ACCEPTANCE_STATUS。
 
@@ -23,14 +23,14 @@
 |---|---|
 | 四源 | fixture_only；live blocked（真实测试空间与委托用户授权未获批准） |
 | 模型 | fake-extractive-v1；live not_run，无 embedding/reranker/compressor |
-| 审计完整性 | partial；独立 DB role / 加密 / 签名根未实现 |
-| 腾讯工具 | not_started；无 callable tool/CLI；DEV-09-CB 任务包已准备 |
+| 审计完整性 | partial；离线签名/篡改检测 verified local；独立 DB role / 加密 / 外部签名保管未实现 |
+| 腾讯工具 | verified local：真实 CodeBuddy 实现 + 审查修正；20 新测试/全仓库 52 测试通过；7 截图及原生 conversation history 已本地保存，未上传 |
 | 浏览器视觉 | blocked：IAB 不可用，Chrome localhost ERR_BLOCKED_BY_CLIENT；HTTP 集成通过不替代视觉检查 |
 | 部署与人工 | local only；G1/G2 / 非作者质量与 ROI not_run |
 
 ## 精确接续点
 
-1. 团队转交 `docs/CODEBUDDY_TASK.md`，CodeBuddy 基准 `889773c`，独占签名验证器路径；完成后 Codex 审查集成。不要在等待时冒领它的实现。
+1. DEV-09-CB 已完成：原始提交 `4165ee6`，集成提交 `8cd5088`，位于 `codex/dev-09-codebuddy-integration`；本轮未推送/合并 main。证据索引 `evidence/tool-usage/README.md`。后续推进密钥轮换、检查点生成节奏及独立保管；当前单公钥离线验证，不扩大 A-11 覆盖声明。
 2. DEV-06：按 SOURCE_CAPABILITIES 核对获批四源测试空间/用户/scope，实施真实委托读取、分页/变更流/撤权合同测试；授权前不得碰现有凭据。
 3. DEV-08/09：批准 runtime 后接入真实模型与语义支持评测；生产 DB/身份/HTTP 栈和独立审计边界仍需工程实现及运行验证。
 4. 浏览器可访问后按 RUNBOOK 完成 UI/键盘/移动布局检查，并组织 G1 人工核验；完善候选材料，最后 G2。

@@ -11,9 +11,9 @@
 | DEV-07 | verified local | stale ACL/撤权/unknown/历史/预览/导出/生成中撤权；P组部分真实机制待测 |
 | DEV-08 | in_progress | 关键词+授权一跳、exact extractive support；语义检索与 live 模型未实现 |
 | DEV-09 | in_progress | 事件链/精确 scope/分页/有限 NL；生产 role/加密未实现 |
-| DEV-09-CB | blocked handoff | 独立签名检查点/验证器，真实 CodeBuddy 实现路径已预留 |
+| DEV-09-CB | verified local | 真实 CodeBuddy Ed25519 检查点/独立 CLI；20 新测试+52 全回归；A-03/04 本地签名子集，A-11 缺锚点/尾部已测，密钥轮换待做；依赖 DEV-09 导出契约 |
 | DEV-10 | in_progress | 英文 Workspace/History/Sources/Audit 已联通；浏览器视觉工具阻挡 |
 | DEV-11 | verified local subset | 五场景回放+安全测试；不是完整 P0/G1 通过 |
 | DEV-12 | blocked | live model / 非作者人工任务测量未运行 |
-| DEV-13 | in_progress | 本地候选审查包、运行指南；封面/视频/真实腾讯证据缺失 |
+| DEV-13 | in_progress | 本地候选审查包、运行指南；真实腾讯对话/7截图已本地留存；封面/视频/材料提交待做 |
 | DEV-14 | in_progress | 本地小步提交及候选重建；G2/publish 未批准 |

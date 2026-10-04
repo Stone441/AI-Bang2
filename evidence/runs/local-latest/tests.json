@@ -1,9 +1,9 @@
 {
-  "started_at": "2026-10-04T09:15:32.041343+00:00",
-  "finished_at": "2026-10-04T09:15:34.226920+00:00",
+  "started_at": "2026-10-04T10:30:48.547066+00:00",
+  "finished_at": "2026-10-04T10:30:53.994582+00:00",
   "mode": "fixture_fake_model",
   "python": "3.14.7",
-  "commit": "61fd1265f570aed6461ab8f9805542b185344c41",
+  "commit": "8cd5088cf244bf96cedf293ae68b1d3eb5cfe2ee",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
@@ -19,18 +19,104 @@
     "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
     "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
     "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8",
+    "tests/codebuddy/test_audit_verifier.py": "4121d5f4e688ff7d7d5a8b1921810785d39cc3c082b684882356c7c3ed339e8f",
+    "tests/codebuddy/__init__.py": "aa1f7dd33a54dd5e7ca68439ee45d953eb4c6bf1358c809c7300308583e7f47a",
     "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730",
     "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
     "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
-    "scripts/test_report.py": "4037ec524832f253444c43a7272b1385dcafd9e67fd316da6e6e44d7aa721ca7",
+    "scripts/test_report.py": "2ab86120af1a02186c548f2fa6c737b91e1a795f1f15c8ddffa068c583ca64aa",
     "scripts/evaluate.py": "1bb058888f3c0be50a07f3bf07f2d6dfb5b1581140169fefa92ba1802e301fbf",
     "web/index.html": "72adc3d005163a3091666372cbe3193511513459c653751060a901e364187df0",
     "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
-    "web/app.js": "7ce618466220ed67d781d76abb3086c143c35e4910ad5d2e39f457e8c876278e"
+    "web/app.js": "7ce618466220ed67d781d76abb3086c143c35e4910ad5d2e39f457e8c876278e",
+    "tools/audit_verifier/checkpoint.py": "4bfb0c522680c22e52558827a385b832ddc296aa1727c1b376ea32107019cd96",
+    "tools/audit_verifier/chain.py": "59ff077fbcb8673f323e9687458b0d6f8ccf667e1b4f291480df78e4db41f00d",
+    "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
+    "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 32,
+  "tests_run": 52,
   "successful": true,
   "results": [
+    {
+      "test": "codebuddy.test_audit_verifier.CheckpointGeneration.test_refuses_to_sign_broken_chain",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.CheckpointGeneration.test_signs_full_chain_and_reports_coverage",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.HashContractCompatibility.test_independent_recomputation_matches_brain_v1",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.NonEd25519KeyRejection.test_generator_rejects_rsa_and_ec_signing_keys",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.NonEd25519KeyRejection.test_verifier_rejects_ec_public_key",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.NonEd25519KeyRejection.test_verifier_rejects_rsa_public_key",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.StrictIntegerTypes.test_bool_seq_and_schema_version_rejected_in_chain",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.StrictIntegerTypes.test_bool_through_seq_rejected_by_verifier",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a03_body_modification_inside_coverage_fails",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a03_middle_deletion_inside_coverage_fails",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a03_middle_deletion_partial_coverage_breaks_chain",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a04_signed_tail_deletion_fails",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a04_whole_chain_recomputation_fails",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a11_tampering_inside_unanchored_tail_reported",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_a11_unanchored_tail_reported_separately",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_corrupted_signature_rejected",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_missing_checkpoint_reports_untrusted",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_original_chain_with_trusted_signature_passes",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_stream_id_checked_as_external_expectation",
+      "status": "passed"
+    },
+    {
+      "test": "codebuddy.test_audit_verifier.VerificationOutcomes.test_wrong_public_key_rejected",
+      "status": "passed"
+    },
     {
       "test": "test_audit_more.AuditIntegrity.test_concurrent_append_and_tamper_boundaries",
       "status": "passed"
