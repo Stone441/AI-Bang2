@@ -141,7 +141,8 @@ def authorize(client, email, notify_url, *, timeout=600, transport=None):
         def log_message(self, *_): pass
         def do_GET(self):
             status = consent.callback(self.path, self.headers.get('Host'), self.headers.get('Origin'))
-            text = ('Google authorization received. Return to the terminal; account verification is next.'
+            text = ('Google authorization received. This is a temporary callback page; do not reload it. '
+                    'Return to the terminal for the application link after account verification.'
                     if status == 200 else f'Authorization unavailable [{consent.reason}]. Return to the terminal.')
             if status != 200 and consent.reason not in diagnostics:
                 diagnostics.add(consent.reason)
