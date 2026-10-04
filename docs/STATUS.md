@@ -84,3 +84,5 @@ Jira CLI诊断/问答、专用凭据env namespace及隐藏输入已实现，6配
 2026-10-05 operator启动故障：用户报告隐藏输入后统一失败。当前8081实读health为confluence_live_api_fake_model/operator；本机bind复现EADDRINUSE(errno48)，8082无监听，未停止已有服务/读取凭据/调用外部API。原统一提示不能追溯证明用户那次异常仅为端口冲突。修复为先预留监听socket再读凭据，native身份通过后挂接application并serve；失败关闭listener/DB，输出固定阶段码，不打印异常原文。当前端口冲突路径已实跑，明确port_in_use且未请求凭据；新增3诊断/cleanup测试，相关11项通过。接续：用户用--port8082运行已有命令；网页/模型实际结果仍待核验。
 
 启动修复全回归：make test-report 142/142，源码SHA-256零差异；真实网页query仍待用户换8082启动后完成。
+
+2026-10-05真实网页查询：用户报告页面可见；实读confluence-web.sqlite request26995601e7634d2191de4a69ee7c1c2d，eng_b/Confluence live API/fake model，问工程事故全链路问题，本次仅返回C-01 runbook v1，不声明完整事故回答。8项DB核验通过（精确摘录、模型/返回前allow、HTTP dispatch、12事件链有效），证据live-confluence/web-query-26995601e7634d2191de4a69ee7c1c2d.json。预览/History网页点击仍待用户，SSO/其他源/真实模型未完成。

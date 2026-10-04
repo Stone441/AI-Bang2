@@ -21,3 +21,5 @@
 - operator UI视觉：尝试Chrome8081模拟服务被ERR_BLOCKED_BY_CLIENT阻挡，已停止临时服务；没有截图/JS点击验收成功证据。真实网页命令已交用户，待完成后查独立DB，不与之前CLI结果合并。
 
 2026-10-05启动诊断修复：全回归142/142（60local+82mock），相关HTTP/identity 11项。8081已有operator服务；bind实际errno48复现，修复后port_in_use在隐藏输入之前报告，不请求凭据/访问平台。旧统一错误无法还原用户那次失败阶段；本轮保留现有进程、不声称真实网页问答已通过。
+
+`runs/live-confluence/web-query-26995601e7634d2191de4a69ee7c1c2d.json`：首个真实operator HTTP query，8项持久DB核验通过，12事件未签名链。工程事故问题仅得runbook；不扩大为多源事故/真实模型/SSO或UI点击验收。
