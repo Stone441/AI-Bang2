@@ -126,3 +126,5 @@ ADR-015实测补充（2026-10-05）：用户重启后，受限父消息响应兼
 ## 2026-10-05 · AUTH-009 · Drive personal-account read-only pilot
 
 用户明确选择“批准此只读范围，使用现有个人 Google 账号”，账号ssy44199@gmail.com；创建比赛专用Google Cloud项目，不启用Billing，仅启用Drive API，OAuth测试模式申请drive.readonly。该scope本身可读授权账号全部Drive文件，程序仅白名单合成文件；不读取个人资料，不扩scope，不付费。最终Google授权由用户点击，凭据按现有本地隐藏输入/进程内复用，不入Git/日志/浏览器。授权不证明项目/OAuth/原生ID/API/ACL完成。新条款或安全敏感持久凭据最终创建按页面另确认/交用户，不自行绕过。
+
+AUTH-009执行补充（2026-10-05）：用户已亲自完成Google Data Policy确认/Create，UI核验OAuth配置成功；唯一drive.readonly配置保存、External Testing和单一test user已核验，尚未授权任何token。Desktop客户端在审核页准备，按UI AI-agent分类help标记agent用途，不创建standard-user第二客户端。最终Create/Download JSON交用户；不读取生成密钥页面，不新增write/profile/email scope或Publish/Billing。
