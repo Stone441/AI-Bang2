@@ -86,3 +86,5 @@
 2026-10-05 rebuild-native-restricted-approved：b541c02 clean archive297tests/五fixture场景/两Node/HTTP smoke通过；rebuild-native-restricted保留先前沙箱bind EPERM失败，未降低断言。
 
 2026-10-05 audit-mixed：四类fixture请求/116event oracle/17页稳定snapshot/role及scope拒绝/4实际签名CLI结果，原测试失败日志保留；team walkthrough prepared，非live审计员/人G1。
+
+2026-10-06 native-jira-update：真实Jira专用合成KAN-6 UI正文更新/eng_b只读API/fake model，13checks/23events；ignored screenshots与hash在native-seed.json。既有runtime服务/配置/原工单不改。

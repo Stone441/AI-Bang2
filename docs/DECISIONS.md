@@ -256,3 +256,7 @@ AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始
 2026-10-05 b541c02重建记录：第一次sandbox run因loopback bind EPERM产生23HTTP errors（297总），非应用断言问题。保留rebuild-native-restricted；经现有本地测试授权提权运行同一提交，setup/297tests/5fixture/2Node/HTTP smoke通过rebuild-native-restricted-approved。未删除有效测试、关闭安全设置或修改runtime；无源/模型调用。
 
 2026-10-05 ADR-036：S-05原前置要求成功/部分授权/拒绝/失败，原captured-live stream未覆盖全部。增加独立fixture Engine请求和request-boundary事件ID oracle，不用inquiry过滤逻辑生成expected；引入page1之后真实新fixture请求验证as_of固定及scope/actor噪声。失败fake model明确注入并保留request_failed/无成功存储。既有CodeBuddy签名CLI复用，无伪造腾讯工具新增贡献；本机临时key删除，不冒称custody。验收输出拒绝覆盖已有目录，原runtime不改。团队单次观看流程集中在SAFETY_REVIEW，记录仍由实际观看产生，不因信任/自动结果标G1。新增runner/Makefile可单独删除回滚，无external权限/费用。
+
+2026-10-06 ADR-037 / AUTH-003执行：用新建独立KAN-6合成工单验证内容更新，避免改已验证baseline KAN-4/KAN-5。仅owner UI写正文，程序只读eng_b既有授权；metadata-only exact key discovery后显式两ID whitelist，独立索引、无原bundle改动。Jira content fingerprint比较用相等/不等而非数字新旧；native/current history/preview保护与refresh证据分离。13checks通过、6guardtests；原源码/harness/hash/UTC timestamps保留，新加坡日期Oct6不回写audit。新临时工单留存Revision2，不删除或扩DeepSeek synthetic guard，不据新增fake模型测试说全live通过。
+
+2026-10-06 独立产品读者接入候选：existing2918379149@qq.com Confluence-only只读scope/Oct20到期/token label及app-owned product_ops Keychain复用，见PRODUCT_READER_PILOT。AUTH-005/014仅eng_b不能推断新账号持久凭据已批准；具体确认已发送，未获答复不创建/读取新token或改平台权限。现有candidate映射须native current-user核验，不用eng_b冒充，C-01/C-03若实际allow即隔离失败。

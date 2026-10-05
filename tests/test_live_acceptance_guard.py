@@ -6,9 +6,28 @@ from pathlib import Path
 from unittest.mock import patch
 from scripts.live_product_acceptance import run
 from scripts.native_restricted_acceptance import run as run_restricted
+from scripts.native_jira_update_acceptance import run as run_jira_update
 
 
 class LiveAcceptanceGuard(unittest.TestCase):
+    def test_jira_update_cli_requires_live_before_source_access(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'unused'
+            result = subprocess.run([sys.executable, '-m', 'scripts.native_jira_update_acceptance', '--output', str(output)], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertIn('--live required', result.stderr)
+            self.assertFalse(output.exists())
+
+    def test_jira_update_preserves_evidence_before_keychain_access(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            record = output / 'audit.json'
+            record.write_text('original')
+            with patch('scripts.native_jira_update_acceptance.MacKeychain') as keys:
+                with self.assertRaises(FileExistsError): run_jira_update(output)
+                keys.assert_not_called()
+            self.assertEqual(record.read_text(), 'original')
+
     def test_restricted_cli_requires_live_without_touching_output(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / 'unused'

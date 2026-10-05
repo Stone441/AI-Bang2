@@ -1,5 +1,9 @@
 # Current status
 
+2026-10-06 最新checkout完整301项Python回归实际通过（native-jira-update/full-tests.log），含新增mixed audit及Jira guard；既有native Jira13checks另列。full suite为fixture/mock，不增加native/model验收覆盖，当前新提交尚非新clean archive/browser视觉通过。独立Confluence product_ops凭据及本机Keychain复用具体候选PRODUCT_READER_PILOT已发确认，未回复前不创建token/读取新凭据/调整权限；其他源更新与真人观看保留pending。
+
+2026-10-06 DEV-12-JIRA-UPDATE verified native API/fake model subset：AUTH-003在KAN独立新建合成KAN-6/10015并仅UI更新正文Revision1 amber→Revision2 green；eng_b AUTH-014已有Keychain复用，隔离memory index/两issue allowlist，不改原配置或8094。13checks/23event unsigned链通过：旧index保留时native old fingerprint/preview/history-export projection拒绝，refresh后新text/model evidence/preview正确、旧marker消失，KAN-4不变。版本是fingerprint，数值变小不代表回退；无新凭据/scope/模型费用。6guard tests（2新）通过；非worker/SLA/浏览器下载/真模型/完整persona或人G1。下一：独立产品身份具体凭据授权尚缺、Slack/Drive内容更新及真人观看仍待完成。
+
 2026-10-05 DEV-12-AUDIT-MIXED verified local subset：实际fixture Engine生成成功/部分授权/全部deny/模型失败四类请求，独立request边界oracle116events与17页NL审计一致；page1后新请求不混入固定snapshot，scope/actor噪声排除，eng_a/security及越范围auditor拒绝，失败无committed/stored answer。CodeBuddy既有CLI实际4次原始/正文改/中间删/covered尾删验证通过，临时private key删除；同机custody仍非生产独立。4针对性tests通过（2新增），首个test mock影响Git revision的失败保留后修正test-only标记，不删断言。make verify-audit-mixed新目录可重放，团队一次集中观看清单已整理；无真实API/model/费用/8094重启，G1/G2 not_run。下一P0实际团队观看及未批准独立persona/native更新范围，其他质量评测可继续。
 
 2026-10-05 最新提交b541c02 clean archive验证完成：无.runtime/.env，setup/297Python/5fixture场景/2Node脚本/真实fixture HTTP assets+login+four-source-query+exact-preview全部通过，evidence/runs/rebuild-native-restricted-approved。首次rebuild-native-restricted在沙箱内因23项HTTP bind EPERM失败，完整日志保留；获准本机loopback测试后同一提交通过，不跳过测试/关闭保护，不调用真实源或模型，不改8094。原生S-03仍single eng_b/fake model subset；下一P0集中团队观看与剩余native persona/更新范围，G1/G2 not_run。
