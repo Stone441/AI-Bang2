@@ -195,3 +195,6 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 ADR-024：已批准原有GET export端点尚无产品入口；新增Export answer按钮，每次调用后端重新鉴权后才生成下载，unknown/unavailable不创建Blob/文件，先清除旧显示。不使用预先生成下载链接或答案缓存。首次真实文件比对失败，发现JS parse/stringify舍入大整数Jira/Slack version；修复为解析结果仅校验访问与request ID、下载后端原始JSON envelope，Node byte-fidelity断言及实际下载逐字段与服务端持久记录匹配。合法下载副本之后不能撤回，UI注明这一边界。
 
 403不直接等同session失效：额外检查既有/api/session，仍有效则保持身份并隐藏被拒绝资料；session也403时清除旧内容/preview/history ID并提示最新operator入口。默认不重启服务、保存新session或自动获取凭据。真实撤权后export不新增文件、旧citation拒绝并保留eng_b登录均实测，未因Chrome自动API导航blocked关闭安全设置。沿用原GET endpoints/权限契约，回滚只移除前端入口与错误提示；不削弱后台鉴权。
+
+
+2026-10-05 ADR-025：统一真实问答53.37秒，原link_seed为每个没有links的候选完整读取原生对象，却没有关联可以展开。仅在links非空时执行这一专用于展开的检查；本次模型前、模型发送前、返回前以及采集当前权限检查不变，不缓存权限、不并行绕过原生鉴权。有links路径仍按原流程检查。mock计数5→4仅证明读取数量下降，真实耗时受网络影响，尚未重测。首次Slack安全测试以第5次读取模拟撤权，优化后注入落到模型之后；改为绑定实际model_dispatch第二候选，保留模型不调用和request_failed断言，原失败报告保留。回滚为恢复无条件link_seed检查；不涉及scope、预算或外部权限修改。

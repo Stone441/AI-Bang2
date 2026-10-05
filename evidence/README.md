@@ -45,3 +45,6 @@
 2026-10-05 native Slack private-channel reader revocation: [same-session checkpoint](runs/live-unified/slack-revocation.json). Nine readonly checks, old mixed history hidden, later model/answer uses six objects from remaining three sources, root/reply native deny. Original member restored (Members2). Direct citation/export live not_run; screenshots ignored. New conservative cost345microUSD.
 
 2026-10-05 [live export and stale citation checks](runs/live-unified/export-verification.json): initial JS rounding failure retained, corrected raw download9633 bytes exactly matches saved answer. Same-session native revoke rejects old export (no additional file) and old citation, clears stale views, retains valid login. No new model fee; original permission restoration separately verified.
+
+
+2026-10-05 linkless source optimization: [initial failed regression](runs/linkless-optimization/first-failed-tests.json) retained; [current regression](runs/local-latest/tests.json) 270/270 passed. Mock native read counts reduced from five to four per matching linkless object; all source_refresh/before_model/model_dispatch/before_dispatch checks remain. Late-revocation injection now binds to the actual dispatch phase, retaining zero-model-call assertion. Five fixture scenarios and frontend security checks passed; no new live API/model call or measured live latency improvement.

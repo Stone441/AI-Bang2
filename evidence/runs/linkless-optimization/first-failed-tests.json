@@ -1,6 +1,6 @@
 {
-  "started_at": "2026-10-05T06:58:16.727248+00:00",
-  "finished_at": "2026-10-05T06:58:29.553294+00:00",
+  "started_at": "2026-10-05T06:55:41.077399+00:00",
+  "finished_at": "2026-10-05T06:55:53.927019+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
@@ -38,7 +38,7 @@
     "tests/test_confluence_probe.py": "16eb8a903d9abb0d2ac0be6b46751a3e0bf396373212fa9f74974f7cfe476d0b",
     "tests/test_model_receipts.py": "d96a01e8d176a2fc6fe13f3306d8753eb3fc6f5785afa5cc87681eb7f1570f51",
     "tests/test_bundle_oauth.py": "e1468f4cea703c173d83b9cead2fd13f9699ea66ca8a97b984bba54723808cd4",
-    "tests/test_slack.py": "dd1405f8ff77ae52c29ed8ffc84d296a7f21448db15296e94e6662d91573049f",
+    "tests/test_slack.py": "1aa80ba198b076b4d0b6c1a7a6523fe268bd2f61e839bc99b8c5c8d78ed2151a",
     "tests/test_drive.py": "720e7f8ac31d17c7178ed6ec74dfe810149685b6ff87ae8436d62cb896a2403c",
     "tests/test_jira_operator.py": "2cb7ffe6d6fb92379b7bcb860170d15cd8ca9e12cda5742ec48cbff23f8e6bf9",
     "tests/test_drive_operator.py": "f7629bcc64169731c703243d7aa900e26c1ab81fba7c90b2291931fe3daf92d1",
@@ -80,7 +80,7 @@
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
   "tests_run": 270,
-  "successful": true,
+  "successful": false,
   "results": [
     {
       "test": "codebuddy.test_audit_verifier.CheckpointGeneration.test_refuses_to_sign_broken_chain",
@@ -1389,7 +1389,7 @@
     },
     {
       "test": "test_slack.SlackEngine.test_final_model_dispatch_permission_check_blocks_late_revocation",
-      "status": "passed",
+      "status": "failed",
       "mode": "mock_http_contract"
     },
     {
@@ -1433,6 +1433,8 @@
       "mode": "mock_http_contract"
     }
   ],
-  "failures": [],
+  "failures": [
+    "(<test_slack.SlackEngine testMethod=test_final_model_dispatch_permission_check_blocks_late_revocation>, 'Traceback (most recent call last):\\n  File \"/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_slack.py\", line 186, in test_final_model_dispatch_permission_check_blocks_late_revocation\\n    self.assertEqual(self.pilot.engine.model.calls,[])\\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\nAssertionError: Lists differ: [{\\'question\\': \\'retry safeguards\\', \\'evidenc[1264 chars]\\'}]}] != []\\n\\nFirst list contains 1 additional elements.\\nFirst extra element 0:\\n{\\'question\\': \\'retry safeguards\\', \\'evidence\\': [{\\'evidence_id\\': \\'slack:C123/1791150000.000001@897923677872037439\\', \\'resource_id\\': \\'slack:C123/1791150000.000001\\', \\'version\\': 897923677872037439, \\'source\\': \\'slack\\', \\'title\\': \\'#synthetic-payments \u00b7 1791150000.000001\\', \\'locator\\': {\\'channel_id\\': \\'C123\\', \\'content_sha256\\': \\'c7610d3def99e3f5860a54000e2147a726416ceb37d7b68ce5ef74b6bc7333db\\', \\'message_ts\\': \\'1791150000.000001\\', \\'thread_ts\\': None}, \\'text\\': \\'Synthetic incident retry safeguards root\\', \\'source_updated_at\\': \\'2026-10-04T21:40:00.000001+00:00\\', \\'indexed_at\\': \\'2026-10-05T06:55:52.872948+00:00\\', \\'source_url\\': \\'https://test.slack.com/archives/C123/p1791150000000001\\'}, {\\'evidence_id\\': \\'slack:C123/1791150001.000002@990036803443094471\\', \\'resource_id\\': \\'slack:C123/1791150001.000002\\', \\'version\\': 990036803443094471, \\'source\\': \\'slack\\', \\'title\\': \\'#synthetic-payments \u00b7 1791150001.000002\\', \\'locator\\': {\\'channel_id\\': \\'C123\\', \\'content_sha256\\': \\'dbd513a2fc9f3c715953b6bf4d6cf184c2239b6e0a6d390c87d4c1b9f75263f1\\', \\'message_ts\\': \\'1791150001.000002\\', \\'thread_ts\\': \\'1791150000.000001\\'}, \\'text\\': \\'Synthetic follow-up retry safeguards reply\\', \\'source_updated_at\\': \\'2026-10-04T21:40:01.000002+00:00\\', \\'indexed_at\\': \\'2026-10-05T06:55:52.873068+00:00\\', \\'source_url\\': \\'https://test.slack.com/archives/C123/p1791150001000002\\'}]}\\n\\nDiff is 1844 characters long. Set self.maxDiff to None to see it.\\n')"
+  ],
   "errors": []
 }

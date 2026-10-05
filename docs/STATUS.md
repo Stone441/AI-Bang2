@@ -220,3 +220,6 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 原8088/eng_b会话，两轮原生仅合成private member撤权分别测试：旧Export按钮得到unavailable，Downloads对应文件数2→2；旧Slack reply citation按钮调用原evidence端点，native deny、旧答案/preview清除且eng_b session仍有效。此前浏览器goto API地址被blocked，没有关闭安全设置；产品按钮实测同一GET endpoint，覆盖对应live子集而不是把mock当真。证据live-unified/export-verification.json；截图ignored private。两轮恢复分别native确认/最终确认待补；无新增模型请求/费用，合法导出已保存副本不可撤回。下一P1减少无关联资料冗余源读取并保持模型前/发送前全部current checks，后续grounded模型综合及完整五场景live。
 
 本轮两次原生撤权恢复均已确认：同一private频道Members2、原Kyle读者rejoined by invitation，无额外角色/scope/新工作区成员。应用仍运行，秘密未重新录入。
+
+
+2026-10-05 DEV-10-LINKLESS verified local/mock：无links候选不再执行空关联展开的link_seed完整源读取；source_refresh/before_model/model_dispatch/before_dispatch仍全部保留。mock原生读者计数验证每个命中对象5→4次读取，270/270回归、Node安全检查及五场景passed_local_subset通过。首次回归的Slack撤权注入按第五次读取定位，优化后错过模型前阶段；已改为在第二个model_dispatch候选撤权，保留模型调用必须为空断言，失败报告保存。真实8088进程仍旧代码，未重启、不读取凭据、无新增平台或模型请求；53.37秒真实耗时尚未重测，不能宣称缩短20%。下一项：新进程Keychain复用与live延迟对比，再推进有证据模型综合。

@@ -109,3 +109,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-11-EXPORT verified local/live subset：按原端点新增导出入口及expired session提示；实测下载逐字段一致（raw保留大整数）、撤权旧导出不创建文件、旧引用GET拒绝且清除视图。268Python+Node回归通过，未新调用模型。剩余P1性能/grounded综合/五场景完整live和人工G1，现有ACL完整矩阵仍partial。
+
+
+2026-10-05 DEV-10-LINKLESS verified local/mock：省去无links对象的空关联源读取，命中对象mock读取5→4，保留所有模型/响应边界检查；270回归与五场景local subset通过。真实延迟/Keychain refresh复用仍not_run，旧8088无需本轮重启。下一P1受控真实性能对比及grounded综合；完整live矩阵/G1仍pending。

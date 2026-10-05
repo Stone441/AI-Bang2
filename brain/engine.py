@@ -71,6 +71,10 @@ class Engine:
             seed_ids={r['id'] for _,r in candidates}
             expansions=[]
             for _,seed in candidates[:12]:
+                # This check only authorizes link expansion. Linkless candidates
+                # still receive before_model, model_dispatch and before_dispatch
+                # native checks; avoid a full source read for an empty operation.
+                if not seed.get('links'): continue
                 if not self.check(actor,seed,rid,'link_seed'): continue
                 if self.world.resources[seed['id']]['version']!=seed['version']: continue
                 for target_id in seed.get('links',[]):
