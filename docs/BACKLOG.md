@@ -143,3 +143,5 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 |---|---|---|
 | DEV-12-LIFECYCLE | P0；existing Engine/current ACL/Ingestion | verified local subset：四源各更新/撤权/删除12组；旧索引阶段不入模型，旧history/export projection与引用阻断，单对象发布/事件幂等/审计链；对应S-02/S-04、F-01/03/04/05、P-05/07/12部分，不计作native通过 |
 | DEV-12-SAFETY-REVIEW | P0；完整live五场景后组织 | checklist prepared / human not_run；团队观看内容及局限已整理，未预填通过 |
+
+DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢复原文与旧访问拒绝，Drive disposable native trash/旧访问/模型保护verified operator subset。真实四源更新/删除矩阵仍partial；不是完整S-02/S-04。原runtime whitelist未扩展，独立临时reader测试已结束。下一S-01缺J-03真实合成资料，种植授权尚pending，界面/审计候选工作可继续。

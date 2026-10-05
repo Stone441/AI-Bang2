@@ -229,4 +229,8 @@ ADR-028验证补充：修正后隔离真实四源11checks通过，保障措施�
 具体授权补充：用户单独批准第二轮同一member/channel的旧导出测试及恢复。已原生2→1→2，旧export返回unavailable、不建文件（0→0），旧正文/quotes/receipt清除而session保持。最终原生核对同一U0C66B76TE3、Members2，之后合法raw导出8146字节与存储答案逐字段一致。未改role/token/scope，未新调模型；审批拒绝未绕过。
 # 2026-10-05 ADR-030: isolated lifecycle acceptance
 
+2026-10-05 AUTH-015：用户对具体候选回复“批准”，允许C-01（Confluence98564）临时改为fixture已定义runbook v2、验证后恢复原正文；允许在已批准Drive合成文件夹创建明确SYNTHETIC临时测试文件、加入本地只读白名单、验证后移至Drive废纸篓并检查旧引用/历史失效。不得删除原三文件、改变共享、增加scope/费用；发现第三方并发修改则停止恢复。本授权不代表G1/G2或发布批准。
+
+AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始终仅eng_b只读/已批准Keychain refresh，fake model无runtime费用；隔离SQLite与临时Drive白名单，不修改用户8094/bundle。CF原文恢复API严格相等，native1→2→3；Drive temporary native1eM_6RUZ8y130l9B0WKrSs3GkGu6rjbUZ移入回收站，原三文件保留、共享未操作。Chrome file URL权限blocked后没有扩展权限或旁路上传，由用户本人拖入。首个CF探针误取Evidence.native_id导致KeyError，保留audit失败事实并修正resource_id定位；初始脚本PYTHONPATH未设的启动失败发生在读取凭据/平台调用前。未改应用代码/有效安全断言；未测后台同步时延/HTTP导出/真实模型/人工G1，边界保持。
+
 用户授权继续所有可推进工作，不等于新增外部写入、公开开放或人工G1/G2通过。采用独立内存fixture世界逐source/operation执行12组生命周期检查，不改变正在运行的8094、真实资料、钥匙串或模型账本。旧索引故意滞后，验证当前权限/版本独立保护模型、历史及引用；更新发布后核验新版本，撤权/删除不重建正文。结果明确local subset，导出仅共享backend projection，不冒称本次HTTP/browser验证。首次探针把用户question中的marker误当模型证据泄露，保留失败报告，修正为只查evidence；有效断言保留。另整理团队安全观看清单，人工批准继续not_run。回滚可删除独立runner/Makefile入口，不影响runtime。

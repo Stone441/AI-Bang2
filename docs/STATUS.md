@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-05 AUTH-015真实生命周期子集完成：Confluence98564 API原生版本1→2→3，新增standby queue内容进入回答，旧引用/history（含export projection）拒绝，恢复后原正文逐字一致；Drive唯一临时合成文件删除前eng_b可检索，移入回收站后native deny/旧引用history拒绝/追问及模型evidence空，旧索引保留，原三文件UI未改。证据live-lifecycle；独立operator/fake model，不宣称本次HTTP下载、真实模型更新、后台同步或完整五场景通过。Chrome扩展文件URL权限阻止自动上传，由用户手工上传，无安全设置改变。两个自有验收进程结束，用户8094未重启，无新模型费用。下一接续：补齐S-01真实J-03 open-follow-up与完整问答真值；当前live白名单仅J-02，新增种植尚未获具体批准。继续可独立推进候选界面/审计展示及人工安全演示准备，G1/G2仍not_run。
+
 2026-10-05 最新接续：`codex/lifecycle-acceptance` 新增可重放四源生命周期矩阵，12/12 `passed_local_subset`（fixture source / fake model）；五场景本地回放、6项增量测试、Node前端安全检查及完整283项回归实际通过。无平台写入/新模型调用/新费用，不重启用户8094。安全演示清单见 SAFETY_REVIEW；真实更新/删除、完整live五场景及人工安全验收仍待完成。12组矩阵不计入unittest数量。下一项真实更新/删除已发具体授权问题，未获回复前不操作外部资料；其他本地质量/界面工作可独立继续。当前新分支未推送或合并。
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。`.DS_Store` ignored；用户明确要求后已将仅含旧 GPT 分析的 `Analysis&Planning/` 移至 Mac 废纸篓（可恢复），Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。

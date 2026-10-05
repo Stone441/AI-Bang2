@@ -58,3 +58,5 @@
 2026-10-05 会话修复：共享CookieJar/双loopback端口的登录、退出、CSRF隔离local verified，283回归。实际8094新页面的query后session-ended、旧信息清空已观察，原因unknown；不是新问答/撤权通过。Chrome双端口临时fixture自动导航blocked，浏览器完整验收不补写。
 
 2026-10-05 综合v2原生撤权：真实8094 eng_b在private Slack member2→1后旧reply citation拒绝并清空旧内容；含Slack的旧综合history/supports/双回执整条隐藏，不含Slack的旧记录可用。单独批准第二轮后旧export拒绝、无文件0→0；两轮都恢复同一UID/Members2，合法导出8146字节精确一致。P-05/07/09与S-04按该合成private子集verified，非全ACL/真实SSO/人G1；初始事故问答三源6input/3claim，不称四源coverage或完整S-01，源码283回归沿用。证据synthesis-native-revocation/。
+
+2026-10-05 F/P lifecycle live subset补充：Confluence真实内容更新1→2及恢复3，新增内容问答、旧版本引用/history保护；Drive临时文件native trash后旧引用/history/export projection拒绝、query/model无旧证据而索引保留，原三文件UI保留。见live-lifecycle。仅独立trusted operator/fake model，无本次HTTP/browser下载或后台同步测量；完整四源矩阵/G1不升级。
