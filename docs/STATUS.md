@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：266/266 回归通过（60 local synthetic + 206 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/撤权及统一四源 live 仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
+**阶段收尾（2026-10-05）：268/268 回归通过（60 local synthetic + 208 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/撤权及统一四源 live 仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -13,7 +13,7 @@
 - 当前源授权在模型前和返回前检查；未知拒绝；四源撤权、旧历史/导出/引用保护。模型、HTTP 均有实际回归。
 - 持久 fake source 与 SQLite 索引分离；对象级事务发布、创建/更新/删除、去重/乱序/重试、失败任务不被游标越过、重启恢复。请求触发处理，不宣称真实自动同步。
 - 完整问答审计、逐资料决策、sent_to_model/cited/dispatch 区分、scope 查询与稳定分页；60 并发追加链测试。已接入离线 Ed25519 检查点 CLI；同机同账号仍不等于生产独立签名边界。
-- `make test-report` 最新266/266 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
+- `make test-report` 最新268/268 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
 
 原型 32 测试阶段已通过从提交导出的独立临时目录 `make setup` / `make test` / JS 语法检查；本轮签名集成验证为当前 checkout 的 52 测试回归。
 
@@ -202,3 +202,6 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 
 
 2026-10-05 DEV-10-KEYCHAIN：AUTH-014 明确批准后，实现 opt-in app-owned macOS Keychain、逐 source 保存、单项 replacement、Google 固定只读 scope offline refresh 重启复用及原生账号校验；make live 为统一入口。10项新增 mock 安全/复用测试；实际本机随机隔离合成条目 add/read/update/delete 已通过并删除，不访问已有密码。完整266/266（60local/206mock），五场景 passed_local_subset；无真实平台/模型新增请求或费用。真实秘密尚未由程序保存，统一四源启动及真实refresh复用仍 not_run。接续：用户新终端 make live，首次输入后保留进程；检查四源身份与问答，再完成Slack读者撤权。运行中access token过期仍fail closed；G1/G2未通过。
+
+
+2026-10-05 DEV-10-UNIFIED首轮现场：用户已打开8088，agent核验eng_b/live model operator UI；startup完成每源原生身份验证。实际联合请求5b6b37e3e7074d62b95ee563333dbdb1的8对象（CF2/Drive3/Jira1/Slack2）source_refresh均native allow，32权限决策完整记录；43.07秒后模型前guard拒绝，未生成回答，budget无query行/无模型费用。原因是原批准CF/Jira种植完整合成banner与模型方括号标记不兼容。最小修复支持exact banner+明确source/fixture匹配，268/268（60local/208mock）及五场景local subset通过，失败证据保留。首轮真实四源读取verified subset，统一成功回答/引用/历史仍待重跑；不将模型管线evidence_used标记当实际网络发送证明。Keychain首次配置用户报告完成，agent未读真实秘密；restart复用/Google refresh待重启核验。接续：用户8088终端Ctrl+C、make live，不要求整套重新录入。G1/G2未通过。

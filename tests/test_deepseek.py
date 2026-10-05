@@ -65,6 +65,29 @@ class DeepSeekBoundary(unittest.TestCase):
         self.assertEqual(self.transport.calls, [])
         self.assertEqual(self.ledger.summary()['accounted_micro_usd'], 0)
 
+    def test_approved_atlassian_banner_reaches_model_without_rewriting_evidence(self):
+        banner = 'SYNTHETIC COMPETITION TEST DATA — not an actual company record.'
+        for source, fid in [('confluence', 'C-01'), ('confluence', 'C-02'), ('jira', 'J-02')]:
+            with self.subTest(source=source, fixture=fid):
+                evidence = replace(self.evidence, source=source,
+                                   text=banner + '\nFixture ID: ' + fid + '\nGA not approved.')
+                result = self.model.generate('Is GA approved?', [evidence])
+                self.assertEqual(result['claims'][0]['text'], evidence.text)
+                payload = json.loads(self.transport.calls[-1].data)
+                self.assertEqual(json.loads(payload['messages'][1]['content'])['evidence'][0]['text'], evidence.text)
+
+    def test_legacy_banner_missing_fixture_wrong_source_or_title_only_never_sent(self):
+        banner = 'SYNTHETIC COMPETITION TEST DATA — not an actual company record.'
+        for source, text in [('confluence', banner), ('confluence', banner + '\nFixture ID: C-99'),
+                             ('drive', banner + '\nFixture ID: C-01'),
+                             ('jira', banner + '\nFixture ID: C-01'),
+                             ('confluence', 'Fixture ID: C-01\nPrivate business data')]:
+            with self.subTest(source=source, text=text):
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate('Question', [replace(self.evidence, source=source, title='[SYNTHETIC]', text=text)])
+        self.assertEqual(self.transport.calls, [])
+        self.assertEqual(self.ledger.summary()['accounted_micro_usd'], 0)
+
     def test_timeout_keeps_reservation_across_restart_and_hides_error(self):
         self.transport.error = True
         with self.assertRaises(ModelUnavailable) as caught: self.model.generate('Question', [self.evidence])

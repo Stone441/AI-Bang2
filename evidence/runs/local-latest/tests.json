@@ -1,10 +1,10 @@
 {
-  "started_at": "2026-10-05T06:00:32.254283+00:00",
-  "finished_at": "2026-10-05T06:00:45.165664+00:00",
+  "started_at": "2026-10-05T06:10:47.092874+00:00",
+  "finished_at": "2026-10-05T06:10:59.887176+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "0c1ff3d07cb872e2c51bbcfb3ed85f91eb6ea8de",
+  "commit": "2928b5e1f1113e7d946a4de7a40547d6a4b6be6b",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
@@ -21,7 +21,7 @@
     "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
     "brain/engine.py": "a185a771774ad6c43d67dfdb36512d74f5046390269bccad0c0a53d9ca6b3f1f",
     "brain/keychain.py": "329010f678201d0e1592c658c6f5e0f220b71a4d602e2d395fc103dd216514a9",
-    "brain/deepseek.py": "f4899e05b72bf139bf96ae3770980154004fb342a31fe75b763baf4e85721208",
+    "brain/deepseek.py": "a936fe158b78f28bb00987405610a133bf63e0f78d01db7a76ba12a2ed263321",
     "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
     "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
     "brain/audit_query.py": "837254cdc8a235044dae523c0b9f35c87765a66e91e9215304dc9ad09c77622b",
@@ -52,7 +52,7 @@
     "tests/frontend_operator_security.js": "19afa993ad843dc2add4e30a2aad098e942edec54ee693f95d4038386c01bc5c",
     "tests/test_confluence_query.py": "2c80af908f7cd44eb3b1fcbaa23366ed17da60e656f38a123e430b8d6c333986",
     "tests/test_delegated_query.py": "42f10b3c06de35449b5f3a64a5e9b6a290044bdff46817eb9b0056c2fddb9963",
-    "tests/test_deepseek.py": "9d1322e64bc53b898b2a9feb3e0ce426ec16fea805e995ceb0d5fc79a0a696fa",
+    "tests/test_deepseek.py": "e004b332420129b2b00efcc1edc7f319ed33cfa489c4135b26691200284eaa80",
     "tests/test_slack_operator.py": "241dfcc591cb8891d8b8564edb39b745abaa3a715f4ed83127a819aa33a7774b",
     "tests/test_confluence.py": "1e271772c77cd41262ac515b3da01913864b158c01689b3ec2a66be41092666a",
     "tests/test_keychain.py": "18202feeca60dd140b852094b10627757f87ec9b2329d52d27a4676ad1fc066a",
@@ -79,7 +79,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 266,
+  "tests_run": 268,
   "successful": true,
   "results": [
     {
@@ -498,6 +498,11 @@
       "mode": "local_synthetic"
     },
     {
+      "test": "test_deepseek.DeepSeekBoundary.test_approved_atlassian_banner_reaches_model_without_rewriting_evidence",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
       "test": "test_deepseek.DeepSeekBoundary.test_budget_exhaustion_prevents_network",
       "status": "passed",
       "mode": "mock_http_contract"
@@ -514,6 +519,11 @@
     },
     {
       "test": "test_deepseek.DeepSeekBoundary.test_engine_live_selection_still_enforces_actor_acl_and_post_generation_revocation",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_deepseek.DeepSeekBoundary.test_legacy_banner_missing_fixture_wrong_source_or_title_only_never_sent",
       "status": "passed",
       "mode": "mock_http_contract"
     },

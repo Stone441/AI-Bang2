@@ -46,6 +46,18 @@ def unique_object(pairs):
     return result
 
 
+def marked_synthetic(evidence):
+    if '[SYNTHETIC' in evidence.text:
+        return True
+    # The original approved Atlassian seeds use this exact banner instead of
+    # brackets. Accept only their source/fixture pairs, never the title alone.
+    lines = {line.strip() for line in evidence.text.splitlines()}
+    fixtures = {'confluence': ('C-01', 'C-02'), 'jira': ('J-02',)}
+    return ('SYNTHETIC COMPETITION TEST DATA — not an actual company record.' in lines
+            and any('Fixture ID: ' + fid in lines
+                    for fid in fixtures.get(evidence.source, ())))
+
+
 class DeepSeekEvidenceModel:
     name = 'deepseek-flash-evidence-selection-v1'
     answer_notice = 'Live model selected source excerpts; free-form synthesis is not enabled.'
@@ -75,7 +87,7 @@ class DeepSeekEvidenceModel:
         check_price_review(self._today())
         if (not isinstance(question, str) or not question.strip() or len(question) > 4000
                 or len(evidence) > 24 or len({e.evidence_id for e in evidence}) != len(evidence)
-                or any('[SYNTHETIC' not in e.text for e in evidence)):
+                or any(not marked_synthetic(e) for e in evidence)):
             raise ModelUnavailable('Model input is outside the synthetic pilot boundary')
         payload = {'model': MODEL, 'thinking': {'type': 'disabled'}, 'stream': False,
                    'max_tokens': OUTPUT_TOKENS, 'response_format': {'type': 'json_object'},

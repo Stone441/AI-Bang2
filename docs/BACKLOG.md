@@ -97,3 +97,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-10-KEYCHAIN verified local/mock + native synthetic smoke：AUTH-014下实现 app-owned 系统钥匙串、逐项保存、单项更新、Google refresh exact scope/原生身份校验；266回归和五场景local subset通过。依赖 reviewed bundle/native映射不变；真实持久化及统一live启动/refresh复用 not_run，Slack读者撤权仍P0待验收。用户接续命令 make live，无新scope/预算。
+
+
+2026-10-05 DEV-10-UNIFIED in_progress：真实startup/四源8对象当前读取allow已现场验证，首轮问答在DeepSeek bracket-only合成guard停止且无费用。DEV-10-MARKER verified local/mock（268测试）：兼容已批准CF C-01/C-02与Jira J-02完整banner，不允许标题/错source/错fixture放行。P0用户make live重启验证Keychain复用→成功联合问答/引用/历史→Slack及混合历史撤权；完整live矩阵仍pending。

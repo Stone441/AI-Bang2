@@ -37,3 +37,5 @@
 2026-10-05 阶段收尾：local-latest当前248/248（60 local /188 mock），五场景passed_local_subset；首次sandbox loopback失败后相同测试获准重跑通过。最新真实能力及not_run以STATUS收尾段为准；本轮未调用真实API或模型，私有截图/工具对话/凭据未纳入push。
 
 2026-10-05 AUTH-014 credential reuse: [Keychain verification](runs/keychain/verification.json), native Mac synthetic add/read/update/delete passed and test item removed; 266 local/mock regression tests. Real stored credentials, Google refresh reuse and unified live startup remain not_run. No existing password item accessed, no new live/model call.
+
+2026-10-05 unified first live attempt: [failure checkpoint](runs/live-unified/first-query-failure.json). Four native sources/eight current objects allowed; model preflight refused inconsistent synthetic marker, no call ledger row or new model fee. Corrected compatibility mock-tested, actual successful unified answer and Keychain restart reuse still pending.
