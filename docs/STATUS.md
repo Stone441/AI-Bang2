@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。`.DS_Store` ignored；用户明确要求后已将仅含旧 GPT 分析的 `Analysis&Planning/` 移至 Mac 废纸篓（可恢复），Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：281/281 回归通过（60 local synthetic + 221 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，有引用综合回答已 opt-in verified live subset；同模型复核仍可能漏错，完整语义验收未完成。**
+**阶段收尾（2026-10-05）：282/282 回归通过（60 local synthetic + 222 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，有引用综合回答已 opt-in verified live subset；同模型复核仍可能漏错，完整语义验收未完成。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -239,3 +239,10 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 2026-10-05 DEV-11-VIEW-RACE verified local frontend：等待新综合UI入口期间，Node复现会话失效后迟到引用重新打开旧正文（first-failed-node.txt），按viewRevision+session对象身份丢弃旧异步响应；问答/preview/history/export及审计/coverage视图受保护，退出和导航清除旧preview。新增4类延迟响应断言均通过；旧query不能覆盖新answer/history_id或解锁新pending按钮，旧export不能建Blob/文件。修正综合模式完成status仍写“selected excerpts”的不一致。281完整回归/Node通过，源码hash保留。
 
 LIVE_PORT新增可选make参数（默认8088不变），`make live-synthesis LIVE_PORT=8094`已dry-run核对。独立8093启动/native身份/Keychain复用成功，但Computer Use读取0600临时内存Unix入口通道返回EPERM（工具隔离限制），没有写票据文件、降级鉴权或关闭保护；仅停止自己8093launcher/子进程，8088保留。已交用户一次在新终端启动8094并打开入口，无需重输凭据；综合真实视觉/键盘检查仍blocked等待新页，不当mock或之前HTTP结果替代。无新增模型调用/费用。下一接续：用户回复综合页面打开后claim正确账号/模式，执行真实问答、quote展开/两回执/引用/history/export/键盘与截图，再人工G1。
+
+
+2026-10-05 DEV-08/11-SYNTHESIS-UI verified live subset + coverage修复：用户8094已打开，eng_b/真实四源/综合模式现场核验。请求fa3abd9a700a4520b479c65a255803be的8对象、五阶段各8allow、4claim引用四源；支持片段逐个展开（第二项Enter）、Slack reply原生定位预览/Escape关闭、双回执、同会话Recent answers、实际raw下载10060字节与DB答案完全一致。UI观察和agent视觉截图均保存，截图ignored private。初答4claim虽有支持却漏答保障措施，质量缺口保留，不将review accepted当完整性通过。
+
+v2增加生成问题覆盖提示、严格question_covered boolean复核、ID与quote一一对应提示；12针对性测试/282全回归（60local+222mock）/Node/五场景local subset通过。真实首轮复核output_rejected（原verdict未捕获，原因未知），第二轮多ID缺quote在draft契约被拒绝；均无答案提交，证据原样保留。最终隔离8092同题真实四源8对象→4claim、11checks通过，包含timeout budget/failover、完整quotes、review question_covered true、双账本settled，56.76秒。agent对照语义支持和问题覆盖，但前三claim仍重复pilot/GA，非广泛质量保证。证据synthesis-ui/；本轮费用合计 6617 microUSD保守上界（含拒绝请求），不等于供应商账单，沿用原USD20账本。
+
+只停止自己8092测试进程；用户8088/8094保留，8094仍加载旧v1模型，需本人终端Ctrl+C后make live-synthesis LIVE_PORT=8094才加载v2；既有Keychain复用无需重新填整套凭据，仍用最新一次性入口。完整键盘/对比度、综合原生撤权、官方五场景完整live与非作者G1/G2仍pending。下一P0综合撤权和内容更新矩阵，P1减少冗余/相关性及延迟；本分支未push或merge，私有截图/对话未上传。

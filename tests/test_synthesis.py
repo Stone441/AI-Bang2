@@ -19,7 +19,7 @@ from brain.synthesis import DeepSeekSynthesisModel, validate_claim
 
 class SequentialTransport:
     def __init__(self, draft, verdicts):
-        self.outputs=[draft, {'verdicts':verdicts}]
+        self.outputs=[draft, {'verdicts':verdicts, 'question_covered':True}]
         self.calls=[]
         self.after_draft=None
 
@@ -84,7 +84,7 @@ class GroundedSynthesis(unittest.TestCase):
                          [{'index':True,'supported':True}],[{'index':1,'supported':True}],
                          [{'index':0,'supported':True},{'index':0,'supported':True}]):
             with self.subTest(verdicts=verdicts):
-                self.transport.calls=[];self.transport.outputs[1]={'verdicts':verdicts}
+                self.transport.calls=[];self.transport.outputs[1]={'verdicts':verdicts, 'question_covered':True}
                 with self.assertRaises(ModelUnavailable):
                     self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
         self.assertEqual(self.ledger.summary()['pending_requests'],0)
@@ -96,6 +96,22 @@ class GroundedSynthesis(unittest.TestCase):
         with self.assertRaises(PermissionError):
             self.model.generate_with_authorization('Question',[self.evidence],self.rid,deny)
         self.assertEqual(len(self.transport.calls),1)
+
+    def test_supported_but_incomplete_answer_or_unknown_coverage_is_rejected(self):
+        # A factual pilot answer omits the requested operational safeguards.
+        for coverage in (False, None, 'true', 1, 'missing'):
+            with self.subTest(coverage=coverage):
+                review={'verdicts':[{'index':0,'supported':True}]}
+                if coverage!='missing':review['question_covered']=coverage
+                self.transport.outputs[1]=review;self.transport.calls=[]
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate_with_authorization(
+                        'Is GA approved, and what operational safeguards are required?',
+                        [self.evidence],self.rid,lambda _:None)
+                self.assertEqual(len(self.transport.calls),2)
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+        outcomes=[r[0] for r in self.ledger.db.execute('select outcome from model_calls')]
+        self.assertEqual(outcomes.count('output_rejected'),5)
 
     def test_empty_evidence_and_empty_claims_do_not_start_review(self):
         result=self.model.generate_with_authorization('Question',[],self.rid,lambda _:self.fail('No stage'))
@@ -161,7 +177,7 @@ class GroundedSynthesis(unittest.TestCase):
         claim=copy.deepcopy(self.claim);claim['text']='GA is approved.'
         self.assertEqual(validate_claim(claim,[self.evidence]),claim)
         self.transport.outputs[0]={'claims':[claim]}
-        self.transport.outputs[1]={'verdicts':[{'index':0,'supported':False}]}
+        self.transport.outputs[1]={'verdicts':[{'index':0,'supported':False}], 'question_covered':True}
         with self.assertRaises(ModelUnavailable):
             self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
 

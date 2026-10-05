@@ -1,10 +1,10 @@
 {
-  "started_at": "2026-10-05T08:53:21.140471+00:00",
-  "finished_at": "2026-10-05T08:53:34.652337+00:00",
+  "started_at": "2026-10-05T09:35:44.271839+00:00",
+  "finished_at": "2026-10-05T09:35:57.275784+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "6a001b7b562ba9dd849ff5f093523d380960a48c",
+  "commit": "278d86af1c5e93daf68624b88890cf226e4bcc44",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
@@ -28,7 +28,7 @@
     "brain/credential_input.py": "7736f24b27ad95d8751479144c3c9e52a80a836100e6551b14296fdab62620f4",
     "brain/drive.py": "e2fe84429b34ef2b2ad496188ed20beaf9e6442e5cef625a8f6edc085548f41d",
     "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
-    "brain/synthesis.py": "87db451e9c89adf9309e0e6a6a1aae01d011d6c61421951e3b9245e2c5135dcd",
+    "brain/synthesis.py": "06a2e88912d595f5b4a66f2e18c6ac268021a6c3fd59819270ffc2e314b1b80c",
     "tests/test_contracts.py": "c6c4ad82ce9cce7505296745a7f824ca216edf5a31f3adc9b2d9d4468d652c56",
     "tests/test_operator_bundle.py": "57e77a6e4c01a972aefd199180f879ca0281b665ccb7bd509bba057345e58202",
     "tests/test_jira_query.py": "f7d6a4e2459fd880782bc52e61ea08fd6d9a6dca51df692b2aff0a28f6003667",
@@ -37,7 +37,7 @@
     "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
     "tests/test_confluence_revocation.py": "85658ba53f7865528ea62e57880d13d5ef0cafb8db877c636a721e2410ab73d2",
     "tests/test_confluence_probe.py": "16eb8a903d9abb0d2ac0be6b46751a3e0bf396373212fa9f74974f7cfe476d0b",
-    "tests/test_synthesis.py": "d391a4558830c34b05b8a5e95ac7cdaaf01ad85a4a1cb8571d37bf43c56d8cb7",
+    "tests/test_synthesis.py": "89c74371d2afcef51343177cf94fc02c62defa9675c995c917764298ac786cd8",
     "tests/test_model_receipts.py": "d96a01e8d176a2fc6fe13f3306d8753eb3fc6f5785afa5cc87681eb7f1570f51",
     "tests/test_bundle_oauth.py": "e1468f4cea703c173d83b9cead2fd13f9699ea66ca8a97b984bba54723808cd4",
     "tests/test_slack.py": "dd1405f8ff77ae52c29ed8ffc84d296a7f21448db15296e94e6662d91573049f",
@@ -81,7 +81,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 281,
+  "tests_run": 282,
   "successful": true,
   "results": [
     {
@@ -1476,6 +1476,11 @@
     },
     {
       "test": "test_synthesis.GroundedSynthesis.test_revocation_between_draft_and_review_prevents_second_network_request",
+      "status": "passed",
+      "mode": "mock_http_contract"
+    },
+    {
+      "test": "test_synthesis.GroundedSynthesis.test_supported_but_incomplete_answer_or_unknown_coverage_is_rejected",
       "status": "passed",
       "mode": "mock_http_contract"
     },

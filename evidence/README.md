@@ -60,3 +60,6 @@
 
 
 2026-10-05 [frontend delayed-response verification](runs/ui-session-races/verification.json) and [reproduced failure](runs/ui-session-races/first-failed-node.txt): expired-session preview, overlapping queries, late history and late export; mock fetch/Node, not live UI.281Python regression remains separate.8093 native-startup succeeded but tool IPC EPERM prevented safe entry transfer; staging stopped, user8094 entry pending. No new model/API query fees.
+
+
+2026-10-05 [真实综合UI验证](runs/synthesis-ui/verification.json)：四源输入/引用、展开quotes、双回执、Slack reply预览、Enter/Escape、重新鉴权历史、实际raw下载逐字段一致。初答遗漏保障措施，保留质量缺口。[v2成功重测](runs/synthesis-ui/coverage-live-query.json)及[实际审计](runs/synthesis-ui/coverage-live-audit.json)包含11checks和agent语义/覆盖对照，56.76秒。保留[首次复核拒绝](runs/synthesis-ui/first-coverage-rejected.json)和[第二次缺quote拒绝](runs/synthesis-ui/second-coverage-invalid-quotes.json)，无自动生产重试/伪造quote。282本地/mock回归通过；截图私有ignored，非作者G1/完整live仍pending。

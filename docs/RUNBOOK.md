@@ -186,7 +186,9 @@ again. The review reads full authorized evidence after another native check.
 
 Review is a fallible quality filter: exact quotes prove source provenance, not
 semantic correctness. Human acceptance must check scope, negation, contradictions
-and whether conclusions actually follow. Missing quote/citation, unknown or
+and whether conclusions actually follow and answer every requested part. The v2
+review requires explicit boolean `question_covered: true` as well as support for
+all claims; this remains a fallible model judgment. Missing quote/citation, unknown or
 negative review, changed access/version and incomplete output reject the answer;
 no automatic paid retry or silent fallback occurs. Fake-model mode does not
 simulate passing synthesis review. Complete five-scenario live acceptance and

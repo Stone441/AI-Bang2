@@ -390,7 +390,10 @@ After draft generation, Engine rechecks the entire selected set at
 `review_dispatch`, including versions, before a separate review model request.
 The reviewer is a separate prompt/call of the same model, not an independent
 model or trust domain. It receives full current authorized evidence and must explicitly
-approve every claim. Unknown, partial, negative or malformed review rejects the
+approve every claim and return boolean `question_covered: true`. Coverage requires
+addressing every requested part supported by supplied evidence; correct background
+claims cannot replace requested safeguards or actions. Unknown, missing, non-boolean,
+partial, negative or malformed review rejects the
 whole answer. Both requests reserve/settle budget independently against the same
 server request ID and existing USD20 ledger. Successful answers/history/exports
 contain separate `model_call` and `model_review` receipts; identical reservation

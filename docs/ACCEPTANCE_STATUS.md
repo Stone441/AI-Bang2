@@ -1,6 +1,6 @@
 # Acceptance coverage · local candidate
 
-当前281个unittest方法（60 local synthetic + 221 mock HTTP/model/credential contracts，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；四源真实查询/各源撤权子集与DeepSeek原文选择及opt-in综合另列。综合已有一次成功四源测试与agent语义对照，完整live矩阵、SSO、人工G1/G2仍未通过。以下未覆盖部分保留，不改写05的oracle。
+当前282个unittest方法（60 local synthetic + 222 mock HTTP/model/credential contracts，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；四源真实查询/各源撤权子集与DeepSeek原文选择及opt-in综合另列。综合已有一次成功四源测试与agent语义对照，完整live矩阵、SSO、人工G1/G2仍未通过。以下未覆盖部分保留，不改写05的oracle。
 
 | IDs | 当前状态与实际证据 / 缺口 |
 |---|---|
@@ -32,7 +32,7 @@
 | A-11 | partial：缺检查点显式不可信、未覆盖尾部单列、非 Ed25519 密钥拒绝已测试；当前单公钥，密钥轮换未实现 |
 | U-01 | local verified：标准库可启动、显式 demo、HTTP 实际请求；独立 git archive 目录 setup/test 已通过 |
 | U-02 | partial：前端分区 + server role enforcement、无 HTTP ACL 管理入口；非公开部署 |
-| U-03 | partial：英文原文答案/引用/历史/导出已有真实浏览器subset；综合quotes/双回执前端Node验证，综合真实视觉/完整键盘/对比度验收pending |
+| U-03 | partial：英文原文答案/引用/历史/导出已有真实浏览器subset；综合quotes/双回执/引用/history/raw下载真实浏览器验证，Enter展开/Escape关闭partial；完整键盘/对比度及非作者G1pending |
 | U-04 | live measured subset：同题live API/fake model53.21→40.12秒（单样本）；真实综合双调用58.95秒、双回执和共享USD20账本实查。供应商实扣/并发性能未测，不作SLA承诺 |
 | U-05 | partial：五场景自动记录/架构/源码；真实腾讯对话/7截图及离线签名已完成；live记录已分模式保存，完整矩阵和最终材料未提交 |
 | U-06 | blocked：非作者人工对照尚未组织 |
@@ -49,3 +49,8 @@
 
 
 2026-10-05 P-11补充：真实DeepSeek、fixture-only业务源的单个恶意授权文档样本已执行；6自动边界检查及agent逐结论核对通过。含GA谎报/admin/private channel/other-user audit/external URL指令的资料实际进入模型，未采纳；仅固定模型endpoint无tools，私有S-01不发送。来源evidence/runs/synthesis-injection/，1331microUSD保守账。输出有额外无关但受证据支持的事故claim，相关性单列。完整攻击族、源平台传播和非作者G1仍未验收，不将P-11整体标passed。
+
+
+2026-10-05 8094综合真实UI子集：eng_b身份、8对象四源输入/五阶段各8allow、4结论支持片段展开、双回执、Slack reply精确预览、Recent answers与raw实际下载一致已核验（synthesis-ui/verification.json）。这次4结论引用四源，但问题保障措施漏答，Q-07完整性failed；费用1591microUSD上界。v2增加模型question_covered严格判断和生成覆盖提示，282回归含missing/false/unknown拒绝；两次真实拒绝诊断分列，不能据拒答称修复后回答质量通过。现有用户8094 Python进程仍是v1，刷新前端不会加载新model。完整live场景/综合原生撤权/非作者G1不变。
+
+修复后单题live结果：synthesis-ui/coverage-live-query.json，四源8对象、11checks及保障措施精确quote通过；agent覆盖/语义检查通过，前三claim冗余保留。首轮review拒绝原因unknown、次轮缺quote拒绝分列；不是完整Q-07人工质量通过，综合原生撤权及非作者G1仍pending。
