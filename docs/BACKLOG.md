@@ -161,3 +161,5 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-05 DEV-11-NATIVE-RESTRICTED verified native subset：Confluence557057仅owner/eng_b deny+164283 allow，13checks，保留synthetic旧索引验证query/model input/preview；原contractor/full矩阵及时间侧信道not_run。fake model零费用，8094不改。2新guard/4针对性tests通过；首次探针失败保留。证据native-restricted-fixed；下一集中安全观看包及已授权native更新子集。
 
 2026-10-05 DEV-12-NATIVE-CANDIDATE verified clean local subset：b541c02 clean archive297Python/5fixture/2Node/实际HTTP链路通过，rebuild-native-restricted-approved。首次沙箱loopback bind失败保留。无真实source/model调用，G1/G2和完整原生矩阵仍pending。
+
+2026-10-05 DEV-12-AUDIT-MIXED verified local subset：实际fixture Engine生成成功/部分授权/全部deny/模型失败四类请求，独立request边界oracle116events与17页NL审计一致；page1后新请求不混入固定snapshot，scope/actor噪声排除，eng_a/security及越范围auditor拒绝，失败无committed/stored answer。CodeBuddy既有CLI实际4次原始/正文改/中间删/covered尾删验证通过，临时private key删除；同机custody仍非生产独立。4针对性tests通过（2新增），首个test mock影响Git revision的失败保留后修正test-only标记，不删断言。make verify-audit-mixed新目录可重放，团队一次集中观看清单已整理；无真实API/model/费用/8094重启，G1/G2 not_run。下一P0实际团队观看及未批准独立persona/native更新范围，其他质量评测可继续。

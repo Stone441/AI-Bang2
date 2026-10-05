@@ -215,4 +215,12 @@ Run `make verify-retrieval` for authored long-document/lexical cases (fixture so
 
 ### Audit interface checks
 
+Mixed-outcome audit acceptance (fixture/fake only, no credentials or costs):
+
+```sh
+make verify-audit-mixed AUDIT_OUTPUT=.runtime/audit-review-01
+```
+
+Use a new output directory on each run. This executes successful, partly authorized, denied and failed questions, compares paginated inquiry with captured event IDs, checks a fixed snapshot during a new request, denies out-of-scope audit access, and runs the existing CodeBuddy signature CLI against original/tampered copies. The disposable local private key is deleted; same-machine signing is not independent production custody. Team observation remains a separate step in `SAFETY_REVIEW.md`.
+
 `node tests/frontend_audit_review.js` checks same-view query ordering, stable-snapshot pagination, duplicate clicks, navigation guards, HTML as text, and honest display of integers outside JavaScript precision. Audit rows distinguish candidate, authorization, model input, citation and delivery. The browser timeline does not verify a signature or prove human reading; use the offline verifier for signed boundaries and the authoritative backend export for exact fingerprints. Current visual browser check was blocked by Chrome and remains not_run.

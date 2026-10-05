@@ -1,5 +1,7 @@
 # Acceptance coverage · local candidate
 
+2026-10-05 DEV-12-AUDIT-MIXED verified local subset：实际fixture Engine生成成功/部分授权/全部deny/模型失败四类请求，独立request边界oracle116events与17页NL审计一致；page1后新请求不混入固定snapshot，scope/actor噪声排除，eng_a/security及越范围auditor拒绝，失败无committed/stored answer。CodeBuddy既有CLI实际4次原始/正文改/中间删/covered尾删验证通过，临时private key删除；同机custody仍非生产独立。4针对性tests通过（2新增），首个test mock影响Git revision的失败保留后修正test-only标记，不删断言。make verify-audit-mixed新目录可重放，团队一次集中观看清单已整理；无真实API/model/费用/8094重启，G1/G2 not_run。下一P0实际团队观看及未批准独立persona/native更新范围，其他质量评测可继续。
+
 2026-10-05 最新提交b541c02 clean archive验证完成：无.runtime/.env，setup/297Python/5fixture场景/2Node脚本/真实fixture HTTP assets+login+four-source-query+exact-preview全部通过，evidence/runs/rebuild-native-restricted-approved。首次rebuild-native-restricted在沙箱内因23项HTTP bind EPERM失败，完整日志保留；获准本机loopback测试后同一提交通过，不跳过测试/关闭保护，不调用真实源或模型，不改8094。原生S-03仍single eng_b/fake model subset；下一P0集中团队观看与剩余native persona/更新范围，G1/G2 not_run。
 
 2026-10-05 S-03 native subset：管理员在既有合成空间新增Restricted C-03/557057，仅owner访问；eng_b原生身份200、C-03 metadata404且无正文请求，C-02正文200。隔离受控synthetic旧索引保留，负面问答/模型evidence不含受限资料，旧preview原生deny；13checks/16event unsigned链通过（native-restricted-fixed）。首次fake空证据调用计数探针错误保留native-restricted失败与实际harness，修正探针后通过，不删安全断言。新增2个runner guard、4项针对性测试通过；未重跑完整295回归，runtime代码未改。无需输入凭据/模型费用/重启8094；不是contractor矩阵、统计侧信道或人工G1。下一P0整理团队一次性安全观看与剩余native persona/更新范围；G1/G2仍not_run。
@@ -12,7 +14,7 @@
 
 2026-10-05 S-01工程事实single eng_b live subset：新增J-03/KAN-5实际In Progress，正文scenario owner Maya fictional、native assignee Unassigned分别表达；四源8证据/4claims覆盖原因、撤回猜测、J-02 Done与J-03仍open、当前CF native3/runbook v1。7fact checks+agent全原文语义对照/quotes/native四阶段/双回执账本独立核验通过；不是原eng_a及product_ops矩阵或人G1。283回归方法数量不变，新增J-03正/负subtests；evidence/runs/live-s01。
 
-当前297个unittest方法（75 local synthetic + 222 mock HTTP/model/credential contracts，另含参数化subtests），不是51个计划案例全通过。最新完整297项结果以 `evidence/runs/rebuild-native-restricted-approved/tests.log` 为准，local-latest旧结果保留为历史。五场景 `scenarios.json` 仅为本地子集；四源真实查询/各源撤权子集与DeepSeek原文选择及opt-in综合另列。综合已有一次成功四源测试与agent语义对照，完整live矩阵、SSO、人工G1/G2仍未通过。以下未覆盖部分保留，不改写05的oracle。
+最近完整已执行的回归为297个unittest方法（75 local synthetic + 222 mock HTTP/model/credential contracts，另含参数化subtests）；本轮另外新增2个审计oracle/防覆盖测试，4项针对性检查通过，未据此宣称全299项已运行，不是51个计划案例全通过。最新完整297项结果以 `evidence/runs/rebuild-native-restricted-approved/tests.log` 为准，local-latest旧结果保留为历史。五场景 `scenarios.json` 仅为本地子集；四源真实查询/各源撤权子集与DeepSeek原文选择及opt-in综合另列。综合已有一次成功四源测试与agent语义对照，完整live矩阵、SSO、人工G1/G2仍未通过。以下未覆盖部分保留，不改写05的oracle。
 
 | IDs | 当前状态与实际证据 / 缺口 |
 |---|---|

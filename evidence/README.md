@@ -84,3 +84,5 @@
 2026-10-05 native-restricted-fixed：S-03 Confluence真实只读+fake model+明确controlled stale synthetic index，13checks/16events；native-restricted保留首次计数探针失败。管理员合成seed/权限截图仅ignored private（native-seed.json存路径/hash），非CodeBuddy/人工G1或完整persona矩阵。
 
 2026-10-05 rebuild-native-restricted-approved：b541c02 clean archive297tests/五fixture场景/两Node/HTTP smoke通过；rebuild-native-restricted保留先前沙箱bind EPERM失败，未降低断言。
+
+2026-10-05 audit-mixed：四类fixture请求/116event oracle/17页稳定snapshot/role及scope拒绝/4实际签名CLI结果，原测试失败日志保留；team walkthrough prepared，非live审计员/人G1。

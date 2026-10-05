@@ -1,5 +1,6 @@
-.PHONY: test demo verify verify-lifecycle verify-retrieval setup live live-synthesis
+.PHONY: test demo verify verify-lifecycle verify-retrieval verify-audit-mixed setup live live-synthesis
 LIVE_PORT ?= 8088
+AUDIT_OUTPUT ?= .runtime/audit-mixed-review
 setup:
 	python3 -c "import sqlite3; import sys; assert sys.version_info >= (3, 11); print('Standard-library runtime ready')"
 test:
@@ -19,3 +20,6 @@ test-report:
 
 verify-retrieval:
 	python3 -m scripts.retrieval_acceptance
+
+verify-audit-mixed:
+	python3 -m scripts.audit_mixed_acceptance --output $(AUDIT_OUTPUT)
