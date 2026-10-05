@@ -1,6 +1,6 @@
 # Current status
 
-2026-10-05 最新接续：`codex/lifecycle-acceptance` 新增可重放四源生命周期矩阵，12/12 `passed_local_subset`（fixture source / fake model）；五场景本地回放、6项增量测试及Node前端安全检查实际通过。无平台写入/新模型调用/新费用，不重启用户8094。安全演示清单见 SAFETY_REVIEW；真实更新/删除、完整live五场景及人工安全验收仍待完成。原283项回归为上一运行记录，本次未将12组矩阵计入unittest数量。下一项优先补齐真实更新/删除的具体种植管理授权和现场证据，其他本地质量/界面工作可独立继续。当前新分支未推送或合并。
+2026-10-05 最新接续：`codex/lifecycle-acceptance` 新增可重放四源生命周期矩阵，12/12 `passed_local_subset`（fixture source / fake model）；五场景本地回放、6项增量测试、Node前端安全检查及完整283项回归实际通过。无平台写入/新模型调用/新费用，不重启用户8094。安全演示清单见 SAFETY_REVIEW；真实更新/删除、完整live五场景及人工安全验收仍待完成。12组矩阵不计入unittest数量。下一项真实更新/删除已发具体授权问题，未获回复前不操作外部资料；其他本地质量/界面工作可独立继续。当前新分支未推送或合并。
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。`.DS_Store` ignored；用户明确要求后已将仅含旧 GPT 分析的 `Analysis&Planning/` 移至 Mac 废纸篓（可恢复），Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 

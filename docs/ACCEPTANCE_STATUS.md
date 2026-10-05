@@ -12,16 +12,16 @@
 | Q-10 | partial：候选 24、输入 16000 字符预算；长文/近重复质量未验证 |
 | P-01/02 | local verified：服务端 session、body role 拒绝、同角色不同频道 |
 | P-03/04 | local verified：四源撤权/unknown；真实 429/token propagation blocked |
-| P-05/06/07 | local/mock verified；原文模式旧历史/引用/导出native Slack撤权live subset。综合双回执/quotes保护已mock业务源+真实HTTP同会话验证，综合live撤权仍pending；无答案缓存，附件未启用 |
+| P-05/06/07 | local/mock verified；原文及综合模式旧历史/引用/导出native Slack撤权live subset（synthesis-native-revocation）；恢复后合法导出精确匹配。完整平台/ACL矩阵仍pending；无答案缓存，附件未启用 |
 | P-08 | local verified：存在/不存在可见结果一致；统计时间侧信道未证明 |
 | P-09/10 | partial：fixture 原生策略和单独评论/隐藏链接；真实继承/附件 blocked |
-| P-11 | local subset：恶意原文不能授予权限或调用工具；fake 可能如实引用恶意文字，真实模型 injection not_run |
+| P-11 | local subset：恶意原文不能授予权限或调用工具；fixture业务源+真实DeepSeek单个恶意文档样本已验证（synthesis-injection），无工具执行/私有资料模型输入；完整攻击族及非作者质量验收not_run |
 | P-12/13 | local verified：拒绝非 demo tenant；旧版本引用拒绝 |
 | P-14 | partial：已批准合成证据发送DeepSeek，当前权限检查及受控错误/预算有local/mock和live子集；未发送真实敏感数据。生产审计加密/出口治理not_run |
 | P-15 | local verified：内存/磁盘源生成期间撤权阻断；平台传播边界 blocked |
 | P-16 | not_supported：DM 不启用 |
-| F-01/02 | local verified：四源创建/更新、单对象发布；真实自动同步时延 not_run |
-| F-03/04 | local verified：撤权不重建正文，删除立即由权限检查阻断，再 tombstone |
+| F-01/02 | local verified：四源创建/更新、单对象发布；lifecycle-local额外四源更新矩阵记录旧索引拒绝/新版本发布；真实自动同步时延 not_run |
+| F-03/04 | local verified：lifecycle-local四源各撤权/删除，旧索引模型输入、旧历史/导出projection/引用全部保护，不重建正文，再 tombstone；真实更新/删除完整矩阵not_run |
 | F-05/06 | local verified：重复/乱序、失败重试、事务发布、游标不越过未完成任务 |
 | F-07 | partial：已知落后证据不使用；索引 failure health，真实断连/续传 not_run |
 | F-08 | not_started：真实 change-token 失效/定期对账 |
