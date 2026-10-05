@@ -227,3 +227,6 @@ ADR-028验证补充：修正后隔离真实四源11checks通过，保障措施�
 2026-10-05 具体综合撤权授权：用户明确批准C0C6R70SGG4私有合成频道/U0C66B76TE3（kyle000909@gmail.com）本次临时移除，验证8094 eng_b旧综合引用/history/export，然后恢复原访问；不改工作区成员、角色/token/scope、不新调模型。第一轮已执行并恢复Members2/同一UID；旧preview原生deny清除答案，history隐藏含Slack的综合supports/双回执，其他独立答案保持。由于拒绝旧引用会清除该旧导出按钮，额外第二轮旧导出测试被自动审批拒绝（认为上次只批准一个循环），需单独明确批准；Remove最终按钮尚未执行，原访问仍恢复，未绕过拒绝。
 
 具体授权补充：用户单独批准第二轮同一member/channel的旧导出测试及恢复。已原生2→1→2，旧export返回unavailable、不建文件（0→0），旧正文/quotes/receipt清除而session保持。最终原生核对同一U0C66B76TE3、Members2，之后合法raw导出8146字节与存储答案逐字段一致。未改role/token/scope，未新调模型；审批拒绝未绕过。
+# 2026-10-05 ADR-030: isolated lifecycle acceptance
+
+用户授权继续所有可推进工作，不等于新增外部写入、公开开放或人工G1/G2通过。采用独立内存fixture世界逐source/operation执行12组生命周期检查，不改变正在运行的8094、真实资料、钥匙串或模型账本。旧索引故意滞后，验证当前权限/版本独立保护模型、历史及引用；更新发布后核验新版本，撤权/删除不重建正文。结果明确local subset，导出仅共享backend projection，不冒称本次HTTP/browser验证。首次探针把用户question中的marker误当模型证据泄露，保留失败报告，修正为只查evidence；有效断言保留。另整理团队安全观看清单，人工批准继续not_run。回滚可删除独立runner/Makefile入口，不影响runtime。

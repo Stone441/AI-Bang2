@@ -36,10 +36,13 @@ make demo
 
 ```sh
 make verify
+make verify-lifecycle
 make test-report
 ```
 
 输出 `evidence/runs/local-latest/scenarios.json`、`audit.json`、`tests.json`。S-05 检查仅是内存保留 trusted head 的本地演示，未具备独立签名根。离线签名另由真实 CodeBuddy 实现并经 20 项测试验证；命令见 CODEBUDDY_AUDIT_DELIVERY.md，同机同账号不代表生产独立保管。
+
+`make verify-lifecycle` 单独生成 `evidence/runs/lifecycle-local/results.json`：四源各自更新、撤权、删除共12组隔离检查，先保留旧索引验证即时拒绝，再应用事件验证单对象发布及重复处理。只使用 fixture/fake model，不访问正在运行的服务、不修改真实平台。团队观看与最终提交检查见 [SAFETY_REVIEW.md](SAFETY_REVIEW.md)，自动回放不代替人工安全验收。
 
 要重新开始人工演示，停止服务后仅将 demo 数据文件改名备份，再启动；先确认备份名称不存在。不要整体移动 `.runtime`：目前其中有 `.runtime/codebuddy-dev09` Git worktree。不要删除旧审计。自动测试均使用自己的临时/内存状态。
 

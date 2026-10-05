@@ -137,3 +137,9 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 综合撤权当前verified citation/history subset：原生2→1→2，同一v2混合答案/quotes/双回执隐藏、无关答案可用、preview deny与session保留；同一UID恢复确认。Export旧按钮依赖第二轮，自动审批拒绝/新具体批准pending，未再次移除成员，无新模型费用。
 
 第二轮旧综合export已获独立批准并verified live subset：deny不下载、正文清除、session保留；同一原读者最终恢复Members2，合法raw实际下载精确一致。综合撤权P0本子集解除阻塞，完整S-04及更新/删除矩阵/G1仍partial，283源码回归沿用，无新模型调用。
+# 2026-10-05 lifecycle acceptance increment
+
+| Task | Priority / dependencies | Status / acceptance |
+|---|---|---|
+| DEV-12-LIFECYCLE | P0；existing Engine/current ACL/Ingestion | verified local subset：四源各更新/撤权/删除12组；旧索引阶段不入模型，旧history/export projection与引用阻断，单对象发布/事件幂等/审计链；对应S-02/S-04、F-01/03/04/05、P-05/07/12部分，不计作native通过 |
+| DEV-12-SAFETY-REVIEW | P0；完整live五场景后组织 | checklist prepared / human not_run；团队观看内容及局限已整理，未预填通过 |
