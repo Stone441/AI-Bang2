@@ -82,3 +82,5 @@
 2026-10-05 [twelve-source-operation matrix](runs/lifecycle-local/results.json), executed with `make verify-lifecycle`: four fixture sources × content/revoke/delete; stale-index model evidence exclusion, history/export projection withholding, citation denial, new revision publication/removal, unrelated revision retention, duplicate event handling and actual audit chains. Fake model / no live API / no human G1. [First probe failure](runs/lifecycle-local/first-probe-failure.json) preserved: the question intentionally contained the marker, so evidence-only leakage checking replaced the overbroad question+evidence check. Five existing local worked examples and six ingestion tests also rerun successfully; Node frontend guard checks passed. No real source writes or model costs.
 
 2026-10-05 native-restricted-fixed：S-03 Confluence真实只读+fake model+明确controlled stale synthetic index，13checks/16events；native-restricted保留首次计数探针失败。管理员合成seed/权限截图仅ignored private（native-seed.json存路径/hash），非CodeBuddy/人工G1或完整persona矩阵。
+
+2026-10-05 rebuild-native-restricted-approved：b541c02 clean archive297tests/五fixture场景/两Node/HTTP smoke通过；rebuild-native-restricted保留先前沙箱bind EPERM失败，未降低断言。

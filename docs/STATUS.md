@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-05 最新提交b541c02 clean archive验证完成：无.runtime/.env，setup/297Python/5fixture场景/2Node脚本/真实fixture HTTP assets+login+four-source-query+exact-preview全部通过，evidence/runs/rebuild-native-restricted-approved。首次rebuild-native-restricted在沙箱内因23项HTTP bind EPERM失败，完整日志保留；获准本机loopback测试后同一提交通过，不跳过测试/关闭保护，不调用真实源或模型，不改8094。原生S-03仍single eng_b/fake model subset；下一P0集中团队观看与剩余native persona/更新范围，G1/G2 not_run。
+
 2026-10-05 S-03 native subset：管理员在既有合成空间新增Restricted C-03/557057，仅owner访问；eng_b原生身份200、C-03 metadata404且无正文请求，C-02正文200。隔离受控synthetic旧索引保留，负面问答/模型evidence不含受限资料，旧preview原生deny；13checks/16event unsigned链通过（native-restricted-fixed）。首次fake空证据调用计数探针错误保留native-restricted失败与实际harness，修正探针后通过，不删安全断言。新增2个runner guard、4项针对性测试通过；未重跑完整295回归，runtime代码未改。无需输入凭据/模型费用/重启8094；不是contractor矩阵、统计侧信道或人工G1。下一P0整理团队一次性安全观看与剩余native persona/更新范围；G1/G2仍not_run。
 
 2026-10-05 最新审计候选0278bab在clean archive已通过setup/295 Python方法/五fixture场景/原前端安全Node/新增审计Node，独立fixture HTTP启动、assets/login/four-source-query/exact-preview通过；evidence/runs/rebuild-audit-ui。Python方法数未增加，新增审计检查属于Node单独证据。Chrome视觉仍blocked/not_run，已关闭自建错误tab/停止临时进程并清理自己tmp目录，不改8094。下一P0真实restricted信息验收可优先复用已有eng_b读者和管理员owner、已有Confluence合成空间种植权限：准备独立C-03受限合成资料并核对原生可见性，再做存在性/模型输入拒绝+可读C-02对照；不能把唯一nonsense query当S-03。新的product_ops/contractor账号、scope/持久凭据仍需对应明确批准，不默认从eng_b Keychain授权扩大。G1/G2仍not_run，未push/merge。

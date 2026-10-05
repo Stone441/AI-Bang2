@@ -46,3 +46,5 @@ Team review: follow `SAFETY_REVIEW.md`, record exact commit/mode, observe output
 4. Assemble the validated demo recording and final material candidate; publishing/submission awaits G2.
 
 Retrieval improvements remain DEV-08, evaluated against these delivery requirements. Adding vectors/reranking is conditional on a demonstrated gap and approved resources, not a prerequisite to every next task.
+
+Latest restricted-acceptance candidate `b541c02` passed clean archive setup, 297 Python tests, five fixture scenarios, both Node checks and HTTP smoke (`evidence/runs/rebuild-native-restricted-approved`). The earlier sandbox run denied loopback bind; its failed logs remain separate. No platform/model access or operator restart was involved.

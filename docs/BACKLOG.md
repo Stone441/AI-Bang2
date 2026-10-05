@@ -159,3 +159,5 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-05 DEV-12-AUDIT-CANDIDATE verified clean local subset：0278bab archive setup/295Python/5fixture/2Node脚本/实际fixture HTTP smoke通过，rebuild-audit-ui。下一P0 native S-03优先existing eng_b+owner的受限C-03合成seed/真实deny与允许C-02控制，在已有AUTH-003范围核对管理员UI；原product_ops/contractor全矩阵不冒称完成，新增身份grants另批。Chrome视觉blocked，不扩安全权限，不重启8094。
 
 2026-10-05 DEV-11-NATIVE-RESTRICTED verified native subset：Confluence557057仅owner/eng_b deny+164283 allow，13checks，保留synthetic旧索引验证query/model input/preview；原contractor/full矩阵及时间侧信道not_run。fake model零费用，8094不改。2新guard/4针对性tests通过；首次探针失败保留。证据native-restricted-fixed；下一集中安全观看包及已授权native更新子集。
+
+2026-10-05 DEV-12-NATIVE-CANDIDATE verified clean local subset：b541c02 clean archive297Python/5fixture/2Node/实际HTTP链路通过，rebuild-native-restricted-approved。首次沙箱loopback bind失败保留。无真实source/model调用，G1/G2和完整原生矩阵仍pending。
