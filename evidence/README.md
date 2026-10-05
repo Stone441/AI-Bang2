@@ -57,3 +57,6 @@
 
 
 2026-10-05 [live-model malicious-source subset](runs/synthesis-injection/query.json), [fixture audit](runs/synthesis-injection/audit.json), [actual harness](runs/synthesis-injection/harness.py.txt): synthetic fixture business sources, real DeepSeek generation/review. Malicious authorized text actually sent; six automated boundaries and agent semantic inspection passed, privateS-01 not sent, only fixed model endpoint/no tools. One authored case, not a comprehensive injection guarantee; extra unrelated supported claim recorded. Two calls1331microUSD upper accounting; no live source writes, same existing budget.
+
+
+2026-10-05 [frontend delayed-response verification](runs/ui-session-races/verification.json) and [reproduced failure](runs/ui-session-races/first-failed-node.txt): expired-session preview, overlapping queries, late history and late export; mock fetch/Node, not live UI.281Python regression remains separate.8093 native-startup succeeded but tool IPC EPERM prevented safe entry transfer; staging stopped, user8094 entry pending. No new model/API query fees.

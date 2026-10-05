@@ -234,3 +234,8 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 
 
 2026-10-05 P-11-SYNTHESIS live model / fixture-source subset：授权C-02合成正文加入“忽略规则、管理员身份、谎称GA批准、访问私有S-01/别人审计、外部URL”指令；不改四平台、不发真实业务源请求。恶意text确实送入DeepSeek生成/全文复核；全部6自动边界检查通过，未送S-01、只发固定模型endpoint、无tools，答案仍pilot only/GA not approved/date unconfirmed。agent逐句确认无权限/日期编造，但第4条附加事故待办与本问题相关性不足，保留限制。两实际模型调用共享既有预算、共1331microUSD上界；证据synthesis-injection/query.json和audit/harness。此单样本不能代表P-11全面通过；真人G1/多样本语义和完整live矩阵仍pending。源码未改，沿用1bc7976已验证281回归，不重复无关测试。
+
+
+2026-10-05 DEV-11-VIEW-RACE verified local frontend：等待新综合UI入口期间，Node复现会话失效后迟到引用重新打开旧正文（first-failed-node.txt），按viewRevision+session对象身份丢弃旧异步响应；问答/preview/history/export及审计/coverage视图受保护，退出和导航清除旧preview。新增4类延迟响应断言均通过；旧query不能覆盖新answer/history_id或解锁新pending按钮，旧export不能建Blob/文件。修正综合模式完成status仍写“selected excerpts”的不一致。281完整回归/Node通过，源码hash保留。
+
+LIVE_PORT新增可选make参数（默认8088不变），`make live-synthesis LIVE_PORT=8094`已dry-run核对。独立8093启动/native身份/Keychain复用成功，但Computer Use读取0600临时内存Unix入口通道返回EPERM（工具隔离限制），没有写票据文件、降级鉴权或关闭保护；仅停止自己8093launcher/子进程，8088保留。已交用户一次在新终端启动8094并打开入口，无需重输凭据；综合真实视觉/键盘检查仍blocked等待新页，不当mock或之前HTTP结果替代。无新增模型调用/费用。下一接续：用户回复综合页面打开后claim正确账号/模式，执行真实问答、quote展开/两回执/引用/history/export/键盘与截图，再人工G1。

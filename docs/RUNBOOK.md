@@ -191,3 +191,8 @@ negative review, changed access/version and incomplete output reject the answer;
 no automatic paid retry or silent fallback occurs. Fake-model mode does not
 simulate passing synthesis review. Complete five-scenario live acceptance and
 G1/G2 remain separate from local/mock results.
+
+
+To preserve an existing8088 service while opening another reviewed synthesis operator, use `make live-synthesis LIVE_PORT=8094` from repository root. The same budget ledger is used, with no scope change; native identities are verified again. Open the new terminal one-use link yourself and keep it out of chat/screenshots. `LIVE_PORT` defaults to8088; existing listeners are never killed automatically.
+
+Frontend navigation/expiry/sign-out invalidate prior requests. A late answer/quote/history/export does not repopulate the newer view or create a file; this does not undo an already-dispatched model call or recover a downloaded copy.

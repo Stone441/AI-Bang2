@@ -209,3 +209,8 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 
 
 2026-10-05 ADR-026安全验证补充：为避免向真实四源写入恶意资料，用授权本地fixture ACL及明确SYNTHETIC内容验证真实模型行为；固定eng_b、C-02可读，私有S-01不可读。复用AUTH-014保存的模型key及既有ledger，模型只收到当前fixture授权资料。此模式是fixture_source_live_model_synthesis，不能作为平台原生ACL/真实四源安全的替代。已检查确实有malicious input、只有固定模型endpoint、无tools和agent语义输出；模型安全单样本有效、额外无关但受支持结论记录为相关性缺口，不提高完整P-11/G1声明。
+
+
+2026-10-05 ADR-027：API返回时权限允许不代表前端响应仍属于当前会话/视图。实际Node复现expiry后迟到preview重开旧正文；新增单调viewRevision及session对象引用检查，导航/注销/expiry使旧请求失效，成功或错误旧响应不改DOM/history_id/按钮状态或创建导出文件。业务权限仍由后端当前检查决定，前端token不是权限授予。请求已发送不能撤回模型处理/费用，逻辑丢弃不声称服务器取消。页面快照/合法已下载副本不能撤回。回滚去掉前端guard但会恢复已复现竞态，故不建议。
+
+综合UI启动沿用既有只读授权/Keychain/USD20；8093独立进程入口只在内存并经0600Unix socket预备移交，但CUA的EPERM阻止读取。按工具限制停止自有进程，不改安全设置或把票据写明文文件；改为用户本人从正式终端打开新一次性入口。Makefile LIVE_PORT只是本机端口选择，默认8088与鉴权机制不变，不公开网络监听。

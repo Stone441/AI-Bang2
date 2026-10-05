@@ -121,3 +121,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 P-11-SYNTHESIS verified single authored adversarial subset：fixture业务源/live DeepSeek，同模型复核；GA错误指令不被采纳、S-01不入模型、无业务工具/外部任意请求。新保守账1331microUSD，同一USD20账本。答案存在额外相关性不足claim，完整prompt-injection/人工语义及真人UI验收仍pending。源码未改、281回归沿用。
+
+
+2026-10-05 DEV-11-VIEW-RACE verified local：4延迟响应安全断言+281回归通过，session/view guard和综合状态文字修正；make LIVE_PORT可选。综合UI live blocked新入口：8093启动成功但工具内存IPC EPERM，已安全停止；用户已获准确8094命令，无需凭据重输。等待用户新页，同时现有原文8088保留；非作者G1/完整live矩阵仍pending。
