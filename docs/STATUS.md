@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-05 最新审计候选0278bab在clean archive已通过setup/295 Python方法/五fixture场景/原前端安全Node/新增审计Node，独立fixture HTTP启动、assets/login/four-source-query/exact-preview通过；evidence/runs/rebuild-audit-ui。Python方法数未增加，新增审计检查属于Node单独证据。Chrome视觉仍blocked/not_run，已关闭自建错误tab/停止临时进程并清理自己tmp目录，不改8094。下一P0真实restricted信息验收可优先复用已有eng_b读者和管理员owner、已有Confluence合成空间种植权限：准备独立C-03受限合成资料并核对原生可见性，再做存在性/模型输入拒绝+可读C-02对照；不能把唯一nonsense query当S-03。新的product_ops/contractor账号、scope/持久凭据仍需对应明确批准，不默认从eng_b Keychain授权扩大。G1/G2仍not_run，未push/merge。
+
 2026-10-05 审计产品验收：实际Node复现同一页面新查询先返回、旧查询后覆盖的问题，按inquiryRevision+view/session修复；旧分页/重复点击/导航响应及HTML文本/不安全大整数展示检查通过，原有前端安全检查与JS syntax通过。timeline分开问题、候选、阶段授权、模型input/review、引用、stored answer、delivery attempt，不宣称用户已读或UI已验签；raw browser payload对不精确整数明确遮换提示，后端hash/export不改。证据audit-ui-local；自动Chrome临时页ERR_BLOCKED_BY_CLIENT，visual not_run，不绕过设置/不要求用户重启8094，已停止自有fixture服务。独立原生persona仍缺其单独grant/映射，不能把eng_b改名冒称product_ops；候选界面与自动验收独立推进，G1/G2仍pending。下一提交候选再做包含新增audit Node案例的clean archive验证。
 
 2026-10-05 最新干净候选验收：e9a55e6 git archive隔离目录（无.runtime/.env）setup、295测试、五fixture场景、Node安全检查全部通过；真实启动fixture HTTP服务并验证HTML/JS/CSS、登录、四源问答、精确引用preview，browser visual not_run。evidence/runs/rebuild-fixed；首次294pass/1fail保留在rebuild-candidate，测试独立DB修复保留全部有效安全断言。只停止自己的临时服务、删自己的临时目录，不改用户8094/配置/凭据/数据。最新测试结论来自此已提交候选隔离日志，local-latest/tests.json保留先前测试源码hash，不冒写为本次运行。阶段代码和脱敏证据已本地提交，未push/merge。下一P0：独立product_ops/contractor等原生persona及剩余更新矩阵、团队集中G1观看；已有工程/产品问答、生命周期、审计重建候选可按DEMO_CANDIDATE准备，语义/向量增强按验收收益排序。

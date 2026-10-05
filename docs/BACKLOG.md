@@ -155,3 +155,5 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-05 DEV-12-REBUILD verified local committed candidate e9a55e6：无本机.runtime/.env的git archive，setup/295tests/5fixture场景/Node/启动HTTP资产+login+four-source-query+preview全部通过。首次26dc4a9 archive仅1测试依赖本机残留DB导致失败，保留rebuild-candidate，修正测试真实独立DB而非削弱安全断言；成功rebuild-fixed。浏览器视觉/原生persona/G1仍pending，本次没有source/model调用，不重启8094。
 
 2026-10-05 DEV-10/12-AUDIT-UI verified local Node subset：原same-view查询竞态已复现、修复；stable snapshot分页捕获result.filters、旧请求/重复点击/导航丢弃、source HTML纯文本、unsafe整数明确提示。审计timeline与raw event并存，原server scope/role及SQL契约未改。Chrome visual blocked/not_run；临时fixture停止，8094保留。下一候选archive加入独立audit frontend check，独立persona/G1/G2仍pending。
+
+2026-10-05 DEV-12-AUDIT-CANDIDATE verified clean local subset：0278bab archive setup/295Python/5fixture/2Node脚本/实际fixture HTTP smoke通过，rebuild-audit-ui。下一P0 native S-03优先existing eng_b+owner的受限C-03合成seed/真实deny与允许C-02控制，在已有AUTH-003范围核对管理员UI；原product_ops/contractor全矩阵不冒称完成，新增身份grants另批。Chrome视觉blocked，不扩安全权限，不重启8094。

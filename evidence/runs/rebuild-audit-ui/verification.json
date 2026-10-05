@@ -1,0 +1,101 @@
+{
+  "started_at": "2026-10-05T13:41:25.360562+00:00",
+  "validated_commit": "0278bab35498253af2b03d42c29309e00a6cc1bb",
+  "mode": "isolated_git_archive_fixture_fake",
+  "live_source_api_called": false,
+  "live_model_called": false,
+  "human_G1": "not_run",
+  "runner_sha256": "1823b10ad9d3428f0be82f4d1680d5df5fda73eaf6e10df3dfda58149818baad",
+  "commands": [
+    {
+      "label": "setup",
+      "command": [
+        "make",
+        "setup"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "tests",
+      "command": [
+        "make",
+        "test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "scenarios",
+      "command": [
+        "make",
+        "verify"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "frontend",
+      "command": [
+        "node",
+        "tests/frontend_operator_security.js"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "audit_frontend",
+      "command": [
+        "node",
+        "tests/frontend_audit_review.js"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "archive_has_no_runtime_or_env": true,
+  "runtime_source_hashes": {
+    "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
+    "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
+    "brain/audit_query.py": "837254cdc8a235044dae523c0b9f35c87765a66e91e9215304dc9ad09c77622b",
+    "brain/budget.py": "cd0f195cec3741ab6741648ee4391cf841e63bd12f1e718ebcc4b6fd66b106fb",
+    "brain/confluence.py": "324e5a8584a55beda55401a489ffbbc5267fb325c490bab7547edf192090860d",
+    "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
+    "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
+    "brain/credential_input.py": "7736f24b27ad95d8751479144c3c9e52a80a836100e6551b14296fdab62620f4",
+    "brain/deepseek.py": "8df246ee5a1c43d0823040ffcbc9a6f36e1603f85a72b95599b7b037a8eb7d10",
+    "brain/delegated_query.py": "f15e270d3e17a9561c5f760e5f3864081dbdc3d439b1f660be9e63a054fab8eb",
+    "brain/drive.py": "e2fe84429b34ef2b2ad496188ed20beaf9e6442e5cef625a8f6edc085548f41d",
+    "brain/drive_oauth.py": "4e72272cc0daaa1f290a12738e195594b0fd384e59227a8f0f038835c68cd86e",
+    "brain/engine.py": "ec590c6ca24b4429b03b449e878f6b98a0677708fb27a1e7154bf0f75954e91a",
+    "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
+    "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
+    "brain/keychain.py": "329010f678201d0e1592c658c6f5e0f220b71a4d602e2d395fc103dd216514a9",
+    "brain/model_receipt.py": "4055abbc3f8bd9804dcfedc49c2a440ad5fe08771ffd914b1b5f563f8238c431",
+    "brain/operator_web.py": "8865abbbfed436738538ae95c4c72692b214da4ae2ac5643c2c8fd85deb2e636",
+    "brain/retrieval.py": "227f09d36f0497d5a7affc6021cc534d8e72223a8eda7a56ad1bc0873ecfb64d",
+    "brain/server.py": "cc13895437c34ec3a352a778d883e3df26cf3355c0b70749da91699ab0ea2324",
+    "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
+    "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
+    "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
+    "brain/synthesis.py": "06a2e88912d595f5b4a66f2e18c6ac268021a6c3fd59819270ffc2e314b1b80c",
+    "web/app.js": "2de4a5380d0d8b3b793893d0faccecd867b02798b101de04421c3b834fbe4a6e",
+    "web/index.html": "c38d18e234ad57a68c7c23cedf96d6f4b6728672c2e1489dced2ae818fd49300",
+    "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
+    "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730"
+  },
+  "scenario_statuses": {
+    "S-01": "passed_local_subset",
+    "S-02": "passed_local_subset",
+    "S-03": "passed_local_subset",
+    "S-04": "passed_local_subset",
+    "S-05": "passed_local_subset"
+  },
+  "http_smoke": {
+    "frontend_assets": "passed",
+    "demo_login": "passed",
+    "four_source_fake_answer": "passed",
+    "exact_preview": "passed",
+    "request_id": "99567db62d2b4cf39bddd4fbf20a30fb",
+    "model": "fake-extractive-v1",
+    "browser_visual_review": "not_run",
+    "cookies_and_csrf_saved": false
+  },
+  "status": "verified_local_subset",
+  "finished_at": "2026-10-05T13:41:41.866573+00:00"
+}

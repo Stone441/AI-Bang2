@@ -18,6 +18,8 @@ The live product harness had a stale `fake_model` response-mode suffix despite a
 
 Application/test commit `e9a55e6` passed a clean git-archive run: setup, 295 tests, five fixture scenarios, Node security checks and a newly started HTTP demo through login/query/exact citation preview. Evidence: `evidence/runs/rebuild-fixed`. The earlier archive failure is preserved; one test had depended on a leftover database and now uses an independent real temporary DB. Browser visual review remains separate.
 
+Latest audit UI application/test commit `0278bab` also passed clean archive setup, 295 Python tests, fixture scenarios, both frontend Node scripts and HTTP smoke (`evidence/runs/rebuild-audit-ui`). Audit UI now separates process stages and rejects stale inquiry/page responses. Chrome visual inspection was blocked; it remains not_run.
+
 ## Review preparation
 
 For the local deterministic walkthrough:

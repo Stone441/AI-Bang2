@@ -1,5 +1,7 @@
 # Acceptance coverage · local candidate
 
+2026-10-05 审计UI/分页候选0278bab：clean archive295 Python、五fixture场景、原frontend与新增audit Node、fixture HTTP smoke通过，rebuild-audit-ui。同view query旧响应/分页/重复点击/导航竞态已复现修复，process stages区分、HTML纯文本、unsafe整数提示；不扩大A签名/真人已读/G1声明，Chrome visual blocked/not_run。
+
 2026-10-05 最新候选e9a55e6在无本机.runtime/.env的git archive中实际295/295、五fixture场景、Node及新启动HTTP前后端烟测通过，evidence/runs/rebuild-fixed。首次archive294/295及test环境依赖失败保留rebuild-candidate；用独立真实临时DB修复、不删安全断言。U-01更新为本地候选可重建subset，浏览器视觉、native矩阵、人工G1/G2不升级。
 
 2026-10-05 更新：长文窗口10新测试（293总方法）local verified subset；Q-02本次eng_b真实产品四结论/四源input/1529microUSD、缺证据控制0模型调用，精确quote/逐阶段native/双ledger/developer review通过，非product_ops权限persona。NL audit对实际live合成日志副本分页与oracle一致，7签名边界通过，包括未覆盖尾部删除可逃过旧checkpoint；offline test auditor/同机临时key，非native审计身份/G1。runner stale mode后缀问题及未来修复均记录，原回答/hash不改。集中候选缺口见DEMO_CANDIDATE。
