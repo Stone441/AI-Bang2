@@ -378,6 +378,33 @@ the budget receipt. Existing reservations without a receipt remain legacy and
 must not be retroactively attributed. Empty evidence records no external call.
 This local receipt is not an independent signature or vendor invoice.
 
+### Opt-in grounded synthesis contract (2026-10-05 increment)
+
+`--model deepseek --answer-style synthesis` retains the same server actor, source
+allowlist and budget ledger. Default excerpts remain unchanged. Each generated
+claim has `text`, known `evidence_ids`, and exactly one `supports` entry per
+citation (`evidence_id`, exact contiguous `quote`). Engine checks quoted provenance
+against the selected current evidence. At most four claims are accepted.
+
+After draft generation, Engine rechecks the entire selected set at
+`review_dispatch`, including versions, before a separate review model request.
+The reviewer is a separate prompt/call of the same model, not an independent
+model or trust domain. It receives full current authorized evidence and must explicitly
+approve every claim. Unknown, partial, negative or malformed review rejects the
+whole answer. Both requests reserve/settle budget independently against the same
+server request ID and existing USD20 ledger. Successful answers/history/exports
+contain separate `model_call` and `model_review` receipts; identical reservation
+IDs are rejected. Audit records `evidence_used.stage=sent_to_review` and both
+receipts in `generation_completed`. Return-time checks remain mandatory.
+
+Exact quote matching establishes provenance, not semantic entailment. Review is
+a fallible model quality filter; it does not establish identity, grant access,
+or guarantee factual correctness. Human semantic acceptance remains required,
+especially for negation, scope and contradictory evidence. No automatic retries
+or fallback silently turn a rejected synthesis into a successful answer.
+JSON mode follows the [official DeepSeek guide](https://api-docs.deepseek.com/guides/json_mode/);
+application validation still handles schema, references and unsupported output.
+
 ## 11. 自然语言审计查询：结构化工具，不另建小型RAG
 
 ```json

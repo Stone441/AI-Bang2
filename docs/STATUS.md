@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。`.DS_Store` ignored；用户明确要求后已将仅含旧 GPT 分析的 `Analysis&Planning/` 移至 Mac 废纸篓（可恢复），Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：270/270 回归通过（60 local synthetic + 210 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
+**阶段收尾（2026-10-05）：281/281 回归通过（60 local synthetic + 221 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，有引用综合回答已 opt-in verified live subset；同模型复核仍可能漏错，完整语义验收未完成。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -13,7 +13,7 @@
 - 当前源授权在模型前和返回前检查；未知拒绝；四源撤权、旧历史/导出/引用保护。模型、HTTP 均有实际回归。
 - 持久 fake source 与 SQLite 索引分离；对象级事务发布、创建/更新/删除、去重/乱序/重试、失败任务不被游标越过、重启恢复。请求触发处理，不宣称真实自动同步。
 - 完整问答审计、逐资料决策、sent_to_model/cited/dispatch 区分、scope 查询与稳定分页；60 并发追加链测试。已接入离线 Ed25519 检查点 CLI；同机同账号仍不等于生产独立签名边界。
-- `make test-report` 最新270/270 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
+- `make test-report` 最新281/281 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
 
 原型 32 测试阶段已通过从提交导出的独立临时目录 `make setup` / `make test` / JS 语法检查；本轮签名集成验证为当前 checkout 的 52 测试回归。
 
@@ -24,7 +24,7 @@
 | 项目 | 状态 |
 |---|---|
 | 四源 | 各源 live query verified subset；统一 live query / Slack独立reader API与撤权 verified subset；试用无付款方式，未授权收费续订 |
-| 模型 | fake-extractive与DeepSeek真实证据选择分列；自由综合回答、embedding/reranker/compressor未实现 |
+| 模型 | fake-extractive与DeepSeek真实证据选择分列；综合回答 opt-in verified subset；embedding/reranker/compressor未实现 |
 | 审计完整性 | partial；离线签名/篡改检测 verified local；独立 DB role / 加密 / 外部签名保管未实现 |
 | 腾讯工具 | verified local：真实 CodeBuddy 实现 + 审查修正；20 新测试/全仓库 52 测试通过；7 截图及原生 conversation history 已本地保存，未上传 |
 | 浏览器视觉 | 各源原生/应用问答、引用、历史有真实子集证据；统一四源答案/引用/历史/导出视觉 verified subset |
@@ -34,7 +34,7 @@
 
 1. DEV-09-CB 已完成：原始提交 `4165ee6`，集成提交 `8cd5088`，位于 `codex/dev-09-codebuddy-integration`；已通过 PR #2 合并至 main（71ad99b）。证据索引 `evidence/tool-usage/README.md`。后续推进密钥轮换、检查点生成节奏及独立保管；当前单公钥离线验证，不扩大 A-11 覆盖声明。
 2. DEV-10：统一四源 eng_b 真实问答及 Slack 原生撤权、旧历史/引用/导出拒绝已 verified subset；完成无关联读取优化的真实性能比较，之后补齐五场景 live 矩阵与权限继承/缓存边界。完整验收仍未通过。
-3. DEV-08/09：DeepSeek 真实证据选择与持久预算回执已验证；下一步实现有引用的综合回答并验证语义支持。生产身份/DB 隔离及独立审计保管仍需工程实现及运行验证。
+3. DEV-08/09：DeepSeek 真实证据选择与持久预算回执已验证；有引用综合回答已verified subset，下一步补齐模式专属人工UI与完整语义验收。生产身份/DB 隔离及独立审计保管仍需工程实现及运行验证。
 4. 浏览器可访问后按 RUNBOOK 完成 UI/键盘/移动布局检查，并组织 G1 人工核验；完善候选材料，最后 G2。
 
 本轮只交付本地候选，不宣称完整项目完成；没有承诺会话结束后继续运行。
@@ -226,3 +226,8 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 
 
 2026-10-05 DEV-10-LATENCY verified live API/fake model subset：按AUTH-014启动隔离8090基准1ba796b与8091优化8d4ba6b，stdin关闭，CF/Jira/Slack程序Keychain复用及Drive refresh后原生账号核验全部通过（两进程独立验证，不读取现有密码条目）。同题四源8证据，基准53.209秒、优化40.116秒；每源source_refresh/before_model/model_dispatch/before_dispatch仍8次allow，空link_seed8→0。每版本一份样本，仅说明本次观测，不保证SLA或真实DeepSeek端到端改善。分离SQLite，无DeepSeek网络调用/账本改动；仅停止自己两个临时进程，8088仍运行旧代码。证据linkless-optimization/live-latency.json及实际执行harness文本；下一任务有证据模型综合与五场景完整live。
+
+
+2026-10-05 DEV-08-SYNTHESIS verified local/mock + live subset：新增 opt-in --answer-style synthesis/make live-synthesis；默认原文模式保留。最多4条结论，每条已知证据ID及逐ID精确连续quote；复核前重新原生鉴权/版本检查，单独同模型请求查看全文并逐结论明确通过，否则整答拒绝。返回前检查不变；history/export保存supports与两份budget receipt，前端展示支持片段和分别费用。281/281（60 local+221 mock）/Node/五场景local subset通过，新增11个mock安全/失败账本及本机HTTP案例。首次审计未注册事件错误已保留并改用evidence_used.stage=sent_to_review，未弱化审计或撤权断言。
+
+真实8092隔离两题：第一题仅检索到三源7证据，模型四结论获准但四源覆盖探针failed，保留first-live-query/audit；第二题明确包含Jira code fix条件，四源8证据/40次当前检查全部allow，4结论与精确quote、两次共享账本settled/accepted、unsigned链实查10checks通过，58.95秒。回答引用CF/Drive/Jira三源，Slack进入授权模型上下文而未被引用，不称每源都有结论。agent逐结论文本检查保留pilot/GA、Done/发布批准与未确认范围边界；不等同人工G1。两题实际四次模型请求合计3340microUSD保守上界，非供应商账单。测试新进程已停止，旧8088保留，不要求用户凭据输入。完整五场景live/真人语义评测/继承ACL/G1/G2仍pending；综合模式HTTP双回执/历史/导出及同会话撤权也已mock业务源+真实loopback验证；下一P0人工UI与live场景矩阵。

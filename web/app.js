@@ -15,7 +15,7 @@ async function exportAnswer(id){$('answer').replaceChildren();$('other').replace
 function modelLabel(answer){
   if(answer.model==='fake-extractive-v1')return 'FAKE MODEL';
   if(answer.model_call?.called===false)return 'NO MODEL CALL';
-  if(answer.model_call?.called===true)return 'LIVE MODEL · SOURCE EXCERPTS';
+  if(answer.model_call?.called===true)return answer.claim_format==='grounded_synthesis_v1'?'LIVE MODEL · REVIEWED SYNTHESIS':'LIVE MODEL · SOURCE EXCERPTS';
   return 'MODEL CALL NOT RECORDED';
 }
 function renderModelUsage(answer,target){
@@ -23,12 +23,17 @@ function renderModelUsage(answer,target){
   if(answer.model==='fake-extractive-v1')return;
   if(receipt?.called===false){target.append(el('p','No external model request was sent.','muted'));return;}
   if(receipt?.called!==true){target.append(el('p','Model usage was not recorded for this answer.','muted'));return;}
-  const details=el('details',undefined,'model-usage');
-  details.append(el('summary','Model usage receipt'),
-    el('p',receipt.prompt_tokens+' input + '+receipt.completion_tokens+' output = '+receipt.total_tokens+' tokens'),
-    el('p','Conservative cost estimate: US$'+(receipt.accounted_upper_micro_usd/1000000).toFixed(6)),
-    el('p','This is an accounting upper estimate, not the provider invoice.','muted'));
-  target.append(details);
+  const receipts=[receipt];
+  if(answer.model_review?.called===true)receipts.push(answer.model_review);
+  for(const [index,item] of receipts.entries()){
+    const details=el('details',undefined,'model-usage');
+    details.append(el('summary',index?'Evidence review usage receipt':'Model usage receipt'),
+      el('p',item.prompt_tokens+' input + '+item.completion_tokens+' output = '+item.total_tokens+' tokens'),
+      el('p','Conservative cost estimate: US$'+(item.accounted_upper_micro_usd/1000000).toFixed(6)),
+      el('p','This is an accounting upper estimate, not the provider invoice.','muted'));
+    target.append(details);
+  }
+
 }
 function answerStatus(answer){
   if(answer.model_call?.called===false)return 'No supporting evidence found. No external model request was sent.';
@@ -36,7 +41,7 @@ function answerStatus(answer){
   if(answer.model==='fake-extractive-v1')return 'Answer recorded. Authorized synthetic source excerpts; fake model.';
   return answer.model_call?.called===true?'Answer recorded. Live model selected authorized source excerpts.':'Answer recorded. Model usage was not recorded.';
 }
-function renderAnswer(answer,target=$('answer')){target.replaceChildren();if(answer.unavailable){target.append(el('p',answer.message,'notice'));return;}const grid=el('div',undefined,'receipt'),main=el('div',undefined,'panel'),side=el('aside',undefined,'panel');const head=el('div',undefined,'receipt-head');head.append(el('h2','Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);for(const c of answer.claims){const block=el('div',undefined,'claim');block.append(el('p',c.text));for(const id of c.evidence_ids){const b=el('button',id,'citation');b.onclick=()=>preview(id);block.append(b);}main.append(block);}for(const u of answer.uncertainties)main.append(el('p',u,'notice'));main.append(el('p','Receipt '+answer.request_id,'muted'));const exportButton=el('button','Export answer');exportButton.onclick=()=>exportAnswer(answer.request_id);main.append(exportButton);renderModelUsage(answer,main);side.append(el('h3','Source evidence'));for(const e of answer.evidence){const card=el('div',undefined,'source-card');card.append(el('span',e.source,'source-name'));const b=el('button',e.title);b.onclick=()=>preview(e.evidence_id);card.append(el('p'),b,el('p',versionLabel(e)+' · '+JSON.stringify(e.locator)),el('p','Source updated '+new Date(e.source_updated_at).toLocaleString()),el('p','Indexed '+new Date(e.indexed_at).toLocaleString()));side.append(card);}if(!answer.evidence.length)side.append(el('p','No supporting evidence is available for this answer.'));grid.append(main,side);target.append(grid);}
+function renderAnswer(answer,target=$('answer')){target.replaceChildren();if(answer.unavailable){target.append(el('p',answer.message,'notice'));return;}const grid=el('div',undefined,'receipt'),main=el('div',undefined,'panel'),side=el('aside',undefined,'panel');const head=el('div',undefined,'receipt-head');head.append(el('h2',answer.claim_format==='grounded_synthesis_v1'?'Evidence-backed answer':'Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);for(const c of answer.claims){const block=el('div',undefined,'claim');block.append(el('p',c.text));if(c.supports?.length){const quotes=el('details');quotes.append(el('summary','Exact supporting quotes'));for(const support of c.supports)quotes.append(el('p',support.quote),el('p',support.evidence_id,'muted'));block.append(quotes);}for(const id of c.evidence_ids){const b=el('button',id,'citation');b.onclick=()=>preview(id);block.append(b);}main.append(block);}for(const u of answer.uncertainties)main.append(el('p',u,'notice'));main.append(el('p','Receipt '+answer.request_id,'muted'));const exportButton=el('button','Export answer');exportButton.onclick=()=>exportAnswer(answer.request_id);main.append(exportButton);renderModelUsage(answer,main);side.append(el('h3','Source evidence'));for(const e of answer.evidence){const card=el('div',undefined,'source-card');card.append(el('span',e.source,'source-name'));const b=el('button',e.title);b.onclick=()=>preview(e.evidence_id);card.append(el('p'),b,el('p',versionLabel(e)+' · '+JSON.stringify(e.locator)),el('p','Source updated '+new Date(e.source_updated_at).toLocaleString()),el('p','Indexed '+new Date(e.indexed_at).toLocaleString()));side.append(card);}if(!answer.evidence.length)side.append(el('p','No supporting evidence is available for this answer.'));grid.append(main,side);target.append(grid);}
 $('loginForm').onsubmit=async e=>{e.preventDefault();try{if(health?.auth_kind!=='demo')throw Error('Open the one-time link from the operator terminal.');session=await api(health.login_path,{user:$('user').value});identity();}catch(err){$('status').textContent=err.message;}};
 $('queryForm').onsubmit=async e=>{e.preventDefault();$('answer').replaceChildren();$('other').replaceChildren();$('ask').disabled=true;$('status').textContent='Checking access and assembling evidence…';try{const data={question:$('question').value};if(historyId)data.history_id=historyId;const a=await api('/api/query',data);historyId=a.request_id;renderAnswer(a);$('status').textContent=answerStatus(a);}catch(err){$('answer').replaceChildren();$('status').textContent=err.message;}finally{$('ask').disabled=false;}};
 for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{$('question').value=b.dataset.question;$('question').focus();};
@@ -50,7 +55,7 @@ async function boot(){
     health=await api('/api/health');
     if(health.auth_kind==='operator'){
       $('modeBadge').textContent=health.mode.includes('mock_http')?'MOCK API PILOT':'LIVE API PILOT';
-      $('modeDescription').textContent=health.mode.endsWith('_live_model_selection')?'Synthetic allowlisted resources · Live model selects excerpts · Local operator':'Synthetic allowlisted resources · Fake model · Local operator';
+      $('modeDescription').textContent=health.mode.endsWith('_live_model_synthesis')?'Synthetic allowlisted resources · Grounded synthesis with model review · Local operator':health.mode.endsWith('_live_model_selection')?'Synthetic allowlisted resources · Live model selects excerpts · Local operator':'Synthetic allowlisted resources · Fake model · Local operator';
       $('modeFooter').textContent='Operator pilot · not employee SSO';
       $('user').hidden=true;$('loginForm').querySelector('label').hidden=true;
       $('loginForm').querySelector('button').hidden=true;

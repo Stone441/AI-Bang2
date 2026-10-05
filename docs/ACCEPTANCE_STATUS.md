@@ -1,23 +1,23 @@
 # Acceptance coverage · local candidate
 
-当前有142个unittest方法（60 local synthetic + 82 mock HTTP，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；新增Confluence真实API/operator+fake model的查询及撤权子集，证据另列。真实模型/完整四源/前端身份/G1仍未通过。以下未覆盖部分保留，不改写05的oracle。
+当前281个unittest方法（60 local synthetic + 221 mock HTTP/model/credential contracts，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；四源真实查询/各源撤权子集与DeepSeek原文选择及opt-in综合另列。综合已有一次成功四源测试与agent语义对照，完整live矩阵、SSO、人工G1/G2仍未通过。以下未覆盖部分保留，不改写05的oracle。
 
 | IDs | 当前状态与实际证据 / 缺口 |
 |---|---|
-| Q-01/02/04 | local subset verified：工程五事实、四源、pilot/GA；fake 摘录，不代表 LLM 综合质量 |
+| Q-01/02/04 | local subset verified；Q-02 live synthesis subset：pilot/GA、Done/发布及未确认日期已agent对照；Q-04首题保留Slack撤回时间线。完整S-01五事实及非作者人工综合质量仍pending |
 | Q-03 | partial：关键词实体路径已实现，尚无专门错误相似对象对照 |
-| Q-05/06/07 | local subset：缺证据、伪造 ID、不支持 claim 均检查；真实模型及人工语义支持 not_run |
+| Q-05/06/07 | local/mock subset：缺证据、伪造ID、quote不匹配、负面/未知review拒绝；live synthesis 4claims精确quote和agent语义支持subset。模型review非准确性证明，人工语义支持not_run |
 | Q-08 | partial：固定四源授权范围检索；没有模型路由 |
 | Q-09 | local one-hop verified：authorized seed + 每目标授权；两跳未实现 |
 | Q-10 | partial：候选 24、输入 16000 字符预算；长文/近重复质量未验证 |
 | P-01/02 | local verified：服务端 session、body role 拒绝、同角色不同频道 |
 | P-03/04 | local verified：四源撤权/unknown；真实 429/token propagation blocked |
-| P-05/06/07 | local verified：历史/导出/预览复核；无答案缓存；附件下载未启用 |
+| P-05/06/07 | local/mock verified；原文模式旧历史/引用/导出native Slack撤权live subset。综合双回执/quotes保护已mock业务源+真实HTTP同会话验证，综合live撤权仍pending；无答案缓存，附件未启用 |
 | P-08 | local verified：存在/不存在可见结果一致；统计时间侧信道未证明 |
 | P-09/10 | partial：fixture 原生策略和单独评论/隐藏链接；真实继承/附件 blocked |
 | P-11 | local subset：恶意原文不能授予权限或调用工具；fake 可能如实引用恶意文字，真实模型 injection not_run |
 | P-12/13 | local verified：拒绝非 demo tenant；旧版本引用拒绝 |
-| P-14 | local only：没有第三方处理、HTTP generic errors；生产审计加密/出口 not_run |
+| P-14 | partial：已批准合成证据发送DeepSeek，当前权限检查及受控错误/预算有local/mock和live子集；未发送真实敏感数据。生产审计加密/出口治理not_run |
 | P-15 | local verified：内存/磁盘源生成期间撤权阻断；平台传播边界 blocked |
 | P-16 | not_supported：DM 不启用 |
 | F-01/02 | local verified：四源创建/更新、单对象发布；真实自动同步时延 not_run |
@@ -32,9 +32,9 @@
 | A-11 | partial：缺检查点显式不可信、未覆盖尾部单列、非 Ed25519 密钥拒绝已测试；当前单公钥，密钥轮换未实现 |
 | U-01 | local verified：标准库可启动、显式 demo、HTTP 实际请求；独立 git archive 目录 setup/test 已通过 |
 | U-02 | partial：前端分区 + server role enforcement、无 HTTP ACL 管理入口；非公开部署 |
-| U-03 | not_run visual：英文 UI/labels/focus/CSP 已实现；浏览器自动化被 ERR_BLOCKED_BY_CLIENT 阻挡 |
-| U-04 | not_run：无真实模型性能/成本；场景耗时只为本机 fake 调用时间 |
-| U-05 | partial：五场景自动记录/架构/源码；真实腾讯对话/7截图及离线签名已完成；live 记录缺失，最终材料未提交 |
+| U-03 | partial：英文原文答案/引用/历史/导出已有真实浏览器subset；综合quotes/双回执前端Node验证，综合真实视觉/完整键盘/对比度验收pending |
+| U-04 | live measured subset：同题live API/fake model53.21→40.12秒（单样本）；真实综合双调用58.95秒、双回执和共享USD20账本实查。供应商实扣/并发性能未测，不作SLA承诺 |
+| U-05 | partial：五场景自动记录/架构/源码；真实腾讯对话/7截图及离线签名已完成；live记录已分模式保存，完整矩阵和最终材料未提交 |
 | U-06 | blocked：非作者人工对照尚未组织 |
 
 失败改进记录：首次自然 S-01 未检索到 PAY-103，原失败见 `evidence/runs/first-scenario-failure.json`。保留断言，新增逐目标授权的一跳检索后回放通过。未硬编码展示答案。
@@ -43,3 +43,6 @@
 
 
 2026-10-05新增mock覆盖：Jira当前字段、父工单/受限评论独立授权、跨Confluence/Jira答案、更新/撤权/unknown/旧历史/引用及碰撞停止；operator网页登录含native identity匹配、ticket单次/过期、CSRF/Host/伪role、同HTTP session撤权后的query/history/export/preview。对应Q-03/06/07/08、P-01/03/04/05/07/09、F-03本地或mock子集，未将完整ID升级passed。网页入口不是SSO，真实网页和JiraAPI仍not_run。J-02/KAN-4 UI种植证据仅原生Done/正文，不能等同源权限通过。前一增量中的Q-04（Slack撤回猜测）映射已纠正，不用Confluence runbook验收替代Slack线程场景。
+
+
+2026-10-05 synthesis增量：281回归、前端Node、五场景local subset。10项live检查、4结论精确quote及agent语义对照见 `evidence/runs/synthesis/live-query.json`，同模型独立prompt/call复核、当前权限`review_dispatch`和返回前检查分别记录。Q-02/06/07、P-01/03/05/07/15、A-01/10、U-04仅按各实际local/mock/live子集覆盖，不将整体ID标passed。首次四源覆盖探针failed记录保留（三源7证据），第二个明确Jira code fix问题四源8证据通过；关键词检索并不保证全语义召回。两题3340microUSD保守费用，不是vendor invoice。G1非作者观看、综合live撤权、完整五场景矩阵仍pending。

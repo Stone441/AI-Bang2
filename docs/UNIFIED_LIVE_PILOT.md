@@ -1,14 +1,16 @@
 # Unified live pilot checkpoint
 
-2026-10-05. Current single-source native queries are verified subsets; unified
-four-source live execution is not_run. The local operator is not employee SSO.
+2026-10-05 updated checkpoint. Unified eng_b four-source live query, citations,
+history and Slack reader revocation are verified subsets. Grounded synthesis is
+opt-in and has one successful four-source live query; full scenario/ACL acceptance
+is pending. The local operator is not employee SSO.
 
-| Source | Current actual operator | Unified-reader gap |
+| Source | Current actual unified reader | Remaining boundary |
 | --- | --- | --- |
 | Confluence | eng_b, secondary email | Already delegated; retain current native identity |
 | Jira | eng_b, secondary email | Already delegated; retain current native identity |
-| Slack | eng_a, primary Google account | Separate ordinary reader membership and its own OAuth grant |
-| Drive | eng_a, primary Google account, file owner | Separate Google reader and Reader sharing on the three synthetic files |
+| Slack | eng_b, kyle000909@gmail.com | Own native identity/OAuth; private member revocation verified subset, full ACL matrix pending |
+| Drive | eng_b, kyle000909@gmail.com, Reader | Native identity/refresh verified; full inherited permission matrix pending |
 
 Do not rename eng_a's existing Slack/Drive delegation to eng_b or borrow owner
 access. The reviewed reader preparation uses existing Atlassian email
@@ -16,7 +18,7 @@ access. The reviewed reader preparation uses existing Atlassian email
 The user explicitly confirmed this account substitution on 2026-10-05. Join only
 AI-Bang2 Slack, and share only the approved synthetic Drive folder as Reader.
 This enables actual removal of the reader while owner seeding access remains.
-These additional registrations, memberships and sharing require explicit approval.
+These additional memberships and synthetic-folder sharing were explicitly approved; future changes outside that scope still require approval.
 Google/Slack final credentials and terms remain user-operated.
 
 Requested eventual read scopes are the existing pilot scopes: Drive
@@ -65,4 +67,7 @@ Port allocation update:8087 is occupied by the running independent Drive reader;
 
 ## Current simplified startup · AUTH-014
 
-Use `make live` from the repository root. The user approved app-owned macOS Keychain persistence for the reviewed eng_b mapping and existing model budget. First input saves each source independently; later launches reuse saved credentials, with native identity and current permission checks unchanged. Drive offline consent uses the same exact read-only scope; native-account verification precedes refresh-token storage. Existing Passwords entries are never read. See RUNBOOK for replacement of one invalid credential. Actual unified live startup and real refresh reuse remain not_run until executed; local/mock tests and a synthetic native Keychain smoke are separate evidence.
+Use `make live` from the repository root. The user approved app-owned macOS Keychain persistence for the reviewed eng_b mapping and existing model budget. First input saves each source independently; later launches reuse saved credentials, with native identity and current permission checks unchanged. Drive offline consent uses the same exact read-only scope; native-account verification precedes refresh-token storage. Existing Passwords entries are never read. See RUNBOOK for replacement of one invalid credential. Actual unified startup and real refresh reuse are verified subsets in evidence/runs/linkless-optimization/live-latency.json; local/mock tests and the synthetic native Keychain smoke remain separate evidence.
+
+
+Current opt-in synthesis: `make live-synthesis` from repository root, preserving the existing USD20 ledger and saved reader credentials. Stop the current8088 process yourself before reusing that port. Exact quotes, separate same-model review and a fresh `review_dispatch` native authorization check apply; model review is fallible. See RUNBOOK and evidence/runs/synthesis/live-query.json. Historical preparation notes above describe earlier checkpoints and must not be interpreted as the latest acceptance status.

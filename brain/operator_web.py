@@ -89,11 +89,16 @@ def main(argv=None):
     parser.add_argument('--live', action='store_true')
     parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive or multi; browser consent instead of hidden Drive token')
     parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
+    parser.add_argument('--answer-style', choices=['excerpts','synthesis'], default='excerpts',
+                        help='Synthesis uses two budgeted calls and exact grounding plus model review')
     parser.add_argument('--credential-store',choices=['memory','macos-keychain'],default='memory',
                         help='Explicit opt-in: save/reuse app-owned credentials in this Mac Keychain')
     parser.add_argument('--replace-credential',choices=['confluence','jira','slack','drive','deepseek'],
                         help='Re-enter only one credential for this launch; keep all others')
     args = parser.parse_args(argv)
+    if args.answer_style=='synthesis' and args.model!='deepseek':
+        print('not_run: synthesis requires DeepSeek; no credentials or platform calls performed.')
+        return 2
     if not args.live:
         print('not_run: --live required; no credentials or platform calls performed.')
         return 2
@@ -166,14 +171,20 @@ def main(argv=None):
                     warnings.simplefilter('error', getpass.GetPassWarning)
                     key = getpass.getpass('DeepSeek API key (hidden): ').strip()
             model = DeepSeekEvidenceModel(key, ledger, synthetic_only=True)
+            if args.answer_style=='synthesis':
+                from .synthesis import DeepSeekSynthesisModel
+                model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True)
             if credential_store and new_key:
                 credential_store.put('deepseek',app.actor.tenant,args.actor,'deepseek-flash',key)
             del key
             app.engine.model = model
             app.engine.mode = app.engine.mode.removesuffix('_fake_model') + '_live_model_selection'
+            if args.answer_style=='synthesis':
+                app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_synthesis'
         server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
         label = 'LIVE MODEL EVIDENCE SELECTION' if args.model == 'deepseek' else 'FAKE MODEL'
+        if args.answer_style=='synthesis': label='LIVE MODEL GROUNDED SYNTHESIS / SEPARATE MODEL REVIEW'
         print(f'{args.source.title()} LIVE API / {label} / LOCAL OPERATOR (not SSO)', flush=True)
         print(f'Open once within 10 minutes: http://127.0.0.1:{server.server_port}/#ticket={app.bootstrap_ticket()}', flush=True)
         stage = 'runtime'

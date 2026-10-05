@@ -102,16 +102,42 @@ class Engine:
                     raise PermissionError('Evidence changed; please ask again')
             for e in selected:
                 self.audit.append('evidence_used',actor.user_id,rid,{'evidence_id':e.evidence_id,'resource_id':e.resource_id,'source':e.source,'version':e.version,'stage':'sent_to_model','resource_scope':'payment-service'})
-            if hasattr(self.model,'generate_for_request'):
+            def authorize_model_stage(phase):
+                if phase!='review_dispatch': raise ValueError('Invalid model stage')
+                for e in selected:
+                    resource=self.store.get(e.resource_id)
+                    if (not resource or not self.check(actor,resource,rid,phase)
+                            or self.world.resources[e.resource_id]['version']!=e.version):
+                        raise PermissionError('Evidence changed; please ask again')
+                for e in selected:
+                    self.audit.append('evidence_used',actor.user_id,rid,
+                                      {'evidence_id':e.evidence_id,'resource_id':e.resource_id,
+                                       'source':e.source,'version':e.version,'stage':'sent_to_review',
+                                       'resource_scope':'payment-service'})
+            if hasattr(self.model,'generate_with_authorization'):
+                draft=self.model.generate_with_authorization(question,selected,rid,authorize_model_stage)
+            elif hasattr(self.model,'generate_for_request'):
                 draft=self.model.generate_for_request(question,selected,rid)
             else:
                 draft=self.model.generate(question,selected)
             by_id={e.evidence_id:e for e in selected}
             # Exact extractive support is intentionally strict for this provider.
             claims=[]
+            synthesis=draft.get('claim_format')=='grounded_synthesis_v1'
+            if synthesis:
+                if (getattr(self.model,'claim_format',None)!='grounded_synthesis_v1'
+                        or draft.get('review_status')!='accepted'):
+                    raise ValueError('Unreviewed synthesis')
+                review_receipt=public_receipt(draft.get('model_review'),rid)
+                if review_receipt['called'] is not True: raise ValueError('Missing review receipt')
             for claim in draft.get('claims',[]):
                 ids=claim.get('evidence_ids',[])
                 if not ids or any(i not in by_id for i in ids): raise ValueError('Unsupported model citation')
+                if synthesis:
+                    from .synthesis import validate_claim
+                    validate_claim(claim,selected)
+                    claims.append(claim)
+                    continue
                 if not isinstance(claim.get('text'),str) or not any(claim['text']==by_id[i].text for i in ids):
                     raise ValueError('Unsupported model claim')
                 claims.append({'text':claim['text'],'evidence_ids':ids})
@@ -121,6 +147,11 @@ class Engine:
                 if receipt['called'] is False and selected:
                     raise ValueError('No-call receipt contradicts model input')
                 generation['model_call']=receipt
+            if synthesis:
+                if generation['model_call']['reservation_id']==review_receipt['reservation_id']:
+                    raise ValueError('Model review must be a separate request')
+                generation.update(claim_format='grounded_synthesis_v1',model_review=review_receipt,
+                                  review_status='accepted')
             self.audit.append('generation_completed',actor.user_id,rid,generation)
             if self.before_dispatch: self.before_dispatch()
             for e in selected:
@@ -132,6 +163,9 @@ class Engine:
                       'uncertainties':[getattr(self.model,'answer_notice','Source excerpts only; live AI synthesis is not enabled.')] if claims else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
             if 'model_call' in generation: response['model_call']=generation['model_call']
+            if synthesis:
+                response.update(claim_format=generation['claim_format'],model_review=review_receipt,
+                                review_status='accepted')
             self.audit.append('response_committed',actor.user_id,rid,{'response':response})
             self.store.save_run(rid,actor.user_id,response)
             return response

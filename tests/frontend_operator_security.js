@@ -51,6 +51,15 @@ function seed(){for(const id of ['answer','other','previewBody'])get(id).append(
   assert.match(vm.runInContext("answerStatus({claims:[],model_call:{called:true}})",context),/model checked authorized sources/);
   vm.runInContext("renderAnswer({request_id:'revoked',unavailable:true,message:'No longer available'})",context);
   assert.doesNotMatch(visibleText(get('answer')),/tokens|cost estimate|Model usage/);
+  vm.runInContext("renderAnswer({model:'deepseek-flash-grounded-synthesis-v1',claim_format:'grounded_synthesis_v1',claims:[{text:'Pilot only.',evidence_ids:['drive:test@1'],supports:[{evidence_id:'drive:test@1',quote:'GA is not approved.'}]}],evidence:[],uncertainties:[],request_id:'synthetic',model_call:{called:true,prompt_tokens:100,completion_tokens:20,total_tokens:120,accounted_upper_micro_usd:54},model_review:{called:true,prompt_tokens:110,completion_tokens:10,total_tokens:120,accounted_upper_micro_usd:45}})",context);
+  assert.match(visibleText(get('answer')),/Evidence-backed answer/);
+  assert.match(visibleText(get('answer')),/REVIEWED SYNTHESIS/);
+  assert.match(visibleText(get('answer')),/Exact supporting quotes/);
+  assert.match(visibleText(get('answer')),/GA is not approved/);
+  assert.match(visibleText(get('answer')),/Evidence review usage receipt/);
+  assert.match(visibleText(get('answer')),/US\$0\.000045/);
+  vm.runInContext("renderAnswer({request_id:'revoked',unavailable:true,message:'No longer available'})",context);
+  assert.doesNotMatch(visibleText(get('answer')),/GA is not approved|review usage|Pilot only/);
   const receiptId='0123456789abcdef0123456789abcdef';
   seed();let requested=[];
   context.fetch=async path=>{requested.push(path);return {ok:true,status:200,text:async()=>JSON.stringify({history:[{request_id:receiptId,unavailable:true}]})};};

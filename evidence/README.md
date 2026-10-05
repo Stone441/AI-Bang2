@@ -51,3 +51,6 @@
 
 
 2026-10-05 [live native-source latency comparison](runs/linkless-optimization/live-latency.json): real approved app-owned credential reuse/native identity and Drive refresh, four sources/eight excerpts, fake model only. Baseline53.209s / optimized40.116s, one sample each; all four remaining authorization phases preserved. [Exact one-off harness text](runs/linkless-optimization/latency-harness.py.txt) records execution for review (requires existing approved private configs/Keychain; not a general startup command). Separate test DBs, original8088 untouched, no paid model request.
+
+
+2026-10-05 grounded synthesis: [successful live query](runs/synthesis/live-query.json), [actual audit](runs/synthesis/live-audit.json), [exact harness](runs/synthesis/live-harness.py.txt). Four authorized input sources/eight objects, four claims citing three sources, exact quotes and separate same-model review, 10checks;58.95s. [First four-source coverage failure](runs/synthesis/first-live-query.json) preserved (valid three-source answer, did not meet probe coverage), and [first targeted audit error](runs/synthesis/first-failed-targeted-tests.txt) retained. 281local/mock regressions/Node passed; new two-query model accounting3340microUSD upper estimate, not invoice. Review is fallible; no G1/full live acceptance claim.

@@ -115,3 +115,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-10-LATENCY verified live API/fake model subset：双隔离进程验证已保存CF/Jira/Slack Keychain+真实Drive refresh复用，统一8证据源读取53.209→40.116秒（每版本单样本）；模型/返回边界保持，旧8088未重启。性能及refresh试点阻塞解除，长期过期处理/完整矩阵仍partial。下一P1 grounded模型综合；G1/G2仍pending。
+
+
+2026-10-05 DEV-08-SYNTHESIS verified local/mock + live subset：opt-in双调用/精确quote/逐结论review/二次原生授权与双回执实现；281回归、Node及五场景local subset通过。实际四源8input证据→4综合claim（引用三源），10live checks通过；首题仅三源命中的四源探针失败记录保留。新模型保守费用3340microUSD，同一USD20ledger。综合模式HTTP/同会话撤权已verified mock；下一P0人工UI验收、官方五场景live矩阵与未知/撤权完整覆盖；当前模型复核非准确性保证，G1/G2未通过。

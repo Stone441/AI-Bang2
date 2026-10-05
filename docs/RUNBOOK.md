@@ -162,3 +162,32 @@ python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.j
 
 
 答案和Recent answers中的Export answer会重新检查所有依赖的当前权限，再下载服务端原始JSON envelope（history数组，保留大整数版本号）。已撤权的答案不下载文件。下载副本离开系统后不能被撤回；演示中只导出合成资料。刷新页面即可加载前端更新，无需重启服务/重填凭据。Session失效时提示打开运行终端最新的一次性入口；资料403而session仍有效时只拒绝对应访问，不要求重登录。
+
+### Opt-in grounded synthesis (synthetic pilot)
+
+Default `make live` retains source-excerpt selection. Use `make live-synthesis` for the reviewed mode, or add
+`--answer-style synthesis` to the reviewed multi-source command:
+
+```sh
+python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --oauth-client .runtime/drive-oauth-client.json --port 8088 --live --model deepseek --credential-store macos-keychain --answer-style synthesis
+```
+
+Do not start a second process on an occupied port. Keep the current service or
+stop it yourself before selecting this mode; app-owned Keychain reuse avoids
+re-entering saved credentials. Native account verification still runs. Existing
+source scopes and the same `.runtime/deepseek-budget.sqlite` USD20 ceiling apply.
+Do not change the working directory to create another budget ledger.
+
+Ask `What is approved for the payment-service pilot, what remains blocked, and what incident safeguards must be in place?`.
+The answer displays a concise conclusion per claim, citation buttons, expandable
+exact supporting quotes, and separate generation/review usage receipts. History
+and raw export preserve grounding and both receipts; current access is checked
+again. The review reads full authorized evidence after another native check.
+
+Review is a fallible quality filter: exact quotes prove source provenance, not
+semantic correctness. Human acceptance must check scope, negation, contradictions
+and whether conclusions actually follow. Missing quote/citation, unknown or
+negative review, changed access/version and incomplete output reject the answer;
+no automatic paid retry or silent fallback occurs. Fake-model mode does not
+simulate passing synthesis review. Complete five-scenario live acceptance and
+G1/G2 remain separate from local/mock results.
