@@ -107,6 +107,14 @@ function seed(){for(const id of ['answer','other','previewBody'])get(id).append(
   assert.equal(vm.runInContext('historyId',context),null);
   resolveNewQuery({ok:true,json:async()=>({request_id:'new',model:'fake-extractive-v1',claims:[],evidence:[],uncertainties:[]})});
   await newQuery;assert.equal(get('ask').disabled,false);assert.equal(vm.runInContext('historyId',context),'new');
+  seed();get('question').value='previous topic';get('newQuestion').onclick();
+  assert.equal(vm.runInContext('historyId',context),null);assert.equal(get('question').value,'');
+  assert.equal(get('answer').children.length,0);assert.equal(get('other').children.length,0);assert.equal(get('preview').open,false);
+  let resolveLateQuery;context.fetch=()=>new Promise(resolve=>resolveLateQuery=resolve);
+  const abandonedQuery=get('queryForm').onsubmit({preventDefault(){}});get('newQuestion').onclick();
+  resolveLateQuery({ok:true,json:async()=>({request_id:'abandoned',model:'fake-extractive-v1',claims:[{text:'ABANDONED-TOPIC',evidence_ids:[]}],evidence:[],uncertainties:[]})});
+  await abandonedQuery;assert.equal(vm.runInContext('historyId',context),null);
+  assert.doesNotMatch(visibleText(get('answer')),/ABANDONED-TOPIC/);
   let resolveLateHistory;
   context.fetch=()=>new Promise(resolve=>resolveLateHistory=resolve);
   const oldHistory=get('historyNav').onclick();get('workspaceNav').onclick();

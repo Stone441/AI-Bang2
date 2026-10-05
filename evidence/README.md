@@ -90,3 +90,5 @@
 2026-10-06 native-jira-update：真实Jira专用合成KAN-6 UI正文更新/eng_b只读API/fake model，13checks/23events；ignored screenshots与hash在native-seed.json。既有runtime服务/配置/原工单不改。
 
 2026-10-06 product-reader-local：AUTH-016批准后单源CF Keychain复用/身份先核验/隔离DB0600，32targeted/307full fixture/mock通过；native产品身份/token/新Keychain尚not_run，浏览器待用户登录。
+
+- `runs/native-product-reader/`: AUTH-016 independent product_ops Confluence identity/Keychain reuse, C-01/C-03 native deny without body and C-02 allow; 16 live API/fake checks, 309 local Python tests, browser answer/preview/history/standalone denial and New question UI checks. Not full persona/G1/G2 acceptance.
