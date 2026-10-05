@@ -138,3 +138,24 @@ Actual first DeepSeek checkpoint: [live-drive-query.json](../evidence/runs/deeps
 Model usage receipts: new answers expose validated token counts and a conservative USD cost estimate under “Model usage receipt”. This is not the vendor invoice. Older answers without a receipt say “MODEL CALL NOT RECORDED”; do not infer a live call or zero usage from their evidence list. Native/history/export authorization still gates the entire record. Static UI updates require refresh; already running Python processes do not load changed Engine code automatically.
 
 Atlassian hidden input: enter the mapped Atlassian email only, then paste only the scoped token value from the password field. Nothing appears while typing/pasting. Invalid input retries just that field (at most3 attempts): `credential_email_invalid`, `credential_token_empty`, `credential_token_multiline`, `credential_token_too_long`; `credential_secure_tty_required`, `credential_hidden_input_unavailable`, `credential_input_ended` stop without echo fallback. These local diagnostics do not indicate whether a token is valid on the platform. Share only the fixed error code for troubleshooting, never entered values.
+
+
+### Approved one-command four-source startup (AUTH-014)
+
+在仓库根目录的新 VS Code 终端只运行：
+
+```sh
+make live
+```
+
+使用已审核 eng_b 的 ignored bundle，8088，真实四源及 DeepSeek，显式 opt-in 本机钥匙串保存。首次仍需逐项隐藏输入 Confluence/Jira 邮箱与各自 token、Slack reader token，完成 Google 只读浏览器授权，再隐藏输入 DeepSeek key。程序不读取你在「密码」应用里已有的条目；创建自己的钥匙串条目。已保存项在后续启动复用，后续步骤失败也不丢失前面的已保存项。操作系统可能要求解锁或允许钥匙串访问。不要关闭安全设置，不发送密钥/完整入口链接。
+
+Google refresh 只在原生账号核对成功后保存；以后重启自动换 access token，scope 固定 drive.readonly。撤销/过期可能需要只重新完成 Google 授权；运行中的 access token 到期仍拒绝访问，可重启。源 token 的格式校验不等于平台授权通过：启动仍核对全部原生账号，每次问答/引用/历史仍核对当前权限。DeepSeek 价格日期及 USD20 账本限制不变。
+
+如只有某枚凭据错误，复制下列命令，将最后的平台选择为 confluence、jira、slack、drive 或 deepseek，只重新输入该项：
+
+```sh
+python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --oauth-client .runtime/drive-oauth-client.json --port 8088 --live --model deepseek --credential-store macos-keychain --replace-credential slack
+```
+
+默认未指定 credential-store 的旧命令依然仅内存保存。钥匙串拒绝读取时停止，不回退明文。只读平台与模型真实集成另行验收；本次合成钥匙串 smoke 和 mock refresh 不代表统一四源 live 已通过。

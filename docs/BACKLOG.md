@@ -94,3 +94,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 2026-10-05 DEV-11-RECEIPT-UI verified local/mock：新增3个Python案例（251=60local+191mock）、13项receipt针对性测试与Node前端状态/usage测试通过；回答/历史/导出回执一致且撤权时隐藏。对应A-10/P-05/P-07子集、模型费用可核验。统一four-source live仍等待用户完成8088启动，不把listener存在当服务ready。下一P0 native四源问答/Slack撤权；P1 grounded综合回答与完整live矩阵。
 
 2026-10-05 DEV-10-INPUT verified local/mock：5新增测试覆盖格式失败分类、field-only bounded retry、安全TTY及listener cleanup；全256通过。P0统一live启动仍待用户重试并提供固定code，不申请新scope/token或读取密码管理器。
+
+
+2026-10-05 DEV-10-KEYCHAIN verified local/mock + native synthetic smoke：AUTH-014下实现 app-owned 系统钥匙串、逐项保存、单项更新、Google refresh exact scope/原生身份校验；266回归和五场景local subset通过。依赖 reviewed bundle/native映射不变；真实持久化及统一live启动/refresh复用 not_run，Slack读者撤权仍P0待验收。用户接续命令 make live，无新scope/预算。

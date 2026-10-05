@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：256/256 回归通过（60 local synthetic + 196 mock HTTP）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/撤权及统一四源 live 仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
+**阶段收尾（2026-10-05）：266/266 回归通过（60 local synthetic + 206 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/撤权及统一四源 live 仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -13,7 +13,7 @@
 - 当前源授权在模型前和返回前检查；未知拒绝；四源撤权、旧历史/导出/引用保护。模型、HTTP 均有实际回归。
 - 持久 fake source 与 SQLite 索引分离；对象级事务发布、创建/更新/删除、去重/乱序/重试、失败任务不被游标越过、重启恢复。请求触发处理，不宣称真实自动同步。
 - 完整问答审计、逐资料决策、sent_to_model/cited/dispatch 区分、scope 查询与稳定分页；60 并发追加链测试。已接入离线 Ed25519 检查点 CLI；同机同账号仍不等于生产独立签名边界。
-- `make test-report` 最新248/248 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
+- `make test-report` 最新266/266 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
 
 原型 32 测试阶段已通过从提交导出的独立临时目录 `make setup` / `make test` / JS 语法检查；本轮签名集成验证为当前 checkout 的 52 测试回归。
 
@@ -199,3 +199,6 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 8088接续补充：后续只读health探测连接不可用，listener已不在监听；没有应用页/native startup完成的证据。等待用户提供固定启动提示或完成纯命令重试，不读取凭据、不自动重启用户进程。
 
 2026-10-05 DEV-10-INPUT修复已verified local/mock：用户提供Confluence hidden prompts之后configuration_or_hidden_input_unavailable，原始细分原因未记录，不能认定token scope错误；此路径尚未请求native API。新增固定credential原因码，先校验邮箱再请求token；只重输当前字段最多3次，secure TTY/warning/EOF终止，不echo或持久化。完整256/256（60local+196mock）、五场景local subset和Node通过；10项probe针对性已通过。真实重试仍待用户，统一live未通过。
+
+
+2026-10-05 DEV-10-KEYCHAIN：AUTH-014 明确批准后，实现 opt-in app-owned macOS Keychain、逐 source 保存、单项 replacement、Google 固定只读 scope offline refresh 重启复用及原生账号校验；make live 为统一入口。10项新增 mock 安全/复用测试；实际本机随机隔离合成条目 add/read/update/delete 已通过并删除，不访问已有密码。完整266/266（60local/206mock），五场景 passed_local_subset；无真实平台/模型新增请求或费用。真实秘密尚未由程序保存，统一四源启动及真实refresh复用仍 not_run。接续：用户新终端 make live，首次输入后保留进程；检查四源身份与问答，再完成Slack读者撤权。运行中access token过期仍fail closed；G1/G2未通过。

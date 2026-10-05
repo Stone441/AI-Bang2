@@ -180,3 +180,10 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 ADR-020：修复网页用evidence数量推断模型调用的问题。将经过request_id/usage/state校验的既有回执随response保存，界面按显式called显示调用标识、token和保守费用估算；旧记录缺回执显示not recorded，不回填、不称vendor invoice。回执不新增授权，撤权历史整条隐藏。代价是旧进程未加载Engine新增代码时回执仍unknown；回滚可移除展示和response投影，账本/原有权限边界不变。
 
 2026-10-05 ADR-021：旧generic配置/hidden错误无法区分输入失败，且有效邮箱随token失误被重复请求。引入固定受控reason enum和每字段最多3次本地重试；保留现有输入格式及安全TTY约束，不重试平台API、不缓存/persist秘密。原现场细分根因未记录，修复提供下一次可靠诊断，不声称已确认原用户输入。
+
+
+2026-10-05 AUTH-014：用户明确回复“批准本机钥匙串保存与程序复用（推荐）”。批准本项目本机程序保存并复用已审核 eng_b 的 Confluence/Jira authorization（含邮箱）、Slack reader token、DeepSeek key、Google 已批准 drive.readonly 返回的 refresh token（若有），限现有 persona/native account/平台及模型预算。仅创建/读写 app-owned macOS Keychain 项；不读取用户已有「密码」条目、不写明文文件、不扩 scope/费用。不授权部署、G1/G2 或上传密钥。本项明确覆盖此前仅内存保存限制，默认 memory 模式仍保留。
+
+2026-10-05 ADR-022：重复启动丢失全部人工输入造成操作负担；增加显式 --credential-store macos-keychain 与 make live，直接调用 macOS Security.framework Generic Password API，不经 shell 参数传密钥。按 source/tenant/actor/native account（Drive 为 client ID+email）隔离；源凭据格式通过即逐项保存，后续失败不要求已保存项重输，平台真实性仍由每次启动及请求的原生身份/权限检查决定。DeepSeek 构造校验后保存；Drive 固定 scope 的 offline OAuth 获得 refresh，核对原生账号后保存，重启刷新并再次核对身份；invalid_grant 才要求单独 Google 重授权，其他错误拒绝。--replace-credential 仅忽略并更新指定平台旧条目，不预先删除。拒绝/锁定钥匙串不降级明文。
+
+钥匙串提供 OS 加密保存和系统访问提示，不是同机同账号恶意进程隔离或企业凭据服务；Python 内存不保证安全擦除。现有已下载 OAuth client JSON 仍按原批准保留为 ignored 0600 文件，本次不另写 token 文件。运行中 access token 到期仍 fail closed，可重启刷新；不承诺永久有效。回滚为 --credential-store memory，既有 app-owned 条目不会被自动删除，用户可用「钥匙串访问」按 AI-Bang2 pilot v1 / 平台删除。依据：[Apple Generic Password API](https://developer.apple.com/documentation/security/seckeychainfindgenericpassword(_:_:_:_:_:_:_:_:))、[Google native-app OAuth](https://developers.google.com/identity/protocols/oauth2/native-app)。实际四源 Keychain 复用/真实 Google refresh 尚 not_run。
