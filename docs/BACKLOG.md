@@ -127,3 +127,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-08/11-SYNTHESIS-UI verified live subset：真实综合UI支持片段/双回执/引用/history/raw下载与键盘Enter/Escape通过；初答漏问到的保障，保留质量失败。v2 question_covered明确boolean判定及更严格生成提示，282回归通过；真实首轮review拒绝、次轮缺quote拒绝、最终四源同题11checks通过且补齐timeout budget/failover。前三claim重复仍待优化，不据单样本/G1泛化。用户8094旧v1保留，backend更新需终端重启一次，无凭据重输；下一P0综合原生撤权/增量更新与完整live矩阵，P1质量/性能。
+
+
+2026-10-05 DEV-11-PORT-SESSION verified local HTTP：原共享CookieJar双端口互相覆盖已复现、修复并验证login/logout/CSRF独立；283回归通过。真实8094本轮会话失败归因unknown，Chrome双端口fixture被blocked；综合撤权in_progress等待修复版有效入口，不修改原生权限、不再要求token。

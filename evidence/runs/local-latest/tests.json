@@ -1,16 +1,16 @@
 {
-  "started_at": "2026-10-05T09:35:44.271839+00:00",
-  "finished_at": "2026-10-05T09:35:57.275784+00:00",
+  "started_at": "2026-10-05T11:09:49.718314+00:00",
+  "finished_at": "2026-10-05T11:10:05.593265+00:00",
   "mode": "local_synthetic_and_mock_http",
   "live_api_called": false,
   "python": "3.14.7",
-  "commit": "278d86af1c5e93daf68624b88890cf226e4bcc44",
+  "commit": "01d7d286421456d360ff96680bc873a61d1d333b",
   "source_hashes": {
     "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
     "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
     "brain/operator_web.py": "8865abbbfed436738538ae95c4c72692b214da4ae2ac5643c2c8fd85deb2e636",
     "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
-    "brain/server.py": "585c7fd45e1c67002ab9147023e12096726784c1c6d59740fa3c001bc202cf65",
+    "brain/server.py": "cc13895437c34ec3a352a778d883e3df26cf3355c0b70749da91699ab0ea2324",
     "brain/model_receipt.py": "4055abbc3f8bd9804dcfedc49c2a440ad5fe08771ffd914b1b5f563f8238c431",
     "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
     "brain/confluence.py": "324e5a8584a55beda55401a489ffbbc5267fb325c490bab7547edf192090860d",
@@ -34,6 +34,7 @@
     "tests/test_jira_query.py": "f7d6a4e2459fd880782bc52e61ea08fd6d9a6dca51df692b2aff0a28f6003667",
     "tests/test_jira_discovery.py": "de2ca86f330bb9bb13cfa66645b0c674e1112a4c2e52e8de54c469d3852739c5",
     "tests/test_engine.py": "0449d5240af821d03545f9fcec1672ef7c0bd5e18149ae40ded97228834b322e",
+    "tests/.DS_Store": "1c7548ee8928efcf891c728906c51313a28fa91f7a2e1f5bb2efb3da9918a1e8",
     "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
     "tests/test_confluence_revocation.py": "85658ba53f7865528ea62e57880d13d5ef0cafb8db877c636a721e2410ab73d2",
     "tests/test_confluence_probe.py": "16eb8a903d9abb0d2ac0be6b46751a3e0bf396373212fa9f74974f7cfe476d0b",
@@ -46,7 +47,7 @@
     "tests/test_drive_operator.py": "f7629bcc64169731c703243d7aa900e26c1ab81fba7c90b2291931fe3daf92d1",
     "tests/test_jira.py": "6138a1a49e70b76db71aafb489cb72de400d69a70a69d2cbc6fbdaa493e1f6b3",
     "tests/test_live_seed.py": "df2ba1d2daa3e7f1016527830de12f3ad2f748633ad01c778819a088db0b19d0",
-    "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
+    "tests/test_http.py": "ca92f8376d5670e6d63e558fd3fbe8276cfa2e5014181062d8c1c33fb423b204",
     "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8",
     "tests/test_drive_oauth.py": "900b1a6d8b6313dee7e1f0bdcc9d4a49a1727e58dee962776c9f4e9fa9bc6cb7",
     "tests/test_budget.py": "09e70b7fc17c2ce34787668a28183f88a1ae539dcf94f5255e0fd135ff7f8f7c",
@@ -81,7 +82,7 @@
     "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
     "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
   },
-  "tests_run": 282,
+  "tests_run": 283,
   "successful": true,
   "results": [
     {
@@ -901,6 +902,11 @@
     },
     {
       "test": "test_http.HTTP.test_local_authority_file_update_and_restart",
+      "status": "passed",
+      "mode": "local_synthetic"
+    },
+    {
+      "test": "test_http.HTTP.test_shared_browser_cookie_jar_keeps_two_port_sessions_isolated",
       "status": "passed",
       "mode": "local_synthetic"
     },

@@ -1,6 +1,6 @@
 # Acceptance coverage · local candidate
 
-当前282个unittest方法（60 local synthetic + 222 mock HTTP/model/credential contracts，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；四源真实查询/各源撤权子集与DeepSeek原文选择及opt-in综合另列。综合已有一次成功四源测试与agent语义对照，完整live矩阵、SSO、人工G1/G2仍未通过。以下未覆盖部分保留，不改写05的oracle。
+当前283个unittest方法（61 local synthetic + 222 mock HTTP/model/credential contracts，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；四源真实查询/各源撤权子集与DeepSeek原文选择及opt-in综合另列。综合已有一次成功四源测试与agent语义对照，完整live矩阵、SSO、人工G1/G2仍未通过。以下未覆盖部分保留，不改写05的oracle。
 
 | IDs | 当前状态与实际证据 / 缺口 |
 |---|---|
@@ -54,3 +54,5 @@
 2026-10-05 8094综合真实UI子集：eng_b身份、8对象四源输入/五阶段各8allow、4结论支持片段展开、双回执、Slack reply精确预览、Recent answers与raw实际下载一致已核验（synthesis-ui/verification.json）。这次4结论引用四源，但问题保障措施漏答，Q-07完整性failed；费用1591microUSD上界。v2增加模型question_covered严格判断和生成覆盖提示，282回归含missing/false/unknown拒绝；两次真实拒绝诊断分列，不能据拒答称修复后回答质量通过。现有用户8094 Python进程仍是v1，刷新前端不会加载新model。完整live场景/综合原生撤权/非作者G1不变。
 
 修复后单题live结果：synthesis-ui/coverage-live-query.json，四源8对象、11checks及保障措施精确quote通过；agent覆盖/语义检查通过，前三claim冗余保留。首轮review拒绝原因unknown、次轮缺quote拒绝分列；不是完整Q-07人工质量通过，综合原生撤权及非作者G1仍pending。
+
+2026-10-05 会话修复：共享CookieJar/双loopback端口的登录、退出、CSRF隔离local verified，283回归。实际8094新页面的query后session-ended、旧信息清空已观察，原因unknown；不是新问答/撤权通过。Chrome双端口临时fixture自动导航blocked，浏览器完整验收不补写。

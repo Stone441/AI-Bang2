@@ -1,0 +1,29 @@
+{
+  "recorded_at": "2026-10-05T11:12:34.889809+00:00",
+  "mode": "local_synthetic_http",
+  "status": "verified_local",
+  "browser_status": "blocked_by_client",
+  "failure_reproduced": "One shared CookieJar logs into two ports; first /api/session changes from 200 to 403 under identical session cookie name.",
+  "verified_after_fix": [
+    "Both port sessions retain their independently authenticated actors in one CookieJar.",
+    "Signing out one port leaves the other signed in.",
+    "CSRF from the first port cannot submit a query to the second."
+  ],
+  "source_hashes": {
+    "brain/server.py": "cc13895437c34ec3a352a778d883e3df26cf3355c0b70749da91699ab0ea2324",
+    "tests/test_http.py": "ca92f8376d5670e6d63e558fd3fbe8276cfa2e5014181062d8c1c33fb423b204"
+  },
+  "regression": {
+    "tests": 283,
+    "passed": 283,
+    "fixture_five_scenarios": "previous282_source_backend_scenario_checks_unchanged_not_repeated"
+  },
+  "current_8094_observation": "Initial DOM eng_b; query then session-ended cleared identity and old answer. Exact reason unknown: expiry, restart or cookie collision are not distinguished by this observation. No live model call established.",
+  "limitations": [
+    "Port-specific names prevent accidental collisions; host cookies are still sent to other ports and this is not a hostile local-service trust boundary.",
+    "Chrome temporary fixture tab navigation blocked; no Chrome two-port pass claimed.",
+    "No source ACL changed; unified synthesis native revocation awaits valid latest8094 entry."
+  ],
+  "reference": "https://www.rfc-editor.org/rfc/rfc6265#section-8.5",
+  "private_screenshot": "evidence/tool-usage/private/onboarding-20261005/8094-session-ended.png"
+}

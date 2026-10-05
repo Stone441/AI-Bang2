@@ -198,3 +198,6 @@ G1/G2 remain separate from local/mock results.
 To preserve an existing8088 service while opening another reviewed synthesis operator, use `make live-synthesis LIVE_PORT=8094` from repository root. The same budget ledger is used, with no scope change; native identities are verified again. Open the new terminal one-use link yourself and keep it out of chat/screenshots. `LIVE_PORT` defaults to8088; existing listeners are never killed automatically.
 
 Frontend navigation/expiry/sign-out invalidate prior requests. A late answer/quote/history/export does not repopulate the newer view or create a file; this does not undo an already-dispatched model call or recover a downloaded copy.
+
+
+Local port-session fix (2026-10-05): newly started servers use separate cookie names per bound port. Existing services continue using their loaded implementation: restart each affected service once and open its new terminal entry. Keys are reused from the approved app-owned Keychain. This prevents accidental login/logout collisions between local ports; cookies are still scoped to a host, so this does not provide security isolation from hostile local HTTP services. Never copy an old cookie/ticket to recover an expired session.

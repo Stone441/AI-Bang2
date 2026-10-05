@@ -219,3 +219,6 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 ADR-028：真实8094综合UI回答fa3abd9a700a4520b479c65a255803be的4结论均有原文支持，但遗漏用户明确问到的运行保障；同模型v1逐句支持复核不足以证明问题覆盖。v2生成优先覆盖所有问题部分/合并重复结论，复核增加严格boolean question_covered；false、missing、unknown及非boolean整答拒绝。保持精确quote、全部原生授权阶段与原预算，既有claim_format不变，model名称v2区分运行版本。首轮v2真实复核output_rejected，原始verdict未捕获，具体拒绝原因未知；第二次实读输出多ID缺对应quote，模型前端契约拒绝且无review，不修补/臆造quote。补充生成提示显式要求ID列表等于supports对应ID、优先少量必要引用；保持服务器断言。失败记录保留，模型复核和coverage仍是同模型的可错判断，不是确定性语义保证。无生产自动付费重试；开发重测使用既有批准的合成源/账本。回滚v1会恢复已观察漏答，不建议；默认原文模式不变。
 
 ADR-028验证补充：修正后隔离真实四源11checks通过，保障措施有C-01精确quote，模型覆盖判定true，agent对照本题所有请求部分。两次失败未删除或标通过；前三claim仍重复，模型判定不能替代人工质量/G1。用户服务不被自动终止；v1历史记录保持原model名称/回执，不回写成v2。
+
+
+2026-10-05 ADR-029：8094新页面初始DOM为eng_b，但查询后session-ended；具体原因未能区分过期/重启/cookie覆盖，不记录为已确定归因。双本机HTTP服务器+真实共享CookieJar明确复现原session同名覆盖导致第一端口403。按绑定server_port选择aibang2_session_{port}，签入/认证/退出一致，只接收本端口cookie；旧session cookie不回退。保持随机token、server session/expiry、HttpOnly/SameSite/Host/Origin/CSRF及来源权限不变。Cookie名字防止意外冲突，并不能隔离同hostname恶意本机服务（各端口仍可能收到其他cookie），不是SSO/生产信任边界。依据[RFC6265 §8.5](https://www.rfc-editor.org/rfc/rfc6265#section-8.5)。5针对性HTTP测试及283回归通过；Chrome自动打开fixture8098被blocked，保留browser not_run，没有绕过保护。只停止自己的8098/8099，未改变Slack成员。回滚恢复同名cookie会复现端口覆盖；旧服务必须重启后用最新入口加载，不读取凭据或令失效session复活。

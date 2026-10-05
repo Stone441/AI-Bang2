@@ -1,0 +1,21 @@
+test_csrf_host_and_evidence_protection (test_http.HTTP.test_csrf_host_and_evidence_protection) ... ok
+test_http_frontend_identity_and_query (test_http.HTTP.test_http_frontend_identity_and_query) ... ok
+test_local_authority_file_update_and_restart (test_http.HTTP.test_local_authority_file_update_and_restart) ... ok
+test_shared_browser_cookie_jar_keeps_two_port_sessions_isolated (test_http.HTTP.test_shared_browser_cookie_jar_keeps_two_port_sessions_isolated) ... /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 403: 'Forbidden'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+FAIL
+test_source_file_revocation_during_generation_is_seen (test_http.HTTP.test_source_file_revocation_during_generation_is_seen) ... ok
+
+======================================================================
+FAIL: test_shared_browser_cookie_jar_keeps_two_port_sessions_isolated (test_http.HTTP.test_shared_browser_cookie_jar_keeps_two_port_sessions_isolated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_http.py", line 66, in test_shared_browser_cookie_jar_keeps_two_port_sessions_isolated
+    self.assertEqual(status,200);self.assertEqual(session['actor'],'eng_a')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 403 != 200
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.085s
+
+FAILED (failures=1)

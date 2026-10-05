@@ -81,7 +81,8 @@ def create_server(app, port=0):
         def auth(self):
             app=self.server.application
             cookie=SimpleCookie(); cookie.load(self.headers.get('Cookie',''))
-            token=cookie['session'].value if 'session' in cookie else ''
+            name=self.server.session_cookie_name
+            token=cookie[name].value if name in cookie else ''
             return app.session(token),token
 
         def dispatch(self, method):
@@ -108,7 +109,7 @@ def create_server(app, port=0):
                     actor=app.authenticate(data)
                     token=secrets.token_urlsafe(32); csrf=secrets.token_urlsafe(32)
                     app.sessions[token]={'actor':actor,'csrf':csrf,'expires':time.monotonic()+3600,'last_query':0}
-                    return self.send(200,{'actor':actor.user_id,'csrf':csrf,'mode':app.engine.mode},cookie=f'session={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=3600')
+                    return self.send(200,{'actor':actor.user_id,'csrf':csrf,'mode':app.engine.mode},cookie=f'{self.server.session_cookie_name}={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=3600')
                 session,token=self.auth(); actor=session['actor']
                 if method=='POST' and not secrets.compare_digest(self.headers.get('X-CSRF-Token',''),session['csrf']):
                     raise PermissionError('Unavailable')
@@ -116,7 +117,7 @@ def create_server(app, port=0):
                     return self.send(200,{'actor':actor.user_id,'csrf':session['csrf'],'mode':app.engine.mode})
                 if method=='POST' and path=='/api/logout':
                     del app.sessions[token]
-                    return self.send(200,{'ok':True},cookie='session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0')
+                    return self.send(200,{'ok':True},cookie=f'{self.server.session_cookie_name}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0')
                 if method=='POST' and path=='/api/query':
                     if set(data)-{'question','history_id'}: raise ValueError('Unsupported query fields')
                     if time.monotonic()-session['last_query']<0.1: return self.send(429,{'error':'Please wait briefly before asking again.'})
@@ -154,6 +155,9 @@ def create_server(app, port=0):
             with self.server.application.store.lock: self.dispatch('POST')
     server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
     server.application=app
+    # Cookies have no browser port isolation. Select only this bound server's
+    # cookie; tokens from other operators and legacy cookies never authenticate.
+    server.session_cookie_name=f'aibang2_session_{server.server_port}'
     return server
 
 

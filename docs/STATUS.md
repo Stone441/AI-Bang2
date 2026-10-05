@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。`.DS_Store` ignored；用户明确要求后已将仅含旧 GPT 分析的 `Analysis&Planning/` 移至 Mac 废纸篓（可恢复），Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：282/282 回归通过（60 local synthetic + 222 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，有引用综合回答已 opt-in verified live subset；同模型复核仍可能漏错，完整语义验收未完成。**
+**阶段收尾（2026-10-05）：283/283 回归通过（61 local synthetic + 222 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，有引用综合回答已 opt-in verified live subset；同模型复核仍可能漏错，完整语义验收未完成。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -246,3 +246,6 @@ LIVE_PORT新增可选make参数（默认8088不变），`make live-synthesis LIV
 v2增加生成问题覆盖提示、严格question_covered boolean复核、ID与quote一一对应提示；12针对性测试/282全回归（60local+222mock）/Node/五场景local subset通过。真实首轮复核output_rejected（原verdict未捕获，原因未知），第二轮多ID缺quote在draft契约被拒绝；均无答案提交，证据原样保留。最终隔离8092同题真实四源8对象→4claim、11checks通过，包含timeout budget/failover、完整quotes、review question_covered true、双账本settled，56.76秒。agent对照语义支持和问题覆盖，但前三claim仍重复pilot/GA，非广泛质量保证。证据synthesis-ui/；本轮费用合计 6617 microUSD保守上界（含拒绝请求），不等于供应商账单，沿用原USD20账本。
 
 只停止自己8092测试进程；用户8088/8094保留，8094仍加载旧v1模型，需本人终端Ctrl+C后make live-synthesis LIVE_PORT=8094才加载v2；既有Keychain复用无需重新填整套凭据，仍用最新一次性入口。完整键盘/对比度、综合原生撤权、官方五场景完整live与非作者G1/G2仍pending。下一P0综合撤权和内容更新矩阵，P1减少冗余/相关性及延迟；本分支未push或merge，私有截图/对话未上传。
+
+
+2026-10-05 DEV-11-PORT-SESSION verified local HTTP：用户报告8094已打开，新页eng_b/综合模式DOM可见，但query后session-ended清空身份/正文，没有新的live模型结果。未断定这次是cookie覆盖；另用同一CookieJar双fixture端口复现同名session覆盖403，修复为按server_port命名/认证/退出，隔离双方登录与logout、跨端口CSRF拒绝；283/283（61 local+222 mock）和5针对性HTTP案例通过。Chrome自动打开隔离fixture页blocked，未绕过保护/声称浏览器通过；仅停止自己的8098/8099，用户进程保持。证据port-session-isolation/含首次失败。已请求用户加载修复版最新8094入口（钥匙串复用，不需整套secret重输）；尚未撤销Slack读者权限，Members恢复后仍保留原状。综合原生撤权/更新/完整五场景/G1/G2仍pending。下一准确接续：新入口→核验v2模型结果→原生private撤权和旧supports/history/export保护→恢复同一读者。
