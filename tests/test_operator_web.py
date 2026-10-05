@@ -97,6 +97,21 @@ class OperatorIdentity(unittest.TestCase):
         self.assertIn('[configuration_or_hidden_input_unavailable]', output.getvalue())
         self.assertNotIn('secret input', output.getvalue())
 
+    def test_hidden_input_failure_reports_fixed_code_and_never_requests_native_identity(self):
+        from brain.credential_input import HiddenInputUnavailable
+        from unittest.mock import Mock
+        for code in ('email_invalid','token_empty','token_multiline','token_too_long',
+                     'hidden_input_unavailable','secure_tty_required','input_ended'):
+            output=io.StringIO();server=Mock()
+            with self.subTest(code=code),contextlib.redirect_stdout(output), \
+                 patch('brain.operator_web.create_server',return_value=server), \
+                 patch('scripts.confluence_probe.load_reader',side_effect=HiddenInputUnavailable(code)), \
+                 patch('brain.operator_web.OperatorApp') as application:
+                self.assertEqual(main(['--config','mock','--live']),2)
+                application.assert_not_called();server.serve_forever.assert_not_called()
+                server.server_close.assert_called_once()
+            self.assertIn('[credential_'+code+']',output.getvalue())
+
 
 class OperatorHTTP(unittest.TestCase):
     request = test_http.HTTP.request

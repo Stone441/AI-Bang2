@@ -92,3 +92,5 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 2026-10-05 阶段收尾：248/248回归与五场景local subset重跑通过；统一8088真实验收/Slack reader API和撤权not_run，用户休息前不再要求凭据。下一P0统一reader启动与native identity→跨源问答→Slack/混合历史撤权；P1有证据模型综合及完整live矩阵。
 
 2026-10-05 DEV-11-RECEIPT-UI verified local/mock：新增3个Python案例（251=60local+191mock）、13项receipt针对性测试与Node前端状态/usage测试通过；回答/历史/导出回执一致且撤权时隐藏。对应A-10/P-05/P-07子集、模型费用可核验。统一four-source live仍等待用户完成8088启动，不把listener存在当服务ready。下一P0 native四源问答/Slack撤权；P1 grounded综合回答与完整live矩阵。
+
+2026-10-05 DEV-10-INPUT verified local/mock：5新增测试覆盖格式失败分类、field-only bounded retry、安全TTY及listener cleanup；全256通过。P0统一live启动仍待用户重试并提供固定code，不申请新scope/token或读取密码管理器。

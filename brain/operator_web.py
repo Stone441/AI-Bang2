@@ -21,6 +21,7 @@ from .slack import SlackReader
 from .drive import DriveReader
 from .server import App, create_server
 from .store import Store
+from .credential_input import HiddenInputUnavailable
 
 
 class OperatorApp:
@@ -160,7 +161,10 @@ def main(argv=None):
     except KeyboardInterrupt:
         return 0
     except Exception as error:
-        if stage == 'bind' and isinstance(error, OSError) and error.errno == errno.EADDRINUSE:
+        if isinstance(error, HiddenInputUnavailable):
+            print(f'Operator service stopped [credential_{error.code}]: Hidden credential input was not accepted. '
+                  'No platform or model request was sent for this input; no credential details are logged.')
+        elif stage == 'bind' and isinstance(error, OSError) and error.errno == errno.EADDRINUSE:
             print(f'Startup stopped [port_in_use]: port {args.port} is already in use. '
                   'Keep the existing service, or retry with --port 8082. No credentials were requested.')
         else:

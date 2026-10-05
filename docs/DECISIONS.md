@@ -178,3 +178,5 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 AUTH-013：用户明确“先做阶段性收尾，然后push和合并代码到main，我要睡觉了”，批准推送本开发分支及经验证的PR合并main；不扩大为部署、G1/G2、提交比赛或私有工具对话截图上传。保留队友未跟踪文件。
 
 2026-10-05 ADR-020：修复网页用evidence数量推断模型调用的问题。将经过request_id/usage/state校验的既有回执随response保存，界面按显式called显示调用标识、token和保守费用估算；旧记录缺回执显示not recorded，不回填、不称vendor invoice。回执不新增授权，撤权历史整条隐藏。代价是旧进程未加载Engine新增代码时回执仍unknown；回滚可移除展示和response投影，账本/原有权限边界不变。
+
+2026-10-05 ADR-021：旧generic配置/hidden错误无法区分输入失败，且有效邮箱随token失误被重复请求。引入固定受控reason enum和每字段最多3次本地重试；保留现有输入格式及安全TTY约束，不重试平台API、不缓存/persist秘密。原现场细分根因未记录，修复提供下一次可靠诊断，不声称已确认原用户输入。
