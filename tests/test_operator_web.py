@@ -3,6 +3,8 @@ import errno
 import io
 import json
 import threading
+import tempfile
+from pathlib import Path
 import unittest
 from unittest.mock import patch
 
@@ -73,12 +75,16 @@ class OperatorIdentity(unittest.TestCase):
         from unittest.mock import Mock
         server = Mock()
         reader = self.app.pilot.authority.readers['confluence']
-        with contextlib.redirect_stdout(output), \
+        # Use a real isolated disk store: mocking Store with :memory: while main
+        # chmods its DB path accidentally depended on a leftover local pilot DB.
+        with tempfile.TemporaryDirectory() as directory, \
+             contextlib.redirect_stdout(output), \
              patch('brain.operator_web.create_server', return_value=server), \
              patch('scripts.confluence_probe.load_reader', return_value=reader), \
-             patch('brain.operator_web.Store', return_value=self.app.store), \
+             patch('brain.operator_web.Path', return_value=Path(directory)), \
              patch('brain.operator_web.OperatorApp', side_effect=SourceUnavailable('secret upstream response')):
             self.assertEqual(main(['--config', 'mock', '--live']), 2)
+            self.assertEqual((Path(directory) / 'confluence-web.sqlite').stat().st_mode & 0o777, 0o600)
         server.serve_forever.assert_not_called()
         server.server_close.assert_called_once()
         self.assertIn('[native_identity_unavailable]', output.getvalue())

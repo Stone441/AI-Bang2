@@ -242,3 +242,6 @@ AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始
 
 
 2026-10-05 ADR-033：依用户确认按验收缺口/依赖/交付风险排序，先补产品业务问答和审计候选，不因讨论RAG而无限扩展技术栈。复用AUTH-003/014已有eng_b四源只读/自己的Keychain与原USD20ledger做产品问答及无证据控制，无外部写入/新scope/凭据要求，不能据工程身份替代product_ops原生权限。新增opt-in验收runner，禁止覆盖现有live证据；实际harness漏改mode留下fake_model后缀，但model名/独立ledger/真实读者阶段明确是真实综合，保存原回答/hash链与实际执行源码，修复未来runnermode而不篡改历史或重复收费。离线import真实合成audit副本，以显式test auditor验证查询和CodeBuddy独立validator签名边界；临时同机privatekey自动删除，不将机制证明当生产独立保管或live审计认证。候选五场景矩阵与缺口集中维护，人工G1/G2继续not_run。
+
+
+2026-10-05 干净归档首次重建失败事实：295测试中native_identity_failure安全stage案例mock Store(:memory:)却让main chmod磁盘路径，依赖本机已存在的confluence-web.sqlite，干净archive返回local_store而非期望native_identity。保留rebuild-candidate失败日志/报告；测试改用独立TemporaryDirectory中的真实SQLite，仍注入原native失败、保留server不serve/close一次/受控错误不含上游秘密全部断言，并实际检查文件0600。不改应用授权/失败分类、不预置本机凭据、不删除或跳过有效测试。需新commit干净archive重跑后才能宣称可重建。

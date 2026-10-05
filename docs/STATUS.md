@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-05 当前干净归档验收发现1项测试环境依赖，295中294通过/1失败，setup通过；失败见rebuild-candidate，不是权限断言被绕过。native_identity_failure案例mock内存Store却chmod实际DB，本机残留文件掩盖失败。已改独立临时真实DB并通过针对性复现，保留全部原断言及新增0600检查。下一接续：提交修复后新archive完整回归+前后端启动烟测，成功前不宣称当前候选可重建通过。用户真实进程/配置/数据库未改。
+
 2026-10-05 交付验收增量（295回归实际通过，73local+222mock；新增显式live opt-in及防覆盖凭据前置安全检查）：eng_b真实四源/DeepSeek产品问答覆盖pilot/GA、Done/发布、沟通范围、未确认日期，4自动fact probes+逐quote/逐阶段native授权/原预算双回执和developer语义审查通过，1529microUSD保守记账；无证据unique-token样本零模型调用/零账本记录。evidence/runs/live-product。执行harness漏更新mode后缀，原record保留并明确解释，当前runner修复未来标签，不为改标签重复收费调用。真实日志副本完成audit NL分页oracle/普通reader拒绝及7项签名边界（offline test auditor / disposable同机key）；evidence/runs/audit-replay，独立key custody/生产role不宣称通过。现有8094未重启，无平台写入/新scope/凭据要求。当前五场景候选及缺口集中于DEMO_CANDIDATE.md；独立product_ops/contractor原生矩阵及人工G1/G2仍not_run。
 
 2026-10-05 检索改进：长文不再因整篇超过16000字符而直接跳过；本地采用2400字符/400重叠窗口，最多每资料3片段、总24证据/16000字符。短资料保留原ID，长片段绑定resource/version/规范offset；preview按当前原生权限和版本解析精确原文，旧history/export projection沿用逐引用检查。10项新增安全/定位测试及293项完整回归通过；五场景、12生命周期、Node检查通过。可重放词法评测见 `make verify-retrieval` / evidence/runs/retrieval-local。仅少量英文词汇映射，不是向量/语义检索；固定窗口可能截句，未知词汇仍可能漏召回；DeepSeek合成标记guard未放宽，缺标记窗口会拒绝真实模型。此次fixture/fake，无新平台/模型调用或费用，用户8094未重启，G1/G2仍not_run。
