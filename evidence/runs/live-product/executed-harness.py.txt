@@ -1,0 +1,119 @@
+"""Opt-in live synthetic pilot validation, reusing reviewed credentials and budget.
+
+No source writes, new scopes, credential entry, UI session, or human approval.
+The operator identity is eng_b, not the fixture product_ops permission persona.
+"""
+import argparse
+import hashlib
+import json
+from pathlib import Path
+from brain.audit import verify_chain
+from brain.budget import BudgetLedger
+from brain.contracts import Actor, now
+from brain.delegated_query import DelegatedQueryPilot
+from brain.keychain import MacKeychain
+from brain.store import Store
+from brain.synthesis import DeepSeekSynthesisModel, validate_claim
+from scripts.build_metadata import revision
+from scripts.operator_bundle import load_reader
+
+
+QUESTION = ('Can we offer payment-retry to all customers now, does PAY-102 being Done mean '
+            'general availability is approved, what release scope can product and operations '
+            'communicate, and is a confirmed general-availability date available?')
+
+
+def run(output):
+    output.mkdir(parents=True, exist_ok=True)
+    report = {'started_at': now(), 'commit': revision(), 'mode': 'four_live_sources_live_deepseek_synthesis',
+              'actor': 'eng_b', 'product_ops_permission_persona': 'not_run',
+              'human_G1': 'not_run', 'source_writes': False, 'new_scope': False,
+              'source_hashes': {str(p): hashlib.sha256(p.read_bytes()).hexdigest()
+                                for p in [Path(__file__), Path('brain/engine.py'),
+                                          Path('brain/retrieval.py'), Path('brain/synthesis.py')]}}
+    store = ledger = pilot = None
+    try:
+        keys = MacKeychain()
+        readers = load_reader(Path('.runtime/operator-bundle.json'), 'eng_b',
+                              oauth_client='.runtime/drive-oauth-client.json', credential_store=keys)
+        tenant = readers['jira'].tenant
+        actor = Actor('eng_b', tenant)
+        # This is a new isolated test DB; the original shared budget DB is mandatory.
+        store = Store(str(Path('.runtime') / ('product-acceptance-' + now().replace(':', '-') + '.sqlite')))
+        pilot = DelegatedQueryPilot(readers, store, live=True)
+        key = keys.get('deepseek', tenant, 'eng_b', 'deepseek-flash')
+        if not key: raise RuntimeError('Previously saved model credential unavailable')
+        if not Path('.runtime/deepseek-budget.sqlite').is_file():
+            raise RuntimeError('Original approved budget ledger required')
+        ledger = BudgetLedger('.runtime/deepseek-budget.sqlite')
+        pilot.engine.model = DeepSeekSynthesisModel(key, ledger, synthetic_only=True)
+        answer = pilot.query(actor, QUESTION)
+        (output / 'answer.json').write_text(json.dumps(answer, indent=2) + '\n')
+        text = ' '.join(c['text'] for c in answer['claims']).lower()
+        facts = {
+            'pilot_scope': 'pilot' in text,
+            'ga_not_approved': ('not' in text or 'no ' in text) and ('general availability' in text or 'ga ' in text),
+            'code_done_not_release': 'pay-102' in text and 'done' in text and ('not' in text or 'doesn’t' in text or "doesn't" in text),
+            'no_confirmed_ga_date': ('date' in text or 'timeline' in text) and ('not' in text or 'no ' in text or 'unconfirmed' in text),
+        }
+        from brain.contracts import Evidence
+        evidence = [Evidence(**e) for e in answer['evidence']]
+        for claim in answer['claims']: validate_claim(claim, evidence)
+        ids = {e['evidence_id'] for e in answer['evidence']}
+        chain = pilot.audit.export()
+        phases = {}
+        for phase in ('before_model', 'model_dispatch', 'review_dispatch', 'before_dispatch'):
+            allowed = {e['payload']['resource_id'] for e in chain
+                       if e['request_id'] == answer['request_id'] and e['event_type'] == 'authorization_decided'
+                       and e['payload']['phase'] == phase and e['payload']['result'] == 'allow'}
+            phases[phase] = {e['resource_id'] for e in answer['evidence']} <= allowed
+        receipts = []
+        for field in ('model_call', 'model_review'):
+            receipt = answer[field]
+            row = ledger.db.execute('SELECT r.state,r.actual,m.query_id,m.outcome,m.prompt_tokens,m.completion_tokens,m.total_tokens FROM reservations r JOIN model_calls m ON r.id=m.reservation_id WHERE r.id=?', (receipt['reservation_id'],)).fetchone()
+            if not row or row[0] != 'settled' or row[2] != answer['request_id'] or row[3] != 'accepted':
+                raise RuntimeError('Independent ledger receipt mismatch')
+            receipts.append({'stage': field, 'reservation_id': receipt['reservation_id'],
+                             'state': row[0], 'actual_micro_usd': row[1], 'query_id': row[2],
+                             'outcome': row[3], 'prompt_tokens': row[4],
+                             'completion_tokens': row[5], 'total_tokens': row[6]})
+        unknown = pilot.query(actor, 'unfindablezebra')
+        (output / 'unsupported-answer.json').write_text(json.dumps(unknown, indent=2) + '\n')
+        no_call = (not unknown['claims'] and not unknown['evidence']
+                   and unknown.get('model_call', {}).get('called') is False
+                   and ledger.db.execute('SELECT count(*) FROM model_calls WHERE query_id=?', (unknown['request_id'],)).fetchone()[0] == 0)
+        report.update(question=QUESTION, request_id=answer['request_id'], fact_probes=facts,
+                      exact_quote_contract=True, authorization_phases=phases,
+                      sources_received=sorted({e['source'] for e in answer['evidence']}),
+                      evidence_ids=sorted(ids), ledger_receipts=receipts,
+                      conservative_cost_micro_usd=sum(r['actual_micro_usd'] for r in receipts),
+                      unsupported_query={'request_id': unknown['request_id'], 'no_model_call': no_call},
+                      status='verified_automated_subset' if all(facts.values()) and all(phases.values()) and no_call else 'quality_failed',
+                      semantic_review='not_run', browser_review='not_run',
+                      limitations=['Substring fact probes do not establish semantic correctness.',
+                                   'eng_b currently has broader knowledge access than fixture product_ops.',
+                                   'Same-model review is fallible; independent persona and human review remain not_run.',
+                                   'Unknown-query sample is a unique nonsense token, not all real-world missing-evidence questions.',
+                                   'Conservative ledger accounting is not a supplier invoice.'])
+    except Exception as error:
+        report.update(status='failed', reason=type(error).__name__)
+    finally:
+        if pilot:
+            events = pilot.audit.export()
+            report['audit_chain'] = verify_chain(events)
+            (output / 'audit.json').write_text(json.dumps(events, indent=2) + '\n')
+        report['finished_at'] = now()
+        (output / 'verification.json').write_text(json.dumps(report, indent=2) + '\n')
+        if store: store.db.close()
+        if ledger: ledger.db.close()
+    print(json.dumps({k: report[k] for k in ('status', 'request_id', 'fact_probes', 'conservative_cost_micro_usd') if k in report}), flush=True)
+    return report['status'] == 'verified_automated_subset'
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--live', action='store_true', help='Explicit approved live pilot opt-in')
+    parser.add_argument('--output', type=Path, default=Path('evidence/runs/live-product'))
+    args = parser.parse_args()
+    if not args.live: parser.error('--live required; only run within the approved pilot')
+    raise SystemExit(0 if run(args.output) else 1)

@@ -1,8 +1,10 @@
 # Acceptance coverage · local candidate
 
+2026-10-05 更新：长文窗口10新测试（293总方法）local verified subset；Q-02本次eng_b真实产品四结论/四源input/1529microUSD、缺证据控制0模型调用，精确quote/逐阶段native/双ledger/developer review通过，非product_ops权限persona。NL audit对实际live合成日志副本分页与oracle一致，7签名边界通过，包括未覆盖尾部删除可逃过旧checkpoint；offline test auditor/同机临时key，非native审计身份/G1。runner stale mode后缀问题及未来修复均记录，原回答/hash不改。集中候选缺口见DEMO_CANDIDATE。
+
 2026-10-05 S-01工程事实single eng_b live subset：新增J-03/KAN-5实际In Progress，正文scenario owner Maya fictional、native assignee Unassigned分别表达；四源8证据/4claims覆盖原因、撤回猜测、J-02 Done与J-03仍open、当前CF native3/runbook v1。7fact checks+agent全原文语义对照/quotes/native四阶段/双回执账本独立核验通过；不是原eng_a及product_ops矩阵或人G1。283回归方法数量不变，新增J-03正/负subtests；evidence/runs/live-s01。
 
-当前283个unittest方法（61 local synthetic + 222 mock HTTP/model/credential contracts，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；四源真实查询/各源撤权子集与DeepSeek原文选择及opt-in综合另列。综合已有一次成功四源测试与agent语义对照，完整live矩阵、SSO、人工G1/G2仍未通过。以下未覆盖部分保留，不改写05的oracle。
+当前295个unittest方法（73 local synthetic + 222 mock HTTP/model/credential contracts，另含参数化subtests），不是51个计划案例全通过。具体结果以 `evidence/runs/local-latest/tests.json` 为准。五场景 `scenarios.json` 仅为本地子集；四源真实查询/各源撤权子集与DeepSeek原文选择及opt-in综合另列。综合已有一次成功四源测试与agent语义对照，完整live矩阵、SSO、人工G1/G2仍未通过。以下未覆盖部分保留，不改写05的oracle。
 
 | IDs | 当前状态与实际证据 / 缺口 |
 |---|---|
@@ -11,7 +13,7 @@
 | Q-05/06/07 | local/mock subset：缺证据、伪造ID、quote不匹配、负面/未知review拒绝；live synthesis 4claims精确quote和agent语义支持subset。模型review非准确性证明，人工语义支持not_run |
 | Q-08 | partial：固定四源授权范围检索；没有模型路由 |
 | Q-09 | local one-hop verified：authorized seed + 每目标授权；两跳未实现 |
-| Q-10 | partial：候选 24、输入 16000 字符预算；长文/近重复质量未验证 |
+| Q-10 | partial：候选 24、输入 16000 字符预算；长窗口/规范offset/撤权保护local subset verified；近重复与独立语义质量未完成 |
 | P-01/02 | local verified：服务端 session、body role 拒绝、同角色不同频道 |
 | P-03/04 | local verified：四源撤权/unknown；真实 429/token propagation blocked |
 | P-05/06/07 | local/mock verified；原文及综合模式旧历史/引用/导出native Slack撤权live subset（synthesis-native-revocation）；恢复后合法导出精确匹配。完整平台/ACL矩阵仍pending；无答案缓存，附件未启用 |

@@ -1,0 +1,95 @@
+{
+  "started_at": "2026-10-05T13:19:12.350477+00:00",
+  "commit": "34b5ecdaad1c50c5af2b5006f3f83c2e86ab2002",
+  "mode": "four_live_sources_live_deepseek_synthesis",
+  "actor": "eng_b",
+  "product_ops_permission_persona": "not_run",
+  "human_G1": "not_run",
+  "source_writes": false,
+  "new_scope": false,
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/live_product_acceptance.py": "6af3d4c26967a72d79972968758c137591f471deeb0833313ba7309f5befec34",
+    "brain/engine.py": "ec590c6ca24b4429b03b449e878f6b98a0677708fb27a1e7154bf0f75954e91a",
+    "brain/retrieval.py": "227f09d36f0497d5a7affc6021cc534d8e72223a8eda7a56ad1bc0873ecfb64d",
+    "brain/synthesis.py": "06a2e88912d595f5b4a66f2e18c6ac268021a6c3fd59819270ffc2e314b1b80c"
+  },
+  "question": "Can we offer payment-retry to all customers now, does PAY-102 being Done mean general availability is approved, what release scope can product and operations communicate, and is a confirmed general-availability date available?",
+  "request_id": "509213b083af45dfbcd48f7edfc7a94f",
+  "fact_probes": {
+    "pilot_scope": true,
+    "ga_not_approved": true,
+    "code_done_not_release": true,
+    "no_confirmed_ga_date": true
+  },
+  "exact_quote_contract": true,
+  "authorization_phases": {
+    "before_model": true,
+    "model_dispatch": true,
+    "review_dispatch": true,
+    "before_dispatch": true
+  },
+  "sources_received": [
+    "confluence",
+    "drive",
+    "jira",
+    "slack"
+  ],
+  "evidence_ids": [
+    "confluence:164283@1",
+    "confluence:98564@3",
+    "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+    "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+    "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+    "jira:10013@336836842918391821",
+    "jira:10014@110363006380417182",
+    "slack:C0C6R70SGG4/1791142152.858189@903088382970380097",
+    "slack:C0C6R70SGG4/1791142180.560339@226823937321883740"
+  ],
+  "ledger_receipts": [
+    {
+      "stage": "model_call",
+      "reservation_id": "582fc5a691864c8ab6405247e7f07c13",
+      "state": "settled",
+      "actual_micro_usd": 975,
+      "query_id": "509213b083af45dfbcd48f7edfc7a94f",
+      "outcome": "accepted",
+      "prompt_tokens": 1170,
+      "completion_tokens": 520,
+      "total_tokens": 1690
+    },
+    {
+      "stage": "model_review",
+      "reservation_id": "4ce86d97feec4396ac4970d5ad603145",
+      "state": "settled",
+      "actual_micro_usd": 554,
+      "query_id": "509213b083af45dfbcd48f7edfc7a94f",
+      "outcome": "accepted",
+      "prompt_tokens": 1665,
+      "completion_tokens": 45,
+      "total_tokens": 1710
+    }
+  ],
+  "conservative_cost_micro_usd": 1529,
+  "unsupported_query": {
+    "request_id": "909cd604a5cb4bd1becce8f68c932b1d",
+    "no_model_call": true
+  },
+  "status": "verified_automated_subset",
+  "semantic_review": "not_run",
+  "browser_review": "not_run",
+  "limitations": [
+    "Substring fact probes do not establish semantic correctness.",
+    "eng_b currently has broader knowledge access than fixture product_ops.",
+    "Same-model review is fallible; independent persona and human review remain not_run.",
+    "Unknown-query sample is a unique nonsense token, not all real-world missing-evidence questions.",
+    "Conservative ledger accounting is not a supplier invoice."
+  ],
+  "audit_chain": {
+    "valid": true,
+    "events": 87,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "finished_at": "2026-10-05T13:20:29.492817+00:00"
+}

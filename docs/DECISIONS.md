@@ -239,3 +239,6 @@ AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始
 
 
 2026-10-05 ADR-032：现实现按整篇16000字符budget跳过长文，不能检索后段事实。无新依赖/服务，改为本地固定2400Unicode字符/400重叠窗口；每资料最多3，总24证据/16000字符，短文<=4000保持旧ID；长引用resource@version#start:end只接受该版本规范窗口，locator.text_window记录单位/策略，正文为原文精确连续切片，不合并权限对象、不补写标题/标记。所有模型/复核/返回阶段仍按资料当前native权限与version检查，preview/history/export重新鉴权；content/ACL增量契约不变，窗口按已发布版本即时派生，无独立向量索引。小型通用英文aliases改善已知词汇变化，不宣称语义检索。代价：固定窗口可截句/重复，部分资料预算先后可能影响召回，仍全量本地扫描，不保证规模性能。DeepSeek synthetic-only严格检查未改：缺真实marker的晚段窗口拒绝调用，不能为了方便把源头标记复制进原文；真实长文模型另需可审查的来源边界实现及验收。回滚engine窗口入口即可恢复整篇模式；已存片段历史若回滚不可解析，安全拒绝，不迁移旧记录为伪原文。无平台写入/新收费/用户服务重启。
+
+
+2026-10-05 ADR-033：依用户确认按验收缺口/依赖/交付风险排序，先补产品业务问答和审计候选，不因讨论RAG而无限扩展技术栈。复用AUTH-003/014已有eng_b四源只读/自己的Keychain与原USD20ledger做产品问答及无证据控制，无外部写入/新scope/凭据要求，不能据工程身份替代product_ops原生权限。新增opt-in验收runner，禁止覆盖现有live证据；实际harness漏改mode留下fake_model后缀，但model名/独立ledger/真实读者阶段明确是真实综合，保存原回答/hash链与实际执行源码，修复未来runnermode而不篡改历史或重复收费。离线import真实合成audit副本，以显式test auditor验证查询和CodeBuddy独立validator签名边界；临时同机privatekey自动删除，不将机制证明当生产独立保管或live审计认证。候选五场景矩阵与缺口集中维护，人工G1/G2继续not_run。
