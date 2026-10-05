@@ -157,3 +157,5 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-05 DEV-10/12-AUDIT-UI verified local Node subset：原same-view查询竞态已复现、修复；stable snapshot分页捕获result.filters、旧请求/重复点击/导航丢弃、source HTML纯文本、unsafe整数明确提示。审计timeline与raw event并存，原server scope/role及SQL契约未改。Chrome visual blocked/not_run；临时fixture停止，8094保留。下一候选archive加入独立audit frontend check，独立persona/G1/G2仍pending。
 
 2026-10-05 DEV-12-AUDIT-CANDIDATE verified clean local subset：0278bab archive setup/295Python/5fixture/2Node脚本/实际fixture HTTP smoke通过，rebuild-audit-ui。下一P0 native S-03优先existing eng_b+owner的受限C-03合成seed/真实deny与允许C-02控制，在已有AUTH-003范围核对管理员UI；原product_ops/contractor全矩阵不冒称完成，新增身份grants另批。Chrome视觉blocked，不扩安全权限，不重启8094。
+
+2026-10-05 DEV-11-NATIVE-RESTRICTED verified native subset：Confluence557057仅owner/eng_b deny+164283 allow，13checks，保留synthetic旧索引验证query/model input/preview；原contractor/full矩阵及时间侧信道not_run。fake model零费用，8094不改。2新guard/4针对性tests通过；首次探针失败保留。证据native-restricted-fixed；下一集中安全观看包及已授权native更新子集。

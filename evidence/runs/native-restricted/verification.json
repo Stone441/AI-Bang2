@@ -1,0 +1,187 @@
+{
+  "started_at": "2026-10-05T15:44:48.370946+00:00",
+  "commit": "6bf83a083c7e6485367184c30814c741c42446a1",
+  "actor": "eng_b",
+  "mode": "confluence_live_api_fake_model_controlled_stale_index",
+  "source_writes": false,
+  "model_network_calls": 0,
+  "human_G1": "not_run",
+  "contractor_permission_persona": "not_run",
+  "stale_index_origin": "Known synthetic owner UI text; not fetched as eng_b",
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/native_restricted_acceptance.py": "843eef7444509955e50971382d66fd77444795ee3d2b6541914a861e23e6af38",
+    "brain/confluence.py": "324e5a8584a55beda55401a489ffbbc5267fb325c490bab7547edf192090860d",
+    "brain/delegated_query.py": "f15e270d3e17a9561c5f760e5f3864081dbdc3d439b1f660be9e63a054fab8eb",
+    "brain/engine.py": "ec590c6ca24b4429b03b449e878f6b98a0677708fb27a1e7154bf0f75954e91a"
+  },
+  "native_decisions": {
+    "restricted": {
+      "result": "deny",
+      "checked_at": "2026-10-05T15:44:49.164962+00:00",
+      "method": "confluence-delegated-current-read",
+      "policy_version": 0
+    },
+    "control": {
+      "result": "allow",
+      "checked_at": "2026-10-05T15:44:50.137893+00:00",
+      "method": "confluence-delegated-current-read",
+      "policy_version": 0
+    }
+  },
+  "checks": {
+    "native_restricted_denied_without_content": true,
+    "native_control_allowed": true,
+    "negative_has_no_claims_or_evidence": true,
+    "negative_does_not_reveal_title_id_or_canary": true,
+    "restricted_never_in_model_inputs": true,
+    "positive_control_in_answer": true,
+    "both_queries_have_native_refresh_denial": true,
+    "stale_index_not_deleted_to_hide_problem": true,
+    "stale_preview_denied": true,
+    "preview_has_native_denial": true,
+    "only_positive_query_reaches_fake_model": false,
+    "audit_chain_valid": true
+  },
+  "negative_request_id": "cb7cad40141f427eb016d72845b2fbf0",
+  "positive_request_id": "ae25dbf4d1ab42efb3f7754de8b59348",
+  "status": "failed",
+  "limitations": [
+    "One existing eng_b identity, not the original contractor/full ACL matrix.",
+    "The stale index is controlled synthetic test setup, not historical ingestion proof.",
+    "No timing side-channel, browser denial, live-model or human acceptance claim.",
+    "The audit chain is unsigned; no independent tamper-proof custody."
+  ],
+  "native_statuses": [
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "restricted",
+      "body_request": false,
+      "status": 404
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "restricted",
+      "body_request": false,
+      "status": 404
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "restricted",
+      "body_request": false,
+      "status": 404
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "restricted",
+      "body_request": false,
+      "status": 404
+    }
+  ],
+  "finished_at": "2026-10-05T15:44:56.587079+00:00"
+}

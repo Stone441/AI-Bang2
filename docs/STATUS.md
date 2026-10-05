@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-05 S-03 native subset：管理员在既有合成空间新增Restricted C-03/557057，仅owner访问；eng_b原生身份200、C-03 metadata404且无正文请求，C-02正文200。隔离受控synthetic旧索引保留，负面问答/模型evidence不含受限资料，旧preview原生deny；13checks/16event unsigned链通过（native-restricted-fixed）。首次fake空证据调用计数探针错误保留native-restricted失败与实际harness，修正探针后通过，不删安全断言。新增2个runner guard、4项针对性测试通过；未重跑完整295回归，runtime代码未改。无需输入凭据/模型费用/重启8094；不是contractor矩阵、统计侧信道或人工G1。下一P0整理团队一次性安全观看与剩余native persona/更新范围；G1/G2仍not_run。
+
 2026-10-05 最新审计候选0278bab在clean archive已通过setup/295 Python方法/五fixture场景/原前端安全Node/新增审计Node，独立fixture HTTP启动、assets/login/four-source-query/exact-preview通过；evidence/runs/rebuild-audit-ui。Python方法数未增加，新增审计检查属于Node单独证据。Chrome视觉仍blocked/not_run，已关闭自建错误tab/停止临时进程并清理自己tmp目录，不改8094。下一P0真实restricted信息验收可优先复用已有eng_b读者和管理员owner、已有Confluence合成空间种植权限：准备独立C-03受限合成资料并核对原生可见性，再做存在性/模型输入拒绝+可读C-02对照；不能把唯一nonsense query当S-03。新的product_ops/contractor账号、scope/持久凭据仍需对应明确批准，不默认从eng_b Keychain授权扩大。G1/G2仍not_run，未push/merge。
 
 2026-10-05 审计产品验收：实际Node复现同一页面新查询先返回、旧查询后覆盖的问题，按inquiryRevision+view/session修复；旧分页/重复点击/导航响应及HTML文本/不安全大整数展示检查通过，原有前端安全检查与JS syntax通过。timeline分开问题、候选、阶段授权、模型input/review、引用、stored answer、delivery attempt，不宣称用户已读或UI已验签；raw browser payload对不精确整数明确遮换提示，后端hash/export不改。证据audit-ui-local；自动Chrome临时页ERR_BLOCKED_BY_CLIENT，visual not_run，不绕过设置/不要求用户重启8094，已停止自有fixture服务。独立原生persona仍缺其单独grant/映射，不能把eng_b改名冒称product_ops；候选界面与自动验收独立推进，G1/G2仍pending。下一提交候选再做包含新增audit Node案例的clean archive验证。

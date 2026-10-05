@@ -250,3 +250,5 @@ AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始
 
 
 2026-10-05 ADR-034：S-05 UI原来同页面并发查询只校验view，旧query/page响应可以覆盖新scope，Node先复现后修复。新增局部inquiryRevision，分页闭包持有该query的filters/as_of，旧response/error不能显示，next disabled防重复、错误可重试；backend audit role/scope/参数化查询不变。render audit事件区分candidate/authorized/model input/review/cited/stored/delivery，不把调用等同已读；所有资料用textContent无HTML执行。对unsafe JS整数显示查看后端/字符串evidence ID的提示，不伪精确或改原始记录。UI不验证独立签名，明确说明；Node模型DOM证据和Chrome blocked/visual not_run分别记，停止自有临时fixture不影响8094。回滚前端会恢复已复现scope混淆，不建议。未新增scope、账号、模型或费用。
+
+2026-10-05 ADR-035 / AUTH-003执行：在既有比赛合成空间按fixture C-03新增557057，Restricted仅现有owner（不新增账号/权限，不修改C-01父页正文或访问）。只读验收实例显式仅557057/164283，复用AUTH-014 app-owned eng_b Keychain，用户配置和8094不改。受控本地stale synthetic索引来自已知owner UI文字，不冒称eng_b成功采集/真实旧授权历史；其保留时native refresh与preview拒绝，证明当前源权限与检索独立。第一次probe以fake generate次数当网络调用次数，实际负面空evidence也执行fake生成；保存失败/harness，改为断言负面空证据与唯一正面证据输入，13checks通过。未删安全断言或放宽runtime；无模型网络/费用。C-03 guard未加入DeepSeek允许集，因为本轮无授权把受限源发给模型。未测原contractor/fullpersona、统计时间边界/G1。新增验收脚本可删除回滚，不影响runtime；外部synthetic seed保留用于复测，删除另按恢复流程，不擅自操作。

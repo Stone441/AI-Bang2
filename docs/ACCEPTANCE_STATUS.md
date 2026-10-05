@@ -1,5 +1,7 @@
 # Acceptance coverage · local candidate
 
+2026-10-05 S-03 native subset：管理员在既有合成空间新增Restricted C-03/557057，仅owner访问；eng_b原生身份200、C-03 metadata404且无正文请求，C-02正文200。隔离受控synthetic旧索引保留，负面问答/模型evidence不含受限资料，旧preview原生deny；13checks/16event unsigned链通过（native-restricted-fixed）。首次fake空证据调用计数探针错误保留native-restricted失败与实际harness，修正探针后通过，不删安全断言。新增2个runner guard、4项针对性测试通过；未重跑完整295回归，runtime代码未改。无需输入凭据/模型费用/重启8094；不是contractor矩阵、统计侧信道或人工G1。下一P0整理团队一次性安全观看与剩余native persona/更新范围；G1/G2仍not_run。
+
 2026-10-05 审计UI/分页候选0278bab：clean archive295 Python、五fixture场景、原frontend与新增audit Node、fixture HTTP smoke通过，rebuild-audit-ui。同view query旧响应/分页/重复点击/导航竞态已复现修复，process stages区分、HTML纯文本、unsafe整数提示；不扩大A签名/真人已读/G1声明，Chrome visual blocked/not_run。
 
 2026-10-05 最新候选e9a55e6在无本机.runtime/.env的git archive中实际295/295、五fixture场景、Node及新启动HTTP前后端烟测通过，evidence/runs/rebuild-fixed。首次archive294/295及test环境依赖失败保留rebuild-candidate；用独立真实临时DB修复、不删安全断言。U-01更新为本地候选可重建subset，浏览器视觉、native矩阵、人工G1/G2不升级。
