@@ -245,3 +245,5 @@ AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始
 
 
 2026-10-05 干净归档首次重建失败事实：295测试中native_identity_failure安全stage案例mock Store(:memory:)却让main chmod磁盘路径，依赖本机已存在的confluence-web.sqlite，干净archive返回local_store而非期望native_identity。保留rebuild-candidate失败日志/报告；测试改用独立TemporaryDirectory中的真实SQLite，仍注入原native失败、保留server不serve/close一次/受控错误不含上游秘密全部断言，并实际检查文件0600。不改应用授权/失败分类、不预置本机凭据、不删除或跳过有效测试。需新commit干净archive重跑后才能宣称可重建。
+
+干净候选修复验证：e9a55e6 archive实际295通过、5local场景/Node/fixture进程HTTP前后端通过，记录rebuild-fixed；只终止自有临时服务并清理自有临时目录。原失败证据保留不标通过。原source真实问答和后续本地重建模式分别列，不据HTTP smoke宣称browser/G1。当前未推送/合并，最终文档证据提交不改变被验证的应用/test代码。

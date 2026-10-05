@@ -1,5 +1,7 @@
 # Acceptance coverage · local candidate
 
+2026-10-05 最新候选e9a55e6在无本机.runtime/.env的git archive中实际295/295、五fixture场景、Node及新启动HTTP前后端烟测通过，evidence/runs/rebuild-fixed。首次archive294/295及test环境依赖失败保留rebuild-candidate；用独立真实临时DB修复、不删安全断言。U-01更新为本地候选可重建subset，浏览器视觉、native矩阵、人工G1/G2不升级。
+
 2026-10-05 更新：长文窗口10新测试（293总方法）local verified subset；Q-02本次eng_b真实产品四结论/四源input/1529microUSD、缺证据控制0模型调用，精确quote/逐阶段native/双ledger/developer review通过，非product_ops权限persona。NL audit对实际live合成日志副本分页与oracle一致，7签名边界通过，包括未覆盖尾部删除可逃过旧checkpoint；offline test auditor/同机临时key，非native审计身份/G1。runner stale mode后缀问题及未来修复均记录，原回答/hash不改。集中候选缺口见DEMO_CANDIDATE。
 
 2026-10-05 S-01工程事实single eng_b live subset：新增J-03/KAN-5实际In Progress，正文scenario owner Maya fictional、native assignee Unassigned分别表达；四源8证据/4claims覆盖原因、撤回猜测、J-02 Done与J-03仍open、当前CF native3/runbook v1。7fact checks+agent全原文语义对照/quotes/native四阶段/双回执账本独立核验通过；不是原eng_a及product_ops矩阵或人G1。283回归方法数量不变，新增J-03正/负subtests；evidence/runs/live-s01。

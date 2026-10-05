@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-05 最新干净候选验收：e9a55e6 git archive隔离目录（无.runtime/.env）setup、295测试、五fixture场景、Node安全检查全部通过；真实启动fixture HTTP服务并验证HTML/JS/CSS、登录、四源问答、精确引用preview，browser visual not_run。evidence/runs/rebuild-fixed；首次294pass/1fail保留在rebuild-candidate，测试独立DB修复保留全部有效安全断言。只停止自己的临时服务、删自己的临时目录，不改用户8094/配置/凭据/数据。最新测试结论来自此已提交候选隔离日志，local-latest/tests.json保留先前测试源码hash，不冒写为本次运行。阶段代码和脱敏证据已本地提交，未push/merge。下一P0：独立product_ops/contractor等原生persona及剩余更新矩阵、团队集中G1观看；已有工程/产品问答、生命周期、审计重建候选可按DEMO_CANDIDATE准备，语义/向量增强按验收收益排序。
+
 2026-10-05 当前干净归档验收发现1项测试环境依赖，295中294通过/1失败，setup通过；失败见rebuild-candidate，不是权限断言被绕过。native_identity_failure案例mock内存Store却chmod实际DB，本机残留文件掩盖失败。已改独立临时真实DB并通过针对性复现，保留全部原断言及新增0600检查。下一接续：提交修复后新archive完整回归+前后端启动烟测，成功前不宣称当前候选可重建通过。用户真实进程/配置/数据库未改。
 
 2026-10-05 交付验收增量（295回归实际通过，73local+222mock；新增显式live opt-in及防覆盖凭据前置安全检查）：eng_b真实四源/DeepSeek产品问答覆盖pilot/GA、Done/发布、沟通范围、未确认日期，4自动fact probes+逐quote/逐阶段native授权/原预算双回执和developer语义审查通过，1529microUSD保守记账；无证据unique-token样本零模型调用/零账本记录。evidence/runs/live-product。执行harness漏更新mode后缀，原record保留并明确解释，当前runner修复未来标签，不为改标签重复收费调用。真实日志副本完成audit NL分页oracle/普通reader拒绝及7项签名边界（offline test auditor / disposable同机key）；evidence/runs/audit-replay，独立key custody/生产role不宣称通过。现有8094未重启，无平台写入/新scope/凭据要求。当前五场景候选及缺口集中于DEMO_CANDIDATE.md；独立product_ops/contractor原生矩阵及人工G1/G2仍not_run。

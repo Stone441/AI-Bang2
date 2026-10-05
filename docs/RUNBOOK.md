@@ -208,3 +208,7 @@ Local port-session fix (2026-10-05): newly started servers use separate cookie n
 ### Local retrieval windows
 
 Run `make verify-retrieval` for authored long-document/lexical cases (fixture source, fake model). Results: `evidence/runs/retrieval-local/results.json`. The current retrieval uses lexical overlap and a small explicit English alias map, not embeddings. Long evidence previews include Unicode character offsets and return the exact source window. Fixed windows may cut sentences. DeepSeek still rejects any window without its approved synthetic marker; this local test does not prove live long-document model support. Existing running services load this code on their next normal restart; no credential re-entry is needed for the approved Keychain configuration.
+
+### Clean candidate validation
+
+`python3 -m scripts.rebuild_acceptance --ref HEAD --output evidence/runs/rebuild-<new-label>` exports only a committed snapshot into a temporary directory and runs setup, the full test suite, fixture five-scene replay, Node frontend checks and a newly started HTTP demo through login/query/preview. It preserves prior evidence, needs loopback permissions/OpenSSL/Node, and does not use existing runtime credentials or paid services. Current candidate e9a55e6 passed; initial test-isolation failure is retained separately. HTTP smoke does not establish browser visual acceptance.
