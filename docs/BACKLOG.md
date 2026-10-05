@@ -90,3 +90,5 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 2026-10-05 用户报告eng_b Slack token保存并离开密钥页；agent未读取秘密。按AUTH-012从已核对U0C66B76TE3自己的Collaborators页面Leave，native确认移除后Your Apps不再列出该app；未退出工作区/频道、未卸载业务OAuth grant。截图private/slack-reader-collaborator-removed.jpg。四源public配置均加载校验同tenant/actor，Drive映射kyle000909@gmail.com、SlackU0C66B76TE3与既有QQ Atlassian对应用户已确认persona；创建ignored0600 operator-bundle.json（mapping reviewed仅表示账号映射审查，非API验收）。下一步一次启动8088 multi+Drive PKCE+DeepSeek并逐source native identity强制核对。reader Slack API/统一live问答/撤权仍not_run；没有新模型调用。
 
 2026-10-05 阶段收尾：248/248回归与五场景local subset重跑通过；统一8088真实验收/Slack reader API和撤权not_run，用户休息前不再要求凭据。下一P0统一reader启动与native identity→跨源问答→Slack/混合历史撤权；P1有证据模型综合及完整live矩阵。
+
+2026-10-05 DEV-11-RECEIPT-UI verified local/mock：新增3个Python案例（251=60local+191mock）、13项receipt针对性测试与Node前端状态/usage测试通过；回答/历史/导出回执一致且撤权时隐藏。对应A-10/P-05/P-07子集、模型费用可核验。统一four-source live仍等待用户完成8088启动，不把listener存在当服务ready。下一P0 native四源问答/Slack撤权；P1 grounded综合回答与完整live矩阵。

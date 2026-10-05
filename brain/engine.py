@@ -3,6 +3,7 @@ import uuid
 from dataclasses import asdict
 from .contracts import Actor, Evidence, MODE, TENANT
 from .sources import policy_allows
+from .model_receipt import public_receipt
 
 STOP=set('what which the a an of is are was were to in on and or from with can we i me you your my do does it for all today latest current including caused use show details just'.split())
 
@@ -111,7 +112,11 @@ class Engine:
                     raise ValueError('Unsupported model claim')
                 claims.append({'text':claim['text'],'evidence_ids':ids})
             generation={'model':self.model.name,'cited':[i for c in claims for i in c['evidence_ids']]}
-            if 'model_call' in draft: generation['model_call']=draft['model_call']
+            if 'model_call' in draft:
+                receipt=public_receipt(draft['model_call'],rid)
+                if receipt['called'] is False and selected:
+                    raise ValueError('No-call receipt contradicts model input')
+                generation['model_call']=receipt
             self.audit.append('generation_completed',actor.user_id,rid,generation)
             if self.before_dispatch: self.before_dispatch()
             for e in selected:
@@ -122,6 +127,7 @@ class Engine:
             response={'request_id':rid,'mode':self.mode,'model':self.model.name,'claims':claims,
                       'uncertainties':[getattr(self.model,'answer_notice','Source excerpts only; live AI synthesis is not enabled.')] if claims else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
+            if 'model_call' in generation: response['model_call']=generation['model_call']
             self.audit.append('response_committed',actor.user_id,rid,{'response':response})
             self.store.save_run(rid,actor.user_id,response)
             return response

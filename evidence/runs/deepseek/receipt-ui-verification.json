@@ -1,0 +1,26 @@
+{
+  "mode": "local_synthetic_and_mock_http",
+  "live_api_called": false,
+  "live_model_called": false,
+  "tested_base_commit": "28c12f851d5b30ae0fe63ede58ed5f2663b34f4f",
+  "started_at": "2026-10-05T05:40:28.525141+00:00",
+  "finished_at": "2026-10-05T05:40:41.416971+00:00",
+  "tests_run": 251,
+  "successful": true,
+  "case_modes": {
+    "local_synthetic": 60,
+    "mock_http_contract": 191
+  },
+  "node_security": "passed: stale-view removal, explicit no-call, legacy unknown usage, token/cost rendering, revoked-history hides receipt",
+  "node_syntax": "passed",
+  "first_new_http_test_failure": {
+    "actual": "HTTP 503",
+    "cause": "Test marked authority text after App had initialized its index; initialize is intentionally non-destructive. Model rejected unmarked original fixture evidence.",
+    "fix": "Mark synthetic authority before App construction; retain all receipt and revocation assertions."
+  },
+  "limits": [
+    "No new native platform or real model request.",
+    "Existing operator processes may have loaded earlier Engine code; require actual response/receipt inspection before claiming new live capability.",
+    "Public successful receipts do not replace failed-request budget reconciliation or vendor invoice."
+  ]
+}

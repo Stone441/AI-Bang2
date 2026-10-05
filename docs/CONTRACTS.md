@@ -38,3 +38,5 @@ Slack delegated reader：固定 workspace team ID/site、channel ID/public-priva
 
 
 Drive delegated reader：固定file ID→parent ID、tenant、原生permissionId身份映射；about(user.permissionId,me)逐读验证，不使用email/Prompt授予权限。personal Drive text/plain UTF-8，原生文件GET和canDownload当前读取权威；alt=media固定HTTPS源、无redirect，metadata前后相同/字节size与checksum一致才返回。locator存file/headRevision/native version/SHA256，不推断旧revision授权。trash/403/404/下载禁止deny；未知/unsupported类型、共享盘、shortcut、父目录变动、竞态unknown；其他同Engine边界不变。
+
+2026-10-05 Model receipt response increment: successful query responses and stored history may include `model_call`. Engine validates server request correlation, accepted/settled state, strict integer token counts and conservative cost bounds; it projects fixed public fields and supplies its own accounting notice, dropping unrelated provider fields. Explicit no-call is allowed only for empty authorized evidence. Historical records without a receipt remain unknown, never inferred from evidence count. Existing citation/history/export authorization applies to the entire response, including its receipt. No new provider request or budget scope is introduced.

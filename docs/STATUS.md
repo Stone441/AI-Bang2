@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：248/248 回归通过（60 local synthetic + 188 mock HTTP）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/撤权及统一四源 live 仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
+**阶段收尾（2026-10-05）：251/251 回归通过（60 local synthetic + 191 mock HTTP）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/撤权及统一四源 live 仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -193,3 +193,7 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 - 下次直接按UNIFIED_LIVE_PILOT.md启动8088统一operator（各secret隐藏输入一次、Drive选kyle000909@gmail.com、DeepSeek既有预算）；先核验四源问答/引用/历史与model receipt，再做Slack私有频道撤权及统一混合历史/导出保护，恢复测试权限。
 - 后续：完善有证据的模型综合回答、补齐官方五场景live矩阵、非作者人工G1验收及提交候选。G2/公开部署/比赛提交未授权。
 - 现有本机服务未停止；机器休眠/进程退出后需按文档重新启动，凭据仅内存，不承诺夜间继续。队友Analysis&Planning未跟踪文件保留，不纳入提交。
+
+2026-10-05 DEV-11-RECEIPT-UI：独立分支codex/model-receipt-ui，实现public receipt验证/投影及网页token、费用估算/unknown历史显示；13项针对性receipt、251全回归、五场景local subset和Node前端安全/语法通过。新增HTTP测试首轮503已复现为fixture初始化顺序，修正准备流程，未放宽合成数据拒绝或撤权断言。证据deepseek/receipt-ui-verification.json。未调用真实源/模型或新增费用。用户启动命令多粘贴Confluence/Jira导致argparse拒绝，已给纯命令纠正；8088 listener存在但应用页未见，不宣称native身份/统一服务启动成功。接续用户完成启动后检验health、四源原生问答、实际receipt和旧引用/历史、Slack撤权。
+
+8088接续补充：后续只读health探测连接不可用，listener已不在监听；没有应用页/native startup完成的证据。等待用户提供固定启动提示或完成纯命令重试，不读取凭据、不自动重启用户进程。
