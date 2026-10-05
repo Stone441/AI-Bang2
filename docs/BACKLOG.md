@@ -106,3 +106,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-10-SLACK-REVOKE verified live subset：原生private成员移除→同会话旧混合历史隐藏→新query只有三源六证据（Slack root/reply native deny）→恢复Members2；9readonly checks。直接旧引用/导出live not_run（Chrome自动本机导航blocked），完整权限矩阵仍pending。真实模型新345microUSD上界；G1/G2未批准。
+
+
+2026-10-05 DEV-11-EXPORT verified local/live subset：按原端点新增导出入口及expired session提示；实测下载逐字段一致（raw保留大整数）、撤权旧导出不创建文件、旧引用GET拒绝且清除视图。268Python+Node回归通过，未新调用模型。剩余P1性能/grounded综合/五场景完整live和人工G1，现有ACL完整矩阵仍partial。

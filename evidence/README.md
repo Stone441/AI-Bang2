@@ -43,3 +43,5 @@
 2026-10-05 unified live API + DeepSeek: [successful query](runs/live-unified/query.json). Four sources/eight objects, 18 readonly checks, native Slack reply preview and reauthorized history verified; 1030 tokens, conservative 468microUSD estimate. 53.37s latency, extractive selection only; full ACL matrix/revocation/G1/G2 separate. Screenshot remains ignored local-only.
 
 2026-10-05 native Slack private-channel reader revocation: [same-session checkpoint](runs/live-unified/slack-revocation.json). Nine readonly checks, old mixed history hidden, later model/answer uses six objects from remaining three sources, root/reply native deny. Original member restored (Members2). Direct citation/export live not_run; screenshots ignored. New conservative cost345microUSD.
+
+2026-10-05 [live export and stale citation checks](runs/live-unified/export-verification.json): initial JS rounding failure retained, corrected raw download9633 bytes exactly matches saved answer. Same-session native revoke rejects old export (no additional file) and old citation, clears stale views, retains valid login. No new model fee; original permission restoration separately verified.

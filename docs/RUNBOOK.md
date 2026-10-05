@@ -159,3 +159,6 @@ python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.j
 ```
 
 默认未指定 credential-store 的旧命令依然仅内存保存。钥匙串拒绝读取时停止，不回退明文。只读平台与模型真实集成另行验收；本次合成钥匙串 smoke 和 mock refresh 不代表统一四源 live 已通过。
+
+
+答案和Recent answers中的Export answer会重新检查所有依赖的当前权限，再下载服务端原始JSON envelope（history数组，保留大整数版本号）。已撤权的答案不下载文件。下载副本离开系统后不能被撤回；演示中只导出合成资料。刷新页面即可加载前端更新，无需重启服务/重填凭据。Session失效时提示打开运行终端最新的一次性入口；资料403而session仍有效时只拒绝对应访问，不要求重登录。

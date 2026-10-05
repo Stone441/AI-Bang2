@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：268/268 回归通过（60 local synthetic + 208 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；直接旧引用/导出 live not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
+**阶段收尾（2026-10-05）：268/268 回归通过（60 local synthetic + 208 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -213,3 +213,10 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 2026-10-05 DEV-10-SLACK-REVOKE verified live subset：按AUTH-003测试权限授权，既有owner ssy44199@gmail.com Google重新登录比赛AI-Bang2，确认私有频道C0C6R70SGG4及读者kyle000909@gmail.com/U0C66B76TE3，仅Remove from channel，成员2→1；未移除工作区/撤销token/使用NTU。原8088 eng_b会话Recent answers重鉴权，旧跨源回答整条不可用；同会话后续query c0585d94fd144e53a05c55f675a10310原生Slack root/reply均deny，仅CF/Jira/Drive六证据进入模型/回答，无Slack引用或canary。9项readonly检查通过，真实模型783tokens/345microUSD保守账（不是供应商账单）；unsigned链有效。已把同一既有成员恢复到原私有频道，native Members2/重新加入事件确认。证据live-unified/slack-revocation.json，截图ignored private。直接旧引用端点被Chrome ERR_BLOCKED_BY_CLIENT阻止自动导航，未关闭安全设置；引用/导出live保留not_run，不能把mock通过补成live。完整ACL/缓存/继承矩阵仍未通过。下一P0补齐直接端点实际验收；P1模型grounded综合与53秒性能改善。保持8088，无需重新token。
 
 恢复后原会话再次Recent answers，两条request receipt均出现，原Slack线程证据按当前恢复权限重新显示；native恢复及历史恢复均verified。累计本轮两次成功模型请求813microUSD保守上界，不含先前243microUSD记录。仅证据/状态改动，沿用268源码回归，不重复无关测试。
+
+
+2026-10-05 DEV-11-EXPORT verified local + live subset：新增英文Export answer产品入口，调用现有/api/export/{request_id}并每次重新鉴权；无权不创建文件。首次真实下载虽生成文件，精确比对发现JS大整数舍入（Jira/root Slack version），保留失败记录后修复为raw JSON envelope下载。修复后实际9633字节文件与DB保存答案逐字段完全一致，SHA2563453a2ac6e3585455d9197b6c6c4cc3aea4ee8138ac234c7a75883f5ad82dcac。前端session失效清除旧内容/提示新入口，单资料403不误退出。268Python回归/Node安全和大整数导出检查通过。
+
+原8088/eng_b会话，两轮原生仅合成private member撤权分别测试：旧Export按钮得到unavailable，Downloads对应文件数2→2；旧Slack reply citation按钮调用原evidence端点，native deny、旧答案/preview清除且eng_b session仍有效。此前浏览器goto API地址被blocked，没有关闭安全设置；产品按钮实测同一GET endpoint，覆盖对应live子集而不是把mock当真。证据live-unified/export-verification.json；截图ignored private。两轮恢复分别native确认/最终确认待补；无新增模型请求/费用，合法导出已保存副本不可撤回。下一P1减少无关联资料冗余源读取并保持模型前/发送前全部current checks，后续grounded模型综合及完整五场景live。
+
+本轮两次原生撤权恢复均已确认：同一private频道Members2、原Kyle读者rejoined by invitation，无额外角色/scope/新工作区成员。应用仍运行，秘密未重新录入。

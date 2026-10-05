@@ -1,0 +1,41 @@
+{
+  "mode": "live_api_operator_export",
+  "initial_download": "actual file generated but fidelity check failed",
+  "failure": "JS JSON parse/stringify rounded Jira/Slack numeric versions above safe integer range",
+  "affected_fields": [
+    "jira:10013 version",
+    "slack root message version"
+  ],
+  "fix": "validate access using parsed response, download untouched server JSON envelope",
+  "regression": "Node asserts raw 903088382970380097 preserved and revoked export cannot create Blob/download; expired session clears contents while document denial retains valid session",
+  "live_corrected_download": {
+    "result": "passed: parsed downloaded envelope exactly equals persisted server answer",
+    "bytes": 9633,
+    "sha256": "3453a2ac6e3585455d9197b6c6c4cc3aea4ee8138ac234c7a75883f5ad82dcac",
+    "large_integer_versions_preserved": true
+  },
+  "live_revoked_export": {
+    "result": "passed: existing answer export button rechecked native rights, displayed unavailable, no new download file",
+    "downloads_before_after": [
+      2,
+      2
+    ],
+    "latest_native_slack_denial": "2026-10-05T06:48:06.524732+00:00",
+    "same_session": true,
+    "restoration": "native_verified"
+  },
+  "live_revoked_citation": {
+    "result": "passed: old visible citation button calls original backend evidence endpoint; native deny, no preview/text/title/canary returned in UI, stale views cleared, valid session retained",
+    "latest_native_denial": "2026-10-05T06:50:45.534564+00:00",
+    "same_session": true,
+    "direct_endpoint_automatic_navigation": "remains browser-blocked; tested same endpoint via product citation button instead, no security settings changed"
+  },
+  "new_model_calls": false,
+  "recorded_at": "2026-10-05T06:53:43.759569+00:00",
+  "local_regression": {
+    "python_tests": 268,
+    "passed": 268,
+    "node_frontend_security": "passed including no-download on revoked response, large integer byte fidelity, document-deny versus expired-session distinction"
+  },
+  "restoration": "native verified after both test cycles: same private channel Members 2, existing reader Kyle rejoined by invitation; no new scopes/roles/workspace members"
+}

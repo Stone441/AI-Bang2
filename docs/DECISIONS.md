@@ -190,3 +190,8 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 
 
 2026-10-05 ADR-023：真实四源 eng_b 启动成功后，首个联合请求5b6b37e3e7074d62b95ee563333dbdb1读取8个对象、四源均allow，却在模型网络发送前失败（43.07秒，ledger无该query行/无费用）。实读DB确认Confluence C-01/C-02及Jira J-02正文使用原批准的完整 SYNTHETIC COMPETITION TEST DATA banner，旧DeepSeek guard仅接受方括号标记。保留旧标记路径，新增完整banner+按source匹配明确Fixture ID的窄兼容，不改正文/引用、scope/预算/授权断言；标题标记单独不放行。两个新增安全案例覆盖三个已种植版本及缺失/错源/错ID拒绝，268全回归通过。原文来自已批准比赛空间，非企业数据。证据live-unified/first-query-failure.json；失败记录保留，修复后真实重跑待用户只重启make live验证Keychain复用。
+
+
+2026-10-05 ADR-024：已批准原有GET export端点尚无产品入口；新增Export answer按钮，每次调用后端重新鉴权后才生成下载，unknown/unavailable不创建Blob/文件，先清除旧显示。不使用预先生成下载链接或答案缓存。首次真实文件比对失败，发现JS parse/stringify舍入大整数Jira/Slack version；修复为解析结果仅校验访问与request ID、下载后端原始JSON envelope，Node byte-fidelity断言及实际下载逐字段与服务端持久记录匹配。合法下载副本之后不能撤回，UI注明这一边界。
+
+403不直接等同session失效：额外检查既有/api/session，仍有效则保持身份并隐藏被拒绝资料；session也403时清除旧内容/preview/history ID并提示最新operator入口。默认不重启服务、保存新session或自动获取凭据。真实撤权后export不新增文件、旧citation拒绝并保留eng_b登录均实测，未因Chrome自动API导航blocked关闭安全设置。沿用原GET endpoints/权限契约，回滚只移除前端入口与错误提示；不削弱后台鉴权。
