@@ -212,3 +212,7 @@ Run `make verify-retrieval` for authored long-document/lexical cases (fixture so
 ### Clean candidate validation
 
 `python3 -m scripts.rebuild_acceptance --ref HEAD --output evidence/runs/rebuild-<new-label>` exports only a committed snapshot into a temporary directory and runs setup, the full test suite, fixture five-scene replay, Node frontend checks and a newly started HTTP demo through login/query/preview. It preserves prior evidence, needs loopback permissions/OpenSSL/Node, and does not use existing runtime credentials or paid services. Current candidate e9a55e6 passed; initial test-isolation failure is retained separately. HTTP smoke does not establish browser visual acceptance.
+
+### Audit interface checks
+
+`node tests/frontend_audit_review.js` checks same-view query ordering, stable-snapshot pagination, duplicate clicks, navigation guards, HTML as text, and honest display of integers outside JavaScript precision. Audit rows distinguish candidate, authorization, model input, citation and delivery. The browser timeline does not verify a signature or prove human reading; use the offline verifier for signed boundaries and the authoritative backend export for exact fingerprints. Current visual browser check was blocked by Chrome and remains not_run.

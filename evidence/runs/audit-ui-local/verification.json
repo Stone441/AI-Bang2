@@ -1,0 +1,40 @@
+{
+  "time": "2026-10-05T13:41:25.174503+00:00",
+  "mode": "local_node_dom_simulation",
+  "checks": [
+    {
+      "command": [
+        "node",
+        "tests/frontend_audit_review.js"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "node",
+        "tests/frontend_operator_security.js"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "web/app.js"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "initial_race_reproduced": true,
+  "source_hashes": {
+    "web/app.js": "2de4a5380d0d8b3b793893d0faccecd867b02798b101de04421c3b834fbe4a6e",
+    "tests/frontend_audit_review.js": "0cf88dfcc22d0b791a5f9df34fa6305d89ef1ee2ac87daf07be9b2bc67cefb01",
+    "tests/frontend_operator_security.js": "b423f1c52a18afe3861ee5649d36068732e1c4db03fb570a0cdf6b97e210b81e"
+  },
+  "browser_visual": "not_run",
+  "browser_block": "Chrome ERR_BLOCKED_BY_CLIENT for temporary loopback demo",
+  "temporary_demo_service_stopped": true,
+  "existing_8094_unchanged": true,
+  "platform_or_model_calls": false,
+  "human_G1": "not_run"
+}

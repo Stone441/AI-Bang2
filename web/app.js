@@ -50,7 +50,74 @@ for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{$('qu
 $('workspaceNav').onclick=()=>{$('answer').replaceChildren();$('other').replaceChildren();show(session?'workspace':'login');};
 $('historyNav').onclick=async()=>{if(!session)return;$('answer').replaceChildren();show('other');const view=viewToken();$('other').replaceChildren(el('h1','Recent answers'),el('p','Access and versions are checked again before answers are displayed.','lede'));try{const result=await api('/api/history');if(!currentView(view))return;for(const a of result.history){const item=el('div',undefined,'history-item');renderAnswer(a,item);$('other').append(item);}if(!result.history.length)$('other').append(el('p','No answers yet.'));}catch(e){if(!currentView(view))return;$('status').textContent=e.message;}};
 $('sourcesNav').onclick=async()=>{show('other');const view=viewToken();$('other').replaceChildren(el('h1','Source coverage'),el('p','Fixture adapters are active. Live integrations are blocked pending explicit authorization.','lede'));try{const r=await api('/api/sources/status');if(!currentView(view))return;for(const s of r.sources){const card=el('div',undefined,'panel');card.append(el('h2',s.source),el('p','Status: '+s.status),el('p','Live: '+s.live),el('p',s.authority));$('other').append(card);}}catch(e){if(!currentView(view))return;$('status').textContent=e.message;}};
-$('auditNav').onclick=()=>{show('other');const view=viewToken();const root=$('other');root.replaceChildren(el('h1','Audit explorer'),el('p','Scoped to eng_a, eng_b and product_ops. Events describe application activity, not proof that a person read the answer.','lede'));const form=el('form',undefined,'audit-form'),input=el('input');input.setAttribute('aria-label','Audit inquiry');input.value='Show everything jdoe accessed related to payment-service in the last 30 days.';const button=el('button','Find events','primary');form.append(input,button);const output=el('div');root.append(form,output);let filters=null;async function display(result,append=false){if(!currentView(view))return;if(!append)output.replaceChildren(el('pre',JSON.stringify(result.filters,null,2)),el('p',result.total+' exact matching events · snapshot '+result.as_of));for(const row of result.events){const d=el('details',undefined,'history-item');d.append(el('summary',row.seq+' · '+row.event_type+' · '+row.actor+' · '+row.timestamp),el('pre',JSON.stringify(row.payload,null,2)));output.append(d);}filters=result.filters;if(result.next_after){const next=el('button','Load next page');next.onclick=async()=>{next.remove();try{await display(await api('/api/audit/events',{...filters,after:result.next_after}),true);}catch(e){if(currentView(view))$('status').textContent=e.message;}};output.append(next);}}form.onsubmit=async e=>{e.preventDefault();try{await display(await api('/api/audit/inquire',{question:input.value}));}catch(err){if(currentView(view))$('status').textContent='Use the shown inquiry template. '+err.message;}};};
+function auditEvent(row){
+  const labels={request_started:'Question',candidate_evaluated:'Retrieval candidate',authorization_decided:'Authorization decision',evidence_used:'Model evidence',generation_completed:'Generation and citations',response_committed:'Stored answer',response_dispatch_attempted:'Delivery attempt',request_failed:'Request stopped',audit_inquiry:'Audit inquiry',source_changed:'Source change'};
+  const item=el('details',undefined,'history-item');
+  item.append(el('summary',row.seq+' · '+(labels[row.event_type]||row.event_type)+' · '+row.actor+' · '+row.timestamp));
+  item.append(el('p','Request: '+row.request_id,'muted'));
+  const p=row.payload||{};
+  if(row.event_type==='request_started')item.append(el('p',p.query));
+  if(row.event_type==='candidate_evaluated')item.append(el('p','Candidate only — not proof of source access or model use.'));
+  if(row.event_type==='authorization_decided'){
+    item.append(el('p',(p.result||'unknown').toUpperCase()+' · '+p.phase+' · '+p.source+' · '+p.resource_id));
+    if(p.version!==undefined&&p.version!==null)item.append(el('p',Number.isSafeInteger(p.version)?'Version: '+p.version:'Exact version is retained by the backend; use the string evidence ID to verify its fingerprint.','muted'));
+  }
+  if(row.event_type==='evidence_used')item.append(el('p',(p.stage==='sent_to_review'?'Sent to evidence review':p.stage==='sent_to_model'?'Sent to answer model':p.stage)+' · '+p.evidence_id));
+  if(row.event_type==='generation_completed'){
+    item.append(el('p','Model: '+p.model));
+    item.append(el('p','Citations listed: '+(p.cited||[]).join(', ')));
+  }
+  if(row.event_type==='response_committed'){
+    const answer=p.response||{};
+    item.append(el('p','Recorded model: '+answer.model));
+    for(const claim of answer.claims||[])item.append(el('p',claim.text));
+    if(!(answer.claims||[]).length)item.append(el('p','No supported answer was stored.'));
+  }
+  if(row.event_type==='response_dispatch_attempted')item.append(el('p','Delivery was attempted; this does not prove the recipient read it.'));
+  const raw=el('details');
+  const payload=JSON.stringify(p,(_key,value)=>typeof value==='number'&&Number.isInteger(value)&&!Number.isSafeInteger(value)?'Exact integer unavailable in browser; consult backend export or string evidence ID':value,2);
+  raw.append(el('summary','Event payload (browser view)'),el('pre',payload));item.append(raw);
+  return item;
+}
+$('auditNav').onclick=()=>{
+  show('other');const view=viewToken(),root=$('other');
+  root.replaceChildren(el('h1','Audit explorer'),el('p','Scoped to eng_a, eng_b and product_ops. Events describe application activity, not proof that a person read the answer.','lede'));
+  const form=el('form',undefined,'audit-form'),input=el('input');input.setAttribute('aria-label','Audit inquiry');
+  input.value='Show everything jdoe accessed related to payment-service in the last 30 days.';
+  const button=el('button','Find events','primary');form.append(input,button);const output=el('div');root.append(form,output);
+  let inquiryRevision=0;
+  const active=revision=>currentView(view)&&revision===inquiryRevision;
+  function display(result,revision,append=false){
+    if(!active(revision))return;
+    if(!append){
+      output.replaceChildren(el('h2','Query scope'),el('pre',JSON.stringify(result.filters,null,2)),el('p',result.total+' matching events · stable snapshot '+result.as_of));
+      output.append(el('p','Candidates, authorization, model input, citations and delivery are separate stages. A readable timeline does not verify a signature or independent checkpoint.','notice'));
+    }
+    for(const row of result.events)output.append(auditEvent(row));
+    if(result.next_after){
+      const next=el('button','Load next page');
+      next.onclick=async()=>{
+        if(!active(revision)||next.disabled)return;
+        next.disabled=true;
+        try{
+          const page=await api('/api/audit/events',{...result.filters,after:result.next_after});
+          if(!active(revision))return;
+          next.remove();display(page,revision,true);
+        }catch(err){if(active(revision)){next.disabled=false;$('status').textContent=err.message;}}
+      };
+      output.append(next);
+    }
+  }
+  form.onsubmit=async event=>{
+    event.preventDefault();const revision=++inquiryRevision;
+    output.replaceChildren();$('status').textContent='Finding scoped audit events…';
+    try{
+      const result=await api('/api/audit/inquire',{question:input.value});
+      if(!active(revision))return;
+      display(result,revision);$('status').textContent=result.total?'Audit events ready.':'No events match these filters.';
+    }catch(err){if(active(revision)){output.replaceChildren();$('status').textContent='Use the shown inquiry template. '+err.message;}}
+  };
+};
 $('closePreview').onclick=()=>{viewRevision++;$('previewBody').replaceChildren();$('preview').close();};
 async function boot(){
   try{

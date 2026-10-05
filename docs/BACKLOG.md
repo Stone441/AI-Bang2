@@ -153,3 +153,5 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-05 验收优先级按用户确认恢复到交付依赖：DEV-12五场景/独立persona/候选安全演示优先，DEV-08质量以实际评测缺口驱动，不因提问新增向量服务。DEV-12-PRODUCT verified eng_b native/model subset（非product_ops ACL）：四结论、1529microUSD、缺证据不调用；DEV-12-AUDIT-REPLAY verified offline captured-live subset：NL分页/普通reader拒绝/7签名边界，独立custody与live审计员仍blocked。DEMO_CANDIDATE集中各场景实际证据与缺口，G1/G2 pending。新runner显式--live/防覆盖，mode标签失配保留原record、修复未来执行。
 
 2026-10-05 DEV-12-REBUILD verified local committed candidate e9a55e6：无本机.runtime/.env的git archive，setup/295tests/5fixture场景/Node/启动HTTP资产+login+four-source-query+preview全部通过。首次26dc4a9 archive仅1测试依赖本机残留DB导致失败，保留rebuild-candidate，修正测试真实独立DB而非削弱安全断言；成功rebuild-fixed。浏览器视觉/原生persona/G1仍pending，本次没有source/model调用，不重启8094。
+
+2026-10-05 DEV-10/12-AUDIT-UI verified local Node subset：原same-view查询竞态已复现、修复；stable snapshot分页捕获result.filters、旧请求/重复点击/导航丢弃、source HTML纯文本、unsafe整数明确提示。审计timeline与raw event并存，原server scope/role及SQL契约未改。Chrome visual blocked/not_run；临时fixture停止，8094保留。下一候选archive加入独立audit frontend check，独立persona/G1/G2仍pending。

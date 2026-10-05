@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-05 审计产品验收：实际Node复现同一页面新查询先返回、旧查询后覆盖的问题，按inquiryRevision+view/session修复；旧分页/重复点击/导航响应及HTML文本/不安全大整数展示检查通过，原有前端安全检查与JS syntax通过。timeline分开问题、候选、阶段授权、模型input/review、引用、stored answer、delivery attempt，不宣称用户已读或UI已验签；raw browser payload对不精确整数明确遮换提示，后端hash/export不改。证据audit-ui-local；自动Chrome临时页ERR_BLOCKED_BY_CLIENT，visual not_run，不绕过设置/不要求用户重启8094，已停止自有fixture服务。独立原生persona仍缺其单独grant/映射，不能把eng_b改名冒称product_ops；候选界面与自动验收独立推进，G1/G2仍pending。下一提交候选再做包含新增audit Node案例的clean archive验证。
+
 2026-10-05 最新干净候选验收：e9a55e6 git archive隔离目录（无.runtime/.env）setup、295测试、五fixture场景、Node安全检查全部通过；真实启动fixture HTTP服务并验证HTML/JS/CSS、登录、四源问答、精确引用preview，browser visual not_run。evidence/runs/rebuild-fixed；首次294pass/1fail保留在rebuild-candidate，测试独立DB修复保留全部有效安全断言。只停止自己的临时服务、删自己的临时目录，不改用户8094/配置/凭据/数据。最新测试结论来自此已提交候选隔离日志，local-latest/tests.json保留先前测试源码hash，不冒写为本次运行。阶段代码和脱敏证据已本地提交，未push/merge。下一P0：独立product_ops/contractor等原生persona及剩余更新矩阵、团队集中G1观看；已有工程/产品问答、生命周期、审计重建候选可按DEMO_CANDIDATE准备，语义/向量增强按验收收益排序。
 
 2026-10-05 当前干净归档验收发现1项测试环境依赖，295中294通过/1失败，setup通过；失败见rebuild-candidate，不是权限断言被绕过。native_identity_failure案例mock内存Store却chmod实际DB，本机残留文件掩盖失败。已改独立临时真实DB并通过针对性复现，保留全部原断言及新增0600检查。下一接续：提交修复后新archive完整回归+前后端启动烟测，成功前不宣称当前候选可重建通过。用户真实进程/配置/数据库未改。

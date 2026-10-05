@@ -37,7 +37,8 @@ def run(ref, output):
                                               for root in ('brain', 'web', 'fixtures') for p in sorted((tree/root).rglob('*')) if p.is_file()}
             for label, cmd in [('setup', ['make', 'setup']), ('tests', ['make', 'test']),
                                ('scenarios', ['make', 'verify']),
-                               ('frontend', ['node', 'tests/frontend_operator_security.js'])]:
+                               ('frontend', ['node', 'tests/frontend_operator_security.js']),
+                               ('audit_frontend', ['node', 'tests/frontend_audit_review.js'])]:
                 result = subprocess.run(cmd, cwd=tree, capture_output=True, text=True, timeout=120)
                 (output / (label + '.log')).write_text(result.stdout + result.stderr)
                 report['commands'].append({'label': label, 'command': cmd, 'exit_code': result.returncode})

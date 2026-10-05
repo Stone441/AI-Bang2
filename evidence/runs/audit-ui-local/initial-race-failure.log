@@ -1,0 +1,22 @@
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /NEW_QUERY/. Input:
+
+' Audit explorer Scoped to eng_a, eng_b and product_ops. Events describe application activity, not proof that a person read the answer.   Find events  {\n' +
+  '  "actor": "eng_b",\n' +
+  '  "as_of": 8\n' +
+  '} 1 exact matching events · snapshot 8  1 · request_started · eng_b · 2026-10-05 {\n' +
+  '  "query": "OLD_QUERY"\n' +
+  '}'
+
+    at /Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/frontend_audit_review.js:26:10 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: ' Audit explorer Scoped to eng_a, eng_b and product_ops. Events describe application activity, not proof that a person read the answer.   Find events  {\n' +
+    '  "actor": "eng_b",\n' +
+    '  "as_of": 8\n' +
+    '} 1 exact matching events · snapshot 8  1 · request_started · eng_b · 2026-10-05 {\n' +
+    '  "query": "OLD_QUERY"\n' +
+    '}',
+  expected: /NEW_QUERY/,
+  operator: 'match',
+  diff: 'simple'
+}
