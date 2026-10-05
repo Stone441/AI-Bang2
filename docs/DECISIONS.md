@@ -236,3 +236,6 @@ ADR-028验证补充：修正后隔离真实四源11checks通过，保障措施�
 AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始终仅eng_b只读/已批准Keychain refresh，fake model无runtime费用；隔离SQLite与临时Drive白名单，不修改用户8094/bundle。CF原文恢复API严格相等，native1→2→3；Drive temporary native1eM_6RUZ8y130l9B0WKrSs3GkGu6rjbUZ移入回收站，原三文件保留、共享未操作。Chrome file URL权限blocked后没有扩展权限或旁路上传，由用户本人拖入。首个CF探针误取Evidence.native_id导致KeyError，保留audit失败事实并修正resource_id定位；初始脚本PYTHONPATH未设的启动失败发生在读取凭据/平台调用前。未改应用代码/有效安全断言；未测后台同步时延/HTTP导出/真实模型/人工G1，边界保持。
 
 用户授权继续所有可推进工作，不等于新增外部写入、公开开放或人工G1/G2通过。采用独立内存fixture世界逐source/operation执行12组生命周期检查，不改变正在运行的8094、真实资料、钥匙串或模型账本。旧索引故意滞后，验证当前权限/版本独立保护模型、历史及引用；更新发布后核验新版本，撤权/删除不重建正文。结果明确local subset，导出仅共享backend projection，不冒称本次HTTP/browser验证。首次探针把用户question中的marker误当模型证据泄露，保留失败报告，修正为只查evidence；有效断言保留。另整理团队安全观看清单，人工批准继续not_run。回滚可删除独立runner/Makefile入口，不影响runtime。
+
+
+2026-10-05 ADR-032：现实现按整篇16000字符budget跳过长文，不能检索后段事实。无新依赖/服务，改为本地固定2400Unicode字符/400重叠窗口；每资料最多3，总24证据/16000字符，短文<=4000保持旧ID；长引用resource@version#start:end只接受该版本规范窗口，locator.text_window记录单位/策略，正文为原文精确连续切片，不合并权限对象、不补写标题/标记。所有模型/复核/返回阶段仍按资料当前native权限与version检查，preview/history/export重新鉴权；content/ACL增量契约不变，窗口按已发布版本即时派生，无独立向量索引。小型通用英文aliases改善已知词汇变化，不宣称语义检索。代价：固定窗口可截句/重复，部分资料预算先后可能影响召回，仍全量本地扫描，不保证规模性能。DeepSeek synthetic-only严格检查未改：缺真实marker的晚段窗口拒绝调用，不能为了方便把源头标记复制进原文；真实长文模型另需可审查的来源边界实现及验收。回滚engine窗口入口即可恢复整篇模式；已存片段历史若回滚不可解析，安全拒绝，不迁移旧记录为伪原文。无平台写入/新收费/用户服务重启。

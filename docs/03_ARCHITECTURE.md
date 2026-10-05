@@ -493,3 +493,10 @@ The local operator pilot now accepts a reviewed bundle of 2–4 delegated reader
 
 
 2026-10-05 local cookie increment: login/auth/logout select a cookie name derived from the server's bound port, preventing accidental cross-port overwrites. Server sessions remain random and mandatory; no actor or credential is selected by client input. Cookies remain host-scoped under RFC6265, so distinct names do not protect against a hostile same-host HTTP listener receiving cookies. This pilot assumes a trusted local machine; production identity remains pending.
+
+
+### Implemented local retrieval increment (2026-10-05, ADR-032)
+
+The SQLite pilot derives exact overlapping text windows from each published resource version at query time. Documents up to 4,000 Unicode characters retain their original evidence ID; longer documents use canonical `resource_id@version#start:end` IDs and `locator.text_window` with character offsets. Windows contain only a continuous slice of that resource. Current source checks remain mandatory before model/review/response and every preview/history/export access; windows never inherit another resource’s authorization. Noncanonical offsets and outdated versions are denied. The entire-document preview ID of a long document is deliberately unavailable.
+
+Ranking uses local lexical overlap and a small explicit English alias map, up to three windows per resource, 24 total evidence objects and 16,000 text characters. This is not the planned vector/hybrid/reranker architecture. Fixed windows can cut sentences, overlap and omit context; there is no background chunk index or scale benchmark. DeepSeek’s existing synthetic input guard remains unchanged; a late slice without the approved marker is rejected, so fixture long-window success does not prove live long-document model support.

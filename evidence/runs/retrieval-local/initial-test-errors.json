@@ -1,0 +1,18 @@
+{
+  "mode": "local_synthetic_and_mock_http",
+  "failures": [
+    {
+      "command": "python3 -m unittest tests.test_engine tests.test_deepseek -q",
+      "tests_run": 31,
+      "errors": 1,
+      "error": "ModuleNotFoundError: No module named test_operator_web"
+    },
+    {
+      "command": "PYTHONPATH=tests python3 -m unittest test_retrieval test_engine test_deepseek -q",
+      "tests_run": 41,
+      "errors": 1,
+      "error": "PermissionError: [Errno 1] Operation not permitted; loopback HTTP server bind"
+    }
+  ],
+  "resolution": "Use discovery via make test-report with approved loopback permissions; preserve HTTP/security assertions."
+}

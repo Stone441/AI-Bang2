@@ -1,4 +1,4 @@
-.PHONY: test demo verify verify-lifecycle setup live live-synthesis
+.PHONY: test demo verify verify-lifecycle verify-retrieval setup live live-synthesis
 LIVE_PORT ?= 8088
 setup:
 	python3 -c "import sqlite3; import sys; assert sys.version_info >= (3, 11); print('Standard-library runtime ready')"
@@ -16,3 +16,6 @@ live-synthesis:
 	python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --oauth-client .runtime/drive-oauth-client.json --port $(LIVE_PORT) --live --model deepseek --credential-store macos-keychain --answer-style synthesis
 test-report:
 	python3 -m scripts.test_report
+
+verify-retrieval:
+	python3 -m scripts.retrieval_acceptance

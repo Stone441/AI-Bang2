@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-05 检索改进：长文不再因整篇超过16000字符而直接跳过；本地采用2400字符/400重叠窗口，最多每资料3片段、总24证据/16000字符。短资料保留原ID，长片段绑定resource/version/规范offset；preview按当前原生权限和版本解析精确原文，旧history/export projection沿用逐引用检查。10项新增安全/定位测试及293项完整回归通过；五场景、12生命周期、Node检查通过。可重放词法评测见 `make verify-retrieval` / evidence/runs/retrieval-local。仅少量英文词汇映射，不是向量/语义检索；固定窗口可能截句，未知词汇仍可能漏召回；DeepSeek合成标记guard未放宽，缺标记窗口会拒绝真实模型。此次fixture/fake，无新平台/模型调用或费用，用户8094未重启，G1/G2仍not_run。
+
 2026-10-05 最新：真实J-03已种植并经eng_b只读API验证，KAN-5/10014原生In Progress、scenario owner Maya fictional/native Unassigned。本地白名单仅新增此合成对象，用户8094仍运行旧配置、无须现在重启或输入凭据。四源真实DeepSeek综合工程题7事实检查、8模型证据/9refresh、逐阶段权限/精确quotes/68事件链与两笔账本回执独立核验通过，1856microUSD上界；evidence/runs/live-s01。283回归、五场景local subset、12生命周期及Node检查通过；初次沙箱bind失败保留。S-01工程事实覆盖verified single eng_b operator subset；产品身份、完整live五场景/人工G1/G2仍未完成。下一可推进：检索质量与长文切块本地实现/评测、审计UI与候选安全演示；不得把本题当完整persona通过。
 
 2026-10-05 AUTH-015真实生命周期子集完成：Confluence98564 API原生版本1→2→3，新增standby queue内容进入回答，旧引用/history（含export projection）拒绝，恢复后原正文逐字一致；Drive唯一临时合成文件删除前eng_b可检索，移入回收站后native deny/旧引用history拒绝/追问及模型evidence空，旧索引保留，原三文件UI未改。证据live-lifecycle；独立operator/fake model，不宣称本次HTTP下载、真实模型更新、后台同步或完整五场景通过。Chrome扩展文件URL权限阻止自动上传，由用户手工上传，无安全设置改变。两个自有验收进程结束，用户8094未重启，无新模型费用。下一接续：补齐S-01真实J-03 open-follow-up与完整问答真值；当前live白名单仅J-02，J-03种植、原生访问及白名单尚未落实，按AUTH-003既有合成空间授权核对后推进。继续可独立推进候选界面/审计展示及人工安全演示准备，G1/G2仍not_run。

@@ -1,15 +1,10 @@
-import re
 import uuid
 from dataclasses import asdict
 from .contracts import Actor, Evidence, MODE, TENANT
 from .sources import policy_allows
 from .model_receipt import public_receipt
 
-STOP=set('what which the a an of is are was were to in on and or from with can we i me you your my do does it for all today latest current including caused use show details just'.split())
-
-
-def tokens(text):
-    return {t for t in re.findall(r'[a-z0-9]+(?:-[a-z0-9]+)*',text.lower()) if t not in STOP}
+from .retrieval import tokens, ranked_windows, window_evidence, resolve_window
 
 
 class FakeExtractiveModel:
@@ -50,7 +45,7 @@ class Engine:
         if not isinstance(question,str) or not question.strip() or len(question)>4000:
             raise ValueError('Question must contain 1–4000 characters')
         rid=uuid.uuid4().hex
-        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + keyword overlap + authorized one-hop links','history_id':history_id})
+        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + lexical aliases + exact windows + authorized one-hop links','history_id':history_id})
         try:
             if hasattr(self.world, 'prepare'):
                 self.world.prepare(actor,self.store,self.audit,rid)
@@ -62,7 +57,8 @@ class Engine:
             for resource in self.store.resources():
                 if resource['tenant']!=actor.tenant: continue
                 if not self.prefilter(actor,resource): continue
-                score=len(query_tokens & tokens(resource['title']+' '+resource['text']))
+                windows=ranked_windows(resource,query_tokens)
+                score=windows[0][0] if windows else 0
                 if resource['id'] in dependency_ids: score+=1
                 if score: candidates.append((score,resource))
             candidates.sort(key=lambda pair:(-pair[0],pair[1]['id']))
@@ -90,9 +86,12 @@ class Engine:
                 if not self.check(actor,r,rid,'before_model'): continue
                 current=self.world.resources[r['id']]
                 if current['version']!=r['version'] or not current['active']: continue
-                if len(r['text'])>budget: continue
-                budget-=len(r['text'])
-                selected.append(Evidence(r['id']+'@'+str(r['version']),r['id'],r['version'],r['source'],r['title'],r['locator'],r['text'],r['source_updated_at'],r['indexed_at'],r['source_url']))
+                for _,start,end in ranked_windows(r,query_tokens,supplementary=True):
+                    eid,locator,text=window_evidence(r,start,end)
+                    if len(selected)>=24: break
+                    if len(text)>budget: continue
+                    budget-=len(text)
+                    selected.append(Evidence(eid,r['id'],r['version'],r['source'],r['title'],locator,text,r['source_updated_at'],r['indexed_at'],r['source_url']))
             # Recheck the complete selected set immediately before model dispatch.
             # A later candidate read may have observed a permission/content change.
             for e in selected:
@@ -177,13 +176,15 @@ class Engine:
         self.validate_actor(actor)
         try:
             resource_id,version=eid.rsplit('@',1)
+            version=version.split('#',1)[0]
             r=self.store.get(resource_id)
             if not r or r['version']!=int(version): raise ValueError()
             if not self.check(actor,r,'evidence','preview'): raise ValueError()
             if self.world.resources[resource_id]['version']!=r['version']: raise ValueError()
+            locator,text=resolve_window(r,eid)
         except (KeyError,ValueError):
             raise PermissionError('Unavailable') from None
-        return {'evidence_id':eid,'title':r['title'],'text':r['text'],'locator':r['locator'],'version':r['version'],'source_url':r['source_url']}
+        return {'evidence_id':eid,'title':r['title'],'text':text,'locator':locator,'version':r['version'],'source_url':r['source_url']}
 
     def safe_history(self, actor, request_id=None):
         self.validate_actor(actor)
