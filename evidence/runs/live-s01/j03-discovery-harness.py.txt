@@ -1,0 +1,17 @@
+import json
+from pathlib import Path
+from dataclasses import asdict
+from brain.jira import JiraReader
+from brain.confluence import Delegation
+from brain.contracts import Actor
+from brain.keychain import MacKeychain
+c=json.loads(Path('.runtime/jira-pilot.json').read_text());m=c['delegations']['eng_b']
+auth=MacKeychain().get('jira',c['tenant'],'eng_b',m['account_id'])
+assert auth
+r=JiraReader(c['site'],c['tenant'],{},[],{'eng_b':Delegation(m['account_id'],auth)},cloud_id=c['cloud_id'],discovery_only=True,discovery_keys={'KAN-5':'KAN'})
+d,ids=r.discover_ids(Actor('eng_b',c['tenant']),'KAN-5')
+assert d.result=='allow' and ids['project_id']=='10001'
+Path('evidence/runs/live-s01/j03-native-discovery.json').write_text(json.dumps({'decision':asdict(d),'ids':ids,'content_returned':False},indent=2)+'\n')
+c['discovery_keys']['KAN-5']='KAN';c['issues'][ids['issue_id']]='KAN-5'
+p=Path('.runtime/jira-s01.json');p.write_text(json.dumps(c,indent=2)+'\n');p.chmod(0o600)
+print(json.dumps(ids))

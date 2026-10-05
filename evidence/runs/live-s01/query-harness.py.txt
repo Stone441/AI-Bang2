@@ -1,0 +1,37 @@
+import json,hashlib
+from pathlib import Path
+from dataclasses import asdict
+from brain.keychain import MacKeychain
+from brain.contracts import Actor,now
+from brain.store import Store
+from brain.delegated_query import DelegatedQueryPilot
+from brain.audit import verify_chain
+from brain.budget import BudgetLedger
+from brain.synthesis import DeepSeekSynthesisModel
+from scripts.operator_bundle import load_reader
+c=json.loads(Path('.runtime/operator-bundle.json').read_text());c['sources']['jira']='jira-s01.json'
+p=Path('.runtime/s01-bundle.json');p.write_text(json.dumps(c,indent=2)+'\n');p.chmod(0o600)
+keys=MacKeychain();readers=load_reader(p,'eng_b',oauth_client='.runtime/drive-oauth-client.json',credential_store=keys)
+tenant=readers['jira'].tenant; actor=Actor('eng_b',tenant)
+d,content=readers['jira'].read(actor,'10014');assert d.result=='allow' and 'Status: In Progress' in content['text'] and 'Maya (fictional)' in content['text']
+Path('evidence/runs/live-s01/j03-native-read.json').write_text(json.dumps({'decision':asdict(d),'content':content},indent=2)+'\n')
+store=Store('.runtime/s01-query.sqlite');pilot=DelegatedQueryPilot(readers,store,live=True)
+key=keys.get('deepseek',tenant,'eng_b','deepseek-flash');assert key
+ledger=BudgetLedger('.runtime/deepseek-budget.sqlite');pilot.engine.model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True)
+question='What caused the payment-service incident, which early explanation was withdrawn, is the PAY-102 code fix Done, what PAY-103 protective follow-up remains open and who is its fictional scenario owner, and which current runbook should engineers use?'
+report={'started_at':now(),'mode':'four_live_sources_live_deepseek_synthesis','question':question,'human_G1':'not_run'}
+try:
+ answer=pilot.query(actor,question)
+ Path('evidence/runs/live-s01/answer.json').write_text(json.dumps(answer,indent=2)+'\n')
+ text=' '.join(x['text'] for x in answer['claims'])
+ checks={'four_input_sources':{e['source'] for e in answer['evidence']}=={'confluence','jira','slack','drive'},'final_cause':'timeout' in text.lower() and 'retry' in text.lower(),'withdrawn_hypothesis':'cache' in text.lower() and ('withdrawn' in text.lower() or 'ruled out' in text.lower()),'code_fix_done':'PAY-102' in text and 'done' in text.lower(),'followup_open':'PAY-103' in text and ('progress' in text.lower() or 'open' in text.lower()),'fictional_owner':'Maya' in text and ('fictional' in text.lower() or 'scenario' in text.lower()),'runbook':'runbook' in text.lower() and ('failover' in text.lower() or 'timeout budget' in text.lower())}
+ report.update(request_id=answer['request_id'],checks=checks,status='verified_subset' if all(checks.values()) else 'quality_failed')
+ print(json.dumps({'request_id':answer['request_id'],'checks':checks,'claims':answer['claims']}),flush=True)
+except Exception as error:
+ report.update(status='failed',reason=type(error).__name__)
+ print('query_failed_'+type(error).__name__,flush=True)
+finally:
+ chain=pilot.audit.export();report['audit_chain_valid']=verify_chain(chain)['valid'];report['finished_at']=now()
+ Path('evidence/runs/live-s01/verification.json').write_text(json.dumps(report,indent=2)+'\n')
+ Path('evidence/runs/live-s01/audit.json').write_text(json.dumps(chain,indent=2)+'\n')
+ store.db.close()

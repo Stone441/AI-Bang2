@@ -67,7 +67,7 @@ class DeepSeekBoundary(unittest.TestCase):
 
     def test_approved_atlassian_banner_reaches_model_without_rewriting_evidence(self):
         banner = 'SYNTHETIC COMPETITION TEST DATA — not an actual company record.'
-        for source, fid in [('confluence', 'C-01'), ('confluence', 'C-02'), ('jira', 'J-02')]:
+        for source, fid in [('confluence', 'C-01'), ('confluence', 'C-02'), ('jira', 'J-02'), ('jira', 'J-03')]:
             with self.subTest(source=source, fixture=fid):
                 evidence = replace(self.evidence, source=source,
                                    text=banner + '\nFixture ID: ' + fid + '\nGA not approved.')
@@ -81,6 +81,8 @@ class DeepSeekBoundary(unittest.TestCase):
         for source, text in [('confluence', banner), ('confluence', banner + '\nFixture ID: C-99'),
                              ('drive', banner + '\nFixture ID: C-01'),
                              ('jira', banner + '\nFixture ID: C-01'),
+                             ('confluence', banner + '\nFixture ID: J-03'),
+                             ('jira', 'Fixture ID: J-03\nPrivate business data'),
                              ('confluence', 'Fixture ID: C-01\nPrivate business data')]:
             with self.subTest(source=source, text=text):
                 with self.assertRaises(ModelUnavailable):

@@ -145,3 +145,5 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 | DEV-12-SAFETY-REVIEW | P0；完整live五场景后组织 | checklist prepared / human not_run；团队观看内容及局限已整理，未预填通过 |
 
 DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢复原文与旧访问拒绝，Drive disposable native trash/旧访问/模型保护verified operator subset。真实四源更新/删除矩阵仍partial；不是完整S-02/S-04。原runtime whitelist未扩展，独立临时reader测试已结束。下一S-01缺J-03真实合成资料，种植/原生访问及白名单尚pending；核对AUTH-003已有授权范围，界面/审计候选工作可继续。
+
+2026-10-05 S-01工程facts解除前置：AUTH-003合成J-03/KAN-5种植、In Progress及API白名单完成；真实四源/DeepSeek single eng_b question覆盖五工程要求及虚构owner说明、7checks+独立quote/auth/ledger审查，费用1856microUSD。完整eng_a/product_ops、真实权限负面矩阵/G1仍pending。DEV-08检索质量继续P0：先本地长文/同义/相似资料评测、切块/全文排序；embedding provider未选，不新增付费服务。

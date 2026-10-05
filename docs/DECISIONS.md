@@ -229,6 +229,8 @@ ADR-028验证补充：修正后隔离真实四源11checks通过，保障措施�
 具体授权补充：用户单独批准第二轮同一member/channel的旧导出测试及恢复。已原生2→1→2，旧export返回unavailable、不建文件（0→0），旧正文/quotes/receipt清除而session保持。最终原生核对同一U0C66B76TE3、Members2，之后合法raw导出8146字节与存储答案逐字段一致。未改role/token/scope，未新调模型；审批拒绝未绕过。
 # 2026-10-05 ADR-030: isolated lifecycle acceptance
 
+2026-10-05 ADR-031 / AUTH-003执行：补齐既有合成Jira项目KAN的J-03，原生KAN-5/10014，In Progress，完整SYNTHETIC banner及Fixture ID；无新增成员、scope或费用。Maya作为虚构scenario owner在正文标记，native assignee明确Unassigned，不冒称真实账号。eng_b原生metadata及正文读取allow后，仅将该工单加入ignored本地白名单，保留旧配置备份；现有8094进程不重启，下一启动读新配置。DeepSeek guard只增加jira/J-03完整banner配对，错误source/缺banner仍拒绝，扩充原测试subtests（方法数仍283），无任意种植资料默认放行。真实综合一题覆盖全部工程要求事实及四源引用；双调用1856microUSD保守记账，同一USD20ledger。不是原eng_a/product_ops全矩阵或人G1，关键词检索/RAG质量仍待增强。
+
 2026-10-05 AUTH-015：用户对具体候选回复“批准”，允许C-01（Confluence98564）临时改为fixture已定义runbook v2、验证后恢复原正文；允许在已批准Drive合成文件夹创建明确SYNTHETIC临时测试文件、加入本地只读白名单、验证后移至Drive废纸篓并检查旧引用/历史失效。不得删除原三文件、改变共享、增加scope/费用；发现第三方并发修改则停止恢复。本授权不代表G1/G2或发布批准。
 
 AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始终仅eng_b只读/已批准Keychain refresh，fake model无runtime费用；隔离SQLite与临时Drive白名单，不修改用户8094/bundle。CF原文恢复API严格相等，native1→2→3；Drive temporary native1eM_6RUZ8y130l9B0WKrSs3GkGu6rjbUZ移入回收站，原三文件保留、共享未操作。Chrome file URL权限blocked后没有扩展权限或旁路上传，由用户本人拖入。首个CF探针误取Evidence.native_id导致KeyError，保留audit失败事实并修正resource_id定位；初始脚本PYTHONPATH未设的启动失败发生在读取凭据/平台调用前。未改应用代码/有效安全断言；未测后台同步时延/HTTP导出/真实模型/人工G1，边界保持。
