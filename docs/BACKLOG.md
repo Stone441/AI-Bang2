@@ -103,3 +103,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-10-UNIFIED verified live query subset：四源8对象/DeepSeek原文选择，web answer/Slack reply preview/reauthorized history/usage receipt，18readonly checks通过；新模型保守账468microUSD。Slack reader API已验证，private撤权/混合历史/导出仍in_progress；53.37秒延迟需改善。Keychain restart user_reported、Google refresh具体路径未独立检查。
+
+
+2026-10-05 DEV-10-SLACK-REVOKE verified live subset：原生private成员移除→同会话旧混合历史隐藏→新query只有三源六证据（Slack root/reply native deny）→恢复Members2；9readonly checks。直接旧引用/导出live not_run（Chrome自动本机导航blocked），完整权限矩阵仍pending。真实模型新345microUSD上界；G1/G2未批准。

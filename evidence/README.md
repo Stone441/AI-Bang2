@@ -41,3 +41,5 @@
 2026-10-05 unified first live attempt: [failure checkpoint](runs/live-unified/first-query-failure.json). Four native sources/eight current objects allowed; model preflight refused inconsistent synthetic marker, no call ledger row or new model fee. Corrected compatibility mock-tested, actual successful unified answer and Keychain restart reuse still pending.
 
 2026-10-05 unified live API + DeepSeek: [successful query](runs/live-unified/query.json). Four sources/eight objects, 18 readonly checks, native Slack reply preview and reauthorized history verified; 1030 tokens, conservative 468microUSD estimate. 53.37s latency, extractive selection only; full ACL matrix/revocation/G1/G2 separate. Screenshot remains ignored local-only.
+
+2026-10-05 native Slack private-channel reader revocation: [same-session checkpoint](runs/live-unified/slack-revocation.json). Nine readonly checks, old mixed history hidden, later model/answer uses six objects from remaining three sources, root/reply native deny. Original member restored (Members2). Direct citation/export live not_run; screenshots ignored. New conservative cost345microUSD.

@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：268/268 回归通过（60 local synthetic + 208 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack撤权仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
+**阶段收尾（2026-10-05）：268/268 回归通过（60 local synthetic + 208 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；直接旧引用/导出 live not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -208,3 +208,8 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 
 
 2026-10-05 DEV-10-UNIFIED verified live subset：用户重启后旧页cookie失效返回Unavailable，使用新一次性入口已恢复eng_b；无需扩大scope/读取密钥。请求1cba33ca06b64b4fa23c087ee998e1e0实读8对象（CF2/Jira1/Slack2/Drive3），所有5阶段当前权限检查allow，DeepSeek选择8原文证据；网页答案、Slack回复精确thread/message/SHA256/native URL预览、Recent answers重新鉴权和usage receipt均agent核验。854input+176output=1030tokens，本轮468microUSD保守上界，不是vendor invoice；18项独立readonly DB检查通过，unsigned链有效，来源evidence/runs/live-unified/query.json。耗时53.370443秒（性能待优化），free-form综合未实现；非完整五场景live、SSO或G1。用户已报告重启，新服务启动成功；未检查实际钥匙串值/逐项console，不能独立声明Google refresh复用通过。下一P0 Slack私有频道撤权和统一历史/引用/导出保护（先确保可恢复权限），P1安全前提下改善性能与模型综合。保持8088进程。
+
+
+2026-10-05 DEV-10-SLACK-REVOKE verified live subset：按AUTH-003测试权限授权，既有owner ssy44199@gmail.com Google重新登录比赛AI-Bang2，确认私有频道C0C6R70SGG4及读者kyle000909@gmail.com/U0C66B76TE3，仅Remove from channel，成员2→1；未移除工作区/撤销token/使用NTU。原8088 eng_b会话Recent answers重鉴权，旧跨源回答整条不可用；同会话后续query c0585d94fd144e53a05c55f675a10310原生Slack root/reply均deny，仅CF/Jira/Drive六证据进入模型/回答，无Slack引用或canary。9项readonly检查通过，真实模型783tokens/345microUSD保守账（不是供应商账单）；unsigned链有效。已把同一既有成员恢复到原私有频道，native Members2/重新加入事件确认。证据live-unified/slack-revocation.json，截图ignored private。直接旧引用端点被Chrome ERR_BLOCKED_BY_CLIENT阻止自动导航，未关闭安全设置；引用/导出live保留not_run，不能把mock通过补成live。完整ACL/缓存/继承矩阵仍未通过。下一P0补齐直接端点实际验收；P1模型grounded综合与53秒性能改善。保持8088，无需重新token。
+
+恢复后原会话再次Recent answers，两条request receipt均出现，原Slack线程证据按当前恢复权限重新显示；native恢复及历史恢复均verified。累计本轮两次成功模型请求813microUSD保守上界，不含先前243microUSD记录。仅证据/状态改动，沿用268源码回归，不重复无关测试。
