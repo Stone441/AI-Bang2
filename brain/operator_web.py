@@ -102,9 +102,10 @@ def main(argv=None):
     if not args.live:
         print('not_run: --live required; no credentials or platform calls performed.')
         return 2
-    if ((args.credential_store=='macos-keychain' and args.source!='multi')
-            or (args.replace_credential and args.credential_store!='macos-keychain')):
-        print('not_run: Keychain reuse requires the reviewed multi-source operator; replacement requires Keychain mode.')
+    if ((args.credential_store=='macos-keychain' and args.source not in ('multi','confluence'))
+            or (args.replace_credential and args.credential_store!='macos-keychain')
+            or (args.source=='confluence' and args.replace_credential not in (None,'confluence'))):
+        print('not_run: Keychain reuse requires a reviewed multi-source or Confluence operator; replacement requires Keychain mode.')
         return 2
     if args.oauth_client and args.source not in ('drive','multi'):
         print('not_run: --oauth-client requires Drive or multi; no credential or platform calls performed.')
@@ -139,8 +140,11 @@ def main(argv=None):
         else:
             from scripts.confluence_probe import load_reader
         if credential_store is not None:
-            reader=load_reader(args.config,prompt_actor=args.actor,oauth_client=args.oauth_client,
-                               credential_store=credential_store)
+            if args.source == 'confluence':
+                reader=load_reader(args.config,prompt_actor=args.actor,credential_store=credential_store)
+            else:
+                reader=load_reader(args.config,prompt_actor=args.actor,oauth_client=args.oauth_client,
+                                   credential_store=credential_store)
         elif args.oauth_client and args.source == 'multi':
             reader = load_reader(args.config, prompt_actor=args.actor, oauth_client=args.oauth_client)
         elif args.oauth_client:
@@ -150,7 +154,15 @@ def main(argv=None):
             reader = load_reader(args.config, prompt_actor=args.actor)
         stage = 'local_store'
         runtime = Path('.runtime'); runtime.mkdir(mode=0o700, exist_ok=True)
-        db = runtime / (args.source + '-web.sqlite')
+        if args.source == 'confluence' and credential_store is not None:
+            import hashlib
+            import json
+            # The reviewed native-account identity is distinct from other operators;
+            # a digest keeps arbitrary CLI actor strings out of filesystem paths.
+            identity = [args.actor, reader.tenant, reader.delegations[args.actor].account_id]
+            db = runtime / ('confluence-' + hashlib.sha256(json.dumps(identity).encode()).hexdigest()[:16] + '-web.sqlite')
+        else:
+            db = runtime / (args.source + '-web.sqlite')
         store = Store(str(db)); os.chmod(db, 0o600)
         stage = 'native_identity'
         app = OperatorApp(reader, store, args.actor, live=True)

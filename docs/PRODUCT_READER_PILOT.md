@@ -1,6 +1,6 @@
 # Independent product-reader pilot candidate
 
-2026-10-06. Candidate only; new token/persistence are not approved. This does not mark product_ops native acceptance complete.
+2026-10-06. AUTH-016 approved the specified Confluence token and app-owned product_ops Keychain reuse. Creation, input and native validation remain pending. This does not mark product_ops native acceptance complete.
 
 The existing third test account is 2918379149@qq.com. The local Confluence config contains a candidate product_ops native account mapping, but it must be checked against the token's actual current-user response before use. The existing eng_b token or identity must never be substituted.
 
@@ -8,7 +8,7 @@ The existing third test account is 2918379149@qq.com. The local Confluence confi
 
 Prepare one Confluence-only readonly token named `AI-Bang2 product_ops Confluence read-only pilot`, expires 2026-10-20, scopes `read:page:confluence` and `read:content-details:confluence`. The scope itself covers pages this account can read; application requests remain restricted to the synthetic lab/explicit C-01, C-02, C-03 IDs. Do not add memberships, broad page permissions, admin/write scope, paid resources or access to existing personal/enterprise documents.
 
-The user completes credential creation and any security verification/terms. After one local hidden input, save/reuse only a new app-owned Mac Keychain item for `confluence / aibang2-live-pilot / product_ops / verified native account`. Do not read the user's existing Passwords entries or persist plaintext. This is outside AUTH-014's eng_b-only authorization and therefore needs explicit approval.
+The user completes credential creation and any security verification/terms. After one local hidden input, save/reuse only a new app-owned Mac Keychain item for `confluence / aibang2-live-pilot / product_ops / verified native account`. Do not read the user's existing Passwords entries or persist plaintext. This is outside AUTH-014's eng_b-only authorization; AUTH-016 now explicitly approves this limited extension.
 
 ## Acceptance after approval
 
@@ -18,3 +18,15 @@ The user completes credential creation and any security verification/terms. Afte
 4. Keep operator config/SQLite independent; preserve eng_b and 8094. Record native decisions and developer checks as a Confluence-only product persona subset. Jira/Slack/Drive and native auditor remain separate prerequisites; no full four-source persona claim.
 
 No token request, secret entry, new Keychain item, platform permission change or paid model call has been performed by this candidate document.
+
+## Prepared startup (fake model only)
+
+The isolated `.runtime/confluence-product.json` configuration contains only product_ops and the three explicit synthetic pages. The reviewed candidate native account ID still requires actual current-user validation; mismatch stops before saving the credential. The existing four-source bundle is unchanged.
+
+After token preparation, run in VS Code's secure terminal:
+
+```sh
+python3 -m brain.operator_web --source confluence --config .runtime/confluence-product.json --actor product_ops --port 8100 --live --model fake --credential-store macos-keychain
+```
+
+First launch asks for email and token through hidden input, verifies the native identity, then saves the new app-owned item. Later launches reuse it. SQLite is separated by a digest of actor/tenant/native account, instead of sharing the old confluence-web.sqlite. Open the new one-time link privately; do not send it or any key to chat. This command does not request a product_ops DeepSeek credential or call a paid model.

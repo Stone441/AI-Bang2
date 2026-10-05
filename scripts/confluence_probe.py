@@ -15,7 +15,7 @@ from brain.contracts import Actor
 from brain.credential_input import HiddenInputUnavailable
 
 
-def load_reader(path, prompt_actor=None, discovery_only=False):
+def load_reader(path, prompt_actor=None, discovery_only=False, *, credential_store=None):
     config = json.loads(Path(path).read_text())
     if config.get('approved_synthetic_only') is not True:
         raise ValueError('Synthetic approval required')
@@ -34,9 +34,22 @@ def load_reader(path, prompt_actor=None, discovery_only=False):
                             [] if discovery_only else config['space_ids'], delegations,
                             cloud_id=config.get('cloud_id'),discovery_only=discovery_only)
     if prompt_actor is not None:
-        if not sys.stdin.isatty() or prompt_actor not in config['delegations']:
+        if prompt_actor not in config['delegations']:
             raise ValueError('Interactive mapped operator required')
-        reader.delegations[prompt_actor]=hidden_delegation(config['delegations'][prompt_actor]['account_id'])
+        account_id = config['delegations'][prompt_actor]['account_id']
+        if credential_store is None:
+            reader.delegations[prompt_actor]=hidden_delegation(account_id)
+        else:
+            saved = credential_store.get('confluence', reader.tenant, prompt_actor, account_id)
+            delegation = Delegation(account_id, saved) if saved is not None else hidden_delegation(account_id)
+            reader.delegations[prompt_actor] = delegation
+            # Verify actual native identity before persisting newly entered data.
+            reader._credential(Actor(prompt_actor, reader.tenant), sorted(reader.page_ids)[0])
+            if saved is None:
+                credential_store.put('confluence', reader.tenant, prompt_actor, account_id, delegation.authorization)
+            print('Confluence: using verified app-owned Keychain credential.', flush=True)
+    elif credential_store is not None:
+        raise ValueError('One mapped operator required for Keychain mode')
     return reader
 
 

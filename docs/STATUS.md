@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-06 AUTH-016已记录，Confluence-only product_ops token及app-owned本机Keychain复用获用户明确批准。已准备独立.runtime/confluence-product.json与nonsecret example、单源Confluence Keychain入口：新输入native身份匹配后才保存，saved免TTY复用、OS拒绝/wrong account不回退，actor/tenant/native-account摘要隔离SQLite0600。32针对性/307完整fixture/mock回归实际通过；初始test_keychain sibling import调用错误记录后按已有discovery路径重跑，不删断言。Atlassian页已填2918379149@qq.com，当前用户登录/邮箱验证pending，token未创建/产品Keychain项未写，native权限验收not_run；待“产品账号已登录”后继续只读scope准备及用户最终创建，再执行fake产品正/负query。不扩Jira/Slack/Drive/DeepSeek授权、不改8094，G1/G2 not_run。
+
 2026-10-06 最新checkout完整301项Python回归实际通过（native-jira-update/full-tests.log），含新增mixed audit及Jira guard；既有native Jira13checks另列。full suite为fixture/mock，不增加native/model验收覆盖，当前新提交尚非新clean archive/browser视觉通过。独立Confluence product_ops凭据及本机Keychain复用具体候选PRODUCT_READER_PILOT已发确认，未回复前不创建token/读取新凭据/调整权限；其他源更新与真人观看保留pending。
 
 2026-10-06 DEV-12-JIRA-UPDATE verified native API/fake model subset：AUTH-003在KAN独立新建合成KAN-6/10015并仅UI更新正文Revision1 amber→Revision2 green；eng_b AUTH-014已有Keychain复用，隔离memory index/两issue allowlist，不改原配置或8094。13checks/23event unsigned链通过：旧index保留时native old fingerprint/preview/history-export projection拒绝，refresh后新text/model evidence/preview正确、旧marker消失，KAN-4不变。版本是fingerprint，数值变小不代表回退；无新凭据/scope/模型费用。6guard tests（2新）通过；非worker/SLA/浏览器下载/真模型/完整persona或人G1。下一：独立产品身份具体凭据授权尚缺、Slack/Drive内容更新及真人观看仍待完成。
