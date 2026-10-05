@@ -39,3 +39,5 @@
 2026-10-05 AUTH-014 credential reuse: [Keychain verification](runs/keychain/verification.json), native Mac synthetic add/read/update/delete passed and test item removed; 266 local/mock regression tests. Real stored credentials, Google refresh reuse and unified live startup remain not_run. No existing password item accessed, no new live/model call.
 
 2026-10-05 unified first live attempt: [failure checkpoint](runs/live-unified/first-query-failure.json). Four native sources/eight current objects allowed; model preflight refused inconsistent synthetic marker, no call ledger row or new model fee. Corrected compatibility mock-tested, actual successful unified answer and Keychain restart reuse still pending.
+
+2026-10-05 unified live API + DeepSeek: [successful query](runs/live-unified/query.json). Four sources/eight objects, 18 readonly checks, native Slack reply preview and reauthorized history verified; 1030 tokens, conservative 468microUSD estimate. 53.37s latency, extractive selection only; full ACL matrix/revocation/G1/G2 separate. Screenshot remains ignored local-only.

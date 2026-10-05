@@ -100,3 +100,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-10-UNIFIED in_progress：真实startup/四源8对象当前读取allow已现场验证，首轮问答在DeepSeek bracket-only合成guard停止且无费用。DEV-10-MARKER verified local/mock（268测试）：兼容已批准CF C-01/C-02与Jira J-02完整banner，不允许标题/错source/错fixture放行。P0用户make live重启验证Keychain复用→成功联合问答/引用/历史→Slack及混合历史撤权；完整live矩阵仍pending。
+
+
+2026-10-05 DEV-10-UNIFIED verified live query subset：四源8对象/DeepSeek原文选择，web answer/Slack reply preview/reauthorized history/usage receipt，18readonly checks通过；新模型保守账468microUSD。Slack reader API已验证，private撤权/混合历史/导出仍in_progress；53.37秒延迟需改善。Keychain restart user_reported、Google refresh具体路径未独立检查。

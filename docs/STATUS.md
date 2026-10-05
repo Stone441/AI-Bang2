@@ -2,7 +2,7 @@
 
 更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：268/268 回归通过（60 local synthetic + 208 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/撤权及统一四源 live 仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
+**阶段收尾（2026-10-05）：268/268 回归通过（60 local synthetic + 208 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack撤权仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -205,3 +205,6 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 
 
 2026-10-05 DEV-10-UNIFIED首轮现场：用户已打开8088，agent核验eng_b/live model operator UI；startup完成每源原生身份验证。实际联合请求5b6b37e3e7074d62b95ee563333dbdb1的8对象（CF2/Drive3/Jira1/Slack2）source_refresh均native allow，32权限决策完整记录；43.07秒后模型前guard拒绝，未生成回答，budget无query行/无模型费用。原因是原批准CF/Jira种植完整合成banner与模型方括号标记不兼容。最小修复支持exact banner+明确source/fixture匹配，268/268（60local/208mock）及五场景local subset通过，失败证据保留。首轮真实四源读取verified subset，统一成功回答/引用/历史仍待重跑；不将模型管线evidence_used标记当实际网络发送证明。Keychain首次配置用户报告完成，agent未读真实秘密；restart复用/Google refresh待重启核验。接续：用户8088终端Ctrl+C、make live，不要求整套重新录入。G1/G2未通过。
+
+
+2026-10-05 DEV-10-UNIFIED verified live subset：用户重启后旧页cookie失效返回Unavailable，使用新一次性入口已恢复eng_b；无需扩大scope/读取密钥。请求1cba33ca06b64b4fa23c087ee998e1e0实读8对象（CF2/Jira1/Slack2/Drive3），所有5阶段当前权限检查allow，DeepSeek选择8原文证据；网页答案、Slack回复精确thread/message/SHA256/native URL预览、Recent answers重新鉴权和usage receipt均agent核验。854input+176output=1030tokens，本轮468microUSD保守上界，不是vendor invoice；18项独立readonly DB检查通过，unsigned链有效，来源evidence/runs/live-unified/query.json。耗时53.370443秒（性能待优化），free-form综合未实现；非完整五场景live、SSO或G1。用户已报告重启，新服务启动成功；未检查实际钥匙串值/逐项console，不能独立声明Google refresh复用通过。下一P0 Slack私有频道撤权和统一历史/引用/导出保护（先确保可恢复权限），P1安全前提下改善性能与模型综合。保持8088进程。
