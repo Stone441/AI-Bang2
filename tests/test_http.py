@@ -34,6 +34,16 @@ class HTTP(unittest.TestCase):
         self.assertEqual(self.request('/api/evidence/'+a['evidence'][0]['evidence_id'])[0],200)
         self.assertEqual(self.request('/api/audit/events',{})[0],403)
         self.assertEqual(self.app.audit.export()[-2]['event_type'],'response_dispatch_attempted')
+    def test_query_rejects_history_dependency_and_answer_export_is_absent(self):
+        self.login()
+        status,answer=self.request('/api/query',{'question':'payment-service incident'})
+        self.assertEqual(status,200);self.assertTrue(answer['evidence'])
+        calls=len(self.app.engine.model.calls)
+        self.assertEqual(self.request('/api/query',{'question':'details','history_id':answer['request_id']})[0],400)
+        self.assertEqual(len(self.app.engine.model.calls),calls)
+        for target in (answer['request_id'],'missing'):
+            self.assertEqual(self.request('/api/export/'+target),(404,{'error':'Unavailable'}))
+        self.assertEqual(self.request('/api/history')[0],200)
     def test_csrf_host_and_evidence_protection(self):
         self.login('contractor')
         self.assertEqual(self.request('/api/query',{'question':'pilot'},{'X-CSRF-Token':'wrong'})[0],403)

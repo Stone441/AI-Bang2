@@ -226,16 +226,22 @@ class GroundedSynthesis(unittest.TestCase):
             self.assertEqual(status,200);self.assertEqual(answer['claims'],[claim])
             self.assertEqual(answer['review_status'],'accepted');self.assertEqual(len(self.transport.calls),2)
             for path in ('/api/history','/api/export/'+answer['request_id']):
+                if path.startswith('/api/export/'):
+                    self.assertEqual(request(path)[0],404)
+                    continue
                 status,body=request(path);self.assertEqual(status,200)
                 self.assertEqual(body['history'][0]['claims'],[claim])
                 self.assertEqual(body['history'][0]['model_review'],answer['model_review'])
             source.allowed.clear()
             for session in app.sessions.values():session['last_query']=0
-            status,after=request('/api/query',{'question':'pilot','history_id':answer['request_id']})
+            status,after=request('/api/query',{'question':'pilot'})
             self.assertEqual(status,200);self.assertEqual(after['claims'],[])
             self.assertEqual(len(self.transport.calls),2)
             self.assertEqual(request('/api/evidence/confluence:98564@1')[0],403)
             for path in ('/api/history','/api/export/'+answer['request_id']):
+                if path.startswith('/api/export/'):
+                    self.assertEqual(request(path)[0],404)
+                    continue
                 status,body=request(path);self.assertEqual(status,200)
                 old=next(r for r in body['history'] if r['request_id']==answer['request_id'])
                 self.assertTrue(old['unavailable'])

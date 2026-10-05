@@ -171,3 +171,7 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-06 AUTH-016已记录，Confluence-only product_ops token及app-owned本机Keychain复用获用户明确批准。已准备独立.runtime/confluence-product.json与nonsecret example、单源Confluence Keychain入口：新输入native身份匹配后才保存，saved免TTY复用、OS拒绝/wrong account不回退，actor/tenant/native-account摘要隔离SQLite0600。32针对性/307完整fixture/mock回归实际通过；初始test_keychain sibling import调用错误记录后按已有discovery路径重跑，不删断言。Atlassian页已填2918379149@qq.com，当前用户登录/邮箱验证pending，token未创建/产品Keychain项未写，native权限验收not_run；待“产品账号已登录”后继续只读scope准备及用户最终创建，再执行fake产品正/负query。不扩Jira/Slack/Drive/DeepSeek授权、不改8094，G1/G2 not_run。
 
 2026-10-06 DEV-06-PRODUCT-CF verified native subset：AUTH-016独立产品原生身份/Keychain复用，16真实API+fake检查及8100正问/引用/历史/独立安全拒答；309本地回归+2harness+Node前端通过。New question入口清空follow-up依赖及迟到响应，浏览器实际核验通过：正问后New question→安全问题为空证据拒答。下一依赖：原生产品Jira/Slack/Drive/auditor身份矩阵尚未授权/验证，不扩大本次Confluence批准范围。
+
+2026-10-06 DEV-10-INDEPENDENT verified local / live restart pending：按用户批准统一独立问答，移除New question及回答导出前后端，history_id HTTP400/export404，旧engine参数忽略依赖。311本地+Node安全/审计通过；保留旧历史和引用安全断言。8100重启后核对native正/负问和export404；8094旧进程未重启。
+
+2026-10-06 用户重启8100后真实新版浏览器两问验证通过：发布C-02有证据，接着安全独立问为空/拒答；两个按钮均不存在，SQLite两次request_started独立标记/history_id=null，负问无evidence_used。evidence/runs/independent-query/live-verification.json。live旧export自动导航被Chrome ERR_BLOCKED_BY_CLIENT阻止，未绕过；端点404为fixture/mock实际HTTP验证，不冒称本次native浏览器端点已测。8094仍旧进程未更新。

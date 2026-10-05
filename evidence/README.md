@@ -92,3 +92,5 @@
 2026-10-06 product-reader-local：AUTH-016批准后单源CF Keychain复用/身份先核验/隔离DB0600，32targeted/307full fixture/mock通过；native产品身份/token/新Keychain尚not_run，浏览器待用户登录。
 
 - `runs/native-product-reader/`: AUTH-016 independent product_ops Confluence identity/Keychain reuse, C-01/C-03 native deny without body and C-02 allow; 16 live API/fake checks, 309 local Python tests, browser answer/preview/history/standalone denial and New question UI checks. Not full persona/G1/G2 acceptance.
+
+- `runs/independent-query/`: user-approved independent questions and removal of answer download frontend/API, 311 fixture/mock regressions plus Node guards; live old-process restart pending.

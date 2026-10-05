@@ -169,11 +169,17 @@ class ModelReceipts(unittest.TestCase):
             status,answer=request('/api/query',{'question':'payment-service retry'})
             self.assertEqual(status,200); self.assertTrue(answer['model_call']['called'])
             for path in ('/api/history','/api/export/'+answer['request_id']):
+                if path.startswith('/api/export/'):
+                    self.assertEqual(request(path)[0],404)
+                    continue
                 status,body=request(path); self.assertEqual(status,200)
                 self.assertEqual(body['history'][0]['model_call'],answer['model_call'])
                 self.assertNotIn('synthetic-not-a-key',json.dumps(body))
             self.app.world.mutate(answer['evidence'][0]['resource_id'],'revoke',user_id='eng_b')
             for path in ('/api/history','/api/export/'+answer['request_id']):
+                if path.startswith('/api/export/'):
+                    self.assertEqual(request(path)[0],404)
+                    continue
                 body=request(path)[1]; self.assertTrue(body['history'][0]['unavailable'])
                 self.assertNotIn('model_call',body['history'][0]); self.assertNotIn('claims',body['history'][0])
         finally:

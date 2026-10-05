@@ -85,9 +85,12 @@ class DriveOperatorHTTP(unittest.TestCase):
         self.login();first=self.request('/api/query',{'question':'payment-service pilot'})[1]
         self.transport.status=403
         self.app.sessions[next(iter(self.app.sessions))]['last_query']=0
-        next_answer=self.request('/api/query',{'question':'payment-service pilot','history_id':first['request_id']})[1]
+        next_answer=self.request('/api/query',{'question':'payment-service pilot'})[1]
         self.assertEqual(next_answer['evidence'],[]);self.assertEqual(self.app.engine.model.calls[-1]['evidence'],[])
         for path in ['/api/history','/api/export/'+first['request_id']]:
+            if path.startswith('/api/export/'):
+                self.assertEqual(self.request(path)[0],404)
+                continue
             result=self.request(path)[1];self.assertNotIn('general release',json.dumps(result))
             self.assertTrue(any(r.get('unavailable') for r in result['history']))
         self.assertEqual(self.request('/api/evidence/'+first['evidence'][0]['evidence_id']),

@@ -158,10 +158,13 @@ class OperatorHTTP(unittest.TestCase):
         self.login()
         first = self.request('/api/query', {'question': 'runbook'})[1]
         self.transport.allowed.clear(); self.app.sessions[next(iter(self.app.sessions))]['last_query'] = 0
-        status, next_answer = self.request('/api/query', {'question': 'details', 'history_id': first['request_id']})
+        status, next_answer = self.request('/api/query', {'question': 'details'})
         self.assertEqual(status, 200); self.assertEqual(next_answer['evidence'], [])
         self.assertEqual(self.app.engine.model.calls[-1]['evidence'], [])
         for endpoint in ['/api/history', '/api/export/' + first['request_id']]:
+            if endpoint.startswith('/api/export/'):
+                self.assertEqual(self.request(endpoint)[0],404)
+                continue
             history = self.request(endpoint)[1]['history']
             self.assertTrue(any(h.get('unavailable') for h in history))
             self.assertNotIn('budget version 1', json.dumps(history))

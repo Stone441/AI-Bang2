@@ -45,21 +45,19 @@ class Engine:
         if not isinstance(question,str) or not question.strip() or len(question)>4000:
             raise ValueError('Question must contain 1–4000 characters')
         rid=uuid.uuid4().hex
-        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + lexical aliases + exact windows + authorized one-hop links','history_id':history_id})
+        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + lexical aliases + exact windows + authorized one-hop links','history_id':None,'query_kind':'independent'})
         try:
             if hasattr(self.world, 'prepare'):
                 self.world.prepare(actor,self.store,self.audit,rid)
             query_tokens=tokens(question)
-            # No previous assistant prose enters retrieval or a model. Only reauthorized dependency IDs can supplement a follow-up.
-            previous=self.store.run(history_id,actor.user_id) if history_id else None
-            dependency_ids={e['resource_id'] for e in previous.get('evidence',[])} if previous else set()
+            # Legacy in-process history_id is accepted for old harness compatibility only.
+            # Independent queries never read or supplement previous answer dependencies.
             candidates=[]
             for resource in self.store.resources():
                 if resource['tenant']!=actor.tenant: continue
                 if not self.prefilter(actor,resource): continue
                 windows=ranked_windows(resource,query_tokens)
                 score=windows[0][0] if windows else 0
-                if resource['id'] in dependency_ids: score+=1
                 if score: candidates.append((score,resource))
             candidates.sort(key=lambda pair:(-pair[0],pair[1]['id']))
             # Expand only links from currently authorized seeds. Targets still receive their

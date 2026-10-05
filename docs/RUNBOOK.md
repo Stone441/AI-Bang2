@@ -29,7 +29,7 @@ make demo
    python3 -m scripts.fixture_admin revoke --resource S-01 --user eng_a
    ```
 
-   原会话追问线程详情；不得再次输出线程独有标记。打开旧 S-01 引用应不可用；Recent answers 中依赖已撤权资料的整条旧回答应不可用。无需全库重建。可分别对 C-01/J-01/D-01 重复。
+   同一登录身份独立再次查询payment-service线程及retry safeguards；不得再次输出线程独有标记。打开旧 S-01 引用应不可用；Recent answers 中依赖已撤权资料的整条旧回答应不可用。无需全库重建。可分别对 C-01/J-01/D-01 重复。
 5. **S-05**：以 Scoped auditor 登录，打开 Audit explorer，提交预置问题。展开事件查看身份、问题、逐资料授权、sent_to_model、引用和最终答案；支持稳定 snapshot 分页。HTTP 场景还记录 dispatch_attempted。CLI 回放不伪装成 HTTP dispatch。
 
 完整自动回放使用隔离内存状态，不改变正在演示的 `.runtime`：
@@ -164,7 +164,7 @@ python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.j
 默认未指定 credential-store 的旧命令依然仅内存保存。钥匙串拒绝读取时停止，不回退明文。只读平台与模型真实集成另行验收；本次合成钥匙串 smoke 和 mock refresh 不代表统一四源 live 已通过。
 
 
-答案和Recent answers中的Export answer会重新检查所有依赖的当前权限，再下载服务端原始JSON envelope（history数组，保留大整数版本号）。已撤权的答案不下载文件。下载副本离开系统后不能被撤回；演示中只导出合成资料。刷新页面即可加载前端更新，无需重启服务/重填凭据。Session失效时提示打开运行终端最新的一次性入口；资料403而session仍有效时只拒绝对应访问，不要求重登录。
+2026-10-06该回答下载功能已取消：无Export answer入口，GET /api/export/*对已登录请求返回404。旧下载验收仅为历史证据，不代表当前能力。每次query独立，客户端history_id返回400；旧服务须重启加载后端修复，凭据按已批准的程序Keychain复用。
 
 ### Opt-in grounded synthesis (synthetic pilot)
 

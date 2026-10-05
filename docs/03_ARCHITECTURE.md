@@ -274,9 +274,9 @@ class SourceAdapter:
 
 ### 8.4 历史会话、缓存、引用、导出
 
-- 不把完整旧assistant回答无条件回注模型；保存证据依赖，重查权限后才恢复相应上下文。
+- 当前产品采用独立问答：每次只使用本次问题检索，不读入上一问答案或证据依赖。历史仅用于重新鉴权后的查看；不作为查询上下文。
 - 首版关闭跨用户回答缓存。未来缓存至少绑定tenant、用户/授权状态、证据版本、策略版本并进行命中复核。
-- 引用详情、原文预览、附件下载、对话导出也必须在服务端鉴权；不能靠URL难猜保护。
+- 引用详情和原文预览必须在服务端鉴权；不能靠URL难猜保护。当前产品不提供回答/对话下载，GET /api/export/*不存在（已登录请求404）。审计的受限结构化查询与本地操作员证据文件不是普通用户下载入口。
 - 历史引用应保留当时的证据标识供审计，但普通用户不能因为当前能读某文档，就自动读到旧版中已删除/曾受限内容。没有源历史版本授权依据时，普通引用仅打开当前获准内容并说明版本已变化。
 - 已经展示给用户的内容无法远程收回；后续不再重新提供，不声称“清除其已有知识”。
 
@@ -500,3 +500,5 @@ The local operator pilot now accepts a reviewed bundle of 2–4 delegated reader
 The SQLite pilot derives exact overlapping text windows from each published resource version at query time. Documents up to 4,000 Unicode characters retain their original evidence ID; longer documents use canonical `resource_id@version#start:end` IDs and `locator.text_window` with character offsets. Windows contain only a continuous slice of that resource. Current source checks remain mandatory before model/review/response and every preview/history/export access; windows never inherit another resource’s authorization. Noncanonical offsets and outdated versions are denied. The entire-document preview ID of a long document is deliberately unavailable.
 
 Ranking uses local lexical overlap and a small explicit English alias map, up to three windows per resource, 24 total evidence objects and 16,000 text characters. This is not the planned vector/hybrid/reranker architecture. Fixed windows can cut sentences, overlap and omit context; there is no background chunk index or scale benchmark. DeepSeek’s existing synthetic input guard remains unchanged; a late slice without the approved marker is rejected, so fixture long-window success does not prove live long-document model support.
+
+2026-10-06 产品范围修订（用户批准，ADR-040）：独立问答取代自动追问；HTTP query仅接受question，history_id拒绝400。Engine旧本地harness位置参数仅兼容接收但不查询/补充任何历史依赖，审计history_id=null/query_kind=independent。取消Export answer及回答下载路由，覆盖此前关于用户导出的实现描述；历史、引用及原文版本仍重新鉴权，不取消安全断言。

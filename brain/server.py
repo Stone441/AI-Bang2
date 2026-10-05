@@ -119,18 +119,16 @@ def create_server(app, port=0):
                     del app.sessions[token]
                     return self.send(200,{'ok':True},cookie=f'{self.server.session_cookie_name}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0')
                 if method=='POST' and path=='/api/query':
-                    if set(data)-{'question','history_id'}: raise ValueError('Unsupported query fields')
+                    if set(data)-{'question'}: raise ValueError('Unsupported query fields')
                     if time.monotonic()-session['last_query']<0.1: return self.send(429,{'error':'Please wait briefly before asking again.'})
                     session['last_query']=time.monotonic()
-                    result=app.engine.query(actor,data.get('question'),data.get('history_id'))
+                    result=app.engine.query(actor,data.get('question'))
                     app.audit.append('response_dispatch_attempted',actor.user_id,result['request_id'],{'transport':'http','meaning':'server attempted dispatch, not user read'})
                     return self.send(200,result)
                 if method=='GET' and path.startswith('/api/evidence/'):
                     return self.send(200,app.engine.evidence(actor,path[len('/api/evidence/'):]))
                 if method=='GET' and path=='/api/history':
                     return self.send(200,{'history':app.engine.safe_history(actor)})
-                if method=='GET' and path.startswith('/api/export/'):
-                    return self.send(200,{'history':app.engine.safe_history(actor,path[len('/api/export/'):])})
                 if method=='GET' and path=='/api/sources/status':
                     if actor.user_id!='auditor': raise PermissionError('Unavailable')
                     return self.send(200,{'sources':[app.world.adapter(s).capabilities() for s in ('confluence','jira','slack','drive')]})

@@ -127,6 +127,9 @@ class BundleHTTP(unittest.TestCase):
         self.assertEqual({e['source'] for e in second['evidence']},{'confluence','jira','slack'})
         self.assertFalse(any(e['source']=='drive' for e in self.app.engine.model.calls[-1]['evidence']))
         for path in ['/api/history','/api/export/'+first['request_id']]:
+            if path.startswith('/api/export/'):
+                self.assertEqual(self.request(path)[0],404)
+                continue
             result=self.request(path)[1];self.assertNotIn('general release NOT approved',json.dumps(result))
             self.assertTrue(any(r.get('unavailable') for r in result['history']))
         self.assertEqual(self.request('/api/evidence/'+drive_evidence['evidence_id']),self.request('/api/evidence/missing@1'))
@@ -136,7 +139,7 @@ class BundleHTTP(unittest.TestCase):
         for field in ('user_id','role','source'):
             self.assertEqual(self.request('/api/query',{'question':'runbook',field:'admin'})[0],400)
         self.transports['slack'].channel['is_member']=False
-        second=self.query(history_id=first['request_id'])
+        second=self.query()
         self.assertEqual({e['source'] for e in second['evidence']},{'confluence','drive','jira'})
         self.assertFalse(any(e['source']=='slack' for e in self.app.engine.model.calls[-1]['evidence']))
         self.assertNotIn('Synthetic follow-up retry safeguards reply',json.dumps(self.app.engine.model.calls[-1]))

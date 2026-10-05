@@ -268,3 +268,7 @@ AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始
 ### ADR-039 · Explicit new question after native product reader check (2026-10-06)
 
 Evidence: browser security question immediately following product capability retained authorized C-02 through existing history_id dependency supplementation; an independent query correctly refused. Add New question action to clear history_id, composer and stale views, preserving session and explicit follow-up behavior. No authorization/model/retrieval relaxation; viewRevision discards delayed old answers. Node race checks cover dependency clearing and delayed response. Revert is limited to UI/button/tests; no schema/data migration or new fees/scopes.
+
+### ADR-040 · Independent questions and no answer downloads (2026-10-06)
+
+用户指出主界面独立问答外观与自动history_id依赖不一致，且无需求依据的下载扩大不可撤回副本范围，并明确批准纠正。选择独立问答：前端移除historyId/New question，HTTP拒绝history_id，Engine不查询旧run/补充依赖（旧本地harness参数仅兼容忽略）。删除Export answer/Blob生成/GET export路由，登录后直接请求返回404。保留历史、引用、逐模型阶段授权和原生撤权测试；旧导出断言替换为端点关闭断言，不再因测试需要提供下载。已合法保存的副本无法远程回收。覆盖ADR-024导出UI及ADR-039新问题按钮；如未来引入聊天或导出须作为明确产品变更，而非验收便利。无schema迁移/新scope/费用。运行中Python旧进程须重启；静态页面刷新只更新前端。

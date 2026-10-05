@@ -229,7 +229,7 @@ class DeepSeekBoundary(unittest.TestCase):
             # Advance only the fixture's rate-limit timestamp; preserve the
             # same authenticated cookie, CSRF token and real ACL checks.
             for session in app.sessions.values(): session['last_query'] = 0
-            status, after = request('/api/query', {'question': 'runbook', 'history_id': answer['request_id']})
+            status, after = request('/api/query', {'question': 'runbook'})
             self.assertEqual(status, 200); self.assertEqual(after['evidence'], [])
             self.assertEqual(len(self.transport.calls), 1)
             status, history = request('/api/history')
@@ -237,8 +237,8 @@ class DeepSeekBoundary(unittest.TestCase):
             self.assertTrue(next(r for r in history['history'] if r['request_id'] == answer['request_id'])['unavailable'])
             self.assertEqual(request('/api/evidence/confluence:98564@1')[0], 403)
             status, exported = request('/api/export/' + answer['request_id'])
-            self.assertEqual(status, 200)
-            self.assertTrue(exported['history'][0]['unavailable'])
+            self.assertEqual(status, 404)
+            self.assertEqual(exported, {'error':'Unavailable'})
             self.assertNotIn('Runbook budget version 1', json.dumps(exported))
         finally:
             self.server.shutdown(); self.server.server_close(); thread.join(); app.store.db.close()

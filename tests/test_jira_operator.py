@@ -55,10 +55,13 @@ class JiraOperatorHTTP(unittest.TestCase):
         first = self.request('/api/query', {'question': 'safeguards'})[1]
         self.transport.issue_allowed.clear()
         self.app.sessions[next(iter(self.app.sessions))]['last_query'] = 0
-        second = self.request('/api/query', {'question': 'safeguards', 'history_id': first['request_id']})[1]
+        second = self.request('/api/query', {'question': 'safeguards'})[1]
         self.assertEqual(second['evidence'], [])
         self.assertEqual(self.app.engine.model.calls[-1]['evidence'], [])
         for endpoint in ['/api/history', '/api/export/' + first['request_id']]:
+            if endpoint.startswith('/api/export/'):
+                self.assertEqual(self.request(endpoint)[0],404)
+                continue
             result = self.request(endpoint)[1]
             self.assertTrue(any(h.get('unavailable') for h in result['history']))
             self.assertNotIn('GA not approved', str(result))
