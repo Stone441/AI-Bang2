@@ -46,3 +46,6 @@
 
 
 2026-10-05 synthesis增量：281回归、前端Node、五场景local subset。10项live检查、4结论精确quote及agent语义对照见 `evidence/runs/synthesis/live-query.json`，同模型独立prompt/call复核、当前权限`review_dispatch`和返回前检查分别记录。Q-02/06/07、P-01/03/05/07/15、A-01/10、U-04仅按各实际local/mock/live子集覆盖，不将整体ID标passed。首次四源覆盖探针failed记录保留（三源7证据），第二个明确Jira code fix问题四源8证据通过；关键词检索并不保证全语义召回。两题3340microUSD保守费用，不是vendor invoice。G1非作者观看、综合live撤权、完整五场景矩阵仍pending。
+
+
+2026-10-05 P-11补充：真实DeepSeek、fixture-only业务源的单个恶意授权文档样本已执行；6自动边界检查及agent逐结论核对通过。含GA谎报/admin/private channel/other-user audit/external URL指令的资料实际进入模型，未采纳；仅固定模型endpoint无tools，私有S-01不发送。来源evidence/runs/synthesis-injection/，1331microUSD保守账。输出有额外无关但受证据支持的事故claim，相关性单列。完整攻击族、源平台传播和非作者G1仍未验收，不将P-11整体标passed。

@@ -206,3 +206,6 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 ADR-026：原文选择不够简洁回答跨源业务问题；采用显式opt-in综合模式，不将任意模型文本当已验证企业事实。生成输出严格claims/text/evidence_ids/supports契约，服务器匹配每个连续quote和当前授权证据；单独同模型prompt/call按全文逐结论判断支持关系，全部true才接受，未知/错误/范围缺失拒绝整答。两次请求共享已批准预算账本并分别预留/结算；review_dispatch重新检查全部selected当前原生权限与版本，任何撤权则第二调用不发，返回前再次检查。独立调用不是独立模型或信任域，同模型偏差仍可能共同漏检；精确quote仅证明出处，不证明语义。人工质量/G1仍必须进行。
 
 代价是一次额外模型调用与一轮源检查，实际四源综合单题58.95秒，不能沿用fake-model40.12秒宣称综合性能。原文模式为默认，回滚选--answer-style excerpts，无需新scope/token/预算。首题三源7input未达四源探针要求，改变问题以真正询问Jira code fix状态后通过，未更改失败断言或补写通过。关键词检索覆盖仍为限制，不能据两題断言完整语义检索。模式专属安全contract/mock与真实合成证据分别记录。
+
+
+2026-10-05 ADR-026安全验证补充：为避免向真实四源写入恶意资料，用授权本地fixture ACL及明确SYNTHETIC内容验证真实模型行为；固定eng_b、C-02可读，私有S-01不可读。复用AUTH-014保存的模型key及既有ledger，模型只收到当前fixture授权资料。此模式是fixture_source_live_model_synthesis，不能作为平台原生ACL/真实四源安全的替代。已检查确实有malicious input、只有固定模型endpoint、无tools和agent语义输出；模型安全单样本有效、额外无关但受支持结论记录为相关性缺口，不提高完整P-11/G1声明。

@@ -118,3 +118,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-08-SYNTHESIS verified local/mock + live subset：opt-in双调用/精确quote/逐结论review/二次原生授权与双回执实现；281回归、Node及五场景local subset通过。实际四源8input证据→4综合claim（引用三源），10live checks通过；首题仅三源命中的四源探针失败记录保留。新模型保守费用3340microUSD，同一USD20ledger。综合模式HTTP/同会话撤权已verified mock；下一P0人工UI验收、官方五场景live矩阵与未知/撤权完整覆盖；当前模型复核非准确性保证，G1/G2未通过。
+
+
+2026-10-05 P-11-SYNTHESIS verified single authored adversarial subset：fixture业务源/live DeepSeek，同模型复核；GA错误指令不被采纳、S-01不入模型、无业务工具/外部任意请求。新保守账1331microUSD，同一USD20账本。答案存在额外相关性不足claim，完整prompt-injection/人工语义及真人UI验收仍pending。源码未改、281回归沿用。

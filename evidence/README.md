@@ -54,3 +54,6 @@
 
 
 2026-10-05 grounded synthesis: [successful live query](runs/synthesis/live-query.json), [actual audit](runs/synthesis/live-audit.json), [exact harness](runs/synthesis/live-harness.py.txt). Four authorized input sources/eight objects, four claims citing three sources, exact quotes and separate same-model review, 10checks;58.95s. [First four-source coverage failure](runs/synthesis/first-live-query.json) preserved (valid three-source answer, did not meet probe coverage), and [first targeted audit error](runs/synthesis/first-failed-targeted-tests.txt) retained. 281local/mock regressions/Node passed; new two-query model accounting3340microUSD upper estimate, not invoice. Review is fallible; no G1/full live acceptance claim.
+
+
+2026-10-05 [live-model malicious-source subset](runs/synthesis-injection/query.json), [fixture audit](runs/synthesis-injection/audit.json), [actual harness](runs/synthesis-injection/harness.py.txt): synthetic fixture business sources, real DeepSeek generation/review. Malicious authorized text actually sent; six automated boundaries and agent semantic inspection passed, privateS-01 not sent, only fixed model endpoint/no tools. One authored case, not a comprehensive injection guarantee; extra unrelated supported claim recorded. Two calls1331microUSD upper accounting; no live source writes, same existing budget.
