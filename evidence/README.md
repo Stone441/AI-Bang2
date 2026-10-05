@@ -35,3 +35,62 @@
 - Drive独立reader原生问答、引用、历史及同会话撤权：[reader-query-and-revocation.json](runs/live-drive/reader-query-and-revocation.json)。fake model；恢复权限只UI，export/full ACL/unified not_run。截图留本地private。
 
 2026-10-05 阶段收尾：local-latest当前248/248（60 local /188 mock），五场景passed_local_subset；首次sandbox loopback失败后相同测试获准重跑通过。最新真实能力及not_run以STATUS收尾段为准；本轮未调用真实API或模型，私有截图/工具对话/凭据未纳入push。
+
+2026-10-05 AUTH-014 credential reuse: [Keychain verification](runs/keychain/verification.json), native Mac synthetic add/read/update/delete passed and test item removed; 266 local/mock regression tests. Real stored credentials, Google refresh reuse and unified live startup remain not_run. No existing password item accessed, no new live/model call.
+
+2026-10-05 unified first live attempt: [failure checkpoint](runs/live-unified/first-query-failure.json). Four native sources/eight current objects allowed; model preflight refused inconsistent synthetic marker, no call ledger row or new model fee. Corrected compatibility mock-tested, actual successful unified answer and Keychain restart reuse still pending.
+
+2026-10-05 unified live API + DeepSeek: [successful query](runs/live-unified/query.json). Four sources/eight objects, 18 readonly checks, native Slack reply preview and reauthorized history verified; 1030 tokens, conservative 468microUSD estimate. 53.37s latency, extractive selection only; full ACL matrix/revocation/G1/G2 separate. Screenshot remains ignored local-only.
+
+2026-10-05 native Slack private-channel reader revocation: [same-session checkpoint](runs/live-unified/slack-revocation.json). Nine readonly checks, old mixed history hidden, later model/answer uses six objects from remaining three sources, root/reply native deny. Original member restored (Members2). Direct citation/export live not_run; screenshots ignored. New conservative cost345microUSD.
+
+2026-10-05 [live export and stale citation checks](runs/live-unified/export-verification.json): initial JS rounding failure retained, corrected raw download9633 bytes exactly matches saved answer. Same-session native revoke rejects old export (no additional file) and old citation, clears stale views, retains valid login. No new model fee; original permission restoration separately verified.
+
+
+2026-10-05 linkless source optimization: [initial failed regression](runs/linkless-optimization/first-failed-tests.json) retained; [current regression](runs/local-latest/tests.json) 270/270 passed. Mock native read counts reduced from five to four per matching linkless object; all source_refresh/before_model/model_dispatch/before_dispatch checks remain. Late-revocation injection now binds to the actual dispatch phase, retaining zero-model-call assertion. Five fixture scenarios and frontend security checks passed; no new live API/model call or measured live latency improvement.
+
+
+2026-10-05 [live native-source latency comparison](runs/linkless-optimization/live-latency.json): real approved app-owned credential reuse/native identity and Drive refresh, four sources/eight excerpts, fake model only. Baseline53.209s / optimized40.116s, one sample each; all four remaining authorization phases preserved. [Exact one-off harness text](runs/linkless-optimization/latency-harness.py.txt) records execution for review (requires existing approved private configs/Keychain; not a general startup command). Separate test DBs, original8088 untouched, no paid model request.
+
+
+2026-10-05 grounded synthesis: [successful live query](runs/synthesis/live-query.json), [actual audit](runs/synthesis/live-audit.json), [exact harness](runs/synthesis/live-harness.py.txt). Four authorized input sources/eight objects, four claims citing three sources, exact quotes and separate same-model review, 10checks;58.95s. [First four-source coverage failure](runs/synthesis/first-live-query.json) preserved (valid three-source answer, did not meet probe coverage), and [first targeted audit error](runs/synthesis/first-failed-targeted-tests.txt) retained. 281local/mock regressions/Node passed; new two-query model accounting3340microUSD upper estimate, not invoice. Review is fallible; no G1/full live acceptance claim.
+
+
+2026-10-05 [live-model malicious-source subset](runs/synthesis-injection/query.json), [fixture audit](runs/synthesis-injection/audit.json), [actual harness](runs/synthesis-injection/harness.py.txt): synthetic fixture business sources, real DeepSeek generation/review. Malicious authorized text actually sent; six automated boundaries and agent semantic inspection passed, privateS-01 not sent, only fixed model endpoint/no tools. One authored case, not a comprehensive injection guarantee; extra unrelated supported claim recorded. Two calls1331microUSD upper accounting; no live source writes, same existing budget.
+
+
+2026-10-05 [frontend delayed-response verification](runs/ui-session-races/verification.json) and [reproduced failure](runs/ui-session-races/first-failed-node.txt): expired-session preview, overlapping queries, late history and late export; mock fetch/Node, not live UI.281Python regression remains separate.8093 native-startup succeeded but tool IPC EPERM prevented safe entry transfer; staging stopped, user8094 entry pending. No new model/API query fees.
+
+
+2026-10-05 [真实综合UI验证](runs/synthesis-ui/verification.json)：四源输入/引用、展开quotes、双回执、Slack reply预览、Enter/Escape、重新鉴权历史、实际raw下载逐字段一致。初答遗漏保障措施，保留质量缺口。[v2成功重测](runs/synthesis-ui/coverage-live-query.json)及[实际审计](runs/synthesis-ui/coverage-live-audit.json)包含11checks和agent语义/覆盖对照，56.76秒。保留[首次复核拒绝](runs/synthesis-ui/first-coverage-rejected.json)和[第二次缺quote拒绝](runs/synthesis-ui/second-coverage-invalid-quotes.json)，无自动生产重试/伪造quote。282本地/mock回归通过；截图私有ignored，非作者G1/完整live仍pending。
+
+
+2026-10-05 [local port-session regression](runs/port-session-isolation/verification.json), [initial reproduced failure](runs/port-session-isolation/first-failed-tests.txt): real shared CookieJar with two loopback fixture servers, no external APIs/models. Login/logout remain independent and cross-port CSRF rejected;283 regressions passed. Chrome temporary fixture navigation blocked, not browser-verified. Current8094 session-ended observation recorded without asserting cause; no Slack membership change.
+
+
+2026-10-05 [v2 real browser query baseline](runs/synthesis-native-revocation/baseline.json), [actual query audit](runs/synthesis-native-revocation/baseline-audit.json): three input sources/six evidence, final cause/withdrawn hypothesis/runbook safeguards, five checks and both receipts;1296microUSD upper accounting. [Incorrect first stage-count oracle](runs/synthesis-native-revocation/first-stage-count-check.json) preserved: source_refresh covers eight configured objects while retrieval selects six; corrected check uses exact selected resource/version sets and all-allow, with refresh coverage. Specific native Remove rejected by automatic approval; no membership changed, awaiting confirmation.
+
+[First native synthesis revocation cycle](runs/synthesis-native-revocation/first-cycle-verification.json), [actual endpoint audit](runs/synthesis-native-revocation/first-cycle-audit.json): member2→1→2, same-session stale citation deny clears answer/preview, mixed synthesis history/quotes/dual receipts withheld, unrelated answer remains usable. Original same member/UID restored;7checks, zero new model calls. Extra export cycle not_run after approval review rejected it; original access remains restored.
+
+[Second native synthesis export cycle](runs/synthesis-native-revocation/second-cycle-verification.json), [endpoint audit](runs/synthesis-native-revocation/second-cycle-audit.json): separately approved, stale export unavailable and files0→0; same native UID finally restored, Members2. Legitimate restored export8146 bytes matches the entire stored answer including quotes/dual receipts; zero extra model calls.
+# Latest local lifecycle acceptance
+
+2026-10-05 [real S-01 engineering fact verification](runs/live-s01/verification.json), [actual answer](runs/live-s01/answer.json), [audit](runs/live-s01/audit.json), [new synthetic J-03 native read](runs/live-s01/j03-native-read.json): four sources,8selected/9refresh,4claims covering root cause/withdrawn cache hypothesis/Done code fix/open protective follow-up/fictional Maya/current runbook;7checks and independent quote/stage/ledger validation. Single eng_b operator, not complete personas/G1. Two settled actual receipts1856microUSD conservative estimate. Actual harnesses saved; ignored private screenshot j03-in-progress.png. [Initial sandbox bind error](runs/live-s01/first-sandbox-test-block.json) retained; unchanged full283 tests passed in authorized loopback environment. No newscope/membership and no user8094 restart.
+
+2026-10-05 AUTH-015 [Confluence real update/restore verification](runs/live-lifecycle/confluence-verification.json), [original answer](runs/live-lifecycle/confluence-baseline.json), [new revision](runs/live-lifecycle/confluence-updated.json), [restored answer](runs/live-lifecycle/confluence-restored.json), [old access denial](runs/live-lifecycle/confluence-old-access.json), [actual audit](runs/live-lifecycle/confluence-audit.json). Native versions1→2→3, original text exactly restored; first diagnostic Evidence.native_id KeyError preserved separately. [Drive disposable deletion verification](runs/live-lifecycle/drive-verification.json), [baseline](runs/live-lifecycle/drive-baseline.json), [audit](runs/live-lifecycle/drive-audit.json): native allow→trash→deny, old preview/history withheld, query/model empty while old index retained. Original three files unchanged in native UI. Both actual harnesses included as text; screenshots ignored/private. User performed upload after Chrome file URL permission blocked; no permission bypass. Live API / fake model / operator logical session, no new model fees, no HTTP export or human G1 claim.
+
+2026-10-05 [twelve-source-operation matrix](runs/lifecycle-local/results.json), executed with `make verify-lifecycle`: four fixture sources × content/revoke/delete; stale-index model evidence exclusion, history/export projection withholding, citation denial, new revision publication/removal, unrelated revision retention, duplicate event handling and actual audit chains. Fake model / no live API / no human G1. [First probe failure](runs/lifecycle-local/first-probe-failure.json) preserved: the question intentionally contained the marker, so evidence-only leakage checking replaced the overbroad question+evidence check. Five existing local worked examples and six ingestion tests also rerun successfully; Node frontend guard checks passed. No real source writes or model costs.
+
+2026-10-05 native-restricted-fixed：S-03 Confluence真实只读+fake model+明确controlled stale synthetic index，13checks/16events；native-restricted保留首次计数探针失败。管理员合成seed/权限截图仅ignored private（native-seed.json存路径/hash），非CodeBuddy/人工G1或完整persona矩阵。
+
+2026-10-05 rebuild-native-restricted-approved：b541c02 clean archive297tests/五fixture场景/两Node/HTTP smoke通过；rebuild-native-restricted保留先前沙箱bind EPERM失败，未降低断言。
+
+2026-10-05 audit-mixed：四类fixture请求/116event oracle/17页稳定snapshot/role及scope拒绝/4实际签名CLI结果，原测试失败日志保留；team walkthrough prepared，非live审计员/人G1。
+
+2026-10-06 native-jira-update：真实Jira专用合成KAN-6 UI正文更新/eng_b只读API/fake model，13checks/23events；ignored screenshots与hash在native-seed.json。既有runtime服务/配置/原工单不改。
+
+2026-10-06 product-reader-local：AUTH-016批准后单源CF Keychain复用/身份先核验/隔离DB0600，32targeted/307full fixture/mock通过；native产品身份/token/新Keychain尚not_run，浏览器待用户登录。
+
+- `runs/native-product-reader/`: AUTH-016 independent product_ops Confluence identity/Keychain reuse, C-01/C-03 native deny without body and C-02 allow; 16 live API/fake checks, 309 local Python tests, browser answer/preview/history/standalone denial and New question UI checks. Not full persona/G1/G2 acceptance.
+
+- `runs/independent-query/`: user-approved independent questions and removal of answer download frontend/API, 311 fixture/mock regressions plus Node guards; live old-process restart pending.

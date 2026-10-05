@@ -1,0 +1,100 @@
+{
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py": "c038b27665f4824eeb4f6192bf9ab213e4e612158f69f0db557fd5eff1abd76b",
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_synthesis.py": "89c74371d2afcef51343177cf94fc02c62defa9675c995c917764298ac786cd8"
+  },
+  "recorded_at": "2026-10-05T09:33:38.957425+00:00",
+  "mode": "live_api_live_model_synthesis",
+  "status": "failed",
+  "actor": "eng_b",
+  "shared_budget": ".runtime/deepseek-budget.sqlite",
+  "credential_reuse": {
+    "confluence": true,
+    "jira": true,
+    "slack": true,
+    "drive_refresh_native_verified": true
+  },
+  "limitations": [
+    "Synthetic allowlisted sources only; model review is not a guarantee of semantic correctness. One question, not full five-scenario live acceptance. Separate app DB, original8088 untouched."
+  ],
+  "model_outputs": {
+    "draft": {
+      "claims": [
+        {
+          "text": "The payment-retry release decision approves a controlled pilot only; general availability (GA) is not approved, and PAY-102 Done is not customer release approval.",
+          "evidence_ids": [
+            "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+            "confluence:164283@1",
+            "jira:10013@336836842918391821"
+          ],
+          "supports": [
+            {
+              "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+              "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+            }
+          ]
+        },
+        {
+          "text": "Completing the retry configuration/code fix (PAY-102) does not approve general customer release; GA remains not approved and no general release date is confirmed.",
+          "evidence_ids": [
+            "jira:10013@336836842918391821",
+            "confluence:164283@1",
+            "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6"
+          ],
+          "supports": [
+            {
+              "evidence_id": "jira:10013@336836842918391821",
+              "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+            }
+          ]
+        },
+        {
+          "text": "Payment-retry is limited to the approved pilot scope and controlled pilot customers; expansion beyond pilot customers and the general availability date remain unconfirmed.",
+          "evidence_ids": [
+            "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+            "confluence:164283@1"
+          ],
+          "supports": [
+            {
+              "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+              "quote": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+            }
+          ]
+        },
+        {
+          "text": "The final postmortem root cause is retry configuration mismatched with the timeout budget, causing duplicate-request backlog; the earlier cache hypothesis was withdrawn/unconfirmed, and the runbook calls for inspecting the timeout budget and following the approved failover procedure.",
+          "evidence_ids": [
+            "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+            "slack:C0C6R70SGG4/1791142180.560339@226823937321883740",
+            "confluence:98564@1"
+          ],
+          "supports": [
+            {
+              "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+              "quote": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests."
+            },
+            {
+              "evidence_id": "confluence:98564@1",
+              "quote": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "reason": "safe_probe_failure",
+  "observed_failure": "Draft cites multiple IDs without one supporting quote per ID; rejected before review. No answer committed.",
+  "request_id": "9d0733421f9d47358d4a2bf8e12f7f40",
+  "shared_ledger_rows": [
+    {
+      "query_id": "9d0733421f9d47358d4a2bf8e12f7f40",
+      "reservation_id": "6760aeab057145e4bb3317456c7b6181",
+      "outcome": "output_rejected",
+      "prompt_tokens": 988,
+      "completion_tokens": 766,
+      "total_tokens": 1754,
+      "state": "settled",
+      "actual": 1216
+    }
+  ]
+}

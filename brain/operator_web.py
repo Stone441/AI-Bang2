@@ -1,6 +1,6 @@
 """Loopback operator UI for approved synthetic delegated resources and fake model.
 
-Token stays in this process, never goes to the browser. A short-lived one-use
+Credentials never go to the browser; explicit opt-in permits app-owned Keychain reuse. A short-lived one-use
 bootstrap ticket attaches a browser to the verified operator, not employee SSO.
 """
 import argparse
@@ -21,6 +21,7 @@ from .slack import SlackReader
 from .drive import DriveReader
 from .server import App, create_server
 from .store import Store
+from .credential_input import HiddenInputUnavailable
 
 
 class OperatorApp:
@@ -88,9 +89,23 @@ def main(argv=None):
     parser.add_argument('--live', action='store_true')
     parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive or multi; browser consent instead of hidden Drive token')
     parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
+    parser.add_argument('--answer-style', choices=['excerpts','synthesis'], default='excerpts',
+                        help='Synthesis uses two budgeted calls and exact grounding plus model review')
+    parser.add_argument('--credential-store',choices=['memory','macos-keychain'],default='memory',
+                        help='Explicit opt-in: save/reuse app-owned credentials in this Mac Keychain')
+    parser.add_argument('--replace-credential',choices=['confluence','jira','slack','drive','deepseek'],
+                        help='Re-enter only one credential for this launch; keep all others')
     args = parser.parse_args(argv)
+    if args.answer_style=='synthesis' and args.model!='deepseek':
+        print('not_run: synthesis requires DeepSeek; no credentials or platform calls performed.')
+        return 2
     if not args.live:
         print('not_run: --live required; no credentials or platform calls performed.')
+        return 2
+    if ((args.credential_store=='macos-keychain' and args.source not in ('multi','confluence'))
+            or (args.replace_credential and args.credential_store!='macos-keychain')
+            or (args.source=='confluence' and args.replace_credential not in (None,'confluence'))):
+        print('not_run: Keychain reuse requires a reviewed multi-source or Confluence operator; replacement requires Keychain mode.')
         return 2
     if args.oauth_client and args.source not in ('drive','multi'):
         print('not_run: --oauth-client requires Drive or multi; no credential or platform calls performed.')
@@ -109,6 +124,11 @@ def main(argv=None):
         # the verified application is attached; no race-prone bind/release probe.
         server = create_server(None, args.port)
         stage = 'configuration_or_hidden_input'
+        credential_store=None
+        if args.credential_store=='macos-keychain':
+            from .keychain import MacKeychain, ReplaceOne
+            credential_store=MacKeychain()
+            if args.replace_credential:credential_store=ReplaceOne(credential_store,args.replace_credential)
         if args.source == 'multi':
             from scripts.operator_bundle import load_reader
         elif args.source == 'drive':
@@ -119,7 +139,13 @@ def main(argv=None):
             from scripts.jira_query import load_reader
         else:
             from scripts.confluence_probe import load_reader
-        if args.oauth_client and args.source == 'multi':
+        if credential_store is not None:
+            if args.source == 'confluence':
+                reader=load_reader(args.config,prompt_actor=args.actor,credential_store=credential_store)
+            else:
+                reader=load_reader(args.config,prompt_actor=args.actor,oauth_client=args.oauth_client,
+                                   credential_store=credential_store)
+        elif args.oauth_client and args.source == 'multi':
             reader = load_reader(args.config, prompt_actor=args.actor, oauth_client=args.oauth_client)
         elif args.oauth_client:
             from scripts.drive_query import load_oauth_reader
@@ -128,7 +154,15 @@ def main(argv=None):
             reader = load_reader(args.config, prompt_actor=args.actor)
         stage = 'local_store'
         runtime = Path('.runtime'); runtime.mkdir(mode=0o700, exist_ok=True)
-        db = runtime / (args.source + '-web.sqlite')
+        if args.source == 'confluence' and credential_store is not None:
+            import hashlib
+            import json
+            # The reviewed native-account identity is distinct from other operators;
+            # a digest keeps arbitrary CLI actor strings out of filesystem paths.
+            identity = [args.actor, reader.tenant, reader.delegations[args.actor].account_id]
+            db = runtime / ('confluence-' + hashlib.sha256(json.dumps(identity).encode()).hexdigest()[:16] + '-web.sqlite')
+        else:
+            db = runtime / (args.source + '-web.sqlite')
         store = Store(str(db)); os.chmod(db, 0o600)
         stage = 'native_identity'
         app = OperatorApp(reader, store, args.actor, live=True)
@@ -137,22 +171,32 @@ def main(argv=None):
             from .deepseek import DeepSeekEvidenceModel
             import sys
             stage = 'model_configuration'
-            if not sys.stdin.isatty():
-                raise ValueError('Hidden model input requires a local TTY')
             ledger_path = runtime / 'deepseek-budget.sqlite'
             # One durable budget across all source operators. Never delete/reset
             # this file to repeat the pilot or bypass prior unknown charges.
             ledger = BudgetLedger(str(ledger_path)); os.chmod(ledger_path, 0o600)
-            with warnings.catch_warnings():
-                warnings.simplefilter('error', getpass.GetPassWarning)
-                key = getpass.getpass('DeepSeek API key (hidden; not saved): ')
+            key=credential_store.get('deepseek',app.actor.tenant,args.actor,'deepseek-flash') if credential_store else None
+            new_key=key is None
+            if new_key:
+                if not sys.stdin.isatty():raise ValueError('Hidden model input requires a local TTY')
+                with warnings.catch_warnings():
+                    warnings.simplefilter('error', getpass.GetPassWarning)
+                    key = getpass.getpass('DeepSeek API key (hidden): ').strip()
             model = DeepSeekEvidenceModel(key, ledger, synthetic_only=True)
+            if args.answer_style=='synthesis':
+                from .synthesis import DeepSeekSynthesisModel
+                model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True)
+            if credential_store and new_key:
+                credential_store.put('deepseek',app.actor.tenant,args.actor,'deepseek-flash',key)
             del key
             app.engine.model = model
             app.engine.mode = app.engine.mode.removesuffix('_fake_model') + '_live_model_selection'
+            if args.answer_style=='synthesis':
+                app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_synthesis'
         server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
         label = 'LIVE MODEL EVIDENCE SELECTION' if args.model == 'deepseek' else 'FAKE MODEL'
+        if args.answer_style=='synthesis': label='LIVE MODEL GROUNDED SYNTHESIS / SEPARATE MODEL REVIEW'
         print(f'{args.source.title()} LIVE API / {label} / LOCAL OPERATOR (not SSO)', flush=True)
         print(f'Open once within 10 minutes: http://127.0.0.1:{server.server_port}/#ticket={app.bootstrap_ticket()}', flush=True)
         stage = 'runtime'
@@ -160,7 +204,13 @@ def main(argv=None):
     except KeyboardInterrupt:
         return 0
     except Exception as error:
-        if stage == 'bind' and isinstance(error, OSError) and error.errno == errno.EADDRINUSE:
+        from .keychain import KeychainUnavailable
+        if isinstance(error,KeychainUnavailable):
+            print('Operator service stopped [macos_keychain_unavailable]: Unlock or approve access to the app-owned Keychain item. No plaintext fallback is used.')
+        elif isinstance(error, HiddenInputUnavailable):
+            print(f'Operator service stopped [credential_{error.code}]: Hidden credential input was not accepted. '
+                  'No platform or model request was sent for this input; no credential details are logged.')
+        elif stage == 'bind' and isinstance(error, OSError) and error.errno == errno.EADDRINUSE:
             print(f'Startup stopped [port_in_use]: port {args.port} is already in use. '
                   'Keep the existing service, or retry with --port 8082. No credentials were requested.')
         else:

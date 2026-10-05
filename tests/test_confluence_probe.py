@@ -78,6 +78,54 @@ class ProbeConfiguration(unittest.TestCase):
             with self.assertRaises(ValueError):load_reader(self.config(folder),prompt_actor='eng_b')
             self.assertEqual(prompt.call_count,1)
 
+    def test_invalid_email_is_retried_before_requesting_token_and_never_echoed(self):
+        from scripts.confluence_probe import hidden_delegation
+        output=io.StringIO()
+        with patch('scripts.confluence_probe.sys.stdin.isatty',return_value=True), \
+             patch('scripts.confluence_probe.getpass.getpass',side_effect=['not-an-email','engineer@example.com','secret-test']) as prompt, \
+             contextlib.redirect_stdout(output):
+            result=hidden_delegation('employee')
+        self.assertEqual(prompt.call_count,3)
+        self.assertEqual(prompt.call_args_list[1].args[0],'Atlassian email (hidden): ')
+        self.assertIn('[email_invalid]',output.getvalue())
+        self.assertNotIn('not-an-email',output.getvalue())
+        self.assertNotIn('secret-test',repr(result)+output.getvalue())
+
+    def test_empty_or_multiline_token_retries_only_token_and_keeps_email(self):
+        from scripts.confluence_probe import hidden_delegation
+        output=io.StringIO()
+        with patch('scripts.confluence_probe.sys.stdin.isatty',return_value=True), \
+             patch('scripts.confluence_probe.getpass.getpass',side_effect=['engineer@example.com','','secret\nother','secret-test']) as prompt, \
+             contextlib.redirect_stdout(output):
+            result=hidden_delegation('employee')
+        self.assertEqual(prompt.call_count,4)
+        self.assertTrue(all('Scoped API token' in call.args[0] for call in prompt.call_args_list[1:]))
+        self.assertIn('[token_empty]',output.getvalue());self.assertIn('[token_multiline]',output.getvalue())
+        self.assertNotIn('secret',output.getvalue()+repr(result))
+
+    def test_invalid_hidden_input_has_bounded_retry_and_fixed_reason(self):
+        from scripts.confluence_probe import hidden_delegation
+        from brain.credential_input import HiddenInputUnavailable
+        for value,reason in [('', 'token_empty'),('x'*4097,'token_too_long'),('private\nkey','token_multiline')]:
+            output=io.StringIO()
+            with self.subTest(reason=reason),patch('scripts.confluence_probe.sys.stdin.isatty',return_value=True), \
+                 patch('scripts.confluence_probe.getpass.getpass',side_effect=['engineer@example.com',value,value,value]) as prompt, \
+                 contextlib.redirect_stdout(output),self.assertRaises(HiddenInputUnavailable) as caught:
+                hidden_delegation('employee')
+            self.assertEqual(prompt.call_count,4);self.assertEqual(caught.exception.code,reason)
+            self.assertNotIn('engineer@example.com',output.getvalue())
+            if value:self.assertNotIn(value,output.getvalue()+str(caught.exception))
+
+    def test_input_eof_is_safe_and_does_not_start_an_echo_fallback(self):
+        from scripts.confluence_probe import hidden_delegation
+        from brain.credential_input import HiddenInputUnavailable
+        with patch('scripts.confluence_probe.sys.stdin.isatty',return_value=True), \
+             patch('scripts.confluence_probe.getpass.getpass',side_effect=EOFError('private-detail')) as prompt, \
+             self.assertRaises(HiddenInputUnavailable) as caught:
+            hidden_delegation('employee')
+        self.assertEqual(caught.exception.code,'input_ended');self.assertEqual(prompt.call_count,1)
+        self.assertNotIn('private-detail',str(caught.exception))
+
 
 if __name__ == '__main__':
     unittest.main()

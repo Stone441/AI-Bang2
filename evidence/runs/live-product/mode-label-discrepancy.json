@@ -1,0 +1,8 @@
+{
+  "observed_response_mode": "confluence_drive_jira_slack_live_api_fake_model",
+  "actual_model": "deepseek-flash-grounded-synthesis-v2",
+  "evidence": "answer.json model field, two accepted ledger-linked model receipts, per-stage live native checks in audit.json",
+  "cause": "Executed test harness replaced the model but did not update Engine.mode; operator_web already updates the mode correctly.",
+  "resolution": "Current runner sets live_model_synthesis before query. Original answer/audit and executed harness remain unchanged; no extra model call merely to relabel evidence.",
+  "scope": "Test harness metadata discrepancy; not a fake model run and not a repaired historical record."
+}

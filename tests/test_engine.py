@@ -14,6 +14,15 @@ class Core(unittest.TestCase):
     def tearDown(self): self.store.db.close()
     def ask(self,user='eng_a',question='payment-service incident retry PAY-103 runbook cache'):
         return self.engine.query(Actor(user),question)
+    def test_previous_answer_cannot_supplement_an_independent_question(self):
+        first=self.ask(question='payment-service incident')
+        self.assertTrue(first['evidence'])
+        second=self.engine.query(Actor('eng_a'),'UNMATCHEDTOPIC9287',first['request_id'])
+        self.assertEqual(second['evidence'],[])
+        self.assertEqual(self.model.calls[-1]['evidence'],[])
+        started=[e for e in self.audit.export() if e['event_type']=='request_started'][-1]
+        self.assertIsNone(started['payload']['history_id'])
+        self.assertEqual(started['payload']['query_kind'],'independent')
     def test_cross_source_claims_and_audit(self):
         answer=self.ask(); sources={e['source'] for e in answer['evidence']}
         self.assertEqual(sources,{'confluence','jira','slack','drive'})

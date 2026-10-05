@@ -274,9 +274,9 @@ class SourceAdapter:
 
 ### 8.4 历史会话、缓存、引用、导出
 
-- 不把完整旧assistant回答无条件回注模型；保存证据依赖，重查权限后才恢复相应上下文。
+- 当前产品采用独立问答：每次只使用本次问题检索，不读入上一问答案或证据依赖。历史仅用于重新鉴权后的查看；不作为查询上下文。
 - 首版关闭跨用户回答缓存。未来缓存至少绑定tenant、用户/授权状态、证据版本、策略版本并进行命中复核。
-- 引用详情、原文预览、附件下载、对话导出也必须在服务端鉴权；不能靠URL难猜保护。
+- 引用详情和原文预览必须在服务端鉴权；不能靠URL难猜保护。当前产品不提供回答/对话下载，GET /api/export/*不存在（已登录请求404）。审计的受限结构化查询与本地操作员证据文件不是普通用户下载入口。
 - 历史引用应保留当时的证据标识供审计，但普通用户不能因为当前能读某文档，就自动读到旧版中已删除/曾受限内容。没有源历史版本授权依据时，普通引用仅打开当前获准内容并说明版本已变化。
 - 已经展示给用户的内容无法远程收回；后续不再重新提供，不声称“清除其已有知识”。
 
@@ -378,6 +378,36 @@ the budget receipt. Existing reservations without a receipt remain legacy and
 must not be retroactively attributed. Empty evidence records no external call.
 This local receipt is not an independent signature or vendor invoice.
 
+### Opt-in grounded synthesis contract (2026-10-05 increment)
+
+`--model deepseek --answer-style synthesis` retains the same server actor, source
+allowlist and budget ledger. Default excerpts remain unchanged. Each generated
+claim has `text`, known `evidence_ids`, and exactly one `supports` entry per
+citation (`evidence_id`, exact contiguous `quote`). Engine checks quoted provenance
+against the selected current evidence. At most four claims are accepted.
+
+After draft generation, Engine rechecks the entire selected set at
+`review_dispatch`, including versions, before a separate review model request.
+The reviewer is a separate prompt/call of the same model, not an independent
+model or trust domain. It receives full current authorized evidence and must explicitly
+approve every claim and return boolean `question_covered: true`. Coverage requires
+addressing every requested part supported by supplied evidence; correct background
+claims cannot replace requested safeguards or actions. Unknown, missing, non-boolean,
+partial, negative or malformed review rejects the
+whole answer. Both requests reserve/settle budget independently against the same
+server request ID and existing USD20 ledger. Successful answers/history/exports
+contain separate `model_call` and `model_review` receipts; identical reservation
+IDs are rejected. Audit records `evidence_used.stage=sent_to_review` and both
+receipts in `generation_completed`. Return-time checks remain mandatory.
+
+Exact quote matching establishes provenance, not semantic entailment. Review is
+a fallible model quality filter; it does not establish identity, grant access,
+or guarantee factual correctness. Human semantic acceptance remains required,
+especially for negation, scope and contradictory evidence. No automatic retries
+or fallback silently turn a rejected synthesis into a successful answer.
+JSON mode follows the [official DeepSeek guide](https://api-docs.deepseek.com/guides/json_mode/);
+application validation still handles schema, references and unsupported output.
+
 ## 11. 自然语言审计查询：结构化工具，不另建小型RAG
 
 ```json
@@ -458,3 +488,17 @@ This local receipt is not an independent signature or vendor invoice.
 ### Implemented operator multi-source boundary — 2026-10-05
 
 The local operator pilot now accepts a reviewed bundle of 2–4 delegated readers. Configuration is trusted administrator input: a common tenant/actor plus explicitly reviewed native account mappings. A review flag is an assertion, not identity proof. Each platform verifies its mapped current account before bootstrap, and every source read checks current effective access before evidence reaches the fake model. No browser actor/role/source field selects a credential. Missing/mismatched source mappings fail startup; later source deny/unknown cannot supply evidence, while independently authorized sources remain usable. Mixed historical answers with any unavailable dependency are withheld. This is mock HTTP verified, not live unified integration or employee SSO. Existing separate live eng_a/eng_b pilots must not be combined without a persona mapping review.
+
+2026-10-05 Model receipt response increment: successful query responses and stored history may include `model_call`. Engine validates server request correlation, accepted/settled state, strict integer token counts and conservative cost bounds; it projects fixed public fields and supplies its own accounting notice, dropping unrelated provider fields. Explicit no-call is allowed only for empty authorized evidence. Historical records without a receipt remain unknown, never inferred from evidence count. Existing citation/history/export authorization applies to the entire response, including its receipt. No new provider request or budget scope is introduced.
+
+
+2026-10-05 local cookie increment: login/auth/logout select a cookie name derived from the server's bound port, preventing accidental cross-port overwrites. Server sessions remain random and mandatory; no actor or credential is selected by client input. Cookies remain host-scoped under RFC6265, so distinct names do not protect against a hostile same-host HTTP listener receiving cookies. This pilot assumes a trusted local machine; production identity remains pending.
+
+
+### Implemented local retrieval increment (2026-10-05, ADR-032)
+
+The SQLite pilot derives exact overlapping text windows from each published resource version at query time. Documents up to 4,000 Unicode characters retain their original evidence ID; longer documents use canonical `resource_id@version#start:end` IDs and `locator.text_window` with character offsets. Windows contain only a continuous slice of that resource. Current source checks remain mandatory before model/review/response and every preview/history/export access; windows never inherit another resource’s authorization. Noncanonical offsets and outdated versions are denied. The entire-document preview ID of a long document is deliberately unavailable.
+
+Ranking uses local lexical overlap and a small explicit English alias map, up to three windows per resource, 24 total evidence objects and 16,000 text characters. This is not the planned vector/hybrid/reranker architecture. Fixed windows can cut sentences, overlap and omit context; there is no background chunk index or scale benchmark. DeepSeek’s existing synthetic input guard remains unchanged; a late slice without the approved marker is rejected, so fixture long-window success does not prove live long-document model support.
+
+2026-10-06 产品范围修订（用户批准，ADR-040）：独立问答取代自动追问；HTTP query仅接受question，history_id拒绝400。Engine旧本地harness位置参数仅兼容接收但不查询/补充任何历史依赖，审计history_id=null/query_kind=independent。取消Export answer及回答下载路由，覆盖此前关于用户导出的实现描述；历史、引用及原文版本仍重新鉴权，不取消安全断言。

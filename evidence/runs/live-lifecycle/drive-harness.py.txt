@@ -1,0 +1,54 @@
+import json,sys,hashlib
+from pathlib import Path
+from brain.keychain import MacKeychain
+from brain.drive import DriveReader,DriveTransport
+from brain.drive_oauth import load_client,refresh_access,verify_account
+from brain.contracts import Actor,now
+from brain.store import Store
+from brain.delegated_query import DelegatedQueryPilot
+from brain.audit import verify_chain
+native_id=sys.argv[1]
+config=json.loads(Path('.runtime/drive-oauth-reader.json').read_text())
+folder='1EMYjaNhzBFQ3TXHC6ukEwN6otVIIeOEv'
+assert set(config['files'].values())=={folder}
+email=config['oauth_operator']['email'];assert email=='kyle000909@gmail.com'
+client=load_client('.runtime/drive-oauth-client.json',config['oauth_client_id'])
+refresh=MacKeychain().get('drive',config['tenant'],'eng_b',client.client_id+'|'+email.casefold())
+if not refresh: raise SystemExit('saved_credential_unavailable')
+transport=DriveTransport();token=refresh_access(client,refresh)
+delegation=verify_account(token,email,transport)
+reader=DriveReader(config['tenant'],{native_id:folder},{'eng_b':delegation},transport)
+store=Store('.runtime/lifecycle-drive.sqlite');pilot=DelegatedQueryPilot({'drive':reader},store,live=True)
+actor=Actor('eng_b',reader.tenant);answers={};marker='lifecycledeletecanary20261005'
+print('ready',flush=True)
+for line in sys.stdin:
+    command=line.strip()
+    try:
+        if command=='baseline':
+            answer=pilot.query(actor,marker)
+            assert len(answer['evidence'])==1 and marker in answer['evidence'][0]['text']
+            answers['baseline']=answer
+            Path('evidence/runs/live-lifecycle/drive-baseline.json').write_text(json.dumps(answer,indent=2)+'\n')
+            print('baseline_allowed',flush=True)
+        elif command=='deleted':
+            prior=answers['baseline'];e=prior['evidence'][0]
+            history=pilot.history(actor,prior['request_id'])
+            try:pilot.evidence(actor,e['evidence_id']);preview='allowed'
+            except PermissionError:preview='denied'
+            followup=pilot.query(actor,marker,prior['request_id'])
+            assert history[0].get('unavailable') and preview=='denied'
+            assert not followup['evidence'] and not followup['claims']
+            assert not pilot.engine.model.calls[-1]['evidence']
+            assert store.get(e['resource_id']) is not None
+            decision,_=reader.read(actor,native_id);assert decision.result=='deny'
+            chain=pilot.audit.export();assert verify_chain(chain)['valid']
+            report={'mode':'live_drive_api_fake_model','status':'verified_subset','checked_at':now(),
+                    'native_id':native_id,'native_decision':decision.result,'old_history_export_projection':history,
+                    'old_preview':preview,'followup':followup,'model_input':pilot.engine.model.calls[-1],
+                    'old_index_retained':True,'live_model':'not_run','human_G1':'not_run',
+                    'limitations':['Trusted operator logical session; not browser/SSO verification.','Native trash tested; no permanent deletion.','Request-driven refresh; no background sync/tombstone claim.']}
+            Path('evidence/runs/live-lifecycle/drive-verification.json').write_text(json.dumps(report,indent=2)+'\n')
+            Path('evidence/runs/live-lifecycle/drive-audit.json').write_text(json.dumps(chain,indent=2)+'\n')
+            print('deleted_access_denied',flush=True);break
+    except Exception as error: print('stage_failed_'+type(error).__name__,flush=True)
+store.db.close()

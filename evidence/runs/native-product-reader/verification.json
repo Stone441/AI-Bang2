@@ -1,0 +1,227 @@
+{
+  "started_at": "2026-10-05T17:40:51.132497+00:00",
+  "commit": "22056a4a54ad4526a03ba459b5384e29caff92d5",
+  "actor": "product_ops",
+  "mode": "confluence_live_api_fake_model_controlled_stale_index",
+  "source_writes": false,
+  "model_network_calls": 0,
+  "human_G1": "not_run",
+  "contractor_permission_persona": "not_run",
+  "stale_index_origin": "Known synthetic owner UI text; not fetched as product_ops",
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/native_product_acceptance.py": "19e0ef4bc60fac6cb6954d194ed0b42f3193a6492d393e2b4fb1dc8e63e52712",
+    "brain/confluence.py": "324e5a8584a55beda55401a489ffbbc5267fb325c490bab7547edf192090860d",
+    "brain/delegated_query.py": "f15e270d3e17a9561c5f760e5f3864081dbdc3d439b1f660be9e63a054fab8eb",
+    "brain/engine.py": "ec590c6ca24b4429b03b449e878f6b98a0677708fb27a1e7154bf0f75954e91a"
+  },
+  "native_decisions": {
+    "engineering": {
+      "result": "deny",
+      "checked_at": "2026-10-05T17:40:51.757459+00:00",
+      "method": "confluence-delegated-current-read",
+      "policy_version": 0
+    },
+    "restricted": {
+      "result": "deny",
+      "checked_at": "2026-10-05T17:40:52.339490+00:00",
+      "method": "confluence-delegated-current-read",
+      "policy_version": 0
+    },
+    "control": {
+      "result": "allow",
+      "checked_at": "2026-10-05T17:40:53.340736+00:00",
+      "method": "confluence-delegated-current-read",
+      "policy_version": 0
+    }
+  },
+  "checks": {
+    "native_restricted_denied_without_content": true,
+    "native_control_allowed": true,
+    "native_engineering_denied_without_content": true,
+    "denied_pages_never_requested_with_body": true,
+    "positive_truth_preserved": true,
+    "negative_has_no_claims_or_evidence": true,
+    "negative_does_not_reveal_title_id_or_canary": true,
+    "restricted_never_in_model_inputs": true,
+    "positive_control_in_answer": true,
+    "both_queries_have_native_refresh_denial": true,
+    "stale_index_not_deleted_to_hide_problem": true,
+    "stale_preview_denied": true,
+    "preview_has_native_denial": true,
+    "negative_fake_model_receives_empty_evidence": true,
+    "only_positive_query_sends_evidence_to_fake_model": true,
+    "audit_chain_valid": true
+  },
+  "negative_request_id": "4ee537ffc529460784e69e5cc0938292",
+  "positive_request_id": "36be1b8dbf68431facfd80ed79a59e86",
+  "status": "verified_native_subset",
+  "limitations": [
+    "One product_ops Confluence identity; no native Jira/Slack/Drive product identity or complete persona matrix.",
+    "The stale index is controlled synthetic test setup, not historical ingestion proof.",
+    "No timing side-channel, browser denial, live-model or human acceptance claim.",
+    "The audit chain is unsigned; no independent tamper-proof custody."
+  ],
+  "native_statuses": [
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "engineering",
+      "body_request": false,
+      "status": 404
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "restricted",
+      "body_request": false,
+      "status": 404
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "restricted",
+      "body_request": false,
+      "status": 404
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "engineering",
+      "body_request": false,
+      "status": 404
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "restricted",
+      "body_request": false,
+      "status": 404
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "engineering",
+      "body_request": false,
+      "status": 404
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "control",
+      "body_request": true,
+      "status": 200
+    },
+    {
+      "target": "identity",
+      "body_request": false,
+      "status": 200
+    },
+    {
+      "target": "restricted",
+      "body_request": false,
+      "status": 404
+    }
+  ],
+  "finished_at": "2026-10-05T17:41:00.458968+00:00"
+}

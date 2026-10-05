@@ -1,5 +1,6 @@
 import json
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 
@@ -117,5 +118,69 @@ class ModelReceipts(unittest.TestCase):
             receipt=event['payload']['model_call']
             self.assertEqual(receipt['query_id'],answer['request_id'])
             self.assertEqual(receipt,self.ledger.model_receipt(receipt['reservation_id']))
+            self.assertEqual(answer['model_call'],receipt)
+            self.assertEqual(Engine(store,world,audit,self.model).safe_history(Actor('eng_b'))[0]['model_call'],receipt)
             self.assertTrue(verify_chain(audit.export())['valid'])
         finally: store.db.close()
+
+    def test_answer_and_history_preserve_no_call_without_inferred_token_usage(self):
+        world=FixtureWorld(); store=Store(); store.initialize(world); audit=Audit(store)
+        try:
+            engine=Engine(store,world,audit,self.model)
+            answer=engine.query(Actor('eng_b'),'unfindablexyz')
+            self.assertEqual(answer['model_call'],{'called':False,'reason':'no_authorized_evidence'})
+            self.assertEqual(engine.safe_history(Actor('eng_b'))[0]['model_call'],answer['model_call'])
+            self.assertEqual(self.transport.calls,[])
+        finally: store.db.close()
+
+    def test_public_receipt_rejects_false_usage_and_strips_unrelated_provider_fields(self):
+        from brain.model_receipt import public_receipt
+        receipt=self.model.generate_for_request('Question',[self.evidence],self.query_id)['model_call']
+        projected=public_receipt(dict(receipt,credential='must-not-return',accounting_basis='vendor invoice'),self.query_id)
+        self.assertNotIn('credential',projected)
+        self.assertIn('not vendor invoice',projected['accounting_basis'])
+        for changed in ({'query_id':'b'*32},{'called':1},{'total_tokens':121},
+                        {'completion_tokens':True},{'state':'dispatched'},
+                        {'accounted_upper_micro_usd':receipt['reserved_micro_usd']+1}):
+            with self.subTest(changed=changed),self.assertRaises(ValueError):
+                public_receipt(dict(receipt,**changed),self.query_id)
+
+    def test_http_receipt_is_returned_with_answer_but_withheld_with_revoked_history(self):
+        from brain.server import App, create_server
+        from unittest.mock import patch
+        import test_http
+        world=FixtureWorld()
+        for resource in world.resources.values(): resource['text']='[SYNTHETIC] '+resource['text']
+        with patch('brain.server.FixtureWorld',return_value=world): self.app=App()
+        self.app.engine.model=self.model
+        def send(request):
+            evidence=json.loads(json.loads(request.data)['messages'][1]['content'])['evidence']
+            response=dict(self.transport.response)
+            response['choices']=[{'finish_reason':'stop','message':{'role':'assistant',
+                                'content':json.dumps({'evidence_ids':[evidence[0]['evidence_id']]})}}]
+            return 200,response
+        self.transport._send=send
+        self.server=create_server(self.app); self.cookie=''; self.csrf=''
+        thread=threading.Thread(target=self.server.serve_forever,daemon=True); thread.start()
+        request=lambda path,data=None:test_http.HTTP.request(self,path,data)
+        try:
+            status,login=request('/api/demo/login',{'user':'eng_b'}); self.assertEqual(status,200)
+            self.csrf=login['csrf']
+            status,answer=request('/api/query',{'question':'payment-service retry'})
+            self.assertEqual(status,200); self.assertTrue(answer['model_call']['called'])
+            for path in ('/api/history','/api/export/'+answer['request_id']):
+                if path.startswith('/api/export/'):
+                    self.assertEqual(request(path)[0],404)
+                    continue
+                status,body=request(path); self.assertEqual(status,200)
+                self.assertEqual(body['history'][0]['model_call'],answer['model_call'])
+                self.assertNotIn('synthetic-not-a-key',json.dumps(body))
+            self.app.world.mutate(answer['evidence'][0]['resource_id'],'revoke',user_id='eng_b')
+            for path in ('/api/history','/api/export/'+answer['request_id']):
+                if path.startswith('/api/export/'):
+                    self.assertEqual(request(path)[0],404)
+                    continue
+                body=request(path)[1]; self.assertTrue(body['history'][0]['unavailable'])
+                self.assertNotIn('model_call',body['history'][0]); self.assertNotIn('claims',body['history'][0])
+        finally:
+            self.server.shutdown(); self.server.server_close(); thread.join(); self.app.store.db.close()

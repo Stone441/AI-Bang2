@@ -1,0 +1,85 @@
+"""Approved synthetic-only live synthesis probe; no secrets in outputs."""
+import hashlib,json,os,queue,signal,sqlite3,subprocess,sys,threading,time
+from pathlib import Path
+from urllib.request import Request,build_opener,HTTPCookieProcessor
+from http.cookiejar import CookieJar
+from datetime import datetime,timezone
+root=Path('/Users/kyle/Projects/TencentHackthon202609/AI-Bang2')
+cwd=root/'.runtime/synthesis-coverage-final-20261005';(cwd/'.runtime').mkdir(mode=0o700,parents=True,exist_ok=True)
+shared=root/'.runtime/deepseek-budget.sqlite'
+if not shared.is_file():raise SystemExit('Existing shared budget required.')
+alias=cwd/'.runtime/deepseek-budget.sqlite'
+if not alias.exists():alias.symlink_to(shared)
+if alias.resolve()!=shared:raise SystemExit('Shared budget mapping mismatch.')
+args=['--source','multi','--config',str(root/'.runtime/operator-bundle.json'),'--actor','eng_b','--oauth-client',str(root/'.runtime/drive-oauth-client.json'),'--port','8092','--live','--model','deepseek','--answer-style','synthesis','--credential-store','macos-keychain']
+capture_path=cwd/'model-output.json'
+child_setup='import json;from pathlib import Path;from brain.synthesis import DeepSeekSynthesisModel,EvidenceReview;captured={};capture_path=Path('+repr(str(capture_path))+');\n'
+for cls,label in [('DeepSeekSynthesisModel','draft'),('EvidenceReview','review')]:
+ child_setup+='original_'+label+'='+cls+'.parse_output\n'
+ child_setup+='def inspect_'+label+'(self,output,evidence):\n captured['+repr(label)+']=output;capture_path.write_text(json.dumps(captured));return original_'+label+'(self,output,evidence)\n'
+ child_setup+=cls+'.parse_output=inspect_'+label+'\n'
+child='import sys;sys.path.insert(0,'+repr(str(root))+');'+child_setup+'from brain.operator_web import main;raise SystemExit(main('+repr(args)+'))'
+proc=subprocess.Popen([sys.executable,'-u','-c',child],cwd=cwd,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
+q=queue.Queue()
+def consume():
+ for line in proc.stdout:q.put(line)
+ q.put(None)
+threading.Thread(target=consume,daemon=True).start()
+report={'source_hashes':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in [root/'brain/synthesis.py',root/'tests/test_synthesis.py']},'recorded_at':datetime.now(timezone.utc).isoformat(),'mode':'live_api_live_model_synthesis','status':'not_run','actor':'eng_b','shared_budget':'.runtime/deepseek-budget.sqlite','credential_reuse':{},'limitations':['Synthetic allowlisted sources only; model review is not a guarantee of semantic correctness. One question, not full five-scenario live acceptance. Separate app DB, original8088 untouched.']}
+question='What is approved for the payment-service payment-retry pilot, does completing the retry configuration fix approve general availability, what remains blocked, and what incident safeguards must be in place?'
+try:
+ deadline=time.monotonic()+90;ticket=None
+ while time.monotonic()<deadline:
+  line=q.get(timeout=max(.1,deadline-time.monotonic()))
+  if line is None:raise RuntimeError('startup_stopped')
+  if 'using app-owned Keychain credential.' in line:report['credential_reuse'][line.split(':')[0].lower()]=True
+  if 'Drive: reused read-only authorization and verified native account.' in line:report['credential_reuse']['drive_refresh_native_verified']=True
+  if 'Open this Google authorization link' in line:raise RuntimeError('google_reauthorization_required')
+  if 'Open once within 10 minutes:' in line:ticket=line.split('#ticket=',1)[1].strip();break
+ if ticket is None:raise RuntimeError('startup_deadline')
+ opener=build_opener(HTTPCookieProcessor(CookieJar()))
+ def post(path,data,csrf=None):
+  headers={'Content-Type':'application/json'}
+  if csrf:headers['X-CSRF-Token']=csrf
+  req=Request('http://127.0.0.1:8092'+path,data=json.dumps(data).encode(),headers=headers,method='POST')
+  with opener.open(req,timeout=180) as r:return json.load(r)
+ session=post('/api/operator/login',{'ticket':ticket});del ticket
+ if session['actor']!='eng_b':raise RuntimeError('actor_mismatch')
+ started=time.monotonic();answer=post('/api/query',{'question':question},session['csrf']);elapsed=time.monotonic()-started
+ del session,opener
+ db=sqlite3.connect('file:'+str(cwd/'.runtime/multi-web.sqlite')+'?mode=ro',uri=True)
+ events=[json.loads(r[0]) for r in db.execute('select body from audit order by seq')];db.close()
+ sys.path.insert(0,str(root))
+ from brain.audit import verify_chain
+ evidence={e['evidence_id']:e for e in answer['evidence']}
+ checks={
+ 'four_sources':{e['source'] for e in evidence.values()}=={'confluence','jira','slack','drive'},
+ 'eight_evidence':len(evidence)==8,
+ 'nonempty_claims':bool(answer['claims']),
+ 'synthesis_format':answer.get('claim_format')=='grounded_synthesis_v1',
+ 'review_accepted':answer.get('review_status')=='accepted',
+ 'separate_calls':answer['model_call']['reservation_id']!=answer['model_review']['reservation_id'],
+ 'requested_safeguards_answered':all(t in ' '.join(c['text'].lower() for c in answer['claims']) for t in ['timeout budget','failover']),
+ 'grounding_quotes_exact':all(s['quote'] in evidence[s['evidence_id']]['text'] for c in answer['claims'] for s in c['supports']),
+ 'unsigned_chain_valid':verify_chain(events)['valid']}
+ phases={}
+ for event in events:
+  if event['event_type']=='authorization_decided':
+   p=event['payload'];phases[p['phase']]=phases.get(p['phase'],0)+1
+ checks['all_five_current_stages']=all(phases.get(p)==8 for p in ['source_refresh','before_model','model_dispatch','review_dispatch','before_dispatch'])
+ ledger=sqlite3.connect('file:'+str(shared)+'?mode=ro',uri=True);ledger.row_factory=sqlite3.Row
+ rows=[dict(r) for r in ledger.execute('select c.query_id,c.reservation_id,c.outcome,c.prompt_tokens,c.completion_tokens,c.total_tokens,r.state,r.actual from model_calls c join reservations r on r.id=c.reservation_id where c.query_id=?',(answer['request_id'],))];ledger.close()
+ checks['two_shared_ledger_settled_calls']=len(rows)==2 and all(r['state']=='settled' and r['outcome']=='accepted' for r in rows)
+ report.update(model_outputs=json.loads(capture_path.read_text()) if capture_path.exists() else {},status='verified_subset' if all(checks.values()) else 'failed',question=question,elapsed_seconds=elapsed,response=answer,checks=checks,authorization_phase_counts=phases,shared_ledger_rows=rows,audit_chain=verify_chain(events))
+ (root/'evidence/runs/synthesis-ui/coverage-live-audit.json').write_text(json.dumps(events,indent=2)+'\n')
+ print('Live synthesis completed: '+report['status']+', '+str(len(answer['claims']))+' claims, '+str(round(elapsed,2))+'s.',flush=True)
+except Exception as exc:
+ report.update(status='failed',model_outputs=json.loads(capture_path.read_text()) if capture_path.exists() else {},reason=str(exc) if isinstance(exc,RuntimeError) else 'safe_probe_failure')
+ print('Live synthesis stopped safely; private diagnostic remains local.',flush=True)
+finally:
+ if proc.poll() is None:
+  proc.send_signal(signal.SIGINT)
+  try:proc.wait(timeout=10)
+  except subprocess.TimeoutExpired:proc.kill();proc.wait()
+ (root/'evidence/runs/synthesis-ui/coverage-live-query.json').write_text(json.dumps(report,indent=2)+'\n')
+ print('Safe report saved; temporary8092 stopped, shared ledger preserved.',flush=True)

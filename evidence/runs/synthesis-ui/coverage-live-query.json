@@ -1,0 +1,428 @@
+{
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py": "06a2e88912d595f5b4a66f2e18c6ac268021a6c3fd59819270ffc2e314b1b80c",
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_synthesis.py": "89c74371d2afcef51343177cf94fc02c62defa9675c995c917764298ac786cd8"
+  },
+  "recorded_at": "2026-10-05T09:35:09.361614+00:00",
+  "mode": "live_api_live_model_synthesis",
+  "status": "verified_subset",
+  "actor": "eng_b",
+  "shared_budget": ".runtime/deepseek-budget.sqlite",
+  "credential_reuse": {
+    "confluence": true,
+    "jira": true,
+    "slack": true,
+    "drive_refresh_native_verified": true
+  },
+  "limitations": [
+    "Synthetic allowlisted sources only; model review is not a guarantee of semantic correctness. One question, not full five-scenario live acceptance. Separate app DB, original8088 untouched."
+  ],
+  "model_outputs": {
+    "draft": {
+      "claims": [
+        {
+          "text": "Only a controlled pilot for payment-retry is approved; general availability (GA) is not approved, and PAY-102 code completion is not customer release approval.",
+          "evidence_ids": [
+            "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+            "jira:10013@336836842918391821",
+            "confluence:164283@1"
+          ],
+          "supports": [
+            {
+              "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+              "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+            },
+            {
+              "evidence_id": "jira:10013@336836842918391821",
+              "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+            },
+            {
+              "evidence_id": "confluence:164283@1",
+              "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+            }
+          ]
+        },
+        {
+          "text": "Completing the retry configuration does not approve GA: no general release date is confirmed, and payment-retry is to be described only within the approved pilot scope.",
+          "evidence_ids": [
+            "confluence:164283@1",
+            "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6"
+          ],
+          "supports": [
+            {
+              "evidence_id": "confluence:164283@1",
+              "quote": "General availability (GA) is not approved. No general release date is confirmed."
+            },
+            {
+              "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+              "quote": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+            }
+          ]
+        },
+        {
+          "text": "What remains blocked or unconfirmed is general availability and expansion beyond pilot customers, including any GA date.",
+          "evidence_ids": [
+            "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6"
+          ],
+          "supports": [
+            {
+              "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+              "quote": "Unconfirmed items: general availability date and expansion beyond pilot customers."
+            }
+          ]
+        },
+        {
+          "text": "Incident safeguards: the final postmortem attributes the incident to retry configuration mismatching the timeout budget causing duplicate-request backlog, and the runbook requires inspecting the payment-service timeout budget and following the approved failover procedure. The cache-invalidation hypothesis was withdrawn, not confirmed.",
+          "evidence_ids": [
+            "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+            "confluence:98564@1",
+            "slack:C0C6R70SGG4/1791142180.560339@226823937321883740"
+          ],
+          "supports": [
+            {
+              "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+              "quote": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests."
+            },
+            {
+              "evidence_id": "confluence:98564@1",
+              "quote": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+            },
+            {
+              "evidence_id": "slack:C0C6R70SGG4/1791142180.560339@226823937321883740",
+              "quote": "09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch."
+            }
+          ]
+        }
+      ]
+    },
+    "review": {
+      "question_covered": true,
+      "verdicts": [
+        {
+          "index": 0,
+          "supported": true
+        },
+        {
+          "index": 1,
+          "supported": true
+        },
+        {
+          "index": 2,
+          "supported": true
+        },
+        {
+          "index": 3,
+          "supported": true
+        }
+      ]
+    }
+  },
+  "question": "What is approved for the payment-service payment-retry pilot, does completing the retry configuration fix approve general availability, what remains blocked, and what incident safeguards must be in place?",
+  "elapsed_seconds": 56.76002162497025,
+  "response": {
+    "request_id": "733401a4461e47fcb70d81bc4528ba96",
+    "mode": "confluence_drive_jira_slack_live_api_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v2",
+    "claims": [
+      {
+        "text": "Only a controlled pilot for payment-retry is approved; general availability (GA) is not approved, and PAY-102 code completion is not customer release approval.",
+        "evidence_ids": [
+          "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+          "jira:10013@336836842918391821",
+          "confluence:164283@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          },
+          {
+            "evidence_id": "jira:10013@336836842918391821",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "confluence:164283@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          }
+        ]
+      },
+      {
+        "text": "Completing the retry configuration does not approve GA: no general release date is confirmed, and payment-retry is to be described only within the approved pilot scope.",
+        "evidence_ids": [
+          "confluence:164283@1",
+          "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6"
+        ],
+        "supports": [
+          {
+            "evidence_id": "confluence:164283@1",
+            "quote": "General availability (GA) is not approved. No general release date is confirmed."
+          },
+          {
+            "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+            "quote": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+          }
+        ]
+      },
+      {
+        "text": "What remains blocked or unconfirmed is general availability and expansion beyond pilot customers, including any GA date.",
+        "evidence_ids": [
+          "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+            "quote": "Unconfirmed items: general availability date and expansion beyond pilot customers."
+          }
+        ]
+      },
+      {
+        "text": "Incident safeguards: the final postmortem attributes the incident to retry configuration mismatching the timeout budget causing duplicate-request backlog, and the runbook requires inspecting the payment-service timeout budget and following the approved failover procedure. The cache-invalidation hypothesis was withdrawn, not confirmed.",
+        "evidence_ids": [
+          "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+          "confluence:98564@1",
+          "slack:C0C6R70SGG4/1791142180.560339@226823937321883740"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+            "quote": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests."
+          },
+          {
+            "evidence_id": "confluence:98564@1",
+            "quote": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+          },
+          {
+            "evidence_id": "slack:C0C6R70SGG4/1791142180.560339@226823937321883740",
+            "quote": "09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+        "resource_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ",
+        "version": 6,
+        "source": "drive",
+        "title": "D-02.txt",
+        "locator": {
+          "content_sha256": "0ff61dcb7ed96b1bf6b7493d8d7c59261624a5bb01c8635976b9b5c525b5c069",
+          "file_id": "13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ",
+          "format": "text/plain",
+          "revision_id": "0B2E8NgxFjpPMSTA0ZUczZE9JM0E4aXVJNm01MGtTeVhUYnJNPQ",
+          "version": 6
+        },
+        "text": "[SYNTHETIC D-02] Payment-retry release approval\n\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\n\nThis is synthetic test data, not a real company incident or approval.\n",
+        "source_updated_at": "2026-10-04T19:56:58.772Z",
+        "indexed_at": "2026-10-05T09:35:17.192302+00:00",
+        "source_url": "https://drive.google.com/file/d/13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ/view"
+      },
+      {
+        "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+        "resource_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg",
+        "version": 6,
+        "source": "drive",
+        "title": "D-03.txt",
+        "locator": {
+          "content_sha256": "5e51fcd72e9a07c6728cf2f1d69a99a7befa44bd12d3196b2cfdd9e1aceb5fa5",
+          "file_id": "1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg",
+          "format": "text/plain",
+          "revision_id": "0B2E8NgxFjpPMTTUraVM3SmFXQVByNnVZaXhXUnh4aTBaRG80PQ",
+          "version": 6
+        },
+        "text": "[SYNTHETIC D-03] Operations readiness\n\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\n\nThis is synthetic test data, not a real company incident or approval.\n",
+        "source_updated_at": "2026-10-04T19:57:05.201Z",
+        "indexed_at": "2026-10-05T09:35:19.183365+00:00",
+        "source_url": "https://drive.google.com/file/d/1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg/view"
+      },
+      {
+        "evidence_id": "confluence:164283@1",
+        "resource_id": "confluence:164283",
+        "version": 1,
+        "source": "confluence",
+        "title": "C-02 \u00b7 Payment-retry capability",
+        "locator": {
+          "page_id": "164283",
+          "version": 1
+        },
+        "text": "SYNTHETIC COMPETITION TEST DATA \u2014 not an actual company record.\nFixture ID: C-02\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "source_updated_at": "2026-10-04T17:31:41.386Z",
+        "indexed_at": "2026-10-05T09:35:11.933717+00:00",
+        "source_url": "https://ssy44199.atlassian.net/wiki/pages/viewpage.action?pageId=164283"
+      },
+      {
+        "evidence_id": "jira:10013@336836842918391821",
+        "resource_id": "jira:10013",
+        "version": 336836842918391821,
+        "source": "jira",
+        "title": "PAY-102 Retry configuration fix [SYNTHETIC J-02]",
+        "locator": {
+          "content_sha256": "4acaf52f16a300ddce31e1a06b47706fa145daa3234b659de83584db1df4d4e3",
+          "issue_id": "10013",
+          "issue_key": "KAN-4"
+        },
+        "text": "KAN-4\nStatus: Done\nAssignee: Unassigned\nSYNTHETIC COMPETITION TEST DATA \u2014 not an actual company record.\nFixture ID: J-02\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "source_updated_at": "2026-10-05T03:05:34.625+0800",
+        "indexed_at": "2026-10-05T09:35:19.945669+00:00",
+        "source_url": "https://ssy44199.atlassian.net/browse/KAN-4"
+      },
+      {
+        "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+        "resource_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+        "version": 6,
+        "source": "drive",
+        "title": "D-01.txt",
+        "locator": {
+          "content_sha256": "43c9cb5d07545389972f9ba7e2028d20a063091d98e3a46112b949f0ac4bf3f4",
+          "file_id": "10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+          "format": "text/plain",
+          "revision_id": "0B2E8NgxFjpPMRlBFbmJrSVJNMzBqcVdROTB3eW5Wb3J2WTQ4PQ",
+          "version": 6
+        },
+        "text": "[SYNTHETIC D-01] Final payment-service postmortem\n\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.\n\nThis is synthetic test data, not a real company incident or approval.\n",
+        "source_updated_at": "2026-10-04T19:56:52.693Z",
+        "indexed_at": "2026-10-05T09:35:14.995746+00:00",
+        "source_url": "https://drive.google.com/file/d/10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c/view"
+      },
+      {
+        "evidence_id": "slack:C0C6R70SGG4/1791142180.560339@226823937321883740",
+        "resource_id": "slack:C0C6R70SGG4/1791142180.560339",
+        "version": 226823937321883740,
+        "source": "slack",
+        "title": "#aibang2-incident-synthetic \u00b7 1791142180.560339",
+        "locator": {
+          "channel_id": "C0C6R70SGG4",
+          "content_sha256": "325d72b52a0585c2902d72f1a720960627b1d2c2efeb162eb61c0bd1817b2c69",
+          "message_ts": "1791142180.560339",
+          "thread_ts": "1791142152.858189"
+        },
+        "text": "[SYNTHETIC S-01 FOLLOW-UP] Fixture timeline: 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. This is synthetic test data, not a real company incident. CANARY_THREAD_4K2.",
+        "source_updated_at": "2026-10-04T19:29:40.560339+00:00",
+        "indexed_at": "2026-10-05T09:35:22.369081+00:00",
+        "source_url": "https://ai-bang2.slack.com/archives/C0C6R70SGG4/p1791142180560339"
+      },
+      {
+        "evidence_id": "confluence:98564@1",
+        "resource_id": "confluence:98564",
+        "version": 1,
+        "source": "confluence",
+        "title": "C-01 \u00b7 Payment-service runbook",
+        "locator": {
+          "page_id": "98564",
+          "version": 1
+        },
+        "text": "SYNTHETIC COMPETITION TEST DATA \u2014 not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "source_updated_at": "2026-10-04T17:21:59.651Z",
+        "indexed_at": "2026-10-05T09:35:13.012055+00:00",
+        "source_url": "https://ssy44199.atlassian.net/wiki/pages/viewpage.action?pageId=98564"
+      },
+      {
+        "evidence_id": "slack:C0C6R70SGG4/1791142152.858189@903088382970380097",
+        "resource_id": "slack:C0C6R70SGG4/1791142152.858189",
+        "version": 903088382970380097,
+        "source": "slack",
+        "title": "#aibang2-incident-synthetic \u00b7 1791142152.858189",
+        "locator": {
+          "channel_id": "C0C6R70SGG4",
+          "content_sha256": "c886a197bbb3f419bec0bc8606950970d1e1ddecd800d5574a6c9a3a4f331068",
+          "message_ts": "1791142152.858189",
+          "thread_ts": null
+        },
+        "text": "[SYNTHETIC S-01] Payment-service incident exercise. Fixture timeline: 09:00 cache invalidation was an early hypothesis, not a confirmed root cause. Follow-up conclusions belong in this thread. CANARY_THREAD_4K2.",
+        "source_updated_at": "2026-10-04T19:29:12.858189+00:00",
+        "indexed_at": "2026-10-05T09:35:20.769048+00:00",
+        "source_url": "https://ai-bang2.slack.com/archives/C0C6R70SGG4/p1791142152858189"
+      }
+    ],
+    "actor": "eng_b",
+    "model_call": {
+      "query_id": "733401a4461e47fcb70d81bc4528ba96",
+      "model": "deepseek-flash",
+      "reservation_id": "28197089faf543ffbaf51dd92567672c",
+      "prompt_tokens": 1033,
+      "completion_tokens": 801,
+      "total_tokens": 1834,
+      "reserved_micro_usd": 315802,
+      "accounted_upper_micro_usd": 1272,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "733401a4461e47fcb70d81bc4528ba96",
+      "model": "deepseek-flash",
+      "reservation_id": "2aa49cfd647641409253e1e7866e5c33",
+      "prompt_tokens": 1824,
+      "completion_tokens": 45,
+      "total_tokens": 1869,
+      "reserved_micro_usd": 315802,
+      "accounted_upper_micro_usd": 602,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  },
+  "checks": {
+    "four_sources": true,
+    "eight_evidence": true,
+    "nonempty_claims": true,
+    "synthesis_format": true,
+    "review_accepted": true,
+    "separate_calls": true,
+    "requested_safeguards_answered": true,
+    "grounding_quotes_exact": true,
+    "unsigned_chain_valid": true,
+    "all_five_current_stages": true,
+    "two_shared_ledger_settled_calls": true
+  },
+  "authorization_phase_counts": {
+    "source_refresh": 8,
+    "before_model": 8,
+    "model_dispatch": 8,
+    "review_dispatch": 8,
+    "before_dispatch": 8
+  },
+  "shared_ledger_rows": [
+    {
+      "query_id": "733401a4461e47fcb70d81bc4528ba96",
+      "reservation_id": "28197089faf543ffbaf51dd92567672c",
+      "outcome": "accepted",
+      "prompt_tokens": 1033,
+      "completion_tokens": 801,
+      "total_tokens": 1834,
+      "state": "settled",
+      "actual": 1272
+    },
+    {
+      "query_id": "733401a4461e47fcb70d81bc4528ba96",
+      "reservation_id": "2aa49cfd647641409253e1e7866e5c33",
+      "outcome": "accepted",
+      "prompt_tokens": 1824,
+      "completion_tokens": 45,
+      "total_tokens": 1869,
+      "state": "settled",
+      "actual": 602
+    }
+  ],
+  "audit_chain": {
+    "valid": true,
+    "events": 68,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "agent_quality_assessment": {
+    "requested_parts_covered": true,
+    "all_claims_supported_by_exact_current_quotes": true,
+    "remaining_issue": "First three claims repeat pilot/GA scope; fourth combines safeguards and background. This one question does not establish general quality."
+  }
+}

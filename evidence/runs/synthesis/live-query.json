@@ -1,0 +1,404 @@
+{
+  "recorded_at": "2026-10-05T07:29:18.890026+00:00",
+  "mode": "live_api_live_model_synthesis",
+  "status": "verified_subset",
+  "actor": "eng_b",
+  "shared_budget": ".runtime/deepseek-budget.sqlite",
+  "credential_reuse": {
+    "confluence": true,
+    "jira": true,
+    "slack": true,
+    "drive_refresh_native_verified": true
+  },
+  "limitations": [
+    "Synthetic allowlisted sources only; model review is not a guarantee of semantic correctness. One question, not full five-scenario live acceptance. Separate app DB, original8088 untouched."
+  ],
+  "question": "What is approved for the payment-service payment-retry pilot, does completing the retry configuration fix approve general availability, what remains blocked, and what incident safeguards must be in place?",
+  "elapsed_seconds": 58.95296404103283,
+  "response": {
+    "request_id": "880839fe3e5a4d2a8c5c6b8a47663d03",
+    "mode": "confluence_drive_jira_slack_live_api_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v1",
+    "claims": [
+      {
+        "text": "Only a controlled pilot for payment-retry is approved; general availability (GA) is not approved, and PAY-102 Done does not constitute customer release approval.",
+        "evidence_ids": [
+          "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          }
+        ]
+      },
+      {
+        "text": "Completing the PAY-102 code fix does not approve general customer release; code completion is not GA approval.",
+        "evidence_ids": [
+          "jira:10013@336836842918391821"
+        ],
+        "supports": [
+          {
+            "evidence_id": "jira:10013@336836842918391821",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          }
+        ]
+      },
+      {
+        "text": "Remaining unconfirmed or blocked items include the general availability date and expansion beyond pilot customers; payment-retry may only be described within the approved pilot scope.",
+        "evidence_ids": [
+          "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+            "quote": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+          }
+        ]
+      },
+      {
+        "text": "The final postmortem root cause was a retry configuration mismatch with the timeout budget causing a backlog of duplicate requests, confirmed at 10:00 +08:00; a runbook safeguard is to inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "evidence_ids": [
+          "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+          "confluence:98564@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+            "quote": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00."
+          },
+          {
+            "evidence_id": "confluence:98564@1",
+            "quote": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+        "resource_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ",
+        "version": 6,
+        "source": "drive",
+        "title": "D-02.txt",
+        "locator": {
+          "content_sha256": "0ff61dcb7ed96b1bf6b7493d8d7c59261624a5bb01c8635976b9b5c525b5c069",
+          "file_id": "13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ",
+          "format": "text/plain",
+          "revision_id": "0B2E8NgxFjpPMSTA0ZUczZE9JM0E4aXVJNm01MGtTeVhUYnJNPQ",
+          "version": 6
+        },
+        "text": "[SYNTHETIC D-02] Payment-retry release approval\n\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\n\nThis is synthetic test data, not a real company incident or approval.\n",
+        "source_updated_at": "2026-10-04T19:56:58.772Z",
+        "indexed_at": "2026-10-05T07:29:27.251814+00:00",
+        "source_url": "https://drive.google.com/file/d/13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ/view"
+      },
+      {
+        "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+        "resource_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg",
+        "version": 6,
+        "source": "drive",
+        "title": "D-03.txt",
+        "locator": {
+          "content_sha256": "5e51fcd72e9a07c6728cf2f1d69a99a7befa44bd12d3196b2cfdd9e1aceb5fa5",
+          "file_id": "1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg",
+          "format": "text/plain",
+          "revision_id": "0B2E8NgxFjpPMTTUraVM3SmFXQVByNnVZaXhXUnh4aTBaRG80PQ",
+          "version": 6
+        },
+        "text": "[SYNTHETIC D-03] Operations readiness\n\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\n\nThis is synthetic test data, not a real company incident or approval.\n",
+        "source_updated_at": "2026-10-04T19:57:05.201Z",
+        "indexed_at": "2026-10-05T07:29:29.034913+00:00",
+        "source_url": "https://drive.google.com/file/d/1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg/view"
+      },
+      {
+        "evidence_id": "confluence:164283@1",
+        "resource_id": "confluence:164283",
+        "version": 1,
+        "source": "confluence",
+        "title": "C-02 \u00b7 Payment-retry capability",
+        "locator": {
+          "page_id": "164283",
+          "version": 1
+        },
+        "text": "SYNTHETIC COMPETITION TEST DATA \u2014 not an actual company record.\nFixture ID: C-02\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "source_updated_at": "2026-10-04T17:31:41.386Z",
+        "indexed_at": "2026-10-05T07:29:21.633484+00:00",
+        "source_url": "https://ssy44199.atlassian.net/wiki/pages/viewpage.action?pageId=164283"
+      },
+      {
+        "evidence_id": "jira:10013@336836842918391821",
+        "resource_id": "jira:10013",
+        "version": 336836842918391821,
+        "source": "jira",
+        "title": "PAY-102 Retry configuration fix [SYNTHETIC J-02]",
+        "locator": {
+          "content_sha256": "4acaf52f16a300ddce31e1a06b47706fa145daa3234b659de83584db1df4d4e3",
+          "issue_id": "10013",
+          "issue_key": "KAN-4"
+        },
+        "text": "KAN-4\nStatus: Done\nAssignee: Unassigned\nSYNTHETIC COMPETITION TEST DATA \u2014 not an actual company record.\nFixture ID: J-02\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "source_updated_at": "2026-10-05T03:05:34.625+0800",
+        "indexed_at": "2026-10-05T07:29:29.883189+00:00",
+        "source_url": "https://ssy44199.atlassian.net/browse/KAN-4"
+      },
+      {
+        "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+        "resource_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+        "version": 6,
+        "source": "drive",
+        "title": "D-01.txt",
+        "locator": {
+          "content_sha256": "43c9cb5d07545389972f9ba7e2028d20a063091d98e3a46112b949f0ac4bf3f4",
+          "file_id": "10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+          "format": "text/plain",
+          "revision_id": "0B2E8NgxFjpPMRlBFbmJrSVJNMzBqcVdROTB3eW5Wb3J2WTQ4PQ",
+          "version": 6
+        },
+        "text": "[SYNTHETIC D-01] Final payment-service postmortem\n\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.\n\nThis is synthetic test data, not a real company incident or approval.\n",
+        "source_updated_at": "2026-10-04T19:56:52.693Z",
+        "indexed_at": "2026-10-05T07:29:25.117928+00:00",
+        "source_url": "https://drive.google.com/file/d/10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c/view"
+      },
+      {
+        "evidence_id": "slack:C0C6R70SGG4/1791142180.560339@226823937321883740",
+        "resource_id": "slack:C0C6R70SGG4/1791142180.560339",
+        "version": 226823937321883740,
+        "source": "slack",
+        "title": "#aibang2-incident-synthetic \u00b7 1791142180.560339",
+        "locator": {
+          "channel_id": "C0C6R70SGG4",
+          "content_sha256": "325d72b52a0585c2902d72f1a720960627b1d2c2efeb162eb61c0bd1817b2c69",
+          "message_ts": "1791142180.560339",
+          "thread_ts": "1791142152.858189"
+        },
+        "text": "[SYNTHETIC S-01 FOLLOW-UP] Fixture timeline: 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. This is synthetic test data, not a real company incident. CANARY_THREAD_4K2.",
+        "source_updated_at": "2026-10-04T19:29:40.560339+00:00",
+        "indexed_at": "2026-10-05T07:29:31.627247+00:00",
+        "source_url": "https://ai-bang2.slack.com/archives/C0C6R70SGG4/p1791142180560339"
+      },
+      {
+        "evidence_id": "confluence:98564@1",
+        "resource_id": "confluence:98564",
+        "version": 1,
+        "source": "confluence",
+        "title": "C-01 \u00b7 Payment-service runbook",
+        "locator": {
+          "page_id": "98564",
+          "version": 1
+        },
+        "text": "SYNTHETIC COMPETITION TEST DATA \u2014 not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "source_updated_at": "2026-10-04T17:21:59.651Z",
+        "indexed_at": "2026-10-05T07:29:22.846734+00:00",
+        "source_url": "https://ssy44199.atlassian.net/wiki/pages/viewpage.action?pageId=98564"
+      },
+      {
+        "evidence_id": "slack:C0C6R70SGG4/1791142152.858189@903088382970380097",
+        "resource_id": "slack:C0C6R70SGG4/1791142152.858189",
+        "version": 903088382970380097,
+        "source": "slack",
+        "title": "#aibang2-incident-synthetic \u00b7 1791142152.858189",
+        "locator": {
+          "channel_id": "C0C6R70SGG4",
+          "content_sha256": "c886a197bbb3f419bec0bc8606950970d1e1ddecd800d5574a6c9a3a4f331068",
+          "message_ts": "1791142152.858189",
+          "thread_ts": null
+        },
+        "text": "[SYNTHETIC S-01] Payment-service incident exercise. Fixture timeline: 09:00 cache invalidation was an early hypothesis, not a confirmed root cause. Follow-up conclusions belong in this thread. CANARY_THREAD_4K2.",
+        "source_updated_at": "2026-10-04T19:29:12.858189+00:00",
+        "indexed_at": "2026-10-05T07:29:30.723839+00:00",
+        "source_url": "https://ai-bang2.slack.com/archives/C0C6R70SGG4/p1791142152858189"
+      }
+    ],
+    "actor": "eng_b",
+    "model_call": {
+      "query_id": "880839fe3e5a4d2a8c5c6b8a47663d03",
+      "model": "deepseek-flash",
+      "reservation_id": "57b29c16e9cf495abbb06e016b7a7687",
+      "prompt_tokens": 949,
+      "completion_tokens": 562,
+      "total_tokens": 1511,
+      "reserved_micro_usd": 315802,
+      "accounted_upper_micro_usd": 960,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "880839fe3e5a4d2a8c5c6b8a47663d03",
+      "model": "deepseek-flash",
+      "reservation_id": "9aedd218ab0940268bbf6b9b7a6c6d88",
+      "prompt_tokens": 1504,
+      "completion_tokens": 39,
+      "total_tokens": 1543,
+      "reserved_micro_usd": 315802,
+      "accounted_upper_micro_usd": 498,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  },
+  "checks": {
+    "four_sources": true,
+    "eight_evidence": true,
+    "nonempty_claims": true,
+    "synthesis_format": true,
+    "review_accepted": true,
+    "separate_calls": true,
+    "grounding_quotes_exact": true,
+    "unsigned_chain_valid": true,
+    "all_five_current_stages": true,
+    "two_shared_ledger_settled_calls": true
+  },
+  "authorization_phase_counts": {
+    "source_refresh": 8,
+    "before_model": 8,
+    "model_dispatch": 8,
+    "review_dispatch": 8,
+    "before_dispatch": 8
+  },
+  "shared_ledger_rows": [
+    {
+      "query_id": "880839fe3e5a4d2a8c5c6b8a47663d03",
+      "reservation_id": "57b29c16e9cf495abbb06e016b7a7687",
+      "outcome": "accepted",
+      "prompt_tokens": 949,
+      "completion_tokens": 562,
+      "total_tokens": 1511,
+      "state": "settled",
+      "actual": 960
+    },
+    {
+      "query_id": "880839fe3e5a4d2a8c5c6b8a47663d03",
+      "reservation_id": "9aedd218ab0940268bbf6b9b7a6c6d88",
+      "outcome": "accepted",
+      "prompt_tokens": 1504,
+      "completion_tokens": 39,
+      "total_tokens": 1543,
+      "state": "settled",
+      "actual": 498
+    }
+  ],
+  "audit_chain": {
+    "valid": true,
+    "events": 68,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "harness": {
+    "path": "evidence/runs/synthesis/live-harness.py.txt",
+    "sha256": "58fc8dd1ca7a83843e2c6620d2d8b29e0b544fd980b37bac67532b4b59311983",
+    "invocation": "python3 /tmp/aibang2_synthesis_live.py"
+  },
+  "agent_semantic_inspection": {
+    "status": "supported_subset",
+    "checked_claims": 4,
+    "method": "agent compared each conclusion against its exact source quotations and synthetic pilot oracle; not human G1",
+    "observations": [
+      "Controlled pilot approval remains distinct from GA approval.",
+      "Jira code fix Done does not grant release approval.",
+      "GA date and expansion remain unconfirmed.",
+      "Postmortem root cause and runbook failover instructions match cited text."
+    ],
+    "cited_sources": [
+      "confluence",
+      "drive",
+      "jira"
+    ],
+    "authorized_input_sources": [
+      "confluence",
+      "drive",
+      "jira",
+      "slack"
+    ]
+  },
+  "round_total_accounted_upper_micro_usd": 3340,
+  "tested_base_commit": "04f2e378d5149896867bddcd4162cc380aef0ee9",
+  "source_hashes": {
+    "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
+    "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
+    "brain/operator_web.py": "8865abbbfed436738538ae95c4c72692b214da4ae2ac5643c2c8fd85deb2e636",
+    "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
+    "brain/server.py": "585c7fd45e1c67002ab9147023e12096726784c1c6d59740fa3c001bc202cf65",
+    "brain/model_receipt.py": "4055abbc3f8bd9804dcfedc49c2a440ad5fe08771ffd914b1b5f563f8238c431",
+    "brain/audit.py": "ea5d2a5e442f6166ea344885ca6be02604e3b11e211941ef5e6cfc88c890c750",
+    "brain/confluence.py": "324e5a8584a55beda55401a489ffbbc5267fb325c490bab7547edf192090860d",
+    "brain/delegated_query.py": "f15e270d3e17a9561c5f760e5f3864081dbdc3d439b1f660be9e63a054fab8eb",
+    "brain/budget.py": "cd0f195cec3741ab6741648ee4391cf841e63bd12f1e718ebcc4b6fd66b106fb",
+    "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
+    "brain/drive_oauth.py": "4e72272cc0daaa1f290a12738e195594b0fd384e59227a8f0f038835c68cd86e",
+    "brain/sources.py": "f774504efe0c8f13b263ad0751938cb2ac58b457ad90e77cdeda2ce8380652fd",
+    "brain/engine.py": "bfcb7fccc0c11140174717fd6ff427b37587e9a3b074209702dc34d5f16299ca",
+    "brain/keychain.py": "329010f678201d0e1592c658c6f5e0f220b71a4d602e2d395fc103dd216514a9",
+    "brain/deepseek.py": "5f606394fb788e60b76eadc0dcfde865f98d0374c3df3880239bbb97e6c1955c",
+    "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
+    "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
+    "brain/audit_query.py": "837254cdc8a235044dae523c0b9f35c87765a66e91e9215304dc9ad09c77622b",
+    "brain/credential_input.py": "7736f24b27ad95d8751479144c3c9e52a80a836100e6551b14296fdab62620f4",
+    "brain/drive.py": "e2fe84429b34ef2b2ad496188ed20beaf9e6442e5cef625a8f6edc085548f41d",
+    "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
+    "brain/synthesis.py": "87db451e9c89adf9309e0e6a6a1aae01d011d6c61421951e3b9245e2c5135dcd",
+    "tests/test_contracts.py": "c6c4ad82ce9cce7505296745a7f824ca216edf5a31f3adc9b2d9d4468d652c56",
+    "tests/test_operator_bundle.py": "57e77a6e4c01a972aefd199180f879ca0281b665ccb7bd509bba057345e58202",
+    "tests/test_jira_query.py": "f7d6a4e2459fd880782bc52e61ea08fd6d9a6dca51df692b2aff0a28f6003667",
+    "tests/test_jira_discovery.py": "de2ca86f330bb9bb13cfa66645b0c674e1112a4c2e52e8de54c469d3852739c5",
+    "tests/test_engine.py": "0449d5240af821d03545f9fcec1672ef7c0bd5e18149ae40ded97228834b322e",
+    "tests/test_audit_more.py": "883cfbcb4ba508d97c6379ed42386941a3ad2102f010b93ef062b25b712715ec",
+    "tests/test_confluence_revocation.py": "85658ba53f7865528ea62e57880d13d5ef0cafb8db877c636a721e2410ab73d2",
+    "tests/test_confluence_probe.py": "16eb8a903d9abb0d2ac0be6b46751a3e0bf396373212fa9f74974f7cfe476d0b",
+    "tests/test_synthesis.py": "d391a4558830c34b05b8a5e95ac7cdaaf01ad85a4a1cb8571d37bf43c56d8cb7",
+    "tests/test_model_receipts.py": "d96a01e8d176a2fc6fe13f3306d8753eb3fc6f5785afa5cc87681eb7f1570f51",
+    "tests/test_bundle_oauth.py": "e1468f4cea703c173d83b9cead2fd13f9699ea66ca8a97b984bba54723808cd4",
+    "tests/test_slack.py": "dd1405f8ff77ae52c29ed8ffc84d296a7f21448db15296e94e6662d91573049f",
+    "tests/test_drive.py": "720e7f8ac31d17c7178ed6ec74dfe810149685b6ff87ae8436d62cb896a2403c",
+    "tests/test_jira_operator.py": "2cb7ffe6d6fb92379b7bcb860170d15cd8ca9e12cda5742ec48cbff23f8e6bf9",
+    "tests/test_drive_operator.py": "f7629bcc64169731c703243d7aa900e26c1ab81fba7c90b2291931fe3daf92d1",
+    "tests/test_jira.py": "6138a1a49e70b76db71aafb489cb72de400d69a70a69d2cbc6fbdaa493e1f6b3",
+    "tests/test_live_seed.py": "df2ba1d2daa3e7f1016527830de12f3ad2f748633ad01c778819a088db0b19d0",
+    "tests/test_http.py": "3e9f2cdb09b0b91e778724657476ddda0b93192ddba61bb1089f0cc1dc6fd1f1",
+    "tests/test_ingestion.py": "78a09ce246c66f2ba90cd249c4528a28c0819f0b4f744349525e6dfb921deeb8",
+    "tests/test_drive_oauth.py": "900b1a6d8b6313dee7e1f0bdcc9d4a49a1727e58dee962776c9f4e9fa9bc6cb7",
+    "tests/test_budget.py": "09e70b7fc17c2ce34787668a28183f88a1ae539dcf94f5255e0fd135ff7f8f7c",
+    "tests/test_operator_web.py": "5bb6090a243bd7b051e9853f301259a0ee83df2ed2e13ebc5b6a4301a094d9bb",
+    "tests/frontend_operator_security.js": "96b4ee6accbfa63eb829dfba0043094e29801e4cb68dd5b4bde9701a366f100f",
+    "tests/test_confluence_query.py": "2c80af908f7cd44eb3b1fcbaa23366ed17da60e656f38a123e430b8d6c333986",
+    "tests/test_delegated_query.py": "70e94f10879670c5e2b5833d8723f25012d48d14039b1040d0464f398acfde2b",
+    "tests/test_deepseek.py": "e004b332420129b2b00efcc1edc7f319ed33cfa489c4135b26691200284eaa80",
+    "tests/test_slack_operator.py": "241dfcc591cb8891d8b8564edb39b745abaa3a715f4ed83127a819aa33a7774b",
+    "tests/test_confluence.py": "1e271772c77cd41262ac515b3da01913864b158c01689b3ec2a66be41092666a",
+    "tests/test_keychain.py": "18202feeca60dd140b852094b10627757f87ec9b2329d52d27a4676ad1fc066a",
+    "tests/codebuddy/test_audit_verifier.py": "4121d5f4e688ff7d7d5a8b1921810785d39cc3c082b684882356c7c3ed339e8f",
+    "tests/codebuddy/__init__.py": "aa1f7dd33a54dd5e7ca68439ee45d953eb4c6bf1358c809c7300308583e7f47a",
+    "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730",
+    "scripts/confluence_query.py": "c22c084a15321f54fb343d15e006e0a34588c8f338432c8ed2c51f6071cfa62c",
+    "scripts/build_metadata.py": "66d7d1948f0a29cfae2b06a809640543eba26337a0dea45be20b49fdbb5d7271",
+    "scripts/fixture_admin.py": "bba631aad321f3fc0bd3c4e40d96d368d79a7d70c65deb32fedf7d5952b08700",
+    "scripts/drive_query.py": "18e6398c8aee08b417f3eecd119dee36a9b80c42742f8d8a657781e232ae7dc5",
+    "scripts/test_report.py": "64974c94aff0d58b3f64c2c7df1dd074f028e96267d65e199ddb026f050171aa",
+    "scripts/confluence_probe.py": "81928e5afbf4fd7e469475282794e79c198c8243d1b587a899fcfabfcbd0734c",
+    "scripts/slack_query.py": "0206a3c733ecf9c374847f73ecf71e28610459f504ae0e229c2a5a9e5af9a136",
+    "scripts/prepare_live_seed.py": "dcd3307e679b3f1d96affc7a65ba9be7af48ed84b258db64366a7bd494fa2eff",
+    "scripts/operator_bundle.py": "c74b36f20a6a0526b99a199f5b308f9e448120b7f9ccad327e3f1558fad9d245",
+    "scripts/evaluate.py": "f98bd282a1e1352a85276b8742201fcb1c3eeff0715752ecdeabe30fdeeb6f46",
+    "scripts/jira_query.py": "d41e562a026c0529fc5136bd3c096a51e294f927cdc8096c7e150550646b12fe",
+    "scripts/confluence_revocation.py": "81f35cd2643049dedd02afec214e231ef82a69edb2fa55cf8ac1c5d4687a1a17",
+    "web/index.html": "c38d18e234ad57a68c7c23cedf96d6f4b6728672c2e1489dced2ae818fd49300",
+    "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
+    "web/app.js": "0ad78e05c64888bff4b411b634fc78e9efa47768a7b8d978dddd2f8e05470368",
+    "tools/audit_verifier/checkpoint.py": "4bfb0c522680c22e52558827a385b832ddc296aa1727c1b376ea32107019cd96",
+    "tools/audit_verifier/chain.py": "59ff077fbcb8673f323e9687458b0d6f8ccf667e1b4f291480df78e4db41f00d",
+    "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
+    "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
+  },
+  "local_regression_tests": 281
+}

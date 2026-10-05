@@ -1,0 +1,255 @@
+{
+  "recorded_at": "2026-10-05T11:17:09.625858+00:00",
+  "source_commit": "97ea3ac",
+  "mode": "confluence_drive_jira_slack_live_api_live_model_synthesis",
+  "status": "baseline_verified_subset",
+  "response": {
+    "actor": "eng_b",
+    "claim_format": "grounded_synthesis_v1",
+    "claims": [
+      {
+        "evidence_ids": [
+          "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+            "quote": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+          }
+        ],
+        "text": "The final payment-service postmortem confirmed the root cause as a retry configuration mismatch with the timeout budget, which caused a backlog of duplicate requests; this was confirmed at 10:00 +08:00, with follow-ups PAY-102 and PAY-103."
+      },
+      {
+        "evidence_ids": [
+          "slack:C0C6R70SGG4/1791142152.858189@903088382970380097",
+          "slack:C0C6R70SGG4/1791142180.560339@226823937321883740"
+        ],
+        "supports": [
+          {
+            "evidence_id": "slack:C0C6R70SGG4/1791142152.858189@903088382970380097",
+            "quote": "09:00 cache invalidation was an early hypothesis, not a confirmed root cause."
+          },
+          {
+            "evidence_id": "slack:C0C6R70SGG4/1791142180.560339@226823937321883740",
+            "quote": "09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch."
+          }
+        ],
+        "text": "The Slack hypothesis that was withdrawn was the 09:00 cache invalidation hypothesis, which was an early hypothesis rather than a confirmed root cause; it was withdrawn at 09:15, and the final postmortem at 10:00 confirmed the retry configuration and timeout budget mismatch."
+      },
+      {
+        "evidence_ids": [
+          "confluence:98564@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "confluence:98564@1",
+            "quote": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+          }
+        ],
+        "text": "Runbook v1 instructs engineers to inspect the payment-service timeout budget and follow the approved failover procedure."
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+        "indexed_at": "2026-10-05T11:14:57.012114+00:00",
+        "locator": {
+          "content_sha256": "43c9cb5d07545389972f9ba7e2028d20a063091d98e3a46112b949f0ac4bf3f4",
+          "file_id": "10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+          "format": "text/plain",
+          "revision_id": "0B2E8NgxFjpPMRlBFbmJrSVJNMzBqcVdROTB3eW5Wb3J2WTQ4PQ",
+          "version": 6
+        },
+        "resource_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+        "source": "drive",
+        "source_updated_at": "2026-10-04T19:56:52.693Z",
+        "source_url": "https://drive.google.com/file/d/10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c/view",
+        "text": "[SYNTHETIC D-01] Final payment-service postmortem\n\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.\n\nThis is synthetic test data, not a real company incident or approval.\n",
+        "title": "D-01.txt",
+        "version": 6
+      },
+      {
+        "evidence_id": "slack:C0C6R70SGG4/1791142152.858189@903088382970380097",
+        "indexed_at": "2026-10-05T11:15:02.898287+00:00",
+        "locator": {
+          "channel_id": "C0C6R70SGG4",
+          "content_sha256": "c886a197bbb3f419bec0bc8606950970d1e1ddecd800d5574a6c9a3a4f331068",
+          "message_ts": "1791142152.858189",
+          "thread_ts": null
+        },
+        "resource_id": "slack:C0C6R70SGG4/1791142152.858189",
+        "source": "slack",
+        "source_updated_at": "2026-10-04T19:29:12.858189+00:00",
+        "source_url": "https://ai-bang2.slack.com/archives/C0C6R70SGG4/p1791142152858189",
+        "text": "[SYNTHETIC S-01] Payment-service incident exercise. Fixture timeline: 09:00 cache invalidation was an early hypothesis, not a confirmed root cause. Follow-up conclusions belong in this thread. CANARY_THREAD_4K2.",
+        "title": "#aibang2-incident-synthetic \u00b7 1791142152.858189",
+        "version": 903088382970380097
+      },
+      {
+        "evidence_id": "slack:C0C6R70SGG4/1791142180.560339@226823937321883740",
+        "indexed_at": "2026-10-05T11:15:03.769196+00:00",
+        "locator": {
+          "channel_id": "C0C6R70SGG4",
+          "content_sha256": "325d72b52a0585c2902d72f1a720960627b1d2c2efeb162eb61c0bd1817b2c69",
+          "message_ts": "1791142180.560339",
+          "thread_ts": "1791142152.858189"
+        },
+        "resource_id": "slack:C0C6R70SGG4/1791142180.560339",
+        "source": "slack",
+        "source_updated_at": "2026-10-04T19:29:40.560339+00:00",
+        "source_url": "https://ai-bang2.slack.com/archives/C0C6R70SGG4/p1791142180560339",
+        "text": "[SYNTHETIC S-01 FOLLOW-UP] Fixture timeline: 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. This is synthetic test data, not a real company incident. CANARY_THREAD_4K2.",
+        "title": "#aibang2-incident-synthetic \u00b7 1791142180.560339",
+        "version": 226823937321883740
+      },
+      {
+        "evidence_id": "confluence:98564@1",
+        "indexed_at": "2026-10-05T11:14:54.816345+00:00",
+        "locator": {
+          "page_id": "98564",
+          "version": 1
+        },
+        "resource_id": "confluence:98564",
+        "source": "confluence",
+        "source_updated_at": "2026-10-04T17:21:59.651Z",
+        "source_url": "https://ssy44199.atlassian.net/wiki/pages/viewpage.action?pageId=98564",
+        "text": "SYNTHETIC COMPETITION TEST DATA \u2014 not an actual company record.\nFixture ID: C-01\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "title": "C-01 \u00b7 Payment-service runbook",
+        "version": 1
+      },
+      {
+        "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+        "indexed_at": "2026-10-05T11:14:59.355677+00:00",
+        "locator": {
+          "content_sha256": "0ff61dcb7ed96b1bf6b7493d8d7c59261624a5bb01c8635976b9b5c525b5c069",
+          "file_id": "13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ",
+          "format": "text/plain",
+          "revision_id": "0B2E8NgxFjpPMSTA0ZUczZE9JM0E4aXVJNm01MGtTeVhUYnJNPQ",
+          "version": 6
+        },
+        "resource_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ",
+        "source": "drive",
+        "source_updated_at": "2026-10-04T19:56:58.772Z",
+        "source_url": "https://drive.google.com/file/d/13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ/view",
+        "text": "[SYNTHETIC D-02] Payment-retry release approval\n\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\n\nThis is synthetic test data, not a real company incident or approval.\n",
+        "title": "D-02.txt",
+        "version": 6
+      },
+      {
+        "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+        "indexed_at": "2026-10-05T11:15:01.242047+00:00",
+        "locator": {
+          "content_sha256": "5e51fcd72e9a07c6728cf2f1d69a99a7befa44bd12d3196b2cfdd9e1aceb5fa5",
+          "file_id": "1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg",
+          "format": "text/plain",
+          "revision_id": "0B2E8NgxFjpPMTTUraVM3SmFXQVByNnVZaXhXUnh4aTBaRG80PQ",
+          "version": 6
+        },
+        "resource_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg",
+        "source": "drive",
+        "source_updated_at": "2026-10-04T19:57:05.201Z",
+        "source_url": "https://drive.google.com/file/d/1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg/view",
+        "text": "[SYNTHETIC D-03] Operations readiness\n\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\n\nThis is synthetic test data, not a real company incident or approval.\n",
+        "title": "D-03.txt",
+        "version": 6
+      }
+    ],
+    "mode": "confluence_drive_jira_slack_live_api_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v2",
+    "model_call": {
+      "accounted_upper_micro_usd": 853,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+      "called": true,
+      "completion_tokens": 493,
+      "dispatch_recorded": true,
+      "model": "deepseek-flash",
+      "outcome": "accepted",
+      "prompt_tokens": 871,
+      "query_id": "a85e49fb3a9d48279115fa6cc530ff35",
+      "reservation_id": "3d5f745cacfa4352b7077be6ec4473ea",
+      "reserved_micro_usd": 315802,
+      "state": "settled",
+      "total_tokens": 1364
+    },
+    "model_review": {
+      "accounted_upper_micro_usd": 443,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+      "called": true,
+      "completion_tokens": 37,
+      "dispatch_recorded": true,
+      "model": "deepseek-flash",
+      "outcome": "accepted",
+      "prompt_tokens": 1328,
+      "query_id": "a85e49fb3a9d48279115fa6cc530ff35",
+      "reservation_id": "53e6a51ac06e4554b182d879d8e5eb01",
+      "reserved_micro_usd": 315802,
+      "state": "settled",
+      "total_tokens": 1365
+    },
+    "request_id": "a85e49fb3a9d48279115fa6cc530ff35",
+    "review_status": "accepted",
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ]
+  },
+  "sources": [
+    "confluence",
+    "drive",
+    "slack"
+  ],
+  "authorization_phase_counts": {
+    "source_refresh": 8,
+    "before_model": 6,
+    "model_dispatch": 6,
+    "review_dispatch": 6,
+    "before_dispatch": 6
+  },
+  "checks": {
+    "v2_model": true,
+    "quotes_exact": true,
+    "two_accepted_settled_calls": true,
+    "all_five_current_stages": true,
+    "unsigned_chain_valid": true
+  },
+  "agent_quality_assessment": "Three claims cover final cause, withdrawn cache hypothesis/timeline, and timeout budget/failover safeguards, with current exact source quotes. Not the full five-fact official S-01 oracle.",
+  "shared_ledger_rows": [
+    {
+      "query_id": "a85e49fb3a9d48279115fa6cc530ff35",
+      "reservation_id": "3d5f745cacfa4352b7077be6ec4473ea",
+      "outcome": "accepted",
+      "prompt_tokens": 871,
+      "completion_tokens": 493,
+      "total_tokens": 1364,
+      "state": "settled",
+      "actual": 853
+    },
+    {
+      "query_id": "a85e49fb3a9d48279115fa6cc530ff35",
+      "reservation_id": "53e6a51ac06e4554b182d879d8e5eb01",
+      "outcome": "accepted",
+      "prompt_tokens": 1328,
+      "completion_tokens": 37,
+      "total_tokens": 1365,
+      "state": "settled",
+      "actual": 443
+    }
+  ],
+  "revocation_status": "verified_citation_history_export_subset",
+  "native_permissions_changed": true,
+  "limitations": [
+    "Input has three sources/six evidence, not a four-source coverage test.",
+    "No fresh human G1 acceptance.",
+    "Chrome extension UI must be dismissed before native Slack revocation; no safety bypass."
+  ],
+  "verification_note": "First probe incorrectly required source_refresh count to equal selected evidence count: refresh reads eight allowlisted objects, retrieval selected six. Corrected to exact selected resource/version sets with all-allow at every model/return stage and refresh coverage; original failed count check preserved.",
+  "private_screenshots": [
+    "evidence/tool-usage/private/onboarding-20261005/synthesis-v2-baseline.png",
+    "evidence/tool-usage/private/onboarding-20261005/synthesis-revoke-approval.png"
+  ],
+  "approval_review": {
+    "action": "Remove U0C66B76TE3 from private C0C6R70SGG4",
+    "result": "rejected",
+    "reason": "Prior trusted authorization did not explicitly cover this member/channel/revocation time."
+  },
+  "native_permissions_current": "restored"
+}

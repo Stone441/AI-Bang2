@@ -59,10 +59,11 @@ class TokenTransport(JsonTransport):
 
 
 class Consent:
-    def __init__(self, client, port, timeout=600):
+    def __init__(self, client, port, timeout=600, *, offline=False):
         if not 1 <= port <= 65535 or not 1 <= timeout <= 600:
             raise ValueError('Bounded loopback required')
         self.client, self.port = client, port
+        self.offline = offline
         self.redirect = f'http://127.0.0.1:{port}/oauth/callback'
         self.state, self.verifier = secrets.token_urlsafe(32), secrets.token_urlsafe(48)
         self.expires = time.monotonic() + timeout
@@ -74,10 +75,12 @@ class Consent:
         if not isinstance(email, str) or not re.fullmatch(r'[^\s:@]+@[^\s:@]+', email):
             raise ValueError('Reviewed Google email required')
         challenge = base64.urlsafe_b64encode(hashlib.sha256(self.verifier.encode()).digest()).decode().rstrip('=')
-        return AUTH + '?' + urlencode({'client_id':self.client.client_id, 'redirect_uri':self.redirect,
+        parameters={'client_id':self.client.client_id, 'redirect_uri':self.redirect,
             'response_type':'code','scope':SCOPE,'state':self.state,'code_challenge':challenge,
-            'code_challenge_method':'S256','login_hint':email,'access_type':'online',
-            'include_granted_scopes':'false'})
+            'code_challenge_method':'S256','login_hint':email,'access_type':'offline' if self.offline else 'online',
+            'include_granted_scopes':'false'}
+        if self.offline:parameters['prompt']='consent'
+        return AUTH + '?' + urlencode(parameters)
 
     def callback(self, target, host, origin=None):
         def reject(reason, status=400):
@@ -129,11 +132,15 @@ class Consent:
                 or not 1 <= len(data['access_token']) <= 8192
                 or any(c.isspace() for c in data['access_token'])):
             raise SourceUnavailable()
-        # Do not retain refresh tokens or log the response, even if Google sends one.
+        if self.offline:
+            refresh=data.get('refresh_token')
+            if not valid_token(refresh):raise SourceUnavailable()
+            return {'access_token':data['access_token'],'refresh_token':refresh}
+        # Memory-only remains the default; refresh tokens are discarded.
         return data['access_token']
 
 
-def authorize(client, email, notify_url, *, timeout=600, transport=None):
+def authorize(client, email, notify_url, *, timeout=600, transport=None, offline=False):
     class Callback(BaseHTTPRequestHandler):
         def setup(self):
             super().setup()
@@ -157,12 +164,33 @@ def authorize(client, email, notify_url, *, timeout=600, transport=None):
             self.end_headers(); self.wfile.write(body)
     with HTTPServer(('127.0.0.1',0),Callback) as server:
         diagnostics = set()
-        consent = Consent(client,server.server_port,timeout)
+        consent = Consent(client,server.server_port,timeout,offline=offline)
         server.timeout = 1
         notify_url(consent.url(email))
         while not consent.finished and time.monotonic() < consent.expires:
             server.handle_request()
         return consent.exchange(transport or TokenTransport())
+
+
+def valid_token(token):
+    return isinstance(token,str) and 1<=len(token)<=8192 and not any(c.isspace() for c in token)
+
+
+class ReauthorizationRequired(SourceUnavailable):
+    pass
+
+
+def refresh_access(client, refresh_token, *, transport=None):
+    if not valid_token(refresh_token):raise SourceUnavailable()
+    status,data=(transport or TokenTransport()).exchange({'client_id':client.client_id,
+        'client_secret':client.client_secret,'refresh_token':refresh_token,'grant_type':'refresh_token'})
+    if status==400 and isinstance(data,dict) and data.get('error')=='invalid_grant':
+        raise ReauthorizationRequired()
+    if (status!=200 or not isinstance(data,dict) or data.get('token_type')!='Bearer'
+            or data.get('scope','').split()!=[SCOPE] or not valid_token(data.get('access_token'))
+            or type(data.get('expires_in')) is not int or not 0<data['expires_in']<=86400):
+        raise SourceUnavailable()
+    return data['access_token']
 
 
 def verify_account(token, email, transport):

@@ -87,6 +87,31 @@ class CombinedQuery(unittest.TestCase):
         with self.assertRaises(PermissionError): self.pilot.query(self.actor, 'runbook safeguards')
         self.assertEqual(self.pilot.engine.model.calls, [])
 
+    def test_linkless_sources_reduce_reads_but_keep_all_model_permission_boundaries(self):
+        with patch.object(self.cf_reader,'read',wraps=self.cf_reader.read) as cf_read, \
+             patch.object(self.readers['jira'],'read',wraps=self.readers['jira'].read) as jira_read:
+            answer=self.pilot.query(self.actor,'runbook safeguards')
+            self.assertEqual(cf_read.call_count,4)
+            self.assertEqual(sum(c.args[1]=='10003' for c in jira_read.call_args_list),4)
+        self.assertEqual({e['source'] for e in answer['evidence']},{'confluence','jira'})
+        events=self.pilot.audit.export()
+        for evidence in answer['evidence']:
+            phases={e['payload']['phase'] for e in events
+                    if e['event_type']=='authorization_decided'
+                    and e['payload']['resource_id']==evidence['resource_id']
+                    and e['payload']['result']=='allow'}
+            self.assertTrue({'source_refresh','before_model','model_dispatch','before_dispatch'}<=phases)
+
+    def test_linkless_candidate_revoked_before_model_does_not_enter_model(self):
+        original=self.pilot.engine.check
+        def revoke(actor,resource,rid,phase):
+            if phase=='before_model':self.jira.issue_allowed.clear()
+            return original(actor,resource,rid,phase)
+        self.pilot.engine.check=revoke
+        result=self.pilot.query(self.actor,'runbook safeguards')
+        self.assertEqual({e['source'] for e in result['evidence']},{'confluence'})
+        self.assertNotIn('jira',json.dumps(self.pilot.engine.model.calls[-1]['evidence']))
+
     def test_restart_rechecks_native_history_and_preserves_content_fingerprint(self):
         first = self.pilot.query(self.actor, 'safeguards')
         restarted = DelegatedQueryPilot(self.readers, self.store)

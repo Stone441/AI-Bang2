@@ -1,0 +1,101 @@
+"""Export a committed candidate and validate it without local runtime credentials.
+
+Only a temporary git archive, standard-library setup, local tests and a fixture
+HTTP demo are used. This does not deploy anything or run a business/model API.
+"""
+import argparse
+import hashlib
+import http.client
+import json
+import re
+import select
+import subprocess
+import sys
+import tarfile
+import tempfile
+from pathlib import Path
+from urllib.parse import quote
+from brain.contracts import now
+
+
+def run(ref, output):
+    if (output / 'verification.json').exists():
+        raise FileExistsError('Preserve previous rebuild evidence; choose a new output directory')
+    commit = subprocess.check_output(['git', 'rev-parse', '--verify', ref + '^{commit}'], text=True).strip()
+    output.mkdir(parents=True, exist_ok=True)
+    report = {'started_at': now(), 'validated_commit': commit, 'mode': 'isolated_git_archive_fixture_fake',
+              'live_source_api_called': False, 'live_model_called': False, 'human_G1': 'not_run',
+              'runner_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'commands': []}
+    try:
+        with tempfile.TemporaryDirectory(prefix='aibang2-rebuild-') as directory:
+            tmp = Path(directory); archive = tmp / 'candidate.tar'; tree = tmp / 'candidate'; tree.mkdir()
+            subprocess.run(['git', 'archive', '--format=tar', '-o', str(archive), commit], check=True)
+            with tarfile.open(archive) as tar: tar.extractall(tree, filter='data')
+            if (tree / '.runtime').exists() or (tree / '.env').exists(): raise RuntimeError('Runtime/secret file included')
+            report['archive_has_no_runtime_or_env'] = True
+            report['runtime_source_hashes'] = {str(p.relative_to(tree)): hashlib.sha256(p.read_bytes()).hexdigest()
+                                              for root in ('brain', 'web', 'fixtures') for p in sorted((tree/root).rglob('*')) if p.is_file()}
+            for label, cmd in [('setup', ['make', 'setup']), ('tests', ['make', 'test']),
+                               ('scenarios', ['make', 'verify']),
+                               ('frontend', ['node', 'tests/frontend_operator_security.js']),
+                               ('audit_frontend', ['node', 'tests/frontend_audit_review.js'])]:
+                result = subprocess.run(cmd, cwd=tree, capture_output=True, text=True, timeout=120)
+                (output / (label + '.log')).write_text(result.stdout + result.stderr)
+                report['commands'].append({'label': label, 'command': cmd, 'exit_code': result.returncode})
+                if result.returncode: raise RuntimeError('Isolated command failed: ' + label)
+            local = json.loads((tree/'evidence/runs/local-latest/scenarios.json').read_text())
+            report['scenario_statuses'] = {s['id']: s['status'] for s in local['scenarios']}
+            process = subprocess.Popen([sys.executable, '-m', 'brain.server', '--demo', '--port', '0'],
+                                       cwd=tree, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            try:
+                if not select.select([process.stdout], [], [], 10)[0]: raise RuntimeError('Demo startup timeout')
+                startup = process.stdout.readline()
+                match = re.search(r'http://127\.0\.0\.1:(\d+)', startup)
+                if not match: raise RuntimeError('Demo startup unavailable')
+                port = int(match[1]); cookie = ''; csrf = ''
+                def request(path, data=None):
+                    nonlocal cookie
+                    connection = http.client.HTTPConnection('127.0.0.1', port, timeout=10)
+                    headers = {'Cookie': cookie, 'X-CSRF-Token': csrf}
+                    if data is not None: headers['Content-Type'] = 'application/json'
+                    connection.request('POST' if data is not None else 'GET', path,
+                                       json.dumps(data) if data is not None else None, headers)
+                    response = connection.getresponse(); raw = response.read()
+                    if response.getheader('Set-Cookie'): cookie = response.getheader('Set-Cookie').split(';',1)[0]
+                    value = json.loads(raw) if response.getheader('Content-Type') == 'application/json' else raw
+                    status = response.status; connection.close()
+                    return status, value
+                for path in ('/', '/app.js', '/style.css'):
+                    status, body = request(path)
+                    if status != 200 or not body: raise RuntimeError('Frontend asset failed')
+                status, login = request('/api/demo/login', {'user':'eng_a'})
+                if status != 200: raise RuntimeError('Demo login failed')
+                csrf = login['csrf']
+                status, answer = request('/api/query', {'question':'payment-service incident retry PAY-103 runbook cache'})
+                if status != 200 or not answer['claims'] or {e['source'] for e in answer['evidence']} != {'confluence','jira','slack','drive'}:
+                    raise RuntimeError('Demo full query failed')
+                status, preview = request('/api/evidence/' + quote(answer['evidence'][0]['evidence_id'], safe=''))
+                if status != 200 or preview['text'] != answer['evidence'][0]['text']: raise RuntimeError('Preview failed')
+                report['http_smoke'] = {'frontend_assets': 'passed', 'demo_login': 'passed',
+                    'four_source_fake_answer': 'passed', 'exact_preview': 'passed',
+                    'request_id': answer['request_id'], 'model': answer['model'],
+                    'browser_visual_review': 'not_run', 'cookies_and_csrf_saved': False}
+            finally:
+                process.terminate()
+                try: process.wait(timeout=5)
+                except subprocess.TimeoutExpired: process.kill(); process.wait(timeout=5)
+        report['status'] = 'verified_local_subset'
+    except Exception as error:
+        report.update(status='failed', reason=type(error).__name__, failed_check=str(error))
+    report['finished_at'] = now()
+    (output/'verification.json').write_text(json.dumps(report, indent=2)+'\n')
+    print(json.dumps({'status': report['status'], 'validated_commit': commit, 'commands': report['commands']}))
+    return report['status'] == 'verified_local_subset'
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--ref', default='HEAD')
+    parser.add_argument('--output', type=Path, default=Path('evidence/runs/rebuild-candidate'))
+    args = parser.parse_args()
+    raise SystemExit(0 if run(args.ref, args.output) else 1)

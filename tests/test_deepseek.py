@@ -65,6 +65,31 @@ class DeepSeekBoundary(unittest.TestCase):
         self.assertEqual(self.transport.calls, [])
         self.assertEqual(self.ledger.summary()['accounted_micro_usd'], 0)
 
+    def test_approved_atlassian_banner_reaches_model_without_rewriting_evidence(self):
+        banner = 'SYNTHETIC COMPETITION TEST DATA — not an actual company record.'
+        for source, fid in [('confluence', 'C-01'), ('confluence', 'C-02'), ('jira', 'J-02'), ('jira', 'J-03')]:
+            with self.subTest(source=source, fixture=fid):
+                evidence = replace(self.evidence, source=source,
+                                   text=banner + '\nFixture ID: ' + fid + '\nGA not approved.')
+                result = self.model.generate('Is GA approved?', [evidence])
+                self.assertEqual(result['claims'][0]['text'], evidence.text)
+                payload = json.loads(self.transport.calls[-1].data)
+                self.assertEqual(json.loads(payload['messages'][1]['content'])['evidence'][0]['text'], evidence.text)
+
+    def test_legacy_banner_missing_fixture_wrong_source_or_title_only_never_sent(self):
+        banner = 'SYNTHETIC COMPETITION TEST DATA — not an actual company record.'
+        for source, text in [('confluence', banner), ('confluence', banner + '\nFixture ID: C-99'),
+                             ('drive', banner + '\nFixture ID: C-01'),
+                             ('jira', banner + '\nFixture ID: C-01'),
+                             ('confluence', banner + '\nFixture ID: J-03'),
+                             ('jira', 'Fixture ID: J-03\nPrivate business data'),
+                             ('confluence', 'Fixture ID: C-01\nPrivate business data')]:
+            with self.subTest(source=source, text=text):
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate('Question', [replace(self.evidence, source=source, title='[SYNTHETIC]', text=text)])
+        self.assertEqual(self.transport.calls, [])
+        self.assertEqual(self.ledger.summary()['accounted_micro_usd'], 0)
+
     def test_timeout_keeps_reservation_across_restart_and_hides_error(self):
         self.transport.error = True
         with self.assertRaises(ModelUnavailable) as caught: self.model.generate('Question', [self.evidence])
@@ -204,7 +229,7 @@ class DeepSeekBoundary(unittest.TestCase):
             # Advance only the fixture's rate-limit timestamp; preserve the
             # same authenticated cookie, CSRF token and real ACL checks.
             for session in app.sessions.values(): session['last_query'] = 0
-            status, after = request('/api/query', {'question': 'runbook', 'history_id': answer['request_id']})
+            status, after = request('/api/query', {'question': 'runbook'})
             self.assertEqual(status, 200); self.assertEqual(after['evidence'], [])
             self.assertEqual(len(self.transport.calls), 1)
             status, history = request('/api/history')
@@ -212,8 +237,8 @@ class DeepSeekBoundary(unittest.TestCase):
             self.assertTrue(next(r for r in history['history'] if r['request_id'] == answer['request_id'])['unavailable'])
             self.assertEqual(request('/api/evidence/confluence:98564@1')[0], 403)
             status, exported = request('/api/export/' + answer['request_id'])
-            self.assertEqual(status, 200)
-            self.assertTrue(exported['history'][0]['unavailable'])
+            self.assertEqual(status, 404)
+            self.assertEqual(exported, {'error':'Unavailable'})
             self.assertNotIn('Runbook budget version 1', json.dumps(exported))
         finally:
             self.server.shutdown(); self.server.server_close(); thread.join(); app.store.db.close()

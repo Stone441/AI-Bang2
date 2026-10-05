@@ -1,0 +1,49 @@
+import json,sys,hashlib
+from pathlib import Path
+from brain.keychain import MacKeychain
+from brain.confluence import Delegation
+from brain.contracts import Actor,now
+from brain.store import Store
+from brain.delegated_query import DelegatedQueryPilot
+from brain.audit import verify_chain
+from scripts.confluence_probe import load_reader
+config=json.loads(Path('.runtime/confluence-pilot.json').read_text())
+r=load_reader('.runtime/confluence-pilot.json')
+account=config['delegations']['eng_b']['account_id']
+auth=MacKeychain().get('confluence',r.tenant,'eng_b',account)
+if not auth: raise SystemExit('saved_credential_unavailable')
+r.delegations['eng_b']=Delegation(account,auth)
+s=Store('.runtime/lifecycle-confluence.sqlite'); p=DelegatedQueryPilot({'confluence':r},s,live=True)
+a=Actor('eng_b',r.tenant); answers={}
+print('ready',flush=True)
+for line in sys.stdin:
+    command=line.strip()
+    try:
+        if command in ('baseline','updated','restored'):
+            answer=p.query(a,'What is the payment-service runbook and the standby processing queue failover check?')
+            ev=next(e for e in answer['evidence'] if e['resource_id']=='confluence:98564')
+            answers[command]=answer
+            Path('evidence/runs/live-lifecycle/confluence-'+command+'.json').write_text(json.dumps(answer,indent=2)+'\n')
+            print(json.dumps({'stage':command,'request_id':answer['request_id'],'version':ev['version'],'text':ev['text']}),flush=True)
+        elif command=='old-access':
+            prior=answers['baseline']; ev=next(e for e in prior['evidence'] if e['resource_id']=='confluence:98564')
+            history=p.history(a,prior['request_id'])
+            try:p.evidence(a,ev['evidence_id']);preview='allowed'
+            except PermissionError:preview='denied'
+            result={'checked_at':now(),'history':history,'preview':preview}
+            assert history[0].get('unavailable') and preview=='denied'
+            Path('evidence/runs/live-lifecycle/confluence-old-access.json').write_text(json.dumps(result,indent=2)+'\n')
+            print('old_access_denied',flush=True)
+        elif command=='finish':
+            assert 'Runbook v1' in json.dumps(answers['baseline'])
+            assert 'standby processing queue' in json.dumps(answers['updated'])
+            b=next(e for e in answers['baseline']['evidence'] if e['resource_id']=='confluence:98564')
+            u=next(e for e in answers['updated']['evidence'] if e['resource_id']=='confluence:98564')
+            f=next(e for e in answers['restored']['evidence'] if e['resource_id']=='confluence:98564')
+            assert b['text']==f['text'] and b['version']<u['version']<f['version']
+            chain=p.audit.export();assert verify_chain(chain)['valid']
+            Path('evidence/runs/live-lifecycle/confluence-audit.json').write_text(json.dumps(chain,indent=2)+'\n')
+            Path('evidence/runs/live-lifecycle/confluence-verification.json').write_text(json.dumps({'mode':'live_confluence_api_fake_model','status':'verified_subset','versions':[b['version'],u['version'],f['version']],'restored_text_sha256':hashlib.sha256(f['text'].encode()).hexdigest(),'old_citation_history_export_projection':'denied','live_model':'not_run','automatic_sync':'not_run','human_G1':'not_run','checked_at':now()},indent=2)+'\n')
+            print('verified_restored',flush=True);break
+    except Exception as error: print('stage_failed_'+type(error).__name__,flush=True)
+s.db.close()

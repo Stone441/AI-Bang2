@@ -1,4 +1,4 @@
-"""Approved synthetic Drive operator configuration; secret stays in process memory."""
+"""Approved synthetic Drive operator configuration; optional app-owned Keychain refresh reuse."""
 import getpass
 import json
 import os
@@ -57,15 +57,33 @@ def prepare_oauth_reader(path, actor):
     return reader, config
 
 
-def complete_oauth_reader(reader, config, client_path, actor, *, client=None):
+def complete_oauth_reader(reader, config, client_path, actor, *, client=None, credential_store=None):
     from brain.drive_oauth import load_client, authorize, verify_account
     client = client or load_client(client_path,config['oauth_client_id'])
     email = config['oauth_operator']['email']
+    account=client.client_id+'|'+email.casefold()
+    if credential_store:
+        from brain.drive_oauth import refresh_access, ReauthorizationRequired
+        refresh=credential_store.get('drive',reader.tenant,actor,account)
+        if refresh is not None:
+            try:
+                token=refresh_access(client,refresh)
+            except ReauthorizationRequired:
+                print('Drive: saved authorization expired or revoked; only Google consent is needed again.',flush=True)
+            else:
+                reader.delegations[actor]=verify_account(token,email,reader.transport)
+                print('Drive: reused read-only authorization and verified native account.',flush=True)
+                return reader
     def notify(url):
         print('Open this Google authorization link. Review the account and Drive read-only scope yourself:',flush=True)
         print(url,flush=True)
-    token = authorize(client,email,notify)
-    reader.delegations[actor] = verify_account(token,email,reader.transport)
+    if credential_store:
+        grant=authorize(client,email,notify,offline=True)
+        reader.delegations[actor]=verify_account(grant['access_token'],email,reader.transport)
+        credential_store.put('drive',reader.tenant,actor,account,grant['refresh_token'])
+    else:
+        token = authorize(client,email,notify)
+        reader.delegations[actor] = verify_account(token,email,reader.transport)
     return reader
 
 

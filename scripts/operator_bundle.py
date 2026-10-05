@@ -7,7 +7,7 @@ MODULES = {'confluence': 'scripts.confluence_probe', 'jira': 'scripts.jira_query
            'slack': 'scripts.slack_query', 'drive': 'scripts.drive_query'}
 
 
-def load_reader(path, prompt_actor=None, *, oauth_client=None):
+def load_reader(path, prompt_actor=None, *, oauth_client=None, credential_store=None):
     path = Path(path)
     config = json.loads(path.read_text())
     if (set(config) != {'approved_synthetic_only', 'identity_mapping_reviewed', 'sources'}
@@ -46,11 +46,22 @@ def load_reader(path, prompt_actor=None, *, oauth_client=None):
         if source == 'drive' and oauth_config is not None:
             continue
         if prompt_actor not in reader.delegations:
-            print(f'{source.title()}: enter the credential for the reviewed operator mapping.', flush=True)
-            hidden = (modules[source].hidden_delegation if source in ('confluence', 'jira')
-                      else modules[source].hidden_token)
-            reader.delegations[prompt_actor] = hidden(mappings[source])
+            from brain.confluence import Delegation
+            saved=credential_store.get(source,reader.tenant,prompt_actor,mappings[source]) if credential_store else None
+            if saved is not None:
+                reader.delegations[prompt_actor]=Delegation(mappings[source],saved)
+                print(f'{source.title()}: using app-owned Keychain credential.',flush=True)
+            else:
+                print(f'{source.title()}: enter the credential for the reviewed operator mapping.', flush=True)
+                hidden = (modules[source].hidden_delegation if source in ('confluence', 'jira')
+                          else modules[source].hidden_token)
+                delegation=hidden(mappings[source])
+                if credential_store:
+                    credential_store.put(source,reader.tenant,prompt_actor,mappings[source],delegation.authorization)
+                reader.delegations[prompt_actor] = delegation
     if oauth_config is not None:
+        kwargs={'client':client}
+        if credential_store is not None:kwargs['credential_store']=credential_store
         readers['drive'] = modules['drive'].complete_oauth_reader(
-            readers['drive'], oauth_config, oauth_client, prompt_actor, client=client)
+            readers['drive'], oauth_config, oauth_client, prompt_actor, **kwargs)
     return readers

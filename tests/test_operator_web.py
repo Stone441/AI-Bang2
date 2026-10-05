@@ -3,6 +3,8 @@ import errno
 import io
 import json
 import threading
+import tempfile
+from pathlib import Path
 import unittest
 from unittest.mock import patch
 
@@ -73,12 +75,16 @@ class OperatorIdentity(unittest.TestCase):
         from unittest.mock import Mock
         server = Mock()
         reader = self.app.pilot.authority.readers['confluence']
-        with contextlib.redirect_stdout(output), \
+        # Use a real isolated disk store: mocking Store with :memory: while main
+        # chmods its DB path accidentally depended on a leftover local pilot DB.
+        with tempfile.TemporaryDirectory() as directory, \
+             contextlib.redirect_stdout(output), \
              patch('brain.operator_web.create_server', return_value=server), \
              patch('scripts.confluence_probe.load_reader', return_value=reader), \
-             patch('brain.operator_web.Store', return_value=self.app.store), \
+             patch('brain.operator_web.Path', return_value=Path(directory)), \
              patch('brain.operator_web.OperatorApp', side_effect=SourceUnavailable('secret upstream response')):
             self.assertEqual(main(['--config', 'mock', '--live']), 2)
+            self.assertEqual((Path(directory) / 'confluence-web.sqlite').stat().st_mode & 0o777, 0o600)
         server.serve_forever.assert_not_called()
         server.server_close.assert_called_once()
         self.assertIn('[native_identity_unavailable]', output.getvalue())
@@ -96,6 +102,21 @@ class OperatorIdentity(unittest.TestCase):
         server.server_close.assert_called_once()
         self.assertIn('[configuration_or_hidden_input_unavailable]', output.getvalue())
         self.assertNotIn('secret input', output.getvalue())
+
+    def test_hidden_input_failure_reports_fixed_code_and_never_requests_native_identity(self):
+        from brain.credential_input import HiddenInputUnavailable
+        from unittest.mock import Mock
+        for code in ('email_invalid','token_empty','token_multiline','token_too_long',
+                     'hidden_input_unavailable','secure_tty_required','input_ended'):
+            output=io.StringIO();server=Mock()
+            with self.subTest(code=code),contextlib.redirect_stdout(output), \
+                 patch('brain.operator_web.create_server',return_value=server), \
+                 patch('scripts.confluence_probe.load_reader',side_effect=HiddenInputUnavailable(code)), \
+                 patch('brain.operator_web.OperatorApp') as application:
+                self.assertEqual(main(['--config','mock','--live']),2)
+                application.assert_not_called();server.serve_forever.assert_not_called()
+                server.server_close.assert_called_once()
+            self.assertIn('[credential_'+code+']',output.getvalue())
 
 
 class OperatorHTTP(unittest.TestCase):
@@ -137,10 +158,13 @@ class OperatorHTTP(unittest.TestCase):
         self.login()
         first = self.request('/api/query', {'question': 'runbook'})[1]
         self.transport.allowed.clear(); self.app.sessions[next(iter(self.app.sessions))]['last_query'] = 0
-        status, next_answer = self.request('/api/query', {'question': 'details', 'history_id': first['request_id']})
+        status, next_answer = self.request('/api/query', {'question': 'details'})
         self.assertEqual(status, 200); self.assertEqual(next_answer['evidence'], [])
         self.assertEqual(self.app.engine.model.calls[-1]['evidence'], [])
         for endpoint in ['/api/history', '/api/export/' + first['request_id']]:
+            if endpoint.startswith('/api/export/'):
+                self.assertEqual(self.request(endpoint)[0],404)
+                continue
             history = self.request(endpoint)[1]['history']
             self.assertTrue(any(h.get('unavailable') for h in history))
             self.assertNotIn('budget version 1', json.dumps(history))

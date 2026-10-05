@@ -34,6 +34,16 @@ class HTTP(unittest.TestCase):
         self.assertEqual(self.request('/api/evidence/'+a['evidence'][0]['evidence_id'])[0],200)
         self.assertEqual(self.request('/api/audit/events',{})[0],403)
         self.assertEqual(self.app.audit.export()[-2]['event_type'],'response_dispatch_attempted')
+    def test_query_rejects_history_dependency_and_answer_export_is_absent(self):
+        self.login()
+        status,answer=self.request('/api/query',{'question':'payment-service incident'})
+        self.assertEqual(status,200);self.assertTrue(answer['evidence'])
+        calls=len(self.app.engine.model.calls)
+        self.assertEqual(self.request('/api/query',{'question':'details','history_id':answer['request_id']})[0],400)
+        self.assertEqual(len(self.app.engine.model.calls),calls)
+        for target in (answer['request_id'],'missing'):
+            self.assertEqual(self.request('/api/export/'+target),(404,{'error':'Unavailable'}))
+        self.assertEqual(self.request('/api/history')[0],200)
     def test_csrf_host_and_evidence_protection(self):
         self.login('contractor')
         self.assertEqual(self.request('/api/query',{'question':'pilot'},{'X-CSRF-Token':'wrong'})[0],403)
@@ -42,6 +52,37 @@ class HTTP(unittest.TestCase):
         self.assertEqual(self.request('/api/evidence/C-03@1'),self.request('/api/evidence/missing@1'))
         self.assertEqual(self.request('/api/sources/status')[0],403)
         self.assertEqual(self.request('/api/admin/sync',{})[0],404)
+
+    def test_shared_browser_cookie_jar_keeps_two_port_sessions_isolated(self):
+        from http.cookiejar import CookieJar
+        from urllib.request import build_opener, HTTPCookieProcessor, Request
+        from urllib.error import HTTPError
+        other=App();server=create_server(other)
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        jar=CookieJar();browser=build_opener(HTTPCookieProcessor(jar))
+        def call(port,path,data=None,csrf=None):
+            headers={'Content-Type':'application/json'}
+            if csrf:headers['X-CSRF-Token']=csrf
+            request=Request(f'http://127.0.0.1:{port}'+path,
+                data=json.dumps(data).encode() if data is not None else None,headers=headers)
+            try:
+                with browser.open(request,timeout=10) as response:
+                    return response.status,json.load(response)
+            except HTTPError as error:
+                with error:return error.code,json.load(error)
+        try:
+            first=call(self.server.server_port,'/api/demo/login',{'user':'eng_a'})[1]
+            second=call(server.server_port,'/api/demo/login',{'user':'contractor'})[1]
+            status,session=call(self.server.server_port,'/api/session')
+            self.assertEqual(status,200);self.assertEqual(session['actor'],'eng_a')
+            self.assertEqual(call(server.server_port,'/api/session')[1]['actor'],'contractor')
+            self.assertEqual(len(list(jar)),2)
+            self.assertEqual(call(self.server.server_port,'/api/logout',{},first['csrf'])[0],200)
+            self.assertEqual(call(self.server.server_port,'/api/session')[0],403)
+            self.assertEqual(call(server.server_port,'/api/session')[1]['actor'],'contractor')
+            self.assertEqual(call(server.server_port,'/api/query',{'question':'pilot'},first['csrf'])[0],403)
+        finally:
+            server.shutdown();server.server_close();thread.join();other.store.db.close()
     def test_local_authority_file_update_and_restart(self):
         import tempfile
         from pathlib import Path

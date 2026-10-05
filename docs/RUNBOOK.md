@@ -29,17 +29,20 @@ make demo
    python3 -m scripts.fixture_admin revoke --resource S-01 --user eng_a
    ```
 
-   原会话追问线程详情；不得再次输出线程独有标记。打开旧 S-01 引用应不可用；Recent answers 中依赖已撤权资料的整条旧回答应不可用。无需全库重建。可分别对 C-01/J-01/D-01 重复。
+   同一登录身份独立再次查询payment-service线程及retry safeguards；不得再次输出线程独有标记。打开旧 S-01 引用应不可用；Recent answers 中依赖已撤权资料的整条旧回答应不可用。无需全库重建。可分别对 C-01/J-01/D-01 重复。
 5. **S-05**：以 Scoped auditor 登录，打开 Audit explorer，提交预置问题。展开事件查看身份、问题、逐资料授权、sent_to_model、引用和最终答案；支持稳定 snapshot 分页。HTTP 场景还记录 dispatch_attempted。CLI 回放不伪装成 HTTP dispatch。
 
 完整自动回放使用隔离内存状态，不改变正在演示的 `.runtime`：
 
 ```sh
 make verify
+make verify-lifecycle
 make test-report
 ```
 
 输出 `evidence/runs/local-latest/scenarios.json`、`audit.json`、`tests.json`。S-05 检查仅是内存保留 trusted head 的本地演示，未具备独立签名根。离线签名另由真实 CodeBuddy 实现并经 20 项测试验证；命令见 CODEBUDDY_AUDIT_DELIVERY.md，同机同账号不代表生产独立保管。
+
+`make verify-lifecycle` 单独生成 `evidence/runs/lifecycle-local/results.json`：四源各自更新、撤权、删除共12组隔离检查，先保留旧索引验证即时拒绝，再应用事件验证单对象发布及重复处理。只使用 fixture/fake model，不访问正在运行的服务、不修改真实平台。团队观看与最终提交检查见 [SAFETY_REVIEW.md](SAFETY_REVIEW.md)，自动回放不代替人工安全验收。
 
 要重新开始人工演示，停止服务后仅将 demo 数据文件改名备份，再启动；先确认备份名称不存在。不要整体移动 `.runtime`：目前其中有 `.runtime/codebuddy-dev09` Git worktree。不要删除旧审计。自动测试均使用自己的临时/内存状态。
 
@@ -134,3 +137,94 @@ Complete the existing Google read-only consent through the terminal URL, then en
 Only explicitly marked synthetic evidence is sent. The model selects evidence; the server renders original excerpts. Free-form synthesis is not enabled. `.runtime/deepseek-budget.sqlite` is the shared USD20 ledger across all operators: never delete, reset, replace or change working directories to bypass pending charges. Peak/cache-miss accounting is conservative, not a billing invoice. Unknown consumption keeps its full reservation. Price review expires at the end of the reviewed Singapore date; future startup or nonempty model use stops until prices are reviewed again. Existing fake services continue running. Real DeepSeek results remain not_run until actual call/output/ledger/audit are inspected.
 
 Actual first DeepSeek checkpoint: [live-drive-query.json](../evidence/runs/deepseek/live-drive-query.json), native Drive + real model selection, query/preview/history verified. Original fake commands and comprehensive live acceptance are separate. Keep port8086 running; no further key input is required during its lifetime.
+
+Model usage receipts: new answers expose validated token counts and a conservative USD cost estimate under “Model usage receipt”. This is not the vendor invoice. Older answers without a receipt say “MODEL CALL NOT RECORDED”; do not infer a live call or zero usage from their evidence list. Native/history/export authorization still gates the entire record. Static UI updates require refresh; already running Python processes do not load changed Engine code automatically.
+
+Atlassian hidden input: enter the mapped Atlassian email only, then paste only the scoped token value from the password field. Nothing appears while typing/pasting. Invalid input retries just that field (at most3 attempts): `credential_email_invalid`, `credential_token_empty`, `credential_token_multiline`, `credential_token_too_long`; `credential_secure_tty_required`, `credential_hidden_input_unavailable`, `credential_input_ended` stop without echo fallback. These local diagnostics do not indicate whether a token is valid on the platform. Share only the fixed error code for troubleshooting, never entered values.
+
+
+### Approved one-command four-source startup (AUTH-014)
+
+在仓库根目录的新 VS Code 终端只运行：
+
+```sh
+make live
+```
+
+使用已审核 eng_b 的 ignored bundle，8088，真实四源及 DeepSeek，显式 opt-in 本机钥匙串保存。首次仍需逐项隐藏输入 Confluence/Jira 邮箱与各自 token、Slack reader token，完成 Google 只读浏览器授权，再隐藏输入 DeepSeek key。程序不读取你在「密码」应用里已有的条目；创建自己的钥匙串条目。已保存项在后续启动复用，后续步骤失败也不丢失前面的已保存项。操作系统可能要求解锁或允许钥匙串访问。不要关闭安全设置，不发送密钥/完整入口链接。
+
+Google refresh 只在原生账号核对成功后保存；以后重启自动换 access token，scope 固定 drive.readonly。撤销/过期可能需要只重新完成 Google 授权；运行中的 access token 到期仍拒绝访问，可重启。源 token 的格式校验不等于平台授权通过：启动仍核对全部原生账号，每次问答/引用/历史仍核对当前权限。DeepSeek 价格日期及 USD20 账本限制不变。
+
+如只有某枚凭据错误，复制下列命令，将最后的平台选择为 confluence、jira、slack、drive 或 deepseek，只重新输入该项：
+
+```sh
+python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --oauth-client .runtime/drive-oauth-client.json --port 8088 --live --model deepseek --credential-store macos-keychain --replace-credential slack
+```
+
+默认未指定 credential-store 的旧命令依然仅内存保存。钥匙串拒绝读取时停止，不回退明文。只读平台与模型真实集成另行验收；本次合成钥匙串 smoke 和 mock refresh 不代表统一四源 live 已通过。
+
+
+2026-10-06该回答下载功能已取消：无Export answer入口，GET /api/export/*对已登录请求返回404。旧下载验收仅为历史证据，不代表当前能力。每次query独立，客户端history_id返回400；旧服务须重启加载后端修复，凭据按已批准的程序Keychain复用。
+
+### Opt-in grounded synthesis (synthetic pilot)
+
+Default `make live` retains source-excerpt selection. Use `make live-synthesis` for the reviewed mode, or add
+`--answer-style synthesis` to the reviewed multi-source command:
+
+```sh
+python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --oauth-client .runtime/drive-oauth-client.json --port 8088 --live --model deepseek --credential-store macos-keychain --answer-style synthesis
+```
+
+Do not start a second process on an occupied port. Keep the current service or
+stop it yourself before selecting this mode; app-owned Keychain reuse avoids
+re-entering saved credentials. Native account verification still runs. Existing
+source scopes and the same `.runtime/deepseek-budget.sqlite` USD20 ceiling apply.
+Do not change the working directory to create another budget ledger.
+
+Ask `What is approved for the payment-service pilot, what remains blocked, and what incident safeguards must be in place?`.
+The answer displays a concise conclusion per claim, citation buttons, expandable
+exact supporting quotes, and separate generation/review usage receipts. History
+and raw export preserve grounding and both receipts; current access is checked
+again. The review reads full authorized evidence after another native check.
+
+Review is a fallible quality filter: exact quotes prove source provenance, not
+semantic correctness. Human acceptance must check scope, negation, contradictions
+and whether conclusions actually follow and answer every requested part. The v2
+review requires explicit boolean `question_covered: true` as well as support for
+all claims; this remains a fallible model judgment. Missing quote/citation, unknown or
+negative review, changed access/version and incomplete output reject the answer;
+no automatic paid retry or silent fallback occurs. Fake-model mode does not
+simulate passing synthesis review. Complete five-scenario live acceptance and
+G1/G2 remain separate from local/mock results.
+
+
+To preserve an existing8088 service while opening another reviewed synthesis operator, use `make live-synthesis LIVE_PORT=8094` from repository root. The same budget ledger is used, with no scope change; native identities are verified again. Open the new terminal one-use link yourself and keep it out of chat/screenshots. `LIVE_PORT` defaults to8088; existing listeners are never killed automatically.
+
+Frontend navigation/expiry/sign-out invalidate prior requests. A late answer/quote/history/export does not repopulate the newer view or create a file; this does not undo an already-dispatched model call or recover a downloaded copy.
+
+
+Local port-session fix (2026-10-05): newly started servers use separate cookie names per bound port. Existing services continue using their loaded implementation: restart each affected service once and open its new terminal entry. Keys are reused from the approved app-owned Keychain. This prevents accidental login/logout collisions between local ports; cookies are still scoped to a host, so this does not provide security isolation from hostile local HTTP services. Never copy an old cookie/ticket to recover an expired session.
+
+### Local retrieval windows
+
+Run `make verify-retrieval` for authored long-document/lexical cases (fixture source, fake model). Results: `evidence/runs/retrieval-local/results.json`. The current retrieval uses lexical overlap and a small explicit English alias map, not embeddings. Long evidence previews include Unicode character offsets and return the exact source window. Fixed windows may cut sentences. DeepSeek still rejects any window without its approved synthetic marker; this local test does not prove live long-document model support. Existing running services load this code on their next normal restart; no credential re-entry is needed for the approved Keychain configuration.
+
+### Clean candidate validation
+
+`python3 -m scripts.rebuild_acceptance --ref HEAD --output evidence/runs/rebuild-<new-label>` exports only a committed snapshot into a temporary directory and runs setup, the full test suite, fixture five-scene replay, Node frontend checks and a newly started HTTP demo through login/query/preview. It preserves prior evidence, needs loopback permissions/OpenSSL/Node, and does not use existing runtime credentials or paid services. Current candidate e9a55e6 passed; initial test-isolation failure is retained separately. HTTP smoke does not establish browser visual acceptance.
+
+### Audit interface checks
+
+Mixed-outcome audit acceptance (fixture/fake only, no credentials or costs):
+
+```sh
+make verify-audit-mixed AUDIT_OUTPUT=.runtime/audit-review-01
+```
+
+Use a new output directory on each run. This executes successful, partly authorized, denied and failed questions, compares paginated inquiry with captured event IDs, checks a fixed snapshot during a new request, denies out-of-scope audit access, and runs the existing CodeBuddy signature CLI against original/tampered copies. The disposable local private key is deleted; same-machine signing is not independent production custody. Team observation remains a separate step in `SAFETY_REVIEW.md`.
+
+`node tests/frontend_audit_review.js` checks same-view query ordering, stable-snapshot pagination, duplicate clicks, navigation guards, HTML as text, and honest display of integers outside JavaScript precision. Audit rows distinguish candidate, authorization, model input, citation and delivery. The browser timeline does not verify a signature or prove human reading; use the offline verifier for signed boundaries and the authoritative backend export for exact fingerprints. Current visual browser check was blocked by Chrome and remains not_run.
+
+### Approved independent Confluence product reader
+
+AUTH-016 approves only the specified product_ops Confluence token and app-owned Keychain reuse. Follow `PRODUCT_READER_PILOT.md`. Single-source Confluence supports `--credential-store macos-keychain`; new input is verified against the native account before saving, and subsequent startup reuses the item. Its database is isolated by actor/tenant/native-account digest. Other single-source Keychain modes remain rejected. Native product permission acceptance is still pending login/token creation; use the prepared fake-model command, not an unapproved product model credential.

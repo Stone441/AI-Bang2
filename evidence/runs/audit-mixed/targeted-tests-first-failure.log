@@ -1,0 +1,34 @@
+test_existing_output_refused_before_running_fixture (tests.test_audit_mixed_acceptance.MixedAuditAcceptance.test_existing_output_refused_before_running_fixture) ... ok
+test_oracle_detects_omitted_failure_event_before_signing (tests.test_audit_mixed_acceptance.MixedAuditAcceptance.test_oracle_detects_omitted_failure_event_before_signing) ... ERROR
+test_concurrent_append_and_tamper_boundaries (tests.test_audit_more.AuditIntegrity.test_concurrent_append_and_tamper_boundaries) ... ok
+test_parser_timezone_range_and_rejection (tests.test_audit_more.AuditIntegrity.test_parser_timezone_range_and_rejection) ... ok
+
+======================================================================
+ERROR: test_oracle_detects_omitted_failure_event_before_signing (tests.test_audit_mixed_acceptance.MixedAuditAcceptance.test_oracle_detects_omitted_failure_event_before_signing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_audit_mixed_acceptance.py", line 32, in test_oracle_detects_omitted_failure_event_before_signing
+    report = run(Path(directory) / 'result')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/audit_mixed_acceptance.py", line 187, in run
+    write(output / 'verification.json', report)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/audit_mixed_acceptance.py", line 33, in write
+    path.write_text(json.dumps(value, indent=2) + '\n')
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 182, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type MagicMock is not JSON serializable
+when serializing dict item 'commit'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.025s
+
+FAILED (errors=1)

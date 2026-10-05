@@ -175,14 +175,16 @@ class SlackEngine(unittest.TestCase):
         self.assertEqual(self.store.get('slack:'+ROOT)['version'],before)
 
     def test_final_model_dispatch_permission_check_blocks_late_revocation(self):
-        original=self.pilot.authority.check_read;count=0
-        def check(actor,rid):
+        original=self.pilot.engine.check;count=0
+        def check(actor,resource,rid,phase):
             nonlocal count
-            count+=1
-            if count==5:self.transport.channel['is_member']=False
-            return original(actor,rid)
-        with patch.object(self.pilot.authority,'check_read',side_effect=check):
+            if phase=='model_dispatch':
+                count+=1
+                if count==2:self.transport.channel['is_member']=False
+            return original(actor,resource,rid,phase)
+        with patch.object(self.pilot.engine,'check',side_effect=check):
             with self.assertRaises(PermissionError):self.pilot.query(self.actor,'retry safeguards')
+        self.assertEqual(count,2)
         self.assertEqual(self.pilot.engine.model.calls,[])
         self.assertTrue(any(e['event_type']=='request_failed' for e in self.pilot.audit.export()))
 

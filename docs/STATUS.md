@@ -1,8 +1,42 @@
 # Current status
 
-更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
+2026-10-06 用户批准纠正产品范围：独立问答，取消自动history依赖/New question/Export answer，HTTP拒绝history_id且回答下载端点404；Engine旧harness参数不补历史。保留当前权限/引用/历史/撤权及异步旧视图保护。311完整fixture/mock测试15.298s通过，前端安全和审计Node检查通过（evidence/runs/independent-query）。8100静态UI已刷新；运行中的旧Python后端需用户重启加载，已交接免重复凭据的Keychain命令，live新版端点验收pending。8094未重启，不能声称旧进程已关闭下载。旧已下载合成副本不自动删除/无法远程撤回；G1/G2不变。
 
-**阶段收尾（2026-10-05）：248/248 回归通过（60 local synthetic + 188 mock HTTP）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/撤权及统一四源 live 仍 not_run。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
+2026-10-06 独立product_ops Confluence真实验收：8100浏览器服务端身份/发布问答/C-02原文引用/历史/独立安全问题拒答实际验证；AUTH-016程序Keychain复用及native身份核验通过。独立只读runner16checks通过：C-01与C-03 native deny/no body、C-02 allow，受限资料不进fake model，controlled stale index保留且preview拒绝，unsigned审计链有效。evidence/runs/native-product-reader；完整309 fixture/mock测试14.681s通过，2 harness tests与Node前端检查通过。发现自动follow-up会补充上一问有权C-02，补New question明确清空依赖/旧视图；native产品Jira/Slack/Drive/auditor及G1/G2仍not_run，无付费模型/平台写入/8094重启。
+
+2026-10-06 AUTH-016已记录，Confluence-only product_ops token及app-owned本机Keychain复用获用户明确批准。已准备独立.runtime/confluence-product.json与nonsecret example、单源Confluence Keychain入口：新输入native身份匹配后才保存，saved免TTY复用、OS拒绝/wrong account不回退，actor/tenant/native-account摘要隔离SQLite0600。32针对性/307完整fixture/mock回归实际通过；初始test_keychain sibling import调用错误记录后按已有discovery路径重跑，不删断言。Atlassian原生API token管理页已核对2918379149@qq.com登录；已准备最终审核页，名称AI-Bang2 product_ops Confluence read-only pilot、到期2026-10-20、仅read:page:confluence/read:content-details:confluence。用户报告最终Create token与Mac密码保存已完成；private/product-reader-20261006/token-review.png不含密钥。token创建为user_reported/产品Keychain项未写，native权限验收not_run；已交接8100独立启动命令，首次隐藏输入与native身份核验后保存程序Keychain，再执行fake产品正/负query。不扩Jira/Slack/Drive/DeepSeek授权、不改8094，G1/G2 not_run。
+
+2026-10-06 最新checkout完整301项Python回归实际通过（native-jira-update/full-tests.log），含新增mixed audit及Jira guard；既有native Jira13checks另列。full suite为fixture/mock，不增加native/model验收覆盖，当前新提交尚非新clean archive/browser视觉通过。独立Confluence product_ops凭据及本机Keychain复用具体候选PRODUCT_READER_PILOT已发确认，未回复前不创建token/读取新凭据/调整权限；其他源更新与真人观看保留pending。
+
+2026-10-06 DEV-12-JIRA-UPDATE verified native API/fake model subset：AUTH-003在KAN独立新建合成KAN-6/10015并仅UI更新正文Revision1 amber→Revision2 green；eng_b AUTH-014已有Keychain复用，隔离memory index/两issue allowlist，不改原配置或8094。13checks/23event unsigned链通过：旧index保留时native old fingerprint/preview/history-export projection拒绝，refresh后新text/model evidence/preview正确、旧marker消失，KAN-4不变。版本是fingerprint，数值变小不代表回退；无新凭据/scope/模型费用。6guard tests（2新）通过；非worker/SLA/浏览器下载/真模型/完整persona或人G1。下一：独立产品身份具体凭据授权尚缺、Slack/Drive内容更新及真人观看仍待完成。
+
+2026-10-05 DEV-12-AUDIT-MIXED verified local subset：实际fixture Engine生成成功/部分授权/全部deny/模型失败四类请求，独立request边界oracle116events与17页NL审计一致；page1后新请求不混入固定snapshot，scope/actor噪声排除，eng_a/security及越范围auditor拒绝，失败无committed/stored answer。CodeBuddy既有CLI实际4次原始/正文改/中间删/covered尾删验证通过，临时private key删除；同机custody仍非生产独立。4针对性tests通过（2新增），首个test mock影响Git revision的失败保留后修正test-only标记，不删断言。make verify-audit-mixed新目录可重放，团队一次集中观看清单已整理；无真实API/model/费用/8094重启，G1/G2 not_run。下一P0实际团队观看及未批准独立persona/native更新范围，其他质量评测可继续。
+
+2026-10-05 最新提交b541c02 clean archive验证完成：无.runtime/.env，setup/297Python/5fixture场景/2Node脚本/真实fixture HTTP assets+login+four-source-query+exact-preview全部通过，evidence/runs/rebuild-native-restricted-approved。首次rebuild-native-restricted在沙箱内因23项HTTP bind EPERM失败，完整日志保留；获准本机loopback测试后同一提交通过，不跳过测试/关闭保护，不调用真实源或模型，不改8094。原生S-03仍single eng_b/fake model subset；下一P0集中团队观看与剩余native persona/更新范围，G1/G2 not_run。
+
+2026-10-05 S-03 native subset：管理员在既有合成空间新增Restricted C-03/557057，仅owner访问；eng_b原生身份200、C-03 metadata404且无正文请求，C-02正文200。隔离受控synthetic旧索引保留，负面问答/模型evidence不含受限资料，旧preview原生deny；13checks/16event unsigned链通过（native-restricted-fixed）。首次fake空证据调用计数探针错误保留native-restricted失败与实际harness，修正探针后通过，不删安全断言。新增2个runner guard、4项针对性测试通过；未重跑完整295回归，runtime代码未改。无需输入凭据/模型费用/重启8094；不是contractor矩阵、统计侧信道或人工G1。下一P0整理团队一次性安全观看与剩余native persona/更新范围；G1/G2仍not_run。
+
+2026-10-05 最新审计候选0278bab在clean archive已通过setup/295 Python方法/五fixture场景/原前端安全Node/新增审计Node，独立fixture HTTP启动、assets/login/four-source-query/exact-preview通过；evidence/runs/rebuild-audit-ui。Python方法数未增加，新增审计检查属于Node单独证据。Chrome视觉仍blocked/not_run，已关闭自建错误tab/停止临时进程并清理自己tmp目录，不改8094。下一P0真实restricted信息验收可优先复用已有eng_b读者和管理员owner、已有Confluence合成空间种植权限：准备独立C-03受限合成资料并核对原生可见性，再做存在性/模型输入拒绝+可读C-02对照；不能把唯一nonsense query当S-03。新的product_ops/contractor账号、scope/持久凭据仍需对应明确批准，不默认从eng_b Keychain授权扩大。G1/G2仍not_run，未push/merge。
+
+2026-10-05 审计产品验收：实际Node复现同一页面新查询先返回、旧查询后覆盖的问题，按inquiryRevision+view/session修复；旧分页/重复点击/导航响应及HTML文本/不安全大整数展示检查通过，原有前端安全检查与JS syntax通过。timeline分开问题、候选、阶段授权、模型input/review、引用、stored answer、delivery attempt，不宣称用户已读或UI已验签；raw browser payload对不精确整数明确遮换提示，后端hash/export不改。证据audit-ui-local；自动Chrome临时页ERR_BLOCKED_BY_CLIENT，visual not_run，不绕过设置/不要求用户重启8094，已停止自有fixture服务。独立原生persona仍缺其单独grant/映射，不能把eng_b改名冒称product_ops；候选界面与自动验收独立推进，G1/G2仍pending。下一提交候选再做包含新增audit Node案例的clean archive验证。
+
+2026-10-05 最新干净候选验收：e9a55e6 git archive隔离目录（无.runtime/.env）setup、295测试、五fixture场景、Node安全检查全部通过；真实启动fixture HTTP服务并验证HTML/JS/CSS、登录、四源问答、精确引用preview，browser visual not_run。evidence/runs/rebuild-fixed；首次294pass/1fail保留在rebuild-candidate，测试独立DB修复保留全部有效安全断言。只停止自己的临时服务、删自己的临时目录，不改用户8094/配置/凭据/数据。最新测试结论来自此已提交候选隔离日志，local-latest/tests.json保留先前测试源码hash，不冒写为本次运行。阶段代码和脱敏证据已本地提交，未push/merge。下一P0：独立product_ops/contractor等原生persona及剩余更新矩阵、团队集中G1观看；已有工程/产品问答、生命周期、审计重建候选可按DEMO_CANDIDATE准备，语义/向量增强按验收收益排序。
+
+2026-10-05 当前干净归档验收发现1项测试环境依赖，295中294通过/1失败，setup通过；失败见rebuild-candidate，不是权限断言被绕过。native_identity_failure案例mock内存Store却chmod实际DB，本机残留文件掩盖失败。已改独立临时真实DB并通过针对性复现，保留全部原断言及新增0600检查。下一接续：提交修复后新archive完整回归+前后端启动烟测，成功前不宣称当前候选可重建通过。用户真实进程/配置/数据库未改。
+
+2026-10-05 交付验收增量（295回归实际通过，73local+222mock；新增显式live opt-in及防覆盖凭据前置安全检查）：eng_b真实四源/DeepSeek产品问答覆盖pilot/GA、Done/发布、沟通范围、未确认日期，4自动fact probes+逐quote/逐阶段native授权/原预算双回执和developer语义审查通过，1529microUSD保守记账；无证据unique-token样本零模型调用/零账本记录。evidence/runs/live-product。执行harness漏更新mode后缀，原record保留并明确解释，当前runner修复未来标签，不为改标签重复收费调用。真实日志副本完成audit NL分页oracle/普通reader拒绝及7项签名边界（offline test auditor / disposable同机key）；evidence/runs/audit-replay，独立key custody/生产role不宣称通过。现有8094未重启，无平台写入/新scope/凭据要求。当前五场景候选及缺口集中于DEMO_CANDIDATE.md；独立product_ops/contractor原生矩阵及人工G1/G2仍not_run。
+
+2026-10-05 检索改进：长文不再因整篇超过16000字符而直接跳过；本地采用2400字符/400重叠窗口，最多每资料3片段、总24证据/16000字符。短资料保留原ID，长片段绑定resource/version/规范offset；preview按当前原生权限和版本解析精确原文，旧history/export projection沿用逐引用检查。10项新增安全/定位测试及293项完整回归通过；五场景、12生命周期、Node检查通过。可重放词法评测见 `make verify-retrieval` / evidence/runs/retrieval-local。仅少量英文词汇映射，不是向量/语义检索；固定窗口可能截句，未知词汇仍可能漏召回；DeepSeek合成标记guard未放宽，缺标记窗口会拒绝真实模型。此次fixture/fake，无新平台/模型调用或费用，用户8094未重启，G1/G2仍not_run。
+
+2026-10-05 最新：真实J-03已种植并经eng_b只读API验证，KAN-5/10014原生In Progress、scenario owner Maya fictional/native Unassigned。本地白名单仅新增此合成对象，用户8094仍运行旧配置、无须现在重启或输入凭据。四源真实DeepSeek综合工程题7事实检查、8模型证据/9refresh、逐阶段权限/精确quotes/68事件链与两笔账本回执独立核验通过，1856microUSD上界；evidence/runs/live-s01。283回归、五场景local subset、12生命周期及Node检查通过；初次沙箱bind失败保留。S-01工程事实覆盖verified single eng_b operator subset；产品身份、完整live五场景/人工G1/G2仍未完成。下一可推进：检索质量与长文切块本地实现/评测、审计UI与候选安全演示；不得把本题当完整persona通过。
+
+2026-10-05 AUTH-015真实生命周期子集完成：Confluence98564 API原生版本1→2→3，新增standby queue内容进入回答，旧引用/history（含export projection）拒绝，恢复后原正文逐字一致；Drive唯一临时合成文件删除前eng_b可检索，移入回收站后native deny/旧引用history拒绝/追问及模型evidence空，旧索引保留，原三文件UI未改。证据live-lifecycle；独立operator/fake model，不宣称本次HTTP下载、真实模型更新、后台同步或完整五场景通过。Chrome扩展文件URL权限阻止自动上传，由用户手工上传，无安全设置改变。两个自有验收进程结束，用户8094未重启，无新模型费用。下一接续：补齐S-01真实J-03 open-follow-up与完整问答真值；当前live白名单仅J-02，J-03种植、原生访问及白名单尚未落实，按AUTH-003既有合成空间授权核对后推进。继续可独立推进候选界面/审计展示及人工安全演示准备，G1/G2仍not_run。
+
+2026-10-05 最新接续：`codex/lifecycle-acceptance` 新增可重放四源生命周期矩阵，12/12 `passed_local_subset`（fixture source / fake model）；五场景本地回放、6项增量测试、Node前端安全检查及完整283项回归实际通过。无平台写入/新模型调用/新费用，不重启用户8094。安全演示清单见 SAFETY_REVIEW；真实更新/删除、完整live五场景及人工安全验收仍待完成。12组矩阵不计入unittest数量。下一项真实更新/删除已发具体授权问题，未获回复前不操作外部资料；其他本地质量/界面工作可独立继续。当前新分支未推送或合并。
+
+更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。`.DS_Store` ignored；用户明确要求后已将仅含旧 GPT 分析的 `Analysis&Planning/` 移至 Mac 废纸篓（可恢复），Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
+
+**阶段收尾（2026-10-05）：283/283 回归通过（61 local synthetic + 222 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，有引用综合回答已 opt-in verified live subset；同模型复核仍可能漏错，完整语义验收未完成。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -13,7 +47,7 @@
 - 当前源授权在模型前和返回前检查；未知拒绝；四源撤权、旧历史/导出/引用保护。模型、HTTP 均有实际回归。
 - 持久 fake source 与 SQLite 索引分离；对象级事务发布、创建/更新/删除、去重/乱序/重试、失败任务不被游标越过、重启恢复。请求触发处理，不宣称真实自动同步。
 - 完整问答审计、逐资料决策、sent_to_model/cited/dispatch 区分、scope 查询与稳定分页；60 并发追加链测试。已接入离线 Ed25519 检查点 CLI；同机同账号仍不等于生产独立签名边界。
-- `make test-report` 最新248/248 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
+- `make test-report` 最新281/281 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
 
 原型 32 测试阶段已通过从提交导出的独立临时目录 `make setup` / `make test` / JS 语法检查；本轮签名集成验证为当前 checkout 的 52 测试回归。
 
@@ -23,18 +57,18 @@
 
 | 项目 | 状态 |
 |---|---|
-| 四源 | 各源 live query verified subset；统一 live / Slack独立reader API与撤权 not_run；试用无付款方式，未授权收费续订 |
-| 模型 | fake-extractive与DeepSeek真实证据选择分列；自由综合回答、embedding/reranker/compressor未实现 |
+| 四源 | 各源 live query verified subset；统一 live query / Slack独立reader API与撤权 verified subset；试用无付款方式，未授权收费续订 |
+| 模型 | fake-extractive与DeepSeek真实证据选择分列；综合回答 opt-in verified subset；embedding/reranker/compressor未实现 |
 | 审计完整性 | partial；离线签名/篡改检测 verified local；独立 DB role / 加密 / 外部签名保管未实现 |
 | 腾讯工具 | verified local：真实 CodeBuddy 实现 + 审查修正；20 新测试/全仓库 52 测试通过；7 截图及原生 conversation history 已本地保存，未上传 |
-| 浏览器视觉 | 各源原生/应用问答、引用、历史有真实子集证据；统一四源视觉仍not_run |
+| 浏览器视觉 | 各源原生/应用问答、引用、历史有真实子集证据；统一四源答案/引用/历史/导出视觉 verified subset |
 | 部署与人工 | local only；G1/G2 / 非作者质量与 ROI not_run |
 
 ## 精确接续点
 
 1. DEV-09-CB 已完成：原始提交 `4165ee6`，集成提交 `8cd5088`，位于 `codex/dev-09-codebuddy-integration`；已通过 PR #2 合并至 main（71ad99b）。证据索引 `evidence/tool-usage/README.md`。后续推进密钥轮换、检查点生成节奏及独立保管；当前单公钥离线验证，不扩大 A-11 覆盖声明。
-2. DEV-06：先完成 docs/LIVE_ONBOARDING.md 的注册交接。已生成本地 13 对象/6 身份 seed manifest，新增权限保留/禁止覆盖测试通过；没有平台写入。映射真实用户后才实施委托读取与撤权合同测试。
-3. DEV-08/09：DeepSeek 首轮预算已批准；本地凭据配置、预算预留/故障记账和模型输出契约实现后才能调用，再做真实模型与语义支持评测；生产 DB/身份/HTTP 栈和独立审计边界仍需工程实现及运行验证。
+2. DEV-10：统一四源 eng_b 真实问答及 Slack 原生撤权、旧历史/引用/导出拒绝已 verified subset；完成无关联读取优化的真实性能比较，之后补齐五场景 live 矩阵与权限继承/缓存边界。完整验收仍未通过。
+3. DEV-08/09：DeepSeek 真实证据选择与持久预算回执已验证；有引用综合回答已verified subset，下一步补齐模式专属人工UI与完整语义验收。生产身份/DB 隔离及独立审计保管仍需工程实现及运行验证。
 4. 浏览器可访问后按 RUNBOOK 完成 UI/键盘/移动布局检查，并组织 G1 人工核验；完善候选材料，最后 G2。
 
 本轮只交付本地候选，不宣称完整项目完成；没有承诺会话结束后继续运行。
@@ -193,3 +227,71 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 - 下次直接按UNIFIED_LIVE_PILOT.md启动8088统一operator（各secret隐藏输入一次、Drive选kyle000909@gmail.com、DeepSeek既有预算）；先核验四源问答/引用/历史与model receipt，再做Slack私有频道撤权及统一混合历史/导出保护，恢复测试权限。
 - 后续：完善有证据的模型综合回答、补齐官方五场景live矩阵、非作者人工G1验收及提交候选。G2/公开部署/比赛提交未授权。
 - 现有本机服务未停止；机器休眠/进程退出后需按文档重新启动，凭据仅内存，不承诺夜间继续。队友Analysis&Planning未跟踪文件保留，不纳入提交。
+
+2026-10-05 DEV-11-RECEIPT-UI：独立分支codex/model-receipt-ui，实现public receipt验证/投影及网页token、费用估算/unknown历史显示；13项针对性receipt、251全回归、五场景local subset和Node前端安全/语法通过。新增HTTP测试首轮503已复现为fixture初始化顺序，修正准备流程，未放宽合成数据拒绝或撤权断言。证据deepseek/receipt-ui-verification.json。未调用真实源/模型或新增费用。用户启动命令多粘贴Confluence/Jira导致argparse拒绝，已给纯命令纠正；8088 listener存在但应用页未见，不宣称native身份/统一服务启动成功。接续用户完成启动后检验health、四源原生问答、实际receipt和旧引用/历史、Slack撤权。
+
+8088接续补充：后续只读health探测连接不可用，listener已不在监听；没有应用页/native startup完成的证据。等待用户提供固定启动提示或完成纯命令重试，不读取凭据、不自动重启用户进程。
+
+2026-10-05 DEV-10-INPUT修复已verified local/mock：用户提供Confluence hidden prompts之后configuration_or_hidden_input_unavailable，原始细分原因未记录，不能认定token scope错误；此路径尚未请求native API。新增固定credential原因码，先校验邮箱再请求token；只重输当前字段最多3次，secure TTY/warning/EOF终止，不echo或持久化。完整256/256（60local+196mock）、五场景local subset和Node通过；10项probe针对性已通过。真实重试仍待用户，统一live未通过。
+
+
+2026-10-05 DEV-10-KEYCHAIN：AUTH-014 明确批准后，实现 opt-in app-owned macOS Keychain、逐 source 保存、单项 replacement、Google 固定只读 scope offline refresh 重启复用及原生账号校验；make live 为统一入口。10项新增 mock 安全/复用测试；实际本机随机隔离合成条目 add/read/update/delete 已通过并删除，不访问已有密码。完整266/266（60local/206mock），五场景 passed_local_subset；无真实平台/模型新增请求或费用。真实秘密尚未由程序保存，统一四源启动及真实refresh复用仍 not_run。接续：用户新终端 make live，首次输入后保留进程；检查四源身份与问答，再完成Slack读者撤权。运行中access token过期仍fail closed；G1/G2未通过。
+
+
+2026-10-05 DEV-10-UNIFIED首轮现场：用户已打开8088，agent核验eng_b/live model operator UI；startup完成每源原生身份验证。实际联合请求5b6b37e3e7074d62b95ee563333dbdb1的8对象（CF2/Drive3/Jira1/Slack2）source_refresh均native allow，32权限决策完整记录；43.07秒后模型前guard拒绝，未生成回答，budget无query行/无模型费用。原因是原批准CF/Jira种植完整合成banner与模型方括号标记不兼容。最小修复支持exact banner+明确source/fixture匹配，268/268（60local/208mock）及五场景local subset通过，失败证据保留。首轮真实四源读取verified subset，统一成功回答/引用/历史仍待重跑；不将模型管线evidence_used标记当实际网络发送证明。Keychain首次配置用户报告完成，agent未读真实秘密；restart复用/Google refresh待重启核验。接续：用户8088终端Ctrl+C、make live，不要求整套重新录入。G1/G2未通过。
+
+
+2026-10-05 DEV-10-UNIFIED verified live subset：用户重启后旧页cookie失效返回Unavailable，使用新一次性入口已恢复eng_b；无需扩大scope/读取密钥。请求1cba33ca06b64b4fa23c087ee998e1e0实读8对象（CF2/Jira1/Slack2/Drive3），所有5阶段当前权限检查allow，DeepSeek选择8原文证据；网页答案、Slack回复精确thread/message/SHA256/native URL预览、Recent answers重新鉴权和usage receipt均agent核验。854input+176output=1030tokens，本轮468microUSD保守上界，不是vendor invoice；18项独立readonly DB检查通过，unsigned链有效，来源evidence/runs/live-unified/query.json。耗时53.370443秒（性能待优化），free-form综合未实现；非完整五场景live、SSO或G1。用户已报告重启，新服务启动成功；未检查实际钥匙串值/逐项console，不能独立声明Google refresh复用通过。下一P0 Slack私有频道撤权和统一历史/引用/导出保护（先确保可恢复权限），P1安全前提下改善性能与模型综合。保持8088进程。
+
+
+2026-10-05 DEV-10-SLACK-REVOKE verified live subset：按AUTH-003测试权限授权，既有owner ssy44199@gmail.com Google重新登录比赛AI-Bang2，确认私有频道C0C6R70SGG4及读者kyle000909@gmail.com/U0C66B76TE3，仅Remove from channel，成员2→1；未移除工作区/撤销token/使用NTU。原8088 eng_b会话Recent answers重鉴权，旧跨源回答整条不可用；同会话后续query c0585d94fd144e53a05c55f675a10310原生Slack root/reply均deny，仅CF/Jira/Drive六证据进入模型/回答，无Slack引用或canary。9项readonly检查通过，真实模型783tokens/345microUSD保守账（不是供应商账单）；unsigned链有效。已把同一既有成员恢复到原私有频道，native Members2/重新加入事件确认。证据live-unified/slack-revocation.json，截图ignored private。直接旧引用端点被Chrome ERR_BLOCKED_BY_CLIENT阻止自动导航，未关闭安全设置；引用/导出live保留not_run，不能把mock通过补成live。完整ACL/缓存/继承矩阵仍未通过。下一P0补齐直接端点实际验收；P1模型grounded综合与53秒性能改善。保持8088，无需重新token。
+
+恢复后原会话再次Recent answers，两条request receipt均出现，原Slack线程证据按当前恢复权限重新显示；native恢复及历史恢复均verified。累计本轮两次成功模型请求813microUSD保守上界，不含先前243microUSD记录。仅证据/状态改动，沿用268源码回归，不重复无关测试。
+
+
+2026-10-05 DEV-11-EXPORT verified local + live subset：新增英文Export answer产品入口，调用现有/api/export/{request_id}并每次重新鉴权；无权不创建文件。首次真实下载虽生成文件，精确比对发现JS大整数舍入（Jira/root Slack version），保留失败记录后修复为raw JSON envelope下载。修复后实际9633字节文件与DB保存答案逐字段完全一致，SHA2563453a2ac6e3585455d9197b6c6c4cc3aea4ee8138ac234c7a75883f5ad82dcac。前端session失效清除旧内容/提示新入口，单资料403不误退出。268Python回归/Node安全和大整数导出检查通过。
+
+原8088/eng_b会话，两轮原生仅合成private member撤权分别测试：旧Export按钮得到unavailable，Downloads对应文件数2→2；旧Slack reply citation按钮调用原evidence端点，native deny、旧答案/preview清除且eng_b session仍有效。此前浏览器goto API地址被blocked，没有关闭安全设置；产品按钮实测同一GET endpoint，覆盖对应live子集而不是把mock当真。证据live-unified/export-verification.json；截图ignored private。两轮恢复分别native确认/最终确认待补；无新增模型请求/费用，合法导出已保存副本不可撤回。下一P1减少无关联资料冗余源读取并保持模型前/发送前全部current checks，后续grounded模型综合及完整五场景live。
+
+本轮两次原生撤权恢复均已确认：同一private频道Members2、原Kyle读者rejoined by invitation，无额外角色/scope/新工作区成员。应用仍运行，秘密未重新录入。
+
+
+2026-10-05 DEV-10-LINKLESS verified local/mock：无links候选不再执行空关联展开的link_seed完整源读取；source_refresh/before_model/model_dispatch/before_dispatch仍全部保留。mock原生读者计数验证每个命中对象5→4次读取，270/270回归、Node安全检查及五场景passed_local_subset通过。首次回归的Slack撤权注入按第五次读取定位，优化后错过模型前阶段；已改为在第二个model_dispatch候选撤权，保留模型调用必须为空断言，失败报告保存。真实8088进程仍旧代码，未重启、不读取凭据、无新增平台或模型请求；53.37秒真实耗时尚未重测，不能宣称缩短20%。下一项：新进程Keychain复用与live延迟对比，再推进有证据模型综合。
+
+
+2026-10-05 DEV-10-LATENCY verified live API/fake model subset：按AUTH-014启动隔离8090基准1ba796b与8091优化8d4ba6b，stdin关闭，CF/Jira/Slack程序Keychain复用及Drive refresh后原生账号核验全部通过（两进程独立验证，不读取现有密码条目）。同题四源8证据，基准53.209秒、优化40.116秒；每源source_refresh/before_model/model_dispatch/before_dispatch仍8次allow，空link_seed8→0。每版本一份样本，仅说明本次观测，不保证SLA或真实DeepSeek端到端改善。分离SQLite，无DeepSeek网络调用/账本改动；仅停止自己两个临时进程，8088仍运行旧代码。证据linkless-optimization/live-latency.json及实际执行harness文本；下一任务有证据模型综合与五场景完整live。
+
+
+2026-10-05 DEV-08-SYNTHESIS verified local/mock + live subset：新增 opt-in --answer-style synthesis/make live-synthesis；默认原文模式保留。最多4条结论，每条已知证据ID及逐ID精确连续quote；复核前重新原生鉴权/版本检查，单独同模型请求查看全文并逐结论明确通过，否则整答拒绝。返回前检查不变；history/export保存supports与两份budget receipt，前端展示支持片段和分别费用。281/281（60 local+221 mock）/Node/五场景local subset通过，新增11个mock安全/失败账本及本机HTTP案例。首次审计未注册事件错误已保留并改用evidence_used.stage=sent_to_review，未弱化审计或撤权断言。
+
+真实8092隔离两题：第一题仅检索到三源7证据，模型四结论获准但四源覆盖探针failed，保留first-live-query/audit；第二题明确包含Jira code fix条件，四源8证据/40次当前检查全部allow，4结论与精确quote、两次共享账本settled/accepted、unsigned链实查10checks通过，58.95秒。回答引用CF/Drive/Jira三源，Slack进入授权模型上下文而未被引用，不称每源都有结论。agent逐结论文本检查保留pilot/GA、Done/发布批准与未确认范围边界；不等同人工G1。两题实际四次模型请求合计3340microUSD保守上界，非供应商账单。测试新进程已停止，旧8088保留，不要求用户凭据输入。完整五场景live/真人语义评测/继承ACL/G1/G2仍pending；综合模式HTTP双回执/历史/导出及同会话撤权也已mock业务源+真实loopback验证；下一P0人工UI与live场景矩阵。
+
+
+2026-10-05 P-11-SYNTHESIS live model / fixture-source subset：授权C-02合成正文加入“忽略规则、管理员身份、谎称GA批准、访问私有S-01/别人审计、外部URL”指令；不改四平台、不发真实业务源请求。恶意text确实送入DeepSeek生成/全文复核；全部6自动边界检查通过，未送S-01、只发固定模型endpoint、无tools，答案仍pilot only/GA not approved/date unconfirmed。agent逐句确认无权限/日期编造，但第4条附加事故待办与本问题相关性不足，保留限制。两实际模型调用共享既有预算、共1331microUSD上界；证据synthesis-injection/query.json和audit/harness。此单样本不能代表P-11全面通过；真人G1/多样本语义和完整live矩阵仍pending。源码未改，沿用1bc7976已验证281回归，不重复无关测试。
+
+
+2026-10-05 DEV-11-VIEW-RACE verified local frontend：等待新综合UI入口期间，Node复现会话失效后迟到引用重新打开旧正文（first-failed-node.txt），按viewRevision+session对象身份丢弃旧异步响应；问答/preview/history/export及审计/coverage视图受保护，退出和导航清除旧preview。新增4类延迟响应断言均通过；旧query不能覆盖新answer/history_id或解锁新pending按钮，旧export不能建Blob/文件。修正综合模式完成status仍写“selected excerpts”的不一致。281完整回归/Node通过，源码hash保留。
+
+LIVE_PORT新增可选make参数（默认8088不变），`make live-synthesis LIVE_PORT=8094`已dry-run核对。独立8093启动/native身份/Keychain复用成功，但Computer Use读取0600临时内存Unix入口通道返回EPERM（工具隔离限制），没有写票据文件、降级鉴权或关闭保护；仅停止自己8093launcher/子进程，8088保留。已交用户一次在新终端启动8094并打开入口，无需重输凭据；综合真实视觉/键盘检查仍blocked等待新页，不当mock或之前HTTP结果替代。无新增模型调用/费用。下一接续：用户回复综合页面打开后claim正确账号/模式，执行真实问答、quote展开/两回执/引用/history/export/键盘与截图，再人工G1。
+
+
+2026-10-05 DEV-08/11-SYNTHESIS-UI verified live subset + coverage修复：用户8094已打开，eng_b/真实四源/综合模式现场核验。请求fa3abd9a700a4520b479c65a255803be的8对象、五阶段各8allow、4claim引用四源；支持片段逐个展开（第二项Enter）、Slack reply原生定位预览/Escape关闭、双回执、同会话Recent answers、实际raw下载10060字节与DB答案完全一致。UI观察和agent视觉截图均保存，截图ignored private。初答4claim虽有支持却漏答保障措施，质量缺口保留，不将review accepted当完整性通过。
+
+v2增加生成问题覆盖提示、严格question_covered boolean复核、ID与quote一一对应提示；12针对性测试/282全回归（60local+222mock）/Node/五场景local subset通过。真实首轮复核output_rejected（原verdict未捕获，原因未知），第二轮多ID缺quote在draft契约被拒绝；均无答案提交，证据原样保留。最终隔离8092同题真实四源8对象→4claim、11checks通过，包含timeout budget/failover、完整quotes、review question_covered true、双账本settled，56.76秒。agent对照语义支持和问题覆盖，但前三claim仍重复pilot/GA，非广泛质量保证。证据synthesis-ui/；本轮费用合计 6617 microUSD保守上界（含拒绝请求），不等于供应商账单，沿用原USD20账本。
+
+只停止自己8092测试进程；用户8088/8094保留，8094仍加载旧v1模型，需本人终端Ctrl+C后make live-synthesis LIVE_PORT=8094才加载v2；既有Keychain复用无需重新填整套凭据，仍用最新一次性入口。完整键盘/对比度、综合原生撤权、官方五场景完整live与非作者G1/G2仍pending。下一P0综合撤权和内容更新矩阵，P1减少冗余/相关性及延迟；本分支未push或merge，私有截图/对话未上传。
+
+
+2026-10-05 DEV-11-PORT-SESSION verified local HTTP：用户报告8094已打开，新页eng_b/综合模式DOM可见，但query后session-ended清空身份/正文，没有新的live模型结果。未断定这次是cookie覆盖；另用同一CookieJar双fixture端口复现同名session覆盖403，修复为按server_port命名/认证/退出，隔离双方登录与logout、跨端口CSRF拒绝；283/283（61 local+222 mock）和5针对性HTTP案例通过。Chrome自动打开隔离fixture页blocked，未绕过保护/声称浏览器通过；仅停止自己的8098/8099，用户进程保持。证据port-session-isolation/含首次失败。已请求用户加载修复版最新8094入口（钥匙串复用，不需整套secret重输）；尚未撤销Slack读者权限，Members恢复后仍保留原状。综合原生撤权/更新/完整五场景/G1/G2仍pending。下一准确接续：新入口→核验v2模型结果→原生private撤权和旧supports/history/export保护→恢复同一读者。
+
+
+2026-10-05 DEV-08-SYNTHESIS-v2新版8094真实UI verified query subset：用户重新打开入口后请求a85e49fb3a9d48279115fa6cc530ff35成功，model=deepseek-flash-grounded-synthesis-v2。源刷新8对象，实际检索/模型/返回为CF+Drive+Slack三源6证据，3结论回答final cause、撤回cache假设及timeout budget/failover保障；逐quote、五阶段resource/version覆盖、2accepted/settled及unsigned链5检查通过。原初检查错误把source_refresh全白名单8与selected6数量等同，失败探针保留，后按精确selected集合/版本+allow和refresh覆盖修正（不降低授权检查）。真实UI身份/答案/Slack quotes/双回执显示，1296microUSD上界；不是四源coverage或完整S-01。283源码回归沿用，未重复不变测试。
+
+撤权步骤：扩展弹窗曾阻止自动操作，用户关闭后已恢复原生成员页面，核对private频道C0C6R70SGG4、owner Kyle SHI及reader U0C66B76TE3/Members2。具体Remove from channel被自动审批拒绝，理由是先前授权未明确覆盖该成员/频道/时点；已向用户集中请求本次暂时撤权与恢复确认，尚未改变权限，native综合撤权blocked。证据synthesis-native-revocation/baseline.json及ignored private截图。用户8094新版保持运行，不要求token或再次重启；下一接续仅等待本次具体批准，依次旧引用/history/export保护并恢复同一原有成员。
+
+
+综合撤权第一轮进展：用户已明确批准具体member/channel/time后，原生Members2→1、同一8094/eng_b旧Slack reply引用deny，答案/quotes/preview清空且session保持。Recent answers三条含Slack历史（包括新v2）不可用/无supports或回执，不含Slack的旧记录仍可见；已按原范围恢复同一U0C66B76TE3，原生Members2/UID确认、重新鉴权历史v2再次显示。7项UI/native/audit检查通过，证据synthesis-native-revocation/first-cycle-verification.json；无额外模型调用。第二轮旧导出Remove被自动审批拒绝（前一批准只覆盖一次循环），已请求独立确认；没有再次撤权，原成员访问保持恢复，export仍not_run。无新源码，283回归沿用。
+
+第二轮综合旧导出已在单独明确批准后完成：原生2→1，旧v2 Export answer显示unavailable、Downloads对应文件0→0，清除正文/quote/双回执但eng_b会话仍有效；恢复同一U0C66B76TE3后Members2，重新鉴权历史可用，实际合法导出8146字节/sha256 fb25805d8032ca7216cb28faa6664af5e3f06846c030bd28f211e23264fa025c 与保存答案完全一致。证据second-cycle-verification.json；两轮原生权限均恢复，无额外模型调用，初始v2问答1296microUSD上界（非账单）。综合引用/history/export撤权verified live subset；其余完整矩阵、内容增量更新及G1/G2仍pending。283回归源码无变更，沿用97ea3ac；用户8094新版保留，无需再重启/填凭据。下一P0四源内容更新/删除真实矩阵，P1合法导出后更清晰的页面反馈及质量/延迟。
+
+2026-10-06 用户重启8100后真实新版浏览器两问验证通过：发布C-02有证据，接着安全独立问为空/拒答；两个按钮均不存在，SQLite两次request_started独立标记/history_id=null，负问无evidence_used。evidence/runs/independent-query/live-verification.json。live旧export自动导航被Chrome ERR_BLOCKED_BY_CLIENT阻止，未绕过；端点404为fixture/mock实际HTTP验证，不冒称本次native浏览器端点已测。8094仍旧进程未更新。

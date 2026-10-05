@@ -176,3 +176,99 @@ Engine原生鉴权链保持，模型只输出已提供evidence IDs，后端从�
 2026-10-05 用户报告eng_b Slack token保存并离开密钥页；agent未读取秘密。按AUTH-012从已核对U0C66B76TE3自己的Collaborators页面Leave，native确认移除后Your Apps不再列出该app；未退出工作区/频道、未卸载业务OAuth grant。截图private/slack-reader-collaborator-removed.jpg。四源public配置均加载校验同tenant/actor，Drive映射kyle000909@gmail.com、SlackU0C66B76TE3与既有QQ Atlassian对应用户已确认persona；创建ignored0600 operator-bundle.json（mapping reviewed仅表示账号映射审查，非API验收）。下一步一次启动8088 multi+Drive PKCE+DeepSeek并逐source native identity强制核对。reader Slack API/统一live问答/撤权仍not_run；没有新模型调用。
 
 2026-10-05 AUTH-013：用户明确“先做阶段性收尾，然后push和合并代码到main，我要睡觉了”，批准推送本开发分支及经验证的PR合并main；不扩大为部署、G1/G2、提交比赛或私有工具对话截图上传。保留队友未跟踪文件。
+
+2026-10-05 ADR-020：修复网页用evidence数量推断模型调用的问题。将经过request_id/usage/state校验的既有回执随response保存，界面按显式called显示调用标识、token和保守费用估算；旧记录缺回执显示not recorded，不回填、不称vendor invoice。回执不新增授权，撤权历史整条隐藏。代价是旧进程未加载Engine新增代码时回执仍unknown；回滚可移除展示和response投影，账本/原有权限边界不变。
+
+2026-10-05 ADR-021：旧generic配置/hidden错误无法区分输入失败，且有效邮箱随token失误被重复请求。引入固定受控reason enum和每字段最多3次本地重试；保留现有输入格式及安全TTY约束，不重试平台API、不缓存/persist秘密。原现场细分根因未记录，修复提供下一次可靠诊断，不声称已确认原用户输入。
+
+
+2026-10-05 AUTH-014：用户明确回复“批准本机钥匙串保存与程序复用（推荐）”。批准本项目本机程序保存并复用已审核 eng_b 的 Confluence/Jira authorization（含邮箱）、Slack reader token、DeepSeek key、Google 已批准 drive.readonly 返回的 refresh token（若有），限现有 persona/native account/平台及模型预算。仅创建/读写 app-owned macOS Keychain 项；不读取用户已有「密码」条目、不写明文文件、不扩 scope/费用。不授权部署、G1/G2 或上传密钥。本项明确覆盖此前仅内存保存限制，默认 memory 模式仍保留。
+
+2026-10-05 ADR-022：重复启动丢失全部人工输入造成操作负担；增加显式 --credential-store macos-keychain 与 make live，直接调用 macOS Security.framework Generic Password API，不经 shell 参数传密钥。按 source/tenant/actor/native account（Drive 为 client ID+email）隔离；源凭据格式通过即逐项保存，后续失败不要求已保存项重输，平台真实性仍由每次启动及请求的原生身份/权限检查决定。DeepSeek 构造校验后保存；Drive 固定 scope 的 offline OAuth 获得 refresh，核对原生账号后保存，重启刷新并再次核对身份；invalid_grant 才要求单独 Google 重授权，其他错误拒绝。--replace-credential 仅忽略并更新指定平台旧条目，不预先删除。拒绝/锁定钥匙串不降级明文。
+
+钥匙串提供 OS 加密保存和系统访问提示，不是同机同账号恶意进程隔离或企业凭据服务；Python 内存不保证安全擦除。现有已下载 OAuth client JSON 仍按原批准保留为 ignored 0600 文件，本次不另写 token 文件。运行中 access token 到期仍 fail closed，可重启刷新；不承诺永久有效。回滚为 --credential-store memory，既有 app-owned 条目不会被自动删除，用户可用「钥匙串访问」按 AI-Bang2 pilot v1 / 平台删除。依据：[Apple Generic Password API](https://developer.apple.com/documentation/security/seckeychainfindgenericpassword(_:_:_:_:_:_:_:_:))、[Google native-app OAuth](https://developers.google.com/identity/protocols/oauth2/native-app)。实际四源 Keychain 复用/真实 Google refresh 尚 not_run。
+
+
+2026-10-05 ADR-023：真实四源 eng_b 启动成功后，首个联合请求5b6b37e3e7074d62b95ee563333dbdb1读取8个对象、四源均allow，却在模型网络发送前失败（43.07秒，ledger无该query行/无费用）。实读DB确认Confluence C-01/C-02及Jira J-02正文使用原批准的完整 SYNTHETIC COMPETITION TEST DATA banner，旧DeepSeek guard仅接受方括号标记。保留旧标记路径，新增完整banner+按source匹配明确Fixture ID的窄兼容，不改正文/引用、scope/预算/授权断言；标题标记单独不放行。两个新增安全案例覆盖三个已种植版本及缺失/错源/错ID拒绝，268全回归通过。原文来自已批准比赛空间，非企业数据。证据live-unified/first-query-failure.json；失败记录保留，修复后真实重跑待用户只重启make live验证Keychain复用。
+
+
+2026-10-05 ADR-024：已批准原有GET export端点尚无产品入口；新增Export answer按钮，每次调用后端重新鉴权后才生成下载，unknown/unavailable不创建Blob/文件，先清除旧显示。不使用预先生成下载链接或答案缓存。首次真实文件比对失败，发现JS parse/stringify舍入大整数Jira/Slack version；修复为解析结果仅校验访问与request ID、下载后端原始JSON envelope，Node byte-fidelity断言及实际下载逐字段与服务端持久记录匹配。合法下载副本之后不能撤回，UI注明这一边界。
+
+403不直接等同session失效：额外检查既有/api/session，仍有效则保持身份并隐藏被拒绝资料；session也403时清除旧内容/preview/history ID并提示最新operator入口。默认不重启服务、保存新session或自动获取凭据。真实撤权后export不新增文件、旧citation拒绝并保留eng_b登录均实测，未因Chrome自动API导航blocked关闭安全设置。沿用原GET endpoints/权限契约，回滚只移除前端入口与错误提示；不削弱后台鉴权。
+
+
+2026-10-05 ADR-025：统一真实问答53.37秒，原link_seed为每个没有links的候选完整读取原生对象，却没有关联可以展开。仅在links非空时执行这一专用于展开的检查；本次模型前、模型发送前、返回前以及采集当前权限检查不变，不缓存权限、不并行绕过原生鉴权。有links路径仍按原流程检查。mock计数5→4仅证明读取数量下降，真实耗时受网络影响，尚未重测。首次Slack安全测试以第5次读取模拟撤权，优化后注入落到模型之后；改为绑定实际model_dispatch第二候选，保留模型不调用和request_failed断言，原失败报告保留。回滚为恢复无条件link_seed检查；不涉及scope、预算或外部权限修改。
+
+
+2026-10-05 ADR-025验证补充：使用可信本地git archive基准1ba796b及优化8d4ba6b两个临时operator，各自工作目录与SQLite隔离、端口8090/8091，fake model控制模型费用和延迟变量。程序复用AUTH-014自己保存的条目，stdin DEVNULL确保不依赖人工输入；Drive固定只读refresh与native身份核验实际通过。stdout只在内存提取reuse标记及一次性入口票据，不输出/保存ticket、OAuth网址或cookies，缺授权即停止。单样本53.209→40.116秒，不作稳定性能承诺。当前用户8088无重启/数据库混入假模型记录；测试结束仅停止自己进程。
+
+
+2026-10-05 ADR-026：原文选择不够简洁回答跨源业务问题；采用显式opt-in综合模式，不将任意模型文本当已验证企业事实。生成输出严格claims/text/evidence_ids/supports契约，服务器匹配每个连续quote和当前授权证据；单独同模型prompt/call按全文逐结论判断支持关系，全部true才接受，未知/错误/范围缺失拒绝整答。两次请求共享已批准预算账本并分别预留/结算；review_dispatch重新检查全部selected当前原生权限与版本，任何撤权则第二调用不发，返回前再次检查。独立调用不是独立模型或信任域，同模型偏差仍可能共同漏检；精确quote仅证明出处，不证明语义。人工质量/G1仍必须进行。
+
+代价是一次额外模型调用与一轮源检查，实际四源综合单题58.95秒，不能沿用fake-model40.12秒宣称综合性能。原文模式为默认，回滚选--answer-style excerpts，无需新scope/token/预算。首题三源7input未达四源探针要求，改变问题以真正询问Jira code fix状态后通过，未更改失败断言或补写通过。关键词检索覆盖仍为限制，不能据两題断言完整语义检索。模式专属安全contract/mock与真实合成证据分别记录。
+
+
+2026-10-05 ADR-026安全验证补充：为避免向真实四源写入恶意资料，用授权本地fixture ACL及明确SYNTHETIC内容验证真实模型行为；固定eng_b、C-02可读，私有S-01不可读。复用AUTH-014保存的模型key及既有ledger，模型只收到当前fixture授权资料。此模式是fixture_source_live_model_synthesis，不能作为平台原生ACL/真实四源安全的替代。已检查确实有malicious input、只有固定模型endpoint、无tools和agent语义输出；模型安全单样本有效、额外无关但受支持结论记录为相关性缺口，不提高完整P-11/G1声明。
+
+
+2026-10-05 ADR-027：API返回时权限允许不代表前端响应仍属于当前会话/视图。实际Node复现expiry后迟到preview重开旧正文；新增单调viewRevision及session对象引用检查，导航/注销/expiry使旧请求失效，成功或错误旧响应不改DOM/history_id/按钮状态或创建导出文件。业务权限仍由后端当前检查决定，前端token不是权限授予。请求已发送不能撤回模型处理/费用，逻辑丢弃不声称服务器取消。页面快照/合法已下载副本不能撤回。回滚去掉前端guard但会恢复已复现竞态，故不建议。
+
+综合UI启动沿用既有只读授权/Keychain/USD20；8093独立进程入口只在内存并经0600Unix socket预备移交，但CUA的EPERM阻止读取。按工具限制停止自有进程，不改安全设置或把票据写明文文件；改为用户本人从正式终端打开新一次性入口。Makefile LIVE_PORT只是本机端口选择，默认8088与鉴权机制不变，不公开网络监听。
+
+
+2026-10-05 ADR-028：真实8094综合UI回答fa3abd9a700a4520b479c65a255803be的4结论均有原文支持，但遗漏用户明确问到的运行保障；同模型v1逐句支持复核不足以证明问题覆盖。v2生成优先覆盖所有问题部分/合并重复结论，复核增加严格boolean question_covered；false、missing、unknown及非boolean整答拒绝。保持精确quote、全部原生授权阶段与原预算，既有claim_format不变，model名称v2区分运行版本。首轮v2真实复核output_rejected，原始verdict未捕获，具体拒绝原因未知；第二次实读输出多ID缺对应quote，模型前端契约拒绝且无review，不修补/臆造quote。补充生成提示显式要求ID列表等于supports对应ID、优先少量必要引用；保持服务器断言。失败记录保留，模型复核和coverage仍是同模型的可错判断，不是确定性语义保证。无生产自动付费重试；开发重测使用既有批准的合成源/账本。回滚v1会恢复已观察漏答，不建议；默认原文模式不变。
+
+ADR-028验证补充：修正后隔离真实四源11checks通过，保障措施有C-01精确quote，模型覆盖判定true，agent对照本题所有请求部分。两次失败未删除或标通过；前三claim仍重复，模型判定不能替代人工质量/G1。用户服务不被自动终止；v1历史记录保持原model名称/回执，不回写成v2。
+
+
+2026-10-05 ADR-029：8094新页面初始DOM为eng_b，但查询后session-ended；具体原因未能区分过期/重启/cookie覆盖，不记录为已确定归因。双本机HTTP服务器+真实共享CookieJar明确复现原session同名覆盖导致第一端口403。按绑定server_port选择aibang2_session_{port}，签入/认证/退出一致，只接收本端口cookie；旧session cookie不回退。保持随机token、server session/expiry、HttpOnly/SameSite/Host/Origin/CSRF及来源权限不变。Cookie名字防止意外冲突，并不能隔离同hostname恶意本机服务（各端口仍可能收到其他cookie），不是SSO/生产信任边界。依据[RFC6265 §8.5](https://www.rfc-editor.org/rfc/rfc6265#section-8.5)。5针对性HTTP测试及283回归通过；Chrome自动打开fixture8098被blocked，保留browser not_run，没有绕过保护。只停止自己的8098/8099，未改变Slack成员。回滚恢复同名cookie会复现端口覆盖；旧服务必须重启后用最新入口加载，不读取凭据或令失效session复活。
+
+
+2026-10-05 具体综合撤权授权：用户明确批准C0C6R70SGG4私有合成频道/U0C66B76TE3（kyle000909@gmail.com）本次临时移除，验证8094 eng_b旧综合引用/history/export，然后恢复原访问；不改工作区成员、角色/token/scope、不新调模型。第一轮已执行并恢复Members2/同一UID；旧preview原生deny清除答案，history隐藏含Slack的综合supports/双回执，其他独立答案保持。由于拒绝旧引用会清除该旧导出按钮，额外第二轮旧导出测试被自动审批拒绝（认为上次只批准一个循环），需单独明确批准；Remove最终按钮尚未执行，原访问仍恢复，未绕过拒绝。
+
+具体授权补充：用户单独批准第二轮同一member/channel的旧导出测试及恢复。已原生2→1→2，旧export返回unavailable、不建文件（0→0），旧正文/quotes/receipt清除而session保持。最终原生核对同一U0C66B76TE3、Members2，之后合法raw导出8146字节与存储答案逐字段一致。未改role/token/scope，未新调模型；审批拒绝未绕过。
+# 2026-10-05 ADR-030: isolated lifecycle acceptance
+
+2026-10-05 ADR-031 / AUTH-003执行：补齐既有合成Jira项目KAN的J-03，原生KAN-5/10014，In Progress，完整SYNTHETIC banner及Fixture ID；无新增成员、scope或费用。Maya作为虚构scenario owner在正文标记，native assignee明确Unassigned，不冒称真实账号。eng_b原生metadata及正文读取allow后，仅将该工单加入ignored本地白名单，保留旧配置备份；现有8094进程不重启，下一启动读新配置。DeepSeek guard只增加jira/J-03完整banner配对，错误source/缺banner仍拒绝，扩充原测试subtests（方法数仍283），无任意种植资料默认放行。真实综合一题覆盖全部工程要求事实及四源引用；双调用1856microUSD保守记账，同一USD20ledger。不是原eng_a/product_ops全矩阵或人G1，关键词检索/RAG质量仍待增强。
+
+2026-10-05 AUTH-015：用户对具体候选回复“批准”，允许C-01（Confluence98564）临时改为fixture已定义runbook v2、验证后恢复原正文；允许在已批准Drive合成文件夹创建明确SYNTHETIC临时测试文件、加入本地只读白名单、验证后移至Drive废纸篓并检查旧引用/历史失效。不得删除原三文件、改变共享、增加scope/费用；发现第三方并发修改则停止恢复。本授权不代表G1/G2或发布批准。
+
+AUTH-015执行：管理员UI操作CF正文与Drive临时文件回收，程序始终仅eng_b只读/已批准Keychain refresh，fake model无runtime费用；隔离SQLite与临时Drive白名单，不修改用户8094/bundle。CF原文恢复API严格相等，native1→2→3；Drive temporary native1eM_6RUZ8y130l9B0WKrSs3GkGu6rjbUZ移入回收站，原三文件保留、共享未操作。Chrome file URL权限blocked后没有扩展权限或旁路上传，由用户本人拖入。首个CF探针误取Evidence.native_id导致KeyError，保留audit失败事实并修正resource_id定位；初始脚本PYTHONPATH未设的启动失败发生在读取凭据/平台调用前。未改应用代码/有效安全断言；未测后台同步时延/HTTP导出/真实模型/人工G1，边界保持。
+
+用户授权继续所有可推进工作，不等于新增外部写入、公开开放或人工G1/G2通过。采用独立内存fixture世界逐source/operation执行12组生命周期检查，不改变正在运行的8094、真实资料、钥匙串或模型账本。旧索引故意滞后，验证当前权限/版本独立保护模型、历史及引用；更新发布后核验新版本，撤权/删除不重建正文。结果明确local subset，导出仅共享backend projection，不冒称本次HTTP/browser验证。首次探针把用户question中的marker误当模型证据泄露，保留失败报告，修正为只查evidence；有效断言保留。另整理团队安全观看清单，人工批准继续not_run。回滚可删除独立runner/Makefile入口，不影响runtime。
+
+
+2026-10-05 ADR-032：现实现按整篇16000字符budget跳过长文，不能检索后段事实。无新依赖/服务，改为本地固定2400Unicode字符/400重叠窗口；每资料最多3，总24证据/16000字符，短文<=4000保持旧ID；长引用resource@version#start:end只接受该版本规范窗口，locator.text_window记录单位/策略，正文为原文精确连续切片，不合并权限对象、不补写标题/标记。所有模型/复核/返回阶段仍按资料当前native权限与version检查，preview/history/export重新鉴权；content/ACL增量契约不变，窗口按已发布版本即时派生，无独立向量索引。小型通用英文aliases改善已知词汇变化，不宣称语义检索。代价：固定窗口可截句/重复，部分资料预算先后可能影响召回，仍全量本地扫描，不保证规模性能。DeepSeek synthetic-only严格检查未改：缺真实marker的晚段窗口拒绝调用，不能为了方便把源头标记复制进原文；真实长文模型另需可审查的来源边界实现及验收。回滚engine窗口入口即可恢复整篇模式；已存片段历史若回滚不可解析，安全拒绝，不迁移旧记录为伪原文。无平台写入/新收费/用户服务重启。
+
+
+2026-10-05 ADR-033：依用户确认按验收缺口/依赖/交付风险排序，先补产品业务问答和审计候选，不因讨论RAG而无限扩展技术栈。复用AUTH-003/014已有eng_b四源只读/自己的Keychain与原USD20ledger做产品问答及无证据控制，无外部写入/新scope/凭据要求，不能据工程身份替代product_ops原生权限。新增opt-in验收runner，禁止覆盖现有live证据；实际harness漏改mode留下fake_model后缀，但model名/独立ledger/真实读者阶段明确是真实综合，保存原回答/hash链与实际执行源码，修复未来runnermode而不篡改历史或重复收费。离线import真实合成audit副本，以显式test auditor验证查询和CodeBuddy独立validator签名边界；临时同机privatekey自动删除，不将机制证明当生产独立保管或live审计认证。候选五场景矩阵与缺口集中维护，人工G1/G2继续not_run。
+
+
+2026-10-05 干净归档首次重建失败事实：295测试中native_identity_failure安全stage案例mock Store(:memory:)却让main chmod磁盘路径，依赖本机已存在的confluence-web.sqlite，干净archive返回local_store而非期望native_identity。保留rebuild-candidate失败日志/报告；测试改用独立TemporaryDirectory中的真实SQLite，仍注入原native失败、保留server不serve/close一次/受控错误不含上游秘密全部断言，并实际检查文件0600。不改应用授权/失败分类、不预置本机凭据、不删除或跳过有效测试。需新commit干净archive重跑后才能宣称可重建。
+
+干净候选修复验证：e9a55e6 archive实际295通过、5local场景/Node/fixture进程HTTP前后端通过，记录rebuild-fixed；只终止自有临时服务并清理自有临时目录。原失败证据保留不标通过。原source真实问答和后续本地重建模式分别列，不据HTTP smoke宣称browser/G1。当前未推送/合并，最终文档证据提交不改变被验证的应用/test代码。
+
+
+2026-10-05 ADR-034：S-05 UI原来同页面并发查询只校验view，旧query/page响应可以覆盖新scope，Node先复现后修复。新增局部inquiryRevision，分页闭包持有该query的filters/as_of，旧response/error不能显示，next disabled防重复、错误可重试；backend audit role/scope/参数化查询不变。render audit事件区分candidate/authorized/model input/review/cited/stored/delivery，不把调用等同已读；所有资料用textContent无HTML执行。对unsafe JS整数显示查看后端/字符串evidence ID的提示，不伪精确或改原始记录。UI不验证独立签名，明确说明；Node模型DOM证据和Chrome blocked/visual not_run分别记，停止自有临时fixture不影响8094。回滚前端会恢复已复现scope混淆，不建议。未新增scope、账号、模型或费用。
+
+2026-10-05 ADR-035 / AUTH-003执行：在既有比赛合成空间按fixture C-03新增557057，Restricted仅现有owner（不新增账号/权限，不修改C-01父页正文或访问）。只读验收实例显式仅557057/164283，复用AUTH-014 app-owned eng_b Keychain，用户配置和8094不改。受控本地stale synthetic索引来自已知owner UI文字，不冒称eng_b成功采集/真实旧授权历史；其保留时native refresh与preview拒绝，证明当前源权限与检索独立。第一次probe以fake generate次数当网络调用次数，实际负面空evidence也执行fake生成；保存失败/harness，改为断言负面空证据与唯一正面证据输入，13checks通过。未删安全断言或放宽runtime；无模型网络/费用。C-03 guard未加入DeepSeek允许集，因为本轮无授权把受限源发给模型。未测原contractor/fullpersona、统计时间边界/G1。新增验收脚本可删除回滚，不影响runtime；外部synthetic seed保留用于复测，删除另按恢复流程，不擅自操作。
+
+2026-10-05 b541c02重建记录：第一次sandbox run因loopback bind EPERM产生23HTTP errors（297总），非应用断言问题。保留rebuild-native-restricted；经现有本地测试授权提权运行同一提交，setup/297tests/5fixture/2Node/HTTP smoke通过rebuild-native-restricted-approved。未删除有效测试、关闭安全设置或修改runtime；无源/模型调用。
+
+2026-10-05 ADR-036：S-05原前置要求成功/部分授权/拒绝/失败，原captured-live stream未覆盖全部。增加独立fixture Engine请求和request-boundary事件ID oracle，不用inquiry过滤逻辑生成expected；引入page1之后真实新fixture请求验证as_of固定及scope/actor噪声。失败fake model明确注入并保留request_failed/无成功存储。既有CodeBuddy签名CLI复用，无伪造腾讯工具新增贡献；本机临时key删除，不冒称custody。验收输出拒绝覆盖已有目录，原runtime不改。团队单次观看流程集中在SAFETY_REVIEW，记录仍由实际观看产生，不因信任/自动结果标G1。新增runner/Makefile可单独删除回滚，无external权限/费用。
+
+2026-10-06 ADR-037 / AUTH-003执行：用新建独立KAN-6合成工单验证内容更新，避免改已验证baseline KAN-4/KAN-5。仅owner UI写正文，程序只读eng_b既有授权；metadata-only exact key discovery后显式两ID whitelist，独立索引、无原bundle改动。Jira content fingerprint比较用相等/不等而非数字新旧；native/current history/preview保护与refresh证据分离。13checks通过、6guardtests；原源码/harness/hash/UTC timestamps保留，新加坡日期Oct6不回写audit。新临时工单留存Revision2，不删除或扩DeepSeek synthetic guard，不据新增fake模型测试说全live通过。
+
+2026-10-06 独立产品读者接入候选：existing2918379149@qq.com Confluence-only只读scope/Oct20到期/token label及app-owned product_ops Keychain复用，见PRODUCT_READER_PILOT。AUTH-005/014仅eng_b不能推断新账号持久凭据已批准；具体确认已发送，未获答复不创建/读取新token或改平台权限。现有candidate映射须native current-user核验，不用eng_b冒充，C-01/C-03若实际allow即隔离失败。
+
+2026-10-06 AUTH-016：用户对PRODUCT_READER_PILOT的具体确认回复“批准”。仅existing product_ops/2918379149@qq.com Confluence token，名称AI-Bang2 product_ops Confluence read-only pilot，Oct20到期，read:page:confluence+read:content-details:confluence；显式C-01/C-02/C-03合成白名单，不新增成员/业务写/admin scope/费用。同时批准confluence/aibang2-live-pilot/product_ops/已核验native account的app-owned本机Keychain保存复用，首次隐藏输入，禁止现有Passwords读取/明文存储；不扩Jira/Slack/Drive/DeepSeek账号。最终密钥创建/输入由用户完成，原生current-user核验后保存，错误身份不得persist/fallback。此授权不代表native验收或G1/G2完成。
+
+2026-10-06 ADR-038：现CLI Keychain仅multi会迫使新获批Confluence产品读者重复输入。按AUTH-016最小扩到Confluence-only（其他single source仍拒绝），source loader保存新key前先native current-user核验，saved每启动同样核验，不读Passwords/不回退env或其他actor。单源Keychain数据库按actor/tenant/native account摘要分离并chmod0600，避免与旧confluence-web混用；multi/default memory行为保留。wrong source replacement拒绝。6新测试覆盖正确身份前后持久化、OS拒绝、错native不保存、saved无TTY和实际CLI重复启动/隔离；307全回归通过。浏览器已交接产品账号登录，未创建token/native权限验证，不能从mock通过推断live。回滚只去掉single CF opt-in会恢复重复输入需求，不迁移旧credential/DB或修改原8094。
+
+### ADR-039 · Explicit new question after native product reader check (2026-10-06)
+
+Evidence: browser security question immediately following product capability retained authorized C-02 through existing history_id dependency supplementation; an independent query correctly refused. Add New question action to clear history_id, composer and stale views, preserving session and explicit follow-up behavior. No authorization/model/retrieval relaxation; viewRevision discards delayed old answers. Node race checks cover dependency clearing and delayed response. Revert is limited to UI/button/tests; no schema/data migration or new fees/scopes.
+
+### ADR-040 · Independent questions and no answer downloads (2026-10-06)
+
+用户指出主界面独立问答外观与自动history_id依赖不一致，且无需求依据的下载扩大不可撤回副本范围，并明确批准纠正。选择独立问答：前端移除historyId/New question，HTTP拒绝history_id，Engine不查询旧run/补充依赖（旧本地harness参数仅兼容忽略）。删除Export answer/Blob生成/GET export路由，登录后直接请求返回404。保留历史、引用、逐模型阶段授权和原生撤权测试；旧导出断言替换为端点关闭断言，不再因测试需要提供下载。已合法保存的副本无法远程回收。覆盖ADR-024导出UI及ADR-039新问题按钮；如未来引入聊天或导出须作为明确产品变更，而非验收便利。无schema迁移/新scope/费用。运行中Python旧进程须重启；静态页面刷新只更新前端。

@@ -1,0 +1,33 @@
+{
+  "date_singapore": "2026-10-06",
+  "mode": "local_fixture_mock_keychain_and_http",
+  "authorization": "AUTH-016 approved; native account/token creation pending",
+  "targeted_tests": 32,
+  "full_tests_final": 307,
+  "earlier_full_tests": 306,
+  "source_hashes": {
+    "brain/operator_web.py": "4ec9d586e0c8889de05e9974282bae1cb4775c65c8d42e0bc6598fa3c2a751c6",
+    "scripts/confluence_probe.py": "4fbd00066fbf7f51bbfdbe710e0c121112b1fa3a7a758ec9775ba1859e2e125b",
+    "tests/test_confluence_keychain.py": "fb31c182167dfadaa804700ef37533612de1d7a0322023f1a6bdec6f3a63e2cb",
+    "config/confluence-product.example.json": "1666759ea40f987f593b772ba9f1a3de2ad2f124c01e7b0b7180b76876515dc5"
+  },
+  "native_product_account": "not_run",
+  "real_keychain_product_item": "not_created",
+  "live_model": "not_run",
+  "human_G1": "not_run",
+  "existing_operator_restarted": false,
+  "checked_behaviors": [
+    "saved credential without hidden input",
+    "new credential native identity before persistence",
+    "wrong native account never saved/fallback",
+    "Keychain denial never falls back",
+    "invalid page whitelist rejected before Keychain read",
+    "operator repeat startup and separate tenant/native account SQLite 0600"
+  ],
+  "initial_target_invocation_error": {
+    "kind": "test_module_import",
+    "detail": "test_keychain imports test_bundle_oauth; package invocation without PYTHONPATH=tests failed before this module tests ran",
+    "outcome": "Ran 22 tests; 1 import error, 21 passed; actual tool output observed, this is a summary not original log",
+    "fix": "Use existing tests discovery layout or PYTHONPATH=tests:. without changing assertions"
+  }
+}

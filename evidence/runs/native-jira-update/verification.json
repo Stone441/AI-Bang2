@@ -1,0 +1,59 @@
+{
+  "started_at": "2026-10-05T16:34:34.275474+00:00",
+  "commit": "a8b662cb2b270d9b1ce40f4950c3a76a0ffb89af",
+  "mode": "jira_live_api_fake_model",
+  "actor": "eng_b",
+  "source_writes_by_runner": false,
+  "model_network_calls": 0,
+  "human_G1": "not_run",
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/native_jira_update_acceptance.py": "2e443a8b83aa8693a0ccb26875bc376da34e48c09183c5d2d1644e35fa439d37",
+    "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
+    "brain/delegated_query.py": "f15e270d3e17a9561c5f760e5f3864081dbdc3d439b1f660be9e63a054fab8eb",
+    "brain/engine.py": "ec590c6ca24b4429b03b449e878f6b98a0677708fb27a1e7154bf0f75954e91a"
+  },
+  "discovery": {
+    "decision": {
+      "result": "allow",
+      "checked_at": "2026-10-05T16:34:35.193064+00:00",
+      "method": "jira-allowlisted-issue-project-discovery",
+      "policy_version": 0
+    },
+    "ids": {
+      "issue_id": "10015",
+      "issue_key": "KAN-6",
+      "project_id": "10001",
+      "project_key": "KAN"
+    }
+  },
+  "checks": {
+    "baseline_revision_1_observed": true,
+    "old_index_present_before_refresh": true,
+    "native_old_version_denied": true,
+    "old_preview_denied_before_index_refresh": true,
+    "old_history_export_projection_denied": true,
+    "fresh_version_changed": true,
+    "fresh_revision_2_observed": true,
+    "fresh_has_no_revision_1": true,
+    "new_preview_matches_exact_text": true,
+    "unrelated_control_unchanged": true,
+    "new_model_evidence_has_revision_2": true,
+    "new_model_evidence_has_no_revision_1": true,
+    "audit_chain_valid": true
+  },
+  "native_id": "10015",
+  "before_version": 516327746802067792,
+  "after_version": 440116571589157286,
+  "before_request_id": "233387a159c24e80a9c09b75c9956a1b",
+  "after_request_id": "f0373d57330745e19c85ecbd91064784",
+  "audit_events": 23,
+  "status": "verified_native_subset",
+  "limitations": [
+    "New synthetic KAN-6 only, existing eng_b readonly operator and fake model.",
+    "Native version is a content fingerprint, not a sequential Jira revision number.",
+    "Query-triggered source refresh, not webhook/scheduler or propagation SLA.",
+    "History uses shared export projection; no browser HTTP download tested here.",
+    "Unsigned audit chain, not independent signature custody or human G1."
+  ],
+  "finished_at": "2026-10-05T16:36:59.631157+00:00"
+}

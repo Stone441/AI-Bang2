@@ -12,9 +12,10 @@ from pathlib import Path
 
 from brain.confluence import ConfluenceReader, Delegation
 from brain.contracts import Actor
+from brain.credential_input import HiddenInputUnavailable
 
 
-def load_reader(path, prompt_actor=None, discovery_only=False):
+def load_reader(path, prompt_actor=None, discovery_only=False, *, credential_store=None):
     config = json.loads(Path(path).read_text())
     if config.get('approved_synthetic_only') is not True:
         raise ValueError('Synthetic approval required')
@@ -33,25 +34,51 @@ def load_reader(path, prompt_actor=None, discovery_only=False):
                             [] if discovery_only else config['space_ids'], delegations,
                             cloud_id=config.get('cloud_id'),discovery_only=discovery_only)
     if prompt_actor is not None:
-        if not sys.stdin.isatty() or prompt_actor not in config['delegations']:
+        if prompt_actor not in config['delegations']:
             raise ValueError('Interactive mapped operator required')
-        reader.delegations[prompt_actor]=hidden_delegation(config['delegations'][prompt_actor]['account_id'])
+        account_id = config['delegations'][prompt_actor]['account_id']
+        if credential_store is None:
+            reader.delegations[prompt_actor]=hidden_delegation(account_id)
+        else:
+            saved = credential_store.get('confluence', reader.tenant, prompt_actor, account_id)
+            delegation = Delegation(account_id, saved) if saved is not None else hidden_delegation(account_id)
+            reader.delegations[prompt_actor] = delegation
+            # Verify actual native identity before persisting newly entered data.
+            reader._credential(Actor(prompt_actor, reader.tenant), sorted(reader.page_ids)[0])
+            if saved is None:
+                credential_store.put('confluence', reader.tenant, prompt_actor, account_id, delegation.authorization)
+            print('Confluence: using verified app-owned Keychain credential.', flush=True)
+    elif credential_store is not None:
+        raise ValueError('One mapped operator required for Keychain mode')
     return reader
 
 
 def hidden_delegation(account_id):
     if not sys.stdin.isatty():
-        raise ValueError('Interactive mapped operator required')
-    try:
-        with warnings.catch_warnings():
-            warnings.simplefilter('error',getpass.GetPassWarning)
-            email=getpass.getpass('Atlassian email (hidden): ').strip()
-            token=getpass.getpass('Scoped API token (hidden; not saved): ').strip()
-    except getpass.GetPassWarning:
-        raise ValueError('Secure hidden input unavailable') from None
-    if (not re.fullmatch(r'[^\s:@]+@[^\s:@]+',email) or not token or len(token)>4096
-            or '\r' in token or '\n' in token):
-        raise ValueError('Invalid credential input')
+        raise HiddenInputUnavailable('secure_tty_required')
+    def read_valid(prompt, validate):
+        for attempt in range(3):
+            try:
+                with warnings.catch_warnings():
+                    warnings.simplefilter('error',getpass.GetPassWarning)
+                    value=getpass.getpass(prompt).strip()
+            except getpass.GetPassWarning:
+                raise HiddenInputUnavailable('hidden_input_unavailable') from None
+            except EOFError:
+                raise HiddenInputUnavailable('input_ended') from None
+            reason=validate(value)
+            if reason is None: return value
+            del value
+            if attempt==2: raise HiddenInputUnavailable(reason)
+            print(f'Input not accepted [{reason}]. Re-enter only this field; input remains hidden.',flush=True)
+    email=read_valid('Atlassian email (hidden): ',
+                     lambda value:None if re.fullmatch(r'[^\s:@]+@[^\s:@]+',value) else 'email_invalid')
+    def token_reason(value):
+        if not value: return 'token_empty'
+        if len(value)>4096: return 'token_too_long'
+        if '\r' in value or '\n' in value: return 'token_multiline'
+        return None
+    token=read_valid('Scoped API token (hidden; not saved): ',token_reason)
     authorization='Basic '+base64.b64encode((email+':'+token).encode()).decode()
     return Delegation(account_id,authorization)
 

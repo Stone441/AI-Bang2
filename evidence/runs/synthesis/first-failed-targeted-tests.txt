@@ -1,0 +1,57 @@
+test_direct_generation_requires_server_stage_callback (test_synthesis.GroundedSynthesis.test_direct_generation_requires_server_stage_callback) ... ok
+test_empty_evidence_and_empty_claims_do_not_start_review (test_synthesis.GroundedSynthesis.test_empty_evidence_and_empty_claims_do_not_start_review) ... ok
+test_engine_review_revocation_or_return_revocation_fail_closed (test_synthesis.GroundedSynthesis.test_engine_review_revocation_or_return_revocation_fail_closed) ... 
+  test_engine_review_revocation_or_return_revocation_fail_closed (test_synthesis.GroundedSynthesis.test_engine_review_revocation_or_return_revocation_fail_closed) (stage=None) ... ERROR
+  test_engine_review_revocation_or_return_revocation_fail_closed (test_synthesis.GroundedSynthesis.test_engine_review_revocation_or_return_revocation_fail_closed) (stage='return') ... ERROR
+test_exact_quote_provenance_does_not_itself_prove_entailment (test_synthesis.GroundedSynthesis.test_exact_quote_provenance_does_not_itself_prove_entailment) ... ok
+test_fake_synthesis_cli_fails_before_platform_access (test_synthesis.GroundedSynthesis.test_fake_synthesis_cli_fails_before_platform_access) ... ok
+test_review_rejects_false_unknown_duplicate_incomplete_or_boolean_index (test_synthesis.GroundedSynthesis.test_review_rejects_false_unknown_duplicate_incomplete_or_boolean_index) ... ok
+test_revocation_between_draft_and_review_prevents_second_network_request (test_synthesis.GroundedSynthesis.test_revocation_between_draft_and_review_prevents_second_network_request) ... ok
+test_two_separately_budgeted_calls_preserve_support_and_current_authorization (test_synthesis.GroundedSynthesis.test_two_separately_budgeted_calls_preserve_support_and_current_authorization) ... ok
+test_unknown_citation_or_invented_quote_rejected_before_review (test_synthesis.GroundedSynthesis.test_unknown_citation_or_invented_quote_rejected_before_review) ... ok
+
+======================================================================
+ERROR: test_engine_review_revocation_or_return_revocation_fail_closed (test_synthesis.GroundedSynthesis.test_engine_review_revocation_or_return_revocation_fail_closed) (stage=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_synthesis.py", line 140, in test_engine_review_revocation_or_return_revocation_fail_closed
+    answer=engine.query(Actor('eng_b'),'payment-service retry incident')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 115, in query
+    draft=self.model.generate_with_authorization(question,selected,rid,authorize_model_stage)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 76, in generate_with_authorization
+    authorize('review_dispatch')
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 112, in authorize_model_stage
+    self.audit.append('model_review_started',actor.user_id,rid,
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      {'evidence_ids':[e.evidence_id for e in selected]})
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/audit.py", line 44, in append
+    raise ValueError('event type')
+ValueError: event type
+
+======================================================================
+ERROR: test_engine_review_revocation_or_return_revocation_fail_closed (test_synthesis.GroundedSynthesis.test_engine_review_revocation_or_return_revocation_fail_closed) (stage='return')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_synthesis.py", line 136, in test_engine_review_revocation_or_return_revocation_fail_closed
+    with self.assertRaises(PermissionError):engine.query(Actor('eng_b'),'payment-service retry incident')
+                                            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 115, in query
+    draft=self.model.generate_with_authorization(question,selected,rid,authorize_model_stage)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 76, in generate_with_authorization
+    authorize('review_dispatch')
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 112, in authorize_model_stage
+    self.audit.append('model_review_started',actor.user_id,rid,
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      {'evidence_ids':[e.evidence_id for e in selected]})
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/audit.py", line 44, in append
+    raise ValueError('event type')
+ValueError: event type
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.053s
+
+FAILED (errors=2)
