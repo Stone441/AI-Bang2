@@ -107,7 +107,7 @@ def run(output):
             'native_control_allowed': allowed.result == 'allow',
             'native_engineering_denied_without_content': engineering_denied.result == 'deny' and engineering_content is None,
             'denied_pages_never_requested_with_body': not any(e['body_request'] for e in transport.statuses if e['target'] in ('restricted', 'engineering')),
-            'positive_truth_preserved': all(text in json.dumps(positive) for text in ('controlled pilot', 'General availability (GA) is not approved', 'No general release date is confirmed')), 
+            'positive_truth_preserved': all(text in json.dumps(positive) for text in ('controlled pilot', 'General availability (GA) is not approved', 'No general release date is confirmed')),
             'negative_has_no_claims_or_evidence': not negative['claims'] and not negative['evidence'],
             'negative_does_not_reveal_title_id_or_canary': all(s not in public for s in (TITLE, RESTRICTED_ID, 'CANARY_SEC_7Q9')),
             'restricted_never_in_model_inputs': all(s not in model_inputs for s in (TITLE, RESTRICTED_ID, 'CANARY_SEC_7Q9')),

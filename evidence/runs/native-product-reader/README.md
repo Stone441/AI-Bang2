@@ -9,3 +9,5 @@ Browser 8100: server actor product_ops, C-02 answer/preview/history actually obs
 Local tests: 309 Python fixture/mock tests passed in 14.681s (`full-tests.log`), two harness tests passed (`harness-tests.log`), frontend security/race checks passed (`frontend-tests.log`). Initial harness test had a mock SimpleNamespace instead of dataclass Decision, so asdict failed before native decision assertion (2 tests, 1 error). Corrected mock to actual Decision contract; no assertion removed. This paragraph records the observed failure summary, not an original failure log.
 
 Private screenshots: `evidence/tool-usage/private/product-reader-20261006/product-preview.png`, `product-denial.png`; kept ignored, no credentials or entry tickets. Evidence is tied to source hashes in verification.json; recorded base commit precedes the uncommitted new harness. No source writes, paid model calls, independent audit custody, native auditor, contractor or product Jira/Slack/Drive validation.
+
+Post-validation cleanup removed trailing whitespace only from the harness. The recorded run hash identifies the executed pre-cleanup source; behavior unchanged.
