@@ -66,3 +66,10 @@
 
 
 2026-10-05 [local port-session regression](runs/port-session-isolation/verification.json), [initial reproduced failure](runs/port-session-isolation/first-failed-tests.txt): real shared CookieJar with two loopback fixture servers, no external APIs/models. Login/logout remain independent and cross-port CSRF rejected;283 regressions passed. Chrome temporary fixture navigation blocked, not browser-verified. Current8094 session-ended observation recorded without asserting cause; no Slack membership change.
+
+
+2026-10-05 [v2 real browser query baseline](runs/synthesis-native-revocation/baseline.json), [actual query audit](runs/synthesis-native-revocation/baseline-audit.json): three input sources/six evidence, final cause/withdrawn hypothesis/runbook safeguards, five checks and both receipts;1296microUSD upper accounting. [Incorrect first stage-count oracle](runs/synthesis-native-revocation/first-stage-count-check.json) preserved: source_refresh covers eight configured objects while retrieval selects six; corrected check uses exact selected resource/version sets and all-allow, with refresh coverage. Specific native Remove rejected by automatic approval; no membership changed, awaiting confirmation.
+
+[First native synthesis revocation cycle](runs/synthesis-native-revocation/first-cycle-verification.json), [actual endpoint audit](runs/synthesis-native-revocation/first-cycle-audit.json): member2→1→2, same-session stale citation deny clears answer/preview, mixed synthesis history/quotes/dual receipts withheld, unrelated answer remains usable. Original same member/UID restored;7checks, zero new model calls. Extra export cycle not_run after approval review rejected it; original access remains restored.
+
+[Second native synthesis export cycle](runs/synthesis-native-revocation/second-cycle-verification.json), [endpoint audit](runs/synthesis-native-revocation/second-cycle-audit.json): separately approved, stale export unavailable and files0→0; same native UID finally restored, Members2. Legitimate restored export8146 bytes matches the entire stored answer including quotes/dual receipts; zero extra model calls.

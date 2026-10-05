@@ -222,3 +222,8 @@ ADR-028验证补充：修正后隔离真实四源11checks通过，保障措施�
 
 
 2026-10-05 ADR-029：8094新页面初始DOM为eng_b，但查询后session-ended；具体原因未能区分过期/重启/cookie覆盖，不记录为已确定归因。双本机HTTP服务器+真实共享CookieJar明确复现原session同名覆盖导致第一端口403。按绑定server_port选择aibang2_session_{port}，签入/认证/退出一致，只接收本端口cookie；旧session cookie不回退。保持随机token、server session/expiry、HttpOnly/SameSite/Host/Origin/CSRF及来源权限不变。Cookie名字防止意外冲突，并不能隔离同hostname恶意本机服务（各端口仍可能收到其他cookie），不是SSO/生产信任边界。依据[RFC6265 §8.5](https://www.rfc-editor.org/rfc/rfc6265#section-8.5)。5针对性HTTP测试及283回归通过；Chrome自动打开fixture8098被blocked，保留browser not_run，没有绕过保护。只停止自己的8098/8099，未改变Slack成员。回滚恢复同名cookie会复现端口覆盖；旧服务必须重启后用最新入口加载，不读取凭据或令失效session复活。
+
+
+2026-10-05 具体综合撤权授权：用户明确批准C0C6R70SGG4私有合成频道/U0C66B76TE3（kyle000909@gmail.com）本次临时移除，验证8094 eng_b旧综合引用/history/export，然后恢复原访问；不改工作区成员、角色/token/scope、不新调模型。第一轮已执行并恢复Members2/同一UID；旧preview原生deny清除答案，history隐藏含Slack的综合supports/双回执，其他独立答案保持。由于拒绝旧引用会清除该旧导出按钮，额外第二轮旧导出测试被自动审批拒绝（认为上次只批准一个循环），需单独明确批准；Remove最终按钮尚未执行，原访问仍恢复，未绕过拒绝。
+
+具体授权补充：用户单独批准第二轮同一member/channel的旧导出测试及恢复。已原生2→1→2，旧export返回unavailable、不建文件（0→0），旧正文/quotes/receipt清除而session保持。最终原生核对同一U0C66B76TE3、Members2，之后合法raw导出8146字节与存储答案逐字段一致。未改role/token/scope，未新调模型；审批拒绝未绕过。

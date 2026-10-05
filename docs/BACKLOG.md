@@ -130,3 +130,10 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-11-PORT-SESSION verified local HTTP：原共享CookieJar双端口互相覆盖已复现、修复并验证login/logout/CSRF独立；283回归通过。真实8094本轮会话失败归因unknown，Chrome双端口fixture被blocked；综合撤权in_progress等待修复版有效入口，不修改原生权限、不再要求token。
+
+
+2026-10-05 综合v2真实8094三源6证据/3结论/5检查已verified query subset，费用1296microUSD；与单题四源模型测试分开，S-01仍缺两事实。P0原生Slack综合撤权blocked具体动作审批：用户已关闭扩展，Remove未执行，待明确U0C66B76TE3/C0C6R70SGG4本次移除及恢复；不重新索要凭据。
+
+综合撤权当前verified citation/history subset：原生2→1→2，同一v2混合答案/quotes/双回执隐藏、无关答案可用、preview deny与session保留；同一UID恢复确认。Export旧按钮依赖第二轮，自动审批拒绝/新具体批准pending，未再次移除成员，无新模型费用。
+
+第二轮旧综合export已获独立批准并verified live subset：deny不下载、正文清除、session保留；同一原读者最终恢复Members2，合法raw实际下载精确一致。综合撤权P0本子集解除阻塞，完整S-04及更新/删除矩阵/G1仍partial，283源码回归沿用，无新模型调用。

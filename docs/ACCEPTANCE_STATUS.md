@@ -56,3 +56,5 @@
 修复后单题live结果：synthesis-ui/coverage-live-query.json，四源8对象、11checks及保障措施精确quote通过；agent覆盖/语义检查通过，前三claim冗余保留。首轮review拒绝原因unknown、次轮缺quote拒绝分列；不是完整Q-07人工质量通过，综合原生撤权及非作者G1仍pending。
 
 2026-10-05 会话修复：共享CookieJar/双loopback端口的登录、退出、CSRF隔离local verified，283回归。实际8094新页面的query后session-ended、旧信息清空已观察，原因unknown；不是新问答/撤权通过。Chrome双端口临时fixture自动导航blocked，浏览器完整验收不补写。
+
+2026-10-05 综合v2原生撤权：真实8094 eng_b在private Slack member2→1后旧reply citation拒绝并清空旧内容；含Slack的旧综合history/supports/双回执整条隐藏，不含Slack的旧记录可用。单独批准第二轮后旧export拒绝、无文件0→0；两轮都恢复同一UID/Members2，合法导出8146字节精确一致。P-05/07/09与S-04按该合成private子集verified，非全ACL/真实SSO/人G1；初始事故问答三源6input/3claim，不称四源coverage或完整S-01，源码283回归沿用。证据synthesis-native-revocation/。

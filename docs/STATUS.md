@@ -249,3 +249,13 @@ v2增加生成问题覆盖提示、严格question_covered boolean复核、ID与q
 
 
 2026-10-05 DEV-11-PORT-SESSION verified local HTTP：用户报告8094已打开，新页eng_b/综合模式DOM可见，但query后session-ended清空身份/正文，没有新的live模型结果。未断定这次是cookie覆盖；另用同一CookieJar双fixture端口复现同名session覆盖403，修复为按server_port命名/认证/退出，隔离双方登录与logout、跨端口CSRF拒绝；283/283（61 local+222 mock）和5针对性HTTP案例通过。Chrome自动打开隔离fixture页blocked，未绕过保护/声称浏览器通过；仅停止自己的8098/8099，用户进程保持。证据port-session-isolation/含首次失败。已请求用户加载修复版最新8094入口（钥匙串复用，不需整套secret重输）；尚未撤销Slack读者权限，Members恢复后仍保留原状。综合原生撤权/更新/完整五场景/G1/G2仍pending。下一准确接续：新入口→核验v2模型结果→原生private撤权和旧supports/history/export保护→恢复同一读者。
+
+
+2026-10-05 DEV-08-SYNTHESIS-v2新版8094真实UI verified query subset：用户重新打开入口后请求a85e49fb3a9d48279115fa6cc530ff35成功，model=deepseek-flash-grounded-synthesis-v2。源刷新8对象，实际检索/模型/返回为CF+Drive+Slack三源6证据，3结论回答final cause、撤回cache假设及timeout budget/failover保障；逐quote、五阶段resource/version覆盖、2accepted/settled及unsigned链5检查通过。原初检查错误把source_refresh全白名单8与selected6数量等同，失败探针保留，后按精确selected集合/版本+allow和refresh覆盖修正（不降低授权检查）。真实UI身份/答案/Slack quotes/双回执显示，1296microUSD上界；不是四源coverage或完整S-01。283源码回归沿用，未重复不变测试。
+
+撤权步骤：扩展弹窗曾阻止自动操作，用户关闭后已恢复原生成员页面，核对private频道C0C6R70SGG4、owner Kyle SHI及reader U0C66B76TE3/Members2。具体Remove from channel被自动审批拒绝，理由是先前授权未明确覆盖该成员/频道/时点；已向用户集中请求本次暂时撤权与恢复确认，尚未改变权限，native综合撤权blocked。证据synthesis-native-revocation/baseline.json及ignored private截图。用户8094新版保持运行，不要求token或再次重启；下一接续仅等待本次具体批准，依次旧引用/history/export保护并恢复同一原有成员。
+
+
+综合撤权第一轮进展：用户已明确批准具体member/channel/time后，原生Members2→1、同一8094/eng_b旧Slack reply引用deny，答案/quotes/preview清空且session保持。Recent answers三条含Slack历史（包括新v2）不可用/无supports或回执，不含Slack的旧记录仍可见；已按原范围恢复同一U0C66B76TE3，原生Members2/UID确认、重新鉴权历史v2再次显示。7项UI/native/audit检查通过，证据synthesis-native-revocation/first-cycle-verification.json；无额外模型调用。第二轮旧导出Remove被自动审批拒绝（前一批准只覆盖一次循环），已请求独立确认；没有再次撤权，原成员访问保持恢复，export仍not_run。无新源码，283回归沿用。
+
+第二轮综合旧导出已在单独明确批准后完成：原生2→1，旧v2 Export answer显示unavailable、Downloads对应文件0→0，清除正文/quote/双回执但eng_b会话仍有效；恢复同一U0C66B76TE3后Members2，重新鉴权历史可用，实际合法导出8146字节/sha256 fb25805d8032ca7216cb28faa6664af5e3f06846c030bd28f211e23264fa025c 与保存答案完全一致。证据second-cycle-verification.json；两轮原生权限均恢复，无额外模型调用，初始v2问答1296microUSD上界（非账单）。综合引用/history/export撤权verified live subset；其余完整矩阵、内容增量更新及G1/G2仍pending。283回归源码无变更，沿用97ea3ac；用户8094新版保留，无需再重启/填凭据。下一P0四源内容更新/删除真实矩阵，P1合法导出后更清晰的页面反馈及质量/延迟。
