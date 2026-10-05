@@ -48,3 +48,6 @@
 
 
 2026-10-05 linkless source optimization: [initial failed regression](runs/linkless-optimization/first-failed-tests.json) retained; [current regression](runs/local-latest/tests.json) 270/270 passed. Mock native read counts reduced from five to four per matching linkless object; all source_refresh/before_model/model_dispatch/before_dispatch checks remain. Late-revocation injection now binds to the actual dispatch phase, retaining zero-model-call assertion. Five fixture scenarios and frontend security checks passed; no new live API/model call or measured live latency improvement.
+
+
+2026-10-05 [live native-source latency comparison](runs/linkless-optimization/live-latency.json): real approved app-owned credential reuse/native identity and Drive refresh, four sources/eight excerpts, fake model only. Baseline53.209s / optimized40.116s, one sample each; all four remaining authorization phases preserved. [Exact one-off harness text](runs/linkless-optimization/latency-harness.py.txt) records execution for review (requires existing approved private configs/Keychain; not a general startup command). Separate test DBs, original8088 untouched, no paid model request.

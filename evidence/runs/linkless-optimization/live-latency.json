@@ -1,0 +1,74 @@
+{
+  "recorded_at": "2026-10-05T07:08:50.993111+00:00",
+  "mode": "live_api_fake_model",
+  "model_network_called": false,
+  "baseline_commit": "1ba796b",
+  "optimized_commit": "8d4ba6b",
+  "samples": [
+    {
+      "version": "baseline",
+      "credential_reuse": {
+        "confluence": true,
+        "jira": true,
+        "slack": true,
+        "drive_refresh_native_verified": true
+      },
+      "status": "verified",
+      "elapsed_seconds": 53.20924766699318,
+      "request_id": "1cf613d39b8041c49d98d4bf368a7903",
+      "evidence_count": 8,
+      "sources": [
+        "confluence",
+        "drive",
+        "jira",
+        "slack"
+      ],
+      "authorization_phase_counts": {
+        "source_refresh": 8,
+        "link_seed": 8,
+        "before_model": 8,
+        "model_dispatch": 8,
+        "before_dispatch": 8
+      },
+      "required_phases_preserved": true,
+      "claims_exact_excerpts": true
+    },
+    {
+      "version": "optimized",
+      "credential_reuse": {
+        "confluence": true,
+        "jira": true,
+        "slack": true,
+        "drive_refresh_native_verified": true
+      },
+      "status": "verified",
+      "elapsed_seconds": 40.11552929203026,
+      "request_id": "abb4772438eb4c1aab4b73d430068784",
+      "evidence_count": 8,
+      "sources": [
+        "confluence",
+        "drive",
+        "jira",
+        "slack"
+      ],
+      "authorization_phase_counts": {
+        "source_refresh": 8,
+        "before_model": 8,
+        "model_dispatch": 8,
+        "before_dispatch": 8
+      },
+      "required_phases_preserved": true,
+      "claims_exact_excerpts": true
+    }
+  ],
+  "limitations": [
+    "One sample per version; network latency varies. Fake model isolates source path, not DeepSeek end-to-end latency. Separate local databases; existing 8088 untouched."
+  ],
+  "harness": {
+    "path": "evidence/runs/linkless-optimization/latency-harness.py.txt",
+    "sha256": "fb2f95739ff6c12a6875241bbc3ea562c7e5ba36ddc97172bfd1915f504f1ae1",
+    "invocation": "python3 /tmp/aibang2_latency_check.py",
+    "execution_authority": "AUTH-014 approved app-owned Keychain reuse; existing synthetic read-only source pilot scopes; no paid model."
+  },
+  "question": "payment-service incident runbook retry safeguards approved release pilot operations final"
+}

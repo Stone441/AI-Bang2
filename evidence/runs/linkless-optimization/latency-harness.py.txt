@@ -1,0 +1,75 @@
+"""One-off approved live API/fake model comparison; never prints process secrets."""
+import io,json,os,queue,signal,sqlite3,subprocess,sys,tarfile,threading,time
+from pathlib import Path
+from urllib.request import Request,build_opener,HTTPCookieProcessor
+from http.cookiejar import CookieJar
+from datetime import datetime,timezone
+root=Path('/Users/kyle/Projects/TencentHackthon202609/AI-Bang2')
+base=root/'.runtime/latency-check-20261005'
+base.mkdir(mode=0o700,exist_ok=True)
+code=base/'baseline-code';code.mkdir(exist_ok=True)
+archive=subprocess.check_output(['git','archive','1ba796b'],cwd=root)
+with tarfile.open(fileobj=io.BytesIO(archive)) as t:t.extractall(code,filter='data')
+report={'recorded_at':datetime.now(timezone.utc).isoformat(),'mode':'live_api_fake_model','model_network_called':False,'baseline_commit':'1ba796b','optimized_commit':'8d4ba6b','samples':[],'limitations':['One sample per version; network latency varies. Fake model isolates source path, not DeepSeek end-to-end latency. Separate local databases; existing 8088 untouched.']}
+question='payment-service incident runbook retry safeguards approved release pilot operations final'
+for label,source,port in [('baseline',code,8090),('optimized',root,8091)]:
+ cwd=base/label;cwd.mkdir(mode=0o700,exist_ok=True)
+ args=['--source','multi','--config',str(root/'.runtime/operator-bundle.json'),'--actor','eng_b','--oauth-client',str(root/'.runtime/drive-oauth-client.json'),'--port',str(port),'--live','--model','fake','--credential-store','macos-keychain']
+ child='import sys;sys.path.insert(0,'+repr(str(source))+');from brain.operator_web import main;raise SystemExit(main('+repr(args)+'))'
+ proc=subprocess.Popen([sys.executable,'-u','-c',child],cwd=cwd,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
+ q=queue.Queue()
+ def consume(stream):
+  for line in stream:q.put(line)
+  q.put(None)
+ threading.Thread(target=consume,args=(proc.stdout,),daemon=True).start()
+ sample={'version':label,'credential_reuse':{},'status':'not_run'}
+ try:
+  deadline=time.monotonic()+90;ticket=None
+  while time.monotonic()<deadline:
+   line=q.get(timeout=max(.1,deadline-time.monotonic()))
+   if line is None:raise RuntimeError('startup_stopped')
+   if 'using app-owned Keychain credential.' in line:sample['credential_reuse'][line.split(':')[0].lower()]=True
+   if 'Drive: reused read-only authorization and verified native account.' in line:sample['credential_reuse']['drive_refresh_native_verified']=True
+   if 'Open this Google authorization link' in line:raise RuntimeError('google_reauthorization_required')
+   if 'Open once within 10 minutes:' in line:ticket=line.split('#ticket=',1)[1].strip();break
+  if ticket is None:raise RuntimeError('startup_deadline')
+  expected={'confluence','jira','slack','drive_refresh_native_verified'}
+  if set(sample['credential_reuse'])!=expected:raise RuntimeError('reuse_not_confirmed')
+  opener=build_opener(HTTPCookieProcessor(CookieJar()))
+  def post(path,data,csrf=None):
+   headers={'Content-Type':'application/json'}
+   if csrf:headers['X-CSRF-Token']=csrf
+   req=Request(f'http://127.0.0.1:{port}'+path,data=json.dumps(data).encode(),headers=headers,method='POST')
+   with opener.open(req,timeout=150) as r:return json.load(r)
+  session=post('/api/operator/login',{'ticket':ticket});del ticket
+  if session['actor']!='eng_b':raise RuntimeError('actor_mismatch')
+  started=time.monotonic();answer=post('/api/query',{'question':question},session['csrf']);elapsed=time.monotonic()-started
+  del session,opener
+  db=sqlite3.connect('file:'+str(cwd/'.runtime/multi-web.sqlite')+'?mode=ro',uri=True)
+  events=[json.loads(r[0]) for r in db.execute('select body from audit order by seq')];db.close()
+  selected=answer['evidence'];sources=sorted({e['source'] for e in selected})
+  if sources!=['confluence','drive','jira','slack']:raise RuntimeError('missing_source')
+  phases={}
+  for e in events:
+   if e['event_type']=='authorization_decided':
+    p=e['payload'];phase=p['phase'];phases[phase]=phases.get(phase,0)+1
+  required=['source_refresh','before_model','model_dispatch','before_dispatch']
+  for selected_e in selected:
+   allows={e['payload']['phase'] for e in events if e['event_type']=='authorization_decided' and e['payload']['resource_id']==selected_e['resource_id'] and e['payload']['result']=='allow'}
+   if not set(required)<=allows:raise RuntimeError('authorization_boundary_missing')
+  if any(c['text'] not in {e['text'] for e in selected} for c in answer['claims']):raise RuntimeError('claim_not_exact_excerpt')
+  sample.update(status='verified',elapsed_seconds=elapsed,request_id=answer['request_id'],evidence_count=len(selected),sources=sources,authorization_phase_counts=phases,required_phases_preserved=True,claims_exact_excerpts=True)
+  print(label+': verified native reuse and query '+str(round(elapsed,2))+'s',flush=True)
+ except Exception as exc:
+  safe=str(exc) if isinstance(exc,RuntimeError) else 'safe_test_failure'
+  sample.update(status='blocked',reason=safe);print(label+': '+safe,flush=True)
+ finally:
+  if proc.poll() is None:
+   proc.send_signal(signal.SIGINT)
+   try:proc.wait(timeout=10)
+   except subprocess.TimeoutExpired:proc.kill();proc.wait()
+  report['samples'].append(sample)
+ if sample['status']!='verified':break
+out=root/'evidence/runs/linkless-optimization/live-latency.json'
+out.write_text(json.dumps(report,indent=2)+'\n')
+print('Safe report saved; only temporary test children stopped.',flush=True)

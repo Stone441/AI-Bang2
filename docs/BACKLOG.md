@@ -112,3 +112,6 @@ DEV-10-DEEPSEEK增量：真实Drive API + DeepSeek evidence selection首轮query
 
 
 2026-10-05 DEV-10-LINKLESS verified local/mock：省去无links对象的空关联源读取，命中对象mock读取5→4，保留所有模型/响应边界检查；270回归与五场景local subset通过。真实延迟/Keychain refresh复用仍not_run，旧8088无需本轮重启。下一P1受控真实性能对比及grounded综合；完整live矩阵/G1仍pending。
+
+
+2026-10-05 DEV-10-LATENCY verified live API/fake model subset：双隔离进程验证已保存CF/Jira/Slack Keychain+真实Drive refresh复用，统一8证据源读取53.209→40.116秒（每版本单样本）；模型/返回边界保持，旧8088未重启。性能及refresh试点阻塞解除，长期过期处理/完整矩阵仍partial。下一P1 grounded模型综合；G1/G2仍pending。

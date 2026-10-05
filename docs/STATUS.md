@@ -1,8 +1,8 @@
 # Current status
 
-更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。原未跟踪 `.DS_Store` / `Analysis&Planning/` 保留，Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
+更新：2026-10-05（Asia/Singapore）。起始基准 `68e65c8` / main，仅文档。`.DS_Store` ignored；用户明确要求后已将仅含旧 GPT 分析的 `Analysis&Planning/` 移至 Mac 废纸篓（可恢复），Requirements 未改；README 仅追加运行说明。已完整阅读 AGENTS、PROJECT_START_HERE、docs/01–05，未采用旧 GPT Requirements。
 
-**阶段收尾（2026-10-05）：268/268 回归通过（60 local synthetic + 208 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
+**阶段收尾（2026-10-05）：270/270 回归通过（60 local synthetic + 210 mock HTTP/credential contracts）；`make verify` 五个场景均 passed_local_subset。四源各自真实问答已有子集证据；Confluence/Jira/Drive 独立读者撤权有子集证据，Slack 读者 API/统一四源问答 verified subset；Slack私有频道撤权 verified subset；旧引用/导出端点经产品操作 verified subset。Drive + DeepSeek 真实证据选择已验证，自由综合回答尚未实现。**
 
 **授权与交付：** G0 本地完整开发、专用合成源及 DeepSeek US$20 上限已批准，G0 不整体标通过；G1/G2 未批准。本次用户明确要求阶段收尾、push 并合并 main，仅集成现有仓库代码/脱敏证据，不包含私有工具对话、截图、运行凭据或公开部署。详见末尾收尾与接续记录。
 
@@ -13,7 +13,7 @@
 - 当前源授权在模型前和返回前检查；未知拒绝；四源撤权、旧历史/导出/引用保护。模型、HTTP 均有实际回归。
 - 持久 fake source 与 SQLite 索引分离；对象级事务发布、创建/更新/删除、去重/乱序/重试、失败任务不被游标越过、重启恢复。请求触发处理，不宣称真实自动同步。
 - 完整问答审计、逐资料决策、sent_to_model/cited/dispatch 区分、scope 查询与稳定分页；60 并发追加链测试。已接入离线 Ed25519 检查点 CLI；同机同账号仍不等于生产独立签名边界。
-- `make test-report` 最新268/268 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
+- `make test-report` 最新270/270 tests passed（含20项 CodeBuddy 验证器测试；旧阶段52项记录保留为历史）；另有 78 权限组合。`make verify` 五场景均 `passed_local_subset`，非完整 live 验收。首次 S-01 检索遗漏已复现、保留失败记录并修复。
 
 原型 32 测试阶段已通过从提交导出的独立临时目录 `make setup` / `make test` / JS 语法检查；本轮签名集成验证为当前 checkout 的 52 测试回归。
 
@@ -23,18 +23,18 @@
 
 | 项目 | 状态 |
 |---|---|
-| 四源 | 各源 live query verified subset；统一 live / Slack独立reader API与撤权 not_run；试用无付款方式，未授权收费续订 |
+| 四源 | 各源 live query verified subset；统一 live query / Slack独立reader API与撤权 verified subset；试用无付款方式，未授权收费续订 |
 | 模型 | fake-extractive与DeepSeek真实证据选择分列；自由综合回答、embedding/reranker/compressor未实现 |
 | 审计完整性 | partial；离线签名/篡改检测 verified local；独立 DB role / 加密 / 外部签名保管未实现 |
 | 腾讯工具 | verified local：真实 CodeBuddy 实现 + 审查修正；20 新测试/全仓库 52 测试通过；7 截图及原生 conversation history 已本地保存，未上传 |
-| 浏览器视觉 | 各源原生/应用问答、引用、历史有真实子集证据；统一四源视觉仍not_run |
+| 浏览器视觉 | 各源原生/应用问答、引用、历史有真实子集证据；统一四源答案/引用/历史/导出视觉 verified subset |
 | 部署与人工 | local only；G1/G2 / 非作者质量与 ROI not_run |
 
 ## 精确接续点
 
 1. DEV-09-CB 已完成：原始提交 `4165ee6`，集成提交 `8cd5088`，位于 `codex/dev-09-codebuddy-integration`；已通过 PR #2 合并至 main（71ad99b）。证据索引 `evidence/tool-usage/README.md`。后续推进密钥轮换、检查点生成节奏及独立保管；当前单公钥离线验证，不扩大 A-11 覆盖声明。
-2. DEV-06：先完成 docs/LIVE_ONBOARDING.md 的注册交接。已生成本地 13 对象/6 身份 seed manifest，新增权限保留/禁止覆盖测试通过；没有平台写入。映射真实用户后才实施委托读取与撤权合同测试。
-3. DEV-08/09：DeepSeek 首轮预算已批准；本地凭据配置、预算预留/故障记账和模型输出契约实现后才能调用，再做真实模型与语义支持评测；生产 DB/身份/HTTP 栈和独立审计边界仍需工程实现及运行验证。
+2. DEV-10：统一四源 eng_b 真实问答及 Slack 原生撤权、旧历史/引用/导出拒绝已 verified subset；完成无关联读取优化的真实性能比较，之后补齐五场景 live 矩阵与权限继承/缓存边界。完整验收仍未通过。
+3. DEV-08/09：DeepSeek 真实证据选择与持久预算回执已验证；下一步实现有引用的综合回答并验证语义支持。生产身份/DB 隔离及独立审计保管仍需工程实现及运行验证。
 4. 浏览器可访问后按 RUNBOOK 完成 UI/键盘/移动布局检查，并组织 G1 人工核验；完善候选材料，最后 G2。
 
 本轮只交付本地候选，不宣称完整项目完成；没有承诺会话结束后继续运行。
@@ -223,3 +223,6 @@ Drive OAuth实际阻塞：用户报告授权完成，但只读callback页面可�
 
 
 2026-10-05 DEV-10-LINKLESS verified local/mock：无links候选不再执行空关联展开的link_seed完整源读取；source_refresh/before_model/model_dispatch/before_dispatch仍全部保留。mock原生读者计数验证每个命中对象5→4次读取，270/270回归、Node安全检查及五场景passed_local_subset通过。首次回归的Slack撤权注入按第五次读取定位，优化后错过模型前阶段；已改为在第二个model_dispatch候选撤权，保留模型调用必须为空断言，失败报告保存。真实8088进程仍旧代码，未重启、不读取凭据、无新增平台或模型请求；53.37秒真实耗时尚未重测，不能宣称缩短20%。下一项：新进程Keychain复用与live延迟对比，再推进有证据模型综合。
+
+
+2026-10-05 DEV-10-LATENCY verified live API/fake model subset：按AUTH-014启动隔离8090基准1ba796b与8091优化8d4ba6b，stdin关闭，CF/Jira/Slack程序Keychain复用及Drive refresh后原生账号核验全部通过（两进程独立验证，不读取现有密码条目）。同题四源8证据，基准53.209秒、优化40.116秒；每源source_refresh/before_model/model_dispatch/before_dispatch仍8次allow，空link_seed8→0。每版本一份样本，仅说明本次观测，不保证SLA或真实DeepSeek端到端改善。分离SQLite，无DeepSeek网络调用/账本改动；仅停止自己两个临时进程，8088仍运行旧代码。证据linkless-optimization/live-latency.json及实际执行harness文本；下一任务有证据模型综合与五场景完整live。
