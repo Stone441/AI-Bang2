@@ -34,6 +34,17 @@ CASES = [
 class CapturedSynthesis(DeepSeekSynthesisModel):
     # Operator-only synthetic evaluation diagnostic, never an HTTP user feature.
     draft_output = None
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        delegate=self.transport;owner=self
+        self.response_diagnostics=[]
+        class DiagnosticTransport:
+            def _send(_,request):
+                status,response=delegate._send(request)
+                # Retain only vendor response JSON, never request headers/key.
+                owner.response_diagnostics.append(response)
+                return status,response
+        self.transport=DiagnosticTransport()
     def parse_output(self, output, evidence):
         self.draft_output = output
         return super().parse_output(output, evidence)
@@ -78,7 +89,8 @@ def run(output, live_model=False, only_case=None):
             if ledger.summary()['available_micro_usd'] < 2*len(cases)*model.reservation:
                 raise ValueError('Insufficient remaining approved budget')
         for label, actor, question, required in cases:
-            if live_model:model.draft_output=None
+            if live_model:
+                model.draft_output=None;model.response_diagnostics=[]
             world=FixtureWorld()
             # Explicit synthetic test copies; no original source/evidence is rewritten.
             for r in world.resources.values():r['text']='[SYNTHETIC]\n'+r['text']
@@ -104,6 +116,7 @@ def run(output, live_model=False, only_case=None):
                     'error_type':error,'request_id':next(e['request_id'] for e in events if e['event_type']=='request_started'),
                     'claims_only':[c['text'] for c in answer['claims']] if answer else [],
                     'draft_diagnostic': model.draft_output if live_model else None,
+                    'vendor_response_diagnostics': model.response_diagnostics if live_model else None,
                     'exact_supports_validated':True if live_model and answer and answer['claims'] else 'not_applicable',
                     'audit_chain':verify_chain(events), 'semantic_recall_coverage_support_errors':'pending_separate_review'}
             report['results'].append(result)

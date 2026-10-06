@@ -89,6 +89,19 @@ class GroundedSynthesis(unittest.TestCase):
         self.assertEqual(self.ledger.summary()['pending_requests'],0)
         self.assertEqual(self.ledger.summary()['settled_micro_usd'],cost_upper(100,20))
 
+    def test_cross_event_quote_provenance_does_not_override_negative_review(self):
+        from dataclasses import replace
+        evidence=replace(self.evidence,text='[SYNTHETIC] Vega incident: DNS caused packet loss. Orion incident: retry budget mismatch caused duplicate requests.')
+        claim={'text':'DNS caused the Orion incident.', 'evidence_ids':[evidence.evidence_id],
+               'supports':[{'evidence_id':evidence.evidence_id,'quote':'Vega incident: DNS caused packet loss.'}]}
+        # Exact quote provenance alone cannot prove named-event entailment.
+        self.assertEqual(validate_claim(claim,[evidence]),claim)
+        self.transport.outputs=[{'claims':[claim]}, {'question_covered':True,'verdicts':[{'index':0,'supported':False}]}]
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization('What caused Orion?', [evidence], self.rid, lambda _:None)
+        self.assertEqual(len(self.transport.calls),2)
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+
     def test_review_rejects_false_unknown_duplicate_incomplete_or_boolean_index(self):
         for verdicts in ([{'index':0,'supported':False}],[],[{'index':0,'supported':'true'}],
                          [{'index':True,'supported':True}],[{'index':1,'supported':True}],

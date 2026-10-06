@@ -1,5 +1,21 @@
 # 安装、启动、测试与演示
 
+## 当前集成候选运行入口 · 2026-10-06
+
+当前开发分支 `fix/review-integrated-candidate`，基准45d7b27；323cb93已干净archive setup/356回归/五fixture场景/两Node/HTTP通过。随后quality诊断及review scope增量需新固定commit复核，不能把323cb93结果冒作之后HEAD通过。当前状态/模式及证据以[STATUS](STATUS.md)、[ACCEPTANCE_STATUS](ACCEPTANCE_STATUS.md)为准；以下历史段落的export/New question、仅memory/尚未授权/尚无native等旧陈述已被ADR-040和最新AUTH覆盖。
+
+本地集中观看：在**新的隔离git archive目录**启动，保留原项目.runtime和审计，不停止8094/8100。先 `make setup`、`make test`、`make verify`；`python3 -m brain.server --demo --port 0` 打印本次实际loopback地址，模式fixture_fake_model。浏览器只访问获许可的该实例；端口变化/实例停止后按具体授权重新确认。fixture身份不是native员工登录，FAKE MODEL为原文摘录；真实模型的claims质量另看独立记录。
+
+同一场五场景：按下方步骤顺序完成S-01当前原因/撤回解释/未完工作及pilot限制；S-02在**该隔离目录**使用fixture_admin更新runbook，旧引用与history失效；S-03 contractor禁止泄露security对象存在，并对照允许的pilot；S-04同一eng_a身份撤权后独立再问、旧引用/history拒绝，不自动继承上一问；S-05 auditor受限模板还原当前准备/发送意图或尝试/有效usage/输出及存储/HTTP交付尝试。Fake provider没有真实vendor调用，不能制造model receipts。签名覆盖另重放既有CodeBuddy verifier对R3A/R4候选快照，注明checkpoint seq/unsigned tail/old rollback和同机custody，不恢复用户答案下载。统一观看清单见[SAFETY_REVIEW](SAFETY_REVIEW.md)。
+
+AUTH-017四个固定容器发现已实现并有当前native readonly/fake模型子集；`--discovery-auth017`只适用既有multi/eng_b，默认关闭，不扩product_ops。新建/修改/删除源端数据及目标服务重启按各自具体授权，不由本地fixture操作推导权限。完整四源native生命周期时延矩阵仍partial。
+
+真实模型每次先 `python3 -m scripts.model_readiness`，再核对现有配置/授权及原USD20 ledger剩余/冻结状态；不注入旧today或重建账本。`python3 -m scripts.quality_acceptance --live-model --output <新目录>`仅固定fixture合成源＋真实模型，使用既有app-owned eng_b key和原账本；不是native persona/四源模型验收。会产生已批准预算内费用，输出capture不等于semantic通过，需逐条claims/quotes/omissions/relevance审查。旧检索harness只用于词法边界：`python3 -m scripts.retrieval_acceptance --output <新目录>`，拒绝覆盖旧记录，不称质量benchmark。
+
+当前R5真实浏览器许可单独记录：旧49161实例已停止；新49161隔离fixture实例已核health、重新请求许可，权限卡片/工具实际允许前不宣称生效。Node/HTTP不替代浏览器。G1/G2仍not_run；集中团队观看和最后材料/提交批准须记录实际结果。
+
+## 先前运行说明（版本/授权描述由上方覆盖）
+
 R2只读native runner：`python3 -m scripts.native_discovery_acceptance --live --output evidence/runs/<新的唯一目录>`。默认既有`.runtime/operator-bundle.json`与私有Drive desktop client；只复用app-owned Keychain和已保存refresh grant，不交互输入/新consent/保存凭据，不启HTTP或付费模型。输出存在即拒绝，首次失败也不覆盖；缺凭据或refresh失效直接停并记录失败类型。先验证AUTH-017配置再用凭据，native身份每源核对；原baseline IDs/原进程保持。已验证新增to-index只有既有KAN-6，不保证其他源有合格新对象。Jira支持完整末尾`[SYNTHETIC ONLY]`，完整原banner+精确J-lifecycle-20261006被认可，未知/篡改仍拒绝；不能将只读批准用于改标题/种植新源。
 R2 AUTH-017 opt-in：原multi命令追加`--discovery-auth017`，仅eng_b及四个固定容器，默认关闭，独立`.runtime/multi-auth017-web.sqlite`；不改变8094/8100已有进程。启动后60秒为成功周期的最短间隔，失败按退避/Retry-After延后，不保证每分钟完成。operator-only状态在该DB discovery_state/catalog；不向浏览器开放来源列表。停止使用Ctrl-C，先结束poller再关闭DB；再次启动从已记录mapping精确复核，unknown不给权限。真实只读发现获AUTH-017批准，native新增/时延本轮未执行；种植/编辑/删除仍按各自具体授权。本地验证：`python3 -m unittest discover -s tests -p test_container_discovery.py -v`；实际mock trace重放请将capture.py复制到新运行目录并用`PYTHONPATH=tests:. python3 <新目录>/capture.py`，exclusive输出不覆盖原结果。
 2026-10-06 R3A/R4 本地回归：`python3 -m unittest discover -s tests -v`；`node tests/frontend_operator_security.js`；`node tests/frontend_audit_review.js`。来源与审计定向：`python3 -m unittest discover -s tests -p test_synthetic_provenance.py -v`及`-p test_model_stages.py`。结果写新的运行目录，不覆盖旧附件；review-r4 capture.py是离线mock且输出exclusive，重放必须先复制到新目录并调整目标。真实模型前执行已有`python3 -m scripts.model_readiness`并保留账本，过期需真实复核；不凭health推断新代码已加载。R2仅AUTH-017固定eng_b容器读取获批，方案尚未实现；不自动重启已有8094/8100。
@@ -41,7 +57,7 @@ make demo
    ```
 
    同一登录身份独立再次查询payment-service线程及retry safeguards；不得再次输出线程独有标记。打开旧 S-01 引用应不可用；Recent answers 中依赖已撤权资料的整条旧回答应不可用。无需全库重建。可分别对 C-01/J-01/D-01 重复。
-5. **S-05**：以 Scoped auditor 登录，打开 Audit explorer，提交预置问题。展开事件查看身份、问题、逐资料授权、sent_to_model、引用和最终答案；支持稳定 snapshot 分页。HTTP 场景还记录 dispatch_attempted。CLI 回放不伪装成 HTTP dispatch。
+5. **S-05**：以 Scoped auditor 登录，打开 Audit explorer，提交预置问题。展开事件查看身份、问题、逐资料授权、prepared_for_answer/review、model_dispatch_intent/attempted、有效usage、引用和最终答案；支持稳定 snapshot 分页。HTTP 场景还记录 dispatch_attempted。CLI 回放不伪装成 HTTP dispatch。
 
 完整自动回放使用隔离内存状态，不改变正在演示的 `.runtime`：
 

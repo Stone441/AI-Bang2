@@ -1,5 +1,7 @@
 # Team safety review and submission checks
 
+2026-10-06 integrated worktree: R5 source preview links, question/time history and collapsed diagnostics have local DOM/HTTP evidence. R3 frozen variants evaluate final claims/supports/omissions separately from evidence recall; long-event review/relevance failures remain explicitly unresolved until actual recheck. Current source/commit/mode and browser permission are recorded in STATUS and ACCEPTANCE_STATUS. R3A/R4 team viewing is not a prerequisite for other local development.
+
 G0/G1/G2 are internal team decision gates, not competition grades. This checklist does not grant approval or mark a review complete.
 
 ## Safety demonstration (G1) — not_run
@@ -11,7 +13,7 @@ The developer operates the prepared application; a team member watches and recor
 | Cross-source engineering and product questions | Cause, withdrawn hypothesis, open follow-up and current runbook have correct evidence; pilot approval is not confused with general availability | Local S-01 subset and live question subsets exist; native eng_b engineering/product fact subsets verified; independent personas and team quality review pending |
 | Content update | New source revision becomes searchable; old revision is unavailable; no false claim of freshness during failed refresh | Four-source local lifecycle matrix, native Confluence update/restore and Jira KAN-6 text update exist; native Slack/Drive updates and timing matrix pending |
 | Restricted material | Unprivileged user gets no restricted text, title, path or existence confirmation; an allowed question still works | Native owner-only C-03 denied to eng_b and C-02 allowed, stale synthetic index/query/model evidence/preview checks passed; full live persona/timing matrix pending |
-| Same-session revocation | After source access removal, old citation, mixed history and export are unavailable; unrelated allowed material stays usable | Native Slack synthesis subset verified, original membership restored; complete live matrix pending |
+| Same-session revocation | After source access removal, old citation and dependent history are unavailable; ordinary answer export remains absent (ADR-040); unrelated allowed material stays usable | Native Slack synthesis subset verified, original membership restored; complete live matrix pending |
 | Audit reconstruction and integrity | Authorized auditor can reconstruct question, decisions, evidence and response; covered tampering is detected and unsigned/uncovered tails are identified honestly | Mixed fixture success/partial/denied/failed requests: 116 expected events across 17 pages, late request excluded, role/scope denied, signed-copy tampering detected. Actual-live replay is separate; native auditor, independent custody and production DB role isolation remain incomplete |
 
 Before external access, additionally confirm the entry point exposes no source administration, secrets are absent from Git/recordings, access is limited to the approved audience, and limitations are stated accurately. The current service is loopback-only; this checklist does not authorize deployment.
