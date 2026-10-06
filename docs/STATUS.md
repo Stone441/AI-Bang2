@@ -1,5 +1,7 @@
 # Current status
 
+验收准备补充（2026-10-06）：已核331bd28→6d79ed2仅8份docs及147份本轮evidence，无实现/测试/配置/构建差异；357及五场景结果对应331bd28，不需因文档提交重跑。两项延期原问题/actual和R2八断言见[DEMO_CANDIDATE](DEMO_CANDIDATE.md)，18分钟观看四列见[SAFETY_REVIEW](SAFETY_REVIEW.md)。本次仅文档整理，不启动服务、不新增费用或开发线；browser blocked（saved site denial）/页面not_run/G1/G2 not_run。记录分支docs/fixed-candidate-acceptance-prep，原候选不变。
+
 ## 当前接续总表 · 2026-10-06（优先于下方历史记录）
 
 本轮统一固定候选已准备，质量已获明确延期；真实browser验证仍受工具许可阻塞：fix/review-integrated-candidate，基准45d7b27，固定应用/测试331bd28e24b17fdac6726b38d16dfbecd0599d78。323cb93的356项archive为中途里程碑；最新331bd28干净archive setup/357项17.406s/五fixture场景/2Node/本地HTTP通过。不能据旧352证据宣称最新HEAD通过。R3A/R4既有实现与原签名证据保留，未重复开发。最新[R2/R3/R5/R6统一候选及明确缺口](../evidence/runs/review-integrated-20261006/README.md)。

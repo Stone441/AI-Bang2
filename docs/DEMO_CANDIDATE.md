@@ -1,5 +1,33 @@
 # Demonstration candidate and remaining acceptance
 
+## 精简验收准备 · 2026-10-06
+
+候选保持不变。本次只核对/整理文档，不启动服务、不调用源API或付费模型。`331bd28`→`6d79ed2`的155个变更路径全部属于docs（8个）或本轮evidence（147个），实现、测试、fixture、配置与构建文件无差异。357项/17.406s、五fixture场景、两Node及HTTP结果明确对应[331bd28干净归档](../evidence/runs/review-integrated-20261006/rebuild-scope-current/verification.json)。6d79ed2是状态/证据提交，不需要因该提交补实现回归；不能把这等同于新浏览器或完整native/live model验收。模型/native各轮仍按原记录的基准commit和实际工作树hash解释，不改写成331bd28新执行。
+
+### 两项已批准延期（仍failed/partial）
+
+| 项目 | 原问题、身份/模式 | 期望 / 实际 / 失败证据 | 场景影响与批准边界 |
+|---|---|---|---|
+| 指定事件长文无最终回答 | “In the Orion incident, which early explanation was withdrawn and what caused the duplicate requests?”；fixture_eng_a，合成源＋真实DeepSeek（fixture_source_live_model_synthesis），不是native员工权限 | 应只回答Orion撤回cache解释、retry budget mismatch造成重复请求，不混入Vega DNS或无关事故。最新[scope recheck原记录](../evidence/runs/review-integrated-20261006/quality-long-scope-recheck/verification.json)，request `6bf6313898ed42a080944661b6e1ea0d`：draft有正确Orion句，但又附payment-service RCA及cache历史；review verdict true/false/true，整答ModelUnavailable、claims_only为空、answer文件null。原v2成功和后续各失败均保留，不能称全部是review误拒 | S-01工程问答、Q-10长文/相似事件：证据送达不等于可得到最终答案。这是明确指定事件的问题，不以多事件歧义解释失败 |
+| 自然题附非必答背景 | 工程原题：“For the payment-service follow-up work, separate the completed repair from safeguards still being worked on, and name the safeguard owner.”；fixture_eng_a。产品原题：“Does PAY-102 being done authorize a general customer rollout?”；fixture_product_ops。均合成源＋真实DeepSeek | 工程应给PAY-102 Done、PAY-103 In Progress、Maya；实际满足这些事实，但又给pilot/GA/no GA date背景。产品应说明Done不等于发布批准；实际正确，但重复pilot限制及日期/扩展范围背景。见[工程最终claims及quotes](../evidence/runs/review-integrated-20261006/quality-final-live/followup_status-answer.json)，request `a2f7afb45d3d4788bc2018f3d0d1946e`；[产品最终claims及quotes](../evidence/runs/review-integrated-20261006/quality-final-live/code_not_release-answer.json)，request `292602be834b4149a5d8eeb818ffc804`。支持事实/原子覆盖通过不代表相关性与简洁度通过。这轮v3早于最后review-scope澄清，保留原hash，不冒作最终版本重跑六题 | S-01工程及产品/运营答案：增加阅读负担，重点容易被背景淹没。不能把所有六题都说成失败，也不能把部分事实正确说成质量全通过 |
+
+仅沿用AUTH-019及[原批准记录](../evidence/runs/review-integrated-20261006/quality-deferral-approval.json)：用户“批准明确延期并交团队验收”，允许固定候选带这两项已知缺口交团队语义观看；不是修复通过，不是降低review gate、清预算、新scope、G1/G2、发布或提交批准。本次没有重新申请或重新批准。
+
+### R2原生8项检查究竟证明什么
+
+[verification](../evidence/runs/review-integrated-20261006/native-discovery-current/verification.json)与[实际cycle](../evidence/runs/review-integrated-20261006/native-discovery-current/discovery-cycle.json)：AUTH-014/017、eng_b、四源live API＋fake model，无源写入/模型网络调用。2026-10-06新加坡时间14:34:49–14:35:26；cycle约20.351s是一次运行耗时，不是源变更至可回答时延。
+
+| 来源与固定范围 | 本次实际行为 | 新资料发现范围 |
+|---|---|---|
+| Confluence space 131227 | 1页list、2次exact read、发布2对象 | 本轮没有新增ID |
+| Jira KAN / 10001 | 1页list、3次exact read、发布3对象 | 既有但不在原白名单的KAN-6 / 10015进入新索引；不是本轮新建工单 |
+| Slack C0C6R70SGG4，自既有合成root起 | 2页list、4次exact read、发布2对象（含thread读取） | 本轮没有新增ID |
+| Drive固定文件夹1EMYjaNhzBFQ3TXHC6ukEwN6otVIIeOEv | 1页list、3次exact read、发布3对象 | 本轮没有新增ID |
+
+8个actual断言逐项：①四native身份核验；②四源周期complete；③发现原白名单外既有10015；④它确实进入本次fake答案（Revision2 green）；⑤发现对象preview精确匹配；⑥原reader白名单未改；⑦product_ops未获发现权限；⑧本地审计链有效。它们不是8个四源生命周期案例。尚未证明四源各自新增/更新/删除完整native矩阵、源变更到答案的时限/p95、持续多周期新鲜度、完整persona/ACL矩阵或此候选的native＋live model＋browser端到端。历史Confluence/Jira更新及其他撤权/删除子集继续按原版本有效，不重做或升级其含义。
+
+观看采用[18分钟四列流程](SAFETY_REVIEW.md#固定候选18分钟观看流程准备未执行)。浏览器仍blocked（工具报告saved site denial），页面交互not_run；49161已停止，不用新端口/工具/入口绕过。启动前须由操作者确认具体服务、331bd28版本、fixture模式、隔离数据与已有启动/实例访问授权；未满足就只回看历史记录。8094/8100不动，native/live model现场测试不纳入这次无费用准备。
+
 2026-10-06 integrated candidate now supersedes the earlier R3A/R4-only handoff: fixed application/test **331bd28**, clean archive **357 regressions**, five fixture scenes, two Node checks and local HTTP passed. R2 current native read-only discovery subset, R3 fixture-source true model failures/fixes and R5 existing UX are [bound by mode and source hash here](../evidence/runs/review-integrated-20261006/README.md). **Fixed candidate prepared**: long/relevance quality explicitly approved deferred to team review, still not passed; browser tool site permission remains blocked and actual browser check not_run; G1/G2 not_run. Earlier historical native/model/browser records remain valid within their original modes, not proof of this new runtime.
 
 2026-10-06 current R3A/R4 local candidate: fixed application/test commit `34281adfe22c839ed463a51cb3536255f47175b4`, branch `fix/r3a-r4-team-candidate`. Clean archive: 352 regressions, five fixture scenes, both Node checks and local HTTP smoke passed; six current mock lifecycle audit snapshots and 13 signature/rollback checks bound to exact runtime hashes, actual read-only sub-agent review closed. [Candidate handoff and limits](../evidence/runs/review-r3a-r4-candidate-20261006/README.md). New-build native/browser visual/live model and G1/G2 remain **not_run**. Historical evidence below keeps its original versions/modes; old 8100 independent-question evidence remains valid. Do not treat prior feature/download descriptions as current ADR-040 behavior.
