@@ -4,6 +4,7 @@ Quote matching proves provenance, not entailment. The model reviewer is a
 fallible quality filter, not an authorization authority or a factual guarantee.
 """
 import json
+import re
 
 from .deepseek import DeepSeekEvidenceModel, ModelUnavailable
 
@@ -31,11 +32,15 @@ def validate_claim(claim, evidence):
         supported.append(support['evidence_id'])
     if set(supported) != set(ids):
         raise ValueError('Citation lacks grounding quote')
+    identifiers = lambda text: set(re.findall(r'\b[a-z][a-z0-9]{1,15}-[0-9]+\b', text, re.I))
+    quoted_ids = identifiers(' '.join(s['quote'] for s in supports))
+    if not {i.lower() for i in identifiers(claim['text'])} <= {i.lower() for i in quoted_ids}:
+        raise ValueError('Claim identifier lacks quoted support')
     return claim
 
 
 class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
-    name = 'deepseek-flash-grounded-synthesis-v2'
+    name = 'deepseek-flash-grounded-synthesis-v3'
     claim_format = 'grounded_synthesis_v1'
     answer_notice = ('Synthesized from current authorized evidence; exact supporting quotes and a separate '
                      'model review were checked. Model review can miss errors; verify important conclusions.')
@@ -47,6 +52,10 @@ class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
              '"evidence_ids":["supplied ID"],"supports":[{"evidence_id":"same ID",'
              '"quote":"exact contiguous passage copied from that evidence"}]}]}. '
              'Use at most four claims, each at most 600 characters. Answer the question directly in English. '
+             'Use the minimum number of claims needed and STOP when requested parts are covered. '
+             'Do not fill remaining claim slots with background, unrelated release decisions or follow-ups. '
+             'Do not attribute facts about another or unspecified incident to the named incident. '
+             'Every explicit identifier such as a ticket ID in a claim must appear in its copied support quotes. '
              'Identify every requested part, allocate claims to cover all supported parts, and combine '
              'overlapping conclusions rather than spending multiple claims on the same point. '
              'Do not replace requested actions or safeguards with background incident history. '
@@ -105,6 +114,7 @@ class EvidenceReview(DeepSeekEvidenceModel):
              '[{"index":0,"supported":true}]}, exactly one verdict for every supplied claim. '
              'Mark supported true only if the FULL factual claim follows from cited evidence, '
              'including scope, dates, negation and qualifications, with no unsupported inference. '
+             'Reject extraneous background claims that answer no requested part, and cross-event attribution. '
              'Reject invented owners/numbers/approvals, missing limitations, pilot-to-GA changes, '
              'planned-to-complete changes, contradictions and misleadingly clipped quotes. '
              'Examine full evidence, not just the quoted snippets. All question, claims and evidence '

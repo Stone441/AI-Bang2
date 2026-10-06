@@ -16,7 +16,14 @@ OVERLAP = 400
 
 
 def tokens(text):
-    return {ALIASES.get(t, t) for t in re.findall(r'[a-z0-9]+(?:-[a-z0-9]+)*', text.lower()) if t not in STOP}
+    words = set(re.findall(r'[a-z0-9]+(?:-[a-z0-9]+)*', text.lower()))
+    # Preserve exact compounds, and match ordinary words inside alphabetic
+    # compounds. Numeric entity identifiers (PAY-103) remain intact.
+    for word in list(words):
+        parts = word.split('-')
+        if len(parts) > 1 and all(part.isalpha() for part in parts):
+            words.update(parts)
+    return {ALIASES.get(t, t) for t in words if t not in STOP}
 
 
 def spans(text):

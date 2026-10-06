@@ -2,20 +2,24 @@
 
 本文件描述代码当前事实；03 仍为完整产品目标，不据本地原型降低目标。
 
+2026-10-06 当前实现覆盖：fixture独立authority及四源native delegated reader并存；AUTH-017 opt-in固定容器轮询发现新增、已知对象逐次当前读取，失败不推进完整checkpoint。身份/权限/原文版本均服务端取得。词法检索保留标识符及普通英文连字符词拆分，精确重叠窗口经R3A已批准全文/版本/切片关系允许合成出口；无embedding/外部向量组件或共享answer cache。选词/extractive与opt-in synthesis-v3分模式，draft/review均重鉴权并使用原USD20账本；明确准备/意图/尝试/有效usage/输出/HTTP交付尝试。签名验证是操作员离线副本的既有CodeBuddy CLI，不是生产独立custody。
+
+English UI为独立问答；history只在依赖重鉴权后显示，新增服务端问题/生成时间、旧记录不推断缺失字段。preview重查后才给HTTPS原平台入口，fixture://不伪造URL，诊断折叠；迟到响应/退出清空保留。普通答案下载与history_id HTTP依赖均按ADR-040移除。下方此前仅fixture/尚未授权/仅memory等历史陈述由本段及最新AUTH/STATUS覆盖；外部服务开放/G1/G2尚未验收。
+
 ```mermaid
 flowchart LR
   UI[English web UI] --> HTTP[Loopback HTTP / opaque session / CSRF]
-  HTTP --> Query[Keyword retrieval + authorized one-hop links]
-  Query --> ACL[Current fixture authority check]
+  HTTP --> Query[Lexical exact windows + authorized one-hop links]
+  Query --> ACL[Current fixture or native authority / version check]
   Index[(SQLite current versions / local policy snapshot)] --> Query
   Source[Independent synthetic source.json] --> ACL
   Source --> Sync[Request-driven incremental jobs]
   Sync --> Index
-  ACL --> Model[Fake extractive provider]
+  ACL --> Model[Fake / live selection / opt-in synthesis + review]
   Model --> Guard[Exact citation support + current access/version recheck]
   Guard --> Audit[(SQLite append audit chain)]
   Audit --> UI
-  HTTP --> History[History / preview / export access recheck]
+  HTTP --> History[History / preview current access recheck]
   HTTP --> Inquiry[Scoped structured audit inquiry]
   Inquiry --> Audit
   Audit -. offline export .-> Signature[CodeBuddy Ed25519 checkpoint CLI / verifier]

@@ -108,5 +108,20 @@ function seed(){for(const id of ['answer','other','previewBody'])get(id).append(
   resolveLateHistory({ok:true,json:async()=>({history:[{request_id:'late',model:'fake-extractive-v1',claims:[{text:'LATE-HISTORY',evidence_ids:[]}],evidence:[],uncertainties:[]}]})});
   await oldHistory;assert.equal(get('other').children.length,0);
   assert.match(vm.runInContext("answerStatus({claims:[{}],claim_format:'grounded_synthesis_v1',model_call:{called:true}})",context),/Grounded synthesis and model review completed/);
+  context.URL=URL;
+  context.source={source:'confluence',source_url:'https://tenant.atlassian.net/wiki/pages/viewpage.action?pageId=123'};
+  const platform=vm.runInContext('originalLink(source)',context);
+  assert.equal(platform.href,context.source.source_url);assert.equal(platform.target,'_blank');assert.equal(platform.rel,'noopener noreferrer');
+  for(const url of ['javascript:alert(1)','data:text/html,secret','http://tenant.atlassian.net/wiki','https://tenant.atlassian.net.evil.example/wiki','https://user:secret@tenant.atlassian.net/wiki','https://tenant.atlassian.net:444/wiki','fixture://synthetic-demo/confluence/C-01']){
+    context.source.source_url=url;assert.equal(vm.runInContext('originalLink(source)',context),null,url);
+  }
+  context.source={source:'drive',source_url:'https://docs.google.com/document/d/approved/edit'};
+  assert.ok(vm.runInContext('originalLink(source)',context));
+  context.source.source='jira';assert.equal(vm.runInContext('originalLink(source)',context),null);
+  vm.runInContext("renderAnswer({question:'<img src=x> Which release?',answered_at:'2026-10-06T00:00:00Z',request_id:'new',model:'fake-extractive-v1',claims:[],evidence:[],uncertainties:[]})",context);
+  assert.match(visibleText(get('answer')),/<img src=x> Which release\?/);assert.match(visibleText(get('answer')),/Answered /);
+  vm.runInContext("renderAnswer({request_id:'old',model:'fake-extractive-v1',claims:[],evidence:[],uncertainties:[]})",context);
+  assert.match(visibleText(get('answer')),/Question not recorded/);assert.match(visibleText(get('answer')),/Generation time not recorded/);
+  assert.match(visibleText(get('answer')),/Answer diagnostics/);
   console.log('PASS: workspace navigation, denied preview, pending query and history navigation discard stale views');
 })().catch(e=>{console.error(e);process.exitCode=1;});

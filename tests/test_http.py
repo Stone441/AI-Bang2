@@ -64,7 +64,14 @@ class HTTP(unittest.TestCase):
         self.assertEqual(len(self.app.engine.model.calls),calls)
         for target in (answer['request_id'],'missing'):
             self.assertEqual(self.request('/api/export/'+target),(404,{'error':'Unavailable'}))
-        self.assertEqual(self.request('/api/history')[0],200)
+        status,history=self.request('/api/history')
+        self.assertEqual(status,200)
+        self.assertEqual(history['history'][0]['question'],'payment-service incident')
+        self.assertEqual(history['history'][0]['answered_at'],answer['answered_at'])
+        self.assertRegex(answer['answered_at'],r'^\d{4}-\d{2}-\d{2}T')
+        preview=self.request('/api/evidence/'+answer['evidence'][0]['evidence_id'])[1]
+        self.assertEqual(preview['source'],answer['evidence'][0]['source'])
+        self.assertEqual(preview['source_url'],answer['evidence'][0]['source_url'])
     def test_csrf_host_and_evidence_protection(self):
         self.login('contractor')
         self.assertEqual(self.request('/api/query',{'question':'pilot'},{'X-CSRF-Token':'wrong'})[0],403)

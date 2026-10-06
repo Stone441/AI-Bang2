@@ -1,6 +1,6 @@
 import uuid
 from dataclasses import asdict
-from .contracts import Actor, Evidence, MODE, TENANT
+from .contracts import Actor, Evidence, MODE, TENANT, now
 from .sources import policy_allows
 from .model_receipt import public_receipt
 
@@ -166,7 +166,7 @@ class Engine:
                 if (not resource or resource['version']!=e.version or not self.check(actor,resource,rid,'before_dispatch')
                         or self.world.resources[e.resource_id]['version']!=e.version):
                     raise PermissionError('Evidence changed; please ask again')
-            response={'request_id':rid,'mode':self.mode,'model':self.model.name,'claims':claims,
+            response={'request_id':rid,'question':question,'answered_at':now(),'mode':self.mode,'model':self.model.name,'claims':claims,
                       'uncertainties':[getattr(self.model,'answer_notice','Source excerpts only; live AI synthesis is not enabled.')] if claims else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
             if 'model_call' in generation: response['model_call']=generation['model_call']
@@ -199,7 +199,7 @@ class Engine:
             locator,text=resolve_window(r,eid)
         except (KeyError,ValueError):
             raise PermissionError('Unavailable') from None
-        return {'evidence_id':eid,'title':r['title'],'text':text,'locator':locator,'version':r['version'],'source_url':r['source_url']}
+        return {'evidence_id':eid,'source':r['source'],'title':r['title'],'text':text,'locator':locator,'version':r['version'],'source_url':r['source_url']}
 
     def safe_history(self, actor, request_id=None):
         self.validate_actor(actor)

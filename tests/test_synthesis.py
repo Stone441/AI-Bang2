@@ -79,6 +79,16 @@ class GroundedSynthesis(unittest.TestCase):
                     self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
                 self.assertEqual(len(self.transport.calls),1)
 
+    def test_identifier_in_uncited_material_cannot_be_added_to_a_claim(self):
+        claim=copy.deepcopy(self.claim)
+        claim['text']='PAY-101 approval is limited to a ten-customer pilot.'
+        self.transport.outputs[0]={'claims':[claim]}
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
+        self.assertEqual(len(self.transport.calls),1)
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+        self.assertEqual(self.ledger.summary()['settled_micro_usd'],cost_upper(100,20))
+
     def test_review_rejects_false_unknown_duplicate_incomplete_or_boolean_index(self):
         for verdicts in ([{'index':0,'supported':False}],[],[{'index':0,'supported':'true'}],
                          [{'index':True,'supported':True}],[{'index':1,'supported':True}],

@@ -1,5 +1,9 @@
 # Local contracts v1
 
+2026-10-06 synthesis-v3: explicit structured identifiers (alphabetic prefix plus hyphen and numeric suffix) in final claims must occur in their copied supporting quotes, case-insensitively; an identifier in unrelated/uncited evidence is insufficient. This guards identifier provenance, not full semantic entailment. Minimum necessary claims and requested-event attribution are prompt/review requirements; same-model review remains fallible.
+
+2026-10-06 R5 additive response fields: new committed answers carry server-recorded `question` and UTC ISO `answered_at`; history returns these only after all dependency authorization/version checks. Old records lacking either remain missing, never inferred or rewritten. Unavailable history placeholders expose neither question nor time. Reauthorized evidence preview adds `source`; UI original-platform URLs come only from that successful current preview, require HTTPS, no userinfo/non-default port and source-specific Atlassian/Slack/Google host checks. Fixture URIs have no external link. Long IDs/locator/model-accounting details are collapsed diagnostics. ADR-040 independent queries and late-response invalidation remain unchanged.
+
 AUTH-017 opt-in发现契约见[R2_DISCOVERY_CONTRACT](R2_DISCOVERY_CONTRACT.md)：服务端固定容器与eng_b身份，列表不授予权限，新增对象仍逐阶段当前原生鉴权；无新增浏览器API/客户端synthetic字段。
 
 状态：实现基线，默认演示模式 fixture_fake_model；委托operator模式另列。`brain/contracts.py` 是类型入口。

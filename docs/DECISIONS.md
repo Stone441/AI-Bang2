@@ -1,5 +1,13 @@
 # Decisions / ADR
 
+## ADR-047 · 2026-10-06 · Integrated review worktree: R3 quality and R5 existing experience
+
+基准45d7b27，fix/review-integrated-candidate。本目标扩大到剩余可授权推进的统一候选，不因R3A/R4团队未观看而阻塞其他开发。R5新回答保存服务端question/answered_at，缺字段旧记录明确缺失；不可用历史不泄露问题/时间。preview逐次鉴权后才返回source映射URL，UI只允许对应平台HTTPS host、无凭据/非标准端口，noopener noreferrer，fixture://无伪原链接。诊断折叠，保持ADR-040与旧响应丢弃。DOM/8HTTP定向通过、实际只读Agent复审无阻断；Chrome localhost访问被工具security policy/user denial拒绝，浏览器not_run，不绕过或换入口。
+
+R3冻结6条只读Agent编写的未参与主Agent调参变体，另有无证据和长文/相似事件。不是人类blind benchmark。首轮fixture_source_live_model_synthesis真正出现明确问题失败：D-01到达模型、S-01未召回、review拒绝。分词完整保留数字ID并通用拆分alphabetic hyphen compound，修复payment与payment-service匹配；不是添加展示专用词表。定向11项及撤权assertion通过。第二轮最终claims暴露PAY-101在对应quotes不存在，以及无关背景；synthesis-v3加入显式结构编号须被quote支持，生成/review强调最小必要claims与事件归属。引文匹配与编号检查仍不能证明完整语义，同模型review仍可能漏检。13synthesis定向通过；第三轮6自然问题+无证据均返回，长文review拒绝，质量工作仍in_progress而非全部通过。
+
+当日实际model_readiness通过；AUTH-003/014固定app-owned模型key、原USD20账本存在/未冻结、剩余预算预检，未改变日期或重置账本。三轮6349+8701+7320microUSD保守结算，非vendor invoice；进一步单题diagnostic另记录。仅fixture合成源，不能冒充native permission persona。R2当前AUTH-017四容器native只读再次verified subset，原对象不写；完整原生新建/更新/删除时延矩阵仍partial。所有新结果review-integrated-20261006独立目录，旧审查与证据保留；runner加exclusive output纠正旧限制说明，不覆盖旧retrieval-local。新scripts/quality_acceptance是受控开发验收harness，不添加用户诊断/下载功能。最终固定候选/相关完整回归及五场景还待本目标后续完成，G1/G2保持not_run，未push/merge或目标服务重启。
+
 ## ADR-046 · 2026-10-06 · R3A/R4 fixed local candidate and signed coverage handoff
 
 本轮只完成R3A/R4团队可验收本地候选；不重做fa515a9、不扩建R1检查体系或产品功能。基准dfa40c3，分支fix/r3a-r4-team-candidate；固定应用/测试34281adfe22c839ed463a51cb3536255f47175b4，后续状态/证据提交不改变runtime。真实只读子Agent独立10项离线方法审查没有复现阻断代码问题，P2发现新R4事件尚缺签名快照对应关系，接受并补齐；follow-up独立2方法及13条验签命令通过。非阻断observer/audit故障注入建议未扩建，未宣称已测试该新增组合。
