@@ -1,5 +1,23 @@
 # Current status
 
+## 当前接续总表 · 2026-10-06（优先于下方历史记录）
+
+本轮任务DEV-REVIEW-R1，基准cf827bb，独立分支fix/review-20261006-first-task；当前代码小步提交见Git，本轮测试绑定verification.json源码hash。审查是团队建议，不新增官方要求，不回退。审查原件见[接管入口](reviews/2026-10-06-cf827bb/README.md)，本轮实际证据见[运行记录](../evidence/runs/review-r1-20261006/README.md)。
+
+| 项目 / 性质 | 当前实现与本轮判断 | fixture/mock | native API | live model | 浏览器 / 人工 | 版本、证据与缺口 |
+|---|---|---|---|---|---|---|
+| R1 价格准备 / 团队安全选择 | verified local；官方复核SGT Oct6，每日过期保持；离线readiness、503操作员提示、启动源码指纹 | 18定向 / 316完整通过；跨日零预留/零发送、旧pending保留 | 本轮仅健康GET，无知识源调用 | 本轮not_run/零费用；历史live子集有效 | 新版本not_run；G1/G2 not_run | review-r1-20261006；Oct7需重新复核，现有进程未加载新代码 |
+| R2 新增发现 / 官方A-08,S-02 | in_progress；固定native_ids按问刷新，自动发现仍缺；不扩范围扫描 | 历史四源生命周期subset | 历史CF/Jira更新、Drive删除subset；完整新增时延缺失 | 新鲜度模型矩阵not_run | 人工not_run | live-lifecycle/native-jira-update；容器发现范围需具体批准 |
+| R3 业务质量 / 官方A-06/07/14+团队Q组 | in_progress；当前长文精确切片缺marker、自然表达miss复现；native links为空 | 既有窗口/权限保护通过，不等于质量通过 | 历史single eng_b四源事实subset | 历史live-s01/live-product有效；长文出口仍blocked | 非作者质量not_run | before.json为当前模块；不得补造banner或以evidence代claims |
+| R4 审计语义 / 官方A-12/13+团队实现 | in_progress；sent_to_model发生于provider之前，界面仍称sent | 既有混合结果/签名subset | native审计身份not_run | 无本轮网络回执 | UI语义待修；人G1未完成 | audit-mixed/audit-replay；历史日志不回写，独立保管未完成 |
+| R5 现有体验 / 团队产品选择 | in_progress；纯文本原链接、历史问题/时间缺失；ADR-040已实现 | HTTP400 history_id / export404、Node安全已验证 | AUTH-016 product_ops CF positive/negative已verified subset | 产品原生四源身份矩阵不冒称完成 | 8100历史浏览器已验证；新build/not_run、人G1未完成 | independent-query/live-verification.json；不恢复New question/下载 |
+| R6 交付一致性 / 团队选择+官方A-16 | partial；本表是当前总入口，下方旧记录保留为历史 | 本轮316 checkout回归；新clean archive未运行 | 历史证据按原版本/模式有效 | 完整五场景候选未通过 | 最终观看/提交not_run | PROJECT_START_HERE/原01–05本轮保护未改；旧架构不是迁移任务 |
+
+现场健康只读确认8094四源/live synthesis、8100 Confluence/fake，两者无新指纹，loaded commit未知，未读取进程秘密或重启。AUTH-014/016有效，不倒退为未授权。本轮无平台写入、scope/费用增加、push/merge或G1/G2。下一项：R3严格长文来源出口契约与独立质量回归；R2只在获批容器范围实现发现。
+
+以下为历史追加记录，其中pending/已退役功能描述由本表及最新ADR覆盖，不能直接当当前待办。
+
+
 2026-10-06 用户批准纠正产品范围：独立问答，取消自动history依赖/New question/Export answer，HTTP拒绝history_id且回答下载端点404；Engine旧harness参数不补历史。保留当前权限/引用/历史/撤权及异步旧视图保护。311完整fixture/mock测试15.298s通过，前端安全和审计Node检查通过（evidence/runs/independent-query）。8100静态UI已刷新；运行中的旧Python后端需用户重启加载，已交接免重复凭据的Keychain命令，live新版端点验收pending。8094未重启，不能声称旧进程已关闭下载。旧已下载合成副本不自动删除/无法远程撤回；G1/G2不变。
 
 2026-10-06 独立product_ops Confluence真实验收：8100浏览器服务端身份/发布问答/C-02原文引用/历史/独立安全问题拒答实际验证；AUTH-016程序Keychain复用及native身份核验通过。独立只读runner16checks通过：C-01与C-03 native deny/no body、C-02 allow，受限资料不进fake model，controlled stale index保留且preview拒绝，unsigned审计链有效。evidence/runs/native-product-reader；完整309 fixture/mock测试14.681s通过，2 harness tests与Node前端检查通过。发现自动follow-up会补充上一问有权C-02，补New question明确清空依赖/旧视图；native产品Jira/Slack/Drive/auditor及G1/G2仍not_run，无付费模型/平台写入/8094重启。

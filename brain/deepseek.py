@@ -15,7 +15,10 @@ from .confluence import JsonTransport
 
 ENDPOINT = 'https://api.deepseek.com/chat/completions'
 MODEL = 'deepseek-flash'
-PRICE_DATE = date(2026, 10, 5)
+# Official pricing re-read on this Singapore date; evidence is kept separately.
+# Never advance this date without reviewing the official model/rates.
+PRICE_DATE = date(2026, 10, 6)
+PRICE_SOURCE = 'https://api-docs.deepseek.com/quick_start/pricing/'
 CONTEXT_TOKENS = 1_048_576
 OUTPUT_TOKENS = 1024
 # Official USD per million tokens converted to micro-USD per million tokens.
@@ -27,6 +30,10 @@ class ModelUnavailable(Exception):
     """Fixed safe error only; no upstream body, credential or prompt."""
 
 
+class PriceReviewRequired(ModelUnavailable, ValueError):
+    """An operator action is required; retrying the question cannot fix it."""
+
+
 def cost_upper(prompt_tokens, completion_tokens):
     return (prompt_tokens * INPUT_RATE + completion_tokens * OUTPUT_RATE + 999_999) // 1_000_000
 
@@ -34,7 +41,10 @@ def cost_upper(prompt_tokens, completion_tokens):
 def check_price_review(today=None):
     current = today or datetime.now(ZoneInfo('Asia/Singapore')).date()
     if current != PRICE_DATE:
-        raise ValueError('Current model price review required')
+        raise PriceReviewRequired(
+            'Model price review expired or is not valid for today. Operator: review '
+            + PRICE_SOURCE + ', record the Singapore review date and verified rates, '
+            'then restart the reviewed build. Preserve the existing USD20 budget ledger.')
 
 
 def unique_object(pairs):

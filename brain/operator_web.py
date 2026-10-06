@@ -22,6 +22,7 @@ from .drive import DriveReader
 from .server import App, create_server
 from .store import Store
 from .credential_input import HiddenInputUnavailable
+from .runtime_version import runtime_version
 
 
 class OperatorApp:
@@ -115,7 +116,10 @@ def main(argv=None):
         try:
             check_price_review()
         except ValueError:
-            print('not_run: current model price review required; no credentials or platform calls performed.')
+            from .deepseek import PRICE_SOURCE
+            print('not_run [model_price_review_required]: Review ' + PRICE_SOURCE
+                  + ', record the Singapore review date and verified rates, then restart the reviewed build. '
+                  'Preserve the existing USD20 ledger. No credentials or platform calls performed.')
             return 2
     store = server = ledger = None
     stage = 'bind'
@@ -198,6 +202,8 @@ def main(argv=None):
         label = 'LIVE MODEL EVIDENCE SELECTION' if args.model == 'deepseek' else 'FAKE MODEL'
         if args.answer_style=='synthesis': label='LIVE MODEL GROUNDED SYNTHESIS / SEPARATE MODEL REVIEW'
         print(f'{args.source.title()} LIVE API / {label} / LOCAL OPERATOR (not SSO)', flush=True)
+        version = runtime_version()
+        print(f"Startup source: {version['startup_source_sha256']} / loaded {version['process_loaded_at']}", flush=True)
         print(f'Open once within 10 minutes: http://127.0.0.1:{server.server_port}/#ticket={app.bootstrap_ticket()}', flush=True)
         stage = 'runtime'
         server.serve_forever()

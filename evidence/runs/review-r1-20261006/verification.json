@@ -1,0 +1,52 @@
+{
+  "checked_at": "2026-10-06T04:17:30.273433+00:00",
+  "base_commit": "cf827bb12c022e63f8e1b498c565d79d20ed25e6",
+  "branch": "fix/review-20261006-first-task",
+  "mode": "fixture_mock_current_checkout",
+  "status": "verified_local_subset",
+  "source_sha256": {
+    "brain/deepseek.py": "6d8d5a2098e11326e2cd8ede4e231c417a26c3875cf813dc2da913fc01994370",
+    "brain/operator_web.py": "f799e2c0b5243789402b471db2d06f562cf923db39a3301517fa0c90d98c0980",
+    "brain/server.py": "0293108fb88ceb1062db7c90d49130b1f704187ad064dafc57117d4a29d9b11c",
+    "brain/runtime_version.py": "f3cddf0e6da0a33e5e8c85512d2bfab3373b26627baa79a11ef117650ef51d91",
+    "scripts/model_readiness.py": "07542a868c6457dfab8ace24bbdf5b3d4b6cd9c187f593bc4111f439e1a72113",
+    "tests/test_deepseek.py": "3055f1a367310795c85f1379f46f43c1e87ca75106f8ece3d610febf26bea344",
+    "tests/test_http.py": "0ec0a1ed7b67a50c9d7fc4cdfc0d391bf44dc922063d6c3e6eff4a620994479c"
+  },
+  "logs_sha256": {
+    "targeted-final.log": "33d87274f934cae0ad9574024ff12352dda40e5eb68ee9e9c7fad8b3160390c1",
+    "full-tests.log": "7f3577fc7d1f9b5185fdbc6578294c6db81dd0b851c89bacae4fc1628288f5df",
+    "frontend-checks.log": "5d07d12010a35246277897647ab4c580f65e43d539db37e58d43f24057890d7c",
+    "targeted-first.log": "a94cd6583e733af61d0219430d28bead66678659f5214034e20239caccd65386"
+  },
+  "checks": {
+    "deepseek_targeted": 18,
+    "full_python": 316,
+    "full_duration_seconds": 16.309,
+    "frontend_security": "passed",
+    "frontend_audit": "passed",
+    "js_syntax": "passed",
+    "protected_documents_unchanged": true,
+    "handoff_bytes_match": true,
+    "git_diff_check": "Authored changes passed; staged review original has 5 Markdown hard-break trailing-space warnings, preserved byte-for-byte.",
+    "r1_current_day_readiness": "passed",
+    "r3_late_window_and_natural_vocabulary_gaps": "reproduced_not_fixed"
+  },
+  "model_network_calls": 0,
+  "native_knowledge_calls": 0,
+  "runtime_service_restarts": 0,
+  "runtime_model_budget_changes": false,
+  "live_model": "not_run",
+  "new_candidate_browser": "not_run",
+  "clean_archive": "not_run",
+  "human_G1_G2": "not_run",
+  "commands": [
+    "python3 -m unittest discover -s tests -p test_deepseek.py -v",
+    "python3 -m unittest discover -s tests -v",
+    "python3 -m scripts.model_readiness",
+    "node tests/frontend_operator_security.js",
+    "node tests/frontend_audit_review.js",
+    "node --check web/app.js",
+    "git diff --check"
+  ]
+}

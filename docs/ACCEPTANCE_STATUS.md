@@ -1,5 +1,11 @@
 # Acceptance coverage · local candidate
 
+## 当前验收增量 · 2026-10-06
+
+以[STATUS当前总表](STATUS.md)为模式/版本/人工状态入口。DEV-REVIEW-R1：316完整fixture/mock方法16.309s、18模型定向、2Node检查通过；当前checkout，不是新的clean archive/native/model/browser验收。U-01/P-14/A-10仅新增价格跨日拒绝、预算保留、503操作员提示及非敏感health启动指纹子集；R4实际发送语义仍未修，不能将A-10整体标通过。R3长窗口synthetic guard与词法miss在当前模块复现，未用历史snapshot。证据review-r1-20261006。
+
+ADR-040已实现，8100历史native/fake独立正负问题已验证；下载404是fixture/mock HTTP。AUTH-016 product_ops CF及AUTH-014有效；产品其他源/G1/G2/not_run。以下旧数字、导出能力和pending为历史记录，以顶部及最新决定覆盖，不改写原oracle或旧证据。
+
 2026-10-06 AUTH-016已记录，Confluence-only product_ops token及app-owned本机Keychain复用获用户明确批准。已准备独立.runtime/confluence-product.json与nonsecret example、单源Confluence Keychain入口：新输入native身份匹配后才保存，saved免TTY复用、OS拒绝/wrong account不回退，actor/tenant/native-account摘要隔离SQLite0600。32针对性/307完整fixture/mock回归实际通过；初始test_keychain sibling import调用错误记录后按已有discovery路径重跑，不删断言。Atlassian页已填2918379149@qq.com，当前用户登录/邮箱验证pending，token未创建/产品Keychain项未写，native权限验收not_run；待“产品账号已登录”后继续只读scope准备及用户最终创建，再执行fake产品正/负query。不扩Jira/Slack/Drive/DeepSeek授权、不改8094，G1/G2 not_run。
 
 2026-10-06 最新checkout完整301项Python回归实际通过（native-jira-update/full-tests.log），含新增mixed audit及Jira guard；既有native Jira13checks另列。full suite为fixture/mock，不增加native/model验收覆盖，当前新提交尚非新clean archive/browser视觉通过。独立Confluence product_ops凭据及本机Keychain复用具体候选PRODUCT_READER_PILOT已发确认，未回复前不创建token/读取新凭据/调整权限；其他源更新与真人观看保留pending。

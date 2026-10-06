@@ -24,6 +24,27 @@ class HTTP(unittest.TestCase):
         c.close();return status,result
     def login(self,user='eng_a'):
         status,result=self.request('/api/demo/login',{'user':user});self.assertEqual(status,200);self.csrf=result['csrf']
+
+    def test_price_expiry_is_operator_action_and_not_invalid_user_input(self):
+        from unittest.mock import patch
+        from brain.deepseek import PriceReviewRequired
+        self.login()
+        with patch.object(self.app.engine, 'query', side_effect=PriceReviewRequired('private details')):
+            status, result = self.request('/api/query', {'question':'payment-service'})
+        self.assertEqual(status, 503)
+        self.assertEqual(result['code'], 'model_price_review_required')
+        self.assertIn('Contact the operator', result['error'])
+        self.assertNotIn('private details', json.dumps(result))
+
+    def test_health_startup_fingerprint_stays_fixed_after_disk_changes(self):
+        from unittest.mock import patch
+        from brain.runtime_version import runtime_version
+        first = self.request('/api/health')[1]['runtime_version']
+        self.assertRegex(first['startup_source_sha256'], r'^[a-f0-9]{64}$')
+        with patch('brain.runtime_version.source_fingerprint', return_value='different-disk'):
+            second = self.request('/api/health')[1]['runtime_version']
+        self.assertEqual(first, second)
+        self.assertEqual(first, runtime_version())
     def test_http_frontend_identity_and_query(self):
         self.assertEqual(self.request('/')[0],200)
         self.assertEqual(self.request('/api/query',{'question':'payment-service'})[0],403)

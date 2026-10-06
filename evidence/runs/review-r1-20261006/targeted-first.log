@@ -1,0 +1,62 @@
+test_approved_atlassian_banner_reaches_model_without_rewriting_evidence (test_deepseek.DeepSeekBoundary.test_approved_atlassian_banner_reaches_model_without_rewriting_evidence) ... ok
+test_budget_exhaustion_prevents_network (test_deepseek.DeepSeekBoundary.test_budget_exhaustion_prevents_network) ... ok
+test_budgeted_fixed_endpoint_selection_derives_text_from_evidence (test_deepseek.DeepSeekBoundary.test_budgeted_fixed_endpoint_selection_derives_text_from_evidence) ... ok
+test_cross_midnight_request_blocked_before_budget_or_network (test_deepseek.DeepSeekBoundary.test_cross_midnight_request_blocked_before_budget_or_network) ... ERROR
+test_engine_denied_evidence_never_reaches_provider (test_deepseek.DeepSeekBoundary.test_engine_denied_evidence_never_reaches_provider) ... ok
+test_engine_live_selection_still_enforces_actor_acl_and_post_generation_revocation (test_deepseek.DeepSeekBoundary.test_engine_live_selection_still_enforces_actor_acl_and_post_generation_revocation) ... ok
+test_expired_startup_stops_before_listener_credentials_and_source_calls (test_deepseek.DeepSeekBoundary.test_expired_startup_stops_before_listener_credentials_and_source_calls) ... ok
+test_legacy_banner_missing_fixture_wrong_source_or_title_only_never_sent (test_deepseek.DeepSeekBoundary.test_legacy_banner_missing_fixture_wrong_source_or_title_only_never_sent) ... ok
+test_no_evidence_or_unmarked_content_never_sent (test_deepseek.DeepSeekBoundary.test_no_evidence_or_unmarked_content_never_sent) ... ok
+test_operator_http_model_selection_and_same_session_revoke (test_deepseek.DeepSeekBoundary.test_operator_http_model_selection_and_same_session_revoke) ... ERROR
+test_operator_price_guard_precedes_credentials_and_no_live_is_no_send (test_deepseek.DeepSeekBoundary.test_operator_price_guard_precedes_credentials_and_no_live_is_no_send) ... ok
+test_price_date_and_approval_guard (test_deepseek.DeepSeekBoundary.test_price_date_and_approval_guard) ... ok
+test_reviewed_restart_keeps_existing_budget_and_allows_mock_request (test_deepseek.DeepSeekBoundary.test_reviewed_restart_keeps_existing_budget_and_allows_mock_request) ... ERROR
+test_timeout_keeps_reservation_across_restart_and_hides_error (test_deepseek.DeepSeekBoundary.test_timeout_keeps_reservation_across_restart_and_hides_error) ... ok
+test_truncated_tool_or_wrong_model_output_is_not_an_answer (test_deepseek.DeepSeekBoundary.test_truncated_tool_or_wrong_model_output_is_not_an_answer) ... ok
+test_unknown_duplicate_forged_or_free_form_output_rejected_but_usage_charged (test_deepseek.DeepSeekBoundary.test_unknown_duplicate_forged_or_free_form_output_rejected_but_usage_charged) ... ok
+test_unknown_usage_retains_full_reservation (test_deepseek.DeepSeekBoundary.test_unknown_usage_retains_full_reservation) ... ok
+test_web_worker_thread_can_use_durable_budget (test_deepseek.DeepSeekBoundary.test_web_worker_thread_can_use_durable_budget) ... ok
+
+======================================================================
+ERROR: test_cross_midnight_request_blocked_before_budget_or_network (test_deepseek.DeepSeekBoundary.test_cross_midnight_request_blocked_before_budget_or_network)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_deepseek.py", line 155, in test_cross_midnight_request_blocked_before_budget_or_network
+    self.assertEqual(self.ledger.receipts_for_query('expired'), [])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BudgetLedger' object has no attribute 'receipts_for_query'
+
+======================================================================
+ERROR: test_operator_http_model_selection_and_same_session_revoke (test_deepseek.DeepSeekBoundary.test_operator_http_model_selection_and_same_session_revoke)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_deepseek.py", line 261, in test_operator_http_model_selection_and_same_session_revoke
+    self.server = create_server(app)
+                  ~~~~~~~~~~~~~^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/server.py", line 160, in create_server
+    server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 457, in __init__
+    self.server_bind()
+    ~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/server.py", line 148, in server_bind
+    socketserver.TCPServer.server_bind(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socketserver.py", line 478, in server_bind
+    self.socket.bind(self.server_address)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+======================================================================
+ERROR: test_reviewed_restart_keeps_existing_budget_and_allows_mock_request (test_deepseek.DeepSeekBoundary.test_reviewed_restart_keeps_existing_budget_and_allows_mock_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_deepseek.py", line 159, in test_reviewed_restart_keeps_existing_budget_and_allows_mock_request
+    existing = self.ledger.reserve(1234, query_id='previous-unknown', model='deepseek-flash')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/budget.py", line 57, in reserve
+    raise ValueError('Server request ID and model required together')
+ValueError: Server request ID and model required together
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.098s
+
+FAILED (errors=3)

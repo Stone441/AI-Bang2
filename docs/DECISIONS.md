@@ -1,5 +1,11 @@
 # Decisions / ADR
 
+## ADR-041 · 2026-10-06 · Review R1 price readiness and startup identity
+
+当前HEAD与审查基准cf827bb一致；实际模块离线复现当天日期阻断及R3缺标记/漏召回，原审查附件逐字节保留，不能当当前运行结果。官方DeepSeek pricing/chat-completions页面本日实读，deepseek-flash/V4.1-Flash及peak cache-miss USD0.30/input、USD1.20/output每百万不变，复核日期更新为SGT Oct6；保留当日有效、未来/过去日期拒绝，不能自动延长、传旧日期或重置既有USD20账本。`scripts.model_readiness`仅离线检查价格准备，不读凭据/账本/源。跨午夜请求仍在reserve/network前停止；HTTP用固定503/operator-action提示，启动错误给官方复核与保留账本步骤。代价：每日人工/Agent实际复核仍需要，未保证全天候可用。
+
+health/启动日志新增进程导入时固定的brain/scripts源码SHA256与UTC加载时间；不读.runtime/env/Keychain，不每请求按磁盘更新，不把静态刷新当后台升级，也非签名构建证明（假设启动期间不并发改源码）。8094/8100现有健康接口分别live synthesis/fake model且无新指纹，未重启，准确loaded commit未知。保留ADR-040，不恢复聊天/下载。18定向及316完整fixture/mock测试通过，Node两个安全检查通过；官方文档核对非live模型验收。首次新测试harness错误/沙箱bind失败保留。证据：`evidence/runs/review-r1-20261006`。回滚可移除readiness/指纹与错误投影；不得回滚为使用已过期价格或删除账本。新API契约：GET health增加runtime_version；价格过期query返回503/code=model_price_review_required，其他授权边界不变。
+
 ## 2026-10-04 · AUTH-001 · approved local scope
 
 用户本次明确授权本仓库内本地、可逆、无新增费用的完整开发、测试、独立分支和小步提交，范围不再限于 Phase 0。G0 **仅本地开发部分获批**；四源真实账号/数据/scope、运行时模型、费用及数据出口待定。G1/G2 未通过。凭据存在不代表可用。无远端推送、公开部署或业务系统写入授权。

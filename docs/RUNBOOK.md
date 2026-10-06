@@ -1,5 +1,13 @@
 # 安装、启动、测试与演示
 
+## 当前运行提示 · 2026-10-06
+
+先看[STATUS当前总表](STATUS.md)。ADR-040独立问答已落实：无聊天历史依赖、New question或普通回答下载；下方相关旧说明为superseded。四源native/DeepSeek及独立product_ops Confluence已有子集，不重复开通。
+
+每次live启动前运行`python3 -m scripts.model_readiness`，只检查价格日期，不读取凭据/账本/联网；返回0仅表明当日价格已复核，不保证预算、源或模型可用。当前复核SGT Oct6，Oct7过期；实际核对官方[价格](https://api-docs.deepseek.com/quick_start/pricing/)及接口并记录新依据后更新构建。不得传旧today、删除/换目录重建USD20账本。跨日非空请求503/model_price_review_required，联系操作员，重试问题不能解决。
+
+新进程启动日志与GET /api/health携带startup_source_sha256和process_loaded_at（源码快照，不是签名证明）；静态UI可独立变化，不热更新后台。只读现场8094=四源/native/live synthesis、8100=CF/native/fake且无该字段；准确loaded commit未知，本轮保持不重启。运行时验收另行记录，不能以磁盘代码/本地回归代替。
+
 要求 Python >=3.11（本次实际 3.14.7）、可绑定 loopback 端口。应用零第三方 Python 依赖，无 npm/pip 安装步骤；无需 API key。签名工具及完整测试另需 PATH 中的 OpenSSL（已验证 3.6.3，需支持 Ed25519 pkeyutl -rawin）。Node 仅用于 `node --check web/app.js`。在仓库根目录执行。
 
 ```sh

@@ -1,5 +1,20 @@
 # Backlog · 2026-10-05
 
+## 当前任务 · 2026-10-06
+
+当前能力/模式/人工状态唯一总表见[STATUS](STATUS.md)顶部；下方旧表和追加记录保留历史，不再据其早期blocked重复接入。
+
+| 任务 | 状态 | 实际完成 / 下一步 |
+|---|---|---|
+| DEV-REVIEW-R1 | verified local / live not_run | 当日官方价格复核、每日expiry保留、跨日/预算/HTTP503/启动指纹；18定向与316完整fixture/mock、2Node通过；review-r1-20261006。未重启8094/8100或调模型；每日先运行model_readiness |
+| DEV-REVIEW-R3 | in_progress | 当前模块重现晚段合成guard与自然表达miss；下一严格原资源/version/切片来源验证+业务质量oracle，不修改原文或弱化guard |
+| DEV-REVIEW-R2 | in_progress / discovery scope pending | 已知对象请求刷新已实现；新增发现/四源时延未完成。超出对象白名单先给具体容器范围，不扫描个人源 |
+| DEV-REVIEW-R4/5 | not_started remediation | 已核对当前审计stage/UI及历史字段问题；保留ADR-040和既有CodeBuddy贡献 |
+| DEV-REVIEW-R6 | in_progress | 顶部当前表已收敛；固定候选clean archive、五场景、非作者观看和最终材料仍待做 |
+
+本轮基准cf827bb/独立fix分支；已有AUTH-014/016、native及live子集有效。下方live未配置/模型未实现/New question/export等旧记录为superseded，具体模式按STATUS与原证据判断。
+
+
 | ID | 状态 | 已完成 / 仍需推进 / 验收 |
 |---|---|---|
 | DEV-00 | verified | 仓库/环境盘点，基准 68e65c8 |
