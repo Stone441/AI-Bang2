@@ -1,5 +1,7 @@
 # Local contracts v1
 
+AUTH-017 opt-in发现契约见[R2_DISCOVERY_CONTRACT](R2_DISCOVERY_CONTRACT.md)：服务端固定容器与eng_b身份，列表不授予权限，新增对象仍逐阶段当前原生鉴权；无新增浏览器API/客户端synthetic字段。
+
 状态：实现基线，默认演示模式 fixture_fake_model；委托operator模式另列。`brain/contracts.py` 是类型入口。
 
 - 身份：仅服务端 opaque session → Actor；仅显式 loopback demo 登录允许从六个固定合成用户选取。业务 API 拒绝额外 user_id/role/tenant 字段。

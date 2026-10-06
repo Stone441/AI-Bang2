@@ -1,5 +1,12 @@
 # Decisions / ADR
 
+## ADR-044 · 2026-10-06 · AUTH-017 bounded discovery (R2 local increment)
+
+基准fa515a9984a773934dc37da96cd1dba55a05dc1f，独立fix/review-r2-discovery。默认关闭的`--discovery-auth017`仅multi/eng_b可启用，要求现有reader配置恰好落在四个批准容器；不改原对象配置/Keychain/scope/product_ops。独立multi-auth017-web.sqlite保存catalog/state，重启先精确当前读再开放动态IDs。CF空间metadata、固定Jira project enhanced JQL（加project元数据验证容器）、Drive direct children、Slack固定频道/时间窗；候选标题/名称/root标签不单独授予模型出口，完整原文仍通过synthetic guard。列表只决定候选，动态对象只对eng_b有候选权，逐阶段native读仍必需；Slack动态回复每次模型/引用/历史检查另复核当前合成父消息。
+
+每源最多10列表页（50条，Slack15）与100精确原文读取，含父消息复核；记录实际adapter HTTP尝试数，不把单次read误当一次HTTP。对象超限轮转，页超限保留backlog，均不推进完整checkpoint。已知对象即使从列表消失仍精确复核，不以列表缺席判删除；deny/unknown先停止服务，unknown不作为删除事实。事务切换新版本/catalog，先记录发布准备审计，完成审计持久化后才推进checkpoint；失败可重试，无全库重建。CF/Drive原生递增版本不回退，Jira/Slack指纹不作数值排序。重复读取未变化对象保留indexed_at。HTTP429 numeric Retry-After保留、其他失败退避，缺scope不放行、不自动申请权限。线程共享pilot锁，停止后才关闭store；慢源会阻塞查询，非生产worker或SLA保证。
+
+19项定向、346完整fixture/mock方法17.110s通过；现有两Node检查通过。实际离线trace包含发现前无新增证据→四源发现后可问答、CF更新/Drive删除/旧历史拒绝、product_ops不继承、429不前移checkpoint；合法长窗口经R3A服务端来源进入MOCK模型通过。原审查/R1/R3A/R4证据、原ZIP和保护路径未改。新native/browser/live model not_run，G1/G2不升级，未重启8094/8100、真实API/模型调用或新增费用。首轮真实父消息复核断点及测试harness错误均保留日志，没有删除安全断言。证据review-r2-20261006。回滚关闭opt-in即可回到原固定ID流程，catalog/旧版本/审计不删除。下一：AUTH-017下独立native只读发现及新增/编辑/删除时延验收；种植操作仍核对具体原AUTH-003范围，不将此次读取批准解释为写授权。
 ## AUTH-017 · 2026-10-06 · eng_b fixed-container discovery reads
 
 用户对具体问题明确回复“批准上述四个固定范围”：Confluence space 131227；Jira KAN/10001；Slack workspace T0C6FQ246TF、频道 C0C6R70SGG4，从既有合成 root 1791142152.858189 起；Drive 文件夹 1EMYjaNhzBFQ3TXHC6ukEwN6otVIIeOEv 的直接子项。仅既有eng_b、既有只读scope/Keychain；不扩费用、scope、源写入、公开范围或product_ops AUTH-016。详见[R2方案](R2_DISCOVERY_PROPOSAL.md)。本轮只准备方案并核对权限范围，没有执行新发现或重启服务；缺scope/身份变化/计费提示须停止该源。

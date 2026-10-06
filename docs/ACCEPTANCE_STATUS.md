@@ -1,5 +1,6 @@
 # Acceptance coverage · local candidate
 
+2026-10-06 R2增量：19定向、346完整fixture/mock回归17.110s及两Node检查通过；四源实际mock新增发现/更新/删除/429 trace见review-r2-20261006。AUTH-017动态IDs仅eng_b，原生当前权限与R3A全文/精确窗口关系保留；不完整分页/读取失败不推进完整checkpoint。R2为verified local subset，native新增发现/生命周期时延及新browser/live model仍not_run；不是完整S-02或新鲜度SLA/G1/G2通过。下文方案未实现描述由本段覆盖。
 2026-10-06 最新增量：R3A/R4 verified local fixture/mock，327完整Python方法16.645s、6来源定向/5审计定向及2Node检查通过。R3A合法无banner窗口按服务端已批准原资源/版本/原文精确关系放行；负例仍网络前拒绝。R4仅区分准备、发送意图/尝试、有效usage及输出、回答交付尝试，历史日志不改写。证据review-r3a-20261006、review-r4-20261006。新build native/browser/live model全部not_run，A-10/A-12/13完整验收及G1/G2不升级。R1本地完成，旧下文R3出口blocked/R4未修描述由本段覆盖；业务质量仍待验证。AUTH-017发现范围获批不等于发现实现/时延通过。8100历史独立问答验收继续有效。
 ## 当前验收增量 · 2026-10-06
 

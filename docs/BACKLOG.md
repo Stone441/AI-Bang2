@@ -8,7 +8,7 @@
 |---|---|---|
 | DEV-REVIEW-R1 | verified local / live not_run | 当日官方价格复核、每日expiry保留、跨日/预算/HTTP503/启动指纹；18定向与316完整fixture/mock、2Node通过；review-r1-20261006。未重启8094/8100或调模型；每日先运行model_readiness |
 | DEV-REVIEW-R3A | verified local/mock | 严格已批准原资源/version/全文/切片来源；6定向+327完整回归；新build native/browser/live model not_run；业务质量仍待评测 |
-| DEV-REVIEW-R2 | prepared / scope approved AUTH-017 | 四个eng_b固定容器已获批准，方案见R2_DISCOVERY_PROPOSAL；下一实现有界发现，新增时延not_run，不扩product_ops |
+| DEV-REVIEW-R2 | verified local/mock subset / native not_run | 默认关闭AUTH-017有界发现、19定向/346完整回归及实际四源mock trace；下一独立native只读发现/生命周期时延，写操作仍按具体授权核对，product_ops不扩 |
 | DEV-REVIEW-R4 | verified local/mock | 准备/意图/尝试/有效usage/输出/交付尝试分离；5定向及Node检查通过；历史原字节保留，真实回执not_run |
 | DEV-REVIEW-R5 | in_progress | 原链接/历史展示待做；ADR-040及8100历史独立问答有效，既有CodeBuddy贡献保留 |
 | DEV-REVIEW-R6 | in_progress | 顶部当前表已收敛；固定候选clean archive、五场景、非作者观看和最终材料仍待做 |

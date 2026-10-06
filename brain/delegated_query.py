@@ -11,6 +11,7 @@ from .drive import DriveReader
 from .contracts import Decision, now
 from .engine import Engine
 from .store import canonical
+from .deepseek import marked_synthetic_text
 
 
 class DelegatedAuthority:
@@ -31,11 +32,16 @@ class DelegatedAuthority:
             source + ':' + native_id for source, ids in self.native_ids.items() for native_id in ids)
         self.users = {uid: {} for r in self.readers.values() for uid in r.delegations}
         self.resources, self.snapshots = {}, {}
+        self.discovered_ids = {}
 
     @staticmethod
-    def resource(content, tenant):
-        return dict(content, id=content['source'] + ':' + content['native_id'], tenant=tenant,
-                    active=True, indexed_at=now(), links=[])
+    def resource(content, tenant, previous=None):
+        resource=dict(content, id=content['source'] + ':' + content['native_id'], tenant=tenant,
+                      active=True, indexed_at=now(), links=[])
+        if previous and DelegatedAuthority.same_content(previous,content):
+            for key in ('indexed_at','observed_at','source_confirmed_at'):
+                if key in previous:resource[key]=previous[key]
+        return resource
 
     @staticmethod
     def same_content(resource, content):
@@ -43,11 +49,24 @@ class DelegatedAuthority:
                    ('source', 'native_id', 'version', 'title', 'text', 'locator',
                     'source_updated_at', 'source_url'))
 
+    def read_current(self, actor, source, native_id, expected_version=None):
+        reader=self.readers[source]
+        dynamic=self.discovered_ids.get(actor.user_id,{}).get(source,frozenset())
+        if source=='slack' and native_id in dynamic:
+            parent=reader.messages.get(native_id)
+            if parent is not None:
+                root=native_id.split('/')[0]+'/'+parent
+                decision,content=reader.read(actor,root)
+                if decision.result!='allow' or content is None or not marked_synthetic_text(content['text'],source):
+                    return Decision('unknown',now(),'discovered-thread-parent-unavailable',0),None
+        return reader.read(actor,native_id,expected_version)
+
     def prepare(self, actor, store, audit, request_id):
         self.snapshots[actor.user_id] = {}
         for source, reader in sorted(self.readers.items()):
-            for native_id in sorted(self.native_ids[source]):
-                decision, content = reader.read(actor, native_id)
+            dynamic = self.discovered_ids.get(actor.user_id, {}).get(source, frozenset())
+            for native_id in sorted(self.native_ids[source] | dynamic):
+                decision, content = self.read_current(actor,source,native_id)
                 resource_id = source + ':' + native_id
                 audit.append('authorization_decided', actor.user_id, request_id,
                              {'resource_id': resource_id, 'source': source,
@@ -57,9 +76,15 @@ class DelegatedAuthority:
                                              else 'mock_http', **asdict(decision)})
                 if decision.result != 'allow' or content is None:
                     continue
+                if native_id in dynamic:
+                    if not marked_synthetic_text(content['text'],source):
+                        continue
                 if content['source'] != source or content['native_id'] != native_id:
                     raise ValueError('Reader content mapping mismatch')
-                resource = self.resource(content, actor.tenant)
+                current=store.get(resource_id)
+                if (current and source in ('confluence','drive') and content['version']<current['version']):
+                    raise ValueError('Source version regressed')
+                resource = self.resource(content, actor.tenant, current)
                 with store.transaction() as db:
                     existing = db.execute('SELECT body FROM versions WHERE id=? AND version=?',
                                           (resource_id, resource['version'])).fetchone()
@@ -88,13 +113,15 @@ class DelegatedAuthority:
             return Decision('unknown', now(), 'delegated-pilot-unmapped', 0)
         source, native_id = resource['source'], resource['native_id']
         reader = self.readers.get(source)
-        if reader is None or native_id not in self.native_ids[source]:
+        dynamic = self.discovered_ids.get(actor.user_id, {}).get(source, frozenset())
+        if reader is None or native_id not in self.native_ids[source] | dynamic:
             return Decision('unknown', now(), 'delegated-pilot-unmapped', 0)
-        decision, content = reader.read(actor, native_id, resource['version'])
+        decision, content = self.read_current(actor,source,native_id,resource['version'])
         if decision.result == 'allow':
-            if content is None or not self.same_content(resource, content):
+            if (content is None or not self.same_content(resource, content)
+                    or (native_id in dynamic and not marked_synthetic_text(content['text'],source))):
                 return Decision('deny', now(), source + '-content-changed', 0)
-            self.resources[resource_id] = self.resource(content, actor.tenant)
+            self.resources[resource_id] = self.resource(content, actor.tenant, resource)
         return decision
 
 

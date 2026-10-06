@@ -19,6 +19,11 @@ class SourceUnavailable(Exception):
     """Intentionally carries no upstream response or credential details."""
 
 
+class SourceRateLimited(SourceUnavailable):
+    def __init__(self, retry_after=60):
+        self.retry_after = retry_after
+
+
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         return None
@@ -53,7 +58,11 @@ class JsonTransport:
         except HTTPError as error:
             # Do not read an error body: it may contain restricted titles or text.
             status = error.code
+            retry = error.headers.get('Retry-After', '') if error.headers else ''
             error.close()
+            if status == 429:
+                delay = int(retry) if isinstance(retry,str) and retry.isdecimal() and len(retry)<=5 else 60
+                raise SourceRateLimited(max(1,min(86400,delay))) from None
             return status, None
         except (URLError, OSError, ValueError):
             raise SourceUnavailable() from None

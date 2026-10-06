@@ -1,5 +1,6 @@
 # 安装、启动、测试与演示
 
+R2 AUTH-017 opt-in：原multi命令追加`--discovery-auth017`，仅eng_b及四个固定容器，默认关闭，独立`.runtime/multi-auth017-web.sqlite`；不改变8094/8100已有进程。启动后60秒为成功周期的最短间隔，失败按退避/Retry-After延后，不保证每分钟完成。operator-only状态在该DB discovery_state/catalog；不向浏览器开放来源列表。停止使用Ctrl-C，先结束poller再关闭DB；再次启动从已记录mapping精确复核，unknown不给权限。真实只读发现获AUTH-017批准，native新增/时延本轮未执行；种植/编辑/删除仍按各自具体授权。本地验证：`python3 -m unittest discover -s tests -p test_container_discovery.py -v`；实际mock trace重放请将capture.py复制到新运行目录并用`PYTHONPATH=tests:. python3 <新目录>/capture.py`，exclusive输出不覆盖原结果。
 2026-10-06 R3A/R4 本地回归：`python3 -m unittest discover -s tests -v`；`node tests/frontend_operator_security.js`；`node tests/frontend_audit_review.js`。来源与审计定向：`python3 -m unittest discover -s tests -p test_synthetic_provenance.py -v`及`-p test_model_stages.py`。结果写新的运行目录，不覆盖旧附件；review-r4 capture.py是离线mock且输出exclusive，重放必须先复制到新目录并调整目标。真实模型前执行已有`python3 -m scripts.model_readiness`并保留账本，过期需真实复核；不凭health推断新代码已加载。R2仅AUTH-017固定eng_b容器读取获批，方案尚未实现；不自动重启已有8094/8100。
 ## 当前运行提示 · 2026-10-06
 

@@ -88,6 +88,7 @@ def main(argv=None):
     parser.add_argument('--source', choices=['confluence', 'jira', 'slack', 'drive', 'multi'], default='confluence')
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
+    parser.add_argument('--discovery-auth017',action='store_true',help='Opt-in eng_b discovery in AUTH-017 fixed four containers; default off')
     parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive or multi; browser consent instead of hidden Drive token')
     parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
     parser.add_argument('--answer-style', choices=['excerpts','synthesis'], default='excerpts',
@@ -97,6 +98,9 @@ def main(argv=None):
     parser.add_argument('--replace-credential',choices=['confluence','jira','slack','drive','deepseek'],
                         help='Re-enter only one credential for this launch; keep all others')
     args = parser.parse_args(argv)
+    if args.discovery_auth017 and (args.source!='multi' or args.actor!='eng_b'):
+        print('not_run: AUTH-017 discovery requires multi-source eng_b; no credentials or platform calls performed.')
+        return 2
     if args.answer_style=='synthesis' and args.model!='deepseek':
         print('not_run: synthesis requires DeepSeek; no credentials or platform calls performed.')
         return 2
@@ -121,7 +125,7 @@ def main(argv=None):
                   + ', record the Singapore review date and verified rates, then restart the reviewed build. '
                   'Preserve the existing USD20 ledger. No credentials or platform calls performed.')
             return 2
-    store = server = ledger = None
+    store = server = ledger = discovery = None
     stage = 'bind'
     try:
         # Reserve the listener before asking for a credential. Do not serve until
@@ -166,7 +170,7 @@ def main(argv=None):
             identity = [args.actor, reader.tenant, reader.delegations[args.actor].account_id]
             db = runtime / ('confluence-' + hashlib.sha256(json.dumps(identity).encode()).hexdigest()[:16] + '-web.sqlite')
         else:
-            db = runtime / (args.source + '-web.sqlite')
+            db = runtime / (args.source + ('-auth017' if args.discovery_auth017 else '') + '-web.sqlite')
         store = Store(str(db)); os.chmod(db, 0o600)
         stage = 'native_identity'
         app = OperatorApp(reader, store, args.actor, live=True)
@@ -197,6 +201,11 @@ def main(argv=None):
             app.engine.mode = app.engine.mode.removesuffix('_fake_model') + '_live_model_selection'
             if args.answer_style=='synthesis':
                 app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_synthesis'
+        if args.discovery_auth017:
+            from .discovery import ContainerDiscovery
+            stage='discovery_configuration'
+            discovery=ContainerDiscovery(app.pilot,app.actor)
+            discovery.start()
         server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
         label = 'LIVE MODEL EVIDENCE SELECTION' if args.model == 'deepseek' else 'FAKE MODEL'
@@ -224,6 +233,7 @@ def main(argv=None):
                 'bind': 'Could not bind the loopback listener. Check local port permissions.',
                 'configuration_or_hidden_input': 'Check the approved configuration, mapped actor and secure TTY input.',
                 'local_store': 'Could not open the local database. Check .runtime access and database locks.',
+                'discovery_configuration': 'Check AUTH-017 exact eng_b container mappings; discovery stays within approved scope.',
                 'native_identity': 'Could not verify the mapped native account. Check token, account mapping and network access.',
                 'model_configuration': 'Check the reviewed model price date, secure TTY and durable budget. No model request was sent.',
                 'runtime': 'The running service stopped unexpectedly.',
@@ -232,6 +242,7 @@ def main(argv=None):
                   'No credential or upstream error details are logged.')
         return 2
     finally:
+        if discovery is not None: discovery.close()
         if ledger is not None: ledger.close()
         if server is not None: server.server_close()
         if store is not None: store.db.close()
