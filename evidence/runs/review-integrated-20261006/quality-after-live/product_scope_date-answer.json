@@ -1,0 +1,184 @@
+{
+  "request_id": "232e863c3b4342fdab344066f0a80865",
+  "question": "Can support promise payment-retry to customers outside the pilot, or give them a general launch date?",
+  "answered_at": "2026-10-06T06:33:24.519392+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v2",
+  "claims": [
+    {
+      "text": "No. Payment-retry is available only to the controlled pilot; general availability is not approved, so support cannot promise payment-retry to customers outside the pilot.",
+      "evidence_ids": [
+        "C-02@1",
+        "D-03@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "C-02@1",
+          "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved."
+        },
+        {
+          "evidence_id": "D-03@1",
+          "quote": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+        }
+      ]
+    },
+    {
+      "text": "No general launch date can be given: no GA date is confirmed, and a general availability date remains unconfirmed.",
+      "evidence_ids": [
+        "C-02@1",
+        "S-02@1",
+        "D-03@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "C-02@1",
+          "quote": "No general release date is confirmed."
+        },
+        {
+          "evidence_id": "S-02@1",
+          "quote": "No GA date is confirmed; use the capability page and release approval."
+        },
+        {
+          "evidence_id": "D-03@1",
+          "quote": "Unconfirmed items: general availability date and expansion beyond pilot customers."
+        }
+      ]
+    },
+    {
+      "text": "The approved release decision was limited to a controlled pilot; GA was not approved, and PAY-102 being marked Done is not customer release approval.",
+      "evidence_ids": [
+        "D-02@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "D-02@1",
+          "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+        }
+      ]
+    },
+    {
+      "text": "PAY-102 code fix completion does not by itself approve general customer release, so it cannot support a claim of broader availability.",
+      "evidence_ids": [
+        "J-02@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "J-02@1",
+          "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "C-02@1",
+      "resource_id": "C-02",
+      "version": 1,
+      "source": "confluence",
+      "title": "Payment-retry capability",
+      "locator": {
+        "paragraph": 1,
+        "section": "Supported rollout"
+      },
+      "text": "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:33:21.462849+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-02"
+    },
+    {
+      "evidence_id": "D-03@1",
+      "resource_id": "D-03",
+      "version": 1,
+      "source": "drive",
+      "title": "Operations readiness",
+      "locator": {
+        "paragraph": 1,
+        "section": "Customer communication"
+      },
+      "text": "[SYNTHETIC]\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:33:21.463331+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-03"
+    },
+    {
+      "evidence_id": "S-02@1",
+      "resource_id": "S-02",
+      "version": 1,
+      "source": "slack",
+      "title": "Release coordination",
+      "locator": {
+        "channel": "release",
+        "thread": "1790823600.000001"
+      },
+      "text": "[SYNTHETIC]\nPayment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:33:21.463148+00:00",
+      "source_url": "fixture://synthetic-demo/slack/S-02"
+    },
+    {
+      "evidence_id": "D-02@1",
+      "resource_id": "D-02",
+      "version": 1,
+      "source": "drive",
+      "title": "Payment-retry release approval",
+      "locator": {
+        "paragraph": 1,
+        "section": "Approval decision"
+      },
+      "text": "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:33:21.463286+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-02"
+    },
+    {
+      "evidence_id": "J-02@1",
+      "resource_id": "J-02",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-102 Retry configuration fix",
+      "locator": {
+        "field": "status and description"
+      },
+      "text": "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:33:21.463005+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-02"
+    }
+  ],
+  "actor": "product_ops",
+  "model_call": {
+    "query_id": "232e863c3b4342fdab344066f0a80865",
+    "model": "deepseek-flash",
+    "reservation_id": "31708516359f4ffdbc0b5b99c1631db5",
+    "prompt_tokens": 536,
+    "completion_tokens": 414,
+    "total_tokens": 950,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 658,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "232e863c3b4342fdab344066f0a80865",
+    "model": "deepseek-flash",
+    "reservation_id": "b1a9cee48bf849f397b1634778c173a3",
+    "prompt_tokens": 930,
+    "completion_tokens": 45,
+    "total_tokens": 975,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 333,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

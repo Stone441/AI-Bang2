@@ -1,5 +1,20 @@
 # Acceptance coverage · local candidate
 
+## 当前统一候选 · 2026-10-06（覆盖下方历史描述）
+
+固定应用/测试331bd28，分支fix/review-integrated-candidate；最新clean archive **357项17.406s**、五fixture场景、2Node及本地HTTP全部通过，证据review-integrated-20261006/rebuild-scope-current。旧34281ad/352和323cb93/356原记录保留，不冒作最新源码通过。
+
+| 对应验收 / 审查 | fixture/mock | native API | live model | browser / human / 缺口 |
+|---|---|---|---|---|
+| R2 / F-01–07 / S-02 | 当前357含固定容器发现/更新/删除/unknown与checkpoint子集 | AUTH-017 eng_b四源只读complete、发现KAN-6、8checks；非完整生命周期/SLA | 本次R2 fake，无native模型升级 | 当前browser not_run；原矩阵子集有效 |
+| R3 / Q-01/02/05/06/07/10 | 词法compound/长窗口/引用ID/negative review定向及完整回归 | 质量runner不调用native | fixture_source_live_model真实8问题前后对照；6自然题原子facts覆盖/无证据正确，quoted-ID缺口修复 | relevance及long-event最终拒答仍partial；人类质量not_run，明确延期待回复 |
+| R3A / P-14 / Q-10 | 当前来源/精确窗口/guard回归 | 原native子集不升级为完整新窗口链路 | fixture合法晚段真实送模型且usage有效，非整体质量通过 | 浏览器/完整native模型矩阵not_run |
+| R4 / A-01/03/04/10 | 当前model stages/历史字节/签名快照回归 | 不升级native auditor | 48本次fixture-source真实usage与原ledger逐笔匹配；output rejection保留 | 独立custody/生产DB角色/用户已读/人G1不证明 |
+| R5 / U-02/03 | 安全链接/历史metadata/诊断折叠/等待/迟到保护Node/HTTP通过 | 不重复历史8100正负独立问答 | UI检查fake，模型结果另列 | 49161新实例文字批准，但同工具normal retry仍saved permission blocks；browser not_run |
+| R6 / U-01/05/06 | 331bd28无runtime/env干净重建及连续五fixture场景 | native和历史subset分列 | 预算/模型readiness本日实查，不保证未来有效 | 团队集中观看及G1/G2/materials pending；目标in_progress |
+
+当前候选[具体交接与未解决项](../evidence/runs/review-integrated-20261006/README.md)。ADR-040独立问答/无答案下载保留；根原docs01–05和历史review/audit/旧结果不改。AUTH-003/014/016/017具体批准持续有效，不能被下方旧pending/尚未开通表述撤销，也不能扩scope/write/account。browser真实许可待工具生效；不换入口绕过。以下日期段落及旧export/未实现状态属于历史，由本表/STATUS及最新ADR覆盖。
+
 2026-10-06 R2真实只读增量：四源native身份/list/current-read complete，16.811s周期，原白名单外KAN-6/10015自动发现、fake问答当前Revision2 green、精确preview、8checks通过；只验证既有原资源进入新索引链路，非创建至可回答时延/四源新增矩阵。两个初始failed保留：精确Jira尾标签及既有fixture ID兼容断点，原文未改写；最新352 fixture/mock、21发现/4runner guard通过。native新增/编辑/删除多次生命周期、browser/live model、人G1/G2仍not_run；R1/R3A/R4新build验收不升级。证据review-r2-native-approved-fixture-20261006及两个失败目录。
 2026-10-06 R2增量：19定向、346完整fixture/mock回归17.110s及两Node检查通过；四源实际mock新增发现/更新/删除/429 trace见review-r2-20261006。AUTH-017动态IDs仅eng_b，原生当前权限与R3A全文/精确窗口关系保留；不完整分页/读取失败不推进完整checkpoint。R2为verified local subset，native新增发现/生命周期时延及新browser/live model仍not_run；不是完整S-02或新鲜度SLA/G1/G2通过。下文方案未实现描述由本段覆盖。
 2026-10-06 最新增量：R3A/R4 verified local fixture/mock，327完整Python方法16.645s、6来源定向/5审计定向及2Node检查通过。R3A合法无banner窗口按服务端已批准原资源/版本/原文精确关系放行；负例仍网络前拒绝。R4仅区分准备、发送意图/尝试、有效usage及输出、回答交付尝试，历史日志不改写。证据review-r3a-20261006、review-r4-20261006。新build native/browser/live model全部not_run，A-10/A-12/13完整验收及G1/G2不升级。R1本地完成，旧下文R3出口blocked/R4未修描述由本段覆盖；业务质量仍待验证。AUTH-017发现范围获批不等于发现实现/时延通过。8100历史独立问答验收继续有效。

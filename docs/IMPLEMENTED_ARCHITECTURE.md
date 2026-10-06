@@ -13,6 +13,9 @@ flowchart LR
   Query --> ACL[Current fixture or native authority / version check]
   Index[(SQLite current versions / local policy snapshot)] --> Query
   Source[Independent synthetic source.json] --> ACL
+  Native[Approved Confluence / Jira / Slack / Drive native readers] --> ACL
+  Native --> Discovery[AUTH-017 opt-in fixed-container discovery]
+  Discovery --> Sync
   Source --> Sync[Request-driven incremental jobs]
   Sync --> Index
   ACL --> Model[Fake / live selection / opt-in synthesis + review]

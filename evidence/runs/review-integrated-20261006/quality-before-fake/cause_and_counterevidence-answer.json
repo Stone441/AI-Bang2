@@ -1,0 +1,76 @@
+{
+  "request_id": "e073f12c29694f109d049c8b224f6576",
+  "question": "Which fault actually produced duplicate payment requests, and what earlier explanation was ruled out?",
+  "answered_at": "2026-10-06T06:31:22.660188+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "evidence_ids": [
+        "D-01@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "evidence_ids": [
+        "J-02@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya.",
+      "evidence_ids": [
+        "J-03@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "D-01@1",
+      "resource_id": "D-01",
+      "version": 1,
+      "source": "drive",
+      "title": "Final payment-service postmortem",
+      "locator": {
+        "paragraph": 1,
+        "section": "Confirmed root cause"
+      },
+      "text": "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:31:22.659608+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-01"
+    },
+    {
+      "evidence_id": "J-02@1",
+      "resource_id": "J-02",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-102 Retry configuration fix",
+      "locator": {
+        "field": "status and description"
+      },
+      "text": "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:31:22.659531+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-02"
+    },
+    {
+      "evidence_id": "J-03@1",
+      "resource_id": "J-03",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-103 Protective measures",
+      "locator": {
+        "field": "status and assignee"
+      },
+      "text": "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:31:22.659545+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-03"
+    }
+  ],
+  "actor": "eng_a"
+}

@@ -1,5 +1,13 @@
 # Decisions / ADR
 
+## AUTH-018 / ADR-048 · 2026-10-06 · Same-target browser instance permission and review scope
+
+用户明确批准当前浏览器工具访问http://127.0.0.1:49161用于本轮本地合成问答/history/引用/navigation/keyboard及无秘密截图；不扩native/模型/外部写/凭据。原实例已停止后遵照用户要求重新确认，并批准新隔离memory Store、fixture_fake_model/live_enabled=false实例。mcp__cua_repl.js→cua.createBrowserTab(chrome,same URL)正常重试仍返回browser tool security policy saved user permission blocks；文字许可不等于实际工具生效。工具无许可管理API，Computer Use禁止访问com.openai.codex，具体设置位置未知。已请求用户仅解除该地址的保存拒绝，无绕过/换端口/代理或关闭保护。旧8094/8100不重启；新实例startup hash/time单独记录，加载R5早于后续review-scope代码，不冒称最新全部runtime。浏览器not_run，普通local开发继续。
+
+R3有界诊断后仅作通用event/scope review澄清：不同或未知事件不能无明确关系被当作命名事件反证，仍检查所有同事件证据、拒未知/未支持细节，不把问题当事实。新增cross-event负面review拒绝回归，不把部分accepted verdict拼成成功答案。331bd28 clean archive357/17.406s、五fixture、2Node/HTTP通过。最新长文draft正确Orion句外仍增加无关payment-service背景，review有false而整答拒绝，保留quality failure，停止无诊断依据的付费循环。另自然题仍有多余背景，原子覆盖不等于relevance全通过。未自动批准延期；已给固定candidate/实际失败/影响与团队延期或继续定位的具体选择，等待回复。
+
+六轮实际模型保守账本增28194microUSD，原总额45219、余19954781/pending0/frozenfalse；48usage事件对原账本只读逐笔匹配。不是invoice、native ACL或human acceptance。R2再次native readonly/fake 8checks真实通过，不计完整创建更新时间矩阵。固定candidate331bd28与所有phase source hashes、native/model/local/browser/human证据分列；最新状态/入口已收敛，完整Goal仍in_progress，G1/G2不升级，无push/merge/source write或目标服务重启。
+
 ## ADR-047 · 2026-10-06 · Integrated review worktree: R3 quality and R5 existing experience
 
 基准45d7b27，fix/review-integrated-candidate。本目标扩大到剩余可授权推进的统一候选，不因R3A/R4团队未观看而阻塞其他开发。R5新回答保存服务端question/answered_at，缺字段旧记录明确缺失；不可用历史不泄露问题/时间。preview逐次鉴权后才返回source映射URL，UI只允许对应平台HTTPS host、无凭据/非标准端口，noopener noreferrer，fixture://无伪原链接。诊断折叠，保持ADR-040与旧响应丢弃。DOM/8HTTP定向通过、实际只读Agent复审无阻断；Chrome localhost访问被工具security policy/user denial拒绝，浏览器not_run，不绕过或换入口。

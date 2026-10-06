@@ -2,7 +2,7 @@
 
 ## 当前集成候选运行入口 · 2026-10-06
 
-当前开发分支 `fix/review-integrated-candidate`，基准45d7b27；323cb93已干净archive setup/356回归/五fixture场景/两Node/HTTP通过。随后quality诊断及review scope增量需新固定commit复核，不能把323cb93结果冒作之后HEAD通过。当前状态/模式及证据以[STATUS](STATUS.md)、[ACCEPTANCE_STATUS](ACCEPTANCE_STATUS.md)为准；以下历史段落的export/New question、仅memory/尚未授权/尚无native等旧陈述已被ADR-040和最新AUTH覆盖。
+当前开发分支 `fix/review-integrated-candidate`，基准45d7b27；最新固定应用/测试331bd28已干净archive setup/357回归17.406s/五fixture场景/两Node/HTTP通过。323cb93的356项记录是早先里程碑，不能冒作之后HEAD通过。当前状态/模式及证据以[STATUS](STATUS.md)、[ACCEPTANCE_STATUS](ACCEPTANCE_STATUS.md)为准；以下历史段落的export/New question、仅memory/尚未授权/尚无native等旧陈述已被ADR-040和最新AUTH覆盖。
 
 本地集中观看：在**新的隔离git archive目录**启动，保留原项目.runtime和审计，不停止8094/8100。先 `make setup`、`make test`、`make verify`；`python3 -m brain.server --demo --port 0` 打印本次实际loopback地址，模式fixture_fake_model。浏览器只访问获许可的该实例；端口变化/实例停止后按具体授权重新确认。fixture身份不是native员工登录，FAKE MODEL为原文摘录；真实模型的claims质量另看独立记录。
 

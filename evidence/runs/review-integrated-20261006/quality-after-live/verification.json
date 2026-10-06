@@ -1,0 +1,242 @@
+{
+  "started_at": "2026-10-06T06:33:14.245002+00:00",
+  "commit": "45d7b27a98a25299cc3c962dcaac7d5ad13c4a0d",
+  "mode": "fixture_source_live_model_synthesis",
+  "source_state": "Current worktree hashes are authoritative; commit identifies baseline until committed.",
+  "case_origin": "First six variants authored by read-only review agent before evaluation; not human blind benchmark.",
+  "native_source_api": "not_run",
+  "native_permission_persona": "not_run",
+  "browser": "not_run",
+  "G1": "not_run",
+  "G2": "not_run",
+  "semantic_review": "pending",
+  "results": [
+    {
+      "case": "safeguard",
+      "actor_mode": "fixture_eng_a",
+      "question": "What must the operator check before using the approved payment-service failover procedure?",
+      "required_atomic_facts": [
+        "inspect timeout budget before approved failover"
+      ],
+      "error_type": null,
+      "request_id": "7d0459c3c38945f3bb61830759bd4dfb",
+      "claims_only": [
+        "Before using the approved payment-service failover procedure, the operator must inspect the payment-service timeout budget.",
+        "The incident's final root cause was that the retry configuration mismatched the timeout budget, causing a backlog of duplicate requests; this was confirmed at 10:00 +08:00. An earlier cache invalidation hypothesis at 09:00 was withdrawn at 09:15.",
+        "Payment-retry is approved only for a controlled pilot; general availability is not approved and no GA date is confirmed.",
+        "Completion of PAY-102 does not approve general customer release; general availability remains unapproved, and unconfirmed items include the GA date and expansion beyond pilot customers."
+      ],
+      "exact_supports_validated": true,
+      "audit_chain": {
+        "valid": true,
+        "events": 95,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "cause_and_counterevidence",
+      "actor_mode": "fixture_eng_a",
+      "question": "Which fault actually produced duplicate payment requests, and what earlier explanation was ruled out?",
+      "required_atomic_facts": [
+        "retry configuration mismatched timeout budget",
+        "duplicate requests backlog",
+        "early cache hypothesis withdrawn"
+      ],
+      "error_type": null,
+      "request_id": "25f676cbf3d842e9a046f885d44aaa3d",
+      "claims_only": [
+        "The fault that actually produced duplicate payment requests was a mismatch between the retry configuration and the timeout budget, causing a backlog of duplicate requests; this was confirmed at 10:00 +08:00 in the final postmortem (PAY-101 incident).",
+        "The earlier explanation that was ruled out was cache invalidation: it was an early hypothesis at 09:00, then withdrawn at 09:15 before the final postmortem confirmed the retry configuration/timeout budget mismatch at 10:00."
+      ],
+      "exact_supports_validated": true,
+      "audit_chain": {
+        "valid": true,
+        "events": 95,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "followup_status",
+      "actor_mode": "fixture_eng_a",
+      "question": "For the payment-service follow-up work, separate the completed repair from safeguards still being worked on, and name the safeguard owner.",
+      "required_atomic_facts": [
+        "PAY-102 Done",
+        "PAY-103 In Progress",
+        "Maya safeguard owner"
+      ],
+      "error_type": null,
+      "request_id": "f91beba8e7204302a7e8d96015348650",
+      "claims_only": [
+        "The completed repair for the payment-service incident was the PAY-102 code fix, which is Done; however, code completion alone does not approve a general customer release.",
+        "The safeguard still being worked on is PAY-103 protective measures, which are In Progress, and their owner is Maya.",
+        "The final root cause, confirmed at 10:00 +08:00, was retry configuration mismatched with the timeout budget, causing a backlog of duplicate requests; the earlier cache invalidation hypothesis was withdrawn.",
+        "Payment-retry remains limited to the controlled pilot; general availability is not approved, no GA date is confirmed, and expansion beyond pilot customers is unconfirmed."
+      ],
+      "exact_supports_validated": true,
+      "audit_chain": {
+        "valid": true,
+        "events": 95,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "product_scope_date",
+      "actor_mode": "fixture_product_ops",
+      "question": "Can support promise payment-retry to customers outside the pilot, or give them a general launch date?",
+      "required_atomic_facts": [
+        "controlled pilot only",
+        "GA not approved",
+        "general date unconfirmed"
+      ],
+      "error_type": null,
+      "request_id": "232e863c3b4342fdab344066f0a80865",
+      "claims_only": [
+        "No. Payment-retry is available only to the controlled pilot; general availability is not approved, so support cannot promise payment-retry to customers outside the pilot.",
+        "No general launch date can be given: no GA date is confirmed, and a general availability date remains unconfirmed.",
+        "The approved release decision was limited to a controlled pilot; GA was not approved, and PAY-102 being marked Done is not customer release approval.",
+        "PAY-102 code fix completion does not by itself approve general customer release, so it cannot support a claim of broader availability."
+      ],
+      "exact_supports_validated": true,
+      "audit_chain": {
+        "valid": true,
+        "events": 49,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "code_not_release",
+      "actor_mode": "fixture_product_ops",
+      "question": "Does PAY-102 being done authorize a general customer rollout?",
+      "required_atomic_facts": [
+        "no; code completion is not release approval"
+      ],
+      "error_type": null,
+      "request_id": "5b68a543617446649883836e44ee42c7",
+      "claims_only": [
+        "No. PAY-102 being Done does not authorize a general customer rollout. Release decision records only a controlled pilot approved, with general availability (GA) not approved, and states PAY-102 Done is not customer release approval.",
+        "Payment-retry is available only to the controlled pilot; general availability (GA) is not approved.",
+        "No general release date is confirmed, and payment-retry is to be described only within the approved pilot scope. Unconfirmed items are the general availability date and expansion beyond pilot customers."
+      ],
+      "exact_supports_validated": true,
+      "audit_chain": {
+        "valid": true,
+        "events": 41,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "withdrawn_explanation",
+      "actor_mode": "fixture_eng_a",
+      "question": "Is the original cache theory still the payment-service incident’s accepted explanation?",
+      "required_atomic_facts": [
+        "cache hypothesis withdrawn",
+        "final retry configuration / timeout budget mismatch"
+      ],
+      "error_type": null,
+      "request_id": "e5203950a5c749c88bb21a824be1ec9c",
+      "claims_only": [
+        "No. The cache invalidation idea was only an early hypothesis: it was withdrawn at 09:15, and the final postmortem at 10:00 confirmed retry configuration and timeout budget mismatch as the cause.",
+        "The accepted explanation is the retry configuration/timeout budget mismatch, which caused a backlog of duplicate requests; that root cause was confirmed at 10:00 +08:00, with follow-ups PAY-102 and PAY-103.",
+        "Current runbook guidance reflects the timeout-budget area rather than cache invalidation: inspect the payment-service timeout budget and follow the approved failover procedure."
+      ],
+      "exact_supports_validated": true,
+      "audit_chain": {
+        "valid": true,
+        "events": 95,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "missing_evidence",
+      "actor_mode": "fixture_eng_a",
+      "question": "unfindablezebra",
+      "required_atomic_facts": [
+        "no claims and no evidence"
+      ],
+      "error_type": null,
+      "request_id": "0eb067dbf85a4142b6c5bf7dcbd73aa0",
+      "claims_only": [],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 3,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "long_similar_entity",
+      "actor_mode": "fixture_eng_a",
+      "question": "In the Orion incident, which early explanation was withdrawn and what caused the duplicate requests?",
+      "required_atomic_facts": [
+        "Orion cache explanation withdrawn",
+        "Orion retry budget mismatch",
+        "do not answer Vega DNS cause"
+      ],
+      "error_type": null,
+      "request_id": "e043007948654e9c93ca5c9fd12cfa72",
+      "claims_only": [
+        "In the Orion incident, the cache explanation was withdrawn.",
+        "The duplicate requests in the Orion incident were caused by a retry budget mismatch.",
+        "A final root cause statement says retry configuration mismatched the timeout budget, producing a backlog of duplicate requests; this was confirmed at 10:00 +08:00, with follow-ups PAY-102 and PAY-103.",
+        "PAY-102 is a code fix marked Done, but code completion does not approve general customer release; PAY-103 protective measures are In Progress with owner Maya."
+      ],
+      "exact_supports_validated": true,
+      "audit_chain": {
+        "valid": true,
+        "events": 66,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    }
+  ],
+  "status": "captured_for_semantic_review",
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/quality_acceptance.py": "270ff79a823a27b6e3fb660174df69bab454da444ba667ba13a9d7d240027628",
+    "brain/engine.py": "404a571c23fcacd47e68e5bd316a0560a7e9dfb4ecbc9e0aa51735c286a080df",
+    "brain/retrieval.py": "5a7298f70933b467765c74a2ac299ca7cb74d9b8752c13e6fad5205beebd0331",
+    "brain/synthesis.py": "f4062b084651af8cfa7696ad58a5b98c74408b8f02ede218d9a08f8e8ef8949f",
+    "brain/deepseek.py": "eaf8a088603b99ff5af62e4461293dc0ae16c571271722a07a114a33f333ddbc",
+    "brain/budget.py": "cd0f195cec3741ab6741648ee4391cf841e63bd12f1e718ebcc4b6fd66b106fb",
+    "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730"
+  },
+  "budget_before": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 23374,
+    "settled_micro_usd": 23374,
+    "available_micro_usd": 19976626,
+    "pending_requests": 0,
+    "blocked_for_review": false
+  },
+  "budget_after": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 32075,
+    "settled_micro_usd": 32075,
+    "available_micro_usd": 19967925,
+    "pending_requests": 0,
+    "blocked_for_review": false
+  },
+  "finished_at": "2026-10-06T06:33:31.772697+00:00"
+}
