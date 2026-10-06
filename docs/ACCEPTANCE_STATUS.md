@@ -7,11 +7,11 @@
 | 对应验收 / 审查 | fixture/mock | native API | live model | browser / human / 缺口 |
 |---|---|---|---|---|
 | R2 / F-01–07 / S-02 | 当前357含固定容器发现/更新/删除/unknown与checkpoint子集 | AUTH-017 eng_b四源只读complete、发现KAN-6、8checks；非完整生命周期/SLA | 本次R2 fake，无native模型升级 | 当前browser not_run；原矩阵子集有效 |
-| R3 / Q-01/02/05/06/07/10 | 词法compound/长窗口/引用ID/negative review定向及完整回归 | 质量runner不调用native | fixture_source_live_model真实8问题前后对照；6自然题原子facts覆盖/无证据正确，quoted-ID缺口修复 | relevance及long-event最终拒答仍partial；人类质量not_run，明确延期待回复 |
+| R3 / Q-01/02/05/06/07/10 | 词法compound/长窗口/引用ID/negative review定向及完整回归 | 质量runner不调用native | fixture_source_live_model真实8问题前后对照；6自然题原子facts覆盖/无证据正确，quoted-ID缺口修复 | relevance及long-event最终拒答仍partial；人类质量not_run，用户明确批准延期交团队语义验收，不称通过 |
 | R3A / P-14 / Q-10 | 当前来源/精确窗口/guard回归 | 原native子集不升级为完整新窗口链路 | fixture合法晚段真实送模型且usage有效，非整体质量通过 | 浏览器/完整native模型矩阵not_run |
 | R4 / A-01/03/04/10 | 当前model stages/历史字节/签名快照回归 | 不升级native auditor | 48本次fixture-source真实usage与原ledger逐笔匹配；output rejection保留 | 独立custody/生产DB角色/用户已读/人G1不证明 |
 | R5 / U-02/03 | 安全链接/历史metadata/诊断折叠/等待/迟到保护Node/HTTP通过 | 不重复历史8100正负独立问答 | UI检查fake，模型结果另列 | 49161新实例文字批准，但同工具normal retry仍saved permission blocks；browser not_run |
-| R6 / U-01/05/06 | 331bd28无runtime/env干净重建及连续五fixture场景 | native和历史subset分列 | 预算/模型readiness本日实查，不保证未来有效 | 团队集中观看及G1/G2/materials pending；目标in_progress |
+| R6 / U-01/05/06 | 331bd28无runtime/env干净重建及连续五fixture场景 | native和历史subset分列 | 预算/模型readiness本日实查，不保证未来有效 | 团队集中观看及G1/G2/materials pending；固定候选已准备，browser工具许可待解锁 |
 
 当前候选[具体交接与未解决项](../evidence/runs/review-integrated-20261006/README.md)。ADR-040独立问答/无答案下载保留；根原docs01–05和历史review/audit/旧结果不改。AUTH-003/014/016/017具体批准持续有效，不能被下方旧pending/尚未开通表述撤销，也不能扩scope/write/account。browser真实许可待工具生效；不换入口绕过。以下日期段落及旧export/未实现状态属于历史，由本表/STATUS及最新ADR覆盖。
 

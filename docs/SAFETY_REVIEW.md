@@ -1,6 +1,6 @@
 # Team safety review and submission checks
 
-2026-10-06 integrated worktree: R5 source preview links, question/time history and collapsed diagnostics have local DOM/HTTP evidence. R3 frozen variants evaluate final claims/supports/omissions separately from evidence recall; long-event review/relevance failures remain explicitly unresolved until actual recheck. Current source/commit/mode and browser permission are recorded in STATUS and ACCEPTANCE_STATUS. R3A/R4 team viewing is not a prerequisite for other local development.
+2026-10-06 integrated worktree: R5 source preview links, question/time history and collapsed diagnostics have local DOM/HTTP evidence. R3 frozen variants evaluate final claims/supports/omissions separately from evidence recall; long-event review/relevance failures remain explicitly failed/partial, with user-approved deferral to this consolidated team review. Current source/commit/mode and browser permission are recorded in STATUS and ACCEPTANCE_STATUS. R3A/R4 team viewing is not a prerequisite for other local development.
 
 G0/G1/G2 are internal team decision gates, not competition grades. This checklist does not grant approval or mark a review complete.
 

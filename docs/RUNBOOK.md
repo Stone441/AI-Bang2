@@ -12,7 +12,7 @@ AUTH-017四个固定容器发现已实现并有当前native readonly/fake模型�
 
 真实模型每次先 `python3 -m scripts.model_readiness`，再核对现有配置/授权及原USD20 ledger剩余/冻结状态；不注入旧today或重建账本。`python3 -m scripts.quality_acceptance --live-model --output <新目录>`仅固定fixture合成源＋真实模型，使用既有app-owned eng_b key和原账本；不是native persona/四源模型验收。会产生已批准预算内费用，输出capture不等于semantic通过，需逐条claims/quotes/omissions/relevance审查。旧检索harness只用于词法边界：`python3 -m scripts.retrieval_acceptance --output <新目录>`，拒绝覆盖旧记录，不称质量benchmark。
 
-当前R5真实浏览器许可单独记录：旧49161实例已停止；新49161隔离fixture实例已核health、重新请求许可，权限卡片/工具实际允许前不宣称生效。Node/HTTP不替代浏览器。G1/G2仍not_run；集中团队观看和最后材料/提交批准须记录实际结果。
+当前R5真实浏览器许可单独记录：新49161隔离fixture已核health并获用户重新批准，但mcp__cua_repl.js / Chrome正常重试仍被saved user site permission拒绝。工具无许可管理API，Codex应用界面访问也被策略禁止；用户回复“没有找到许可入口”，具体设置位置未知。真实browser/screenshots not_run，Node/HTTP不替代浏览器。仅自建49161实例已结束，8094/8100未动；未来先核新实例归属/模式并重新确认对应许可，不沿用旧地址授权。G1/G2仍not_run。
 
 ## 先前运行说明（版本/授权描述由上方覆盖）
 

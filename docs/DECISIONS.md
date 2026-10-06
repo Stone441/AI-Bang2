@@ -1,5 +1,11 @@
 # Decisions / ADR
 
+## AUTH-019 · 2026-10-06 · Explicit quality deferral for consolidated team candidate
+
+用户对固定331bd28、357archive/五fixture场景、实际真模型失败/诊断与影响的具体提案明确回复“批准明确延期并交团队验收”。仅允许将long named-event/similar-event review拒答及部分自然回答非必答背景两项保留为已知质量缺口，交团队集中语义验收；冻结时不能称通过。原review gate、所有有效断言/失败与原USD20账本保留，不是G1/G2/发布/提交批准，也不改变浏览器实际工具许可。browser保存站点拒绝仍须通过正常许可机制解除；用户回复“没有找到许可入口”，位置未知，browser/screenshots not_run。仅Agent自建49161 fixture已结束，未来新实例需重新核归属/模式及许可。不能换端口/工具/代理/关闭安全设置。
+
+以下ADR-048/047为此前执行时记录；其中等待回复/in_progress由AUTH-019及STATUS当前表覆盖。
+
 ## AUTH-018 / ADR-048 · 2026-10-06 · Same-target browser instance permission and review scope
 
 用户明确批准当前浏览器工具访问http://127.0.0.1:49161用于本轮本地合成问答/history/引用/navigation/keyboard及无秘密截图；不扩native/模型/外部写/凭据。原实例已停止后遵照用户要求重新确认，并批准新隔离memory Store、fixture_fake_model/live_enabled=false实例。mcp__cua_repl.js→cua.createBrowserTab(chrome,same URL)正常重试仍返回browser tool security policy saved user permission blocks；文字许可不等于实际工具生效。工具无许可管理API，Computer Use禁止访问com.openai.codex，具体设置位置未知。已请求用户仅解除该地址的保存拒绝，无绕过/换端口/代理或关闭保护。旧8094/8100不重启；新实例startup hash/time单独记录，加载R5早于后续review-scope代码，不冒称最新全部runtime。浏览器not_run，普通local开发继续。

@@ -10,8 +10,8 @@
 | DEV-REVIEW-R3A | verified local candidate | 严格已批准原资源/version/全文/切片来源；34281ad clean archive 352回归+只读复审；review-r3a-r4-candidate-20261006；新build native/browser/live model not_run，质量另列 |
 | DEV-REVIEW-R2 | verified local/mock + native discovery subset | 352本地/21发现/4runner guard通过；四源native周期成功、发现KAN-6并问答/精确preview；两次failed原件保留；生命周期时延矩阵仍待具体源管理验收，不扩product_ops |
 | DEV-REVIEW-R4 | verified local candidate | 准备/意图/尝试/有效usage/输出/交付尝试分离；当前352回归/2Node/HTTP与六日志/13验签边界；只读复审证据缺口关闭；历史不改，真实回执/独立custody未完成 |
-| DEV-REVIEW-R5 | verified local / browser blocked | 安全原平台入口/历史问题与时间/折叠诊断/等待提示实现；331bd28 357archive与Node/HTTP通过；新49161用户批准后仍saved tool site denial，待实际许可；ADR-040保留 |
-| DEV-REVIEW-R6 | in_progress candidate prepared | 当前331bd28 clean archive357/五fixture场景/2Node/HTTP；统一RUNBOOK/架构/验收总表；quality延期决定/browser许可/团队集中观看及最终材料pending |
+| DEV-REVIEW-R5 | verified local / browser blocked | 安全原平台入口/历史问题与时间/折叠诊断/等待提示实现；331bd28 357archive与Node/HTTP通过；新49161用户批准后仍saved tool site denial，用户无许可入口，browser not_run，已结束自建fixture；ADR-040保留 |
+| DEV-REVIEW-R6 | verified candidate preparation | 当前331bd28 clean archive357/五fixture场景/2Node/HTTP；统一RUNBOOK/架构/验收总表；quality明确延期已获批准，browser许可/团队集中观看及最终材料pending |
 
 本轮基准cf827bb/独立fix分支；已有AUTH-014/016、native及live子集有效。下方live未配置/模型未实现/New question/export等旧记录为superseded，具体模式按STATUS与原证据判断。
 
@@ -194,4 +194,6 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 
 2026-10-06 R3A/R4 bounded local candidate完成：fix/r3a-r4-team-candidate，基准dfa40c3，固定应用/测试34281ad。原实现不重复开发；只读子Agent10离线方法与13验签独立复核，唯一P2新日志签名绑定缺口已关闭。第一次archive 351/352通过、product acceptance test依赖本机runtime配置错误；原failed保留，精确mock配置隔离并强化原断言后352/352（16.920s）、五fixture场景、2Node及本地HTTP烟测通过。六份当前R4 snapshot/checkpoint/覆盖seq/raw verifier对应，mock/native/model模式不混用；旧checkpoint+截短旧snapshot仍可通过的边界明确。源码hash与最终archive相同，保护文件/旧审查/旧证据不改，ZIP未跟踪。证据review-r3a-r4-candidate-20261006；无需外部API/model/重启/费用/push。新build native/browser/live model和G1/G2 not_run。下一集中团队本地观看与具体授权内后续验收，非作者质量/独立custody/生产DB角色仍未完成。
 
-2026-10-06 统一候选fix/review-integrated-candidate：331bd28 clean archive357方法17.406s/五fixture/2Node/HTTP实际通过；此前323cb93的356记录保留。R5修复现有入口/历史/诊断而无新功能；真实只读Agent复核，browser新49161批准后仍saved site denial，正常设置入口未暴露。R2再次8 native readonly/fake checks有效，不冒称创建到回答SLA。R3六自然问题/无证据/长文真正模型小集保留前后失败，通用hyphen拆分和quoted-ID guard修复；六自然题原子事实覆盖，但多余背景与长文review拒答仍partial，明确延期提案未回复前不批准。原账本48usage逐笔只读核对、保守增28194microUSD，不清预算。集成证据review-integrated-20261006，fixed code/source hash/进程加载模式分列；G1/G2未运行。下一浏览器实际许可/质量处置/团队集中观察，目标保持active而非假称完整交付。
+2026-10-06 统一候选fix/review-integrated-candidate：331bd28 clean archive357方法17.406s/五fixture/2Node/HTTP实际通过；此前323cb93的356记录保留。R5修复现有入口/历史/诊断而无新功能；真实只读Agent复核，browser新49161批准后仍saved site denial，正常设置入口未暴露。R2再次8 native readonly/fake checks有效，不冒称创建到回答SLA。R3六自然问题/无证据/长文真正模型小集保留前后失败，通用hyphen拆分和quoted-ID guard修复；六自然题原子事实覆盖，但多余背景与长文review拒答仍partial，用户已明确批准两项质量延期，冻结不称通过。原账本48usage逐笔只读核对、保守增28194microUSD，不清预算。集成证据review-integrated-20261006，fixed code/source hash/进程加载模式分列；G1/G2未运行。下一浏览器实际许可/质量处置/团队集中观察，目标保持active而非假称完整交付。
+
+2026-10-06 用户明确回复“批准明确延期并交团队验收”：long named-event/similar-event final answer rejection及非必答背景作为固定331bd28已知质量缺口，原失败/诊断/费用保留，不放宽review，不批准G1/G2或发布提交。browser保存拒绝是独立未解除工具条件；其它固定候选开发与状态准备已收敛。

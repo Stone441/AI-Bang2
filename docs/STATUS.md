@@ -2,23 +2,23 @@
 
 ## 当前接续总表 · 2026-10-06（优先于下方历史记录）
 
-本轮统一候选in_progress：fix/review-integrated-candidate，基准45d7b27，固定应用/测试331bd28e24b17fdac6726b38d16dfbecd0599d78。323cb93的356项archive为中途里程碑；最新331bd28干净archive setup/357项17.406s/五fixture场景/2Node/本地HTTP通过。不能据旧352证据宣称最新HEAD通过。R3A/R4既有实现与原签名证据保留，未重复开发。最新[R2/R3/R5/R6统一候选及明确缺口](../evidence/runs/review-integrated-20261006/README.md)。
+本轮统一固定候选已准备，质量已获明确延期；真实browser验证仍受工具许可阻塞：fix/review-integrated-candidate，基准45d7b27，固定应用/测试331bd28e24b17fdac6726b38d16dfbecd0599d78。323cb93的356项archive为中途里程碑；最新331bd28干净archive setup/357项17.406s/五fixture场景/2Node/本地HTTP通过。不能据旧352证据宣称最新HEAD通过。R3A/R4既有实现与原签名证据保留，未重复开发。最新[R2/R3/R5/R6统一候选及明确缺口](../evidence/runs/review-integrated-20261006/README.md)。
 
 | 项目 | 当前实现 / 本轮实际模式与证据 | 剩余缺口 / 下一项 |
 |---|---|---|
 | R1 | 原local修复与316证据保留；SGT Oct6实际model_readiness有效，每日expiry保留 | 后续真实模型重新核当前日期/原预算；不得传旧today或清账本 |
 | R2 | AUTH-017 eng_b四固定容器native只读再次complete，8checks/发现既有KAN-6/当前fake答/preview通过；本地发现/更新/删除回归保留 | 四源source-change-to-answer时延/完整native创建更新删除矩阵partial；原操作员进程不改，product_ops不扩 |
 | R3A | 合法无banner窗口仍基于服务器approved original/version/slice；357当前回归通过；fixture_source_live_model晚段实际送达并有效usage | 不能升级完整native-origin窗口/browser或质量验收；既有审查原件/代码不回退 |
-| R3质量 | 冻结6Agent自然变体+无证据+长文；真实fixture-source模型复现漏召回与未引用PAY-101，通用compound tokens/quoted-ID修复；v3六自然题原子覆盖和无证据通过 | 部分多余背景/长文review拒答仍未解决，**质量partial**；保留所有失败/诊断，已提出明确延期团队验收或继续定位的选择，未回复不推断批准 |
+| R3质量 | 冻结6Agent自然变体+无证据+长文；真实fixture-source模型复现漏召回与未引用PAY-101，通用compound tokens/quoted-ID修复；v3六自然题原子覆盖和无证据通过 | 部分多余背景/长文review拒答仍未解决，**质量partial**；保留所有失败/诊断；用户已明确“批准明确延期并交团队验收”，冻结不标质量通过 |
 | R4 | 原准备/意图/尝试/usage/output/存储/HTTP区分及签名闭环保留；357回归重跑；48实际fixture-source live model usage事件与原账本只读逐笔匹配 | 非native全部模型路径/人类收到证明；独立custody/生产DB roles尚未实现，旧checkpoint rollback明确 |
-| R5 | 当前preview HTTPS平台链接、服务端question/answered_at及缺失提示、诊断折叠/等待文案；Node/8HTTP定向及357archive通过，只读Agent复审 | 真浏览器not_run：新49161纯fixture instance获文字批准后同工具重试仍被saved site denial拦截；正常权限入口未知，等用户解除，不绕过 |
-| R6 | RUNBOOK实际入口/五场景、IMPLEMENTED_ARCHITECTURE/CONTRACTS/SAFETY_REVIEW更新；固定331bd28可重复本地启动/回放，模式与哈希逐轮区分 | 待质量延期决定/浏览器许可实测及团队集中观看；完整材料/发布/提交G2未批准 |
+| R5 | 当前preview HTTPS平台链接、服务端question/answered_at及缺失提示、诊断折叠/等待文案；Node/8HTTP定向及357archive通过，只读Agent复审 | 真浏览器not_run：新49161纯fixture instance获文字批准后同工具重试仍被saved site denial拦截；用户回复“没有找到许可入口”；具体设置位置未知，不绕过，已结束自建fixture |
+| R6 | RUNBOOK实际入口/五场景、IMPLEMENTED_ARCHITECTURE/CONTRACTS/SAFETY_REVIEW更新；固定331bd28可重复本地启动/回放，模式与哈希逐轮区分 | 质量延期已批准；待浏览器许可实测及团队集中观看；完整材料/发布/提交G2未批准 |
 
-当前真实运行：8094/8100未重启或终止，旧health不证明331bd28已加载；历史8100独立正负问答证据有效。新49161隔离内存fixture_fake_model/live_enabled=false实例在旧测试实例停止后另建，启动hash/time已保存，加载R5实现早于后续review-scope增量；不是最新native模型服务。用户明确批准新实例浏览器访问，但工具许可仍拒绝，不宣称实际生效。无cookies/tickets/密钥截图保存。
+当前真实运行：8094/8100未重启或终止，旧health不证明331bd28已加载；历史8100独立正负问答证据有效。新49161隔离内存fixture_fake_model/live_enabled=false实例在旧测试实例停止后另建，启动hash/time已保存，加载R5实现早于后续review-scope增量；不是最新native模型服务。用户明确批准新实例浏览器访问，但工具许可仍拒绝，不宣称实际生效。无cookies/tickets/密钥截图保存。用户未找到许可入口后已结束仅本Agent启动的49161 fixture；该地址当前无本轮测试实例，不沿用旧地址许可。
 
 本轮原USD20 ledger由17025增至45219microUSD保守记账，六轮合计28194；最后剩余19954781、pending=0、frozen=false。模型仅已批准fixture合成源/固定app-owned key，非供应商invoice或native persona；原账本不重置。R2仅已有AUTH-014/017只读及已有Drive refresh，无scope/source写入。未push/merge/发布、目标服务重启或提交。G1/G2 not_run；新browser及完整native/live模型矩阵不以本地/局部真模型通过代替。根AGENTS/PROJECT_START_HERE/原docs01–05/README/旧review证据保留，ZIP未跟踪，Markdown硬换行不改原字节/全局规则。
 
-下一接续：工具站点许可实际解除后在同一已批准49161实例进行真实页面/键盘核验；若实例结束需再确认许可。质量单项处置等待具体回复，不能自动批准延期；不再对同一无诊断失败重复付费循环。其他候选文档、原证据保存及固定版本核对已落实。团队集中安全/语义观看与G2材料提交依然人工关口，不自动宣称Goal complete。
+下一接续：需工具正常机制解除站点拒绝；之后先确认新的测试实例归属、模式并重新取得对应许可，再进行真实页面/键盘核验。质量单项已明确获用户延期，转团队集中语义验收且不标通过；不再对同一无诊断失败重复付费循环。其他候选文档、原证据保存及固定版本核对已落实。团队集中安全/语义观看与G2材料提交依然人工关口，本轮统一候选准备完成，不等于全部质量/浏览器/项目验收完成。
 
 以下为历史追加记录，其中pending/已退役功能描述由本表及最新ADR覆盖，不能直接当当前待办。
 
