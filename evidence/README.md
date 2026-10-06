@@ -1,5 +1,6 @@
 # Evidence index
 
+2026-10-06 [R2 native发现子集](runs/review-r2-native-approved-fixture-20261006/README.md)：四源身份与周期成功，原白名单外KAN-6自动发现、fake问答/精确引用8checks通过；352本地回归。两个原始failed目录保留；非完整生命周期时延、browser/live model或人G1/G2。
 2026-10-06 [R2四源有界发现](runs/review-r2-20261006/README.md)：19定向、346完整fixture/mock及两Node检查通过；实际离线新增问答/更新/删除/限流trace，native/browser/live model not_run。AUTH-017读取范围有效，产品范围与G1/G2不变。
 2026-10-06 本地增量：[R3A](runs/review-r3a-20261006/README.md)原资源精确窗口出口、[R4](runs/review-r4-20261006/README.md)审计阶段；327完整fixture/mock方法及两Node检查通过。新build native/browser/live model not_run；R1与历史审查证据保留。
 - 2026-10-06 [独立审查R1接续](runs/review-r1-20261006/README.md)：ZIP完整性、当前模块R1/R3复现、官方价格复核、现有两服务健康模式、316 fixture/mock与18定向测试、启动版本/跨日保护；原历史审查与失败结果保留。新版本native/live-model/browser/G1/G2未验收；当前模式总表见docs/STATUS.md，以下早期pending保留为历史。

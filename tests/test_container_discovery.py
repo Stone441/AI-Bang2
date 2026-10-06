@@ -191,6 +191,39 @@ class DiscoveryBoundary(unittest.TestCase):
         self.assertIsNone(self.store.get('drive:FILE2'))
         self.assertFalse(any(call.startswith('media:') for call in t.calls))
 
+    def test_approved_legacy_jira_lifecycle_banner_requires_exact_fixture_and_provenance(self):
+        from brain.deepseek import marked_synthetic_text,DeepSeekEvidenceModel
+        from brain.synthetic_provenance import SyntheticProvenance
+        from brain.contracts import Evidence
+        from brain.retrieval import window_evidence
+        banner='SYNTHETIC COMPETITION TEST DATA — not an actual company record.'
+        for text,allowed in [(banner+'\nFixture ID: J-lifecycle-20261006\nRevision 2: update-check queue is green.',True),
+                             ('Fixture ID: J-lifecycle-20261006',False),
+                             (banner+'\nFixture ID: J-lifecycle-unknown',False),
+                             ('Edited '+banner+'\nFixture ID: J-lifecycle-20261006',False)]:
+            self.assertEqual(marked_synthetic_text(text,'jira'),allowed)
+        t=self.http['jira'];item=t.content['10015']
+        item['fields']['summary']='S-02 Jira lifecycle check [SYNTHETIC ONLY]'
+        item['fields']['description']=document(banner+'\nFixture ID: J-lifecycle-20261006\nRevision 2: update-check queue is green.')
+        self.cycle();r=self.store.get('jira:10015');self.assertIsNotNone(r)
+        eid,locator,text=window_evidence(r,0,len(r['text']))
+        e=Evidence(eid,r['id'],r['version'],r['source'],r['title'],locator,text,r['source_updated_at'],r['indexed_at'],r['source_url'])
+        a=self.pilot.authority;scope=SyntheticProvenance(a.approved_synthetic_resource_ids,a.resources.get)
+        self.assertTrue(DeepSeekEvidenceModel.synthetic_input_allowed(e,scope))
+        self.assertFalse(DeepSeekEvidenceModel.synthetic_input_allowed(e,SyntheticProvenance([],a.resources.get)))
+
+    def test_existing_explicit_jira_synthetic_suffix_is_candidate_not_model_approval(self):
+        t=self.http['jira'];t.content['10015']['fields']['summary']='S-02 Jira lifecycle check [SYNTHETIC ONLY]'
+        self.cycle()
+        self.assertIn('10015',self.pilot.authority.discovered_ids['eng_b']['jira'])
+        for name in ('SYNTHETIC ONLY','ordinary synthetic title','x[SYNTHETIC ONLY]','[SYNTHETIC ONLY] extra'):
+            item=copy.deepcopy(t.content['10015']);item['id']='10016';item['key']='KAN-7';item['fields']['summary']=name
+            t.content['10016']=item;self.cycle()
+            self.assertNotIn('10016',self.pilot.authority.discovered_ids['eng_b']['jira'])
+        item['fields']['summary']='Only a title [SYNTHETIC ONLY]';item['fields']['description']=document('not synthetic original')
+        t.content['10016']=item;self.cycle()
+        self.assertNotIn('10016',self.pilot.authority.discovered_ids['eng_b']['jira'])
+
     def test_jira_project_substitution_and_comment_scope_never_discovered(self):
         t=self.http['jira'];data=copy.deepcopy(t.content['10015']);data['fields']['project']['id']='999'
         t.pages={'':{'issues':[data],'isLast':True}}

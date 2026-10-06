@@ -2,18 +2,18 @@
 
 ## 当前接续总表 · 2026-10-06（优先于下方历史记录）
 
-本轮DEV-REVIEW-R2，基准fa515a9984a773934dc37da96cd1dba55a05dc1f，分支fix/review-r2-discovery；本地提交见Git，精确源码hash见review-r2-20261006/verification.json。R3A/R4已在fa515a9本地提交，原证据有效。审查cf827bb是历史团队建议，不回退、不新增官方要求。R1按本地修复完成收尾，316项与前端检查不升级G1/G2，原证据不改写。
+本轮DEV-REVIEW-R2 native只读增量，基准0dda56a5b0c1db4a427d7d5e49e0183cafdc624c，分支verify/review-r2-native；本地提交见Git，精确源码hash见review-r2-native-approved-fixture-20261006/verification.json及预检manifest。0dda56a的346本地回归继续有效。R3A/R4已在fa515a9本地提交，原证据有效。审查cf827bb是历史团队建议，不回退、不新增官方要求。R1按本地修复完成收尾，316项与前端检查不升级G1/G2，原证据不改写。
 
 | 项目 | 当前实现 / 本轮验证 | 限制 / 下一项 |
 |---|---|---|
 | R1 | verified local；每日价格失效保留、真实模型运行前model_readiness；原316回归及Node有效 | 新build native/browser/live model not_run；不清预算、不改旧日期绕过 |
-| R2 | verified local/mock subset；AUTH-017默认关闭的有界四源发现、精确当前读、事务发布/保留checkpoint、退避/轮转；19定向+346完整回归通过；[证据](../evidence/runs/review-r2-20261006/README.md) | native新增发现/时延、browser/live model not_run；上限或慢源不保证SLA，下一独立native只读发现与生命周期验收；product_ops不扩 |
+| R2 | verified local/mock + native discovery subset；352本地回归/21发现定向/4runner guard；四源native身份和周期16.811s complete，自动发现原白名单外KAN-6，fake问答/精确引用通过；[native证据](../evidence/runs/review-r2-native-approved-fixture-20261006/README.md) | 两次初始failed保留；CF/Drive/Slack本次无新对象，完整新增/更新/删除时延矩阵及browser/live model not_run；product_ops不扩；不将周期耗时当发布SLA |
 | R3A | verified fixture/mock：服务端已批准原资源/版本/全文/精确窗口关系允许合法切片；6定向及327完整回归通过 | 新build native/browser/live model not_run；不补banner、不接受自报标志；[证据](../evidence/runs/review-r3a-20261006/README.md) |
 | R3质量 | in_progress：不把窗口出口修复当召回/业务质量通过；历史live子集有效 | 明确漏召回与问题歧义分列；不继承历史、不加展示专用关键词；非作者质量not_run |
 | R4 | verified local/mock：准备、意图、尝试、有效usage、输出接受/拒绝、回答存储/交付尝试分开；5定向、327完整与2Node通过 | 历史审计原字节不改；超时called未知/预算保留；独立保管/人工G1未完成；[证据](../evidence/runs/review-r4-20261006/README.md) |
 | R5/R6 | ADR-040独立问答已实现，8100历史独立正负问答继续有效；交付一致性partial | 原链接/历史展示、clean archive、五场景与最终人工/提交仍待做 |
 
-8094/8100未重启，旧health不证明加载本轮版本。AUTH-014/016/017有效；本轮无真实源/模型请求、scope变更、源写入、费用、push/merge。新构建native/browser/live model统一not_run，G1/G2不变。原ZIP及审查附件保留，根AGENTS/PROJECT_START_HERE/原docs01–05不改。历史Markdown硬换行警告仅解释，不修改原字节或全局规则。
+8094/8100未重启，旧health不证明加载本轮版本。AUTH-014/016/017有效；本轮仅AUTH-014/017真实源只读及已有Drive grant refresh，无模型请求、scope变更、源业务写入、费用或push/merge。R2仅native discovery subset如表；R1/R3A/R4新构建native/browser/live model仍not_run，G1/G2不变。原ZIP及审查附件保留，根AGENTS/PROJECT_START_HERE/原docs01–05不改。历史Markdown硬换行警告仅解释，不修改原字节或全局规则。
 
 以下为历史追加记录，其中pending/已退役功能描述由本表及最新ADR覆盖，不能直接当当前待办。
 

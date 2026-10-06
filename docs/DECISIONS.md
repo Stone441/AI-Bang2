@@ -1,5 +1,14 @@
 # Decisions / ADR
 
+## ADR-045 · 2026-10-06 · R2 native discovery and exact legacy fixture compatibility
+
+基准0dda56a5b0c1db4a427d7d5e49e0183cafdc624c，verify/review-r2-native。AUTH-014 app-owned Keychain只读复用、已有Drive refresh grant换token并核对原生账号；没有prompt/consent fallback、凭据put或源业务写入。新runner显式--live、独立内存Store、新目录exclusive证据，未启动/重启服务或读取DeepSeek凭据/账本。配置与AUTH-017固定四容器先验证，再读取凭据；缺失/失效/unknown失败，不申请scope。
+
+初始真实四源list/read周期全部complete（18.3567s），但无动态新对象、目标问答无证据，新增验收failed。当前native metadata说明既有获批KAN-6/10015标题以完整`[SYNTHETIC ONLY]`结尾；Jira方案允许明确合成标记，实现却只用开头`[SYNTHETIC]`。仅Jira补这个精确完整后缀，CF/Drive/Slack规则不变；不是任意synthetic子串匹配。第二次周期complete（16.7914s），但原文guard仍拒绝：当前原文完整原banner保留，Fixture ID是既有批准`J-lifecycle-20261006`，原精确清单仅J-02/J-03。补入这一精确既有fixture ID与原完整banner组合，不接受未知fixture/缺banner/改banner，不补造原文、改源标题、自动继承历史或给模型自报授权。容器/actor/权限/版本/精确切片关系继续服务端验证；不将此兼容视为放宽数据类别或新scope授权。
+
+第三次新目录实际native周期16.8111s，四源native身份及list/read complete；自动发现原固定白名单外Jira10015/KAN-6，实际fake回答仅引用当前指纹440116571589157286的Revision2 green，精确preview一致；原reader IDs不改、动态IDs不授予product_ops、审计链有效。8checks verified native subset；其余源本次没有符合规则的新对象，所以不是四源新对象矩阵、发布至回答时延SLA、真实模型或persona完整矩阵。原两个failed记录及各次源码hash保留，不改写通过。证据review-r2-native-20261006 / review-r2-native-fixed-20261006 / review-r2-native-approved-fixture-20261006。
+
+4新runner guard、21发现定向及352完整fixture/mock方法16.913s通过，验证精确标签/fixture仅候选、原文不符及未批准来源仍拒绝。native周期另列，不升级R1/R3A/R4新build native/browser/live model或G1/G2。未推送/合并、费用、新scope、平台业务写入，8094/8100保持运行。回滚关闭发现opt-in或去掉两个有限兼容项即可恢复原拒绝；旧审计/版本/附件不删除。R2新增/更新/删除多次生命周期时延仍待具体管理操作验收，AUTH-017只读不授权种植。可继续本地R3清晰问题漏召回与歧义质量评测。
 ## ADR-044 · 2026-10-06 · AUTH-017 bounded discovery (R2 local increment)
 
 基准fa515a9984a773934dc37da96cd1dba55a05dc1f，独立fix/review-r2-discovery。默认关闭的`--discovery-auth017`仅multi/eng_b可启用，要求现有reader配置恰好落在四个批准容器；不改原对象配置/Keychain/scope/product_ops。独立multi-auth017-web.sqlite保存catalog/state，重启先精确当前读再开放动态IDs。CF空间metadata、固定Jira project enhanced JQL（加project元数据验证容器）、Drive direct children、Slack固定频道/时间窗；候选标题/名称/root标签不单独授予模型出口，完整原文仍通过synthetic guard。列表只决定候选，动态对象只对eng_b有候选权，逐阶段native读仍必需；Slack动态回复每次模型/引用/历史检查另复核当前合成父消息。

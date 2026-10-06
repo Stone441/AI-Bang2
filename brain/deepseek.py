@@ -70,7 +70,7 @@ def marked_synthetic_text(text, source):
     # The original approved Atlassian seeds use this exact banner instead of
     # brackets. Accept only their source/fixture pairs, never the title alone.
     lines = {line.strip() for line in text.splitlines()}
-    fixtures = {'confluence': ('C-01', 'C-02'), 'jira': ('J-02', 'J-03')}
+    fixtures = {'confluence': ('C-01', 'C-02'), 'jira': ('J-02', 'J-03', 'J-lifecycle-20261006')}
     return ('SYNTHETIC COMPETITION TEST DATA — not an actual company record.' in lines
             and any('Fixture ID: ' + fid in lines
                     for fid in fixtures.get(source, ())))

@@ -31,6 +31,12 @@ def token(value):
     return value
 
 
+def candidate_label(source, name):
+    if not isinstance(name,str):return False
+    return (name.startswith('[SYNTHETIC]') or (source=='jira'
+            and re.search(r'(?:^|\s)\[SYNTHETIC ONLY\]$',name) is not None))
+
+
 class NativeCounter:
     """Count actual adapter transport attempts without retaining URL/auth/body."""
     def __init__(self, transport, stop_event):
@@ -215,7 +221,7 @@ class ContainerDiscovery:
                 if native in ids:raise DiscoveryFailure('duplicate_object')
                 ids.add(native)
                 if not isinstance(name,str):raise DiscoveryFailure('invalid_metadata')
-                if native in mappings or name.startswith('[SYNTHETIC]'):
+                if native in mappings or candidate_label(source,name):
                     mappings[native]=mapping
                     if source=='slack' and row.get('reply_count',0):roots.append(native)
         # Thread list reads follow exact current parent read and synthetic validation.
@@ -291,7 +297,7 @@ class ContainerDiscovery:
                 if (content['source']!=source or content['native_id']!=native
                         or not marked_synthetic_text(content['text'],source)
                         or (native not in previously_known and source in ('confluence','jira','drive')
-                            and not content['title'].startswith('[SYNTHETIC]'))):
+                            and not candidate_label(source,content['title']))):
                     self._disable(source,native)
                     if native in previously_known:resolved[native]=mappings[native]
                     continue
