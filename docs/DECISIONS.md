@@ -1,5 +1,15 @@
 # Decisions / ADR
 
+## ADR-046 · 2026-10-06 · R3A/R4 fixed local candidate and signed coverage handoff
+
+本轮只完成R3A/R4团队可验收本地候选；不重做fa515a9、不扩建R1检查体系或产品功能。基准dfa40c3，分支fix/r3a-r4-team-candidate；固定应用/测试34281adfe22c839ed463a51cb3536255f47175b4，后续状态/证据提交不改变runtime。真实只读子Agent独立10项离线方法审查没有复现阻断代码问题，P2发现新R4事件尚缺签名快照对应关系，接受并补齐；follow-up独立2方法及13条验签命令通过。非阻断observer/audit故障注入建议未扩建，未宣称已测试该新增组合。
+
+首次dfa40c3 clean archive 352中351通过，唯一test_product_acceptance在读取缺失.runtime配置时提前停止，未到原生mock权限断言。test-only修复精确路径mock config、保留原异常allow必须失败/不能query/无凭据输出断言，增加精确账号及3次read证据。34281ad新clean archive setup/352项16.920s/五fixture场景/2Node/自有新loopback HTTP烟测通过；失败原件保留，不改变产品或原生权限代码。回滚测试修复将恢复无本机配置的archive失败，不需要删除任何证据。
+
+受控操作员离线snapshot不是普通用户下载功能。六份当前fixture/mock R4审计流各自保留旧prepared事件并签至seq42/31/31/31/33/51；既有真实CodeBuddy CLI不改，实际13验签含原件/正文改/中间删/覆盖尾删/全链重算/未签名尾/旧checkpoint回滚。临时private key删除，仅public key保留；同机同账号临时signer不能证明独立custody或生产DB角色。旧checkpoint+对应旧截短流可通过，只有另外可信保留的更新checkpoint拒绝覆盖尾删除；未新增自动freshness authority。audit capture精确绑定dfa40c3 source hashes，与最终34281ad archive runtime hashes比对一致，不能冒写capture提交。证据review-r3a-r4-candidate-20261006。
+
+历史ZIP六文件逐字节一致，原审查/证据不覆盖；Markdown硬换行保留原字节而不改全局规则。ADR-040独立问答/无答案下载不变；旧8100独立问答继续有效。每日价格expiry及真实模型前model_readiness不变，不清账本或传旧日期绕过。没有外部API/model/new scope/费用/源写入、用户进程重启、推送合并或发布。新build native/browser/live model与G1/G2 not_run；团队实际本地观看、完整native/质量矩阵及生产独立保管是明确后续，不能由本地mock/Agent审查替代。
+
 ## ADR-045 · 2026-10-06 · R2 native discovery and exact legacy fixture compatibility
 
 基准0dda56a5b0c1db4a427d7d5e49e0183cafdc624c，verify/review-r2-native。AUTH-014 app-owned Keychain只读复用、已有Drive refresh grant换token并核对原生账号；没有prompt/consent fallback、凭据put或源业务写入。新runner显式--live、独立内存Store、新目录exclusive证据，未启动/重启服务或读取DeepSeek凭据/账本。配置与AUTH-017固定四容器先验证，再读取凭据；缺失/失效/unknown失败，不申请scope。

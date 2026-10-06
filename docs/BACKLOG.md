@@ -7,11 +7,11 @@
 | 任务 | 状态 | 实际完成 / 下一步 |
 |---|---|---|
 | DEV-REVIEW-R1 | verified local / live not_run | 当日官方价格复核、每日expiry保留、跨日/预算/HTTP503/启动指纹；18定向与316完整fixture/mock、2Node通过；review-r1-20261006。未重启8094/8100或调模型；每日先运行model_readiness |
-| DEV-REVIEW-R3A | verified local/mock | 严格已批准原资源/version/全文/切片来源；6定向+327完整回归；新build native/browser/live model not_run；业务质量仍待评测 |
+| DEV-REVIEW-R3A | verified local candidate | 严格已批准原资源/version/全文/切片来源；34281ad clean archive 352回归+只读复审；review-r3a-r4-candidate-20261006；新build native/browser/live model not_run，质量另列 |
 | DEV-REVIEW-R2 | verified local/mock + native discovery subset | 352本地/21发现/4runner guard通过；四源native周期成功、发现KAN-6并问答/精确preview；两次failed原件保留；生命周期时延矩阵仍待具体源管理验收，不扩product_ops |
-| DEV-REVIEW-R4 | verified local/mock | 准备/意图/尝试/有效usage/输出/交付尝试分离；5定向及Node检查通过；历史原字节保留，真实回执not_run |
+| DEV-REVIEW-R4 | verified local candidate | 准备/意图/尝试/有效usage/输出/交付尝试分离；当前352回归/2Node/HTTP与六日志/13验签边界；只读复审证据缺口关闭；历史不改，真实回执/独立custody未完成 |
 | DEV-REVIEW-R5 | in_progress | 原链接/历史展示待做；ADR-040及8100历史独立问答有效，既有CodeBuddy贡献保留 |
-| DEV-REVIEW-R6 | in_progress | 顶部当前表已收敛；固定候选clean archive、五场景、非作者观看和最终材料仍待做 |
+| DEV-REVIEW-R6 | in_progress | 当前34281ad clean archive/五fixture场景已验证；完整native五场景、非作者观看和最终材料仍待做 |
 
 本轮基准cf827bb/独立fix分支；已有AUTH-014/016、native及live子集有效。下方live未配置/模型未实现/New question/export等旧记录为superseded，具体模式按STATUS与原证据判断。
 
@@ -191,3 +191,5 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-06 DEV-10-INDEPENDENT verified local / live restart pending：按用户批准统一独立问答，移除New question及回答导出前后端，history_id HTTP400/export404，旧engine参数忽略依赖。311本地+Node安全/审计通过；保留旧历史和引用安全断言。8100重启后核对native正/负问和export404；8094旧进程未重启。
 
 2026-10-06 用户重启8100后真实新版浏览器两问验证通过：发布C-02有证据，接着安全独立问为空/拒答；两个按钮均不存在，SQLite两次request_started独立标记/history_id=null，负问无evidence_used。evidence/runs/independent-query/live-verification.json。live旧export自动导航被Chrome ERR_BLOCKED_BY_CLIENT阻止，未绕过；端点404为fixture/mock实际HTTP验证，不冒称本次native浏览器端点已测。8094仍旧进程未更新。
+
+2026-10-06 R3A/R4 bounded local candidate完成：fix/r3a-r4-team-candidate，基准dfa40c3，固定应用/测试34281ad。原实现不重复开发；只读子Agent10离线方法与13验签独立复核，唯一P2新日志签名绑定缺口已关闭。第一次archive 351/352通过、product acceptance test依赖本机runtime配置错误；原failed保留，精确mock配置隔离并强化原断言后352/352（16.920s）、五fixture场景、2Node及本地HTTP烟测通过。六份当前R4 snapshot/checkpoint/覆盖seq/raw verifier对应，mock/native/model模式不混用；旧checkpoint+截短旧snapshot仍可通过的边界明确。源码hash与最终archive相同，保护文件/旧审查/旧证据不改，ZIP未跟踪。证据review-r3a-r4-candidate-20261006；无需外部API/model/重启/费用/push。新build native/browser/live model和G1/G2 not_run。下一集中团队本地观看与具体授权内后续验收，非作者质量/独立custody/生产DB角色仍未完成。

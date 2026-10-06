@@ -1,5 +1,7 @@
 # Demonstration candidate and remaining acceptance
 
+2026-10-06 current R3A/R4 local candidate: fixed application/test commit `34281adfe22c839ed463a51cb3536255f47175b4`, branch `fix/r3a-r4-team-candidate`. Clean archive: 352 regressions, five fixture scenes, both Node checks and local HTTP smoke passed; six current mock lifecycle audit snapshots and 13 signature/rollback checks bound to exact runtime hashes, actual read-only sub-agent review closed. [Candidate handoff and limits](../evidence/runs/review-r3a-r4-candidate-20261006/README.md). New-build native/browser visual/live model and G1/G2 remain **not_run**. Historical evidence below keeps its original versions/modes; old 8100 independent-question evidence remains valid. Do not treat prior feature/download descriptions as current ADR-040 behavior.
+
 2026-10-05. Local-only candidate; this document is not G1/G2 approval, a production claim or a submission.
 
 ## Five-scene coverage

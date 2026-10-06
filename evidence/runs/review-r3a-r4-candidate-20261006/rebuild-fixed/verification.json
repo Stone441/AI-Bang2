@@ -1,0 +1,104 @@
+{
+  "started_at": "2026-10-06T06:16:58.021322+00:00",
+  "validated_commit": "34281adfe22c839ed463a51cb3536255f47175b4",
+  "mode": "isolated_git_archive_fixture_fake",
+  "live_source_api_called": false,
+  "live_model_called": false,
+  "human_G1": "not_run",
+  "runner_sha256": "1823b10ad9d3428f0be82f4d1680d5df5fda73eaf6e10df3dfda58149818baad",
+  "commands": [
+    {
+      "label": "setup",
+      "command": [
+        "make",
+        "setup"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "tests",
+      "command": [
+        "make",
+        "test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "scenarios",
+      "command": [
+        "make",
+        "verify"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "frontend",
+      "command": [
+        "node",
+        "tests/frontend_operator_security.js"
+      ],
+      "exit_code": 0
+    },
+    {
+      "label": "audit_frontend",
+      "command": [
+        "node",
+        "tests/frontend_audit_review.js"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "archive_has_no_runtime_or_env": true,
+  "runtime_source_hashes": {
+    "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
+    "brain/audit.py": "40bb185bdd25b96c0803c6da3b804a5163a97af2af5c1f147d59e488540c1fa9",
+    "brain/audit_query.py": "837254cdc8a235044dae523c0b9f35c87765a66e91e9215304dc9ad09c77622b",
+    "brain/budget.py": "cd0f195cec3741ab6741648ee4391cf841e63bd12f1e718ebcc4b6fd66b106fb",
+    "brain/confluence.py": "052499ec05ce82bbd4636f2eb2554c37fcf2fda82b8ac7b65a7f2ef9c6353d37",
+    "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
+    "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
+    "brain/credential_input.py": "7736f24b27ad95d8751479144c3c9e52a80a836100e6551b14296fdab62620f4",
+    "brain/deepseek.py": "eaf8a088603b99ff5af62e4461293dc0ae16c571271722a07a114a33f333ddbc",
+    "brain/delegated_query.py": "65388c5cb0b3ae1f8724d24926cd6210489e201d2d7b974dc2774351b158bccb",
+    "brain/discovery.py": "f6d1462582c94f29ed4ecfd9a40e96e67d57900c361e6092f96a45c94901f289",
+    "brain/drive.py": "e2fe84429b34ef2b2ad496188ed20beaf9e6442e5cef625a8f6edc085548f41d",
+    "brain/drive_oauth.py": "4e72272cc0daaa1f290a12738e195594b0fd384e59227a8f0f038835c68cd86e",
+    "brain/engine.py": "715675311480e5a29fa41b03459db401560595a1e4ee0240e1dfc62111230171",
+    "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
+    "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
+    "brain/keychain.py": "329010f678201d0e1592c658c6f5e0f220b71a4d602e2d395fc103dd216514a9",
+    "brain/model_receipt.py": "4055abbc3f8bd9804dcfedc49c2a440ad5fe08771ffd914b1b5f563f8238c431",
+    "brain/operator_web.py": "b652972e7dee0078fb3b188925320b3b61ece4b88ef5039e08e762b782147dc5",
+    "brain/retrieval.py": "227f09d36f0497d5a7affc6021cc534d8e72223a8eda7a56ad1bc0873ecfb64d",
+    "brain/runtime_version.py": "f3cddf0e6da0a33e5e8c85512d2bfab3373b26627baa79a11ef117650ef51d91",
+    "brain/server.py": "0293108fb88ceb1062db7c90d49130b1f704187ad064dafc57117d4a29d9b11c",
+    "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
+    "brain/sources.py": "02b8f29842422938f87dcad4a9f75b25bf5ee24ce4c04067afe51915ec6a61fe",
+    "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
+    "brain/synthesis.py": "f4062b084651af8cfa7696ad58a5b98c74408b8f02ede218d9a08f8e8ef8949f",
+    "brain/synthetic_provenance.py": "1cd96724152507e90c5aa873c27520407d458e6d6a96c21d9f39897d77bfc396",
+    "web/app.js": "294689e09f5edb9b340df16810a39a2c7812de6b63d9a08361a1539c8683d5e3",
+    "web/index.html": "b7a5b621ca33f78a116af5f0711a8de1588e31009e322b005f1f61bbecff4606",
+    "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
+    "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730"
+  },
+  "scenario_statuses": {
+    "S-01": "passed_local_subset",
+    "S-02": "passed_local_subset",
+    "S-03": "passed_local_subset",
+    "S-04": "passed_local_subset",
+    "S-05": "passed_local_subset"
+  },
+  "http_smoke": {
+    "frontend_assets": "passed",
+    "demo_login": "passed",
+    "four_source_fake_answer": "passed",
+    "exact_preview": "passed",
+    "request_id": "f8ea3067578146f68baaab07217aeb71",
+    "model": "fake-extractive-v1",
+    "browser_visual_review": "not_run",
+    "cookies_and_csrf_saved": false
+  },
+  "status": "verified_local_subset",
+  "finished_at": "2026-10-06T06:17:15.567642+00:00"
+}
