@@ -160,7 +160,7 @@ class GroundedSynthesis(unittest.TestCase):
                         generation=next(e['payload'] for e in audit.export() if e['event_type']=='generation_completed')
                         self.assertEqual(generation['model_review'],answer['model_review'])
                         self.assertTrue(any(e['event_type']=='evidence_used' and
-                            e['payload']['stage']=='sent_to_review' for e in audit.export()))
+                            e['payload']['stage']=='prepared_for_review' for e in audit.export()))
                         self.assertEqual(engine.safe_history(Actor('eng_b'))[0]['model_review'],answer['model_review'])
                         world.revoked.add(('eng_b',supplied[0]['evidence_id'].rsplit('@',1)[0]))
                         self.assertTrue(engine.safe_history(Actor('eng_b'))[0]['unavailable'])

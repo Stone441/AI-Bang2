@@ -61,7 +61,9 @@ function auditEvent(row){
     item.append(el('p',(p.result||'unknown').toUpperCase()+' · '+p.phase+' · '+p.source+' · '+p.resource_id));
     if(p.version!==undefined&&p.version!==null)item.append(el('p',Number.isSafeInteger(p.version)?'Version: '+p.version:'Exact version is retained by the backend; use the string evidence ID to verify its fingerprint.','muted'));
   }
-  if(row.event_type==='evidence_used')item.append(el('p',(p.stage==='sent_to_review'?'Sent to evidence review':p.stage==='sent_to_model'?'Sent to answer model':p.stage)+' · '+p.evidence_id));
+  if(row.event_type==='evidence_used')item.append(el('p',((p.stage==='sent_to_review'||p.stage==='prepared_for_review')?'Prepared for evidence review (not proof of sending)':(p.stage==='sent_to_model'||p.stage==='prepared_for_answer')?'Prepared for answer model (not proof of sending)':p.stage)+' · '+p.evidence_id));
+  const modelStages={model_dispatch_intent:'Model send intent persisted (delivery unknown)',model_dispatch_attempted:'Model send attempted (delivery unknown)',model_usage_received:'Validated model usage received (answer may still be rejected)',model_output_accepted:'Model output accepted',model_output_rejected:'Model output rejected'};
+  if(modelStages[row.event_type])item.append(el('p',modelStages[row.event_type]+' · '+p.stage));
   if(row.event_type==='generation_completed'){
     item.append(el('p','Model: '+p.model));
     item.append(el('p','Citations listed: '+(p.cited||[]).join(', ')));

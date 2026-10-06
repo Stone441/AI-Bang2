@@ -1,5 +1,6 @@
 # Acceptance coverage · local candidate
 
+2026-10-06 最新增量：R3A/R4 verified local fixture/mock，327完整Python方法16.645s、6来源定向/5审计定向及2Node检查通过。R3A合法无banner窗口按服务端已批准原资源/版本/原文精确关系放行；负例仍网络前拒绝。R4仅区分准备、发送意图/尝试、有效usage及输出、回答交付尝试，历史日志不改写。证据review-r3a-20261006、review-r4-20261006。新build native/browser/live model全部not_run，A-10/A-12/13完整验收及G1/G2不升级。R1本地完成，旧下文R3出口blocked/R4未修描述由本段覆盖；业务质量仍待验证。AUTH-017发现范围获批不等于发现实现/时延通过。8100历史独立问答验收继续有效。
 ## 当前验收增量 · 2026-10-06
 
 以[STATUS当前总表](STATUS.md)为模式/版本/人工状态入口。DEV-REVIEW-R1：316完整fixture/mock方法16.309s、18模型定向、2Node检查通过；当前checkout，不是新的clean archive/native/model/browser验收。U-01/P-14/A-10仅新增价格跨日拒绝、预算保留、503操作员提示及非敏感health启动指纹子集；R4实际发送语义仍未修，不能将A-10整体标通过。R3长窗口synthetic guard与词法miss在当前模块复现，未用历史snapshot。证据review-r1-20261006。

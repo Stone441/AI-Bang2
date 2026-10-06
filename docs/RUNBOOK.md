@@ -1,5 +1,6 @@
 # 安装、启动、测试与演示
 
+2026-10-06 R3A/R4 本地回归：`python3 -m unittest discover -s tests -v`；`node tests/frontend_operator_security.js`；`node tests/frontend_audit_review.js`。来源与审计定向：`python3 -m unittest discover -s tests -p test_synthetic_provenance.py -v`及`-p test_model_stages.py`。结果写新的运行目录，不覆盖旧附件；review-r4 capture.py是离线mock且输出exclusive，重放必须先复制到新目录并调整目标。真实模型前执行已有`python3 -m scripts.model_readiness`并保留账本，过期需真实复核；不凭health推断新代码已加载。R2仅AUTH-017固定eng_b容器读取获批，方案尚未实现；不自动重启已有8094/8100。
 ## 当前运行提示 · 2026-10-06
 
 先看[STATUS当前总表](STATUS.md)。ADR-040独立问答已落实：无聊天历史依赖、New question或普通回答下载；下方相关旧说明为superseded。四源native/DeepSeek及独立product_ops Confluence已有子集，不重复开通。

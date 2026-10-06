@@ -27,6 +27,8 @@ class DelegatedAuthority:
         self.tenant = tenants.pop()
         self.native_ids = {s: frozenset(r.page_ids if s == 'confluence' else r.native_ids)
                            for s, r in self.readers.items()}
+        self.approved_synthetic_resource_ids = frozenset(
+            source + ':' + native_id for source, ids in self.native_ids.items() for native_id in ids)
         self.users = {uid: {} for r in self.readers.values() for uid in r.delegations}
         self.resources, self.snapshots = {}, {}
 

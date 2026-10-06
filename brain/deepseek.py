@@ -30,6 +30,10 @@ class ModelUnavailable(Exception):
     """Fixed safe error only; no upstream body, credential or prompt."""
 
 
+class ModelInputRejected(ModelUnavailable):
+    """Provider input failed before budget reservation or network dispatch."""
+
+
 class PriceReviewRequired(ModelUnavailable, ValueError):
     """An operator action is required; retrying the question cannot fix it."""
 
@@ -57,15 +61,19 @@ def unique_object(pairs):
 
 
 def marked_synthetic(evidence):
-    if '[SYNTHETIC' in evidence.text:
+    return marked_synthetic_text(evidence.text, evidence.source)
+
+
+def marked_synthetic_text(text, source):
+    if '[SYNTHETIC' in text:
         return True
     # The original approved Atlassian seeds use this exact banner instead of
     # brackets. Accept only their source/fixture pairs, never the title alone.
-    lines = {line.strip() for line in evidence.text.splitlines()}
+    lines = {line.strip() for line in text.splitlines()}
     fixtures = {'confluence': ('C-01', 'C-02'), 'jira': ('J-02', 'J-03')}
     return ('SYNTHETIC COMPETITION TEST DATA — not an actual company record.' in lines
             and any('Fixture ID: ' + fid in lines
-                    for fid in fixtures.get(evidence.source, ())))
+                    for fid in fixtures.get(source, ())))
 
 
 class DeepSeekEvidenceModel:
@@ -90,26 +98,36 @@ class DeepSeekEvidenceModel:
     def generate_for_request(self, question, evidence, request_id):
         return self.generate(question, evidence, request_id=request_id)
 
-    def generate(self, question, evidence, *, request_id=None):
+    def generate_with_provenance(self, question, evidence, request_id, provenance, authorize, observe=None):
+        return self.generate(question, evidence, request_id=request_id, provenance=provenance, observe=observe)
+
+    def generate(self, question, evidence, *, request_id=None, provenance=None, observe=None, stage='answer'):
         if not evidence:
             return {'claims': [], 'uncertainties': ['Insufficient evidence in the currently accessible material.'],
                     'model_call': {'called': False, 'reason': 'no_authorized_evidence'}}
         check_price_review(self._today())
         if (not isinstance(question, str) or not question.strip() or len(question) > 4000
                 or len(evidence) > 24 or len({e.evidence_id for e in evidence}) != len(evidence)
-                or any(not marked_synthetic(e) for e in evidence)):
-            raise ModelUnavailable('Model input is outside the synthetic pilot boundary')
+                or any(not self.synthetic_input_allowed(e, provenance) for e in evidence)):
+            raise ModelInputRejected('Model input is outside the synthetic pilot boundary')
         payload = {'model': MODEL, 'thinking': {'type': 'disabled'}, 'stream': False,
                    'max_tokens': OUTPUT_TOKENS, 'response_format': {'type': 'json_object'},
                    'messages': self.messages(question, evidence)}
         body = json.dumps(payload, ensure_ascii=False).encode()
         if len(body) > 100_000:
-            raise ModelUnavailable('Model input exceeds pilot limit')
+            raise ModelInputRejected('Model input exceeds pilot limit')
         request = Request(ENDPOINT, data=body, headers={'Authorization': 'Bearer ' + self._key,
                           'Content-Type': 'application/json', 'Accept': 'application/json'}, method='POST')
         reservation_id = self.ledger.reserve(self.reservation, query_id=request_id if request_id is not None else uuid.uuid4().hex, model=MODEL)
         self.ledger.dispatch(reservation_id)  # Crash/timeout preserves the full reservation.
+        def record(event):
+            if observe is not None:
+                observe(event, {'stage':stage, 'model':MODEL, 'reservation_id':reservation_id,
+                                'evidence_ids':[e.evidence_id for e in evidence],
+                                'receipt':self.ledger.model_receipt(reservation_id)})
+        record('model_dispatch_intent')
         try:
+            record('model_dispatch_attempted')
             status, response = self.transport._send(request)
             if status != 200 or not isinstance(response, dict):
                 raise ValueError()
@@ -129,6 +147,7 @@ class DeepSeekEvidenceModel:
         # Known usage is charged conservatively even if its answer is rejected.
         self.ledger.settle(reservation_id, cost_upper(p, o), usage={
             'prompt_tokens':p, 'completion_tokens':o, 'total_tokens':total})
+        record('model_usage_received')  # Validated usage, not an accepted answer.
         try:
             if response['model'] not in (MODEL, 'DeepSeek-V4.1-Flash'):
                 raise ValueError()
@@ -142,10 +161,23 @@ class DeepSeekEvidenceModel:
             claims = self.parse_output(output, evidence)
         except Exception:
             self.ledger.model_outcome(reservation_id, 'output_rejected')
+            record('model_output_rejected')
             raise ModelUnavailable('Model output could not be supported by current evidence') from None
         self.ledger.model_outcome(reservation_id, 'accepted')
+        record('model_output_accepted')
         return {'claims': claims, 'uncertainties': [self.answer_notice],
                 'model_call': self.ledger.model_receipt(reservation_id)}
+
+    @staticmethod
+    def synthetic_input_allowed(evidence, provenance):
+        from .synthetic_provenance import SyntheticProvenance
+        if provenance is not None:
+            return (isinstance(provenance, SyntheticProvenance)
+                    and provenance.permits(evidence, marked_synthetic_text))
+        # Legacy standalone whole-document calls keep their existing boundary.
+        # Windows can NEVER self-authorize through a marker in their text/title.
+        return ('#' not in evidence.evidence_id and 'text_window' not in evidence.locator
+                and marked_synthetic(evidence))
 
     def messages(self, question, evidence):
         return [

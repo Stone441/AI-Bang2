@@ -1,5 +1,20 @@
 # Decisions / ADR
 
+## AUTH-017 · 2026-10-06 · eng_b fixed-container discovery reads
+
+用户对具体问题明确回复“批准上述四个固定范围”：Confluence space 131227；Jira KAN/10001；Slack workspace T0C6FQ246TF、频道 C0C6R70SGG4，从既有合成 root 1791142152.858189 起；Drive 文件夹 1EMYjaNhzBFQ3TXHC6ukEwN6otVIIeOEv 的直接子项。仅既有eng_b、既有只读scope/Keychain；不扩费用、scope、源写入、公开范围或product_ops AUTH-016。详见[R2方案](R2_DISCOVERY_PROPOSAL.md)。本轮只准备方案并核对权限范围，没有执行新发现或重启服务；缺scope/身份变化/计费提示须停止该源。
+
+## ADR-042 · 2026-10-06 · Trusted synthetic exact-window provenance (R3A)
+
+基准97c2a08当前模块先复现合法晚段窗口因不含原文开头banner而在网络前拒绝。最小修复使用服务端冻结的已批准原资源ID集合（fixture baseline / native配置固定IDs）与实时原资源lookup；进入每次draft/review前验证active、source、严格整数version、完整原文原有合成marker、canonical evidence ID及resolve_window精确文本/locator/元数据。保留原生逐阶段当前权限检查；此来源类别批准不授予员工权限。indexed_at是本地摄取时间，不作为原文版本关系。不给切片补banner、不向模型/客户端输出可自报的synthetic字段。完整原文marker仍必需；固定ID配置也不是独立签名真实性证明。独立provider旧whole-document调用保持旧marker策略，但任何窗口都必须有服务端来源。回滚去掉此桥接会恢复合法晚窗口拒绝，不能改成窗口自报放行。
+
+6项定向测试覆盖合法窗口、未批准资源、版本/正文/source/locator/窗口篡改、draft与review间原文变化、当前preview/history撤权，以及delegated Confluence MOCK路径。完整327项fixture/mock回归通过；真实native/model/browser均not_run。证据review-r3a-20261006。R3业务质量仍待测：明确问题漏召回与歧义分别评估，Which hypothesis was abandoned?只是单资源诊断，不添加展示关键词或继承历史。
+
+## ADR-043 · 2026-10-06 · Model attempt and receipt audit (R4)
+
+新增evidence_used阶段prepared_for_answer/review；provider输入guard、价格、预算通过并持久化dispatch后记录model_dispatch_intent，transport调用前记录model_dispatch_attempted；有效HTTP/usage结构与计数校验、预算settle后记model_usage_received；输出结构/证据校验后记model_output_accepted或rejected。有效usage不是有效答案，超时保留pending预留且called未知；attempt不证明服务端收到。draft/review各自reservation_id与stage独立。HTTP成功另记response_dispatch_attempted，不证明用户阅读。审计schema仅增加事件枚举；旧sent_to_model/review事件原字节不回写，UI解释为输入准备而非已发送。失败原因固定安全分类，不回显原始错误或凭据。
+
+5项定向测试含guard/价格/预算零transport、成功/超时、review输出失败、实际本地HTTP成功交付尝试与503无交付事件；原历史事件保持且链有效。两项Node前端检查及327完整fixture/mock回归通过。真实模型收据/native/browser新build未运行，独立防篡改保管与人G1仍未完成。证据review-r4-20261006。回滚新事件/UI无需改写已有审计；不能把历史准备日志重新当网络成功。
 ## ADR-041 · 2026-10-06 · Review R1 price readiness and startup identity
 
 当前HEAD与审查基准cf827bb一致；实际模块离线复现当天日期阻断及R3缺标记/漏召回，原审查附件逐字节保留，不能当当前运行结果。官方DeepSeek pricing/chat-completions页面本日实读，deepseek-flash/V4.1-Flash及peak cache-miss USD0.30/input、USD1.20/output每百万不变，复核日期更新为SGT Oct6；保留当日有效、未来/过去日期拒绝，不能自动延长、传旧日期或重置既有USD20账本。`scripts.model_readiness`仅离线检查价格准备，不读凭据/账本/源。跨午夜请求仍在reserve/network前停止；HTTP用固定503/operator-action提示，启动错误给官方复核与保留账本步骤。代价：每日人工/Agent实际复核仍需要，未保证全天候可用。

@@ -2,18 +2,18 @@
 
 ## 当前接续总表 · 2026-10-06（优先于下方历史记录）
 
-本轮任务DEV-REVIEW-R1，基准cf827bb，独立分支fix/review-20261006-first-task；当前代码小步提交见Git，本轮测试绑定verification.json源码hash。审查是团队建议，不新增官方要求，不回退。审查原件见[接管入口](reviews/2026-10-06-cf827bb/README.md)，本轮实际证据见[运行记录](../evidence/runs/review-r1-20261006/README.md)。
+本轮DEV-REVIEW-R3A/R4，基准97c2a088d63ef2cc404221176ea9d95aaebaccf2，分支fix/review-r3a-r4；本地提交见Git，精确源码hash见两个新证据目录verification.json。审查cf827bb是历史团队建议，不回退、不新增官方要求。R1按本地修复完成收尾，316项与前端检查不升级G1/G2，原证据不改写。
 
-| 项目 / 性质 | 当前实现与本轮判断 | fixture/mock | native API | live model | 浏览器 / 人工 | 版本、证据与缺口 |
-|---|---|---|---|---|---|---|
-| R1 价格准备 / 团队安全选择 | verified local；官方复核SGT Oct6，每日过期保持；离线readiness、503操作员提示、启动源码指纹 | 18定向 / 316完整通过；跨日零预留/零发送、旧pending保留 | 本轮仅健康GET，无知识源调用 | 本轮not_run/零费用；历史live子集有效 | 新版本not_run；G1/G2 not_run | review-r1-20261006；Oct7需重新复核，现有进程未加载新代码 |
-| R2 新增发现 / 官方A-08,S-02 | in_progress；固定native_ids按问刷新，自动发现仍缺；不扩范围扫描 | 历史四源生命周期subset | 历史CF/Jira更新、Drive删除subset；完整新增时延缺失 | 新鲜度模型矩阵not_run | 人工not_run | live-lifecycle/native-jira-update；容器发现范围需具体批准 |
-| R3 业务质量 / 官方A-06/07/14+团队Q组 | in_progress；当前长文精确切片缺marker、自然表达miss复现；native links为空 | 既有窗口/权限保护通过，不等于质量通过 | 历史single eng_b四源事实subset | 历史live-s01/live-product有效；长文出口仍blocked | 非作者质量not_run | before.json为当前模块；不得补造banner或以evidence代claims |
-| R4 审计语义 / 官方A-12/13+团队实现 | in_progress；sent_to_model发生于provider之前，界面仍称sent | 既有混合结果/签名subset | native审计身份not_run | 无本轮网络回执 | UI语义待修；人G1未完成 | audit-mixed/audit-replay；历史日志不回写，独立保管未完成 |
-| R5 现有体验 / 团队产品选择 | in_progress；纯文本原链接、历史问题/时间缺失；ADR-040已实现 | HTTP400 history_id / export404、Node安全已验证 | AUTH-016 product_ops CF positive/negative已verified subset | 产品原生四源身份矩阵不冒称完成 | 8100历史浏览器已验证；新build/not_run、人G1未完成 | independent-query/live-verification.json；不恢复New question/下载 |
-| R6 交付一致性 / 团队选择+官方A-16 | partial；本表是当前总入口，下方旧记录保留为历史 | 本轮316 checkout回归；新clean archive未运行 | 历史证据按原版本/模式有效 | 完整五场景候选未通过 | 最终观看/提交not_run | PROJECT_START_HERE/原01–05本轮保护未改；旧架构不是迁移任务 |
+| 项目 | 当前实现 / 本轮验证 | 限制 / 下一项 |
+|---|---|---|
+| R1 | verified local；每日价格失效保留、真实模型运行前model_readiness；原316回归及Node有效 | 新build native/browser/live model not_run；不清预算、不改旧日期绕过 |
+| R2 | 方案准备完成，AUTH-017四个固定容器发现读取已批准；已知对象逐问刷新保留 | 新发现实现与native时延not_run；下一在批准范围实现有界发现，product_ops不扩 |
+| R3A | verified fixture/mock：服务端已批准原资源/版本/全文/精确窗口关系允许合法切片；6定向及327完整回归通过 | 新build native/browser/live model not_run；不补banner、不接受自报标志；[证据](../evidence/runs/review-r3a-20261006/README.md) |
+| R3质量 | in_progress：不把窗口出口修复当召回/业务质量通过；历史live子集有效 | 明确漏召回与问题歧义分列；不继承历史、不加展示专用关键词；非作者质量not_run |
+| R4 | verified local/mock：准备、意图、尝试、有效usage、输出接受/拒绝、回答存储/交付尝试分开；5定向、327完整与2Node通过 | 历史审计原字节不改；超时called未知/预算保留；独立保管/人工G1未完成；[证据](../evidence/runs/review-r4-20261006/README.md) |
+| R5/R6 | ADR-040独立问答已实现，8100历史独立正负问答继续有效；交付一致性partial | 原链接/历史展示、clean archive、五场景与最终人工/提交仍待做 |
 
-现场健康只读确认8094四源/live synthesis、8100 Confluence/fake，两者无新指纹，loaded commit未知，未读取进程秘密或重启。AUTH-014/016有效，不倒退为未授权。本轮无平台写入、scope/费用增加、push/merge或G1/G2。下一项：R3严格长文来源出口契约与独立质量回归；R2只在获批容器范围实现发现。
+8094/8100未重启，旧health不证明加载本轮版本。AUTH-014/016/017有效；本轮无真实源/模型请求、scope变更、源写入、费用、push/merge。新构建native/browser/live model统一not_run，G1/G2不变。原ZIP及审查附件保留，根AGENTS/PROJECT_START_HERE/原docs01–05不改。历史Markdown硬换行警告仅解释，不修改原字节或全局规则。
 
 以下为历史追加记录，其中pending/已退役功能描述由本表及最新ADR覆盖，不能直接当当前待办。
 

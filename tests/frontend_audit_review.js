@@ -52,6 +52,16 @@ const result=(label,next=null)=>({filters:{actor:'eng_b',as_of:8},as_of:8,total:
   assert.match(versionEvent,/Exact version is retained by the backend/);
   assert.match(versionEvent,/Exact integer unavailable in browser/);
   assert.doesNotMatch(versionEvent,/9007199254740992/);
+  for(const stage of ['sent_to_model','sent_to_review','prepared_for_answer','prepared_for_review']){
+    ctx.event={seq:11,event_type:'evidence_used',actor:'eng_b',payload:{stage,evidence_id:'test@1'}};
+    const renderedStage=text(vm.runInContext('auditEvent(event)',ctx));
+    assert.match(renderedStage,/Prepared for.*not proof of sending/);
+    assert.doesNotMatch(renderedStage,/Sent to answer model|Sent to evidence review/);
+  }
+  for(const [type,label] of [['model_dispatch_intent','send intent persisted'],['model_dispatch_attempted','send attempted'],['model_usage_received','Validated model usage received']]){
+    ctx.event={seq:12,event_type:type,actor:'eng_b',payload:{stage:'answer'}};
+    assert.ok(text(vm.runInContext('auditEvent(event)',ctx)).includes(label));
+  }
   // Navigation invalidates an otherwise fresh inquiry too.
   const late=deferred();ctx.fetch=()=>late.promise;
   const querying=form.onsubmit({preventDefault(){}});get('workspaceNav').onclick();

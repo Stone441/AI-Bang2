@@ -71,18 +71,23 @@ class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
     def generate(self, *args, **kwargs):
         raise ModelUnavailable('Synthesis requires server authorization at each model stage')
 
-    def generate_with_authorization(self, question, evidence, request_id, authorize):
+    def generate_with_provenance(self, question, evidence, request_id, provenance, authorize, observe=None):
+        return self.generate_with_authorization(question, evidence, request_id, authorize,
+                                                provenance=provenance, observe=observe)
+
+    def generate_with_authorization(self, question, evidence, request_id, authorize, *, provenance=None, observe=None):
         if not callable(authorize):
             raise ModelUnavailable('Server authorization callback required')
         # Engine has just checked the complete set at model_dispatch. Only the
         # additional model stage needs another native check, after draft output.
-        draft = super().generate(question, evidence, request_id=request_id)
+        draft = super().generate(question, evidence, request_id=request_id, provenance=provenance, observe=observe)
         if not draft['claims']:
             return draft
         authorize('review_dispatch')
         reviewer = EvidenceReview(self._key, self.ledger, synthetic_only=True,
                                   transport=self.transport, today=self._today(), claims=draft['claims'])
-        review = reviewer.generate(question, evidence, request_id=request_id)
+        review = reviewer.generate(question, evidence, request_id=request_id, provenance=provenance,
+                                   observe=observe, stage='review')
         return {**draft, 'claim_format': self.claim_format,
                 'model_review': review['model_call'], 'review_status': 'accepted'}
 

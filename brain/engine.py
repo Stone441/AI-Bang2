@@ -98,7 +98,7 @@ class Engine:
                         or self.world.resources[e.resource_id]['version']!=e.version):
                     raise PermissionError('Evidence changed; please ask again')
             for e in selected:
-                self.audit.append('evidence_used',actor.user_id,rid,{'evidence_id':e.evidence_id,'resource_id':e.resource_id,'source':e.source,'version':e.version,'stage':'sent_to_model','resource_scope':'payment-service'})
+                self.audit.append('evidence_used',actor.user_id,rid,{'evidence_id':e.evidence_id,'resource_id':e.resource_id,'source':e.source,'version':e.version,'stage':'prepared_for_answer','resource_scope':'payment-service'})
             def authorize_model_stage(phase):
                 if phase!='review_dispatch': raise ValueError('Invalid model stage')
                 for e in selected:
@@ -109,9 +109,19 @@ class Engine:
                 for e in selected:
                     self.audit.append('evidence_used',actor.user_id,rid,
                                       {'evidence_id':e.evidence_id,'resource_id':e.resource_id,
-                                       'source':e.source,'version':e.version,'stage':'sent_to_review',
+                                       'source':e.source,'version':e.version,'stage':'prepared_for_review',
                                        'resource_scope':'payment-service'})
-            if hasattr(self.model,'generate_with_authorization'):
+            if hasattr(self.model,'generate_with_provenance'):
+                from .synthetic_provenance import SyntheticProvenance
+                provenance = SyntheticProvenance(
+                    getattr(self.world, 'approved_synthetic_resource_ids', ()), self.world.resources.get)
+                def observe_model(event, payload):
+                    if event not in ('model_dispatch_intent','model_dispatch_attempted','model_usage_received',
+                                     'model_output_accepted','model_output_rejected'):
+                        raise ValueError('Invalid model event')
+                    self.audit.append(event,actor.user_id,rid,{**payload,'resource_scope':'payment-service'})
+                draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage,observe_model)
+            elif hasattr(self.model,'generate_with_authorization'):
                 draft=self.model.generate_with_authorization(question,selected,rid,authorize_model_stage)
             elif hasattr(self.model,'generate_for_request'):
                 draft=self.model.generate_for_request(question,selected,rid)
@@ -166,8 +176,15 @@ class Engine:
             self.audit.append('response_committed',actor.user_id,rid,{'response':response})
             self.store.save_run(rid,actor.user_id,response)
             return response
-        except Exception:
-            self.audit.append('request_failed',actor.user_id,rid,{'reason':'request_stopped'})
+        except Exception as error:
+            from .deepseek import PriceReviewRequired, ModelInputRejected, ModelUnavailable
+            from .budget import BudgetExceeded
+            reason = ('model_price_review_required' if isinstance(error,PriceReviewRequired)
+                      else 'model_budget_unavailable' if isinstance(error,BudgetExceeded)
+                      else 'model_input_rejected' if isinstance(error,ModelInputRejected)
+                      else 'model_input_or_output_unavailable' if isinstance(error,ModelUnavailable)
+                      else 'request_stopped')
+            self.audit.append('request_failed',actor.user_id,rid,{'reason':reason})
             raise
 
     def evidence(self, actor, eid):
