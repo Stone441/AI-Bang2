@@ -1,5 +1,7 @@
 # Local contracts v1
 
+2026-10-07 synthesis-v6开发：生成/review传入同一已鉴权Evidence的原title/locator作为source_context，与text分开；不据问题推定资源事件，不将context作为指令、原文quote或权限。SyntheticProvenance原来已核title/locator一致，保留批准资源/version/原文切片和整答gate；既有100KB payload上限在reserve前执行。当前语义效果待实际验证，不能继承64b705a的结果。
+
 2026-10-07 ADR-056：64b705a trusted Python/operator配置temperature默认0，允许有限数值[0,2]；None显式保留provider默认。generation/review相同值，thinking=disabled；客户端/浏览器无采样授权字段。三开发题各四次同输入比较支持可回滚选择，非确定性/语义保证。原模型、预算、原文窗口、每claim引用及whole-answer gate不变；当前business16误归/business12结构失败证明精确引用＋同模型review仍非语义完备。旧原件保留，当前结果见STATUS。
 
 2026-10-07 synthesis-v4：提案、审批、完成和撤回分别要求明确支持；非审批不推出取消/放弃。无明确问题指代时允许有范围候选事实或空claims，空claims可加通用范围澄清提示。现有结构、精确引用验证、逐阶段权限及整答review gate不变；模型review不能证明语义正确。

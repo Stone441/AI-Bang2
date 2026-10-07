@@ -96,6 +96,36 @@ class GroundedSynthesis(unittest.TestCase):
         self.assertEqual([p['temperature'] for p in self.transport.calls],[0,0])
         self.assertTrue(all(p['thinking']=={'type':'disabled'} for p in self.transport.calls))
 
+    def test_ambiguous_passage_keeps_original_subject_in_both_model_stages(self):
+        from dataclasses import replace
+        evidence=replace(self.evidence,title='Final payment-service postmortem',
+                         locator={'section':'Confirmed root cause'},
+                         text='[SYNTHETIC] Final root cause: retry budget mismatch.')
+        claim={'text':'The payment-service cause was retry budget mismatch.',
+               'evidence_ids':[evidence.evidence_id],
+               'supports':[{'evidence_id':evidence.evidence_id,
+                            'quote':'Final root cause: retry budget mismatch.'}]}
+        self.transport.outputs[0]={'claims':[claim]}
+        result=self.model.generate_with_authorization('What caused the webhook incident?',
+            [evidence],self.rid,lambda _:None)
+        # This mocked verdict does not prove semantic correctness; it checks that
+        # neither stage silently loses the actual subject of ambiguous source text.
+        for request in self.transport.calls:
+            supplied=json.loads(request['messages'][1]['content'])['evidence']
+            self.assertEqual(supplied,[{'evidence_id':evidence.evidence_id,'text':evidence.text,
+                'source_context':{'title':evidence.title,'locator':evidence.locator}}])
+        self.assertEqual(result['claims'][0]['supports'][0]['quote'],claim['supports'][0]['quote'])
+
+    def test_source_title_is_not_substitute_support_for_a_ticket_identifier(self):
+        from dataclasses import replace
+        evidence=replace(self.evidence,title='TASK-742 rollout approval')
+        claim=copy.deepcopy(self.claim);claim['text']='TASK-742 pilot is approved.'
+        self.transport.outputs[0]={'claims':[claim]}
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization('Is TASK-742 approved?',
+                [evidence],self.rid,lambda _:None)
+        self.assertEqual(len(self.transport.calls),1)
+
     def test_each_claim_requires_its_own_identifier_context_in_an_exact_quote(self):
         from dataclasses import replace
         evidence=replace(self.evidence,text='[SYNTHETIC] TASK-742 is In Progress. Owner: Noor. The remaining blocker is unmatched totals.')
