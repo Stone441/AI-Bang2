@@ -51,7 +51,7 @@ def validate_claim(claim, evidence):
 
 
 class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
-    name = 'deepseek-flash-grounded-synthesis-v8'
+    name = 'deepseek-flash-grounded-synthesis-v9'
     claim_format = 'grounded_synthesis_v1'
     answer_notice = ('Synthesized from current authorized evidence; exact supporting quotes and a separate '
                      'model review were checked. Model review can miss errors; verify important conclusions.')
@@ -99,6 +99,11 @@ class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
              'If the question does not identify the event, entity or policy, '
              'give explicitly scoped candidate facts or return an empty claims list; do not choose '
              'a single unstated referent or inherit one from an earlier question. '
+             'A scoped candidate must explicitly name its business object or event in the claim, '
+             'using cited text; an unexplained plan name or an evidence title alone is insufficient. '
+             'If evidence cannot identify that object, return empty claims rather than assigning '
+             'the retrieved plan to the unspecified question. Do not treat a retrieved rule as '
+             'the rule mentioned in a question unless the event and effective date match. '
              'Use one quote (12–1200 characters) per citation, at most four citations per claim. '
              'Use only the citations necessary to support that claim. The evidence_ids list MUST '
              'exactly equal the evidence_id values in supports: never list additional relevant IDs '
@@ -162,6 +167,10 @@ class EvidenceReview(DeepSeekEvidenceModel):
              'that acknowledgement is not proof of the outcome or exhaustive source coverage. '
              'For an unspecified referent, reject an unconditional single-entity answer; clearly '
              'scoped candidate facts may be valid without resolving the missing referent. '
+             'The claim itself must name the business object or event using cited text; '
+             'an unexplained plan name or evidence title alone does not resolve its scope. '
+             'Do not accept a retrieved rule as the unspecified rule of a question without '
+             'evidence matching its event and effective date. '
              'Judge supported (factual entailment) and responsive (answer relevance) independently. '
              'Set responsive true only when the claim answers an explicit requested part or supplies '
              'a necessary qualification of that same answer. A shared topic is insufficient. '

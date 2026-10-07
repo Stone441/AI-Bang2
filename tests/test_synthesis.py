@@ -127,7 +127,7 @@ class GroundedSynthesis(unittest.TestCase):
 
     def test_expanded_output_cap_is_shared_by_stages_and_pre_reserved(self):
         from brain.deepseek import CONTEXT_TOKENS
-        for cap in (2048,4096):
+        for cap in (2048,4096,8192):
             with self.subTest(cap=cap):
                 self.transport.calls.clear()
                 model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
@@ -140,7 +140,7 @@ class GroundedSynthesis(unittest.TestCase):
                                  [expected,expected])
 
     def test_invalid_output_cap_rejected_without_budget_or_dispatch(self):
-        for cap in (True,0,1025,8192,'2048',None):
+        for cap in (True,0,1025,16384,'2048',None):
             with self.subTest(cap=cap),self.assertRaises(ValueError):
                 DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
                     transport=self.transport,today=PRICE_DATE,output_tokens=cap)
@@ -171,6 +171,23 @@ class GroundedSynthesis(unittest.TestCase):
         def send(request):
             status,response=original_send(request)
             response['usage'].update(completion_tokens=4097,total_tokens=4197)
+            return status,response
+        self.transport._send=send
+        with self.assertRaises(ModelUnavailable):
+            model.generate_with_authorization('Is GA approved?',[self.evidence],self.rid,lambda _:None)
+        summary=self.ledger.summary()
+        self.assertTrue(summary['blocked_for_review'])
+        self.assertEqual(summary['pending_requests'],1)
+        self.assertEqual(summary['accounted_micro_usd'],model.reservation)
+        self.assertEqual(len(self.transport.calls),1)
+
+    def test_usage_above_8192_cap_still_freezes_and_preserves_reservation(self):
+        model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+            transport=self.transport,today=PRICE_DATE,reasoning_effort='low',output_tokens=8192)
+        original_send=self.transport._send
+        def send(request):
+            status,response=original_send(request)
+            response['usage'].update(completion_tokens=8193,total_tokens=8293)
             return status,response
         self.transport._send=send
         with self.assertRaises(ModelUnavailable):

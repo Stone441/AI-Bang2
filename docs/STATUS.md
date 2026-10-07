@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-08封版当前：GitHub已恢复，PR #6合并main 72dc688，本地新必要修复分支fix/closure-bounded-output-20261008。8f40ca6实际已知12题：3正确事实/范围、5安全空答、1故障停答、1歧义限定不足、2review cap无答案；17usage/42354microUSD。native Slack82.371秒query/27.122秒单preview，产品generation cap失败；3usage/10832microUSD。旧单次成功不代表稳定质量。当前最小v9/8192有界实验in_progress，尚不宣称通过；新失败不扩大AUTH019延期。原账本pending0、remaining19555939microUSD；8094/8100未重启。
+
 2026-10-08当前Git交付blocked：本地fd2ee04已提交并通过检查；GitHub两次push均remote Internal Server Error，远端分支不存在/PR未创建，main仍4b93d52。本次未完成合并，错误原件candidate-closure-20261008/git-delivery.json；AUTH-023授权保留，待远端恢复可继续。
 
 2026-10-08 Git增量交付：上一轮PR #5已合并main 4b93d52，应用字节对应0bc90ae。当前封版runner配置/耗时接线和当日真实价格复核已完成本地检查（400完整回归＋2新增guard、前端两Node/语法、12题fake执行），证据candidate-closure-20261008。已知12题新版live回归、native分段耗时和四源时间线整合仍in_progress/not_run；本次推送合并不代表封版Goal完成、不继承旧live结果或升级G1/G2，运行中8094/8100未动。
