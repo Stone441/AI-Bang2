@@ -1,5 +1,7 @@
 # Local contracts v1
 
+2026-10-07 synthesis-v8诊断：v7已生成有范围的未知，但review错误coverage拒绝，背景仍responsive true。v8仅澄清review coverage语句：未知前提有范围明确回应、原文记录状态及无同实体/范围正面证据可以覆盖所问项，不要求编造positive；同实体其他属性不是所问属性的回答，必要限定须改变该回答解释。supported/responsive/question_covered仍全严格true，未删除quote/权限/whole-answer断言；效果待实际验证，v7失败原件保留。
+
 2026-10-07 synthesis-v7开发契约：内部review每claim verdict精确含index/supported/responsive；supported与responsive必须分别是布尔true，未知/缺字段/false拒绝整答，不局部删claim放行。question_covered还需明确回应未由引用资料建立的问题前提；“未建立”不等于显式否定或全源无记录。生成先按请求项分配事实，背景只因主题相近不算相关，实际请求的owner/blocker仍需覆盖。公共claim格式、原文/源context、逐阶段权限、原账本/温度0不变；当前语义效果待实际验证，v6旧结果保持原版本。
 
 2026-10-07 synthesis-v6开发：生成/review传入同一已鉴权Evidence的原title/locator作为source_context，与text分开；不据问题推定资源事件，不将context作为指令、原文quote或权限。SyntheticProvenance原来已核title/locator一致，保留批准资源/version/原文切片和整答gate；既有100KB payload上限在reserve前执行。388/389 archive、完整24开发题和两native/model题已验证对应版本；03未知表达及32背景仍未通过，不继承旧版本结果或宣称全部质量通过。
