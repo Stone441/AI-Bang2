@@ -1,0 +1,30 @@
+{
+  "base_commit": "4b93d5284ba055badc44ce0883f4d3f2722f2aa8",
+  "mode": "local_fixture_mock",
+  "full_regression": {
+    "count": 400,
+    "result": "passed",
+    "command": "python3 -m unittest discover -s tests -v"
+  },
+  "additional_guard_tests": {
+    "count": 2,
+    "result": "passed"
+  },
+  "timing_tests": {
+    "count": 2,
+    "included_in_full_regression": true,
+    "result": "passed"
+  },
+  "frontend": [
+    "node --check web/app.js",
+    "node tests/frontend_operator_security.js",
+    "node tests/frontend_audit_review.js"
+  ],
+  "fake_known12_runner": "passed execution only; semantic quality not evaluated",
+  "new_native_timing": "not_run",
+  "known12_live_model_regression": "not_run",
+  "browser": "blocked_saved_site_denial",
+  "G1": "not_run",
+  "G2": "not_run",
+  "boundary": "No external source write, model call, service restart or budget reset in this delivery."
+}
