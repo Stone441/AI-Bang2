@@ -1,0 +1,95 @@
+{
+  "request_id": "45c2fbf0ca3540468544d4286b9341bf",
+  "question": "Who owns MIG-301 and what is still blocking cutover?",
+  "answered_at": "2026-10-07T08:38:21.547177+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+      "evidence_ids": [
+        "BV-04@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "evidence_ids": [
+        "BV-12@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "evidence_ids": [
+        "BV-11@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "evidence_ids": [
+        "BV-21@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-04@1",
+      "resource_id": "BV-04",
+      "version": 1,
+      "source": "drive",
+      "title": "authentication / Cutover scope",
+      "locator": {
+        "section": "Cutover scope"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:38:21.304468+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-04"
+    },
+    {
+      "evidence_id": "BV-12@1",
+      "resource_id": "BV-12",
+      "version": 1,
+      "source": "drive",
+      "title": "migration / Cutover ticket",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:38:21.304602+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    },
+    {
+      "evidence_id": "BV-11@1",
+      "resource_id": "BV-11",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Database design rationale",
+      "locator": {
+        "section": "Database design rationale"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:38:21.304585+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "evidence_id": "BV-21@1",
+      "resource_id": "BV-21",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Ownership decision",
+      "locator": {
+        "section": "Ownership decision"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:38:21.304746+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-21"
+    }
+  ],
+  "actor": "eng_a"
+}

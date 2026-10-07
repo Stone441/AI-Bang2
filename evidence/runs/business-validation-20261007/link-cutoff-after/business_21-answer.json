@@ -1,0 +1,115 @@
+{
+  "request_id": "a8dae931397f4f8ea9b7a8f21ada9ec4",
+  "question": "Who owns reconciliation exceptions versus ingestion failures?",
+  "answered_at": "2026-10-07T11:03:41.885719+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "evidence_ids": [
+        "BV-21@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "evidence_ids": [
+        "BV-23@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+      "evidence_ids": [
+        "BV-24@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "evidence_ids": [
+        "BV-22@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nThe old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+      "evidence_ids": [
+        "BV-25@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-21@1",
+      "resource_id": "BV-21",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Ownership decision",
+      "locator": {
+        "section": "Ownership decision"
+      },
+      "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.252840+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-21"
+    },
+    {
+      "evidence_id": "BV-23@1",
+      "resource_id": "BV-23",
+      "version": 1,
+      "source": "slack",
+      "title": "reconciliation / Missing input",
+      "locator": {
+        "section": "Missing input"
+      },
+      "text": "[SYNTHETIC]\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.252890+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-23"
+    },
+    {
+      "evidence_id": "BV-24@1",
+      "resource_id": "BV-24",
+      "version": 1,
+      "source": "drive",
+      "title": "reconciliation / Pilot blocker",
+      "locator": {
+        "section": "Pilot blocker"
+      },
+      "text": "[SYNTHETIC]\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.252913+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-24"
+    },
+    {
+      "evidence_id": "BV-22@1",
+      "resource_id": "BV-22",
+      "version": 1,
+      "source": "jira",
+      "title": "reconciliation / Batch deadline",
+      "locator": {
+        "section": "Batch deadline"
+      },
+      "text": "[SYNTHETIC]\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.252866+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-22"
+    },
+    {
+      "evidence_id": "BV-25@1",
+      "resource_id": "BV-25",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Old operating note",
+      "locator": {
+        "section": "Old operating note"
+      },
+      "text": "[SYNTHETIC]\nThe old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.252936+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-25"
+    }
+  ],
+  "actor": "eng_a"
+}

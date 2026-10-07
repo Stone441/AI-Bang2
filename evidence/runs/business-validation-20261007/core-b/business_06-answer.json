@@ -1,0 +1,115 @@
+{
+  "request_id": "f242fffb77bf47a5a11728072c690bf1",
+  "question": "Can the Atlas connector serve personal Singapore SGD accounts?",
+  "answered_at": "2026-10-07T08:38:32.192985+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.",
+      "evidence_ids": [
+        "BV-06@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "evidence_ids": [
+        "BV-07@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "evidence_ids": [
+        "BV-31@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "evidence_ids": [
+        "BV-10@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "evidence_ids": [
+        "BV-22@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-06@1",
+      "resource_id": "BV-06",
+      "version": 1,
+      "source": "jira",
+      "title": "integration / SGD account eligibility",
+      "locator": {
+        "section": "SGD account eligibility"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:38:32.173156+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-06"
+    },
+    {
+      "evidence_id": "BV-07@1",
+      "resource_id": "BV-07",
+      "version": 1,
+      "source": "slack",
+      "title": "integration / USD exception",
+      "locator": {
+        "section": "USD exception"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:38:32.173172+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-07"
+    },
+    {
+      "evidence_id": "BV-31@1",
+      "resource_id": "BV-31",
+      "version": 1,
+      "source": "slack",
+      "title": "settlement / Settlement scope",
+      "locator": {
+        "section": "Settlement scope"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:38:32.173537+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-31"
+    },
+    {
+      "evidence_id": "BV-10@1",
+      "resource_id": "BV-10",
+      "version": 1,
+      "source": "jira",
+      "title": "integration / Scope confirmation",
+      "locator": {
+        "section": "Scope confirmation"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:38:32.173219+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-10"
+    },
+    {
+      "evidence_id": "BV-22@1",
+      "resource_id": "BV-22",
+      "version": 1,
+      "source": "jira",
+      "title": "reconciliation / Batch deadline",
+      "locator": {
+        "section": "Batch deadline"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:38:32.173401+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-22"
+    }
+  ],
+  "actor": "product_ops"
+}

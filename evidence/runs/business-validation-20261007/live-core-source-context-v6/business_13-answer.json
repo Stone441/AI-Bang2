@@ -1,0 +1,243 @@
+{
+  "request_id": "75c7dc16db6f4a3b960e1a4eb1ccce8c",
+  "question": "When should the ledger migration be rolled back?",
+  "answered_at": "2026-10-07T12:16:14.199087+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v6",
+  "claims": [
+    {
+      "text": "The ledger migration should be rolled back if settlement differences exceed five basis points.",
+      "evidence_ids": [
+        "BV-13@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-13@1",
+          "quote": "Roll back the ledger migration if settlement differences exceed five basis points."
+        }
+      ]
+    },
+    {
+      "text": "The September rehearsal's ten-basis-point threshold is superseded by the October five-basis-point rule.",
+      "evidence_ids": [
+        "BV-14@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-14@1",
+          "quote": "The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-13@1",
+      "resource_id": "BV-13",
+      "version": 1,
+      "source": "confluence",
+      "title": "migration / Rollback signal",
+      "locator": {
+        "section": "Rollback signal"
+      },
+      "text": "[SYNTHETIC]\nRoll back the ledger migration if settlement differences exceed five basis points.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042505+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-13"
+    },
+    {
+      "evidence_id": "BV-30@1",
+      "resource_id": "BV-30",
+      "version": 1,
+      "source": "jira",
+      "title": "access / Unknown authority",
+      "locator": {
+        "section": "Unknown authority"
+      },
+      "text": "[SYNTHETIC]\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042912+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-30"
+    },
+    {
+      "evidence_id": "BV-23@1",
+      "resource_id": "BV-23",
+      "version": 1,
+      "source": "slack",
+      "title": "reconciliation / Missing input",
+      "locator": {
+        "section": "Missing input"
+      },
+      "text": "[SYNTHETIC]\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042746+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-23"
+    },
+    {
+      "evidence_id": "BV-29@1",
+      "resource_id": "BV-29",
+      "version": 1,
+      "source": "confluence",
+      "title": "access / Offboarding rule",
+      "locator": {
+        "section": "Offboarding rule"
+      },
+      "text": "[SYNTHETIC]\nRemoval from a source channel prevents future citation and history access; previously saved copies cannot be recalled.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042889+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-29"
+    },
+    {
+      "evidence_id": "BV-11@1#16000:17452",
+      "resource_id": "BV-11",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Database design rationale",
+      "locator": {
+        "section": "Database design rationale",
+        "text_window": {
+          "start": 16000,
+          "end": 17452,
+          "unit": "unicode_characters",
+          "strategy": "fixed-2400-overlap-400-v1"
+        }
+      },
+      "text": "try 166: batch 2822, checksum 5146; no current decision recorded.\nArchived migration rehearsal entry 167: batch 2839, checksum 5177; no current decision recorded.\nArchived migration rehearsal entry 168: batch 2856, checksum 5208; no current decision recorded.\nArchived migration rehearsal entry 169: batch 2873, checksum 5239; no current decision recorded.\nArchived migration rehearsal entry 170: batch 2890, checksum 5270; no current decision recorded.\nArchived migration rehearsal entry 171: batch 2907, checksum 5301; no current decision recorded.\nArchived migration rehearsal entry 172: batch 2924, checksum 5332; no current decision recorded.\nArchived migration rehearsal entry 173: batch 2941, checksum 5363; no current decision recorded.\nArchived migration rehearsal entry 174: batch 2958, checksum 5394; no current decision recorded.\nArchived migration rehearsal entry 175: batch 2975, checksum 5425; no current decision recorded.\nArchived migration rehearsal entry 176: batch 2992, checksum 5456; no current decision recorded.\nArchived migration rehearsal entry 177: batch 3009, checksum 5487; no current decision recorded.\nArchived migration rehearsal entry 178: batch 3026, checksum 5518; no current decision recorded.\nArchived migration rehearsal entry 179: batch 3043, checksum 5549; no current decision recorded.\n# Current ledger migration decision\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042332+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "evidence_id": "BV-11@1#8000:10400",
+      "resource_id": "BV-11",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Database design rationale",
+      "locator": {
+        "section": "Database design rationale",
+        "text_window": {
+          "start": 8000,
+          "end": 10400,
+          "unit": "unicode_characters",
+          "strategy": "fixed-2400-overlap-400-v1"
+        }
+      },
+      "text": " no current decision recorded.\nArchived migration rehearsal entry 84: batch 1428, checksum 2604; no current decision recorded.\nArchived migration rehearsal entry 85: batch 1445, checksum 2635; no current decision recorded.\nArchived migration rehearsal entry 86: batch 1462, checksum 2666; no current decision recorded.\nArchived migration rehearsal entry 87: batch 1479, checksum 2697; no current decision recorded.\nArchived migration rehearsal entry 88: batch 1496, checksum 2728; no current decision recorded.\nArchived migration rehearsal entry 89: batch 1513, checksum 2759; no current decision recorded.\nArchived migration rehearsal entry 90: batch 1530, checksum 2790; no current decision recorded.\nArchived migration rehearsal entry 91: batch 1547, checksum 2821; no current decision recorded.\nArchived migration rehearsal entry 92: batch 1564, checksum 2852; no current decision recorded.\nArchived migration rehearsal entry 93: batch 1581, checksum 2883; no current decision recorded.\nArchived migration rehearsal entry 94: batch 1598, checksum 2914; no current decision recorded.\nArchived migration rehearsal entry 95: batch 1615, checksum 2945; no current decision recorded.\nArchived migration rehearsal entry 96: batch 1632, checksum 2976; no current decision recorded.\nArchived migration rehearsal entry 97: batch 1649, checksum 3007; no current decision recorded.\nArchived migration rehearsal entry 98: batch 1666, checksum 3038; no current decision recorded.\nArchived migration rehearsal entry 99: batch 1683, checksum 3069; no current decision recorded.\nArchived migration rehearsal entry 100: batch 1700, checksum 3100; no current decision recorded.\nArchived migration rehearsal entry 101: batch 1717, checksum 3131; no current decision recorded.\nArchived migration rehearsal entry 102: batch 1734, checksum 3162; no current decision recorded.\nArchived migration rehearsal entry 103: batch 1751, checksum 3193; no current decision recorded.\nArchived migration rehearsal entry 104: batch 1768, checksum 3224; no current decision recorded.\nArchived migration rehearsal entry 105: batch 1785, checksum 3255; no current decision recorded.\nArchived migration rehearsal entry 106: batch 1802, checksum 3286; no current decision recorded.\nArchived migration rehearsal entry 107: batch 1819, checksum 3317; no current decision recorded.\nArchived migration rehearsal entry 108: batch 1836, check",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042332+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "evidence_id": "BV-11@1#10000:12400",
+      "resource_id": "BV-11",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Database design rationale",
+      "locator": {
+        "section": "Database design rationale",
+        "text_window": {
+          "start": 10000,
+          "end": 12400,
+          "unit": "unicode_characters",
+          "strategy": "fixed-2400-overlap-400-v1"
+        }
+      },
+      "text": " 1768, checksum 3224; no current decision recorded.\nArchived migration rehearsal entry 105: batch 1785, checksum 3255; no current decision recorded.\nArchived migration rehearsal entry 106: batch 1802, checksum 3286; no current decision recorded.\nArchived migration rehearsal entry 107: batch 1819, checksum 3317; no current decision recorded.\nArchived migration rehearsal entry 108: batch 1836, checksum 3348; no current decision recorded.\nArchived migration rehearsal entry 109: batch 1853, checksum 3379; no current decision recorded.\nArchived migration rehearsal entry 110: batch 1870, checksum 3410; no current decision recorded.\nArchived migration rehearsal entry 111: batch 1887, checksum 3441; no current decision recorded.\nArchived migration rehearsal entry 112: batch 1904, checksum 3472; no current decision recorded.\nArchived migration rehearsal entry 113: batch 1921, checksum 3503; no current decision recorded.\nArchived migration rehearsal entry 114: batch 1938, checksum 3534; no current decision recorded.\nArchived migration rehearsal entry 115: batch 1955, checksum 3565; no current decision recorded.\nArchived migration rehearsal entry 116: batch 1972, checksum 3596; no current decision recorded.\nArchived migration rehearsal entry 117: batch 1989, checksum 3627; no current decision recorded.\nArchived migration rehearsal entry 118: batch 2006, checksum 3658; no current decision recorded.\nArchived migration rehearsal entry 119: batch 2023, checksum 3689; no current decision recorded.\nArchived migration rehearsal entry 120: batch 2040, checksum 3720; no current decision recorded.\nArchived migration rehearsal entry 121: batch 2057, checksum 3751; no current decision recorded.\nArchived migration rehearsal entry 122: batch 2074, checksum 3782; no current decision recorded.\nArchived migration rehearsal entry 123: batch 2091, checksum 3813; no current decision recorded.\nArchived migration rehearsal entry 124: batch 2108, checksum 3844; no current decision recorded.\nArchived migration rehearsal entry 125: batch 2125, checksum 3875; no current decision recorded.\nArchived migration rehearsal entry 126: batch 2142, checksum 3906; no current decision recorded.\nArchived migration rehearsal entry 127: batch 2159, checksum 3937; no current decision recorded.\nArchived migration rehearsal entry 128: batch 2176, checksum 3968; no current decision recorded.\nArchived migration r",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042332+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "evidence_id": "BV-12@1",
+      "resource_id": "BV-12",
+      "version": 1,
+      "source": "drive",
+      "title": "migration / Cutover ticket",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042479+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    },
+    {
+      "evidence_id": "BV-02@1",
+      "resource_id": "BV-02",
+      "version": 1,
+      "source": "jira",
+      "title": "authentication / Migration blocker",
+      "locator": {
+        "section": "Migration blocker"
+      },
+      "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042095+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-02"
+    },
+    {
+      "evidence_id": "BV-14@1",
+      "resource_id": "BV-14",
+      "version": 1,
+      "source": "jira",
+      "title": "migration / Past rehearsal",
+      "locator": {
+        "section": "Past rehearsal"
+      },
+      "text": "[SYNTHETIC]\nThe September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042529+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-14"
+    },
+    {
+      "evidence_id": "BV-15@1",
+      "resource_id": "BV-15",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Unapproved alternative",
+      "locator": {
+        "section": "Unapproved alternative"
+      },
+      "text": "[SYNTHETIC]\nDual-region active writes were proposed but not approved; the accepted migration uses one writer.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:15:45.042553+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-15"
+    }
+  ],
+  "actor": "eng_a",
+  "model_call": {
+    "query_id": "75c7dc16db6f4a3b960e1a4eb1ccce8c",
+    "model": "deepseek-flash",
+    "reservation_id": "44749a4f21054816bd1d095675f37b6a",
+    "prompt_tokens": 3022,
+    "completion_tokens": 140,
+    "total_tokens": 3162,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 1075,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "75c7dc16db6f4a3b960e1a4eb1ccce8c",
+    "model": "deepseek-flash",
+    "reservation_id": "c435f7045a444bbbba14e8593d753fd4",
+    "prompt_tokens": 3083,
+    "completion_tokens": 29,
+    "total_tokens": 3112,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 960,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

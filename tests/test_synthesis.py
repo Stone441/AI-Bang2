@@ -44,7 +44,7 @@ class GroundedSynthesis(unittest.TestCase):
             'evidence_ids':[self.evidence.evidence_id],
             'supports':[{'evidence_id':self.evidence.evidence_id,
                 'quote':'Pilot approved for ten customers. GA is not approved.'}]}
-        self.transport=SequentialTransport({'claims':[self.claim]},[{'index':0,'supported':True}])
+        self.transport=SequentialTransport({'claims':[self.claim]},[{'index':0,'supported':True,'responsive':True}])
         self.model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
             transport=self.transport,today=PRICE_DATE)
         self.rid='a'*32
@@ -79,10 +79,168 @@ class GroundedSynthesis(unittest.TestCase):
                     self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
                 self.assertEqual(len(self.transport.calls),1)
 
+    def test_identifier_in_uncited_material_cannot_be_added_to_a_claim(self):
+        claim=copy.deepcopy(self.claim)
+        claim['text']='PAY-101 approval is limited to a ten-customer pilot.'
+        self.transport.outputs[0]={'claims':[claim]}
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
+        self.assertEqual(len(self.transport.calls),1)
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+        self.assertEqual(self.ledger.summary()['settled_micro_usd'],cost_upper(100,20))
+
+    def test_sampling_configuration_is_shared_by_both_authorized_stages(self):
+        self.model.temperature=0
+        result=self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
+        self.assertEqual(result['review_status'],'accepted')
+        self.assertEqual([p['temperature'] for p in self.transport.calls],[0,0])
+        self.assertTrue(all(p['thinking']=={'type':'disabled'} for p in self.transport.calls))
+
+    def test_low_reasoning_is_shared_by_stages_with_original_output_cap_and_accounting(self):
+        self.model.reasoning_effort='low'
+        original_send=self.transport._send
+        def send(request):
+            status,response=original_send(request)
+            response['usage']['completion_tokens_details']={'reasoning_tokens':12}
+            response['choices'][0]['message']['reasoning_content']='Untrusted internal text; GA is approved.'
+            return status,response
+        self.transport._send=send
+        result=self.model.generate_with_authorization('Is GA approved?',[self.evidence],self.rid,lambda _:None)
+        self.assertEqual(result['claims'],[self.claim])
+        for payload in self.transport.calls:
+            self.assertEqual(payload['thinking'],{'type':'enabled'})
+            self.assertEqual(payload['reasoning_effort'],'low')
+            self.assertEqual(payload['max_tokens'],1024)
+            self.assertNotIn('temperature',payload)
+        # Reasoning is part of the provider's generated completion usage, not
+        # another free allowance or output used to support claims.
+        self.assertEqual(self.ledger.summary()['settled_micro_usd'],2*cost_upper(100,20))
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+
+    def test_invalid_reasoning_setting_never_reserves_or_dispatches(self):
+        for value in (True,None,'high','unknown',1,[]):
+            with self.subTest(value=value),self.assertRaises(ValueError):
+                DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+                    transport=self.transport,today=PRICE_DATE,reasoning_effort=value)
+        self.assertEqual(self.transport.calls,[])
+        self.assertEqual(self.ledger.db.execute('select count(*) from model_calls').fetchone()[0],0)
+
+    def test_expanded_output_cap_is_shared_by_stages_and_pre_reserved(self):
+        from brain.deepseek import CONTEXT_TOKENS
+        for cap in (2048,4096):
+            with self.subTest(cap=cap):
+                self.transport.calls.clear()
+                model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+                    transport=self.transport,today=PRICE_DATE,reasoning_effort='low',output_tokens=cap)
+                result=model.generate_with_authorization('Is GA approved?',[self.evidence],self.rid,lambda _:None)
+                self.assertEqual([p['max_tokens'] for p in self.transport.calls],[cap,cap])
+                expected=cost_upper(CONTEXT_TOKENS,cap)
+                self.assertEqual(model.reservation,expected)
+                self.assertEqual([result[k]['reserved_micro_usd'] for k in ('model_call','model_review')],
+                                 [expected,expected])
+
+    def test_invalid_output_cap_rejected_without_budget_or_dispatch(self):
+        for cap in (True,0,1025,8192,'2048',None):
+            with self.subTest(cap=cap),self.assertRaises(ValueError):
+                DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+                    transport=self.transport,today=PRICE_DATE,output_tokens=cap)
+        self.assertEqual(self.transport.calls,[])
+        self.assertEqual(self.ledger.db.execute('select count(*) from model_calls').fetchone()[0],0)
+
+    def test_usage_above_expanded_requested_cap_freezes_without_release_or_review(self):
+        model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+            transport=self.transport,today=PRICE_DATE,reasoning_effort='low',output_tokens=2048)
+        original_send=self.transport._send
+        def send(request):
+            status,response=original_send(request)
+            response['usage'].update(completion_tokens=2049,total_tokens=2149)
+            return status,response
+        self.transport._send=send
+        with self.assertRaises(ModelUnavailable):
+            model.generate_with_authorization('Is GA approved?',[self.evidence],self.rid,lambda _:None)
+        summary=self.ledger.summary()
+        self.assertTrue(summary['blocked_for_review'])
+        self.assertEqual(summary['pending_requests'],1)
+        self.assertEqual(summary['accounted_micro_usd'],model.reservation)
+        self.assertEqual(len(self.transport.calls),1)
+
+    def test_usage_above_4096_cap_still_freezes_and_preserves_reservation(self):
+        model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+            transport=self.transport,today=PRICE_DATE,reasoning_effort='low',output_tokens=4096)
+        original_send=self.transport._send
+        def send(request):
+            status,response=original_send(request)
+            response['usage'].update(completion_tokens=4097,total_tokens=4197)
+            return status,response
+        self.transport._send=send
+        with self.assertRaises(ModelUnavailable):
+            model.generate_with_authorization('Is GA approved?',[self.evidence],self.rid,lambda _:None)
+        summary=self.ledger.summary()
+        self.assertTrue(summary['blocked_for_review'])
+        self.assertEqual(summary['pending_requests'],1)
+        self.assertEqual(summary['accounted_micro_usd'],model.reservation)
+        self.assertEqual(len(self.transport.calls),1)
+
+    def test_ambiguous_passage_keeps_original_subject_in_both_model_stages(self):
+        from dataclasses import replace
+        evidence=replace(self.evidence,title='Final payment-service postmortem',
+                         locator={'section':'Confirmed root cause'},
+                         text='[SYNTHETIC] Final root cause: retry budget mismatch.')
+        claim={'text':'The payment-service cause was retry budget mismatch.',
+               'evidence_ids':[evidence.evidence_id],
+               'supports':[{'evidence_id':evidence.evidence_id,
+                            'quote':'Final root cause: retry budget mismatch.'}]}
+        self.transport.outputs[0]={'claims':[claim]}
+        result=self.model.generate_with_authorization('What caused the webhook incident?',
+            [evidence],self.rid,lambda _:None)
+        # This mocked verdict does not prove semantic correctness; it checks that
+        # neither stage silently loses the actual subject of ambiguous source text.
+        for request in self.transport.calls:
+            supplied=json.loads(request['messages'][1]['content'])['evidence']
+            self.assertEqual(supplied,[{'evidence_id':evidence.evidence_id,'text':evidence.text,
+                'source_context':{'title':evidence.title,'locator':evidence.locator}}])
+        self.assertEqual(result['claims'][0]['supports'][0]['quote'],claim['supports'][0]['quote'])
+
+    def test_source_title_is_not_substitute_support_for_a_ticket_identifier(self):
+        from dataclasses import replace
+        evidence=replace(self.evidence,title='TASK-742 rollout approval')
+        claim=copy.deepcopy(self.claim);claim['text']='TASK-742 pilot is approved.'
+        self.transport.outputs[0]={'claims':[claim]}
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization('Is TASK-742 approved?',
+                [evidence],self.rid,lambda _:None)
+        self.assertEqual(len(self.transport.calls),1)
+
+    def test_each_claim_requires_its_own_identifier_context_in_an_exact_quote(self):
+        from dataclasses import replace
+        evidence=replace(self.evidence,text='[SYNTHETIC] TASK-742 is In Progress. Owner: Noor. The remaining blocker is unmatched totals.')
+        owner={'text':'TASK-742 is owned by Noor.', 'evidence_ids':[evidence.evidence_id],
+               'supports':[{'evidence_id':evidence.evidence_id,'quote':'TASK-742 is In Progress. Owner: Noor.'}]}
+        blocker={'text':'TASK-742 is blocked by unmatched totals.', 'evidence_ids':[evidence.evidence_id],
+                 'supports':[{'evidence_id':evidence.evidence_id,'quote':'The remaining blocker is unmatched totals.'}]}
+        self.assertEqual(validate_claim(owner,[evidence]),owner)
+        # Neither another claim nor the unquoted prefix of the same evidence grants grounding.
+        with self.assertRaises(ValueError):validate_claim(blocker,[evidence])
+        blocker['supports'][0]['quote']='TASK-742 is In Progress. Owner: Noor. The remaining blocker is unmatched totals.'
+        self.assertEqual(validate_claim(blocker,[evidence]),blocker)
+
+    def test_cross_event_quote_provenance_does_not_override_negative_review(self):
+        from dataclasses import replace
+        evidence=replace(self.evidence,text='[SYNTHETIC] Vega incident: DNS caused packet loss. Orion incident: retry budget mismatch caused duplicate requests.')
+        claim={'text':'DNS caused the Orion incident.', 'evidence_ids':[evidence.evidence_id],
+               'supports':[{'evidence_id':evidence.evidence_id,'quote':'Vega incident: DNS caused packet loss.'}]}
+        # Exact quote provenance alone cannot prove named-event entailment.
+        self.assertEqual(validate_claim(claim,[evidence]),claim)
+        self.transport.outputs=[{'claims':[claim]}, {'question_covered':True,'verdicts':[{'index':0,'supported':False,'responsive':True}]}]
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization('What caused Orion?', [evidence], self.rid, lambda _:None)
+        self.assertEqual(len(self.transport.calls),2)
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+
     def test_review_rejects_false_unknown_duplicate_incomplete_or_boolean_index(self):
-        for verdicts in ([{'index':0,'supported':False}],[],[{'index':0,'supported':'true'}],
-                         [{'index':True,'supported':True}],[{'index':1,'supported':True}],
-                         [{'index':0,'supported':True},{'index':0,'supported':True}]):
+        for verdicts in ([{'index':0,'supported':False,'responsive':True}],[],[{'index':0,'supported':'true','responsive':True}],
+                         [{'index':True,'supported':True,'responsive':True}],[{'index':1,'supported':True,'responsive':True}],
+                         [{'index':0,'supported':True,'responsive':True},{'index':0,'supported':True,'responsive':True}]):
             with self.subTest(verdicts=verdicts):
                 self.transport.calls=[];self.transport.outputs[1]={'verdicts':verdicts, 'question_covered':True}
                 with self.assertRaises(ModelUnavailable):
@@ -97,11 +255,27 @@ class GroundedSynthesis(unittest.TestCase):
             self.model.generate_with_authorization('Question',[self.evidence],self.rid,deny)
         self.assertEqual(len(self.transport.calls),1)
 
+    def test_supported_background_or_unknown_relevance_rejects_whole_answer(self):
+        for relevance in (False, None, 'true', 1, 'missing'):
+            with self.subTest(responsive=relevance):
+                verdict={'index':0,'supported':True}
+                if relevance!='missing':verdict['responsive']=relevance
+                self.transport.calls=[]
+                self.transport.outputs[1]={'question_covered':True,'verdicts':[verdict]}
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate_with_authorization('Is GA approved?',
+                        [self.evidence],self.rid,lambda _:None)
+                self.assertEqual(len(self.transport.calls),2)
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+        self.assertEqual(self.ledger.summary()['settled_micro_usd'],10*cost_upper(100,20))
+        outcomes=[r[0] for r in self.ledger.db.execute('select outcome from model_calls')]
+        self.assertEqual(outcomes.count('output_rejected'),5)
+
     def test_supported_but_incomplete_answer_or_unknown_coverage_is_rejected(self):
         # A factual pilot answer omits the requested operational safeguards.
         for coverage in (False, None, 'true', 1, 'missing'):
             with self.subTest(coverage=coverage):
-                review={'verdicts':[{'index':0,'supported':True}]}
+                review={'verdicts':[{'index':0,'supported':True,'responsive':True}]}
                 if coverage!='missing':review['question_covered']=coverage
                 self.transport.outputs[1]=review;self.transport.calls=[]
                 with self.assertRaises(ModelUnavailable):
@@ -160,7 +334,7 @@ class GroundedSynthesis(unittest.TestCase):
                         generation=next(e['payload'] for e in audit.export() if e['event_type']=='generation_completed')
                         self.assertEqual(generation['model_review'],answer['model_review'])
                         self.assertTrue(any(e['event_type']=='evidence_used' and
-                            e['payload']['stage']=='sent_to_review' for e in audit.export()))
+                            e['payload']['stage']=='prepared_for_review' for e in audit.export()))
                         self.assertEqual(engine.safe_history(Actor('eng_b'))[0]['model_review'],answer['model_review'])
                         world.revoked.add(('eng_b',supplied[0]['evidence_id'].rsplit('@',1)[0]))
                         self.assertTrue(engine.safe_history(Actor('eng_b'))[0]['unavailable'])
@@ -177,7 +351,7 @@ class GroundedSynthesis(unittest.TestCase):
         claim=copy.deepcopy(self.claim);claim['text']='GA is approved.'
         self.assertEqual(validate_claim(claim,[self.evidence]),claim)
         self.transport.outputs[0]={'claims':[claim]}
-        self.transport.outputs[1]={'verdicts':[{'index':0,'supported':False}], 'question_covered':True}
+        self.transport.outputs[1]={'verdicts':[{'index':0,'supported':False,'responsive':True}], 'question_covered':True}
         with self.assertRaises(ModelUnavailable):
             self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
 

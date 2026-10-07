@@ -1,0 +1,150 @@
+{
+  "started_at": "2026-10-06T06:37:44.551630+00:00",
+  "commit": "323cb9314608c920c5713b6f08778807de44d44f",
+  "mode": "fixture_source_live_model_synthesis",
+  "source_state": "Current worktree hashes are authoritative; commit identifies baseline until committed.",
+  "case_origin": "First six variants authored by read-only review agent before evaluation; not human blind benchmark.",
+  "native_source_api": "not_run",
+  "native_permission_persona": "not_run",
+  "browser": "not_run",
+  "G1": "not_run",
+  "G2": "not_run",
+  "semantic_review": "pending",
+  "results": [
+    {
+      "case": "long_similar_entity",
+      "actor_mode": "fixture_eng_a",
+      "question": "In the Orion incident, which early explanation was withdrawn and what caused the duplicate requests?",
+      "required_atomic_facts": [
+        "Orion cache explanation withdrawn",
+        "Orion retry budget mismatch",
+        "do not answer Vega DNS cause"
+      ],
+      "error_type": "ModelUnavailable",
+      "request_id": "aee0a79a9d264708a29fbd7bc7128d96",
+      "claims_only": [],
+      "draft_diagnostic": {
+        "claims": [
+          {
+            "text": "In the Orion incident, the cache explanation was withdrawn; the withdrawn cache explanation was an early hypothesis.",
+            "evidence_ids": [
+              "C-01@1#24000:26400"
+            ],
+            "supports": [
+              {
+                "evidence_id": "C-01@1#24000:26400",
+                "quote": "Orion incident: cache explanation withdrawn; retry budget mismatch caused duplicate requests."
+              }
+            ]
+          },
+          {
+            "text": "The duplicate requests were caused by a retry budget mismatch.",
+            "evidence_ids": [
+              "C-01@1#24000:26400"
+            ],
+            "supports": [
+              {
+                "evidence_id": "C-01@1#24000:26400",
+                "quote": "Orion incident: cache explanation withdrawn; retry budget mismatch caused duplicate requests."
+              }
+            ]
+          }
+        ]
+      },
+      "vendor_response_diagnostics": [
+        {
+          "id": "a6a7c26b-b21a-4d94-9f55-146d022c83f5",
+          "object": "chat.completion",
+          "created": 1791268664,
+          "model": "deepseek-flash",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"claims\":[{\"text\":\"In the Orion incident, the cache explanation was withdrawn; the withdrawn cache explanation was an early hypothesis.\",\"evidence_ids\":[\"C-01@1#24000:26400\"],\"supports\":[{\"evidence_id\":\"C-01@1#24000:26400\",\"quote\":\"Orion incident: cache explanation withdrawn; retry budget mismatch caused duplicate requests.\"}]},{\"text\":\"The duplicate requests were caused by a retry budget mismatch.\",\"evidence_ids\":[\"C-01@1#24000:26400\"],\"supports\":[{\"evidence_id\":\"C-01@1#24000:26400\",\"quote\":\"Orion incident: cache explanation withdrawn; retry budget mismatch caused duplicate requests.\"}]}]}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 2785,
+            "completion_tokens": 155,
+            "total_tokens": 2940,
+            "prompt_tokens_details": {
+              "cached_tokens": 2560
+            },
+            "prompt_cache_hit_tokens": 2560,
+            "prompt_cache_miss_tokens": 225
+          },
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+        },
+        {
+          "id": "288a90d1-bc57-4e51-88cf-9df817664b51",
+          "object": "chat.completion",
+          "created": 1791268665,
+          "model": "deepseek-flash",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":false},{\"index\":1,\"supported\":false}]}"
+              },
+              "logprobs": null,
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 2847,
+            "completion_tokens": 29,
+            "total_tokens": 2876,
+            "prompt_tokens_details": {
+              "cached_tokens": 128
+            },
+            "prompt_cache_hit_tokens": 128,
+            "prompt_cache_miss_tokens": 2719
+          },
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+        }
+      ],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 57,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    }
+  ],
+  "status": "captured_for_semantic_review",
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/quality_acceptance.py": "9e08fcbd032958f2f7ab18d61f16fa55f3529986065d73dd6d4cbf0f24f72eb0",
+    "brain/engine.py": "404a571c23fcacd47e68e5bd316a0560a7e9dfb4ecbc9e0aa51735c286a080df",
+    "brain/retrieval.py": "5a7298f70933b467765c74a2ac299ca7cb74d9b8752c13e6fad5205beebd0331",
+    "brain/synthesis.py": "ceffff5cedf24dd7335e77ed33434965a8967841728eb0b1d5280bcd1782d8cb",
+    "brain/deepseek.py": "eaf8a088603b99ff5af62e4461293dc0ae16c571271722a07a114a33f333ddbc",
+    "brain/budget.py": "cd0f195cec3741ab6741648ee4391cf841e63bd12f1e718ebcc4b6fd66b106fb",
+    "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730"
+  },
+  "budget_before": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 41193,
+    "settled_micro_usd": 41193,
+    "available_micro_usd": 19958807,
+    "pending_requests": 0,
+    "blocked_for_review": false
+  },
+  "budget_after": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 43104,
+    "settled_micro_usd": 43104,
+    "available_micro_usd": 19956896,
+    "pending_requests": 0,
+    "blocked_for_review": false
+  },
+  "finished_at": "2026-10-06T06:37:46.413438+00:00"
+}

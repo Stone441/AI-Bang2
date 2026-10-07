@@ -1,0 +1,185 @@
+{
+  "request_id": "51626b41968243f2b7f9cf9e7236e65a",
+  "question": "What is the current Singapore weekday reconciliation deadline?",
+  "answered_at": "2026-10-07T15:07:51.911606+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v8",
+  "claims": [
+    {
+      "text": "The current Singapore weekday reconciliation deadline is 18:00 SGT.",
+      "evidence_ids": [
+        "BV-22@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-22@1",
+          "quote": "For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-22@1",
+      "resource_id": "BV-22",
+      "version": 1,
+      "source": "jira",
+      "title": "reconciliation / Batch deadline",
+      "locator": {
+        "section": "Batch deadline"
+      },
+      "text": "[SYNTHETIC]\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T15:05:56.439120+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-22"
+    },
+    {
+      "evidence_id": "BV-25@1",
+      "resource_id": "BV-25",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Old operating note",
+      "locator": {
+        "section": "Old operating note"
+      },
+      "text": "[SYNTHETIC]\nThe old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T15:05:56.439161+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-25"
+    },
+    {
+      "evidence_id": "BV-21@1",
+      "resource_id": "BV-21",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Ownership decision",
+      "locator": {
+        "section": "Ownership decision"
+      },
+      "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T15:05:56.439105+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-21"
+    },
+    {
+      "evidence_id": "BV-07@1",
+      "resource_id": "BV-07",
+      "version": 1,
+      "source": "slack",
+      "title": "integration / USD exception",
+      "locator": {
+        "section": "USD exception"
+      },
+      "text": "[SYNTHETIC]\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T15:05:56.438816+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-07"
+    },
+    {
+      "evidence_id": "BV-23@1",
+      "resource_id": "BV-23",
+      "version": 1,
+      "source": "slack",
+      "title": "reconciliation / Missing input",
+      "locator": {
+        "section": "Missing input"
+      },
+      "text": "[SYNTHETIC]\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T15:05:56.439134+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-23"
+    },
+    {
+      "evidence_id": "BV-24@1",
+      "resource_id": "BV-24",
+      "version": 1,
+      "source": "drive",
+      "title": "reconciliation / Pilot blocker",
+      "locator": {
+        "section": "Pilot blocker"
+      },
+      "text": "[SYNTHETIC]\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T15:05:56.439148+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-24"
+    },
+    {
+      "evidence_id": "BV-31@1",
+      "resource_id": "BV-31",
+      "version": 1,
+      "source": "slack",
+      "title": "settlement / Settlement scope",
+      "locator": {
+        "section": "Settlement scope"
+      },
+      "text": "[SYNTHETIC]\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T15:05:56.439247+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-31"
+    },
+    {
+      "evidence_id": "BV-06@1",
+      "resource_id": "BV-06",
+      "version": 1,
+      "source": "confluence",
+      "title": "integration / SGD account eligibility",
+      "locator": {
+        "section": "SGD account eligibility"
+      },
+      "text": "[SYNTHETIC]\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.\n\nAtlas account eligibility\nAccount\tScope\n\n Singapore business SGD \t Pilot supported \n\n Personal SGD \t Not supported \n",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T15:05:56.438798+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-06"
+    },
+    {
+      "evidence_id": "BV-10@1",
+      "resource_id": "BV-10",
+      "version": 1,
+      "source": "jira",
+      "title": "integration / Scope confirmation",
+      "locator": {
+        "section": "Scope confirmation"
+      },
+      "text": "[SYNTHETIC]\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T15:05:56.438858+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-10"
+    }
+  ],
+  "actor": "product_ops",
+  "model_call": {
+    "query_id": "51626b41968243f2b7f9cf9e7236e65a",
+    "model": "deepseek-flash",
+    "reservation_id": "b9665bce9bff4d0b8b2e0b0d3d31bcf0",
+    "prompt_tokens": 1380,
+    "completion_tokens": 607,
+    "total_tokens": 1987,
+    "reserved_micro_usd": 319488,
+    "accounted_upper_micro_usd": 1143,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "51626b41968243f2b7f9cf9e7236e65a",
+    "model": "deepseek-flash",
+    "reservation_id": "ffe6cd1db4934dc18c0c89a5e608a3f9",
+    "prompt_tokens": 1430,
+    "completion_tokens": 254,
+    "total_tokens": 1684,
+    "reserved_micro_usd": 319488,
+    "accounted_upper_micro_usd": 734,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

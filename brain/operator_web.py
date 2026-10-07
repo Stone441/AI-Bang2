@@ -22,6 +22,7 @@ from .drive import DriveReader
 from .server import App, create_server
 from .store import Store
 from .credential_input import HiddenInputUnavailable
+from .runtime_version import runtime_version
 
 
 class OperatorApp:
@@ -47,6 +48,7 @@ class OperatorApp:
         else:
             self._single_source(reader, store, actor_id, live)
         self.engine, self.world, self.audit = self.pilot.engine, self.pilot.authority, self.pilot.audit
+        self.request_lock=self.pilot.lock
         self.store, self.sessions = store, {}
         self._ticket = secrets.token_urlsafe(32)
         self._ticket_expires = time.monotonic() + 600
@@ -77,7 +79,7 @@ class OperatorApp:
         return self.actor
 
     def refresh(self):
-        pass  # Engine performs per-query native refresh; no fixture source exists.
+        pass  # Engine uses trusted published candidates or explicit native refresh.
 
 
 def main(argv=None):
@@ -87,15 +89,26 @@ def main(argv=None):
     parser.add_argument('--source', choices=['confluence', 'jira', 'slack', 'drive', 'multi'], default='confluence')
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
+    parser.add_argument('--discovery-auth017',action='store_true',help='Opt-in eng_b discovery in AUTH-017 fixed four containers; default off')
     parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive or multi; browser consent instead of hidden Drive token')
     parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
     parser.add_argument('--answer-style', choices=['excerpts','synthesis'], default='excerpts',
                         help='Synthesis uses two budgeted calls and exact grounding plus model review')
+    parser.add_argument('--reasoning-effort', choices=['none','low'], default='none',
+                        help='Trusted synthesis launch configuration; never supplied by browser questions')
+    parser.add_argument('--output-tokens', type=int, choices=[1024,2048,4096], default=1024)
     parser.add_argument('--credential-store',choices=['memory','macos-keychain'],default='memory',
                         help='Explicit opt-in: save/reuse app-owned credentials in this Mac Keychain')
     parser.add_argument('--replace-credential',choices=['confluence','jira','slack','drive','deepseek'],
                         help='Re-enter only one credential for this launch; keep all others')
     args = parser.parse_args(argv)
+    if (args.reasoning_effort!='none' or args.output_tokens!=1024) and (
+            args.model!='deepseek' or args.answer_style!='synthesis'):
+        print('not_run: reasoning/output overrides require DeepSeek synthesis; no credentials or platform calls performed.')
+        return 2
+    if args.discovery_auth017 and (args.source!='multi' or args.actor!='eng_b'):
+        print('not_run: AUTH-017 discovery requires multi-source eng_b; no credentials or platform calls performed.')
+        return 2
     if args.answer_style=='synthesis' and args.model!='deepseek':
         print('not_run: synthesis requires DeepSeek; no credentials or platform calls performed.')
         return 2
@@ -115,9 +128,12 @@ def main(argv=None):
         try:
             check_price_review()
         except ValueError:
-            print('not_run: current model price review required; no credentials or platform calls performed.')
+            from .deepseek import PRICE_SOURCE
+            print('not_run [model_price_review_required]: Review ' + PRICE_SOURCE
+                  + ', record the Singapore review date and verified rates, then restart the reviewed build. '
+                  'Preserve the existing USD20 ledger. No credentials or platform calls performed.')
             return 2
-    store = server = ledger = None
+    store = server = ledger = discovery = None
     stage = 'bind'
     try:
         # Reserve the listener before asking for a credential. Do not serve until
@@ -162,7 +178,7 @@ def main(argv=None):
             identity = [args.actor, reader.tenant, reader.delegations[args.actor].account_id]
             db = runtime / ('confluence-' + hashlib.sha256(json.dumps(identity).encode()).hexdigest()[:16] + '-web.sqlite')
         else:
-            db = runtime / (args.source + '-web.sqlite')
+            db = runtime / (args.source + ('-auth017' if args.discovery_auth017 else '') + '-web.sqlite')
         store = Store(str(db)); os.chmod(db, 0o600)
         stage = 'native_identity'
         app = OperatorApp(reader, store, args.actor, live=True)
@@ -182,10 +198,12 @@ def main(argv=None):
                 with warnings.catch_warnings():
                     warnings.simplefilter('error', getpass.GetPassWarning)
                     key = getpass.getpass('DeepSeek API key (hidden): ').strip()
-            model = DeepSeekEvidenceModel(key, ledger, synthetic_only=True)
             if args.answer_style=='synthesis':
                 from .synthesis import DeepSeekSynthesisModel
-                model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True)
+                model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True,
+                    reasoning_effort=args.reasoning_effort,output_tokens=args.output_tokens)
+            else:
+                model = DeepSeekEvidenceModel(key, ledger, synthetic_only=True)
             if credential_store and new_key:
                 credential_store.put('deepseek',app.actor.tenant,args.actor,'deepseek-flash',key)
             del key
@@ -193,11 +211,18 @@ def main(argv=None):
             app.engine.mode = app.engine.mode.removesuffix('_fake_model') + '_live_model_selection'
             if args.answer_style=='synthesis':
                 app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_synthesis'
+        if args.discovery_auth017:
+            from .discovery import ContainerDiscovery
+            stage='discovery_configuration'
+            discovery=ContainerDiscovery(app.pilot,app.actor,bounded_queries=True)
+            discovery.start()
         server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
         label = 'LIVE MODEL EVIDENCE SELECTION' if args.model == 'deepseek' else 'FAKE MODEL'
         if args.answer_style=='synthesis': label='LIVE MODEL GROUNDED SYNTHESIS / SEPARATE MODEL REVIEW'
         print(f'{args.source.title()} LIVE API / {label} / LOCAL OPERATOR (not SSO)', flush=True)
+        version = runtime_version()
+        print(f"Startup source: {version['startup_source_sha256']} / loaded {version['process_loaded_at']}", flush=True)
         print(f'Open once within 10 minutes: http://127.0.0.1:{server.server_port}/#ticket={app.bootstrap_ticket()}', flush=True)
         stage = 'runtime'
         server.serve_forever()
@@ -218,6 +243,7 @@ def main(argv=None):
                 'bind': 'Could not bind the loopback listener. Check local port permissions.',
                 'configuration_or_hidden_input': 'Check the approved configuration, mapped actor and secure TTY input.',
                 'local_store': 'Could not open the local database. Check .runtime access and database locks.',
+                'discovery_configuration': 'Check AUTH-017 exact eng_b container mappings; discovery stays within approved scope.',
                 'native_identity': 'Could not verify the mapped native account. Check token, account mapping and network access.',
                 'model_configuration': 'Check the reviewed model price date, secure TTY and durable budget. No model request was sent.',
                 'runtime': 'The running service stopped unexpectedly.',
@@ -226,6 +252,7 @@ def main(argv=None):
                   'No credential or upstream error details are logged.')
         return 2
     finally:
+        if discovery is not None: discovery.close()
         if ledger is not None: ledger.close()
         if server is not None: server.server_close()
         if store is not None: store.db.close()

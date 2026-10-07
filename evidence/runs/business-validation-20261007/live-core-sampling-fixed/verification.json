@@ -1,0 +1,754 @@
+{
+  "started_mode": "fixture_source_live_model_synthesis",
+  "started_at": "2026-10-07T12:01:39.373153+00:00",
+  "recorded_at": "2026-10-07T12:02:20.321348+00:00",
+  "baseline_commit": "64b705ad544dd4849e327fb20182300758a4cc53",
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/business_validation.py": "74fccf1a7559c9e6cc228e4d2946c9fd954657426d7c8a75a5b0e535076f334e",
+    "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
+    "brain/audit.py": "83235d7556b378963cb15c2ac677b42959b648d6cfda7858ec48afcff6c7b048",
+    "brain/audit_query.py": "6cdc70aa02d460b4805e08bc2eb873c87366415a133f05e2eede6591dac5306b",
+    "brain/budget.py": "cd0f195cec3741ab6741648ee4391cf841e63bd12f1e718ebcc4b6fd66b106fb",
+    "brain/confluence.py": "dce74d46a0f0cc6add1432c79a68c752364c63942b63179c510b1268e9af2c41",
+    "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
+    "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
+    "brain/credential_input.py": "7736f24b27ad95d8751479144c3c9e52a80a836100e6551b14296fdab62620f4",
+    "brain/deepseek.py": "b17d2bd67fcca6b83daa153692a32bee4dee746cdc5c8888d6607d119ad67ca7",
+    "brain/delegated_query.py": "1fdfcbd4a99a20ffe909014206909ca43c70b1366c621910a7931de69c0e2b27",
+    "brain/discovery.py": "7c4bd2b7df82de14624c714658cf5cb76afee3fc03cfd929b82cd53b2f1b65fb",
+    "brain/drive.py": "e2fe84429b34ef2b2ad496188ed20beaf9e6442e5cef625a8f6edc085548f41d",
+    "brain/drive_oauth.py": "4e72272cc0daaa1f290a12738e195594b0fd384e59227a8f0f038835c68cd86e",
+    "brain/engine.py": "818d16530e1ee7ff709cc00530ca521e00e366effad9d2e77836c758f0c62ff6",
+    "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
+    "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
+    "brain/keychain.py": "329010f678201d0e1592c658c6f5e0f220b71a4d602e2d395fc103dd216514a9",
+    "brain/model_receipt.py": "4055abbc3f8bd9804dcfedc49c2a440ad5fe08771ffd914b1b5f563f8238c431",
+    "brain/operator_web.py": "3f74a28767be08b162f82d184dc4c8d0e2b3d9ca4d3550fc4f995134ecb59dc4",
+    "brain/retrieval.py": "2792ef2d007e113c23edd3f7b6130384537d1f611e2a064ed2683b97034f7181",
+    "brain/runtime_version.py": "f3cddf0e6da0a33e5e8c85512d2bfab3373b26627baa79a11ef117650ef51d91",
+    "brain/server.py": "0bb6900f802fa0bbe5a26c621001984e31223f71b6c9296085471c66e22b45b9",
+    "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
+    "brain/sources.py": "02b8f29842422938f87dcad4a9f75b25bf5ee24ce4c04067afe51915ec6a61fe",
+    "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
+    "brain/synthesis.py": "3467317a346550ab589f6269ba80767f10b4a48b7e5850d70948d1b72f8ef16b",
+    "brain/synthetic_provenance.py": "1cd96724152507e90c5aa873c27520407d458e6d6a96c21d9f39897d77bfc396"
+  },
+  "scale_measurements": {
+    "objects": 48,
+    "exact_windows": 56,
+    "source_utf8_bytes": 22835,
+    "initialize_index_seconds": 0.002428041014354676,
+    "process_peak_rss_bytes": 50200576,
+    "memory_measurement": "process peak, includes Python and evaluation artifacts; not index-only",
+    "source_native_calls": 0,
+    "model_network_calls": "see actual audit attempts",
+    "paid_query_cost": {
+      "unique_usage_receipts": 43,
+      "accounted_upper_micro_usd": 18016,
+      "attempts_without_recorded_usage": 0,
+      "basis": "Unique settled usage receipts in this captured audit; not vendor invoice.",
+      "missing_usage_warning": "Missing usage keeps its reservation; zero settled receipt sum does not mean a free call.",
+      "global_snapshot_warning": "Shared-ledger snapshots may include other concurrent runs or pending reservations."
+    }
+  },
+  "core_objects": 48,
+  "noise_objects": 0,
+  "retrieval_strategy": "bm25",
+  "development_questions": 24,
+  "sampling_temperature": 0,
+  "sampling_scope": "same value for generation/review; None omits parameter; not a determinism guarantee",
+  "held_out": "Not run by this development harness; see separate retained-set records",
+  "diagnostic_failures": [
+    "cause",
+    "withdrawn",
+    "release",
+    "business_01",
+    "business_02",
+    "business_03",
+    "business_04",
+    "business_05",
+    "business_06",
+    "business_08",
+    "business_09",
+    "business_12",
+    "business_13",
+    "business_17",
+    "business_22",
+    "business_32"
+  ],
+  "results": [
+    {
+      "case": "cause",
+      "request_id": "24518b4904c54d4cbb8a2b6e8f73f77b",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-05",
+        "C-01",
+        "C-02",
+        "D-01",
+        "D-02",
+        "D-03",
+        "J-01",
+        "J-02",
+        "J-03",
+        "S-01",
+        "S-02",
+        "S-03"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "retry configuration mismatched the timeout budget"
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 2.1212170419748873,
+      "claims_only": [
+        "The payment-service duplicate requests were caused by a mismatch between the retry configuration and the timeout budget, which produced a backlog of duplicate requests.",
+        "An earlier cache invalidation hypothesis was raised at 09:00 and withdrawn at 09:15; it was not the confirmed cause."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "withdrawn",
+      "request_id": "f52a423889894d6da2ab197c257119ba",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-05",
+        "BV-18",
+        "C-01",
+        "C-02",
+        "D-01",
+        "D-02",
+        "D-03",
+        "J-01",
+        "J-02",
+        "J-03",
+        "S-01",
+        "S-02",
+        "S-03"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "cache hypothesis was withdrawn"
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.7559852920239791,
+      "claims_only": [
+        "The payment-service cache invalidation explanation was withdrawn."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "followup",
+      "request_id": "a1cf5b8341ab4a5fbd577d9d9e406cd0",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-02",
+        "BV-05",
+        "BV-09",
+        "BV-12",
+        "BV-17",
+        "BV-24",
+        "BV-33",
+        "BV-35",
+        "C-01",
+        "C-02",
+        "D-01",
+        "D-02",
+        "J-01",
+        "J-02",
+        "J-03",
+        "S-01",
+        "S-02"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [],
+      "unexpected_answer": false,
+      "elapsed_seconds": 2.0653715420048684,
+      "claims_only": [
+        "PAY-103 protective measures are In Progress, owned by Maya."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "release",
+      "request_id": "50d202f618ed48c58e5e7cad1b9f6053",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-09",
+        "BV-17",
+        "BV-20",
+        "C-02",
+        "D-02",
+        "D-03",
+        "J-02",
+        "S-02"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "Code completion does not approve general customer release",
+        "GA) not approved"
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.9578521249932237,
+      "claims_only": [
+        "PAY-102 Done does not authorize general customer release; it is not customer release approval.",
+        "The release decision approved a controlled pilot, but general availability (GA) was not approved."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "no_information",
+      "request_id": "62fbce1e079646e8b7386be48e8af1fc",
+      "error_type": null,
+      "prepared_evidence_ids": [],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [],
+      "unexpected_answer": false,
+      "elapsed_seconds": 0.005914666980970651,
+      "claims_only": [],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "restricted",
+      "request_id": "ac685912862b48eaacd2db51c260aa8d",
+      "error_type": null,
+      "prepared_evidence_ids": [],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [],
+      "unexpected_answer": false,
+      "elapsed_seconds": 0.004785917000845075,
+      "claims_only": [],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_01",
+      "request_id": "72b7d226e22f4a01b5e9b802fa1c10f6",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-01"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.6240830830065534,
+      "claims_only": [
+        "Token rotation preserves sessions because it uses overlapping signing keys, keeping sessions valid for fifteen minutes."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_02",
+      "request_id": "ca9b1417225a41299fd203a015a68e40",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-02",
+        "BV-21"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.4214624160085805,
+      "claims_only": [
+        "AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and its owner is Lena."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_03",
+      "request_id": "ad662796be9146b68615df56302c819a",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-01",
+        "BV-02",
+        "BV-03",
+        "BV-04",
+        "BV-05",
+        "BV-18",
+        "BV-34"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.6064109170110896,
+      "claims_only": [
+        "The shared-secret authentication signing proposal was withdrawn; per-client asymmetric signing was accepted."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_04",
+      "request_id": "291cfa856a744018a07ff94ccd2025a7",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-04",
+        "BV-07",
+        "BV-12"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.9116975410142913,
+      "claims_only": [
+        "The enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_05",
+      "request_id": "b4f98bed59244f65bd7026cd1c7b1092",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-02",
+        "BV-05",
+        "BV-19",
+        "BV-30",
+        "BV-32",
+        "C-01",
+        "D-01",
+        "J-01",
+        "J-02",
+        "J-03",
+        "S-01"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "Beginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.692171042028349,
+      "claims_only": [
+        "As of 2026-10-07, before November, service tokens expire after sixty minutes."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_06",
+      "request_id": "fe098a786e454e7d92e6782701282f92",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-06",
+        "BV-07",
+        "BV-10",
+        "BV-22",
+        "BV-31"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "The Atlas connector supports Singapore business SGD accounts, not personal accounts."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.9153291669790633,
+      "claims_only": [
+        "The Atlas connector does not support personal Singapore SGD accounts; it supports Singapore business SGD accounts instead."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_07",
+      "request_id": "79ea5761173c4d818f591b7ae422cc3a",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-06",
+        "BV-07",
+        "BV-09",
+        "BV-10",
+        "BV-31",
+        "C-02",
+        "D-02",
+        "S-02"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.7328425000305288,
+      "claims_only": [
+        "Singapore business USD accounts require a separate connector approval; SGD approval does not include USD."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_08",
+      "request_id": "405a0dc9a5814882a1efb16783874934",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-08",
+        "BV-28"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "Partner-led onboarding requires manual verification; direct onboarding supports automated verification."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.641455249977298,
+      "claims_only": [
+        "Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_09",
+      "request_id": "347e518829f1407bac7a40cc2d564095",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-09",
+        "BV-15",
+        "BV-17",
+        "BV-20",
+        "BV-28",
+        "BV-31",
+        "BV-32",
+        "BV-34",
+        "C-02",
+        "D-02",
+        "D-03",
+        "J-02"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "INT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 2.281216665985994,
+      "claims_only": [
+        "INT-210 implementation is Done, but commercial launch remains Pending approval.",
+        "For payment-retry, only a controlled pilot is approved; general availability (GA) is not approved and no general release date is confirmed.",
+        "PAY-102 code fix is Done, but code completion does not approve general customer release."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_11",
+      "request_id": "86e5518fce324f1296b5289d25893646",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-02",
+        "BV-11",
+        "BV-12",
+        "BV-13",
+        "BV-14",
+        "BV-15"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.8181310829822905,
+      "claims_only": [
+        "Ledger migration chose a shadow table to allow rollback without blocking existing writes."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_12",
+      "request_id": "a6a48ab626ed46209d6bc7b4766c5a66",
+      "error_type": "ModelUnavailable",
+      "prepared_evidence_ids": [
+        "BV-04",
+        "BV-11",
+        "BV-12",
+        "BV-21"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [
+        "BV-12"
+      ],
+      "returned_evidence_diagnostic": "no final response after ModelUnavailable",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.1265676250332035,
+      "claims_only": [],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_13",
+      "request_id": "c3947bf16ceb48f2a16666c587971a07",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-02",
+        "BV-11",
+        "BV-12",
+        "BV-13",
+        "BV-14",
+        "BV-15",
+        "BV-23",
+        "BV-29",
+        "BV-30"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "Roll back the ledger migration if settlement differences exceed five basis points."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 2.2410096660023555,
+      "claims_only": [
+        "The ledger migration should be rolled back if settlement differences exceed five basis points.",
+        "The five-basis-point rollback threshold is the October rule; the September rehearsal's ten-basis-point threshold is superseded."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_16",
+      "request_id": "b9c2accc56d84cab8b498e329841f53a",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-11",
+        "BV-16",
+        "BV-17",
+        "BV-19",
+        "BV-20",
+        "D-01",
+        "J-02",
+        "J-03"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [],
+      "unexpected_answer": false,
+      "elapsed_seconds": 2.142095583025366,
+      "claims_only": [
+        "The webhook backlog came from an exhausted worker pool, not DNS resolution.",
+        "DNS was a historical webhook hypothesis, and the retired webhook rehearsal records no current decision.",
+        "The final root cause was retry configuration mismatched to the timeout budget, causing a backlog of duplicate requests, confirmed at 10:00 +08:00."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_17",
+      "request_id": "e5e2fbf19e99494d89825e2d8cb01ea1",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-11",
+        "BV-12",
+        "BV-16",
+        "BV-17",
+        "BV-19",
+        "BV-20",
+        "BV-21",
+        "BV-33",
+        "J-03"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "HOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.9860654590302147,
+      "claims_only": [
+        "HOOK-411 load shedding is In Progress, owned by Ravi."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_21",
+      "request_id": "39dbb29002724df49ccf5b23514b94f7",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-21",
+        "BV-22",
+        "BV-23",
+        "BV-24",
+        "BV-25"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.6432494170148857,
+      "claims_only": [
+        "Mina owns reconciliation exceptions; the platform team owns ingestion failures."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_22",
+      "request_id": "84832d2b89a244fc89f52bb79fb1b6f9",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-06",
+        "BV-07",
+        "BV-10",
+        "BV-21",
+        "BV-22",
+        "BV-23",
+        "BV-24",
+        "BV-25",
+        "BV-31"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.8232232499867678,
+      "claims_only": [
+        "For Singapore weekday batches, the reconciliation deadline is 18:00 SGT.",
+        "The 17:00 deadline applies only to the retired September pilot, not to current weekday batches."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_31",
+      "request_id": "1fc77a69145b4fbdaf7732fa90084a05",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-06",
+        "BV-07",
+        "BV-12",
+        "BV-13",
+        "BV-15",
+        "BV-20",
+        "BV-22",
+        "BV-28",
+        "BV-31",
+        "BV-32",
+        "BV-33",
+        "BV-34",
+        "BV-35",
+        "C-02",
+        "D-02",
+        "D-03"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [],
+      "unexpected_answer": false,
+      "elapsed_seconds": 2.4005413749837317,
+      "claims_only": [
+        "Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+        "An unsigned draft saying MYR settlement is available is a proposal, not the approved operating rule."
+      ],
+      "answer_quality": "pending_semantic_review"
+    },
+    {
+      "case": "business_32",
+      "request_id": "36a0eb8d762242738b6a6925b497ea9c",
+      "error_type": null,
+      "prepared_evidence_ids": [
+        "BV-12",
+        "BV-13",
+        "BV-31",
+        "BV-32",
+        "BV-33",
+        "BV-34",
+        "BV-35"
+      ],
+      "required_model_input_evidence_missing": [],
+      "required_evidence_missing": [],
+      "returned_evidence_diagnostic": "actual final evidence",
+      "forbidden_evidence_used": [],
+      "required_claim_spans_missing": [
+        "The proposed November hourly schedule is not approved. Current settlement is daily."
+      ],
+      "unexpected_answer": false,
+      "elapsed_seconds": 1.922369499981869,
+      "claims_only": [
+        "The proposed November hourly schedule is not approved; current settlement is daily.",
+        "If bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+        "SET-610 is In Progress because bank confirmation is missing, with Eva as owner."
+      ],
+      "answer_quality": "pending_semantic_review"
+    }
+  ],
+  "audit_chain": {
+    "valid": true,
+    "events": 1489,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "live_model": "captured_pending_semantic_review",
+  "native": "not_run",
+  "browser": "blocked_saved_site_denial",
+  "G1": "not_run",
+  "G2": "not_run",
+  "quality_semantic_pass": "not_claimed; exact-span probes are not a semantic judge",
+  "budget_before": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 173681,
+    "settled_micro_usd": 173681,
+    "available_micro_usd": 19826319,
+    "pending_requests": 0,
+    "blocked_for_review": false
+  },
+  "budget_after": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 191697,
+    "settled_micro_usd": 191697,
+    "available_micro_usd": 19808303,
+    "pending_requests": 0,
+    "blocked_for_review": false
+  }
+}

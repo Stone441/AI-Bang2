@@ -1,0 +1,37 @@
+{
+  "draft": null,
+  "vendor_responses": [
+    {
+      "id": "283dd7a3-8d6e-4d08-b575-368d1f3d2125",
+      "object": "chat.completion",
+      "created": 1791379690,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "",
+            "reasoning_content": "We need answer question: \"Can we promise the November hourly settlement schedule?\" Need JSON claims. Need analyze evidence. Question asks can we promise November hourly settlement schedule. We need answer directly in English. Evidence: BV-32 says proposed November hourly schedule is not approved. Current settlement is daily. So cannot promise? Need maybe say no, because proposed schedule not approved, current daily. Also BV-35 says if bank confirmation absent, ask Eva; do not promise completed settlement. But question specifically November hourly settlement schedule. BV-33: SET-610 in progress because bank confirmation missing. Maybe relevant? But not necessarily schedule. BV-31: same-day settlement approved for Singapore SGD pilot accounts; MYR outside scope. Not directly November hourly. BV-34: unsigned draft says MYR settlement available; proposal not approved operating rule. Not directly. BV-12 and BV-13 migration unrelated. Need at most four claims, minimum. We can make one claim: \"No, the proposed November hourly settlement schedule is not approved; current settlement is daily, so it cannot be promised.\" But must support with quotes. Claim text can include both facts. Evidence IDs: BV-32@1. Quote: \"[SYNTHETIC]\\nThe proposed November hourly schedule is not approved. Current settlement is daily.\" That's exact contiguous passage. Is that enough? The question \"Can we promise the November hourly settlement schedule?\" Direct answer: cannot promise because not approved and current daily. That claim covers requested. Maybe also mention do not promise completed settlement if bank confirmation absent? But that's about completed settlement, not schedule. However question asks \"Can we promise the November hourly settlement schedule?\" We should not overcomplicate. One claim sufficient. But maybe include qualification: \"The passage does not establish an approved November hourly schedule.\" But claim can say no. We can include \"No, it cannot be promised...\" The support quote exactly says proposed not approved and current daily. Good.\n\nNeed ensure JSON schema. Claim text at most 600 chars. Evidence_ids exactly same as supports. Supports array with evidence_id and quote. Use only one. That should satisfy.\n\nBut let's double-check if question might be from a context where \"November hourly settlement schedule\" maybe refers to a schedule in evidence? BV-32 explicitly. So answer no.\n\nCould there be need to mention SET-610? The question \"Can we promise the November hourly settlement schedule?\" The evidence BV-32 says proposed November hourly schedule not approved. Current daily. So no. BV-33 says SET-610 in progress due bank confirmation missing; maybe the schedule is dependent? But not asked. \"Can we promise\" maybe implies do not promise due missing bank confirmation? But the schedule itself is not approved. The primary is BV-32. We should not add unrelated.\n\nWe must follow instruction: \"Before writing each claim, identify the explicit requested part it answers...\" The requested part is yes/no promise. Claim answers no. Good.\n\nNeed output JSON only. No extra.\n\nEnsure quote exact contiguous passage copied from evidence. Include [SYNTHETIC] newline? The text has \"[SYNTHETIC]\\nThe proposed November hourly schedule is not approved. Current settlement is daily.\" We can quote exactly including [SYNTHETIC]\\n? The quote can include newline. In JSON, newline escaped as \\n. That's fine. Could omit [SYNTHETIC]? The exact contiguous passage includes it? The instructions: copy support quotes only from text, never from source_context. The text field includes \"[SYNTHETIC]\\n\". We can quote from text. Should we include [SYNTHETIC]? It is part of text. It might be okay. To be safe, include exactly the two sentences, maybe starting after [SYNTHETIC]\\n? But that would not be contiguous from beginning? It is contiguous if we start after [SYNTHETIC]\\n? Actually starting \"The proposed...\" is contiguous within the text, but misses the first token. The instruction says exact contiguous passage copied from that evidence. It doesn't require starting at beginning. So we can quote \"The proposed November hourly schedule is not approved. Current settlement is daily.\" This is contiguous and exact. That avoids [SYNTHETIC]. That's fine. It's within text. Use that. Evidence id BV-32@1. Good.\n\nClaim text: \"No. The proposed November hourly settlement schedule is not approved and current settlement is daily, so it cannot be promised.\" That includes conclusion. Support quote only says proposed not approved, current daily; does it support \"cannot be promised\"? That's inference from not approved. The question asks can we promise; if not approved, we cannot promise it as approved. But \"cannot be promised\" may be slightly stronger? It's reasonable: if schedule not approved, you can't promise it. The evidence also BV-35 says do not promise completed settlement if bank confirmation absent."
+          },
+          "logprobs": null,
+          "finish_reason": "length"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1231,
+        "completion_tokens": 1024,
+        "total_tokens": 2255,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1024
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 719
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

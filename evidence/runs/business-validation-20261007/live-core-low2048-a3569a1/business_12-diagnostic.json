@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Chen owns MIG-301, and the remaining blocker is unmatched settlement totals.",
+        "evidence_ids": [
+          "BV-12@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-12@1",
+            "quote": "MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "e4194a4f-db85-41b5-813d-bf1f42b57b8a",
+      "object": "chat.completion",
+      "created": 1791385210,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Chen owns MIG-301, and the remaining blocker is unmatched settlement totals.\",\"evidence_ids\":[\"BV-12@1\"],\"supports\":[{\"evidence_id\":\"BV-12@1\",\"quote\":\"MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\"}]}]}",
+            "reasoning_content": "We need answer question: Who owns MIG-301 and what is still blocking cutover? Need JSON claims. Evidence: BV-12 says MIG-301 In Progress. Owner: Chen. Remaining blocker unmatched settlement totals. So owner Chen, blocker unmatched settlement totals. Need maybe one claim covers both. Question asks \"Who owns MIG-301 and what is still blocking cutover?\" We can provide claim with both. Must include evidence_ids exactly equal supports IDs. Quote exact contiguous passage from evidence. For BV-12@1 text: \"[SYNTHETIC]\\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\" We can quote \"MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\" That includes identifier MIG-301. Good. At most four claims. Need no extra. Source context irrelevant. Ensure JSON only. Claim text concise: \"Chen owns MIG-301; the remaining blocker is unmatched settlement totals.\" But must be supported by quote. The quote says Owner: Chen, remaining blocker. That's fine.\n\nNeed output JSON object with claims list. Ensure evidence_ids [\"BV-12@1\"], supports [{\"evidence_id\":\"BV-12@1\",\"quote\":\"MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\"}]. That's within 12-1200 chars. Claim length under 600. Done."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1416,
+        "completion_tokens": 376,
+        "total_tokens": 1792,
+        "prompt_tokens_details": {
+          "cached_tokens": 1280
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 303
+        },
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 136
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "034c21c7-66f3-40dc-8b5c-25205debf548",
+      "object": "chat.completion",
+      "created": 1791385212,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"Who owns MIG-301 and what is still blocking cutover?\" Claims: one claim: \"Chen owns MIG-301, and the remaining blocker is unmatched settlement totals.\" Evidence BV-12@1: \"MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\" This directly supports. Need judge supported and responsive. Question asks who owns MIG-301 and what is blocking cutover. Claim answers both. Evidence BV-12 explicitly. So supported true, responsive true. question_covered true? Need every requested part: owner and blocker. Claim covers both. So true. Need exactly one verdict. Check if any issue: \"remaining blocker\" and \"cutover\" maybe evidence says remaining blocker but not explicitly \"cutover\"? Ticket is migration / Cutover ticket, source context title \"migration / Cutover ticket\". Text says MIG-301 In Progress, Owner Chen, remaining blocker unmatched settlement totals. likely yes. Also could there be other evidence contradicting? BV-21 says Mina owns reconciliation exceptions; platform team owns ingestion failures. Not about MIG-301. BV-04 about Enterprise SSO cutover scope. Not relevant. BV-11 unrelated. So claim supported. Output JSON. Ensure field names exactly."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1466,
+        "completion_tokens": 299,
+        "total_tokens": 1765,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 273
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 954
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

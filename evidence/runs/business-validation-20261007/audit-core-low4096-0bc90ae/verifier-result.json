@@ -1,0 +1,30 @@
+{
+  "anchored": {
+    "chain_valid": true,
+    "events": 1506,
+    "head_hash": "268e9e7ce0e683829bc0e6cd40876ad03c30039c51898f4dfa43d76f76c429c6",
+    "through_seq": 1506
+  },
+  "boundaries": [
+    "Same-host, same-account signing cannot resist full compromise of that account; this is a logical demonstration, not a production independence boundary.",
+    "Audit v1 events carry no stream_id; stream identity is enforced only as an external expectation parameter on the checkpoint, so cross-stream transplant prevention is checked, not proven by the event schema itself.",
+    "Events after through_seq are not covered by the checkpoint signature; replacement or truncation inside the unanchored tail is undetectable by this checkpoint.",
+    "Verification recomputes canonical hashes from parsed JSON; it detects content tampering, not non-canonical re-serialization of identical content."
+  ],
+  "exported_events": 1506,
+  "signature": {
+    "algorithm": "ed25519",
+    "detail": "ok",
+    "verified": true
+  },
+  "stream_id": {
+    "checkpoint": "ai-bang2-bv-core-0bc90ae",
+    "expected": "ai-bang2-bv-core-0bc90ae",
+    "match": true
+  },
+  "tail": {
+    "count": 0,
+    "present": false
+  },
+  "verdict": "anchored_valid"
+}

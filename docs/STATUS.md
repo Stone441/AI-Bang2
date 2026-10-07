@@ -1,5 +1,54 @@
 # Current status
 
+2026-10-07统一业务增强候选固定为 **0bc90ae**：synthesis-v8，可信显式low/4096；默认none/1024保持，当前8094/8100未重启。398干净归档回归、同48世界五fixture、JS语法及两Node通过；完整24作者开发题真实模型为22正确事实回答＋2正确空答，零异常，经只读Agent逐题核原问题/quotes/relevance，非稳定率或盲测。eng_b当前原生＋真实模型两题均正确，Slack最终amber替代green、产品pilot/GA/date/Done边界齐全；耗时含preview133.132/146.085秒，非SLA。本流费用上界core46985/native12302microUSD；原账本settled390875/pending0，不从共享差额归费用。当前core完整签名、native分页/七签名边界及fixture四结果审计已配对，非独立custody或人阅读证明。四源AUTH021创建/修正原native/fake证据按原版本保留。
+
+剩余分列：原保留集f8ecbed失败未重跑、未改写为修复；AUTH019仅原长文Orion与自然题冗余两项延期，不扩大。native正文一跳解析、Google Docs/OCR/全附件/DM及生产SSO/KMS/WORM未实现或不支持；embedding方案C无已批准provider/依赖，blocked。完整native生命周期/故障/身份矩阵、新鲜度SLA及质量稳定性仍未验；性能仍有缺口。产品browser为工具saved site denial blocked（49161停止），不是产品失败；真人业务/ROI/G1/G2、录屏、外部开放、推送合并/发布/比赛提交not_run。本轮完成以EXECUTION_BRIEF5.3的业务增强与有模式边界的统一候选为范围，不宣称全部开发或技术验收完成。
+
+下方较早阶段记录保留为历史，本段为当前状态。
+
+2026-10-07可信operator启动配置已完成：low/2048 opt-in、fake/excerpts在listener/凭据前拒绝；实际构造传参mock验证和397完整fixture/mock回归通过。新接线native/live复验仍not_run，原73b1e3e七题证据不得冒充新应用接线验收。
+
+2026-10-07当前HEAD 73b1e3e为v8可信有界推理实验；上一统一native候选3ceb625/v6保留。395干净archive回归、五fixture、两Node及语法通过。相同7作者开发题low/1024为6正确返回＋1输出cap截断；low/2048实际7题正确返回、8claim精确quote、14有效stop回执，上界18137microUSD，累计settled276156/pending0。只读Agent逐题复核，4项exact-span探针不匹配不等于语义失败；不是盲测、稳定质量或原保留失败已修复。当前在接入可信operator启动参数，默认none/1024保持，完整24题及同版native复验待做，不将开发harness当产品已加载。Drive file URLs权限已被原Chrome工具实际接受，AUTH021四源三阶段证据已完成，不重复写入；此许可不解除49161产品saved site denial。browser blocked/G1/G2 not_run，8094/8100未动，Goal active。
+
+2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
+
+
+2026-10-07固定新版2a73bd0：clean archive380回归、48同世界五fixture、web/app.js语法与两Node前端检查通过；错误frontend路径的首轮失败保留。audit-mixed新版四结果/208事件oracle/30页通过。新版eng_b原生＋真实模型两题返回正确Slack最终amber替代green、pilot/noGA/no确认日期/Done≠发布批准；3207microUSD，原账本累计102690/pending0，272事件副本分页及7签名边界通过。native-model-2a73bd0及current-2a73bd0-association保存精确版本关系；这不是unknown故障路径的live验证、完整四源freshness/SLA或全质量通过。两题含preview各118.815/128.086秒，性能不足仍open。产品browser blocked saved site denial，不是页面测试失败；49161停止，8094/8100未动。保留题状态误答原失败未重跑/未称修复，AUTH-019延期不变。普通native链接解析和Google Docs导出仍未实现；人业务判断/ROI/G1/G2/提交not_run。Goal active，下一核对业务任务缺口及未实现项的最小必要范围，不默认候选冻结等于开发完成。
+
+
+2026-10-07当前增量（固定实现2a73bd0）：关联cutoff最小修复及synthesis-v4状态/歧义规则已实现，380完整fixture/mock回归通过（tests-state-v4-full.log；末尾failed JSON为test_product_acceptance预期失败路径输出，非回归失败）。1048对象同资料/24开发题BM25关联漏召回诊断关闭，lexical对照仍漏；3新增测试验证种子及目标撤权。独立4题v3/v4真实模型开发比较保留：当前4题受限事实/有范围候选回答正确，非新盲测或旧保留题修复证明。48对象同世界五fixture场景通过，签名尚待本次配对。原共享账本99483microUSD；native新版与browser未验证，G1/G2 not_run。Drive AUTH-021三阶段上传/原生读回已完成，用户开启file URLs不解除产品saved site denial；无重复源写入。Goal继续，仍有未完成工程和统一候选证据。
+
+
+2026-10-07业务增强候选实现f8ecbed：373 clean archive/五fixture/2Node/HTTP通过；binary-TF BM25、表格cell关系、资源方向审计、有界后台查询及版本反证停答已实现。四源AUTH-021新probe和两次修正native API/fake当前16断言通过，加载hash匹配候选；query约43–58秒，非SLA。12保留题冻结后一次live评测及只读语义审查已完成，具体见business-validation-20261007/heldout-review.json：有明确正确答案和safe unsupported，也有歧义/状态误答、部分答案和来源故障告知不足，不能称质量全通过；两项AUTH-019原延期不覆盖这些新失败。当前native/模型签名副本分别核验，同机测试key非独立custody；产品browser仍saved site denial blocked，49161停止、8094/8100不动；G1/G2、人类任务/ROI及发布提交not_run。Goal active，新增工程缺口仍由Codex继续负责。最新本地候选c825143非后台unknown通用修复有17定向、377 clean archive/五fixture/2Node/HTTP及只读复审通过；它尚未形成新native/live/browser结果，不能继承f8ecbed两题实际运行。
+
+历史阶段快照（由顶部当前记录覆盖）：2026-10-07业务增强Goal active，分支feat/business-validation-20261007、基准9b9c193；实现已固定f8ecbed，clean archive 373回归/五fixture/2Node/HTTP通过，未push；证据提交仍待整理。48对象/24开发题与1000干扰集已运行：single live A/B为16事实+2正确空答+6失败与20+2+2，非稳定质量率；1000集仍漏J-03。当前采用binary-TF BM25，非embedding/向量或语义检索。资源方向审计、表格cell关系、有界后台查询已实现；373 fixture/mock完整回归及45定向通过；缓存新版反证停答、逐阶段resource/version检查去重已只读复审通过。AUTH-021四源新probe已完成amber→green→amber，native API/fake model检查通过，Slack最新值语义选择未证明，查询数十秒/含排队，非SLA。所有原失败/附件保留；见evidence/runs/business-validation-20261007。12保留题未消费、统一fixed candidate与签名证据仍待完成。browser saved site denial blocked；49161停止、8094/8100未动；AUTH-019延期、G1/G2 not_run。
+
+
+验收准备补充（2026-10-06）：已核331bd28→6d79ed2仅8份docs及147份本轮evidence，无实现/测试/配置/构建差异；357及五场景结果对应331bd28，不需因文档提交重跑。两项延期原问题/actual和R2八断言见[DEMO_CANDIDATE](DEMO_CANDIDATE.md)，18分钟观看四列见[SAFETY_REVIEW](SAFETY_REVIEW.md)。本次仅文档整理，不启动服务、不新增费用或开发线；browser blocked（saved site denial）/页面not_run/G1/G2 not_run。记录分支docs/fixed-candidate-acceptance-prep，原候选不变。
+
+## 当前接续总表 · 2026-10-06（优先于下方历史记录）
+
+本轮统一固定候选已准备，质量已获明确延期；真实browser验证仍受工具许可阻塞：fix/review-integrated-candidate，基准45d7b27，固定应用/测试331bd28e24b17fdac6726b38d16dfbecd0599d78。323cb93的356项archive为中途里程碑；最新331bd28干净archive setup/357项17.406s/五fixture场景/2Node/本地HTTP通过。不能据旧352证据宣称最新HEAD通过。R3A/R4既有实现与原签名证据保留，未重复开发。最新[R2/R3/R5/R6统一候选及明确缺口](../evidence/runs/review-integrated-20261006/README.md)。
+
+| 项目 | 当前实现 / 本轮实际模式与证据 | 剩余缺口 / 下一项 |
+|---|---|---|
+| R1 | 原local修复与316证据保留；SGT Oct6实际model_readiness有效，每日expiry保留 | 后续真实模型重新核当前日期/原预算；不得传旧today或清账本 |
+| R2 | AUTH-017 eng_b四固定容器native只读再次complete，8checks/发现既有KAN-6/当前fake答/preview通过；本地发现/更新/删除回归保留 | 四源source-change-to-answer时延/完整native创建更新删除矩阵partial；原操作员进程不改，product_ops不扩 |
+| R3A | 合法无banner窗口仍基于服务器approved original/version/slice；357当前回归通过；fixture_source_live_model晚段实际送达并有效usage | 不能升级完整native-origin窗口/browser或质量验收；既有审查原件/代码不回退 |
+| R3质量 | 冻结6Agent自然变体+无证据+长文；真实fixture-source模型复现漏召回与未引用PAY-101，通用compound tokens/quoted-ID修复；v3六自然题原子覆盖和无证据通过 | 部分多余背景/长文review拒答仍未解决，**质量partial**；保留所有失败/诊断；用户已明确“批准明确延期并交团队验收”，冻结不标质量通过 |
+| R4 | 原准备/意图/尝试/usage/output/存储/HTTP区分及签名闭环保留；357回归重跑；48实际fixture-source live model usage事件与原账本只读逐笔匹配 | 非native全部模型路径/人类收到证明；独立custody/生产DB roles尚未实现，旧checkpoint rollback明确 |
+| R5 | 当前preview HTTPS平台链接、服务端question/answered_at及缺失提示、诊断折叠/等待文案；Node/8HTTP定向及357archive通过，只读Agent复审 | 真浏览器not_run：新49161纯fixture instance获文字批准后同工具重试仍被saved site denial拦截；用户回复“没有找到许可入口”；具体设置位置未知，不绕过，已结束自建fixture |
+| R6 | RUNBOOK实际入口/五场景、IMPLEMENTED_ARCHITECTURE/CONTRACTS/SAFETY_REVIEW更新；固定331bd28可重复本地启动/回放，模式与哈希逐轮区分 | 质量延期已批准；待浏览器许可实测及团队集中观看；完整材料/发布/提交G2未批准 |
+
+当前真实运行：8094/8100未重启或终止，旧health不证明331bd28已加载；历史8100独立正负问答证据有效。新49161隔离内存fixture_fake_model/live_enabled=false实例在旧测试实例停止后另建，启动hash/time已保存，加载R5实现早于后续review-scope增量；不是最新native模型服务。用户明确批准新实例浏览器访问，但工具许可仍拒绝，不宣称实际生效。无cookies/tickets/密钥截图保存。用户未找到许可入口后已结束仅本Agent启动的49161 fixture；该地址当前无本轮测试实例，不沿用旧地址许可。
+
+本轮原USD20 ledger由17025增至45219microUSD保守记账，六轮合计28194；最后剩余19954781、pending=0、frozen=false。模型仅已批准fixture合成源/固定app-owned key，非供应商invoice或native persona；原账本不重置。R2仅已有AUTH-014/017只读及已有Drive refresh，无scope/source写入。未push/merge/发布、目标服务重启或提交。G1/G2 not_run；新browser及完整native/live模型矩阵不以本地/局部真模型通过代替。根AGENTS/PROJECT_START_HERE/原docs01–05/README/旧review证据保留，ZIP未跟踪，Markdown硬换行不改原字节/全局规则。
+
+下一接续：需工具正常机制解除站点拒绝；之后先确认新的测试实例归属、模式并重新取得对应许可，再进行真实页面/键盘核验。质量单项已明确获用户延期，转团队集中语义验收且不标通过；不再对同一无诊断失败重复付费循环。其他候选文档、原证据保存及固定版本核对已落实。团队集中安全/语义观看与G2材料提交依然人工关口，本轮统一候选准备完成，不等于全部质量/浏览器/项目验收完成。
+
+以下为历史追加记录，其中pending/已退役功能描述由本表及最新ADR覆盖，不能直接当当前待办。
+
+
 2026-10-06 用户批准纠正产品范围：独立问答，取消自动history依赖/New question/Export answer，HTTP拒绝history_id且回答下载端点404；Engine旧harness参数不补历史。保留当前权限/引用/历史/撤权及异步旧视图保护。311完整fixture/mock测试15.298s通过，前端安全和审计Node检查通过（evidence/runs/independent-query）。8100静态UI已刷新；运行中的旧Python后端需用户重启加载，已交接免重复凭据的Keychain命令，live新版端点验收pending。8094未重启，不能声称旧进程已关闭下载。旧已下载合成副本不自动删除/无法远程撤回；G1/G2不变。
 
 2026-10-06 独立product_ops Confluence真实验收：8100浏览器服务端身份/发布问答/C-02原文引用/历史/独立安全问题拒答实际验证；AUTH-016程序Keychain复用及native身份核验通过。独立只读runner16checks通过：C-01与C-03 native deny/no body、C-02 allow，受限资料不进fake model，controlled stale index保留且preview拒绝，unsigned审计链有效。evidence/runs/native-product-reader；完整309 fixture/mock测试14.681s通过，2 harness tests与Node前端检查通过。发现自动follow-up会补充上一问有权C-02，补New question明确清空依赖/旧视图；native产品Jira/Slack/Drive/auditor及G1/G2仍not_run，无付费模型/平台写入/8094重启。

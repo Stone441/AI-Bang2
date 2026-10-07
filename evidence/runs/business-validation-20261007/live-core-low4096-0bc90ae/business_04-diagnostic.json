@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No, enterprise SSO cutover does not include contractors; it applies to internal employees only, and contractors remain on the legacy gateway.",
+        "evidence_ids": [
+          "BV-04@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-04@1",
+            "quote": "Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "be76b0e4-bbeb-4eba-b8f9-346e60204a89",
+      "object": "chat.completion",
+      "created": 1791385611,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No, enterprise SSO cutover does not include contractors; it applies to internal employees only, and contractors remain on the legacy gateway.\",\"evidence_ids\":[\"BV-04@1\"],\"supports\":[{\"evidence_id\":\"BV-04@1\",\"quote\":\"Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\"}]}]}",
+            "reasoning_content": "We need answer question: Does enterprise SSO cutover include contractors? Evidence BV-04 says: Enterprise SSO cutover applies to internal employees only; contractors remain on legacy gateway. So answer: No, contractors not included. Need JSON with claims. At most four claims. Need concise factual conclusion. Evidence_ids exactly match supports. Quote exact contiguous passage from evidence. Use minimum. One claim likely sufficient. Need quote from BV-04. The claim text: \"No, enterprise SSO cutover does not include contractors; it applies to internal employees only, and contractors remain on the legacy gateway.\" That is supported. Quote: \"Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\" That's exact contiguous. Need include evidence_ids: [\"BV-04@1\"]. Supports with evidence_id BV-04@1 and quote. Ensure JSON only. No extra. Should we mention source_context? No. Check constraints: every explicit identifier? None. Quote length 12-1200, yes. Claim at most 600 chars. Good.\n\nBut need be careful: question \"Does enterprise SSO cutover include contractors?\" Direct answer: No. Evidence supports. We can just one claim. Maybe include source? Not needed. Final JSON object with claims array. Ensure no markdown."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 954,
+        "completion_tokens": 349,
+        "total_tokens": 1303,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 267
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 186
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "24838ffc-7a47-46ce-9a5c-4e6e843b320b",
+      "object": "chat.completion",
+      "created": 1791385613,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review claim vs evidence. We need determine question_covered and verdict. Need one verdict for every claim. Claim: \"No, enterprise SSO cutover does not include contractors; it applies to internal employees only, and contractors remain on legacy gateway.\" Evidence BV-04@1 exactly? Text: \"[SYNTHETIC]\\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\" Source context authentication / Cutover scope. This exactly supports claim. Question: \"Does enterprise SSO cutover include contractors?\" Claim answers no. Supported true. Responsive true, answers explicit requested part. Question_covered true? Only claim covers. Need check evidence other irrelevant. So output JSON. Ensure exactly one verdict index 0. JSON object only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1013,
+        "completion_tokens": 191,
+        "total_tokens": 1204,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 165
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 501
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

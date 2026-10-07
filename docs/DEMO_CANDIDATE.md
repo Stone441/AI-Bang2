@@ -1,5 +1,57 @@
 # Demonstration candidate and remaining acceptance
 
+2026-10-07统一业务增强候选固定为 **0bc90ae**：synthesis-v8，可信显式low/4096；默认none/1024保持，当前8094/8100未重启。398干净归档回归、同48世界五fixture、JS语法及两Node通过；完整24作者开发题真实模型为22正确事实回答＋2正确空答，零异常，经只读Agent逐题核原问题/quotes/relevance，非稳定率或盲测。eng_b当前原生＋真实模型两题均正确，Slack最终amber替代green、产品pilot/GA/date/Done边界齐全；耗时含preview133.132/146.085秒，非SLA。本流费用上界core46985/native12302microUSD；原账本settled390875/pending0，不从共享差额归费用。当前core完整签名、native分页/七签名边界及fixture四结果审计已配对，非独立custody或人阅读证明。四源AUTH021创建/修正原native/fake证据按原版本保留。
+
+剩余分列：原保留集f8ecbed失败未重跑、未改写为修复；AUTH019仅原长文Orion与自然题冗余两项延期，不扩大。native正文一跳解析、Google Docs/OCR/全附件/DM及生产SSO/KMS/WORM未实现或不支持；embedding方案C无已批准provider/依赖，blocked。完整native生命周期/故障/身份矩阵、新鲜度SLA及质量稳定性仍未验；性能仍有缺口。产品browser为工具saved site denial blocked（49161停止），不是产品失败；真人业务/ROI/G1/G2、录屏、外部开放、推送合并/发布/比赛提交not_run。本轮完成以EXECUTION_BRIEF5.3的业务增强与有模式边界的统一候选为范围，不宣称全部开发或技术验收完成。
+
+下方较早阶段记录保留为历史，本段为当前状态。
+
+2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
+
+2026-10-07本地材料草稿（未提交/未获G2）：当前代码2a73bd0；模式与质量结果以STATUS及business-validation-20261007为准，旧331bd28证据继续按原版本保留。标题 **ContextLedger**；7-word blurb **Enterprise answers with permissions, citations and audit.** 16:9封面：[SVG](../assets/submission/contextledger-cover.svg) / [1600×900 PNG](../assets/submission/contextledger-cover.png)，实际本地渲染检查，不是产品浏览器截图。
+
+English description draft: ContextLedger addresses The Internal Brain challenge: engineers and product staff must reconcile incident decisions, work status and release scope scattered across enterprise knowledge tools. This synthetic competition prototype offers independent questions, exact source citations and reauthorized answer history across Confluence, Jira, Slack and Google Drive. Its value proposition is faster, checkable decisions without turning collection credentials into employee access. Human time savings have not yet been measured.
+
+The application uses server-verified local operator sessions, delegated read-only source adapters, bounded discovery, SQLite resource/version storage, overlapping exact-text windows and permission-filtered binary-TF BM25. It uses no embeddings, vector database or semantic reranker. Current source checks protect generation, separate review, answer commitment and subsequent citation/history access. Prompts preserve event, time and approval scope and require copied supporting quotes; structural validation and whole-answer review reject invalid output. Audit queries use restricted structured conditions. A genuinely CodeBuddy-developed offline Ed25519 verifier checks saved checkpoints, with same-machine custody limits explicitly retained.
+
+Measured development work includes 48 core synthetic objects, 24 development questions, a separate 12-question retained evaluation, and 1000 distinct distractors. Source-owner probes recorded four-source creation and two corrections; these manual samples do not establish a freshness SLA. Selected native and paid-model runs have receipts and exact evidence records. Semantic errors, abstentions and unsupported formats remain explicit. Browser verification, complete native acceptance, human benefit, independent production custody and final team approval are incomplete.
+
+CodeBuddy真实贡献及截图/对话继续使用既有证据索引，不能用本地材料草稿代替真实工具使用证明。录屏/视频未制作；本地源代码提交不等于远端提交或比赛交付。
+
+2026-10-07业务增强候选实现f8ecbed：373 clean archive/五fixture/2Node/HTTP通过；binary-TF BM25、表格cell关系、资源方向审计、有界后台查询及版本反证停答已实现。四源AUTH-021新probe和两次修正native API/fake当前16断言通过，加载hash匹配候选；query约43–58秒，非SLA。12保留题冻结后一次live评测及只读语义审查已完成，具体见business-validation-20261007/heldout-review.json：有明确正确答案和safe unsupported，也有歧义/状态误答、部分答案和来源故障告知不足，不能称质量全通过；两项AUTH-019原延期不覆盖这些新失败。当前native/模型签名副本分别核验，同机测试key非独立custody；产品browser仍saved site denial blocked，49161停止、8094/8100不动；G1/G2、人类任务/ROI及发布提交not_run。Goal active，新增工程缺口仍由Codex继续负责。最新本地候选c825143非后台unknown通用修复有17定向、377 clean archive/五fixture/2Node/HTTP及只读复审通过；它尚未形成新native/live/browser结果，不能继承f8ecbed两题实际运行。
+
+## 精简验收准备 · 2026-10-06
+
+候选保持不变。本次只核对/整理文档，不启动服务、不调用源API或付费模型。`331bd28`→`6d79ed2`的155个变更路径全部属于docs（8个）或本轮evidence（147个），实现、测试、fixture、配置与构建文件无差异。357项/17.406s、五fixture场景、两Node及HTTP结果明确对应[331bd28干净归档](../evidence/runs/review-integrated-20261006/rebuild-scope-current/verification.json)。6d79ed2是状态/证据提交，不需要因该提交补实现回归；不能把这等同于新浏览器或完整native/live model验收。模型/native各轮仍按原记录的基准commit和实际工作树hash解释，不改写成331bd28新执行。
+
+### 两项已批准延期（仍failed/partial）
+
+| 项目 | 原问题、身份/模式 | 期望 / 实际 / 失败证据 | 场景影响与批准边界 |
+|---|---|---|---|
+| 指定事件长文无最终回答 | “In the Orion incident, which early explanation was withdrawn and what caused the duplicate requests?”；fixture_eng_a，合成源＋真实DeepSeek（fixture_source_live_model_synthesis），不是native员工权限 | 应只回答Orion撤回cache解释、retry budget mismatch造成重复请求，不混入Vega DNS或无关事故。最新[scope recheck原记录](../evidence/runs/review-integrated-20261006/quality-long-scope-recheck/verification.json)，request `6bf6313898ed42a080944661b6e1ea0d`：draft有正确Orion句，但又附payment-service RCA及cache历史；review verdict true/false/true，整答ModelUnavailable、claims_only为空、answer文件null。原v2成功和后续各失败均保留，不能称全部是review误拒 | S-01工程问答、Q-10长文/相似事件：证据送达不等于可得到最终答案。这是明确指定事件的问题，不以多事件歧义解释失败 |
+| 自然题附非必答背景 | 工程原题：“For the payment-service follow-up work, separate the completed repair from safeguards still being worked on, and name the safeguard owner.”；fixture_eng_a。产品原题：“Does PAY-102 being done authorize a general customer rollout?”；fixture_product_ops。均合成源＋真实DeepSeek | 工程应给PAY-102 Done、PAY-103 In Progress、Maya；实际满足这些事实，但又给pilot/GA/no GA date背景。产品应说明Done不等于发布批准；实际正确，但重复pilot限制及日期/扩展范围背景。见[工程最终claims及quotes](../evidence/runs/review-integrated-20261006/quality-final-live/followup_status-answer.json)，request `a2f7afb45d3d4788bc2018f3d0d1946e`；[产品最终claims及quotes](../evidence/runs/review-integrated-20261006/quality-final-live/code_not_release-answer.json)，request `292602be834b4149a5d8eeb818ffc804`。支持事实/原子覆盖通过不代表相关性与简洁度通过。这轮v3早于最后review-scope澄清，保留原hash，不冒作最终版本重跑六题 | S-01工程及产品/运营答案：增加阅读负担，重点容易被背景淹没。不能把所有六题都说成失败，也不能把部分事实正确说成质量全通过 |
+
+仅沿用AUTH-019及[原批准记录](../evidence/runs/review-integrated-20261006/quality-deferral-approval.json)：用户“批准明确延期并交团队验收”，允许固定候选带这两项已知缺口交团队语义观看；不是修复通过，不是降低review gate、清预算、新scope、G1/G2、发布或提交批准。本次没有重新申请或重新批准。
+
+### R2原生8项检查究竟证明什么
+
+[verification](../evidence/runs/review-integrated-20261006/native-discovery-current/verification.json)与[实际cycle](../evidence/runs/review-integrated-20261006/native-discovery-current/discovery-cycle.json)：AUTH-014/017、eng_b、四源live API＋fake model，无源写入/模型网络调用。2026-10-06新加坡时间14:34:49–14:35:26；cycle约20.351s是一次运行耗时，不是源变更至可回答时延。
+
+| 来源与固定范围 | 本次实际行为 | 新资料发现范围 |
+|---|---|---|
+| Confluence space 131227 | 1页list、2次exact read、发布2对象 | 本轮没有新增ID |
+| Jira KAN / 10001 | 1页list、3次exact read、发布3对象 | 既有但不在原白名单的KAN-6 / 10015进入新索引；不是本轮新建工单 |
+| Slack C0C6R70SGG4，自既有合成root起 | 2页list、4次exact read、发布2对象（含thread读取） | 本轮没有新增ID |
+| Drive固定文件夹1EMYjaNhzBFQ3TXHC6ukEwN6otVIIeOEv | 1页list、3次exact read、发布3对象 | 本轮没有新增ID |
+
+8个actual断言逐项：①四native身份核验；②四源周期complete；③发现原白名单外既有10015；④它确实进入本次fake答案（Revision2 green）；⑤发现对象preview精确匹配；⑥原reader白名单未改；⑦product_ops未获发现权限；⑧本地审计链有效。它们不是8个四源生命周期案例。尚未证明四源各自新增/更新/删除完整native矩阵、源变更到答案的时限/p95、持续多周期新鲜度、完整persona/ACL矩阵或此候选的native＋live model＋browser端到端。历史Confluence/Jira更新及其他撤权/删除子集继续按原版本有效，不重做或升级其含义。
+
+观看采用[18分钟四列流程](SAFETY_REVIEW.md#固定候选18分钟观看流程准备未执行)。浏览器仍blocked（工具报告saved site denial），页面交互not_run；49161已停止，不用新端口/工具/入口绕过。启动前须由操作者确认具体服务、331bd28版本、fixture模式、隔离数据与已有启动/实例访问授权；未满足就只回看历史记录。8094/8100不动，native/live model现场测试不纳入这次无费用准备。
+
+2026-10-06 integrated candidate now supersedes the earlier R3A/R4-only handoff: fixed application/test **331bd28**, clean archive **357 regressions**, five fixture scenes, two Node checks and local HTTP passed. R2 current native read-only discovery subset, R3 fixture-source true model failures/fixes and R5 existing UX are [bound by mode and source hash here](../evidence/runs/review-integrated-20261006/README.md). **Fixed candidate prepared**: long/relevance quality explicitly approved deferred to team review, still not passed; browser tool site permission remains blocked and actual browser check not_run; G1/G2 not_run. Earlier historical native/model/browser records remain valid within their original modes, not proof of this new runtime.
+
+2026-10-06 current R3A/R4 local candidate: fixed application/test commit `34281adfe22c839ed463a51cb3536255f47175b4`, branch `fix/r3a-r4-team-candidate`. Clean archive: 352 regressions, five fixture scenes, both Node checks and local HTTP smoke passed; six current mock lifecycle audit snapshots and 13 signature/rollback checks bound to exact runtime hashes, actual read-only sub-agent review closed. [Candidate handoff and limits](../evidence/runs/review-r3a-r4-candidate-20261006/README.md). New-build native/browser visual/live model and G1/G2 remain **not_run**. Historical evidence below keeps its original versions/modes; old 8100 independent-question evidence remains valid. Do not treat prior feature/download descriptions as current ADR-040 behavior.
+
 2026-10-05. Local-only candidate; this document is not G1/G2 approval, a production claim or a submission.
 
 ## Five-scene coverage

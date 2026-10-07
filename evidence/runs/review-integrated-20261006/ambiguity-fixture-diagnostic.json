@@ -1,0 +1,210 @@
+{
+  "application_commit": "331bd28e24b17fdac6726b38d16dfbecd0599d78",
+  "mode": "fixture_fake_model_classification_diagnostic",
+  "live_model": "not_run",
+  "native_permission": "not_run",
+  "history_used": false,
+  "new_aliases_added": false,
+  "cases": [
+    {
+      "case": "single_resource_diagnostic",
+      "question": "Which hypothesis was abandoned?",
+      "classification_oracle": "unique scoped event; historical diagnostic type",
+      "actual_answer": {
+        "request_id": "7d53d6b361704843af49e2e1f526368f",
+        "question": "Which hypothesis was abandoned?",
+        "answered_at": "2026-10-06T06:57:58.270022+00:00",
+        "mode": "fixture_fake_model",
+        "model": "fake-extractive-v1",
+        "claims": [
+          {
+            "text": "[SYNTHETIC] Alpha incident: cache hypothesis withdrawn.",
+            "evidence_ids": [
+              "C-01@1"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "Source excerpts only; live AI synthesis is not enabled."
+        ],
+        "evidence": [
+          {
+            "evidence_id": "C-01@1",
+            "resource_id": "C-01",
+            "version": 1,
+            "source": "confluence",
+            "title": "Synthetic Alpha incident",
+            "locator": {
+              "paragraph": 1,
+              "section": "Failover procedure"
+            },
+            "text": "[SYNTHETIC] Alpha incident: cache hypothesis withdrawn.",
+            "source_updated_at": "2026-10-01T09:00:00+08:00",
+            "indexed_at": "2026-10-06T06:57:58.269538+00:00",
+            "source_url": "fixture://synthetic-demo/confluence/C-01"
+          }
+        ],
+        "actor": "eng_a"
+      },
+      "actual_authorized_evidence_ids": [
+        "C-01@1"
+      ],
+      "audit_chain": {
+        "valid": true,
+        "events": 8,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "limitations": "Actual fake excerpts show retrieval only, not a live-model ambiguity/clarification pass; classification is the stated manual oracle."
+    },
+    {
+      "case": "multiple_events_ambiguous",
+      "question": "Which hypothesis was abandoned?",
+      "classification_oracle": "ambiguous: accept clarification or explicit per-event account, not unconditional single answer",
+      "actual_answer": {
+        "request_id": "e7a591638fda4ba3bc390042be1af6a6",
+        "question": "Which hypothesis was abandoned?",
+        "answered_at": "2026-10-06T06:57:58.270897+00:00",
+        "mode": "fixture_fake_model",
+        "model": "fake-extractive-v1",
+        "claims": [
+          {
+            "text": "[SYNTHETIC] Alpha incident: cache hypothesis withdrawn.",
+            "evidence_ids": [
+              "C-01@1"
+            ]
+          },
+          {
+            "text": "[SYNTHETIC] Beta incident: routing hypothesis withdrawn.",
+            "evidence_ids": [
+              "D-01@1"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "Source excerpts only; live AI synthesis is not enabled."
+        ],
+        "evidence": [
+          {
+            "evidence_id": "C-01@1",
+            "resource_id": "C-01",
+            "version": 1,
+            "source": "confluence",
+            "title": "Synthetic Alpha incident",
+            "locator": {
+              "paragraph": 1,
+              "section": "Failover procedure"
+            },
+            "text": "[SYNTHETIC] Alpha incident: cache hypothesis withdrawn.",
+            "source_updated_at": "2026-10-01T09:00:00+08:00",
+            "indexed_at": "2026-10-06T06:57:58.270528+00:00",
+            "source_url": "fixture://synthetic-demo/confluence/C-01"
+          },
+          {
+            "evidence_id": "D-01@1",
+            "resource_id": "D-01",
+            "version": 1,
+            "source": "drive",
+            "title": "Synthetic Beta incident",
+            "locator": {
+              "paragraph": 1,
+              "section": "Confirmed root cause"
+            },
+            "text": "[SYNTHETIC] Beta incident: routing hypothesis withdrawn.",
+            "source_updated_at": "2026-10-01T09:00:00+08:00",
+            "indexed_at": "2026-10-06T06:57:58.270553+00:00",
+            "source_url": "fixture://synthetic-demo/drive/D-01"
+          }
+        ],
+        "actor": "eng_a"
+      },
+      "actual_authorized_evidence_ids": [
+        "C-01@1",
+        "D-01@1"
+      ],
+      "audit_chain": {
+        "valid": true,
+        "events": 13,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "limitations": "Actual fake excerpts show retrieval only, not a live-model ambiguity/clarification pass; classification is the stated manual oracle."
+    },
+    {
+      "case": "explicit_event_question",
+      "question": "In the Alpha incident, which hypothesis was withdrawn?",
+      "classification_oracle": "clear event; do not classify a missing requested Alpha fact as ambiguity",
+      "actual_answer": {
+        "request_id": "0cb286cf130e41839b4f0f13ed9634c0",
+        "question": "In the Alpha incident, which hypothesis was withdrawn?",
+        "answered_at": "2026-10-06T06:57:58.271615+00:00",
+        "mode": "fixture_fake_model",
+        "model": "fake-extractive-v1",
+        "claims": [
+          {
+            "text": "[SYNTHETIC] Alpha incident: cache hypothesis withdrawn.",
+            "evidence_ids": [
+              "C-01@1"
+            ]
+          },
+          {
+            "text": "[SYNTHETIC] Beta incident: routing hypothesis withdrawn.",
+            "evidence_ids": [
+              "D-01@1"
+            ]
+          }
+        ],
+        "uncertainties": [
+          "Source excerpts only; live AI synthesis is not enabled."
+        ],
+        "evidence": [
+          {
+            "evidence_id": "C-01@1",
+            "resource_id": "C-01",
+            "version": 1,
+            "source": "confluence",
+            "title": "Synthetic Alpha incident",
+            "locator": {
+              "paragraph": 1,
+              "section": "Failover procedure"
+            },
+            "text": "[SYNTHETIC] Alpha incident: cache hypothesis withdrawn.",
+            "source_updated_at": "2026-10-01T09:00:00+08:00",
+            "indexed_at": "2026-10-06T06:57:58.271289+00:00",
+            "source_url": "fixture://synthetic-demo/confluence/C-01"
+          },
+          {
+            "evidence_id": "D-01@1",
+            "resource_id": "D-01",
+            "version": 1,
+            "source": "drive",
+            "title": "Synthetic Beta incident",
+            "locator": {
+              "paragraph": 1,
+              "section": "Confirmed root cause"
+            },
+            "text": "[SYNTHETIC] Beta incident: routing hypothesis withdrawn.",
+            "source_updated_at": "2026-10-01T09:00:00+08:00",
+            "indexed_at": "2026-10-06T06:57:58.271311+00:00",
+            "source_url": "fixture://synthetic-demo/drive/D-01"
+          }
+        ],
+        "actor": "eng_a"
+      },
+      "actual_authorized_evidence_ids": [
+        "C-01@1",
+        "D-01@1"
+      ],
+      "audit_chain": {
+        "valid": true,
+        "events": 13,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "limitations": "Actual fake excerpts show retrieval only, not a live-model ambiguity/clarification pass; classification is the stated manual oracle."
+    }
+  ]
+}

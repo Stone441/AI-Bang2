@@ -1,0 +1,37 @@
+{
+  "reviewer": "authorized readonly r3a_r4_readonly_review",
+  "mode": "offline_review_of_fixture_source_live_model_development",
+  "before": {
+    "run": "quote-quantifier-v4-before",
+    "returned": 4,
+    "generation_reject": 1,
+    "cost_micro_usd": 3557
+  },
+  "after": {
+    "run": "quote-quantifier-v5-after",
+    "returned": 5,
+    "core_facts_correct": 5,
+    "cost_micro_usd": 3769
+  },
+  "same_world_bytes": true,
+  "same_case_bytes": true,
+  "same_engine_and_deepseek_hashes": true,
+  "only_synthesis_changed": true,
+  "returned_claims_exact": 13,
+  "gate_relaxed": false,
+  "synthesis_tests": {
+    "count": 15,
+    "status": "passed_local"
+  },
+  "case_details": {
+    "dev_quote_context": "v4 second claim lacks MIG-301 in its own quote; v5 combined owner/blocker with full exact contiguous quote",
+    "dev_auth_blocker": "correct both",
+    "dev_draft_scope": "correct limited non-exhaustive interpretation both; v5 removes unnecessary second background claim",
+    "dev_myr_approval": "correct both; v5 removes November background",
+    "dev_schedule": "correct both"
+  },
+  "limits": [
+    "Single developer case comparison, not blind/stable/native acceptance.",
+    "Original business_31, retained failures, AUTH019 not rerun by this comparison."
+  ]
+}

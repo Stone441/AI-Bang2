@@ -1,0 +1,64 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "SGD connector approval does not cover Singapore business USD accounts; USD requires a separate connector approval.",
+        "evidence_ids": [
+          "BV-07@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-07@1",
+            "quote": "Singapore business USD accounts require a separate connector approval; SGD approval does not include USD."
+          }
+        ]
+      },
+      {
+        "text": "The Atlas connector approval covers Singapore business SGD accounts for a pilot, not personal accounts.",
+        "evidence_ids": [
+          "BV-06@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-06@1",
+            "quote": "The Atlas connector supports Singapore business SGD accounts, not personal accounts."
+          },
+          {
+            "evidence_id": "BV-06@1",
+            "quote": "Personal SGD \t Not supported"
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "bdb8fdf0-2552-4197-af04-167ad3e75e2e",
+      "object": "chat.completion",
+      "created": 1791362847,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"SGD connector approval does not cover Singapore business USD accounts; USD requires a separate connector approval.\",\"evidence_ids\":[\"BV-07@1\"],\"supports\":[{\"evidence_id\":\"BV-07@1\",\"quote\":\"Singapore business USD accounts require a separate connector approval; SGD approval does not include USD.\"}]},{\"text\":\"The Atlas connector approval covers Singapore business SGD accounts for a pilot, not personal accounts.\",\"evidence_ids\":[\"BV-06@1\"],\"supports\":[{\"evidence_id\":\"BV-06@1\",\"quote\":\"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\"},{\"evidence_id\":\"BV-06@1\",\"quote\":\"Personal SGD \\t Not supported\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 734,
+        "completion_tokens": 152,
+        "total_tokens": 886,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 606
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

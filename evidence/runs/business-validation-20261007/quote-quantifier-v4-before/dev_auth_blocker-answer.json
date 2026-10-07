@@ -1,0 +1,115 @@
+{
+  "request_id": "6d90e395e05f4e66b7aa925a8ac09cd6",
+  "question": "For AUTH-204, what is the blocker and who owns it?",
+  "answered_at": "2026-10-07T11:33:45.324135+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v4",
+  "claims": [
+    {
+      "text": "AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and Lena owns it.",
+      "evidence_ids": [
+        "BV-02@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-02@1",
+          "quote": "AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-02@1",
+      "resource_id": "BV-02",
+      "version": 1,
+      "source": "jira",
+      "title": "authentication / Migration blocker",
+      "locator": {
+        "section": "Migration blocker"
+      },
+      "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:33:42.856473+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-02"
+    },
+    {
+      "evidence_id": "BV-21@1",
+      "resource_id": "BV-21",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Ownership decision",
+      "locator": {
+        "section": "Ownership decision"
+      },
+      "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:33:42.857080+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-21"
+    },
+    {
+      "evidence_id": "BV-12@1",
+      "resource_id": "BV-12",
+      "version": 1,
+      "source": "drive",
+      "title": "migration / Cutover ticket",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:33:42.856852+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    },
+    {
+      "evidence_id": "BV-24@1",
+      "resource_id": "BV-24",
+      "version": 1,
+      "source": "drive",
+      "title": "reconciliation / Pilot blocker",
+      "locator": {
+        "section": "Pilot blocker"
+      },
+      "text": "[SYNTHETIC]\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:33:42.857156+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-24"
+    }
+  ],
+  "actor": "eng_a",
+  "model_call": {
+    "query_id": "6d90e395e05f4e66b7aa925a8ac09cd6",
+    "model": "deepseek-flash",
+    "reservation_id": "27edf31a005142c69cc7ffe10a57f797",
+    "prompt_tokens": 613,
+    "completion_tokens": 74,
+    "total_tokens": 687,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 273,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "6d90e395e05f4e66b7aa925a8ac09cd6",
+    "model": "deepseek-flash",
+    "reservation_id": "949c3f21bc5844339cae8d759a27dab5",
+    "prompt_tokens": 653,
+    "completion_tokens": 21,
+    "total_tokens": 674,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 222,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

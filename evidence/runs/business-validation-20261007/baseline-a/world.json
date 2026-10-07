@@ -1,0 +1,1443 @@
+{
+  "synthetic": true,
+  "users": {
+    "eng_a": {
+      "groups": [
+        "engineering",
+        "staff"
+      ],
+      "channels": [
+        "incident",
+        "release",
+        "external"
+      ]
+    },
+    "eng_b": {
+      "groups": [
+        "engineering",
+        "staff"
+      ],
+      "channels": [
+        "release"
+      ]
+    },
+    "product_ops": {
+      "groups": [
+        "product",
+        "staff"
+      ],
+      "channels": [
+        "release"
+      ]
+    },
+    "contractor": {
+      "groups": [
+        "external"
+      ],
+      "channels": [
+        "external"
+      ]
+    },
+    "security": {
+      "groups": [
+        "engineering",
+        "security",
+        "staff"
+      ],
+      "channels": [
+        "incident",
+        "release"
+      ]
+    },
+    "auditor": {
+      "groups": [],
+      "channels": []
+    }
+  },
+  "resources": [
+    {
+      "id": "C-01",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-C-01",
+      "parent": "eng",
+      "version": 1,
+      "title": "Payment-service runbook",
+      "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+      "locator": {
+        "section": "Failover procedure",
+        "paragraph": 1
+      },
+      "links": [
+        "J-01",
+        "D-01"
+      ],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "engineering"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-01"
+    },
+    {
+      "id": "C-02",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-C-02",
+      "parent": "capability",
+      "version": 1,
+      "title": "Payment-retry capability",
+      "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+      "locator": {
+        "section": "Supported rollout",
+        "paragraph": 1
+      },
+      "links": [
+        "D-02"
+      ],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff",
+          "external"
+        ],
+        "page_groups": [
+          "staff",
+          "external"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-02"
+    },
+    {
+      "id": "C-03",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-C-03",
+      "parent": "sec",
+      "version": 1,
+      "title": "Q3 security incident report",
+      "text": "Restricted security investigation. CANARY_SEC_7Q9.",
+      "locator": {
+        "section": "Restricted findings",
+        "paragraph": 1
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-03"
+    },
+    {
+      "id": "J-01",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-01",
+      "parent": "eng",
+      "version": 1,
+      "title": "PAY-101 Payment-service incident",
+      "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+      "locator": {
+        "field": "description"
+      },
+      "links": [
+        "S-01",
+        "C-01",
+        "D-01"
+      ],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "engineering"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-01"
+    },
+    {
+      "id": "J-02",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-02",
+      "parent": "staff",
+      "version": 1,
+      "title": "PAY-102 Retry configuration fix",
+      "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "locator": {
+        "field": "status and description"
+      },
+      "links": [
+        "J-01",
+        "D-02"
+      ],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-02"
+    },
+    {
+      "id": "J-03",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-03",
+      "parent": "staff",
+      "version": 1,
+      "title": "PAY-103 Protective measures",
+      "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+      "locator": {
+        "field": "status and assignee"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-03"
+    },
+    {
+      "id": "S-01",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-S-01",
+      "parent": "incident",
+      "version": 1,
+      "title": "Private incident discussion",
+      "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "locator": {
+        "channel": "incident",
+        "thread": "1790816400.000001",
+        "messages": [
+          "1790816400.000001",
+          "1790817300.000001",
+          "1790820000.000001"
+        ]
+      },
+      "links": [
+        "D-01"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/S-01"
+    },
+    {
+      "id": "S-02",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-S-02",
+      "parent": "release",
+      "version": 1,
+      "title": "Release coordination",
+      "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+      "locator": {
+        "channel": "release",
+        "thread": "1790823600.000001"
+      },
+      "links": [
+        "C-02",
+        "D-02"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "release",
+        "private": true,
+        "members": [
+          "eng_a",
+          "eng_b",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/S-02"
+    },
+    {
+      "id": "S-03",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-S-03",
+      "parent": "external",
+      "version": 1,
+      "title": "External collaboration",
+      "text": "External partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+      "locator": {
+        "channel": "external",
+        "thread": "1790827200.000001"
+      },
+      "links": [
+        "C-02"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "external",
+        "private": true,
+        "members": [
+          "eng_a",
+          "contractor"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/S-03"
+    },
+    {
+      "id": "D-01",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-D-01",
+      "parent": "eng",
+      "version": 1,
+      "title": "Final payment-service postmortem",
+      "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "locator": {
+        "section": "Confirmed root cause",
+        "paragraph": 1
+      },
+      "links": [
+        "J-02",
+        "J-03"
+      ],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "engineering"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/D-01"
+    },
+    {
+      "id": "D-02",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-D-02",
+      "parent": "staff",
+      "version": 1,
+      "title": "Payment-retry release approval",
+      "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+      "locator": {
+        "section": "Approval decision",
+        "paragraph": 1
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/D-02"
+    },
+    {
+      "id": "D-03",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-D-03",
+      "parent": "staff",
+      "version": 1,
+      "title": "Operations readiness",
+      "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+      "locator": {
+        "section": "Customer communication",
+        "paragraph": 1
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/D-03"
+    },
+    {
+      "id": "J-01-comment-sec",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-01-comment-sec",
+      "parent": "J-01",
+      "version": 1,
+      "title": "PAY-101 restricted comment",
+      "text": "Security-only follow-up. CANARY_COMMENT_8P3.",
+      "locator": {
+        "comment_id": "comment-security-1"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "security"
+        ],
+        "comment_groups": [
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-01-comment-sec"
+    },
+    {
+      "id": "BV-01",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-01",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Token rotation decision",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-01"
+    },
+    {
+      "id": "BV-02",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-02",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Migration blocker",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "locator": {
+        "section": "Migration blocker"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-02"
+    },
+    {
+      "id": "BV-03",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-03",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Rejected design thread",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+      "locator": {
+        "section": "Rejected design thread"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-03"
+    },
+    {
+      "id": "BV-04",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-04",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Cutover scope",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+      "locator": {
+        "section": "Cutover scope"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-04"
+    },
+    {
+      "id": "BV-05",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-05",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Future policy",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+      "locator": {
+        "section": "Future policy"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-05"
+    },
+    {
+      "id": "BV-06",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-06",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / SGD account eligibility",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.",
+      "locator": {
+        "section": "SGD account eligibility"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-06"
+    },
+    {
+      "id": "BV-07",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-07",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / USD exception",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "locator": {
+        "section": "USD exception"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-07"
+    },
+    {
+      "id": "BV-08",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-08",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / Partner channel rule",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nPartner-led onboarding requires manual verification; direct onboarding supports automated verification.",
+      "locator": {
+        "section": "Partner channel rule"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-08"
+    },
+    {
+      "id": "BV-09",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-09",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / Launch ticket",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+      "locator": {
+        "section": "Launch ticket"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-09"
+    },
+    {
+      "id": "BV-10",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-10",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / Scope confirmation",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "locator": {
+        "section": "Scope confirmation"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-10"
+    },
+    {
+      "id": "BV-11",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-11",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Database design rationale",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "locator": {
+        "section": "Database design rationale"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "id": "BV-12",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-12",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Cutover ticket",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    },
+    {
+      "id": "BV-13",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-13",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Rollback signal",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRoll back the ledger migration if settlement differences exceed five basis points.",
+      "locator": {
+        "section": "Rollback signal"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-13"
+    },
+    {
+      "id": "BV-14",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-14",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Past rehearsal",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.",
+      "locator": {
+        "section": "Past rehearsal"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-14"
+    },
+    {
+      "id": "BV-15",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-15",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Unapproved alternative",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nDual-region active writes were proposed but not approved; the accepted migration uses one writer.",
+      "locator": {
+        "section": "Unapproved alternative"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-15"
+    },
+    {
+      "id": "BV-16",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-16",
+      "parent": "bv",
+      "version": 1,
+      "title": "webhook / Webhook incident cause",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.",
+      "locator": {
+        "section": "Webhook incident cause"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-16"
+    },
+    {
+      "id": "BV-17",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-17",
+      "parent": "bv",
+      "version": 1,
+      "title": "webhook / Webhook fix status",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+      "locator": {
+        "section": "Webhook fix status"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-17"
+    },
+    {
+      "id": "BV-18",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-18",
+      "parent": "bv",
+      "version": 1,
+      "title": "webhook / Withdrawn explanation",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nA webhook DNS explanation was withdrawn at 08:40; the worker pool was confirmed at 09:10.",
+      "locator": {
+        "section": "Withdrawn explanation"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-18"
+    },
+    {
+      "id": "BV-19",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-19",
+      "parent": "bv",
+      "version": 1,
+      "title": "webhook / Current response procedure",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+      "locator": {
+        "section": "Current response procedure"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-19"
+    },
+    {
+      "id": "BV-20",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-20",
+      "parent": "bv",
+      "version": 1,
+      "title": "webhook / External commitment",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nWebhook latency targets apply to the pilot only; no general customer latency guarantee is approved.",
+      "locator": {
+        "section": "External commitment"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-20"
+    },
+    {
+      "id": "BV-21",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-21",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Ownership decision",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "locator": {
+        "section": "Ownership decision"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-21"
+    },
+    {
+      "id": "BV-22",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-22",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Batch deadline",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "locator": {
+        "section": "Batch deadline"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-22"
+    },
+    {
+      "id": "BV-23",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-23",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Missing input",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "locator": {
+        "section": "Missing input"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-23"
+    },
+    {
+      "id": "BV-24",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-24",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Pilot blocker",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+      "locator": {
+        "section": "Pilot blocker"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-24"
+    },
+    {
+      "id": "BV-25",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-25",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Old operating note",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+      "locator": {
+        "section": "Old operating note"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-25"
+    },
+    {
+      "id": "BV-26",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-26",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Partner channel membership",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe private partner-escalation channel is available to eng_a but not eng_b despite their shared engineering role.",
+      "locator": {
+        "section": "Partner channel membership"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "engineering"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-26"
+    },
+    {
+      "id": "BV-27",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-27",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Security comment",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nCANARY_BV_RESTRICTED: security-only authentication investigation; no general employee disclosure.",
+      "locator": {
+        "section": "Security comment"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-27"
+    },
+    {
+      "id": "BV-28",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-28",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Approved public guidance",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nPartner users may read approved integration eligibility guidance; incident details are not public guidance.",
+      "locator": {
+        "section": "Approved public guidance"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-28"
+    },
+    {
+      "id": "BV-29",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-29",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Offboarding rule",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRemoval from a source channel prevents future citation and history access; previously saved copies cannot be recalled.",
+      "locator": {
+        "section": "Offboarding rule"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-29"
+    },
+    {
+      "id": "BV-30",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-30",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Unknown authority",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+      "locator": {
+        "section": "Unknown authority"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-30"
+    },
+    {
+      "id": "BV-31",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-31",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Settlement scope",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "locator": {
+        "section": "Settlement scope"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-31"
+    },
+    {
+      "id": "BV-32",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-32",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Future settlement schedule",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe proposed November hourly schedule is not approved. Current settlement is daily.",
+      "locator": {
+        "section": "Future settlement schedule"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-32"
+    },
+    {
+      "id": "BV-33",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-33",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Settlement dependency",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSET-610 is In Progress because bank confirmation is missing. Owner: Eva.",
+      "locator": {
+        "section": "Settlement dependency"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-33"
+    },
+    {
+      "id": "BV-34",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-34",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Contradictory proposal",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAn unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.",
+      "locator": {
+        "section": "Contradictory proposal"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-34"
+    },
+    {
+      "id": "BV-35",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-35",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Escalation guidance",
+      "text": "SYNTHETIC BUSINESS VALIDATION\nIf bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+      "locator": {
+        "section": "Escalation guidance"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-35"
+    }
+  ]
+}

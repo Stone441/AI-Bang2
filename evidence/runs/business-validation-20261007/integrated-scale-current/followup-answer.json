@@ -1,0 +1,363 @@
+{
+  "request_id": "a11964c29feb40f6beb34c37a97a33b0",
+  "question": "What is the payment-service safeguard status and owner?",
+  "answered_at": "2026-10-07T10:41:17.922559+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+      "evidence_ids": [
+        "J-01@1"
+      ]
+    },
+    {
+      "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+      "evidence_ids": [
+        "C-01@1"
+      ]
+    },
+    {
+      "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "evidence_ids": [
+        "D-01@1"
+      ]
+    },
+    {
+      "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "evidence_ids": [
+        "S-01@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+      "evidence_ids": [
+        "BV-05@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 0: warehouse rack 0, inspection interval 1 days, owner catalog-worker-0. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10000.",
+      "evidence_ids": [
+        "NOISE-0000@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 1: warehouse rack 1, inspection interval 2 days, owner catalog-worker-1. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10001.",
+      "evidence_ids": [
+        "NOISE-0001@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 2: warehouse rack 2, inspection interval 3 days, owner catalog-worker-2. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10002.",
+      "evidence_ids": [
+        "NOISE-0002@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 3: warehouse rack 3, inspection interval 4 days, owner catalog-worker-3. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10003.",
+      "evidence_ids": [
+        "NOISE-0003@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 4: warehouse rack 4, inspection interval 5 days, owner catalog-worker-4. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10004.",
+      "evidence_ids": [
+        "NOISE-0004@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 5: warehouse rack 5, inspection interval 6 days, owner catalog-worker-5. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10005.",
+      "evidence_ids": [
+        "NOISE-0005@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 6: warehouse rack 6, inspection interval 7 days, owner catalog-worker-6. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10006.",
+      "evidence_ids": [
+        "NOISE-0006@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 7: warehouse rack 7, inspection interval 8 days, owner catalog-worker-7. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10007.",
+      "evidence_ids": [
+        "NOISE-0007@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 8: warehouse rack 8, inspection interval 9 days, owner catalog-worker-8. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10008.",
+      "evidence_ids": [
+        "NOISE-0008@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 9: warehouse rack 9, inspection interval 10 days, owner catalog-worker-9. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10009.",
+      "evidence_ids": [
+        "NOISE-0009@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC catalog entry 10: warehouse rack 10, inspection interval 11 days, owner catalog-worker-10. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10010.",
+      "evidence_ids": [
+        "NOISE-0010@1"
+      ]
+    },
+    {
+      "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "evidence_ids": [
+        "J-02@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "J-01@1",
+      "resource_id": "J-01",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-101 Payment-service incident",
+      "locator": {
+        "field": "description"
+      },
+      "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.806823+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-01"
+    },
+    {
+      "evidence_id": "C-01@1",
+      "resource_id": "C-01",
+      "version": 1,
+      "source": "confluence",
+      "title": "Payment-service runbook",
+      "locator": {
+        "paragraph": 1,
+        "section": "Failover procedure"
+      },
+      "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.806674+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-01"
+    },
+    {
+      "evidence_id": "D-01@1",
+      "resource_id": "D-01",
+      "version": 1,
+      "source": "drive",
+      "title": "Final payment-service postmortem",
+      "locator": {
+        "paragraph": 1,
+        "section": "Confirmed root cause"
+      },
+      "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.806994+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-01"
+    },
+    {
+      "evidence_id": "S-01@1",
+      "resource_id": "S-01",
+      "version": 1,
+      "source": "slack",
+      "title": "Private incident discussion",
+      "locator": {
+        "channel": "incident",
+        "messages": [
+          "1790816400.000001",
+          "1790817300.000001",
+          "1790820000.000001"
+        ],
+        "thread": "1790816400.000001"
+      },
+      "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.806905+00:00",
+      "source_url": "fixture://synthetic-demo/slack/S-01"
+    },
+    {
+      "evidence_id": "BV-05@1",
+      "resource_id": "BV-05",
+      "version": 1,
+      "source": "confluence",
+      "title": "authentication / Future policy",
+      "locator": {
+        "section": "Future policy"
+      },
+      "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.807202+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-05"
+    },
+    {
+      "evidence_id": "NOISE-0000@1",
+      "resource_id": "NOISE-0000",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 0",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 0: warehouse rack 0, inspection interval 1 days, owner catalog-worker-0. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10000.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808082+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0000"
+    },
+    {
+      "evidence_id": "NOISE-0001@1",
+      "resource_id": "NOISE-0001",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 1",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 1: warehouse rack 1, inspection interval 2 days, owner catalog-worker-1. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10001.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808109+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0001"
+    },
+    {
+      "evidence_id": "NOISE-0002@1",
+      "resource_id": "NOISE-0002",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 2",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 2: warehouse rack 2, inspection interval 3 days, owner catalog-worker-2. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10002.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808136+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0002"
+    },
+    {
+      "evidence_id": "NOISE-0003@1",
+      "resource_id": "NOISE-0003",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 3",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 3: warehouse rack 3, inspection interval 4 days, owner catalog-worker-3. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10003.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808161+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0003"
+    },
+    {
+      "evidence_id": "NOISE-0004@1",
+      "resource_id": "NOISE-0004",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 4",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 4: warehouse rack 4, inspection interval 5 days, owner catalog-worker-4. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10004.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808185+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0004"
+    },
+    {
+      "evidence_id": "NOISE-0005@1",
+      "resource_id": "NOISE-0005",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 5",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 5: warehouse rack 5, inspection interval 6 days, owner catalog-worker-5. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10005.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808210+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0005"
+    },
+    {
+      "evidence_id": "NOISE-0006@1",
+      "resource_id": "NOISE-0006",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 6",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 6: warehouse rack 6, inspection interval 7 days, owner catalog-worker-6. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10006.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808234+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0006"
+    },
+    {
+      "evidence_id": "NOISE-0007@1",
+      "resource_id": "NOISE-0007",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 7",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 7: warehouse rack 7, inspection interval 8 days, owner catalog-worker-7. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10007.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808259+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0007"
+    },
+    {
+      "evidence_id": "NOISE-0008@1",
+      "resource_id": "NOISE-0008",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 8",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 8: warehouse rack 8, inspection interval 9 days, owner catalog-worker-8. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10008.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808283+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0008"
+    },
+    {
+      "evidence_id": "NOISE-0009@1",
+      "resource_id": "NOISE-0009",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 9",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 9: warehouse rack 9, inspection interval 10 days, owner catalog-worker-9. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10009.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808307+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0009"
+    },
+    {
+      "evidence_id": "NOISE-0010@1",
+      "resource_id": "NOISE-0010",
+      "version": 1,
+      "source": "confluence",
+      "title": "Synthetic unrelated catalog 10",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC catalog entry 10: warehouse rack 10, inspection interval 11 days, owner catalog-worker-10. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10010.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.808331+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/NOISE-0010"
+    },
+    {
+      "evidence_id": "J-02@1",
+      "resource_id": "J-02",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-102 Retry configuration fix",
+      "locator": {
+        "field": "status and description"
+      },
+      "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T10:41:17.806851+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-02"
+    }
+  ],
+  "actor": "eng_a"
+}

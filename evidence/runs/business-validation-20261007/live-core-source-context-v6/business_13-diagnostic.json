@@ -1,0 +1,88 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The ledger migration should be rolled back if settlement differences exceed five basis points.",
+        "evidence_ids": [
+          "BV-13@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-13@1",
+            "quote": "Roll back the ledger migration if settlement differences exceed five basis points."
+          }
+        ]
+      },
+      {
+        "text": "The September rehearsal's ten-basis-point threshold is superseded by the October five-basis-point rule.",
+        "evidence_ids": [
+          "BV-14@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-14@1",
+            "quote": "The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "2093fa07-b049-4929-b510-c37ef1c32915",
+      "object": "chat.completion",
+      "created": 1791375372,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The ledger migration should be rolled back if settlement differences exceed five basis points.\",\"evidence_ids\":[\"BV-13@1\"],\"supports\":[{\"evidence_id\":\"BV-13@1\",\"quote\":\"Roll back the ledger migration if settlement differences exceed five basis points.\"}]},{\"text\":\"The September rehearsal's ten-basis-point threshold is superseded by the October five-basis-point rule.\",\"evidence_ids\":[\"BV-14@1\"],\"supports\":[{\"evidence_id\":\"BV-14@1\",\"quote\":\"The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3022,
+        "completion_tokens": 140,
+        "total_tokens": 3162,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 2638
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "27bb7ba8-3c5f-4053-93b2-6221452bb79f",
+      "object": "chat.completion",
+      "created": 1791375373,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3083,
+        "completion_tokens": 29,
+        "total_tokens": 3112,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 2827
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

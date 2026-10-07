@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Rotation preserves sessions by using overlapping signing keys: sessions remain valid for fifteen minutes.",
+        "evidence_ids": [
+          "BV-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-01@1",
+            "quote": "Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "397ca314-18c9-4d24-b3c3-89e380162574",
+      "object": "chat.completion",
+      "created": 1791385159,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Rotation preserves sessions by using overlapping signing keys: sessions remain valid for fifteen minutes.\",\"evidence_ids\":[\"BV-01@1\"],\"supports\":[{\"evidence_id\":\"BV-01@1\",\"quote\":\"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Why does token rotation preserve sessions?\" Evidence: BV-01@1 text: \"[SYNTHETIC]\\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" Need return JSON claims. Question asks why token rotation preserve sessions. Evidence says rotation uses overlapping signing keys; sessions remain valid for fifteen minutes. That is direct reason. Need claim with evidence_id and support quote exact contiguous passage. At most four claims, at most 600 chars. Use minimum claims. So one claim: Rotation uses overlapping signing keys, so sessions remain valid for fifteen minutes. But careful: evidence text includes \"[SYNTHETIC]\\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" Quote should be exact contiguous passage copied from evidence. Can copy \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" Is that contiguous? Yes, after newline. But if we include \"[SYNTHETIC]\\n\" maybe also contiguous. But quote only from text, not source_context. We can quote \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" That is contiguous substring? Original text: \"[SYNTHETIC]\\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" Yes contiguous starting after newline? Actually \"Rotation...\" follows newline. It is contiguous. Good. Claim text concise: \"Token rotation preserves sessions because it uses overlapping signing keys, keeping sessions valid for fifteen minutes.\" But is \"because\" supported? Source says \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" It implies reason? The semicolon connects, not explicitly \"because\". We can state: \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" That directly answers why: by using overlapping signing keys. Need maybe mention synthetic? No, source_context says synthetic, but that's source data not in text? Actually text has [SYNTHETIC]. We can include maybe not needed. Evidence ID list must exactly equal supports evidence_id values. So supports [{\"evidence_id\":\"BV-01@1\",\"quote\":\"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\"}]. Claim text: \"Rotation preserves sessions by using overlapping signing keys: sessions remain valid for fifteen minutes.\" This is supported. Ensure no external. Good.\n\nNeed JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 811,
+        "completion_tokens": 547,
+        "total_tokens": 1358,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 481
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 299
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "8e496981-c711-494b-ad4e-ed9294950d2f",
+      "object": "chat.completion",
+      "created": 1791385162,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. We need evaluate claim support and question coverage. Question: \"Why does token rotation preserve sessions?\" Claim: \"Rotation preserves sessions by using overlapping signing keys: sessions remain valid for fifteen minutes.\" Evidence BV-01@1 text: \"[SYNTHETIC]\\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" source_context title authentication / Token rotation decision locator section Token rotation decision.\n\nNeed decide supported true? Claim says rotation preserves sessions by using overlapping signing keys: sessions remain valid for fifteen minutes. Evidence says Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes. Does that entail why preserves sessions? It states mechanism and duration. \"preserves sessions\" maybe implied? It says sessions remain valid for fifteen minutes due to overlapping signing keys. The claim is almost same as evidence. Supported true. Responsive? Question asks Why does token rotation preserve sessions? Claim provides reason: overlapping signing keys and duration. That answers explicit requested why. Responsive true. question_covered true? There's only one claim, addresses why. So true.\n\nNeed output exactly schema: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}. Ensure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 854,
+        "completion_tokens": 281,
+        "total_tokens": 1135,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 255
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 342
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

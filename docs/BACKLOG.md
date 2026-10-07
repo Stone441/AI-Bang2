@@ -1,5 +1,41 @@
 # Backlog · 2026-10-05
 
+2026-10-07 BV本轮完成记录见STATUS当前0bc90ae及completion-audit-low4096.json：BV00接线/原字节、BV01基线/问题、BV02有限对比/已验证实现选择、BV03获批四源变化/规模及local故障、BV04当前请求/审计/检查点、BV06可复现候选与材料均有对应模式证据。BV05浏览器blocked、人类任务not_run已明确；完整native矩阵/新鲜度SLA、旧保留失败、unsupported与AUTH019原延期继续保留，非全部工程关闭。不再做无诊断付费循环或扩展检查体系；后续项目工程按具体缺口、已有授权及团队效果反馈推进。
+
+2026-10-07可信operator启动配置已完成：low/2048 opt-in、fake/excerpts在listener/凭据前拒绝；实际构造传参mock验证和397完整fixture/mock回归通过。新接线native/live复验仍not_run，原73b1e3e七题证据不得冒充新应用接线验收。
+
+2026-10-07 BV-02接续：73b1e3e low/2048在7作者开发题上本次均正确，low/1024的32截断未重现；需完成可信operator配置接入及固定同版完整24开发/native两题验证。395archive及精确quote、cap/reservation负测试通过；不重跑已消费保留集、不把原失败改写通过、不自动付费重试。BV-05产品browser仍saved拒绝blocked，与已完成Drive上传许可独立。
+
+2026-10-07最新BV-02：3ceb625传递授权原title/locator；388 archive及两native/model题实际通过，2a039aa仅context篡改负测试/389 archive，runtime相同。完整24题22核心事实正确＋2空，business12/16原失败本轮未重现；business03问题前提/未知表达不足、32无关背景仍open，非AUTH019延期。下一以通用“问题所问状态与原文已证实状态”开发例和回答相关性继续定位，不弱化quote/review，不重跑保留集或无新诊断付费循环。当前模式/成本见STATUS，Goal active。
+
+2026-10-07当前：2a73bd0 clean archive380/同48世界五fixture/两Node、新版native/live两题及配对签名完成；新故障路径仍仅local/mock证明，native完整新鲜度/多persona/Docs/native关系解析未完成。BV-05浏览器和human/ROI not_run；BV-06材料有本地title/blurb/description/16:9封面草稿，统一范围审计待完成。性能两题含preview约119/128秒，不能称实时/半小时SLA已证。其余条目为各阶段历史，顶部事实优先。
+
+2026-10-07增量接续：BV-02关联cutoff verified local（380回归/1000干扰同世界比较），状态/歧义v4有4题live开发诊断；旧f8ecbed保留题失败维持failed，不宣称已修复。BV-03新版unknown修复已本地验证；2a73bd0 clean archive380/同世界五fixture/两Node已通过；下一native/model读回、配对审计。BV-06同48世界五fixture已实际运行，16:9本地封面草稿已渲染检查；材料及当前版本模式对齐仍in_progress。BV-05 browser saved denial blocked、真人业务判断/ROI not_run；不安排用户现在操作。
+
+
+2026-10-07新工程open：BV-03 legacy/fixture real-model来源unknown通用修复verified local（17定向/377 clean archive/五fixture/2Node/HTTP与只读审查，新native/live not_run）；BV-02 未批准≠已放弃及歧义单答案误答，1000压力J-03漏召回。保留集已消费，不据其调固定f8ecbed或冒称新盲测；后续修复须独立开发复现与新版本验证。这些并非外部授权blocked或AUTH-019新增延期。BV-04当前native/live副本配对签名已完成，独立custody仍not_run；BV-05人工3×4任务/ROI及browser未执行。
+
+历史阶段快照（由顶部当前记录覆盖）：2026-10-07当前BV：00 verified local；01 48对象/24开发题/1000压力基线已运行，保留12题未消费；02 本地lexical/BM25与single live A/B已运行，B试用默认，1000集J-03漏召回仍open；03 四源AUTH-021新probe及两次修正native API/fake subset verified，cached反证/故障和HTTP锁修复local，性能/固定新版仍待验证；04 资源方向审计local已实现，当前签名回放待做；05 browser saved denial blocked、人任务not_run；06 f8ecbed固定实现与clean archive373/五fixture/Node/HTTP已通过，保留集/当前native与配对证据尚待完成。AUTH-019保留，旧331bd28可回退。
+
+
+## 当前任务 · 2026-10-06
+
+本轮停止主动开发，仅保留固定候选并准备团队观看。331bd28/6d79ed2差异、两项延期原问题与R2八断言已整理到DEMO_CANDIDATE；18分钟流程在SAFETY_REVIEW，未执行，browser blocked。
+
+当前能力/模式/人工状态唯一总表见[STATUS](STATUS.md)顶部；下方旧表和追加记录保留历史，不再据其早期blocked重复接入。
+
+| 任务 | 状态 | 实际完成 / 下一步 |
+|---|---|---|
+| DEV-REVIEW-R1 | verified local / live not_run | 当日官方价格复核、每日expiry保留、跨日/预算/HTTP503/启动指纹；18定向与316完整fixture/mock、2Node通过；review-r1-20261006。未重启8094/8100或调模型；每日先运行model_readiness |
+| DEV-REVIEW-R3A | verified local candidate | 严格已批准原资源/version/全文/切片来源；34281ad clean archive 352回归+只读复审；review-r3a-r4-candidate-20261006；新build native/browser/live model not_run，质量另列 |
+| DEV-REVIEW-R2 | verified local/mock + native discovery subset | 352本地/21发现/4runner guard通过；四源native周期成功、发现KAN-6并问答/精确preview；两次failed原件保留；生命周期时延矩阵仍待具体源管理验收，不扩product_ops |
+| DEV-REVIEW-R4 | verified local candidate | 准备/意图/尝试/有效usage/输出/交付尝试分离；当前352回归/2Node/HTTP与六日志/13验签边界；只读复审证据缺口关闭；历史不改，真实回执/独立custody未完成 |
+| DEV-REVIEW-R5 | verified local / browser blocked | 安全原平台入口/历史问题与时间/折叠诊断/等待提示实现；331bd28 357archive与Node/HTTP通过；新49161用户批准后仍saved tool site denial，用户无许可入口，browser not_run，已结束自建fixture；ADR-040保留 |
+| DEV-REVIEW-R6 | verified candidate preparation | 当前331bd28 clean archive357/五fixture场景/2Node/HTTP；统一RUNBOOK/架构/验收总表；quality明确延期已获批准，browser许可/团队集中观看及最终材料pending |
+
+本轮基准cf827bb/独立fix分支；已有AUTH-014/016、native及live子集有效。下方live未配置/模型未实现/New question/export等旧记录为superseded，具体模式按STATUS与原证据判断。
+
+
 | ID | 状态 | 已完成 / 仍需推进 / 验收 |
 |---|---|---|
 | DEV-00 | verified | 仓库/环境盘点，基准 68e65c8 |
@@ -175,3 +211,9 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-06 DEV-10-INDEPENDENT verified local / live restart pending：按用户批准统一独立问答，移除New question及回答导出前后端，history_id HTTP400/export404，旧engine参数忽略依赖。311本地+Node安全/审计通过；保留旧历史和引用安全断言。8100重启后核对native正/负问和export404；8094旧进程未重启。
 
 2026-10-06 用户重启8100后真实新版浏览器两问验证通过：发布C-02有证据，接着安全独立问为空/拒答；两个按钮均不存在，SQLite两次request_started独立标记/history_id=null，负问无evidence_used。evidence/runs/independent-query/live-verification.json。live旧export自动导航被Chrome ERR_BLOCKED_BY_CLIENT阻止，未绕过；端点404为fixture/mock实际HTTP验证，不冒称本次native浏览器端点已测。8094仍旧进程未更新。
+
+2026-10-06 R3A/R4 bounded local candidate完成：fix/r3a-r4-team-candidate，基准dfa40c3，固定应用/测试34281ad。原实现不重复开发；只读子Agent10离线方法与13验签独立复核，唯一P2新日志签名绑定缺口已关闭。第一次archive 351/352通过、product acceptance test依赖本机runtime配置错误；原failed保留，精确mock配置隔离并强化原断言后352/352（16.920s）、五fixture场景、2Node及本地HTTP烟测通过。六份当前R4 snapshot/checkpoint/覆盖seq/raw verifier对应，mock/native/model模式不混用；旧checkpoint+截短旧snapshot仍可通过的边界明确。源码hash与最终archive相同，保护文件/旧审查/旧证据不改，ZIP未跟踪。证据review-r3a-r4-candidate-20261006；无需外部API/model/重启/费用/push。新build native/browser/live model和G1/G2 not_run。下一集中团队本地观看与具体授权内后续验收，非作者质量/独立custody/生产DB角色仍未完成。
+
+2026-10-06 统一候选fix/review-integrated-candidate：331bd28 clean archive357方法17.406s/五fixture/2Node/HTTP实际通过；此前323cb93的356记录保留。R5修复现有入口/历史/诊断而无新功能；真实只读Agent复核，browser新49161批准后仍saved site denial，正常设置入口未暴露。R2再次8 native readonly/fake checks有效，不冒称创建到回答SLA。R3六自然问题/无证据/长文真正模型小集保留前后失败，通用hyphen拆分和quoted-ID guard修复；六自然题原子事实覆盖，但多余背景与长文review拒答仍partial，用户已明确批准两项质量延期，冻结不称通过。原账本48usage逐笔只读核对、保守增28194microUSD，不清预算。集成证据review-integrated-20261006，fixed code/source hash/进程加载模式分列；G1/G2未运行。下一浏览器实际许可/质量处置/团队集中观察，目标保持active而非假称完整交付。
+
+2026-10-06 用户明确回复“批准明确延期并交团队验收”：long named-event/similar-event final answer rejection及非必答背景作为固定331bd28已知质量缺口，原失败/诊断/费用保留，不放宽review，不批准G1/G2或发布提交。browser保存拒绝是独立未解除工具条件；其它固定候选开发与状态准备已收敛。

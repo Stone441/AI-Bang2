@@ -1,0 +1,93 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The proposed November hourly settlement schedule is not approved; current settlement is daily.",
+        "evidence_ids": [
+          "BV-32@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-32@1",
+            "quote": "The proposed November hourly schedule is not approved. Current settlement is daily."
+          }
+        ]
+      },
+      {
+        "text": "SET-610 is In Progress because bank confirmation is missing, owned by Eva; if bank confirmation is absent, the instruction is to ask Eva for status rather than promise a completed settlement.",
+        "evidence_ids": [
+          "BV-33@1",
+          "BV-35@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-33@1",
+            "quote": "SET-610 is In Progress because bank confirmation is missing. Owner: Eva."
+          },
+          {
+            "evidence_id": "BV-35@1",
+            "quote": "If bank confirmation is absent, ask Eva for status; do not promise a completed settlement."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "42a65ba5-848f-4cf6-b440-79dcb39b7bbc",
+      "object": "chat.completion",
+      "created": 1791373058,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The proposed November hourly settlement schedule is not approved; current settlement is daily.\",\"evidence_ids\":[\"BV-32@1\"],\"supports\":[{\"evidence_id\":\"BV-32@1\",\"quote\":\"The proposed November hourly schedule is not approved. Current settlement is daily.\"}]},{\"text\":\"SET-610 is In Progress because bank confirmation is missing, owned by Eva; if bank confirmation is absent, the instruction is to ask Eva for status rather than promise a completed settlement.\",\"evidence_ids\":[\"BV-33@1\",\"BV-35@1\"],\"supports\":[{\"evidence_id\":\"BV-33@1\",\"quote\":\"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\"},{\"evidence_id\":\"BV-35@1\",\"quote\":\"If bank confirmation is absent, ask Eva for status; do not promise a completed settlement.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 814,
+        "completion_tokens": 185,
+        "total_tokens": 999,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 302
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "4c6829c2-b806-4d95-a726-a8b25731c150",
+      "object": "chat.completion",
+      "created": 1791373059,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 916,
+        "completion_tokens": 29,
+        "total_tokens": 945,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 660
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

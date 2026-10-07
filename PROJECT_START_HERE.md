@@ -1,5 +1,8 @@
 # 从这里开始：AI-Bang2项目交接包
 
+当前为已实现可运行原型；固定旧候选331bd28及证据保留。2026-10-07业务增强见[执行入口](docs/iterations/2026-10-07-business-validation/README.md)、[STATUS](docs/STATUS.md)与[DECISIONS](docs/DECISIONS.md)。下方初始Phase 0为历史交接，不代表当前空仓。
+
+
 > 版本1.0｜2026-09-27｜适用：三人NTU团队、Aspire Internal Brain赛道。  
 > 本包包含**7份工作文档 + 2份原文文字归档**。只创建了方案文件，没有替你们提交代码、修改GitHub、接入平台或运行产品测试。
 

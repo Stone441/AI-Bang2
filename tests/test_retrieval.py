@@ -98,6 +98,17 @@ class RetrievalWindows(unittest.TestCase):
         self.assertEqual(tokens('outages retracted remediation'), tokens('incident withdrawn fix'))
         self.assertEqual(self.engine.query(self.actor, 'unfindablezebra')['evidence'], [])
 
+    def test_ordinary_compound_words_recall_counterevidence_without_splitting_ids(self):
+        self.assertEqual(tokens('distributed-storage'), {'distributed-storage', 'distributed', 'storage'})
+        self.assertEqual(tokens('PAY-103'), {'pay-103'})
+        question = 'Which fault actually produced duplicate payment requests, and what earlier explanation was ruled out?'
+        answer = self.engine.query(self.actor, question)
+        self.assertIn('S-01', {e['resource_id'] for e in answer['evidence']})
+        self.assertTrue(any('cache hypothesis was withdrawn' in c['text'] for c in answer['claims']))
+        self.world.mutate('S-01', 'revoke', user_id='eng_a')
+        denied = self.engine.query(self.actor, question)
+        self.assertNotIn('S-01', {e['resource_id'] for e in denied['evidence']})
+
     def test_window_boundaries_and_limits(self):
         for length in (0, 3999, 4000, 4001, 6400, 30000):
             text = '界' * length

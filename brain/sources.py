@@ -30,6 +30,7 @@ class FixtureWorld:
             raise ValueError('Only synthetic fixtures are authorized')
         self.users = copy.deepcopy(self.baseline['users'])
         self.resources = {r['id']: copy.deepcopy(r) for r in self.baseline['resources']}
+        self.approved_synthetic_resource_ids = frozenset(self.resources)
         self.events = []
         self.faults = set()
         self.revoked = set()

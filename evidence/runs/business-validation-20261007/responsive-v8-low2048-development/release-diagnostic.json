@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No. PAY-102 Done does not authorize general customer release; the release decision approved only a controlled pilot, and general availability (GA) is not approved.",
+        "evidence_ids": [
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "cb3cb658-7ea6-4818-8ea2-49f942ac397f",
+      "object": "chat.completion",
+      "created": 1791384612,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No. PAY-102 Done does not authorize general customer release; the release decision approved only a controlled pilot, and general availability (GA) is not approved.\",\"evidence_ids\":[\"D-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"}]}]}",
+            "reasoning_content": "We need answer question: Does PAY-102 Done authorize general customer release? Need JSON only. Need claims with evidence. We need identify explicit requested part: whether PAY-102 Done authorizes general customer release. Evidence J-02 says PAY-102 code fix Done. Code completion does not approve general customer release. D-02 says Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval. So answer: No. Need claim concise. Need support quote exact contiguous passage from evidence. Could use D-02@1 quote including \"PAY-102 Done is not customer release approval.\" and maybe \"General availability (GA) not approved.\" That's enough. Evidence_ids exactly supports. One claim. Must include identifier? The claim can mention PAY-102 Done? It says every explicit identifier such as ticket ID in claim must appear in copied support quotes. So if claim includes PAY-102, quote must include PAY-102. D-02 quote includes PAY-102 Done is not customer release approval. Good. Also maybe J-02 quote includes PAY-102 code fix: Done. Code completion does not approve general customer release. But D-02 directly says not. Use D-02 only. Need maybe also note controlled pilot approved, GA not approved. Claim: \"No. PAY-102 Done does not authorize general customer release; the release decision approved only a controlled pilot, and GA is not approved.\" Quote from D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" That is contiguous. Exactly. This covers. One claim. Evidence_ids [\"D-02@1\"]. Supports quote same. Need JSON. Ensure claim length <=600. Fine. Only JSON object. No extra text."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1349,
+        "completion_tokens": 468,
+        "total_tokens": 1817,
+        "prompt_tokens_details": {
+          "cached_tokens": 1152
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 374
+        },
+        "prompt_cache_hit_tokens": 1152,
+        "prompt_cache_miss_tokens": 197
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "5c04a84c-9384-424c-a2c8-0c78dd988281",
+      "object": "chat.completion",
+      "created": 1791384614,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review claim support and question coverage. Need produce verdicts exactly one for every supplied claim. There is one claim. Need determine supported, responsive, question_covered.\n\nQuestion: \"Does PAY-102 Done authorize general customer release?\" Claim: \"No. PAY-102 Done does not authorize general customer release; the release decision approved only a controlled pilot, and general availability (GA) is not approved.\" Evidence D-02@1 quote exactly includes Release decision controlled pilot approved. GA not approved. PAY-102 Done is not customer release approval. So supported true. Responsive? Question asks whether PAY-102 Done authorizes general customer release. Claim answers no, and provides qualifications. Responsive true. Question covered? We need ensure all requested parts. There's only yes/no plus maybe authorization. Claim addresses. Evidence supports. So question_covered true. Need JSON only. Ensure exact schema: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}. No extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1420,
+        "completion_tokens": 242,
+        "total_tokens": 1662,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 216
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 908
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

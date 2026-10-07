@@ -1,13 +1,15 @@
 """Append-only interface and deterministic chain. Signed checkpoints reserved for CodeBuddy."""
 import hashlib
 import json
+import re
 from .store import canonical
 from .contracts import now
 
 DOMAIN=b'ContextLedger.audit.v1\0'
 ZERO='0'*64
 AUDIT_ACTORS=('eng_a','eng_b','product_ops')
-EVENT_TYPES={'request_started','candidate_evaluated','authorization_decided','evidence_used','generation_completed','response_committed','response_dispatch_attempted','request_failed','audit_inquiry','source_changed'}
+EVENT_TYPES={'request_started','candidate_evaluated','authorization_decided','evidence_used','generation_completed','response_committed','response_dispatch_attempted','request_failed','audit_inquiry','source_changed',
+             'model_dispatch_intent','model_dispatch_attempted','model_usage_received','model_output_accepted','model_output_rejected'}
 
 
 def event_hash(event):
@@ -55,16 +57,34 @@ class Audit:
         with self.store.lock:
             return [json.loads(r[0]) for r in self.store.db.execute('SELECT body FROM audit ORDER BY seq')]
 
+    def request_has_unknown(self, actor, request_id):
+        """Internal completeness check; never exposes source/object diagnostics."""
+        with self.store.lock:
+            return self.store.db.execute("SELECT 1 FROM audit WHERE "
+                "json_extract(body,'$.actor')=? AND json_extract(body,'$.request_id')=? "
+                "AND json_extract(body,'$.event_type')='authorization_decided' "
+                "AND json_extract(body,'$.payload.result')='unknown' LIMIT 1",
+                (actor,request_id)).fetchone() is not None
+
     def inquire(self, actor, filters):
         if actor.user_id!='auditor':
             raise PermissionError('Unavailable')
-        allowed={'actor','start_time','end_time','event_type','after','as_of','page_size','source','resource_scope'}
+        allowed={'actor','start_time','end_time','event_type','after','as_of','page_size','source','resource_scope','resource_id'}
         if set(filters)-allowed:
             raise ValueError('Unsupported audit fields')
-        uid=filters.get('actor','eng_a')
-        if uid=='jdoe': uid='eng_a'
-        if uid not in AUDIT_ACTORS:
+        resource_id=filters.get('resource_id')
+        if resource_id is not None and (not isinstance(resource_id,str)
+                or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_:./-]{0,199}',resource_id)):
+            raise ValueError('Invalid resource identifier')
+        if resource_id is not None and filters.get('resource_scope','payment-service')!='payment-service':
             raise PermissionError('Unavailable')
+        uid=filters.get('actor',None if resource_id is not None else 'eng_a')
+        if uid=='jdoe': uid='eng_a'
+        if uid is None and resource_id is None:
+            raise PermissionError('Unavailable')
+        if uid is not None and uid not in AUDIT_ACTORS:
+            raise PermissionError('Unavailable')
+        actors=(uid,) if uid is not None else AUDIT_ACTORS
         size=filters.get('page_size',50); after=filters.get('after',0)
         if type(size)!=int or not 1<=size<=100 or type(after)!=int or after<0:
             raise ValueError('Invalid pagination')
@@ -84,22 +104,28 @@ class Audit:
             head=self.store.db.execute('SELECT coalesce(max(seq),0) FROM audit').fetchone()[0]
             as_of=filters.get('as_of',head)
             if type(as_of)!=int or as_of<0 or as_of>head: raise ValueError('Invalid snapshot')
-            rows=self.store.db.execute("SELECT body FROM audit WHERE seq<=? AND json_extract(body,'$.actor')=? ORDER BY seq",(as_of,uid)).fetchall()
+            placeholders=','.join('?' for _ in actors)
+            rows=self.store.db.execute("SELECT body FROM audit WHERE seq<=? AND json_extract(body,'$.actor') IN ("+placeholders+") ORDER BY seq",(as_of,*actors)).fetchall()
         # Scoped exact filtering. SQL never comes from the model or request.
         # Scope matches exact resource events and includes the surrounding request lifecycle,
         # so the inquiry can reconstruct the question and final answer as well as checks.
         decoded=[json.loads(row[0]) for row in rows]
-        scoped_requests={e['request_id'] for e in decoded if e['actor']==uid
+        scoped_requests={(e['actor'],e['request_id']) for e in decoded if e['actor'] in actors
+                         and (resource_id is None or e['payload'].get('resource_id')==resource_id)
+                         and (resource_id is None or e['payload'].get('resource_scope')=='payment-service')
                          and (not filters.get('source') or e['payload'].get('source')==filters['source'])
                          and (not filters.get('resource_scope') or e['payload'].get('resource_scope')==filters['resource_scope'])}
         events=[]
         for row in rows:
             e=json.loads(row[0])
-            if e['actor']!=uid or (event_type and e['event_type']!=event_type): continue
+            if e['actor'] not in actors or (event_type and e['event_type']!=event_type): continue
             stamp=datetime.fromisoformat(e['timestamp'])
             if filters.get('start_time') and stamp<datetime.fromisoformat(filters['start_time']): continue
             if filters.get('end_time') and stamp>=datetime.fromisoformat(filters['end_time']): continue
-            if (filters.get('source') or filters.get('resource_scope')) and e['request_id'] not in scoped_requests: continue
+            if (resource_id is not None or filters.get('source') or filters.get('resource_scope')) and (e['actor'],e['request_id']) not in scoped_requests: continue
+            if resource_id is not None and e['payload'].get('resource_id') not in (None,resource_id): continue
+            if resource_id is not None and e['payload'].get('resource_id') is not None and e['payload'].get('resource_scope')!='payment-service': continue
+            if resource_id is not None and filters.get('source') and e['payload'].get('resource_id') is not None and e['payload'].get('source')!=filters['source']: continue
             events.append(e)
         page=[e for e in events if e['seq']>after][:size]
         normalized=dict(filters,actor=uid,as_of=as_of,page_size=size)

@@ -1,0 +1,970 @@
+{
+  "filters": {
+    "actor": "eng_a",
+    "resource_scope": "payment-service",
+    "as_of": 1231,
+    "page_size": 50
+  },
+  "events": [
+    {
+      "actor": "eng_a",
+      "event_type": "request_started",
+      "hash": "a4edc2e2fa6fc3f648bf448bf6dd6af322a05e67f952232087010bc04f3909c7",
+      "payload": {
+        "candidate_strategy": "authority prefilter + bm25 + lexical aliases + exact windows + authorized one-hop links",
+        "history_id": null,
+        "mode": "fixture_fake_model",
+        "query": "What caused the payment-service duplicate requests?",
+        "query_kind": "independent"
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 1,
+      "timestamp": "2026-10-07T10:41:17.832857+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "4f5e588da0c26a66802e69c533f202b68591a2decbd830bdfe9cb47c00b13e17",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860120+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "link_seed",
+        "policy_version": 1,
+        "resource_id": "D-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "drive",
+        "version": 1
+      },
+      "previous_hash": "a4edc2e2fa6fc3f648bf448bf6dd6af322a05e67f952232087010bc04f3909c7",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 2,
+      "timestamp": "2026-10-07T10:41:17.860208+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "22b1cf74978b41b6c420fc0a2d1aae0d2834048ce53dcb9679e35c9aad83cf09",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860340+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "link_seed",
+        "policy_version": 1,
+        "resource_id": "J-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "4f5e588da0c26a66802e69c533f202b68591a2decbd830bdfe9cb47c00b13e17",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 3,
+      "timestamp": "2026-10-07T10:41:17.860364+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "93a43a72aeb7b0013187fe09d5217262fb16f8b3c18e84c3a6fb6c32b7fd7a8a",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860397+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "link_seed",
+        "policy_version": 1,
+        "resource_id": "C-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "22b1cf74978b41b6c420fc0a2d1aae0d2834048ce53dcb9679e35c9aad83cf09",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 4,
+      "timestamp": "2026-10-07T10:41:17.860413+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "0cb17664c8b91ce37b475fc2bcebfeab0e3aed474726b1d70589939bd1f4c275",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860442+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "link_seed",
+        "policy_version": 1,
+        "resource_id": "S-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "slack",
+        "version": 1
+      },
+      "previous_hash": "93a43a72aeb7b0013187fe09d5217262fb16f8b3c18e84c3a6fb6c32b7fd7a8a",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 5,
+      "timestamp": "2026-10-07T10:41:17.860455+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "95f1034ccc40aa3da59f1d0bf1f80ca0c850a9d79c1ba4bd4ff5991fd7b69b11",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860477+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "link_seed",
+        "policy_version": 1,
+        "resource_id": "S-02",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "slack",
+        "version": 1
+      },
+      "previous_hash": "0cb17664c8b91ce37b475fc2bcebfeab0e3aed474726b1d70589939bd1f4c275",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 6,
+      "timestamp": "2026-10-07T10:41:17.860551+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "ce6dcb7c405b73b7da99dea366fa5bcc7b7ffb44f24db7433f8f3e71d7bfc4f5",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860573+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "link_seed",
+        "policy_version": 1,
+        "resource_id": "C-02",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "95f1034ccc40aa3da59f1d0bf1f80ca0c850a9d79c1ba4bd4ff5991fd7b69b11",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 7,
+      "timestamp": "2026-10-07T10:41:17.860584+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "73253f603637b91d4e5054034ec183d9c7ac0a5f8bf5ca6d3657b070628c1ab3",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860614+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "link_seed",
+        "policy_version": 1,
+        "resource_id": "S-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "slack",
+        "version": 1
+      },
+      "previous_hash": "ce6dcb7c405b73b7da99dea366fa5bcc7b7ffb44f24db7433f8f3e71d7bfc4f5",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 8,
+      "timestamp": "2026-10-07T10:41:17.860626+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "9f07e829f839150c00a2cc7580bfbb7ce19ebdc7c9d079e1a77e346a5d71c051",
+      "payload": {
+        "resource_id": "D-01",
+        "resource_scope": "payment-service",
+        "score": 24.860374505123417,
+        "source": "drive"
+      },
+      "previous_hash": "73253f603637b91d4e5054034ec183d9c7ac0a5f8bf5ca6d3657b070628c1ab3",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 9,
+      "timestamp": "2026-10-07T10:41:17.860665+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "89fb7de0df9994e995e31c15403a37bd3c9987c34052af43cf3f0efa68f4886b",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860690+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "D-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "drive",
+        "version": 1
+      },
+      "previous_hash": "9f07e829f839150c00a2cc7580bfbb7ce19ebdc7c9d079e1a77e346a5d71c051",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 10,
+      "timestamp": "2026-10-07T10:41:17.860703+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "eb15ab19f0f35ea07763c214d4c1d59bca0f06a61fc8cbc409dbf7f2af5b6020",
+      "payload": {
+        "resource_id": "J-01",
+        "resource_scope": "payment-service",
+        "score": 14.675616203529435,
+        "source": "jira"
+      },
+      "previous_hash": "89fb7de0df9994e995e31c15403a37bd3c9987c34052af43cf3f0efa68f4886b",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 11,
+      "timestamp": "2026-10-07T10:41:17.860743+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "afa7ac8567f48315289ccfb126d44a9650372c84c232ab380531a3ececf91244",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860763+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "J-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "eb15ab19f0f35ea07763c214d4c1d59bca0f06a61fc8cbc409dbf7f2af5b6020",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 12,
+      "timestamp": "2026-10-07T10:41:17.860774+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "6acccd06467adcfce5a4c169fea9a545e3d982739c96f31082e6f65fafdc8d18",
+      "payload": {
+        "resource_id": "C-01",
+        "resource_scope": "payment-service",
+        "score": 14.128335122506698,
+        "source": "confluence"
+      },
+      "previous_hash": "afa7ac8567f48315289ccfb126d44a9650372c84c232ab380531a3ececf91244",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 13,
+      "timestamp": "2026-10-07T10:41:17.860807+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "ae2556ce3ec457cbd2d326455d6ced81174d890aa8f129aa8823a9f939ef501b",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860826+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "C-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "6acccd06467adcfce5a4c169fea9a545e3d982739c96f31082e6f65fafdc8d18",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 14,
+      "timestamp": "2026-10-07T10:41:17.860837+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "07dba7d0769c37a3d95969b32a0befc4b834738be12c58b1892e79c557ba8bee",
+      "payload": {
+        "resource_id": "S-01",
+        "resource_scope": "payment-service",
+        "score": 11.203689801526163,
+        "source": "slack"
+      },
+      "previous_hash": "ae2556ce3ec457cbd2d326455d6ced81174d890aa8f129aa8823a9f939ef501b",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 15,
+      "timestamp": "2026-10-07T10:41:17.860870+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "1808511f1f86542ab802526432603c91ef9f87355c82d0d2bb0bd7147838870c",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860889+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "S-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "slack",
+        "version": 1
+      },
+      "previous_hash": "07dba7d0769c37a3d95969b32a0befc4b834738be12c58b1892e79c557ba8bee",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 16,
+      "timestamp": "2026-10-07T10:41:17.860899+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "d0bb2ec56f767e553ded6e540198f255aa012fb3af96ff357bd878278df7c3b6",
+      "payload": {
+        "resource_id": "BV-05",
+        "resource_scope": "payment-service",
+        "score": 6.315258733692559,
+        "source": "confluence"
+      },
+      "previous_hash": "1808511f1f86542ab802526432603c91ef9f87355c82d0d2bb0bd7147838870c",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 17,
+      "timestamp": "2026-10-07T10:41:17.860927+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "1908af95b385f9396c4a7686848b1605e847e6fc5206102289c2cd7f5f89da1b",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.860947+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "BV-05",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "d0bb2ec56f767e553ded6e540198f255aa012fb3af96ff357bd878278df7c3b6",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 18,
+      "timestamp": "2026-10-07T10:41:17.860958+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "921a9643ec52a1c415183f7bcb8eaf3a21f4b6732dadd6a4252c6617d88d1dca",
+      "payload": {
+        "resource_id": "S-02",
+        "resource_scope": "payment-service",
+        "score": 0.05366545507092965,
+        "source": "slack"
+      },
+      "previous_hash": "1908af95b385f9396c4a7686848b1605e847e6fc5206102289c2cd7f5f89da1b",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 19,
+      "timestamp": "2026-10-07T10:41:17.860986+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "d3825aa29a4ef8ab9ab64fb1709ec58298a8198d7d78e9b4b0e6afb29f523c13",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861004+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "S-02",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "slack",
+        "version": 1
+      },
+      "previous_hash": "921a9643ec52a1c415183f7bcb8eaf3a21f4b6732dadd6a4252c6617d88d1dca",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 20,
+      "timestamp": "2026-10-07T10:41:17.861014+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "88d36ab45172592581b4df8be6a12acccb657aed846003066da453ad3538cd08",
+      "payload": {
+        "resource_id": "D-02",
+        "resource_scope": "payment-service",
+        "score": 0.05273426432647656,
+        "source": "drive"
+      },
+      "previous_hash": "d3825aa29a4ef8ab9ab64fb1709ec58298a8198d7d78e9b4b0e6afb29f523c13",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 21,
+      "timestamp": "2026-10-07T10:41:17.861043+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "8dedda93be1673b9fb71fff9a4cbfd529e689b0c46fb4e2a4a715312b6f5ee75",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861062+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "D-02",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "drive",
+        "version": 1
+      },
+      "previous_hash": "88d36ab45172592581b4df8be6a12acccb657aed846003066da453ad3538cd08",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 22,
+      "timestamp": "2026-10-07T10:41:17.861072+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "dea4230b29ead53386cf3fef09845c41562aa984476746b5c9737f3b813d383c",
+      "payload": {
+        "resource_id": "C-02",
+        "resource_scope": "payment-service",
+        "score": 0.05183483803163773,
+        "source": "confluence"
+      },
+      "previous_hash": "8dedda93be1673b9fb71fff9a4cbfd529e689b0c46fb4e2a4a715312b6f5ee75",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 23,
+      "timestamp": "2026-10-07T10:41:17.861098+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "acfc9d79efc6c598ad3d03901b51e47d2a51d68c86569b9c23a5d980bfab1b95",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861116+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "C-02",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "dea4230b29ead53386cf3fef09845c41562aa984476746b5c9737f3b813d383c",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 24,
+      "timestamp": "2026-10-07T10:41:17.861126+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "a45deda1225a573064f697f30ccd0067344bc45964641d1df2909ad5cbbeada2",
+      "payload": {
+        "resource_id": "S-03",
+        "resource_scope": "payment-service",
+        "score": 0.05096557813595868,
+        "source": "slack"
+      },
+      "previous_hash": "acfc9d79efc6c598ad3d03901b51e47d2a51d68c86569b9c23a5d980bfab1b95",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 25,
+      "timestamp": "2026-10-07T10:41:17.861153+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "f3f0c8afb2c23100e1dab7688873d1b48516ae8bd189eba2add8f918cf307c5a",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861171+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "S-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "slack",
+        "version": 1
+      },
+      "previous_hash": "a45deda1225a573064f697f30ccd0067344bc45964641d1df2909ad5cbbeada2",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 26,
+      "timestamp": "2026-10-07T10:41:17.861181+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "9a1c6f68890fc9f07ee56ba458bc7579903e3bff98c1863ad65ca8661bc1fc04",
+      "payload": {
+        "resource_id": "D-03",
+        "resource_scope": "payment-service",
+        "score": 0.050124992016928945,
+        "source": "drive"
+      },
+      "previous_hash": "f3f0c8afb2c23100e1dab7688873d1b48516ae8bd189eba2add8f918cf307c5a",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 27,
+      "timestamp": "2026-10-07T10:41:17.861215+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "6aad29163cc59581b21e5de7182db92d424ddf16b81511ad7ea19f1a2e024198",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861234+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "D-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "drive",
+        "version": 1
+      },
+      "previous_hash": "9a1c6f68890fc9f07ee56ba458bc7579903e3bff98c1863ad65ca8661bc1fc04",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 28,
+      "timestamp": "2026-10-07T10:41:17.861245+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "6a32157c19605189865850e6aedafd76b9503646854f81ea9c9742b4f0faf076",
+      "payload": {
+        "resource_id": "NOISE-0000",
+        "resource_scope": "payment-service",
+        "score": 0.043646197812262554,
+        "source": "confluence"
+      },
+      "previous_hash": "6aad29163cc59581b21e5de7182db92d424ddf16b81511ad7ea19f1a2e024198",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 29,
+      "timestamp": "2026-10-07T10:41:17.861273+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "92fe17278fde08d51e3a99ee1df821546744cdf2236a613a689b92c59bd35e90",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861292+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "NOISE-0000",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "6a32157c19605189865850e6aedafd76b9503646854f81ea9c9742b4f0faf076",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 30,
+      "timestamp": "2026-10-07T10:41:17.861302+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "319fbaacbcd25a3c253ab8d052862a2c76f57f76e8a0d2809f70b4dcc6343a72",
+      "payload": {
+        "resource_id": "NOISE-0001",
+        "resource_scope": "payment-service",
+        "score": 0.043646197812262554,
+        "source": "confluence"
+      },
+      "previous_hash": "92fe17278fde08d51e3a99ee1df821546744cdf2236a613a689b92c59bd35e90",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 31,
+      "timestamp": "2026-10-07T10:41:17.861329+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "fe671188a39d246a02c738b22c9844469f9c92e30c925196f1580d7b2d64930b",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861350+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "NOISE-0001",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "319fbaacbcd25a3c253ab8d052862a2c76f57f76e8a0d2809f70b4dcc6343a72",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 32,
+      "timestamp": "2026-10-07T10:41:17.861362+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "46c4d396de97428790029f8be2d05c8b4f3b015eb04bbd3cfef43723a2064273",
+      "payload": {
+        "resource_id": "NOISE-0002",
+        "resource_scope": "payment-service",
+        "score": 0.043646197812262554,
+        "source": "confluence"
+      },
+      "previous_hash": "fe671188a39d246a02c738b22c9844469f9c92e30c925196f1580d7b2d64930b",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 33,
+      "timestamp": "2026-10-07T10:41:17.861390+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "84b19c13337ccb84123260ea93d1d10294f7807aaecbbdd25cb2553553244f3d",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861408+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "NOISE-0002",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "46c4d396de97428790029f8be2d05c8b4f3b015eb04bbd3cfef43723a2064273",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 34,
+      "timestamp": "2026-10-07T10:41:17.861417+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "0d1a7468c673ca0f9eff0bc53d8c9e21fc6b732de4cd11e7c0843017848d7766",
+      "payload": {
+        "resource_id": "NOISE-0003",
+        "resource_scope": "payment-service",
+        "score": 0.043646197812262554,
+        "source": "confluence"
+      },
+      "previous_hash": "84b19c13337ccb84123260ea93d1d10294f7807aaecbbdd25cb2553553244f3d",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 35,
+      "timestamp": "2026-10-07T10:41:17.861445+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "701bd8df1b8f68967a28bdc146cd68cf645c0b6d90d0bff99729ecbfcb65a90e",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861466+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "NOISE-0003",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "0d1a7468c673ca0f9eff0bc53d8c9e21fc6b732de4cd11e7c0843017848d7766",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 36,
+      "timestamp": "2026-10-07T10:41:17.861476+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "4d24e89d1b67857e3c777cf3c631a659c94ae809110f2e226828f1811abf7d4c",
+      "payload": {
+        "resource_id": "NOISE-0004",
+        "resource_scope": "payment-service",
+        "score": 0.043646197812262554,
+        "source": "confluence"
+      },
+      "previous_hash": "701bd8df1b8f68967a28bdc146cd68cf645c0b6d90d0bff99729ecbfcb65a90e",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 37,
+      "timestamp": "2026-10-07T10:41:17.861503+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "6883a80fa35d7770d5562ca4db20eac74244015c1bc127d8713a2e2140e9c329",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861521+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "NOISE-0004",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "4d24e89d1b67857e3c777cf3c631a659c94ae809110f2e226828f1811abf7d4c",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 38,
+      "timestamp": "2026-10-07T10:41:17.861531+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "5f634950a89364b54017dbe946c15c36ce5c06b23a017f03b0efe05e20e7eeb6",
+      "payload": {
+        "resource_id": "NOISE-0005",
+        "resource_scope": "payment-service",
+        "score": 0.043646197812262554,
+        "source": "confluence"
+      },
+      "previous_hash": "6883a80fa35d7770d5562ca4db20eac74244015c1bc127d8713a2e2140e9c329",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 39,
+      "timestamp": "2026-10-07T10:41:17.861558+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "e0d5755a6e4e3449de96feb4fcabf94845ffed6c809bb3e79fbf9e43de673624",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861575+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "NOISE-0005",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "5f634950a89364b54017dbe946c15c36ce5c06b23a017f03b0efe05e20e7eeb6",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 40,
+      "timestamp": "2026-10-07T10:41:17.861585+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "38fb38ef772b0ba5b87ec200f062d4528f831f8bfa6f27dffc15154dc681d3eb",
+      "payload": {
+        "resource_id": "J-02",
+        "resource_scope": "payment-service",
+        "score": 0,
+        "source": "jira"
+      },
+      "previous_hash": "e0d5755a6e4e3449de96feb4fcabf94845ffed6c809bb3e79fbf9e43de673624",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 41,
+      "timestamp": "2026-10-07T10:41:17.861611+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "956a4237c8c9a74517be7a8fef8c2bce8cb76e7ecb1c0abe2c78ec69aef16991",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861630+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "J-02",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "38fb38ef772b0ba5b87ec200f062d4528f831f8bfa6f27dffc15154dc681d3eb",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 42,
+      "timestamp": "2026-10-07T10:41:17.861640+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "39c69e8f40b95ce0fcd8d3702007d72dd8e567b93f558122fe416e0c67d61517",
+      "payload": {
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "score": 0,
+        "source": "jira"
+      },
+      "previous_hash": "956a4237c8c9a74517be7a8fef8c2bce8cb76e7ecb1c0abe2c78ec69aef16991",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 43,
+      "timestamp": "2026-10-07T10:41:17.861671+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "12b78df83c3be6b527c8a36a95192920893777fb5dc9ac40213e9f6fd6c661de",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861689+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "39c69e8f40b95ce0fcd8d3702007d72dd8e567b93f558122fe416e0c67d61517",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 44,
+      "timestamp": "2026-10-07T10:41:17.861698+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "23218c2532f959fec48e813610d17158da85edefae7c1f71ccf6440b878bca06",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861745+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "D-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "drive",
+        "version": 1
+      },
+      "previous_hash": "12b78df83c3be6b527c8a36a95192920893777fb5dc9ac40213e9f6fd6c661de",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 45,
+      "timestamp": "2026-10-07T10:41:17.861757+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "ee6e108c280fd16de6c143afb82acd0aaac23c00b0c00b1c9792d5ef077dd264",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861787+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "23218c2532f959fec48e813610d17158da85edefae7c1f71ccf6440b878bca06",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 46,
+      "timestamp": "2026-10-07T10:41:17.861798+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "94761e5e8372755775651365016e597a81e76de608ee14bf01720e8ea899ed40",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861826+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "C-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "ee6e108c280fd16de6c143afb82acd0aaac23c00b0c00b1c9792d5ef077dd264",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 47,
+      "timestamp": "2026-10-07T10:41:17.861836+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "3d73f5c733afbc9c467636b7edd6c83bd5d193bf94f8a436c72fc16c54422ccb",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861866+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "S-01",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "slack",
+        "version": 1
+      },
+      "previous_hash": "94761e5e8372755775651365016e597a81e76de608ee14bf01720e8ea899ed40",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 48,
+      "timestamp": "2026-10-07T10:41:17.861881+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "8480b1f98e5414c093fc2b5fcc7aa53883fa2c3fb3fd2a0bc0831d57144761c8",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861913+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "BV-05",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "confluence",
+        "version": 1
+      },
+      "previous_hash": "3d73f5c733afbc9c467636b7edd6c83bd5d193bf94f8a436c72fc16c54422ccb",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 49,
+      "timestamp": "2026-10-07T10:41:17.861923+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "11ebeaa5827b4025e5ae9fe8d714a6ac942af2aeebfe666fa08746c21b8c1c43",
+      "payload": {
+        "checked_at": "2026-10-07T10:41:17.861952+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "S-02",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "slack",
+        "version": 1
+      },
+      "previous_hash": "8480b1f98e5414c093fc2b5fcc7aa53883fa2c3fb3fd2a0bc0831d57144761c8",
+      "request_id": "0cb1b02a0887466398ab500784d335f4",
+      "schema_version": 1,
+      "seq": 50,
+      "timestamp": "2026-10-07T10:41:17.861962+00:00"
+    }
+  ],
+  "total": 820,
+  "as_of": 1231,
+  "next_after": 50,
+  "semantics": "Events through this application; not proof of human reading."
+}

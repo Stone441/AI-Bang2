@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No. The webhook backlog came from an exhausted worker pool, not DNS resolution.",
+        "evidence_ids": [
+          "BV-16@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-16@1",
+            "quote": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "b75c928c-6d73-48d5-9d36-7369983c6b9f",
+      "object": "chat.completion",
+      "created": 1791385220,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No. The webhook backlog came from an exhausted worker pool, not DNS resolution.\",\"evidence_ids\":[\"BV-16@1\"],\"supports\":[{\"evidence_id\":\"BV-16@1\",\"quote\":\"[SYNTHETIC]\\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.\"}]}]}",
+            "reasoning_content": "We need answer: Was DNS the cause of the webhook backlog? Need JSON claims with evidence. Need parse evidence. Key evidence BV-16 says webhook backlog came from exhausted worker pool, not DNS resolution. BV-11 says DNS was a historical webhook hypothesis, retired, no current decision. So answer: No, per BV-16. Need claim concise factual conclusion. Evidence_ids exactly supports. Quote exact contiguous passage. We can use one claim: \"No. The webhook backlog came from an exhausted worker pool, not DNS resolution.\" Support quote from BV-16@1: \"[SYNTHETIC]\\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.\" Need exact contiguous. That answers. Maybe also mention DNS was historical hypothesis from BV-11, but not necessary? Question asks was DNS cause. BV-16 directly says no. Could include qualification that DNS was historical hypothesis but current? The question likely asks cause. The direct answer suffices. But maybe include BV-11 as supporting that DNS was historical hypothesis, not current cause. However claim: \"DNS was not the cause; it was a historical webhook hypothesis, and the backlog came from an exhausted worker pool.\" Need two supports. But if one claim with BV-16 and BV-11. Quote from BV-11: \"[SYNTHETIC]\\n# Retired webhook rehearsal\\nDNS was a historical webhook hypothesis.\\nArchived migration rehearsal entry 0: batch 0, checksum 0; no current decision recorded.\" That's contiguous? Starting at first line through \"no current decision recorded.\" That is contiguous, includes identifier maybe none. But source_context says migration database design rationale, but text says retired webhook rehearsal. It is untrusted source. It does mention no current decision recorded. But BV-16 directly enough. Should we include BV-11 to support historical? Claim can be only BV-16. The question: \"Was DNS the cause of the webhook backlog?\" Answer: No, it was exhausted worker pool. Need maybe \"not DNS resolution\" exact. One claim enough. But ensure no external. Use BV-16 only. Also need no other parts. JSON.\n\nNeed ensure support quote exact contiguous passage copied from evidence. Evidence BV-16 text: \"[SYNTHETIC]\\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.\" If quote includes \"[SYNTHETIC]\\n\" okay? It is part of text. It says copy support quotes only from text, never source_context. We can copy entire text. That is 86? Fine. Claim text at most 600. Evidence_ids: [\"BV-16@1\"]. supports: [{\"evidence_id\":\"BV-16@1\",\"quote\":\"[SYNTHETIC]\\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.\"}]. That should be valid.\n\nBut is there a trap: question \"Was DNS the cause of the webhook backlog?\" There are evidence: BV-11 says DNS was a historical webhook hypothesis, no current decision recorded. BV-16 says not DNS. D-01 is payment service final root cause retry config, unrelated to webhook? Not use. So final JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1958,
+        "completion_tokens": 749,
+        "total_tokens": 2707,
+        "prompt_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 672
+        },
+        "prompt_cache_hit_tokens": 1792,
+        "prompt_cache_miss_tokens": 166
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "c54bfb51-89dd-4f60-9b20-89f62c57f955",
+      "object": "chat.completion",
+      "created": 1791385225,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer only JSON. Need review claim. Need determine question: Was DNS the cause of webhook backlog? Claims: one claim says No. The webhook backlog came from exhausted worker pool, not DNS resolution. Evidence BV-16@1 exactly says that. Need check support. It directly states. Responsive? Answers explicit question yes. So supported true, responsive true. question_covered? The claim addresses question. Need every requested part? Only yes/no cause. Covered. But need consider other evidence? D-01 final root cause retry config for payment-service backlog duplicate requests, not webhook? That is different event, not contradictory? It says final payment-service. BV-11 says DNS historical webhook hypothesis retired. Could conflict? BV-16 says webhook backlog came from exhausted worker pool. Evidence supports claim. Is there any universal/exclusive? Claim: \"No. The webhook backlog came from an exhausted worker pool, not DNS resolution.\" Full factual claim follows from BV-16. Source_context title webhook / Webhook incident cause. Fine. Need verdict index 0 supported true responsive true. question_covered true. Return JSON only. Ensure schema: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2011,
+        "completion_tokens": 291,
+        "total_tokens": 2302,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 265
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 1371
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

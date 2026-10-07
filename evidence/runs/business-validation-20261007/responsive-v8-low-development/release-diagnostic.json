@@ -1,0 +1,89 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No. PAY-102 Done does not authorize general customer release; the release decision approved a controlled pilot only, states general availability (GA) is not approved, and says PAY-102 Done is not customer release approval.",
+        "evidence_ids": [
+          "J-02@1",
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "8aab7c22-c08e-4e41-93ba-4823a4ed0148",
+      "object": "chat.completion",
+      "created": 1791379670,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No. PAY-102 Done does not authorize general customer release; the release decision approved a controlled pilot only, states general availability (GA) is not approved, and says PAY-102 Done is not customer release approval.\",\"evidence_ids\":[\"J-02@1\",\"D-02@1\"],\"supports\":[{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"},{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"}]}]}",
+            "reasoning_content": "We need answer question: Does PAY-102 Done authorize general customer release? Need JSON only. We need claims with evidence_ids and supports quotes. We need use supplied evidence. We need answer directly. Likely no. Need cite evidence that PAY-102 code fix Done does not approve general customer release, and release decision controlled pilot approved, GA not approved, PAY-102 Done is not customer release approval. Also maybe payment-retry available only to controlled pilot, GA not approved. We need minimal claims. At most four claims. We can make one claim: No, PAY-102 Done does not authorize general customer release; it is code completion, and release decision records controlled pilot approved but GA not approved, and PAY-102 Done is not customer release approval. Cite J-02@1 and D-02@1. That may suffice. Need exact contiguous passages. J-02@1 text: \"[SYNTHETIC]\\nPAY-102 code fix: Done. Code completion does not approve general customer release.\" Quote can be \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" D-02@1: \"[SYNTHETIC]\\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" Quote can be \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" That directly answers. We can add claim about payment-retry only controlled pilot? But question specifically PAY-102 Done authorize general customer release? Could answer no and mention only pilot approved. Maybe one claim enough. Need ensure every explicit identifier like PAY-102 appears in support quotes. In first quote includes PAY-102. Second quote includes PAY-102. Good. Claim text: \"No. PAY-102 Done does not authorize general customer release; the release decision approved a controlled pilot only and states general availability (GA) is not approved, and PAY-102 Done is not customer release approval.\" Evidence IDs J-02@1 and D-02@1. Supports with quotes. That covers. Could include third claim? But minimal. Need at most four claims. Use one claim. Ensure JSON exactly schema: {\"claims\":[...]}.\n\nNeed no external. Quote length 12-1200. Fine. Ensure evidence_ids exactly supports evidence_id. Supports array with evidence_id same. Good.\n\nLet's produce JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1349,
+        "completion_tokens": 648,
+        "total_tokens": 1997,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 506
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 1349
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "3a9e15f1-887d-4115-b6ba-72dec248298e",
+      "object": "chat.completion",
+      "created": 1791379673,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review evidence support and question coverage. We have question: \"Does PAY-102 Done authorize general customer release?\" Claims: one claim. Need verdict supported/responsive. Need determine if claim follows from cited evidence J-02@1 and D-02@1. Claim text: \"No. PAY-102 Done does not authorize general customer release; the release decision approved a controlled pilot only, states general availability (GA) is not approved, and says PAY-102 Done is not customer release approval.\"\n\nEvidence J-02: PAY-102 code fix: Done. Code completion does not approve general customer release.\nD-02: Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\n\nSupported? It directly follows. Need check scope: PAY-102 Done does not authorize general customer release. J-02 says code completion does not approve general customer release. D-02 says release decision controlled pilot approved, GA not approved, PAY-102 Done is not customer release approval. This supports. Responsive? Question asks yes/no. Claim answers no and provides reasons. Responsive true.\n\nQuestion coverage: only one claim addresses explicit requested part. Need question_covered true. But check \"Does PAY-102 Done authorize general customer release?\" Claim addresses every requested part: yes/no. So true.\n\nNeed output exactly one verdict for every supplied claim. JSON schema. Ensure no extra. {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}\n\nNeed consider if \"release decision approved a controlled pilot only\" wording: D-02 says controlled pilot approved; does \"only\" follow? It says GA not approved. \"approved a controlled pilot only\" could mean only pilot approved. Evidence says controlled pilot approved, GA not approved. Could also other things? But in context likely supports. Is \"only\" too strong? It says release decision approved a controlled pilot. GA not approved. No mention other approvals. But \"only\" could be inferred as not GA. However evidence does not explicitly say only controlled pilot? It says controlled pilot approved. General availability not approved. That implies not general release. \"only\" might be acceptable as the decision approved pilot and did not approve GA. Could be other approvals not mentioned but not relevant. Full factual claim? It states \"the release decision approved a controlled pilot only\" - if there were other approvals? Not in evidence. But likely supported by D-02. However strict? Need not overcomplicate.\n\nQuestion asks \"Does PAY-102 Done authorize general customer release?\" Answer no. Claim \"PAY-102 Done does not authorize general customer release\" supported by both. \"states general availability (GA) is not approved\" supported. \"says PAY-102 Done is not customer release approval\" supported. Good.\n\nNeed final only JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1473,
+        "completion_tokens": 621,
+        "total_tokens": 2094,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 595
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 1473
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

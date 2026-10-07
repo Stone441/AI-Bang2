@@ -1,0 +1,88 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "SGD connector approval does not cover Singapore business USD accounts; business USD accounts require a separate connector approval.",
+        "evidence_ids": [
+          "BV-07@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-07@1",
+            "quote": "Singapore business USD accounts require a separate connector approval; SGD approval does not include USD."
+          }
+        ]
+      },
+      {
+        "text": "The Atlas connector's supported scope is Singapore business SGD accounts (pilot supported), and it does not support personal SGD accounts.",
+        "evidence_ids": [
+          "BV-06@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-06@1",
+            "quote": "The Atlas connector supports Singapore business SGD accounts, not personal accounts.\n\nAtlas account eligibility\nAccount\tScope\n\n Singapore business SGD \t Pilot supported \n\n Personal SGD \t Not supported"
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "cd28f768-e601-4125-b489-d1def1cc1292",
+      "object": "chat.completion",
+      "created": 1791372636,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"SGD connector approval does not cover Singapore business USD accounts; business USD accounts require a separate connector approval.\",\"evidence_ids\":[\"BV-07@1\"],\"supports\":[{\"evidence_id\":\"BV-07@1\",\"quote\":\"Singapore business USD accounts require a separate connector approval; SGD approval does not include USD.\"}]},{\"text\":\"The Atlas connector's supported scope is Singapore business SGD accounts (pilot supported), and it does not support personal SGD accounts.\",\"evidence_ids\":[\"BV-06@1\"],\"supports\":[{\"evidence_id\":\"BV-06@1\",\"quote\":\"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 819,
+        "completion_tokens": 172,
+        "total_tokens": 991,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 435
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "72ae045b-b20e-4d18-b817-d2083e431c0a",
+      "object": "chat.completion",
+      "created": 1791372637,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 963,
+        "completion_tokens": 29,
+        "total_tokens": 992,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 707
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

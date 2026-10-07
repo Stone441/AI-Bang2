@@ -1,10 +1,10 @@
 import uuid
 from dataclasses import asdict
-from .contracts import Actor, Evidence, MODE, TENANT
+from .contracts import Actor, Evidence, MODE, TENANT, now
 from .sources import policy_allows
 from .model_receipt import public_receipt
 
-from .retrieval import tokens, ranked_windows, window_evidence, resolve_window
+from .retrieval import tokens, ranked_windows, bm25_windows, spans, window_evidence, resolve_window
 
 
 class FakeExtractiveModel:
@@ -18,10 +18,13 @@ class FakeExtractiveModel:
 
 
 class Engine:
-    def __init__(self, store, world, audit, model=None, *, tenant=TENANT, mode=MODE):
+    def __init__(self, store, world, audit, model=None, *, tenant=TENANT, mode=MODE,
+                 retrieval_strategy='bm25'):
+        if retrieval_strategy not in ('lexical','bm25'):raise ValueError('Unsupported retrieval strategy')
         self.store,self.world,self.audit=store,world,audit
         self.model=model or FakeExtractiveModel()
         self.tenant,self.mode=tenant,mode
+        self.retrieval_strategy=retrieval_strategy
         self.before_dispatch=None
 
     def prefilter(self, actor, resource):
@@ -38,6 +41,19 @@ class Engine:
         self.audit.append('authorization_decided',actor.user_id,request_id,
                           {'resource_id':resource['id'],'source':resource['source'],'version':resource['version'],
                            'phase':phase,'resource_scope':'payment-service',**asdict(decision)})
+        discovery=getattr(self.world,'discovery',None)
+        if (decision.result=='unknown' and phase!='preview'
+                and getattr(self.model,'claim_format',None)=='grounded_synthesis_v1'):
+            from .confluence import SourceUnavailable
+            raise SourceUnavailable('Current source coverage unavailable; retry later')
+        content_changed=(decision.result=='deny' and decision.method in {
+            source+'-'+change for source in ('confluence','jira','slack','drive')
+            for change in ('content-changed','version-changed')})
+        if ((decision.result=='unknown' or content_changed) and phase not in ('preview',)
+                and discovery is not None
+                and discovery.bounded_queries and discovery.background_started and actor==discovery.actor):
+            from .confluence import SourceUnavailable
+            raise SourceUnavailable('Current source coverage unavailable; retry later')
         return decision.result=='allow'
 
     def query(self, actor:Actor, question, history_id=None):
@@ -45,24 +61,34 @@ class Engine:
         if not isinstance(question,str) or not question.strip() or len(question)>4000:
             raise ValueError('Question must contain 1–4000 characters')
         rid=uuid.uuid4().hex
-        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + lexical aliases + exact windows + authorized one-hop links','history_id':None,'query_kind':'independent'})
+        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + '+self.retrieval_strategy+' + lexical aliases + exact windows + authorized one-hop links','history_id':None,'query_kind':'independent'})
         try:
             if hasattr(self.world, 'prepare'):
                 self.world.prepare(actor,self.store,self.audit,rid)
+            if (getattr(self.model,'claim_format',None)=='grounded_synthesis_v1'
+                    and self.audit.request_has_unknown(actor.user_id,rid)):
+                from .confluence import SourceUnavailable
+                raise SourceUnavailable('Current source coverage unavailable; retry later')
             query_tokens=tokens(question)
+            visible=[r for r in self.store.resources()
+                     if r['tenant']==actor.tenant and self.prefilter(actor,r)]
+            bm25=bm25_windows(visible,query_tokens) if self.retrieval_strategy=='bm25' else None
+            def rank(resource, *, supplementary=False):
+                if bm25 is None:return ranked_windows(resource,query_tokens,supplementary=supplementary)
+                return bm25.get(resource['id']) or ([(0,*spans(resource['text'])[0])] if supplementary else [])
             # Legacy in-process history_id is accepted for old harness compatibility only.
             # Independent queries never read or supplement previous answer dependencies.
             candidates=[]
-            for resource in self.store.resources():
-                if resource['tenant']!=actor.tenant: continue
-                if not self.prefilter(actor,resource): continue
-                windows=ranked_windows(resource,query_tokens)
+            for resource in visible:
+                windows=rank(resource)
                 score=windows[0][0] if windows else 0
                 if score: candidates.append((score,resource))
             candidates.sort(key=lambda pair:(-pair[0],pair[1]['id']))
             # Expand only links from currently authorized seeds. Targets still receive their
             # own local prefilter and final source check below; links never grant access.
-            seed_ids={r['id'] for _,r in candidates}
+            # Only retained candidates are seeds. A weak lexical hit below the
+            # cutoff must still be eligible as an authorized linked target.
+            seed_ids={r['id'] for _,r in candidates[:16]}
             expansions=[]
             for _,seed in candidates[:12]:
                 # This check only authorizes link expansion. Linkless candidates
@@ -84,7 +110,7 @@ class Engine:
                 if not self.check(actor,r,rid,'before_model'): continue
                 current=self.world.resources[r['id']]
                 if current['version']!=r['version'] or not current['active']: continue
-                for _,start,end in ranked_windows(r,query_tokens,supplementary=True):
+                for _,start,end in rank(r,supplementary=True):
                     eid,locator,text=window_evidence(r,start,end)
                     if len(selected)>=24: break
                     if len(text)>budget: continue
@@ -92,26 +118,38 @@ class Engine:
                     selected.append(Evidence(eid,r['id'],r['version'],r['source'],r['title'],locator,text,r['source_updated_at'],r['indexed_at'],r['source_url']))
             # Recheck the complete selected set immediately before model dispatch.
             # A later candidate read may have observed a permission/content change.
-            for e in selected:
-                resource=self.store.get(e.resource_id)
-                if (not resource or not self.check(actor,resource,rid,'model_dispatch')
-                        or self.world.resources[e.resource_id]['version']!=e.version):
-                    raise PermissionError('Evidence changed; please ask again')
-            for e in selected:
-                self.audit.append('evidence_used',actor.user_id,rid,{'evidence_id':e.evidence_id,'resource_id':e.resource_id,'source':e.source,'version':e.version,'stage':'sent_to_model','resource_scope':'payment-service'})
-            def authorize_model_stage(phase):
-                if phase!='review_dispatch': raise ValueError('Invalid model stage')
+            def authorize_selected(phase):
+                checked=set()  # Request/phase local; never reuse a prior stage's allow.
                 for e in selected:
                     resource=self.store.get(e.resource_id)
-                    if (not resource or not self.check(actor,resource,rid,phase)
+                    key=(e.resource_id,e.version)
+                    if (not resource or resource['version']!=e.version
+                            or (key not in checked and not self.check(actor,resource,rid,phase))
                             or self.world.resources[e.resource_id]['version']!=e.version):
                         raise PermissionError('Evidence changed; please ask again')
+                    checked.add(key)
+            authorize_selected('model_dispatch')
+            for e in selected:
+                self.audit.append('evidence_used',actor.user_id,rid,{'evidence_id':e.evidence_id,'resource_id':e.resource_id,'source':e.source,'version':e.version,'stage':'prepared_for_answer','resource_scope':'payment-service'})
+            def authorize_model_stage(phase):
+                if phase!='review_dispatch': raise ValueError('Invalid model stage')
+                authorize_selected(phase)
                 for e in selected:
                     self.audit.append('evidence_used',actor.user_id,rid,
                                       {'evidence_id':e.evidence_id,'resource_id':e.resource_id,
-                                       'source':e.source,'version':e.version,'stage':'sent_to_review',
+                                       'source':e.source,'version':e.version,'stage':'prepared_for_review',
                                        'resource_scope':'payment-service'})
-            if hasattr(self.model,'generate_with_authorization'):
+            if hasattr(self.model,'generate_with_provenance'):
+                from .synthetic_provenance import SyntheticProvenance
+                provenance = SyntheticProvenance(
+                    getattr(self.world, 'approved_synthetic_resource_ids', ()), self.world.resources.get)
+                def observe_model(event, payload):
+                    if event not in ('model_dispatch_intent','model_dispatch_attempted','model_usage_received',
+                                     'model_output_accepted','model_output_rejected'):
+                        raise ValueError('Invalid model event')
+                    self.audit.append(event,actor.user_id,rid,{**payload,'resource_scope':'payment-service'})
+                draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage,observe_model)
+            elif hasattr(self.model,'generate_with_authorization'):
                 draft=self.model.generate_with_authorization(question,selected,rid,authorize_model_stage)
             elif hasattr(self.model,'generate_for_request'):
                 draft=self.model.generate_for_request(question,selected,rid)
@@ -151,14 +189,14 @@ class Engine:
                                   review_status='accepted')
             self.audit.append('generation_completed',actor.user_id,rid,generation)
             if self.before_dispatch: self.before_dispatch()
-            for e in selected:
-                resource=self.store.get(e.resource_id)
-                if (not resource or resource['version']!=e.version or not self.check(actor,resource,rid,'before_dispatch')
-                        or self.world.resources[e.resource_id]['version']!=e.version):
-                    raise PermissionError('Evidence changed; please ask again')
-            response={'request_id':rid,'mode':self.mode,'model':self.model.name,'claims':claims,
+            authorize_selected('before_dispatch')
+            response={'request_id':rid,'question':question,'answered_at':now(),'mode':self.mode,'model':self.model.name,'claims':claims,
                       'uncertainties':[getattr(self.model,'answer_notice','Source excerpts only; live AI synthesis is not enabled.')] if claims else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
+            if self.audit.request_has_unknown(actor.user_id,rid):
+                response['uncertainties']=['Some source checks could not be completed. These results may omit relevant information; retry before relying on a complete conclusion.']
+            elif not claims and getattr(self.model,'claim_format',None)=='grounded_synthesis_v1':
+                response['uncertainties'].append('If you mean a particular event or policy, name it and its scope so I can check the relevant evidence.')
             if 'model_call' in generation: response['model_call']=generation['model_call']
             if synthesis:
                 response.update(claim_format=generation['claim_format'],model_review=review_receipt,
@@ -166,8 +204,15 @@ class Engine:
             self.audit.append('response_committed',actor.user_id,rid,{'response':response})
             self.store.save_run(rid,actor.user_id,response)
             return response
-        except Exception:
-            self.audit.append('request_failed',actor.user_id,rid,{'reason':'request_stopped'})
+        except Exception as error:
+            from .deepseek import PriceReviewRequired, ModelInputRejected, ModelUnavailable
+            from .budget import BudgetExceeded
+            reason = ('model_price_review_required' if isinstance(error,PriceReviewRequired)
+                      else 'model_budget_unavailable' if isinstance(error,BudgetExceeded)
+                      else 'model_input_rejected' if isinstance(error,ModelInputRejected)
+                      else 'model_input_or_output_unavailable' if isinstance(error,ModelUnavailable)
+                      else 'request_stopped')
+            self.audit.append('request_failed',actor.user_id,rid,{'reason':reason})
             raise
 
     def evidence(self, actor, eid):
@@ -182,7 +227,7 @@ class Engine:
             locator,text=resolve_window(r,eid)
         except (KeyError,ValueError):
             raise PermissionError('Unavailable') from None
-        return {'evidence_id':eid,'title':r['title'],'text':text,'locator':locator,'version':r['version'],'source_url':r['source_url']}
+        return {'evidence_id':eid,'source':r['source'],'title':r['title'],'text':text,'locator':locator,'version':r['version'],'source_url':r['source_url']}
 
     def safe_history(self, actor, request_id=None):
         self.validate_actor(actor)

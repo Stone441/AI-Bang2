@@ -1,0 +1,96 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Current settlement is daily, and the proposed November hourly schedule is not approved.",
+        "evidence_ids": [
+          "BV-32@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-32@1",
+            "quote": "The proposed November hourly schedule is not approved. Current settlement is daily."
+          }
+        ]
+      },
+      {
+        "text": "SET-610 is In Progress and owned by Eva; it is blocked because bank confirmation is missing.",
+        "evidence_ids": [
+          "BV-33@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-33@1",
+            "quote": "SET-610 is In Progress because bank confirmation is missing. Owner: Eva."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "39211a07-be61-49f9-80ef-e11e6b49d6aa",
+      "object": "chat.completion",
+      "created": 1791384653,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Current settlement is daily, and the proposed November hourly schedule is not approved.\",\"evidence_ids\":[\"BV-32@1\"],\"supports\":[{\"evidence_id\":\"BV-32@1\",\"quote\":\"The proposed November hourly schedule is not approved. Current settlement is daily.\"}]},{\"text\":\"SET-610 is In Progress and owned by Eva; it is blocked because bank confirmation is missing.\",\"evidence_ids\":[\"BV-33@1\"],\"supports\":[{\"evidence_id\":\"BV-33@1\",\"quote\":\"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\"}]}]}",
+            "reasoning_content": "We need answer. Need parse question: \"What settlement schedule is current, is the proposed November hourly schedule approved, and who owns SET-610 and what is blocking it?\" Need produce JSON claims only. Need use evidence. We need identify requested parts:\n1 current settlement schedule\n2 proposed November hourly schedule approved?\n3 who owns SET-610\n4 what is blocking SET-610.\n\nEvidence:\nBV-32@1: \"The proposed November hourly schedule is not approved. Current settlement is daily.\" Covers 1 and 2.\nBV-33@1: \"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\" Covers owner and blocker. Note ticket ID must appear in quote. Quote exact. Good.\nNeed claims max 4, each concise. Could combine current schedule and November approval? Each claim can have multiple facts if same evidence? The instruction says combine overlapping conclusions. Maybe one claim for schedule: current settlement daily; proposed November hourly schedule not approved. Then second for SET-610 owner and blocker. That should cover all. Need supports with exact quotes. Evidence_ids exactly supports IDs. Claim text at most 600. Claim 1 text: \"Current settlement is daily, and the proposed November hourly schedule is not approved.\" Evidence BV-32@1 quote: \"The proposed November hourly schedule is not approved. Current settlement is daily.\" That quote order reversed but exact contiguous passage? It is two sentences contiguous in source. Good. Claim 2: \"SET-610 is In Progress and owned by Eva; it is blocked because bank confirmation is missing.\" Evidence BV-33@1 quote: \"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\" Need ticket ID appears. Good.\n\nNeed ensure no extra irrelevant. We can output 2 claims. JSON only. Use {\"claims\":[...]} exactly. Need evidence_ids array with BV-32@1 etc. supports array with evidence_id and quote. Ensure quote exact. Let's verify BV-32 quote: \"[SYNTHETIC]\\nThe proposed November hourly schedule is not approved. Current settlement is daily.\" Text includes [SYNTHETIC] line. We can quote \"The proposed November hourly schedule is not approved. Current settlement is daily.\" Is that exact contiguous passage copied from evidence? It omits [SYNTHETIC] prefix, but contiguous from after prefix. That's okay? \"exact contiguous passage copied from that evidence\" likely can start after [SYNTHETIC]. It is contiguous. For BV-33: \"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\" Exact contiguous. Good.\n\nCould there be issue: \"who owns SET-610 and what is blocking it?\" We answer Eva and bank confirmation missing. Good. Need no external.\n\nFinal JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2213,
+        "completion_tokens": 713,
+        "total_tokens": 2926,
+        "prompt_tokens_details": {
+          "cached_tokens": 2048
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 580
+        },
+        "prompt_cache_hit_tokens": 2048,
+        "prompt_cache_miss_tokens": 165
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "a75d418b-80b0-4ae6-9f38-d662a8853462",
+      "object": "chat.completion",
+      "created": 1791384657,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer review evidence support and question coverage. Need return JSON only with question_covered and verdicts for every supplied claim. We need examine claims and evidence. Claims:\n\n1. \"Current settlement is daily, and the proposed November hourly schedule is not approved.\" evidence BV-32@1 quote: \"The proposed November hourly schedule is not approved. Current settlement is daily.\" So supported. Responsive? Question asks: \"What settlement schedule is current, is the proposed November hourly schedule approved, and who owns SET-610 and what is blocking it?\" Claim 1 answers current settlement daily, proposed November hourly not approved. Yes responsive.\n\n2. \"SET-610 is In Progress and owned by Eva; it is blocked because bank confirmation is missing.\" evidence BV-33@1 quote: \"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\" Supported. Responsive? Answers who owns SET-610 and what blocking it. Yes.\n\nQuestion coverage: Need cover every requested part: current settlement schedule, proposed November hourly schedule approved?, who owns SET-610 and what is blocking it. Claim1 covers current schedule and proposed schedule approval. Claim2 covers owner and blocker. So question_covered true.\n\nNeed check if any unsupported details. Claim1: \"Current settlement is daily, and proposed November hourly schedule is not approved.\" Evidence exactly. Claim2: \"SET-610 is In Progress and owned by Eva; it is blocked because bank confirmation is missing.\" Evidence: \"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\" That supports. Need consider \"blocked because\" vs \"In Progress because\" maybe \"is In Progress because bank confirmation is missing\" implies blocked? Hmm claim says \"it is blocked because bank confirmation is missing.\" Evidence says \"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\" Could be interpreted as In Progress due to missing confirmation? Actually \"because bank confirmation is missing\" modifies In Progress? It says SET-610 is In Progress because bank confirmation is missing. This is odd but likely blocker. The claim says blocked because bank confirmation missing. Is that supported? Need be strict. \"In Progress because bank confirmation is missing\" might not explicitly say blocked, but if bank confirmation missing causing In Progress? Let's parse: \"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\" It doesn't say \"blocked\" but question asks what is blocking it. Evidence says In Progress because bank confirmation is missing. That is effectively blocker. Should be supported.\n\nNeed ensure no other contradictions? BV-35@1 says if bank confirmation absent, ask Eva for status; do not promise completed settlement. That corroborates Eva and missing confirmation but not owner? It says ask Eva for status. BV-33 says owner Eva. Fine.\n\nPotential issue: Claim 2 \"SET-610 is In Progress and owned by Eva; it is blocked because bank confirmation is missing.\" Evidence: \"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\" Could \"In Progress because bank confirmation is missing\" not necessarily \"blocked because\" but it's close. Since question asks blocking, and evidence gives reason for status? We need decide supported. It likely supports. No unsupported.\n\nNeed output JSON exactly:\n{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true}]}\n\nEnsure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2329,
+        "completion_tokens": 756,
+        "total_tokens": 3085,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 718
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 1689
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

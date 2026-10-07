@@ -1,0 +1,336 @@
+{
+  "request_id": "8d5ebebb3dc941aa9ce8aefc2b4b844d",
+  "question": "Does SGD connector approval cover business USD accounts?",
+  "answered_at": "2026-10-07T08:37:21.188819+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "evidence_ids": [
+        "BV-07@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.",
+      "evidence_ids": [
+        "BV-06@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "evidence_ids": [
+        "BV-31@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+      "evidence_ids": [
+        "BV-09@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "evidence_ids": [
+        "BV-10@1"
+      ]
+    },
+    {
+      "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+      "evidence_ids": [
+        "D-02@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.",
+      "evidence_ids": [
+        "BV-01@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "evidence_ids": [
+        "BV-02@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+      "evidence_ids": [
+        "BV-03@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+      "evidence_ids": [
+        "BV-04@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+      "evidence_ids": [
+        "BV-05@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nPartner-led onboarding requires manual verification; direct onboarding supports automated verification.",
+      "evidence_ids": [
+        "BV-08@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "evidence_ids": [
+        "BV-11@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "evidence_ids": [
+        "BV-12@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRoll back the ledger migration if settlement differences exceed five basis points.",
+      "evidence_ids": [
+        "BV-13@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.",
+      "evidence_ids": [
+        "BV-14@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-07@1",
+      "resource_id": "BV-07",
+      "version": 1,
+      "source": "slack",
+      "title": "integration / USD exception",
+      "locator": {
+        "section": "USD exception"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169602+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-07"
+    },
+    {
+      "evidence_id": "BV-06@1",
+      "resource_id": "BV-06",
+      "version": 1,
+      "source": "jira",
+      "title": "integration / SGD account eligibility",
+      "locator": {
+        "section": "SGD account eligibility"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169588+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-06"
+    },
+    {
+      "evidence_id": "BV-31@1",
+      "resource_id": "BV-31",
+      "version": 1,
+      "source": "slack",
+      "title": "settlement / Settlement scope",
+      "locator": {
+        "section": "Settlement scope"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169942+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-31"
+    },
+    {
+      "evidence_id": "BV-09@1",
+      "resource_id": "BV-09",
+      "version": 1,
+      "source": "confluence",
+      "title": "integration / Launch ticket",
+      "locator": {
+        "section": "Launch ticket"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169630+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-09"
+    },
+    {
+      "evidence_id": "BV-10@1",
+      "resource_id": "BV-10",
+      "version": 1,
+      "source": "jira",
+      "title": "integration / Scope confirmation",
+      "locator": {
+        "section": "Scope confirmation"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169644+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-10"
+    },
+    {
+      "evidence_id": "D-02@1",
+      "resource_id": "D-02",
+      "version": 1,
+      "source": "drive",
+      "title": "Payment-retry release approval",
+      "locator": {
+        "paragraph": 1,
+        "section": "Approval decision"
+      },
+      "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169466+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-02"
+    },
+    {
+      "evidence_id": "BV-01@1",
+      "resource_id": "BV-01",
+      "version": 1,
+      "source": "confluence",
+      "title": "authentication / Token rotation decision",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169514+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-01"
+    },
+    {
+      "evidence_id": "BV-02@1",
+      "resource_id": "BV-02",
+      "version": 1,
+      "source": "jira",
+      "title": "authentication / Migration blocker",
+      "locator": {
+        "section": "Migration blocker"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169529+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-02"
+    },
+    {
+      "evidence_id": "BV-03@1",
+      "resource_id": "BV-03",
+      "version": 1,
+      "source": "slack",
+      "title": "authentication / Rejected design thread",
+      "locator": {
+        "section": "Rejected design thread"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169543+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-03"
+    },
+    {
+      "evidence_id": "BV-04@1",
+      "resource_id": "BV-04",
+      "version": 1,
+      "source": "drive",
+      "title": "authentication / Cutover scope",
+      "locator": {
+        "section": "Cutover scope"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169557+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-04"
+    },
+    {
+      "evidence_id": "BV-05@1",
+      "resource_id": "BV-05",
+      "version": 1,
+      "source": "confluence",
+      "title": "authentication / Future policy",
+      "locator": {
+        "section": "Future policy"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169571+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-05"
+    },
+    {
+      "evidence_id": "BV-08@1",
+      "resource_id": "BV-08",
+      "version": 1,
+      "source": "drive",
+      "title": "integration / Partner channel rule",
+      "locator": {
+        "section": "Partner channel rule"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nPartner-led onboarding requires manual verification; direct onboarding supports automated verification.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169617+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-08"
+    },
+    {
+      "evidence_id": "BV-11@1",
+      "resource_id": "BV-11",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Database design rationale",
+      "locator": {
+        "section": "Database design rationale"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169658+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "evidence_id": "BV-12@1",
+      "resource_id": "BV-12",
+      "version": 1,
+      "source": "drive",
+      "title": "migration / Cutover ticket",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169672+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    },
+    {
+      "evidence_id": "BV-13@1",
+      "resource_id": "BV-13",
+      "version": 1,
+      "source": "confluence",
+      "title": "migration / Rollback signal",
+      "locator": {
+        "section": "Rollback signal"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRoll back the ledger migration if settlement differences exceed five basis points.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169688+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-13"
+    },
+    {
+      "evidence_id": "BV-14@1",
+      "resource_id": "BV-14",
+      "version": 1,
+      "source": "jira",
+      "title": "migration / Past rehearsal",
+      "locator": {
+        "section": "Past rehearsal"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:37:21.169702+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-14"
+    }
+  ],
+  "actor": "product_ops"
+}

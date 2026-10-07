@@ -1,0 +1,391 @@
+{
+  "finished_at": "2026-10-06T06:16:08.867894+00:00",
+  "validated_commit": "dfa40c32d514bf4a1466b5af1caae8192a294334",
+  "mode": "fixture_mock_model_disposable_local_signature",
+  "cases": {
+    "success": {
+      "snapshot": "success-snapshot.json",
+      "snapshot_sha256": "e85475b782ef02589145ca1e6b23a8bfab43e98e11a1fd5bed769906efdf4168",
+      "checkpoint": "success-checkpoint.json",
+      "through_seq": 42,
+      "transport_calls": 1,
+      "error_type": null,
+      "mode": "fixture_mock_model"
+    },
+    "guard": {
+      "snapshot": "guard-snapshot.json",
+      "snapshot_sha256": "5af5e4925049b00200c42f9616b908ead229d68eaaa9c2f44f1d39b3bfb77e67",
+      "checkpoint": "guard-checkpoint.json",
+      "through_seq": 31,
+      "transport_calls": 0,
+      "error_type": "ModelInputRejected",
+      "mode": "fixture_mock_model"
+    },
+    "price": {
+      "snapshot": "price-snapshot.json",
+      "snapshot_sha256": "9ccffb7a2c8ee0660b856b83dd888f8d766969b08bef81fbe1d172024eebc351",
+      "checkpoint": "price-checkpoint.json",
+      "through_seq": 31,
+      "transport_calls": 0,
+      "error_type": "PriceReviewRequired",
+      "mode": "fixture_mock_model"
+    },
+    "budget": {
+      "snapshot": "budget-snapshot.json",
+      "snapshot_sha256": "c33390f54e85fad7094d6d68322e3d683527b3bcd7010afabc3ad0f29627a03d",
+      "checkpoint": "budget-checkpoint.json",
+      "through_seq": 31,
+      "transport_calls": 0,
+      "error_type": "BudgetExceeded",
+      "mode": "fixture_mock_model"
+    },
+    "timeout": {
+      "snapshot": "timeout-snapshot.json",
+      "snapshot_sha256": "483ec9c970df9108ced6a40f50fe39d9b35c056a3a2abc87c6f8ddaa0b19419c",
+      "checkpoint": "timeout-checkpoint.json",
+      "through_seq": 33,
+      "transport_calls": 1,
+      "error_type": "ModelUnavailable",
+      "mode": "fixture_mock_model"
+    },
+    "review": {
+      "snapshot": "review-snapshot.json",
+      "snapshot_sha256": "ac4f816bf38475e7a1f9bf2222e6bc654bdf6bbecbcda4c4c416c79f62487bc4",
+      "checkpoint": "review-checkpoint.json",
+      "through_seq": 51,
+      "transport_calls": 2,
+      "error_type": "ModelUnavailable",
+      "mode": "fixture_mock_model"
+    }
+  },
+  "signature_checks": {
+    "success": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/success-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/success-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 0,
+      "verdict": "anchored_valid",
+      "through_seq": 42,
+      "tail": {
+        "count": 0,
+        "present": false
+      },
+      "expected_accept": true
+    },
+    "guard": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/guard-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/guard-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 0,
+      "verdict": "anchored_valid",
+      "through_seq": 31,
+      "tail": {
+        "count": 0,
+        "present": false
+      },
+      "expected_accept": true
+    },
+    "price": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/price-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/price-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 0,
+      "verdict": "anchored_valid",
+      "through_seq": 31,
+      "tail": {
+        "count": 0,
+        "present": false
+      },
+      "expected_accept": true
+    },
+    "budget": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/budget-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/budget-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 0,
+      "verdict": "anchored_valid",
+      "through_seq": 31,
+      "tail": {
+        "count": 0,
+        "present": false
+      },
+      "expected_accept": true
+    },
+    "timeout": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/timeout-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/timeout-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 0,
+      "verdict": "anchored_valid",
+      "through_seq": 33,
+      "tail": {
+        "count": 0,
+        "present": false
+      },
+      "expected_accept": true
+    },
+    "review": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/review-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/review-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 0,
+      "verdict": "anchored_valid",
+      "through_seq": 51,
+      "tail": {
+        "count": 0,
+        "present": false
+      },
+      "expected_accept": true
+    },
+    "body_modified": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/body_modified-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/success-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 1,
+      "verdict": "anchored_chain_invalid",
+      "through_seq": 42,
+      "tail": null,
+      "expected_accept": false
+    },
+    "middle_deleted": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/middle_deleted-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/success-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 1,
+      "verdict": "covered_events_missing",
+      "through_seq": 42,
+      "tail": null,
+      "expected_accept": false
+    },
+    "covered_tail_deleted": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/covered_tail_deleted-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/success-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 1,
+      "verdict": "covered_events_missing",
+      "through_seq": 42,
+      "tail": null,
+      "expected_accept": false
+    },
+    "whole_chain_recomputed": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/whole_chain_recomputed-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/success-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 1,
+      "verdict": "anchored_head_mismatch",
+      "through_seq": 42,
+      "tail": null,
+      "expected_accept": false
+    },
+    "uncovered_tail_present": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/uncovered_tail_present-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/success-prefix-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 0,
+      "verdict": "anchored_valid_tail_unanchored",
+      "through_seq": 41,
+      "tail": {
+        "anchored": false,
+        "chain_valid": true,
+        "count": 1,
+        "from_seq": 42,
+        "note": "Not covered by the checkpoint signature; replacement or truncation inside this tail is undetectable by this checkpoint.",
+        "present": true,
+        "reason": null,
+        "sequence": null,
+        "to_seq": 42
+      },
+      "expected_accept": true
+    },
+    "old_checkpoint_and_truncated_snapshot": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/old_checkpoint_and_truncated_snapshot-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/success-prefix-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 0,
+      "verdict": "anchored_valid",
+      "through_seq": 41,
+      "tail": {
+        "count": 0,
+        "present": false
+      },
+      "expected_accept": true
+    },
+    "truncated_snapshot_against_retained_latest": {
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/audit_verifier/verify.py",
+        "--events",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/truncated_snapshot_against_retained_latest-events.json",
+        "--checkpoint",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/success-checkpoint.json",
+        "--public-key",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/review-r3a-r4-candidate-20261006/audit/test-public.pem",
+        "--expected-stream-id",
+        "r3a-r4-local-candidate"
+      ],
+      "exit_code": 1,
+      "verdict": "covered_events_missing",
+      "through_seq": 42,
+      "tail": null,
+      "expected_accept": false
+    }
+  },
+  "private_test_key_deleted": true,
+  "runtime_source_hashes": {
+    "brain/.DS_Store": "311eaecff1da9217a09c6b8eb5aae8c9e659fdd5812020b8a9f2f789d1717c54",
+    "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
+    "brain/audit.py": "40bb185bdd25b96c0803c6da3b804a5163a97af2af5c1f147d59e488540c1fa9",
+    "brain/audit_query.py": "837254cdc8a235044dae523c0b9f35c87765a66e91e9215304dc9ad09c77622b",
+    "brain/budget.py": "cd0f195cec3741ab6741648ee4391cf841e63bd12f1e718ebcc4b6fd66b106fb",
+    "brain/confluence.py": "052499ec05ce82bbd4636f2eb2554c37fcf2fda82b8ac7b65a7f2ef9c6353d37",
+    "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
+    "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
+    "brain/credential_input.py": "7736f24b27ad95d8751479144c3c9e52a80a836100e6551b14296fdab62620f4",
+    "brain/deepseek.py": "eaf8a088603b99ff5af62e4461293dc0ae16c571271722a07a114a33f333ddbc",
+    "brain/delegated_query.py": "65388c5cb0b3ae1f8724d24926cd6210489e201d2d7b974dc2774351b158bccb",
+    "brain/discovery.py": "f6d1462582c94f29ed4ecfd9a40e96e67d57900c361e6092f96a45c94901f289",
+    "brain/drive.py": "e2fe84429b34ef2b2ad496188ed20beaf9e6442e5cef625a8f6edc085548f41d",
+    "brain/drive_oauth.py": "4e72272cc0daaa1f290a12738e195594b0fd384e59227a8f0f038835c68cd86e",
+    "brain/engine.py": "715675311480e5a29fa41b03459db401560595a1e4ee0240e1dfc62111230171",
+    "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
+    "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
+    "brain/keychain.py": "329010f678201d0e1592c658c6f5e0f220b71a4d602e2d395fc103dd216514a9",
+    "brain/model_receipt.py": "4055abbc3f8bd9804dcfedc49c2a440ad5fe08771ffd914b1b5f563f8238c431",
+    "brain/operator_web.py": "b652972e7dee0078fb3b188925320b3b61ece4b88ef5039e08e762b782147dc5",
+    "brain/retrieval.py": "227f09d36f0497d5a7affc6021cc534d8e72223a8eda7a56ad1bc0873ecfb64d",
+    "brain/runtime_version.py": "f3cddf0e6da0a33e5e8c85512d2bfab3373b26627baa79a11ef117650ef51d91",
+    "brain/server.py": "0293108fb88ceb1062db7c90d49130b1f704187ad064dafc57117d4a29d9b11c",
+    "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
+    "brain/sources.py": "02b8f29842422938f87dcad4a9f75b25bf5ee24ce4c04067afe51915ec6a61fe",
+    "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
+    "brain/synthesis.py": "f4062b084651af8cfa7696ad58a5b98c74408b8f02ede218d9a08f8e8ef8949f",
+    "brain/synthetic_provenance.py": "1cd96724152507e90c5aa873c27520407d458e6d6a96c21d9f39897d77bfc396",
+    "web/app.js": "294689e09f5edb9b340df16810a39a2c7812de6b63d9a08361a1539c8683d5e3",
+    "web/index.html": "b7a5b621ca33f78a116af5f0711a8de1588e31009e322b005f1f61bbecff4606",
+    "web/style.css": "3fa17c31121628a136fcc14aa5470d8cb4e468516f4cab7d8e533c8b004198f7",
+    "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730",
+    "tools/audit_verifier/chain.py": "59ff077fbcb8673f323e9687458b0d6f8ccf667e1b4f291480df78e4db41f00d",
+    "tools/audit_verifier/checkpoint.py": "4bfb0c522680c22e52558827a385b832ddc296aa1727c1b376ea32107019cd96",
+    "tools/audit_verifier/crypto.py": "ae5caeb0d91c40cb72087619edf5eb914ebd65e35030ae2ad921ba5630ab2392",
+    "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
+  },
+  "live_source_api_called": false,
+  "live_model_called": false,
+  "human_G1": "not_run",
+  "limitations": [
+    "Mock usage is not a vendor receipt.",
+    "Disposable same-host same-account key; independent custody and production DB roles not implemented.",
+    "Prefix does not protect unsigned tail; an old checkpoint plus truncated old snapshot is accepted.",
+    "Latest separately retained checkpoint rejects covered truncation; no automatic freshness authority.",
+    "Legacy prepared event is retained verbatim in each fresh fixture stream."
+  ],
+  "status": "verified_local_subset"
+}

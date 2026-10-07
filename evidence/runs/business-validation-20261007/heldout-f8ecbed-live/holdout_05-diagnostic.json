@@ -1,0 +1,122 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The code fix (PAY-102) is complete, but its completion does not approve general customer release; the customer rollout is not complete because general availability (GA) is not approved and no general release date is confirmed. Payment-retry remains limited to the controlled pilot.",
+        "evidence_ids": [
+          "J-02@1",
+          "D-02@1",
+          "C-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          },
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          }
+        ]
+      },
+      {
+        "text": "INT-210 implementation is Done, but its commercial launch remains Pending approval.",
+        "evidence_ids": [
+          "BV-09@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-09@1",
+            "quote": "INT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor."
+          }
+        ]
+      },
+      {
+        "text": "HOOK-410 worker expansion is Done, while HOOK-411 load shedding is In Progress.",
+        "evidence_ids": [
+          "BV-17@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-17@1",
+            "quote": "HOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi."
+          }
+        ]
+      },
+      {
+        "text": "Webhook latency targets apply only to the pilot; no general customer latency guarantee is approved.",
+        "evidence_ids": [
+          "BV-20@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-20@1",
+            "quote": "Webhook latency targets apply to the pilot only; no general customer latency guarantee is approved."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "47105f84-1417-43d4-a533-ad1eb5266e31",
+      "object": "chat.completion",
+      "created": 1791370050,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The code fix (PAY-102) is complete, but its completion does not approve general customer release; the customer rollout is not complete because general availability (GA) is not approved and no general release date is confirmed. Payment-retry remains limited to the controlled pilot.\",\"evidence_ids\":[\"J-02@1\",\"D-02@1\",\"C-02@1\"],\"supports\":[{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"},{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"},{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"}]},{\"text\":\"INT-210 implementation is Done, but its commercial launch remains Pending approval.\",\"evidence_ids\":[\"BV-09@1\"],\"supports\":[{\"evidence_id\":\"BV-09@1\",\"quote\":\"INT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.\"}]},{\"text\":\"HOOK-410 worker expansion is Done, while HOOK-411 load shedding is In Progress.\",\"evidence_ids\":[\"BV-17@1\"],\"supports\":[{\"evidence_id\":\"BV-17@1\",\"quote\":\"HOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.\"}]},{\"text\":\"Webhook latency targets apply only to the pilot; no general customer latency guarantee is approved.\",\"evidence_ids\":[\"BV-20@1\"],\"supports\":[{\"evidence_id\":\"BV-20@1\",\"quote\":\"Webhook latency targets apply to the pilot only; no general customer latency guarantee is approved.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 688,
+        "completion_tokens": 405,
+        "total_tokens": 1093,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 560
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "5d03a5f5-2e7a-411b-846d-4bb568184f56",
+      "object": "chat.completion",
+      "created": 1791370052,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true},{\"index\":2,\"supported\":true},{\"index\":3,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1090,
+        "completion_tokens": 45,
+        "total_tokens": 1135,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 962
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

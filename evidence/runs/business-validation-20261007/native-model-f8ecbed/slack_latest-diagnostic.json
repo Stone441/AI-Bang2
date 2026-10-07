@@ -1,0 +1,93 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "For the BV-20261007 Slack probe thread, the approved probe value after the final correction is amber, superseding correction 2's green value.",
+        "evidence_ids": [
+          "slack:C0C6R70SGG4/1791364699.192759@56399498513313818"
+        ],
+        "supports": [
+          {
+            "evidence_id": "slack:C0C6R70SGG4/1791364699.192759@56399498513313818",
+            "quote": "[SYNTHETIC] BV-20261007 slack correction 3: approved probe value amber; supersedes correction 2 green. No customer promise."
+          }
+        ]
+      },
+      {
+        "text": "That supersession chain began with a root amber value, which correction 2 superseded with green before correction 3 reverted to amber.",
+        "evidence_ids": [
+          "slack:C0C6R70SGG4/1791363578.580389@546135004399221415",
+          "slack:C0C6R70SGG4/1791364196.524909@977460312587581392"
+        ],
+        "supports": [
+          {
+            "evidence_id": "slack:C0C6R70SGG4/1791363578.580389@546135004399221415",
+            "quote": "[SYNTHETIC] BV-20261007 change probe slack. Approved probe value amber; no customer promise. This new thread is the only BV-20261007 Slack probe; later replies explicitly supersede this value."
+          },
+          {
+            "evidence_id": "slack:C0C6R70SGG4/1791364196.524909@977460312587581392",
+            "quote": "[SYNTHETIC] BV-20261007 slack correction 2: approved probe value green; supersedes the root amber value. No customer promise."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "c7439d12-d2f4-42fb-96c4-5a2df5db1a06",
+      "object": "chat.completion",
+      "created": 1791370285,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"For the BV-20261007 Slack probe thread, the approved probe value after the final correction is amber, superseding correction 2's green value.\",\"evidence_ids\":[\"slack:C0C6R70SGG4/1791364699.192759@56399498513313818\"],\"supports\":[{\"evidence_id\":\"slack:C0C6R70SGG4/1791364699.192759@56399498513313818\",\"quote\":\"[SYNTHETIC] BV-20261007 slack correction 3: approved probe value amber; supersedes correction 2 green. No customer promise.\"}]},{\"text\":\"That supersession chain began with a root amber value, which correction 2 superseded with green before correction 3 reverted to amber.\",\"evidence_ids\":[\"slack:C0C6R70SGG4/1791363578.580389@546135004399221415\",\"slack:C0C6R70SGG4/1791364196.524909@977460312587581392\"],\"supports\":[{\"evidence_id\":\"slack:C0C6R70SGG4/1791363578.580389@546135004399221415\",\"quote\":\"[SYNTHETIC] BV-20261007 change probe slack. Approved probe value amber; no customer promise. This new thread is the only BV-20261007 Slack probe; later replies explicitly supersede this value.\"},{\"evidence_id\":\"slack:C0C6R70SGG4/1791364196.524909@977460312587581392\",\"quote\":\"[SYNTHETIC] BV-20261007 slack correction 2: approved probe value green; supersedes the root amber value. No customer promise.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1396,
+        "completion_tokens": 383,
+        "total_tokens": 1779,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 1268
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "bfe97e31-f490-43a8-953a-633e50c33f52",
+      "object": "chat.completion",
+      "created": 1791370307,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1756,
+        "completion_tokens": 29,
+        "total_tokens": 1785,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 1628
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

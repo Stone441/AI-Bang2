@@ -1,0 +1,646 @@
+{
+  "product": {
+    "request_id": "732f83068bc340a3b0639512cd22a6c4",
+    "question": "Can payment-retry be offered to all customers? Does PAY-102 Done mean release approval?",
+    "answered_at": "2026-10-07T12:14:58.400983+00:00",
+    "mode": "fixture_fake_model",
+    "model": "fake-extractive-v1",
+    "claims": [
+      {
+        "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "evidence_ids": [
+          "D-02@1"
+        ]
+      },
+      {
+        "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+        "evidence_ids": [
+          "S-02@1"
+        ]
+      },
+      {
+        "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "evidence_ids": [
+          "J-02@1"
+        ]
+      },
+      {
+        "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+        "evidence_ids": [
+          "D-03@1"
+        ]
+      },
+      {
+        "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "evidence_ids": [
+          "C-02@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+        "evidence_ids": [
+          "BV-09@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+        "evidence_ids": [
+          "BV-23@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+        "evidence_ids": [
+          "BV-30@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nRemoval from a source channel prevents future citation and history access; previously saved copies cannot be recalled.",
+        "evidence_ids": [
+          "BV-29@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+        "evidence_ids": [
+          "BV-17@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+        "evidence_ids": [
+          "BV-07@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+        "evidence_ids": [
+          "BV-10@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+        "evidence_ids": [
+          "BV-19@1"
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Source excerpts only; live AI synthesis is not enabled."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "D-02@1",
+        "resource_id": "D-02",
+        "version": 1,
+        "source": "drive",
+        "title": "Payment-retry release approval",
+        "locator": {
+          "paragraph": 1,
+          "section": "Approval decision"
+        },
+        "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384817+00:00",
+        "source_url": "fixture://synthetic-demo/drive/D-02"
+      },
+      {
+        "evidence_id": "S-02@1",
+        "resource_id": "S-02",
+        "version": 1,
+        "source": "slack",
+        "title": "Release coordination",
+        "locator": {
+          "channel": "release",
+          "thread": "1790823600.000001"
+        },
+        "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384736+00:00",
+        "source_url": "fixture://synthetic-demo/slack/S-02"
+      },
+      {
+        "evidence_id": "J-02@1",
+        "resource_id": "J-02",
+        "version": 1,
+        "source": "jira",
+        "title": "PAY-102 Retry configuration fix",
+        "locator": {
+          "field": "status and description"
+        },
+        "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384648+00:00",
+        "source_url": "fixture://synthetic-demo/jira/J-02"
+      },
+      {
+        "evidence_id": "D-03@1",
+        "resource_id": "D-03",
+        "version": 1,
+        "source": "drive",
+        "title": "Operations readiness",
+        "locator": {
+          "paragraph": 1,
+          "section": "Customer communication"
+        },
+        "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384842+00:00",
+        "source_url": "fixture://synthetic-demo/drive/D-03"
+      },
+      {
+        "evidence_id": "C-02@1",
+        "resource_id": "C-02",
+        "version": 1,
+        "source": "confluence",
+        "title": "Payment-retry capability",
+        "locator": {
+          "paragraph": 1,
+          "section": "Supported rollout"
+        },
+        "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384549+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/C-02"
+      },
+      {
+        "evidence_id": "BV-09@1",
+        "resource_id": "BV-09",
+        "version": 1,
+        "source": "confluence",
+        "title": "integration / Launch ticket",
+        "locator": {
+          "section": "Launch ticket"
+        },
+        "text": "[SYNTHETIC]\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385100+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-09"
+      },
+      {
+        "evidence_id": "BV-23@1",
+        "resource_id": "BV-23",
+        "version": 1,
+        "source": "slack",
+        "title": "reconciliation / Missing input",
+        "locator": {
+          "section": "Missing input"
+        },
+        "text": "[SYNTHETIC]\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385568+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-23"
+      },
+      {
+        "evidence_id": "BV-30@1",
+        "resource_id": "BV-30",
+        "version": 1,
+        "source": "jira",
+        "title": "access / Unknown authority",
+        "locator": {
+          "section": "Unknown authority"
+        },
+        "text": "[SYNTHETIC]\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385732+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-30"
+      },
+      {
+        "evidence_id": "BV-29@1",
+        "resource_id": "BV-29",
+        "version": 1,
+        "source": "confluence",
+        "title": "access / Offboarding rule",
+        "locator": {
+          "section": "Offboarding rule"
+        },
+        "text": "[SYNTHETIC]\nRemoval from a source channel prevents future citation and history access; previously saved copies cannot be recalled.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385709+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-29"
+      },
+      {
+        "evidence_id": "BV-17@1",
+        "resource_id": "BV-17",
+        "version": 1,
+        "source": "confluence",
+        "title": "webhook / Webhook fix status",
+        "locator": {
+          "section": "Webhook fix status"
+        },
+        "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385421+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-17"
+      },
+      {
+        "evidence_id": "BV-07@1",
+        "resource_id": "BV-07",
+        "version": 1,
+        "source": "slack",
+        "title": "integration / USD exception",
+        "locator": {
+          "section": "USD exception"
+        },
+        "text": "[SYNTHETIC]\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385053+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-07"
+      },
+      {
+        "evidence_id": "BV-10@1",
+        "resource_id": "BV-10",
+        "version": 1,
+        "source": "jira",
+        "title": "integration / Scope confirmation",
+        "locator": {
+          "section": "Scope confirmation"
+        },
+        "text": "[SYNTHETIC]\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385123+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-10"
+      },
+      {
+        "evidence_id": "BV-19@1",
+        "resource_id": "BV-19",
+        "version": 1,
+        "source": "slack",
+        "title": "webhook / Current response procedure",
+        "locator": {
+          "section": "Current response procedure"
+        },
+        "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385470+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-19"
+      }
+    ],
+    "actor": "product_ops"
+  },
+  "engineering": {
+    "request_id": "d9c1214af3bf40d7bdc9b997b299c161",
+    "question": "payment-service incident cause withdrawn hypothesis safeguard status owner runbook",
+    "answered_at": "2026-10-07T12:14:58.405889+00:00",
+    "mode": "fixture_fake_model",
+    "model": "fake-extractive-v1",
+    "claims": [
+      {
+        "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+        "evidence_ids": [
+          "J-01@1"
+        ]
+      },
+      {
+        "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+        "evidence_ids": [
+          "S-01@1"
+        ]
+      },
+      {
+        "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "evidence_ids": [
+          "C-01@1"
+        ]
+      },
+      {
+        "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+        "evidence_ids": [
+          "D-01@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.",
+        "evidence_ids": [
+          "BV-16@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+        "evidence_ids": [
+          "BV-17@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nIf bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+        "evidence_ids": [
+          "BV-35@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+        "evidence_ids": [
+          "BV-18@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nPartner users may read approved integration eligibility guidance; incident details are not public guidance.",
+        "evidence_ids": [
+          "BV-28@1"
+        ]
+      },
+      {
+        "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+        "evidence_ids": [
+          "J-03@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+        "evidence_ids": [
+          "BV-05@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nSET-610 is In Progress because bank confirmation is missing. Owner: Eva.",
+        "evidence_ids": [
+          "BV-33@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+        "evidence_ids": [
+          "BV-09@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+        "evidence_ids": [
+          "BV-12@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+        "evidence_ids": [
+          "BV-24@1"
+        ]
+      },
+      {
+        "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+        "evidence_ids": [
+          "BV-02@1"
+        ]
+      },
+      {
+        "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "evidence_ids": [
+          "J-02@1"
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Source excerpts only; live AI synthesis is not enabled."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "J-01@1",
+        "resource_id": "J-01",
+        "version": 1,
+        "source": "jira",
+        "title": "PAY-101 Payment-service incident",
+        "locator": {
+          "field": "description"
+        },
+        "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384620+00:00",
+        "source_url": "fixture://synthetic-demo/jira/J-01"
+      },
+      {
+        "evidence_id": "S-01@1",
+        "resource_id": "S-01",
+        "version": 1,
+        "source": "slack",
+        "title": "Private incident discussion",
+        "locator": {
+          "channel": "incident",
+          "messages": [
+            "1790816400.000001",
+            "1790817300.000001",
+            "1790820000.000001"
+          ],
+          "thread": "1790816400.000001"
+        },
+        "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384700+00:00",
+        "source_url": "fixture://synthetic-demo/slack/S-01"
+      },
+      {
+        "evidence_id": "C-01@1",
+        "resource_id": "C-01",
+        "version": 1,
+        "source": "confluence",
+        "title": "Payment-service runbook",
+        "locator": {
+          "paragraph": 1,
+          "section": "Failover procedure"
+        },
+        "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384288+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/C-01"
+      },
+      {
+        "evidence_id": "D-01@1",
+        "resource_id": "D-01",
+        "version": 1,
+        "source": "drive",
+        "title": "Final payment-service postmortem",
+        "locator": {
+          "paragraph": 1,
+          "section": "Confirmed root cause"
+        },
+        "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384791+00:00",
+        "source_url": "fixture://synthetic-demo/drive/D-01"
+      },
+      {
+        "evidence_id": "BV-16@1",
+        "resource_id": "BV-16",
+        "version": 1,
+        "source": "drive",
+        "title": "webhook / Webhook incident cause",
+        "locator": {
+          "section": "Webhook incident cause"
+        },
+        "text": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385398+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-16"
+      },
+      {
+        "evidence_id": "BV-17@1",
+        "resource_id": "BV-17",
+        "version": 1,
+        "source": "confluence",
+        "title": "webhook / Webhook fix status",
+        "locator": {
+          "section": "Webhook fix status"
+        },
+        "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385421+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-17"
+      },
+      {
+        "evidence_id": "BV-35@1",
+        "resource_id": "BV-35",
+        "version": 1,
+        "source": "slack",
+        "title": "settlement / Escalation guidance",
+        "locator": {
+          "section": "Escalation guidance"
+        },
+        "text": "[SYNTHETIC]\nIf bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385852+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-35"
+      },
+      {
+        "evidence_id": "BV-18@1",
+        "resource_id": "BV-18",
+        "version": 1,
+        "source": "slack",
+        "title": "Authentication signing design reply",
+        "locator": {
+          "channel": "synthetic-auth",
+          "message": "BV-18",
+          "root": "BV-03"
+        },
+        "text": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385445+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-18"
+      },
+      {
+        "evidence_id": "BV-28@1",
+        "resource_id": "BV-28",
+        "version": 1,
+        "source": "drive",
+        "title": "access / Approved public guidance",
+        "locator": {
+          "section": "Approved public guidance"
+        },
+        "text": "[SYNTHETIC]\nPartner users may read approved integration eligibility guidance; incident details are not public guidance.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385686+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-28"
+      },
+      {
+        "evidence_id": "J-03@1",
+        "resource_id": "J-03",
+        "version": 1,
+        "source": "jira",
+        "title": "PAY-103 Protective measures",
+        "locator": {
+          "field": "status and assignee"
+        },
+        "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384674+00:00",
+        "source_url": "fixture://synthetic-demo/jira/J-03"
+      },
+      {
+        "evidence_id": "BV-05@1",
+        "resource_id": "BV-05",
+        "version": 1,
+        "source": "confluence",
+        "title": "authentication / Future policy",
+        "locator": {
+          "section": "Future policy"
+        },
+        "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384999+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-05"
+      },
+      {
+        "evidence_id": "BV-33@1",
+        "resource_id": "BV-33",
+        "version": 1,
+        "source": "confluence",
+        "title": "settlement / Settlement dependency",
+        "locator": {
+          "section": "Settlement dependency"
+        },
+        "text": "[SYNTHETIC]\nSET-610 is In Progress because bank confirmation is missing. Owner: Eva.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385805+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-33"
+      },
+      {
+        "evidence_id": "BV-09@1",
+        "resource_id": "BV-09",
+        "version": 1,
+        "source": "confluence",
+        "title": "integration / Launch ticket",
+        "locator": {
+          "section": "Launch ticket"
+        },
+        "text": "[SYNTHETIC]\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385100+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-09"
+      },
+      {
+        "evidence_id": "BV-12@1",
+        "resource_id": "BV-12",
+        "version": 1,
+        "source": "drive",
+        "title": "migration / Cutover ticket",
+        "locator": {
+          "section": "Cutover ticket"
+        },
+        "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385301+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-12"
+      },
+      {
+        "evidence_id": "BV-24@1",
+        "resource_id": "BV-24",
+        "version": 1,
+        "source": "drive",
+        "title": "reconciliation / Pilot blocker",
+        "locator": {
+          "section": "Pilot blocker"
+        },
+        "text": "[SYNTHETIC]\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.385591+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-24"
+      },
+      {
+        "evidence_id": "BV-02@1",
+        "resource_id": "BV-02",
+        "version": 1,
+        "source": "jira",
+        "title": "authentication / Migration blocker",
+        "locator": {
+          "section": "Migration blocker"
+        },
+        "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384922+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-02"
+      },
+      {
+        "evidence_id": "J-02@1",
+        "resource_id": "J-02",
+        "version": 1,
+        "source": "jira",
+        "title": "PAY-102 Retry configuration fix",
+        "locator": {
+          "field": "status and description"
+        },
+        "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-07T12:14:58.384648+00:00",
+        "source_url": "fixture://synthetic-demo/jira/J-02"
+      }
+    ],
+    "actor": "eng_a"
+  }
+}

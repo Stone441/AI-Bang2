@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "SGD connector approval does not cover Singapore business USD accounts; those accounts require a separate connector approval.",
+        "evidence_ids": [
+          "BV-07@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-07@1",
+            "quote": "Singapore business USD accounts require a separate connector approval; SGD approval does not include USD."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "8867be99-b553-4a9e-a7ab-e111c2f1b2f1",
+      "object": "chat.completion",
+      "created": 1791385625,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"SGD connector approval does not cover Singapore business USD accounts; those accounts require a separate connector approval.\",\"evidence_ids\":[\"BV-07@1\"],\"supports\":[{\"evidence_id\":\"BV-07@1\",\"quote\":\"Singapore business USD accounts require a separate connector approval; SGD approval does not include USD.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Does SGD connector approval cover business USD accounts?\" Need output JSON claims with evidence_ids and supports quotes. Need use evidence. We have evidence BV-07@1 says \"Singapore business USD accounts require a separate connector approval; SGD approval does not include USD.\" That directly answers no. Need maybe one claim. Also perhaps BV-06 says Atlas connector supports Singapore business SGD accounts, not personal accounts. But question asks does SGD connector approval cover business USD accounts. Direct evidence BV-07. Need ensure every explicit identifier in claim appears in support quotes. Claim text could be \"SGD connector approval does not cover Singapore business USD accounts; those require a separate connector approval.\" Evidence IDs: [\"BV-07@1\"], supports quote exact contiguous passage: \"Singapore business USD accounts require a separate connector approval; SGD approval does not include USD.\" That includes \"Singapore business USD\", \"SGD approval\", no ticket ID. Good.\n\nNeed maybe mention \"SGD connector approval\" not in quote? Quote says \"SGD approval does not include USD.\" It covers. Claim \"SGD connector approval does not cover business USD accounts\" okay. Should we include BV-06? It says Atlas connector supports Singapore business SGD accounts, not personal accounts. Not necessary. But maybe question \"Does SGD connector approval cover business USD accounts?\" The direct evidence is sufficient. Use minimum claims. Could output one claim. Ensure JSON schema: {\"claims\":[{\"text\":\"...\",\"evidence_ids\":[\"BV-07@1\"],\"supports\":[{\"evidence_id\":\"BV-07@1\",\"quote\":\"...\"}]}]}. No extra. Need maybe evidence ID in supports exactly. Good. Should I mention \"separate connector approval\" yes. Done.\n\nNeed final only JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1351,
+        "completion_tokens": 432,
+        "total_tokens": 1783,
+        "prompt_tokens_details": {
+          "cached_tokens": 1152
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 358
+        },
+        "prompt_cache_hit_tokens": 1152,
+        "prompt_cache_miss_tokens": 199
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "cf7a35d4-10c4-49d1-9407-99fc44c0b969",
+      "object": "chat.completion",
+      "created": 1791385628,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer user's meta task. We need review evidence support and question coverage, return JSON only. Need evaluate claim. We have question: \"Does SGD connector approval cover business USD accounts?\" Claims: one claim: \"SGD connector approval does not cover Singapore business USD accounts; those accounts require a separate connector approval.\" Evidence BV-07@1 quote: \"[SYNTHETIC]\\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.\" Need determine supported and responsive. Also question_covered true only if claims address EVERY requested part supported by supplied evidence. The question asks yes/no whether SGD connector approval covers business USD accounts. Claim says no, and requires separate approval. Evidence explicitly says SGD approval does not include USD; Singapore business USD accounts require separate connector approval. So supported true. Responsive true? It directly answers requested question. Question_covered? Only requested part is yes/no. Claim covers it. Need output JSON with verdicts one per claim. So {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}. But need ensure no hidden issue: Synthetic evidence. The claim entity \"SGD connector approval\" maybe question says SGD connector approval; evidence says SGD approval. Supported. It says \"business USD accounts\" vs \"Singapore business USD accounts\" maybe question \"business USD accounts\" likely Singapore business USD accounts? Evidence says Singapore business USD accounts. The claim specifically Singapore business USD accounts. Responsive? It answers. Good.\n\nNeed no extra text. Final JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1402,
+        "completion_tokens": 346,
+        "total_tokens": 1748,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 320
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 890
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

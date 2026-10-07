@@ -1,0 +1,11 @@
+# Actual read-only Agent review of integrated candidate
+
+Reviewer `/root/r3a_r4_readonly_review`; no file writes, credentials, native/model API or operator process operations. Primary records the actual delivered findings, not a fabricated human review.
+
+R5 diff: no blocking URL/authorization/late-response issue found; independently ran both Node scripts. Source HTTPS/host/source type, no userinfo/non-default port, noopener/noreferrer, textContent and view-token guards confirmed. Suggested additive CONTRACTS update completed. Identified old retrieval runner's stale R3A limitation and overwrite risk; create-only output and current wording fixed, historical results preserved.
+
+Provided six natural expression variants before first quality run; stated these are Agent-authored, not human blind benchmark. Independently inspected current final claims and quotes: original successful six and long Orion answer supported; no-evidence empty. Actual clear-question ModelUnavailable must remain a failure; first prepared stream establishes missing S-01, not ambiguity. Low-impact runner frozen-budget-before-key preflight gap accepted and fixed/tested; original ledger remains fail closed.
+
+Follow-up: verified 323cb93 clean archive **356** methods/setup/five fixture scenes/two Node/HTTP all pass. Confirmed long diagnostics do not justify blanket reviewer false-negative claim; one wholly supported draft rejected, another had unquoted early-hypothesis detail. Suggested generic explicit event/scope clarification while preserving full same-event counterevidence, unsupported-detail rejection and no factual premises from question. Primary implemented with cross-event negative-review regression; latest actual result still rejected due additional unrequested background, preserved as unresolved. Agent also identified followup/product extra background; atomic fact coverage is not complete relevance success.
+
+Diagnostic transport reads only response JSON, never request headers/key; actual captured vendor responses contain model/usage/choices, all synthetic data. No client flag can grant authorization; no review bypass or returned partial failed answer. Primary's later 331bd28 archive **357** methods verifies this updated code; reviewer has not independently rerun that entire final archive. Native API, true browser and human G1/G2 remain distinct modes.

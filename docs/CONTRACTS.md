@@ -1,5 +1,36 @@
 # Local contracts v1
 
+2026-10-07有界cap跟进：a3569a1完整24题为21正确事实返回＋2空＋03复核length失败（2048个reasoning tokens，无final）。仅新增可信4096候选档，生成/复核同cap、按实际cap预留和usage上限检查；默认1024保持，未知cap8192等仍拒绝，4097超4096实测mock冻结并保留reservation。原03失败保留、不自动重试；先单题诊断，再据实际结果决定是否形成候选，不预称全通过。原生a3569a1进程仍保持启动时加载的2048配置。
+
+2026-10-07可信operator启动增量：--reasoning-effort none|low、--output-tokens 1024|2048默认none/1024；非默认仅DeepSeek synthesis允许，fake/excerpts在listener/凭据前拒绝。两阶段继承配置。native诊断同参数及actual-cap preflight；HTTP用户不能选择。未重启运行中服务。
+
+2026-10-07有界输出cap实验：low/1024一题全部tokens用于reasoning、finish_reason length无最终内容，原失败不升级。可信Python/runner允许1024或2048（默认1024）；instance reservation按1M context＋实际cap peak估计，preflight按同cap两次/题，genreview一致，usage越实例cap仍冻结/保留reservation，缺usage不退款。不是增加原USD20上限、换provider/账号/数据或自动retry；新增显式2048开发对比，效果待实际输出。
+
+2026-10-07有限reasoning配置实验：可信Python/开发runner可指定reasoning_effort none/low，默认none保持非thinking；low以thinking enabled+reasoning_effort low发送且省略无效temperature，两模型阶段一致。仍DeepSeek Flash、原端点/合成范围/1024输出cap/保守peak价格/原共享USD20/reservation；仅parse最终content，不用reasoning_content作为claim或原文。错误配置在reserve前拒绝，思考tokens计入供应商completion usage；未知usage保留预留。不是新模型/客户端授权字段，是否采用待实际比较，不因选项存在标通过。
+
+2026-10-07 synthesis-v8诊断：v7已生成有范围的未知，但review错误coverage拒绝，背景仍responsive true。v8仅澄清review coverage语句：未知前提有范围明确回应、原文记录状态及无同实体/范围正面证据可以覆盖所问项，不要求编造positive；同实体其他属性不是所问属性的回答，必要限定须改变该回答解释。supported/responsive/question_covered仍全严格true，未删除quote/权限/whole-answer断言；效果待实际验证，v7失败原件保留。
+
+2026-10-07 synthesis-v7开发契约：内部review每claim verdict精确含index/supported/responsive；supported与responsive必须分别是布尔true，未知/缺字段/false拒绝整答，不局部删claim放行。question_covered还需明确回应未由引用资料建立的问题前提；“未建立”不等于显式否定或全源无记录。生成先按请求项分配事实，背景只因主题相近不算相关，实际请求的owner/blocker仍需覆盖。公共claim格式、原文/源context、逐阶段权限、原账本/温度0不变；当前语义效果待实际验证，v6旧结果保持原版本。
+
+2026-10-07 synthesis-v6开发：生成/review传入同一已鉴权Evidence的原title/locator作为source_context，与text分开；不据问题推定资源事件，不将context作为指令、原文quote或权限。SyntheticProvenance原来已核title/locator一致，保留批准资源/version/原文切片和整答gate；既有100KB payload上限在reserve前执行。388/389 archive、完整24开发题和两native/model题已验证对应版本；03未知表达及32背景仍未通过，不继承旧版本结果或宣称全部质量通过。
+
+2026-10-07 ADR-056：64b705a trusted Python/operator配置temperature默认0，允许有限数值[0,2]；None显式保留provider默认。generation/review相同值，thinking=disabled；客户端/浏览器无采样授权字段。三开发题各四次同输入比较支持可回滚选择，非确定性/语义保证。原模型、预算、原文窗口、每claim引用及whole-answer gate不变；64b705a的business16误归/business12结构失败证明精确引用＋同模型review仍非语义完备。旧原件保留，当前结果见STATUS。
+
+2026-10-07 synthesis-v4：提案、审批、完成和撤回分别要求明确支持；非审批不推出取消/放弃。无明确问题指代时允许有范围候选事实或空claims，空claims可加通用范围澄清提示。现有结构、精确引用验证、逐阶段权限及整答review gate不变；模型review不能证明语义正确。
+
+
+2026-10-07 DEV-BV-03 source fault completeness: unknown source authorization in this actor/request (including legacy preparation) stops the next synthesis/review dispatch or final commit. Unknown found before the first send means zero model calls; unknown found after generation/review does not erase prior attempts or charges. Fixture extractive diagnostics may retain allowed excerpts, but return a generic incomplete-coverage notice instead of implying verified absence. No source names, hidden objects, counts or paths are disclosed; audit still retains the original decisions. This extends completeness handling without changing ACL deny filtering or model review acceptance.
+
+2026-10-07 DEV-BV-03 bounded publication: published candidate snapshot never grants current permission. Current native unknown or explicit content/version-changed denial stops the question before sending or committing an answer. ACL denial filters inaccessible candidates. Preview/history retain unavailable semantics; only a fresh complete publication makes the new content eligible. Same-request same-stage resource/version windows share one check; separate model/review/answer stages always reauthorize. No client flags or old checkpoint authorize this path.
+
+2026-10-07 DEV-BV-04: auditor resource-direction inquiry accepts exact resource_id with payment-service scope, optional actor; omitted actor searches only existing AUDIT_ACTORS. Structured parameterized conditions only, stable as_of pagination and inquiry audit retained. Return matching resource decisions plus surrounding request lifecycle, not unrelated resource decisions; events indicate candidate/allow/prepared/attempt/answer separately, never human reading. No new native auditor or payload scope.
+
+2026-10-06 synthesis-v3: explicit structured identifiers (alphabetic prefix plus hyphen and numeric suffix) in final claims must occur in their copied supporting quotes, case-insensitively; an identifier in unrelated/uncited evidence is insufficient. This guards identifier provenance, not full semantic entailment. Minimum necessary claims and requested-event attribution are prompt/review requirements; same-model review remains fallible.
+
+2026-10-06 R5 additive response fields: new committed answers carry server-recorded `question` and UTC ISO `answered_at`; history returns these only after all dependency authorization/version checks. Old records lacking either remain missing, never inferred or rewritten. Unavailable history placeholders expose neither question nor time. Reauthorized evidence preview adds `source`; UI original-platform URLs come only from that successful current preview, require HTTPS, no userinfo/non-default port and source-specific Atlassian/Slack/Google host checks. Fixture URIs have no external link. Long IDs/locator/model-accounting details are collapsed diagnostics. ADR-040 independent queries and late-response invalidation remain unchanged.
+
+AUTH-017 opt-in发现契约见[R2_DISCOVERY_CONTRACT](R2_DISCOVERY_CONTRACT.md)：服务端固定容器与eng_b身份，列表不授予权限，新增对象仍逐阶段当前原生鉴权；无新增浏览器API/客户端synthetic字段。
+
 状态：实现基线，默认演示模式 fixture_fake_model；委托operator模式另列。`brain/contracts.py` 是类型入口。
 
 - 身份：仅服务端 opaque session → Actor；仅显式 loopback demo 登录允许从六个固定合成用户选取。业务 API 拒绝额外 user_id/role/tenant 字段。
@@ -45,3 +76,5 @@ Drive delegated reader：固定file ID→parent ID、tenant、原生permissionId
 ## Opt-in local credential persistence · AUTH-014
 
 The reviewed multi-source operator may use --credential-store macos-keychain; memory remains default. App-owned Generic Password items are namespaced by source/tenant/actor/native account, and Drive by client/email. Existing Passwords entries are not accessed. Saving syntactically valid delegation does not validate platform rights: mandatory native identity checks still precede bootstrap and current rights gate every evidence path. Google offline refresh retains exact drive.readonly scope and rechecks the native account; unknown errors fail closed. --replace-credential bypasses only the named saved source for one launch. OS Keychain protection does not isolate malicious same-user code. No token enters browser, SQLite or plaintext files.
+
+DEV-BV-03 2026-10-07：可信operator --discovery-auth017运行时采用bounded_queries。仅活跃、当前完整、无backlog、进程内120秒有效发布的同actor映射用于CPU候选预过滤；不复用allow。失效/unknown为请求暂不可用，不解释为无证据。所有既有native阶段及精确原文/版本边界保留。HTTP与worker统一pilot.lock→store.lock顺序；原library默认旧刷新路径保持。

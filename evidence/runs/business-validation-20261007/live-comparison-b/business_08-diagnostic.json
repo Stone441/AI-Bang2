@@ -1,0 +1,88 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification.",
+        "evidence_ids": [
+          "BV-08@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-08@1",
+            "quote": "Partner-led onboarding requires manual verification; direct onboarding supports automated verification."
+          }
+        ]
+      },
+      {
+        "text": "Partner users may read approved integration eligibility guidance, but incident details are not public guidance.",
+        "evidence_ids": [
+          "BV-28@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-28@1",
+            "quote": "Partner users may read approved integration eligibility guidance; incident details are not public guidance."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "023ae876-41ee-4245-8a45-71705d6cbf21",
+      "object": "chat.completion",
+      "created": 1791363026,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification.\",\"evidence_ids\":[\"BV-08@1\"],\"supports\":[{\"evidence_id\":\"BV-08@1\",\"quote\":\"Partner-led onboarding requires manual verification; direct onboarding supports automated verification.\"}]},{\"text\":\"Partner users may read approved integration eligibility guidance, but incident details are not public guidance.\",\"evidence_ids\":[\"BV-28@1\"],\"supports\":[{\"evidence_id\":\"BV-28@1\",\"quote\":\"Partner users may read approved integration eligibility guidance; incident details are not public guidance.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 433,
+        "completion_tokens": 127,
+        "total_tokens": 560,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 177
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "04256de2-762b-4acd-bebc-f4edb836cbac",
+      "object": "chat.completion",
+      "created": 1791363027,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":false}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 535,
+        "completion_tokens": 29,
+        "total_tokens": 564,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 151
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

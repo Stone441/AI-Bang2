@@ -1,0 +1,76 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Rotation preserves sessions because it uses overlapping signing keys, and sessions remain valid for fifteen minutes.",
+        "evidence_ids": [
+          "BV-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-01@1",
+            "quote": "Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "f542fbc2-f029-4b07-8bcb-9ca1e96dfb40",
+      "object": "chat.completion",
+      "created": 1791372625,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Rotation preserves sessions because it uses overlapping signing keys, and sessions remain valid for fifteen minutes.\",\"evidence_ids\":[\"BV-01@1\"],\"supports\":[{\"evidence_id\":\"BV-01@1\",\"quote\":\"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 480,
+        "completion_tokens": 67,
+        "total_tokens": 547,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 224
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "9d0b2132-88e2-413d-99a5-f7335f50ce14",
+      "object": "chat.completion",
+      "created": 1791372626,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 513,
+        "completion_tokens": 21,
+        "total_tokens": 534,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 257
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+test_changed_original_at_review_rejected_even_if_local_version_unchanged (test_synthetic_provenance.WindowProvenance.test_changed_original_at_review_rejected_even_if_local_version_unchanged) ... ok
+test_engine_synthesis_checks_draft_review_preview_and_current_access (test_synthetic_provenance.WindowProvenance.test_engine_synthesis_checks_draft_review_preview_and_current_access) ... ERROR
+test_exact_late_window_allowed_without_invented_banner (test_synthetic_provenance.WindowProvenance.test_exact_late_window_allowed_without_invented_banner) ... ok
+test_self_reported_synthetic_and_marker_in_slice_cannot_grant_window_approval (test_synthetic_provenance.WindowProvenance.test_self_reported_synthetic_and_marker_in_slice_cannot_grant_window_approval) ... ok
+test_unapproved_version_text_source_locator_and_window_rejected_before_reserve (test_synthetic_provenance.WindowProvenance.test_unapproved_version_text_source_locator_and_window_rejected_before_reserve) ... ok
+
+======================================================================
+ERROR: test_engine_synthesis_checks_draft_review_preview_and_current_access (test_synthetic_provenance.WindowProvenance.test_engine_synthesis_checks_draft_review_preview_and_current_access)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_synthetic_provenance.py", line 90, in test_engine_synthesis_checks_draft_review_preview_and_current_access
+    answer=engine.query(Actor('eng_a'),'Orion incident standby queue')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 118, in query
+    draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 75, in generate_with_provenance
+    return self.generate_with_authorization(question, evidence, request_id, authorize,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                            provenance=provenance)
+                                            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 83, in generate_with_authorization
+    draft = super().generate(question, evidence, request_id=request_id, provenance=provenance)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 108, in generate
+    raise ModelUnavailable('Model input is outside the synthetic pilot boundary')
+brain.deepseek.ModelUnavailable: Model input is outside the synthetic pilot boundary
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.014s
+
+FAILED (errors=1)

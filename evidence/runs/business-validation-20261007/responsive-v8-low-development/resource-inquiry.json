@@ -1,0 +1,733 @@
+{
+  "filters": {
+    "resource_id": "J-03",
+    "actor": null,
+    "as_of": 513,
+    "page_size": 50
+  },
+  "events": [
+    {
+      "actor": "eng_a",
+      "event_type": "request_started",
+      "hash": "5ee064daa4a56770061919050b24a70102567161649d8081bd8411bf572ae095",
+      "payload": {
+        "candidate_strategy": "authority prefilter + bm25 + lexical aliases + exact windows + authorized one-hop links",
+        "history_id": null,
+        "mode": "fixture_source_live_model_synthesis",
+        "query": "Was DNS the cause of the webhook backlog?",
+        "query_kind": "independent"
+      },
+      "previous_hash": "18445d9730bd653edfe2da31864131df4d4faaa316f2ea369de0bd1ce62df7ba",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 171,
+      "timestamp": "2026-10-07T13:28:06.563523+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "6701d7df407cd91359df647930341999b8e6a024e5421eff7a5c834f83fc1eed",
+      "payload": {
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "score": 0,
+        "source": "jira"
+      },
+      "previous_hash": "c32c4ef3afdc86cdab3e38c79381ef9e13c992550e032e6744702ebe122b2f3e",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 187,
+      "timestamp": "2026-10-07T13:28:06.567259+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "4bda6fe4bc097903390f3466440cd59f2d364aa5ce0ced7733a9e35f57dc598a",
+      "payload": {
+        "checked_at": "2026-10-07T13:28:06.567285+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "6701d7df407cd91359df647930341999b8e6a024e5421eff7a5c834f83fc1eed",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 188,
+      "timestamp": "2026-10-07T13:28:06.567299+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "5aa218031d925519f43f73b6c50abc1ff63b1107146937fc27b08f642e50bc57",
+      "payload": {
+        "checked_at": "2026-10-07T13:28:06.567787+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "123e8ea99a4be497d93a99eb2b1fd559ae3cc72aa6cacc770303eb37c5346a1a",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 196,
+      "timestamp": "2026-10-07T13:28:06.567802+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "evidence_used",
+      "hash": "586139ceb2adab00ee2dd9bda726175cfa4af3a3b4f15d947b9eb8da55f19b56",
+      "payload": {
+        "evidence_id": "J-03@1",
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "source": "jira",
+        "stage": "prepared_for_answer",
+        "version": 1
+      },
+      "previous_hash": "af28b3ad4e6afb1284d511aa624a50a4aa8a8bc0624fc11047716a71dfe13fba",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 204,
+      "timestamp": "2026-10-07T13:28:06.568081+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "model_dispatch_intent",
+      "hash": "4003601eb1af0f39d5d2e01b560839298a29378a60afd52d8d6fd93d6effa80f",
+      "payload": {
+        "evidence_ids": [
+          "BV-16@1",
+          "BV-19@1",
+          "D-01@1",
+          "BV-17@1",
+          "BV-20@1",
+          "BV-11@1#0:2400",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "deepseek-flash",
+        "receipt": {
+          "accounted_upper_micro_usd": null,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": null,
+          "completion_tokens": null,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "pending",
+          "prompt_tokens": null,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+          "reserved_micro_usd": 315802,
+          "state": "dispatched",
+          "total_tokens": null
+        },
+        "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+        "resource_scope": "payment-service",
+        "stage": "answer"
+      },
+      "previous_hash": "586139ceb2adab00ee2dd9bda726175cfa4af3a3b4f15d947b9eb8da55f19b56",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 205,
+      "timestamp": "2026-10-07T13:28:06.569727+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "model_dispatch_attempted",
+      "hash": "ec015a3c4fd0e3a333648544e9c5124206d71f1e261c7afbd21bc52b27e96721",
+      "payload": {
+        "evidence_ids": [
+          "BV-16@1",
+          "BV-19@1",
+          "D-01@1",
+          "BV-17@1",
+          "BV-20@1",
+          "BV-11@1#0:2400",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "deepseek-flash",
+        "receipt": {
+          "accounted_upper_micro_usd": null,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": null,
+          "completion_tokens": null,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "pending",
+          "prompt_tokens": null,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+          "reserved_micro_usd": 315802,
+          "state": "dispatched",
+          "total_tokens": null
+        },
+        "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+        "resource_scope": "payment-service",
+        "stage": "answer"
+      },
+      "previous_hash": "4003601eb1af0f39d5d2e01b560839298a29378a60afd52d8d6fd93d6effa80f",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 206,
+      "timestamp": "2026-10-07T13:28:06.569814+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "model_usage_received",
+      "hash": "79ace86d9b4f843ab8237bfe821b9e15327cad11a224bdbdc34c9d74a92fa9e3",
+      "payload": {
+        "evidence_ids": [
+          "BV-16@1",
+          "BV-19@1",
+          "D-01@1",
+          "BV-17@1",
+          "BV-20@1",
+          "BV-11@1#0:2400",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "deepseek-flash",
+        "receipt": {
+          "accounted_upper_micro_usd": 1065,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": true,
+          "completion_tokens": 398,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "pending",
+          "prompt_tokens": 1958,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+          "reserved_micro_usd": 315802,
+          "state": "settled",
+          "total_tokens": 2356
+        },
+        "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+        "resource_scope": "payment-service",
+        "stage": "answer"
+      },
+      "previous_hash": "ec015a3c4fd0e3a333648544e9c5124206d71f1e261c7afbd21bc52b27e96721",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 207,
+      "timestamp": "2026-10-07T13:28:08.997047+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "model_output_accepted",
+      "hash": "4d93bc414b4778d4a4b7782aac51189ae1aa6f72415c562dda627e90f69b8018",
+      "payload": {
+        "evidence_ids": [
+          "BV-16@1",
+          "BV-19@1",
+          "D-01@1",
+          "BV-17@1",
+          "BV-20@1",
+          "BV-11@1#0:2400",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "deepseek-flash",
+        "receipt": {
+          "accounted_upper_micro_usd": 1065,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": true,
+          "completion_tokens": 398,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "accepted",
+          "prompt_tokens": 1958,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+          "reserved_micro_usd": 315802,
+          "state": "settled",
+          "total_tokens": 2356
+        },
+        "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+        "resource_scope": "payment-service",
+        "stage": "answer"
+      },
+      "previous_hash": "79ace86d9b4f843ab8237bfe821b9e15327cad11a224bdbdc34c9d74a92fa9e3",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 208,
+      "timestamp": "2026-10-07T13:28:08.998381+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "003e29ad4c18c3f62a0a20dcef4bdfe02b65bdd9cf599549f56619a20aaf74be",
+      "payload": {
+        "checked_at": "2026-10-07T13:28:08.999744+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "review_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "fd361b2312d0e2628a0fa4174e9096ddde1ffe8f3e56c4a7e42247bd5ea9f7e8",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 216,
+      "timestamp": "2026-10-07T13:28:08.999764+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "evidence_used",
+      "hash": "636b636a021c249c15d3ad3582aaa9fe1dc13e1ba68ae1a8ce92d5cdf647de4b",
+      "payload": {
+        "evidence_id": "J-03@1",
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "source": "jira",
+        "stage": "prepared_for_review",
+        "version": 1
+      },
+      "previous_hash": "15df5896f5aedfc41d4f1175cfa205f9646e6f60357246213e850710f9259cdb",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 224,
+      "timestamp": "2026-10-07T13:28:09.000129+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "model_dispatch_intent",
+      "hash": "b8ca5763724d74e53227b8f2f6f44be848be3b6917fa9c159b0717658de39c57",
+      "payload": {
+        "evidence_ids": [
+          "BV-16@1",
+          "BV-19@1",
+          "D-01@1",
+          "BV-17@1",
+          "BV-20@1",
+          "BV-11@1#0:2400",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "deepseek-flash",
+        "receipt": {
+          "accounted_upper_micro_usd": null,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": null,
+          "completion_tokens": null,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "pending",
+          "prompt_tokens": null,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+          "reserved_micro_usd": 315802,
+          "state": "dispatched",
+          "total_tokens": null
+        },
+        "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+        "resource_scope": "payment-service",
+        "stage": "review"
+      },
+      "previous_hash": "636b636a021c249c15d3ad3582aaa9fe1dc13e1ba68ae1a8ce92d5cdf647de4b",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 225,
+      "timestamp": "2026-10-07T13:28:09.002063+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "model_dispatch_attempted",
+      "hash": "8d122b8bb414d0130cbf8c539d0fb8d1cb1a18383852e3dc58299b14fa8f29b6",
+      "payload": {
+        "evidence_ids": [
+          "BV-16@1",
+          "BV-19@1",
+          "D-01@1",
+          "BV-17@1",
+          "BV-20@1",
+          "BV-11@1#0:2400",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "deepseek-flash",
+        "receipt": {
+          "accounted_upper_micro_usd": null,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": null,
+          "completion_tokens": null,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "pending",
+          "prompt_tokens": null,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+          "reserved_micro_usd": 315802,
+          "state": "dispatched",
+          "total_tokens": null
+        },
+        "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+        "resource_scope": "payment-service",
+        "stage": "review"
+      },
+      "previous_hash": "b8ca5763724d74e53227b8f2f6f44be848be3b6917fa9c159b0717658de39c57",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 226,
+      "timestamp": "2026-10-07T13:28:09.002181+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "model_usage_received",
+      "hash": "02318c59ee381036d824dafd11b80a6031ba57ad811da78790de312ec4208f8e",
+      "payload": {
+        "evidence_ids": [
+          "BV-16@1",
+          "BV-19@1",
+          "D-01@1",
+          "BV-17@1",
+          "BV-20@1",
+          "BV-11@1#0:2400",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "deepseek-flash",
+        "receipt": {
+          "accounted_upper_micro_usd": 802,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": true,
+          "completion_tokens": 165,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "pending",
+          "prompt_tokens": 2013,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+          "reserved_micro_usd": 315802,
+          "state": "settled",
+          "total_tokens": 2178
+        },
+        "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+        "resource_scope": "payment-service",
+        "stage": "review"
+      },
+      "previous_hash": "8d122b8bb414d0130cbf8c539d0fb8d1cb1a18383852e3dc58299b14fa8f29b6",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 227,
+      "timestamp": "2026-10-07T13:28:10.213540+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "model_output_accepted",
+      "hash": "789011fb0abc7b5b4224ad62dfe1153d84542007087b6ada4c559191b5500045",
+      "payload": {
+        "evidence_ids": [
+          "BV-16@1",
+          "BV-19@1",
+          "D-01@1",
+          "BV-17@1",
+          "BV-20@1",
+          "BV-11@1#0:2400",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "deepseek-flash",
+        "receipt": {
+          "accounted_upper_micro_usd": 802,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": true,
+          "completion_tokens": 165,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "accepted",
+          "prompt_tokens": 2013,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+          "reserved_micro_usd": 315802,
+          "state": "settled",
+          "total_tokens": 2178
+        },
+        "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+        "resource_scope": "payment-service",
+        "stage": "review"
+      },
+      "previous_hash": "02318c59ee381036d824dafd11b80a6031ba57ad811da78790de312ec4208f8e",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 228,
+      "timestamp": "2026-10-07T13:28:10.214803+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "generation_completed",
+      "hash": "c3423464c7152028ce4f7f674b00d3bb98fa9ef27e5b7ebf24d50b4f7c13ed6d",
+      "payload": {
+        "cited": [
+          "BV-16@1"
+        ],
+        "claim_format": "grounded_synthesis_v1",
+        "model": "deepseek-flash-grounded-synthesis-v8",
+        "model_call": {
+          "accounted_upper_micro_usd": 1065,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": true,
+          "completion_tokens": 398,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "accepted",
+          "prompt_tokens": 1958,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+          "reserved_micro_usd": 315802,
+          "state": "settled",
+          "total_tokens": 2356
+        },
+        "model_review": {
+          "accounted_upper_micro_usd": 802,
+          "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+          "called": true,
+          "completion_tokens": 165,
+          "dispatch_recorded": true,
+          "model": "deepseek-flash",
+          "outcome": "accepted",
+          "prompt_tokens": 2013,
+          "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+          "reserved_micro_usd": 315802,
+          "state": "settled",
+          "total_tokens": 2178
+        },
+        "review_status": "accepted"
+      },
+      "previous_hash": "789011fb0abc7b5b4224ad62dfe1153d84542007087b6ada4c559191b5500045",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 229,
+      "timestamp": "2026-10-07T13:28:10.215130+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "8c58e04415cb2d8c3beab8927e2d75f63dbfde5ad3614f99b0ea2f6f2a8c90ab",
+      "payload": {
+        "checked_at": "2026-10-07T13:28:10.216159+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "59e5f500ecca62916e3b85ed826765845b9d983346970d51eee1ed19c60ad3d8",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 237,
+      "timestamp": "2026-10-07T13:28:10.216195+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "response_committed",
+      "hash": "f97b8d6a6c8b04c4f1fd7a342351a24447dcd003156d324abc0f12f059fefb8f",
+      "payload": {
+        "response": {
+          "actor": "eng_a",
+          "answered_at": "2026-10-07T13:28:10.216248+00:00",
+          "claim_format": "grounded_synthesis_v1",
+          "claims": [
+            {
+              "evidence_ids": [
+                "BV-16@1"
+              ],
+              "supports": [
+                {
+                  "evidence_id": "BV-16@1",
+                  "quote": "The webhook backlog came from an exhausted worker pool, not DNS resolution."
+                }
+              ],
+              "text": "No, DNS was not the cause of the webhook backlog; the backlog came from an exhausted worker pool, not DNS resolution."
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "BV-16@1",
+              "indexed_at": "2026-10-07T13:27:50.135156+00:00",
+              "locator": {
+                "section": "Webhook incident cause"
+              },
+              "resource_id": "BV-16",
+              "source": "drive",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/BV-16",
+              "text": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.",
+              "title": "webhook / Webhook incident cause",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-19@1",
+              "indexed_at": "2026-10-07T13:27:50.135227+00:00",
+              "locator": {
+                "section": "Current response procedure"
+              },
+              "resource_id": "BV-19",
+              "source": "slack",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/BV-19",
+              "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+              "title": "webhook / Current response procedure",
+              "version": 1
+            },
+            {
+              "evidence_id": "D-01@1",
+              "indexed_at": "2026-10-07T13:27:50.134559+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Confirmed root cause"
+              },
+              "resource_id": "D-01",
+              "source": "drive",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/D-01",
+              "text": "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "title": "Final payment-service postmortem",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-17@1",
+              "indexed_at": "2026-10-07T13:27:50.135179+00:00",
+              "locator": {
+                "section": "Webhook fix status"
+              },
+              "resource_id": "BV-17",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/BV-17",
+              "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+              "title": "webhook / Webhook fix status",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-20@1",
+              "indexed_at": "2026-10-07T13:27:50.135251+00:00",
+              "locator": {
+                "section": "External commitment"
+              },
+              "resource_id": "BV-20",
+              "source": "drive",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/BV-20",
+              "text": "[SYNTHETIC]\nWebhook latency targets apply to the pilot only; no general customer latency guarantee is approved.",
+              "title": "webhook / External commitment",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-11@1#0:2400",
+              "indexed_at": "2026-10-07T13:27:50.134916+00:00",
+              "locator": {
+                "section": "Database design rationale",
+                "text_window": {
+                  "end": 2400,
+                  "start": 0,
+                  "strategy": "fixed-2400-overlap-400-v1",
+                  "unit": "unicode_characters"
+                }
+              },
+              "resource_id": "BV-11",
+              "source": "slack",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/BV-11",
+              "text": "[SYNTHETIC]\n# Retired webhook rehearsal\nDNS was a historical webhook hypothesis.\nArchived migration rehearsal entry 0: batch 0, checksum 0; no current decision recorded.\nArchived migration rehearsal entry 1: batch 17, checksum 31; no current decision recorded.\nArchived migration rehearsal entry 2: batch 34, checksum 62; no current decision recorded.\nArchived migration rehearsal entry 3: batch 51, checksum 93; no current decision recorded.\nArchived migration rehearsal entry 4: batch 68, checksum 124; no current decision recorded.\nArchived migration rehearsal entry 5: batch 85, checksum 155; no current decision recorded.\nArchived migration rehearsal entry 6: batch 102, checksum 186; no current decision recorded.\nArchived migration rehearsal entry 7: batch 119, checksum 217; no current decision recorded.\nArchived migration rehearsal entry 8: batch 136, checksum 248; no current decision recorded.\nArchived migration rehearsal entry 9: batch 153, checksum 279; no current decision recorded.\nArchived migration rehearsal entry 10: batch 170, checksum 310; no current decision recorded.\nArchived migration rehearsal entry 11: batch 187, checksum 341; no current decision recorded.\nArchived migration rehearsal entry 12: batch 204, checksum 372; no current decision recorded.\nArchived migration rehearsal entry 13: batch 221, checksum 403; no current decision recorded.\nArchived migration rehearsal entry 14: batch 238, checksum 434; no current decision recorded.\nArchived migration rehearsal entry 15: batch 255, checksum 465; no current decision recorded.\nArchived migration rehearsal entry 16: batch 272, checksum 496; no current decision recorded.\nArchived migration rehearsal entry 17: batch 289, checksum 527; no current decision recorded.\nArchived migration rehearsal entry 18: batch 306, checksum 558; no current decision recorded.\nArchived migration rehearsal entry 19: batch 323, checksum 589; no current decision recorded.\nArchived migration rehearsal entry 20: batch 340, checksum 620; no current decision recorded.\nArchived migration rehearsal entry 21: batch 357, checksum 651; no current decision recorded.\nArchived migration rehearsal entry 22: batch 374, checksum 682; no current decision recorded.\nArchived migration rehearsal entry 23: batch 391, checksum 713; no current decision recorded.\nArchived migration rehearsal entry 24: batch 408, checksum 744; no current decision r",
+              "title": "migration / Database design rationale",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-02@1",
+              "indexed_at": "2026-10-07T13:27:50.134415+00:00",
+              "locator": {
+                "field": "status and description"
+              },
+              "resource_id": "J-02",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-02",
+              "text": "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "title": "PAY-102 Retry configuration fix",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-03@1",
+              "indexed_at": "2026-10-07T13:27:50.134441+00:00",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "resource_id": "J-03",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03",
+              "text": "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya.",
+              "title": "PAY-103 Protective measures",
+              "version": 1
+            }
+          ],
+          "mode": "fixture_source_live_model_synthesis",
+          "model": "deepseek-flash-grounded-synthesis-v8",
+          "model_call": {
+            "accounted_upper_micro_usd": 1065,
+            "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+            "called": true,
+            "completion_tokens": 398,
+            "dispatch_recorded": true,
+            "model": "deepseek-flash",
+            "outcome": "accepted",
+            "prompt_tokens": 1958,
+            "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+            "reservation_id": "d92c1ee5c9a949ccb6b836c2194eb1bc",
+            "reserved_micro_usd": 315802,
+            "state": "settled",
+            "total_tokens": 2356
+          },
+          "model_review": {
+            "accounted_upper_micro_usd": 802,
+            "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+            "called": true,
+            "completion_tokens": 165,
+            "dispatch_recorded": true,
+            "model": "deepseek-flash",
+            "outcome": "accepted",
+            "prompt_tokens": 2013,
+            "query_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+            "reservation_id": "4a184e45393c4168b6286e9ffbe17154",
+            "reserved_micro_usd": 315802,
+            "state": "settled",
+            "total_tokens": 2178
+          },
+          "question": "Was DNS the cause of the webhook backlog?",
+          "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+          "review_status": "accepted",
+          "uncertainties": [
+            "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+          ]
+        }
+      },
+      "previous_hash": "8c58e04415cb2d8c3beab8927e2d75f63dbfde5ad3614f99b0ea2f6f2a8c90ab",
+      "request_id": "d6d04f80845245bbbb1d1f3aacb294ce",
+      "schema_version": 1,
+      "seq": 238,
+      "timestamp": "2026-10-07T13:28:10.216829+00:00"
+    }
+  ],
+  "total": 18,
+  "as_of": 513,
+  "next_after": null,
+  "semantics": "Events through this application; not proof of human reading."
+}

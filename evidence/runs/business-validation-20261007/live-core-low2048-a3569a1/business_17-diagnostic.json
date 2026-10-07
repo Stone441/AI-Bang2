@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "HOOK-411 load shedding is the webhook safeguard still in progress, and it is owned by Ravi.",
+        "evidence_ids": [
+          "BV-17@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-17@1",
+            "quote": "HOOK-411 load shedding is In Progress. Owner: Ravi."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "9163abd0-0888-4db1-8792-50fffa437934",
+      "object": "chat.completion",
+      "created": 1791385227,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"HOOK-411 load shedding is the webhook safeguard still in progress, and it is owned by Ravi.\",\"evidence_ids\":[\"BV-17@1\"],\"supports\":[{\"evidence_id\":\"BV-17@1\",\"quote\":\"HOOK-411 load shedding is In Progress. Owner: Ravi.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Which webhook safeguard is still in progress and who owns it?\" Need parse evidence. We need return JSON claims. We must identify requested part: webhook safeguard still in progress and owner. Evidence BV-17@1: HOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi. This directly answers: webhook safeguard? HOOK-411 load shedding is In Progress, owner Ravi. Need maybe quote exact: \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" That includes identifier. Should claim text: \"HOOK-411 load shedding is the webhook safeguard still in progress, owned by Ravi.\" Evidence_ids [\"BV-17@1\"], supports quote. Need ensure no external. Also maybe if \"webhook safeguard\" refers to load shedding. Yes.\n\nNeed include at most four claims. Only one claim needed. But check if question asks \"Which webhook safeguard is still in progress and who owns it?\" The evidence says HOOK-411 load shedding In Progress. Owner Ravi. So one claim. Need exact quote from evidence. Use quote: \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" That's contiguous. Good.\n\nBut we need consider if there is other webhook safeguard? BV-19 current response procedure: pause noncritical jobs before adding workers; do not retry every webhook. But not status. BV-20 pilot only. Not in progress. So only one.\n\nNeed output JSON only. Ensure supports array with evidence_id same as evidence_ids. Claim text concise. Include \"HOOK-411\" and \"Ravi\" both in quote. Good.\n\nFinal JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1989,
+        "completion_tokens": 430,
+        "total_tokens": 2419,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 355
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1477
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "94a77a6c-b26e-40d2-94f5-c93a1d871fe0",
+      "object": "chat.completion",
+      "created": 1791385229,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim and question coverage.\n\nQuestion: \"Which webhook safeguard is still in progress and who owns it?\"\n\nClaims: one claim: \"HOOK-411 load shedding is the webhook safeguard still in progress, and it is owned by Ravi.\" Evidence BV-17@1 quote \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" Also evidence includes other items. Need determine if supported and responsive.\n\nWe need inspect all supplied evidence. Claim says HOOK-411 load shedding is the webhook safeguard still in progress, owned by Ravi. Evidence BV-17@1 says HOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi. That supports exactly? It says load shedding in progress owner Ravi. Is it a \"webhook safeguard\"? Source title \"webhook / Webhook fix status\" section Webhook fix status. It lists HOOK-410 worker expansion Done, HOOK-411 load shedding In Progress. Question asks \"Which webhook safeguard is still in progress and who owns it?\" Evidence identifies HOOK-411 load shedding as In Progress and owner Ravi. So supported true.\n\nResponsive: It answers which safeguard and owner. Yes true.\n\nQuestion covered? Only requested part: which webhook safeguard still in progress and owner. Claim covers. Need question_covered true.\n\nNeed ensure no issue: \"load shedding\" maybe safeguard? Evidence says HOOK-411 load shedding; context webhook fix status. It supports. There are other webhook evidence about backlog, response procedure, external commitment, retired rehearsal. But no other in-progress webhook safeguard. BV-16 cause, BV-19 response procedure, BV-20 external commitment, BV-11 retired webhook rehearsal. No contradiction. BV-17 says HOOK-410 Done, HOOK-411 In Progress. Owner Ravi. So supported.\n\nNeed return exactly JSON with question_covered true and verdicts array one object index 0 supported true responsive true. Ensure schema.\n\nFinal only JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2041,
+        "completion_tokens": 453,
+        "total_tokens": 2494,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 427
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1529
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

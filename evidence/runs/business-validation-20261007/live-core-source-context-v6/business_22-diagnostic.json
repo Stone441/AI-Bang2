@@ -1,0 +1,88 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "For Singapore weekday batches, the reconciliation deadline is 18:00 SGT.",
+        "evidence_ids": [
+          "BV-22@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-22@1",
+            "quote": "For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline."
+          }
+        ]
+      },
+      {
+        "text": "The old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+        "evidence_ids": [
+          "BV-25@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-25@1",
+            "quote": "The old 17:00 deadline applies only to the retired September pilot, not current weekday batches."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "d4d1c839-7136-43cb-8088-7b0d5a771dc3",
+      "object": "chat.completion",
+      "created": 1791375380,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"For Singapore weekday batches, the reconciliation deadline is 18:00 SGT.\",\"evidence_ids\":[\"BV-22@1\"],\"supports\":[{\"evidence_id\":\"BV-22@1\",\"quote\":\"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\"}]},{\"text\":\"The old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\",\"evidence_ids\":[\"BV-25@1\"],\"supports\":[{\"evidence_id\":\"BV-25@1\",\"quote\":\"The old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1219,
+        "completion_tokens": 145,
+        "total_tokens": 1364,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 835
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "b07200c0-0f27-4fe0-b047-77c0e81d4ad5",
+      "object": "chat.completion",
+      "created": 1791375380,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1285,
+        "completion_tokens": 29,
+        "total_tokens": 1314,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 1029
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "commit": "64b705ad544dd4849e327fb20182300758a4cc53",
+  "reviewer": "authorized single readonly agent; summary of actual reports, not independent human acceptance",
+  "mode": "readonly_semantic_review_of_captured_current_outputs",
+  "development": {
+    "total": 24,
+    "core_correct_returns": 20,
+    "misleading_cross_event_returns": 1,
+    "correct_empty": 2,
+    "with_evidence_generation_structure_failure": 1,
+    "quality_pass": false,
+    "failed_cases": {
+      "business_16": "Webhook question returns an unscoped final retry/timeout cause from payment-service D-01. Correct webhook core does not remove this misleading additional assertion.",
+      "business_12": "MIG-301 blocker claim has exact quote without its own identifier. Generation rejected before review; both required facts were present."
+    },
+    "background_cases": [
+      "business_09",
+      "business_32"
+    ],
+    "business_03": "Only withdrawn/accepted recorded; no not-rejected assertion this run. Original failure retained, broad fix unproven.",
+    "exact_quotes_and_windows": 32,
+    "usage_micro_usd": 18016
+  },
+  "native": {
+    "actor": "eng_b",
+    "questions": 2,
+    "semantic_results": [
+      "Final Slack amber supersedes intermediate green",
+      "Pilot only / GA not approved / Done not release approval / no confirmed release date"
+    ],
+    "exact_windows": 28,
+    "all_four_authorization_stages": "allow for all selected resources",
+    "generation_review_usage_receipts": 4,
+    "usage_micro_usd": 3288,
+    "complete_quality_matrix": false
+  },
+  "sampling": "3 unique questions x4 repeats each, same code/world/cases, t1 9 returns/3 failures, t0 12 returns; not blind, not stability guarantee",
+  "budget_after": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 194985,
+    "settled_micro_usd": 194985,
+    "available_micro_usd": 19805015,
+    "pending_requests": 0,
+    "blocked_for_review": false
+  },
+  "AUTH019": "unchanged; new business16/12 failures are open engineering, not newly approved deferrals",
+  "browser": "blocked_saved_site_denial",
+  "human_acceptance": "not_run",
+  "G1": "not_run",
+  "G2": "not_run"
+}

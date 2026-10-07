@@ -1,5 +1,44 @@
 # 安装、启动、测试与演示
 
+2026-10-07固定候选0bc90ae采用显式可信`--model deepseek --answer-style synthesis --reasoning-effort low --output-tokens 4096`；AUTH017统一发现另用既有`--source multi --actor eng_b --discovery-auth017`与原审核config/Keychain/Drive OAuth。默认仍none/1024；已有运行进程未加载此候选。启动前核具体服务/版本和对应授权，不启动49161或动8094/8100；先model_readiness/当日官方价格、原USD20账本及native身份，失效停用、不改旧日期、不清预算。当前核心命令/文件hash记录在candidate指纹和各verification.json；这些验证不是浏览器或G1/G2通过。
+
+以下较早版本的状态描述为历史记录，由顶部候选记录覆盖；通用安全操作要求仍有效。
+
+2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
+
+2026-10-07最新局部结果：固定代码2a73bd0，380 clean archive/同48世界五fixture/两Node通过；当前eng_b两题native＋真实模型经只读复核5claims/28windows/四阶段当前allow/四usage与账本3207microUSD增量一致。配对272事件签名副本及混合208事件oracle另列local。全persona、故障live、四源native删除/新鲜度SLA、native正文关联、Docs支持未完成；browser saved site denial blocked，human业务判断/ROI/G1/G2 not_run。旧f8ecbed保留题失败及AUTH019延期保留，不从四开发题改称通过。完整证据见business-validation-20261007，旧版本表保持历史。
+
+2026-10-07业务增强候选实现f8ecbed：373 clean archive/五fixture/2Node/HTTP通过；binary-TF BM25、表格cell关系、资源方向审计、有界后台查询及版本反证停答已实现。四源AUTH-021新probe和两次修正native API/fake当前16断言通过，加载hash匹配候选；query约43–58秒，非SLA。12保留题冻结后一次live评测及只读语义审查已完成，具体见business-validation-20261007/heldout-review.json：有明确正确答案和safe unsupported，也有歧义/状态误答、部分答案和来源故障告知不足，不能称质量全通过；两项AUTH-019原延期不覆盖这些新失败。当前native/模型签名副本分别核验，同机测试key非独立custody；产品browser仍saved site denial blocked，49161停止、8094/8100不动；G1/G2、人类任务/ROI及发布提交not_run。Goal active，新增工程缺口仍由Codex继续负责。最新本地候选c825143非后台unknown通用修复有17定向、377 clean archive/五fixture/2Node/HTTP及只读复审通过；它尚未形成新native/live/browser结果，不能继承f8ecbed两题实际运行。
+
+新增只读/隔离命令（每次新目录，勿覆盖历史）：`python3 -m scripts.business_native_changes --live --root evidence/runs/business-validation-20261007/native-change-owner --phase amber-return --capture-name <new-label> --background`；当前源码回归`python3 -m scripts.rebuild_acceptance --ref f8ecbed --output <new-directory>`。native model使用`python3 -m scripts.business_current_native_model --live --output <new-directory>`，先真实model_readiness/原账本，复用原AUTH与Keychain，不启动HTTP/源写入/新费用范围。保留题已消费，不再作为未见题重复调参。上传file URL许可只用于owner三版本上传，已完成，用户可关闭；不自动修改设置。
+
+## 当前集成候选运行入口 · 2026-10-06
+
+当前开发分支 `fix/review-integrated-candidate`，基准45d7b27；最新固定应用/测试331bd28已干净archive setup/357回归17.406s/五fixture场景/两Node/HTTP通过。323cb93的356项记录是早先里程碑，不能冒作之后HEAD通过。当前状态/模式及证据以[STATUS](STATUS.md)、[ACCEPTANCE_STATUS](ACCEPTANCE_STATUS.md)为准；以下历史段落的export/New question、仅memory/尚未授权/尚无native等旧陈述已被ADR-040和最新AUTH覆盖。
+
+本地集中观看：在**新的隔离git archive目录**启动，保留原项目.runtime和审计，不停止8094/8100。先 `make setup`、`make test`、`make verify`；`python3 -m brain.server --demo --port 0` 打印本次实际loopback地址，模式fixture_fake_model。浏览器只访问获许可的该实例；端口变化/实例停止后按具体授权重新确认。fixture身份不是native员工登录，FAKE MODEL为原文摘录；真实模型的claims质量另看独立记录。
+
+同一场五场景：按下方步骤顺序完成S-01当前原因/撤回解释/未完工作及pilot限制；S-02在**该隔离目录**使用fixture_admin更新runbook，旧引用与history失效；S-03 contractor禁止泄露security对象存在，并对照允许的pilot；S-04同一eng_a身份撤权后独立再问、旧引用/history拒绝，不自动继承上一问；S-05 auditor受限模板还原当前准备/发送意图或尝试/有效usage/输出及存储/HTTP交付尝试。Fake provider没有真实vendor调用，不能制造model receipts。签名覆盖另重放既有CodeBuddy verifier对R3A/R4候选快照，注明checkpoint seq/unsigned tail/old rollback和同机custody，不恢复用户答案下载。统一观看清单见[SAFETY_REVIEW](SAFETY_REVIEW.md)。
+
+AUTH-017四个固定容器发现已实现并有当前native readonly/fake模型子集；`--discovery-auth017`只适用既有multi/eng_b，默认关闭，不扩product_ops。新建/修改/删除源端数据及目标服务重启按各自具体授权，不由本地fixture操作推导权限。完整四源native生命周期时延矩阵仍partial。
+
+真实模型每次先 `python3 -m scripts.model_readiness`，再核对现有配置/授权及原USD20 ledger剩余/冻结状态；不注入旧today或重建账本。`python3 -m scripts.quality_acceptance --live-model --output <新目录>`仅固定fixture合成源＋真实模型，使用既有app-owned eng_b key和原账本；不是native persona/四源模型验收。会产生已批准预算内费用，输出capture不等于semantic通过，需逐条claims/quotes/omissions/relevance审查。旧检索harness只用于词法边界：`python3 -m scripts.retrieval_acceptance --output <新目录>`，拒绝覆盖旧记录，不称质量benchmark。
+
+当前R5真实浏览器许可单独记录：新49161隔离fixture已核health并获用户重新批准，但mcp__cua_repl.js / Chrome正常重试仍被saved user site permission拒绝。工具无许可管理API，Codex应用界面访问也被策略禁止；用户回复“没有找到许可入口”，具体设置位置未知。真实browser/screenshots not_run，Node/HTTP不替代浏览器。仅自建49161实例已结束，8094/8100未动；未来先核新实例归属/模式并重新确认对应许可，不沿用旧地址授权。G1/G2仍not_run。
+
+## 先前运行说明（版本/授权描述由上方覆盖）
+
+R2只读native runner：`python3 -m scripts.native_discovery_acceptance --live --output evidence/runs/<新的唯一目录>`。默认既有`.runtime/operator-bundle.json`与私有Drive desktop client；只复用app-owned Keychain和已保存refresh grant，不交互输入/新consent/保存凭据，不启HTTP或付费模型。输出存在即拒绝，首次失败也不覆盖；缺凭据或refresh失效直接停并记录失败类型。先验证AUTH-017配置再用凭据，native身份每源核对；原baseline IDs/原进程保持。已验证新增to-index只有既有KAN-6，不保证其他源有合格新对象。Jira支持完整末尾`[SYNTHETIC ONLY]`，完整原banner+精确J-lifecycle-20261006被认可，未知/篡改仍拒绝；不能将只读批准用于改标题/种植新源。
+R2 AUTH-017 opt-in：原multi命令追加`--discovery-auth017`，仅eng_b及四个固定容器，默认关闭，独立`.runtime/multi-auth017-web.sqlite`；不改变8094/8100已有进程。启动后60秒为成功周期的最短间隔，失败按退避/Retry-After延后，不保证每分钟完成。operator-only状态在该DB discovery_state/catalog；不向浏览器开放来源列表。停止使用Ctrl-C，先结束poller再关闭DB；再次启动从已记录mapping精确复核，unknown不给权限。真实只读发现获AUTH-017批准，native新增/时延本轮未执行；种植/编辑/删除仍按各自具体授权。本地验证：`python3 -m unittest discover -s tests -p test_container_discovery.py -v`；实际mock trace重放请将capture.py复制到新运行目录并用`PYTHONPATH=tests:. python3 <新目录>/capture.py`，exclusive输出不覆盖原结果。
+2026-10-06 R3A/R4 本地回归：`python3 -m unittest discover -s tests -v`；`node tests/frontend_operator_security.js`；`node tests/frontend_audit_review.js`。来源与审计定向：`python3 -m unittest discover -s tests -p test_synthetic_provenance.py -v`及`-p test_model_stages.py`。结果写新的运行目录，不覆盖旧附件；review-r4 capture.py是离线mock且输出exclusive，重放必须先复制到新目录并调整目标。真实模型前执行已有`python3 -m scripts.model_readiness`并保留账本，过期需真实复核；不凭health推断新代码已加载。R2仅AUTH-017固定eng_b容器读取获批，方案尚未实现；不自动重启已有8094/8100。
+## 当前运行提示 · 2026-10-06
+
+先看[STATUS当前总表](STATUS.md)。ADR-040独立问答已落实：无聊天历史依赖、New question或普通回答下载；下方相关旧说明为superseded。四源native/DeepSeek及独立product_ops Confluence已有子集，不重复开通。
+
+每次live启动前运行`python3 -m scripts.model_readiness`，只检查价格日期，不读取凭据/账本/联网；返回0仅表明当日价格已复核，不保证预算、源或模型可用。当前复核SGT Oct6，Oct7过期；实际核对官方[价格](https://api-docs.deepseek.com/quick_start/pricing/)及接口并记录新依据后更新构建。不得传旧today、删除/换目录重建USD20账本。跨日非空请求503/model_price_review_required，联系操作员，重试问题不能解决。
+
+新进程启动日志与GET /api/health携带startup_source_sha256和process_loaded_at（源码快照，不是签名证明）；静态UI可独立变化，不热更新后台。只读现场8094=四源/native/live synthesis、8100=CF/native/fake且无该字段；准确loaded commit未知，本轮保持不重启。运行时验收另行记录，不能以磁盘代码/本地回归代替。
+
 要求 Python >=3.11（本次实际 3.14.7）、可绑定 loopback 端口。应用零第三方 Python 依赖，无 npm/pip 安装步骤；无需 API key。签名工具及完整测试另需 PATH 中的 OpenSSL（已验证 3.6.3，需支持 Ed25519 pkeyutl -rawin）。Node 仅用于 `node --check web/app.js`。在仓库根目录执行。
 
 ```sh
@@ -30,7 +69,7 @@ make demo
    ```
 
    同一登录身份独立再次查询payment-service线程及retry safeguards；不得再次输出线程独有标记。打开旧 S-01 引用应不可用；Recent answers 中依赖已撤权资料的整条旧回答应不可用。无需全库重建。可分别对 C-01/J-01/D-01 重复。
-5. **S-05**：以 Scoped auditor 登录，打开 Audit explorer，提交预置问题。展开事件查看身份、问题、逐资料授权、sent_to_model、引用和最终答案；支持稳定 snapshot 分页。HTTP 场景还记录 dispatch_attempted。CLI 回放不伪装成 HTTP dispatch。
+5. **S-05**：以 Scoped auditor 登录，打开 Audit explorer，提交预置问题。展开事件查看身份、问题、逐资料授权、prepared_for_answer/review、model_dispatch_intent/attempted、有效usage、引用和最终答案；支持稳定 snapshot 分页。HTTP 场景还记录 dispatch_attempted。CLI 回放不伪装成 HTTP dispatch。
 
 完整自动回放使用隔离内存状态，不改变正在演示的 `.runtime`：
 

@@ -1,5 +1,41 @@
 # Acceptance coverage · local candidate
 
+2026-10-07统一业务增强候选固定为 **0bc90ae**：synthesis-v8，可信显式low/4096；默认none/1024保持，当前8094/8100未重启。398干净归档回归、同48世界五fixture、JS语法及两Node通过；完整24作者开发题真实模型为22正确事实回答＋2正确空答，零异常，经只读Agent逐题核原问题/quotes/relevance，非稳定率或盲测。eng_b当前原生＋真实模型两题均正确，Slack最终amber替代green、产品pilot/GA/date/Done边界齐全；耗时含preview133.132/146.085秒，非SLA。本流费用上界core46985/native12302microUSD；原账本settled390875/pending0，不从共享差额归费用。当前core完整签名、native分页/七签名边界及fixture四结果审计已配对，非独立custody或人阅读证明。四源AUTH021创建/修正原native/fake证据按原版本保留。
+
+剩余分列：原保留集f8ecbed失败未重跑、未改写为修复；AUTH019仅原长文Orion与自然题冗余两项延期，不扩大。native正文一跳解析、Google Docs/OCR/全附件/DM及生产SSO/KMS/WORM未实现或不支持；embedding方案C无已批准provider/依赖，blocked。完整native生命周期/故障/身份矩阵、新鲜度SLA及质量稳定性仍未验；性能仍有缺口。产品browser为工具saved site denial blocked（49161停止），不是产品失败；真人业务/ROI/G1/G2、录屏、外部开放、推送合并/发布/比赛提交not_run。本轮完成以EXECUTION_BRIEF5.3的业务增强与有模式边界的统一候选为范围，不宣称全部开发或技术验收完成。
+
+下方较早阶段记录保留为历史，本段为当前状态。
+
+2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
+
+2026-10-07最新局部结果：固定代码2a73bd0，380 clean archive/同48世界五fixture/两Node通过；当前eng_b两题native＋真实模型经只读复核5claims/28windows/四阶段当前allow/四usage与账本3207microUSD增量一致。配对272事件签名副本及混合208事件oracle另列local。全persona、故障live、四源native删除/新鲜度SLA、native正文关联、Docs支持未完成；browser saved site denial blocked，human业务判断/ROI/G1/G2 not_run。旧f8ecbed保留题失败及AUTH019延期保留，不从四开发题改称通过。完整证据见business-validation-20261007，旧版本表保持历史。
+
+2026-10-07业务增强候选实现f8ecbed：373 clean archive/五fixture/2Node/HTTP通过；binary-TF BM25、表格cell关系、资源方向审计、有界后台查询及版本反证停答已实现。四源AUTH-021新probe和两次修正native API/fake当前16断言通过，加载hash匹配候选；query约43–58秒，非SLA。12保留题冻结后一次live评测及只读语义审查已完成，具体见business-validation-20261007/heldout-review.json：有明确正确答案和safe unsupported，也有歧义/状态误答、部分答案和来源故障告知不足，不能称质量全通过；两项AUTH-019原延期不覆盖这些新失败。当前native/模型签名副本分别核验，同机测试key非独立custody；产品browser仍saved site denial blocked，49161停止、8094/8100不动；G1/G2、人类任务/ROI及发布提交not_run。Goal active，新增工程缺口仍由Codex继续负责。最新本地候选c825143非后台unknown通用修复有17定向、377 clean archive/五fixture/2Node/HTTP及只读复审通过；它尚未形成新native/live/browser结果，不能继承f8ecbed两题实际运行。
+
+## 当前统一候选 · 2026-10-06（覆盖下方历史描述）
+
+固定应用/测试331bd28，分支fix/review-integrated-candidate；最新clean archive **357项17.406s**、五fixture场景、2Node及本地HTTP全部通过，证据review-integrated-20261006/rebuild-scope-current。旧34281ad/352和323cb93/356原记录保留，不冒作最新源码通过。
+
+| 对应验收 / 审查 | fixture/mock | native API | live model | browser / human / 缺口 |
+|---|---|---|---|---|
+| R2 / F-01–07 / S-02 | 当前357含固定容器发现/更新/删除/unknown与checkpoint子集 | AUTH-017 eng_b四源只读complete、发现KAN-6、8checks；非完整生命周期/SLA | 本次R2 fake，无native模型升级 | 当前browser not_run；原矩阵子集有效 |
+| R3 / Q-01/02/05/06/07/10 | 词法compound/长窗口/引用ID/negative review定向及完整回归 | 质量runner不调用native | fixture_source_live_model真实8问题前后对照；6自然题原子facts覆盖/无证据正确，quoted-ID缺口修复 | relevance及long-event最终拒答仍partial；人类质量not_run，用户明确批准延期交团队语义验收，不称通过 |
+| R3A / P-14 / Q-10 | 当前来源/精确窗口/guard回归 | 原native子集不升级为完整新窗口链路 | fixture合法晚段真实送模型且usage有效，非整体质量通过 | 浏览器/完整native模型矩阵not_run |
+| R4 / A-01/03/04/10 | 当前model stages/历史字节/签名快照回归 | 不升级native auditor | 48本次fixture-source真实usage与原ledger逐笔匹配；output rejection保留 | 独立custody/生产DB角色/用户已读/人G1不证明 |
+| R5 / U-02/03 | 安全链接/历史metadata/诊断折叠/等待/迟到保护Node/HTTP通过 | 不重复历史8100正负独立问答 | UI检查fake，模型结果另列 | 49161新实例文字批准，但同工具normal retry仍saved permission blocks；browser not_run |
+| R6 / U-01/05/06 | 331bd28无runtime/env干净重建及连续五fixture场景 | native和历史subset分列 | 预算/模型readiness本日实查，不保证未来有效 | 团队集中观看及G1/G2/materials pending；固定候选已准备，browser工具许可待解锁 |
+
+当前候选[具体交接与未解决项](../evidence/runs/review-integrated-20261006/README.md)。ADR-040独立问答/无答案下载保留；根原docs01–05和历史review/audit/旧结果不改。AUTH-003/014/016/017具体批准持续有效，不能被下方旧pending/尚未开通表述撤销，也不能扩scope/write/account。browser真实许可待工具生效；不换入口绕过。以下日期段落及旧export/未实现状态属于历史，由本表/STATUS及最新ADR覆盖。
+
+2026-10-06 R2真实只读增量：四源native身份/list/current-read complete，16.811s周期，原白名单外KAN-6/10015自动发现、fake问答当前Revision2 green、精确preview、8checks通过；只验证既有原资源进入新索引链路，非创建至可回答时延/四源新增矩阵。两个初始failed保留：精确Jira尾标签及既有fixture ID兼容断点，原文未改写；最新352 fixture/mock、21发现/4runner guard通过。native新增/编辑/删除多次生命周期、browser/live model、人G1/G2仍not_run；R1/R3A/R4新build验收不升级。证据review-r2-native-approved-fixture-20261006及两个失败目录。
+2026-10-06 R2增量：19定向、346完整fixture/mock回归17.110s及两Node检查通过；四源实际mock新增发现/更新/删除/429 trace见review-r2-20261006。AUTH-017动态IDs仅eng_b，原生当前权限与R3A全文/精确窗口关系保留；不完整分页/读取失败不推进完整checkpoint。R2为verified local subset，native新增发现/生命周期时延及新browser/live model仍not_run；不是完整S-02或新鲜度SLA/G1/G2通过。下文方案未实现描述由本段覆盖。
+2026-10-06 最新增量：R3A/R4 verified local fixture/mock，327完整Python方法16.645s、6来源定向/5审计定向及2Node检查通过。R3A合法无banner窗口按服务端已批准原资源/版本/原文精确关系放行；负例仍网络前拒绝。R4仅区分准备、发送意图/尝试、有效usage及输出、回答交付尝试，历史日志不改写。证据review-r3a-20261006、review-r4-20261006。新build native/browser/live model全部not_run，A-10/A-12/13完整验收及G1/G2不升级。R1本地完成，旧下文R3出口blocked/R4未修描述由本段覆盖；业务质量仍待验证。AUTH-017发现范围获批不等于发现实现/时延通过。8100历史独立问答验收继续有效。
+## 当前验收增量 · 2026-10-06
+
+以[STATUS当前总表](STATUS.md)为模式/版本/人工状态入口。DEV-REVIEW-R1：316完整fixture/mock方法16.309s、18模型定向、2Node检查通过；当前checkout，不是新的clean archive/native/model/browser验收。U-01/P-14/A-10仅新增价格跨日拒绝、预算保留、503操作员提示及非敏感health启动指纹子集；R4实际发送语义仍未修，不能将A-10整体标通过。R3长窗口synthetic guard与词法miss在当前模块复现，未用历史snapshot。证据review-r1-20261006。
+
+ADR-040已实现，8100历史native/fake独立正负问题已验证；下载404是fixture/mock HTTP。AUTH-016 product_ops CF及AUTH-014有效；产品其他源/G1/G2/not_run。以下旧数字、导出能力和pending为历史记录，以顶部及最新决定覆盖，不改写原oracle或旧证据。
+
 2026-10-06 AUTH-016已记录，Confluence-only product_ops token及app-owned本机Keychain复用获用户明确批准。已准备独立.runtime/confluence-product.json与nonsecret example、单源Confluence Keychain入口：新输入native身份匹配后才保存，saved免TTY复用、OS拒绝/wrong account不回退，actor/tenant/native-account摘要隔离SQLite0600。32针对性/307完整fixture/mock回归实际通过；初始test_keychain sibling import调用错误记录后按已有discovery路径重跑，不删断言。Atlassian页已填2918379149@qq.com，当前用户登录/邮箱验证pending，token未创建/产品Keychain项未写，native权限验收not_run；待“产品账号已登录”后继续只读scope准备及用户最终创建，再执行fake产品正/负query。不扩Jira/Slack/Drive/DeepSeek授权、不改8094，G1/G2 not_run。
 
 2026-10-06 最新checkout完整301项Python回归实际通过（native-jira-update/full-tests.log），含新增mixed audit及Jira guard；既有native Jira13checks另列。full suite为fixture/mock，不增加native/model验收覆盖，当前新提交尚非新clean archive/browser视觉通过。独立Confluence product_ops凭据及本机Keychain复用具体候选PRODUCT_READER_PILOT已发确认，未回复前不创建token/读取新凭据/调整权限；其他源更新与真人观看保留pending。

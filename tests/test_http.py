@@ -24,6 +24,27 @@ class HTTP(unittest.TestCase):
         c.close();return status,result
     def login(self,user='eng_a'):
         status,result=self.request('/api/demo/login',{'user':user});self.assertEqual(status,200);self.csrf=result['csrf']
+
+    def test_price_expiry_is_operator_action_and_not_invalid_user_input(self):
+        from unittest.mock import patch
+        from brain.deepseek import PriceReviewRequired
+        self.login()
+        with patch.object(self.app.engine, 'query', side_effect=PriceReviewRequired('private details')):
+            status, result = self.request('/api/query', {'question':'payment-service'})
+        self.assertEqual(status, 503)
+        self.assertEqual(result['code'], 'model_price_review_required')
+        self.assertIn('Contact the operator', result['error'])
+        self.assertNotIn('private details', json.dumps(result))
+
+    def test_health_startup_fingerprint_stays_fixed_after_disk_changes(self):
+        from unittest.mock import patch
+        from brain.runtime_version import runtime_version
+        first = self.request('/api/health')[1]['runtime_version']
+        self.assertRegex(first['startup_source_sha256'], r'^[a-f0-9]{64}$')
+        with patch('brain.runtime_version.source_fingerprint', return_value='different-disk'):
+            second = self.request('/api/health')[1]['runtime_version']
+        self.assertEqual(first, second)
+        self.assertEqual(first, runtime_version())
     def test_http_frontend_identity_and_query(self):
         self.assertEqual(self.request('/')[0],200)
         self.assertEqual(self.request('/api/query',{'question':'payment-service'})[0],403)
@@ -43,7 +64,14 @@ class HTTP(unittest.TestCase):
         self.assertEqual(len(self.app.engine.model.calls),calls)
         for target in (answer['request_id'],'missing'):
             self.assertEqual(self.request('/api/export/'+target),(404,{'error':'Unavailable'}))
-        self.assertEqual(self.request('/api/history')[0],200)
+        status,history=self.request('/api/history')
+        self.assertEqual(status,200)
+        self.assertEqual(history['history'][0]['question'],'payment-service incident')
+        self.assertEqual(history['history'][0]['answered_at'],answer['answered_at'])
+        self.assertRegex(answer['answered_at'],r'^\d{4}-\d{2}-\d{2}T')
+        preview=self.request('/api/evidence/'+answer['evidence'][0]['evidence_id'])[1]
+        self.assertEqual(preview['source'],answer['evidence'][0]['source'])
+        self.assertEqual(preview['source_url'],answer['evidence'][0]['source_url'])
     def test_csrf_host_and_evidence_protection(self):
         self.login('contractor')
         self.assertEqual(self.request('/api/query',{'question':'pilot'},{'X-CSRF-Token':'wrong'})[0],403)

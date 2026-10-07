@@ -1,5 +1,10 @@
 # Evidence index
 
+2026-10-06 [R2 native发现子集](runs/review-r2-native-approved-fixture-20261006/README.md)：四源身份与周期成功，原白名单外KAN-6自动发现、fake问答/精确引用8checks通过；352本地回归。两个原始failed目录保留；非完整生命周期时延、browser/live model或人G1/G2。
+2026-10-06 [R2四源有界发现](runs/review-r2-20261006/README.md)：19定向、346完整fixture/mock及两Node检查通过；实际离线新增问答/更新/删除/限流trace，native/browser/live model not_run。AUTH-017读取范围有效，产品范围与G1/G2不变。
+2026-10-06 本地增量：[R3A](runs/review-r3a-20261006/README.md)原资源精确窗口出口、[R4](runs/review-r4-20261006/README.md)审计阶段；327完整fixture/mock方法及两Node检查通过。新build native/browser/live model not_run；R1与历史审查证据保留。
+- 2026-10-06 [独立审查R1接续](runs/review-r1-20261006/README.md)：ZIP完整性、当前模块R1/R3复现、官方价格复核、现有两服务健康模式、316 fixture/mock与18定向测试、启动版本/跨日保护；原历史审查与失败结果保留。新版本native/live-model/browser/G1/G2未验收；当前模式总表见docs/STATUS.md，以下早期pending保留为历史。
+
 全部为合成数据，不含真实凭据/企业内容；没有上传外部证据。
 
 - `runs/local-latest/tests.json`：unittest 实际结果、运行时间、Python 版本、被测 commit 和逐文件 SHA-256；2026-10-05 为 101 个测试方法（含 41 个 Confluence 模拟 HTTP/配置/查询/撤权runner案例、7 个预算账本案例和 seed exporter），额外权限矩阵 subtests。逐案例区分 local_synthetic / mock_http_contract，回归未调用真实 API。

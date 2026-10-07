@@ -1,0 +1,64 @@
+{
+  "commit": "81dd33ebb8d9aa57192192d819f24f991089dc04",
+  "mode": "clean_archive_fixture_mock",
+  "results": [
+    {
+      "check": "tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests"
+      ],
+      "exit_code": 0,
+      "seconds": 19.510059833992273
+    },
+    {
+      "check": "five-scenes",
+      "command": [
+        "python3",
+        "-m",
+        "scripts.business_lifecycle",
+        "--output",
+        "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/evidence/runs/business-validation-20261007/clean-reasoning-config/same-world-five"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1662772920099087
+    },
+    {
+      "check": "js-syntax",
+      "command": [
+        "node",
+        "--check",
+        "web/app.js"
+      ],
+      "exit_code": 0,
+      "seconds": 0.034232917008921504
+    },
+    {
+      "check": "operator",
+      "command": [
+        "node",
+        "tests/frontend_operator_security.js"
+      ],
+      "exit_code": 0,
+      "seconds": 0.04964729200582951
+    },
+    {
+      "check": "audit-ui",
+      "command": [
+        "node",
+        "tests/frontend_audit_review.js"
+      ],
+      "exit_code": 0,
+      "seconds": 0.036302416992839426
+    }
+  ],
+  "native": "not_run",
+  "live_model": "not_run",
+  "browser": "blocked_saved_site_denial",
+  "G1": "not_run",
+  "G2": "not_run"
+}

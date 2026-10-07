@@ -1,0 +1,93 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No. INT-210 implementation being Done does not mean commercial launch is approved; commercial launch remains pending approval.",
+        "evidence_ids": [
+          "BV-09@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-09@1",
+            "quote": "INT-210 implementation is Done; commercial launch remains Pending approval."
+          }
+        ]
+      },
+      {
+        "text": "Completion of code work for a payment item likewise does not constitute customer release approval, and general availability is not approved.",
+        "evidence_ids": [
+          "D-02@1",
+          "J-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          },
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "ea517e64-3b80-4367-8764-f43fd81e9cd8",
+      "object": "chat.completion",
+      "created": 1791363028,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No. INT-210 implementation being Done does not mean commercial launch is approved; commercial launch remains pending approval.\",\"evidence_ids\":[\"BV-09@1\"],\"supports\":[{\"evidence_id\":\"BV-09@1\",\"quote\":\"INT-210 implementation is Done; commercial launch remains Pending approval.\"}]},{\"text\":\"Completion of code work for a payment item likewise does not constitute customer release approval, and general availability is not approved.\",\"evidence_ids\":[\"D-02@1\",\"J-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"General availability (GA) not approved. PAY-102 Done is not customer release approval.\"},{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 880,
+        "completion_tokens": 180,
+        "total_tokens": 1060,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 624
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "41f2e0da-4e6f-4889-8fbd-7ea61f489bd0",
+      "object": "chat.completion",
+      "created": 1791363029,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1040,
+        "completion_tokens": 29,
+        "total_tokens": 1069,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 912
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The ledger migration should be rolled back if settlement differences exceed five basis points.",
+        "evidence_ids": [
+          "BV-13@1",
+          "BV-14@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-13@1",
+            "quote": "Roll back the ledger migration if settlement differences exceed five basis points."
+          },
+          {
+            "evidence_id": "BV-14@1",
+            "quote": "The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule."
+          }
+        ]
+      },
+      {
+        "text": "The chosen shadow-table approach allows rollback without blocking existing writes.",
+        "evidence_ids": [
+          "BV-11@1#16000:17452"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-11@1#16000:17452",
+            "quote": "Ledger migration chose a shadow table to allow rollback without blocking existing writes."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "691254ff-be47-4ad3-b9f9-c781b17c4905",
+      "object": "chat.completion",
+      "created": 1791362855,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The ledger migration should be rolled back if settlement differences exceed five basis points.\",\"evidence_ids\":[\"BV-13@1\",\"BV-14@1\"],\"supports\":[{\"evidence_id\":\"BV-13@1\",\"quote\":\"Roll back the ledger migration if settlement differences exceed five basis points.\"},{\"evidence_id\":\"BV-14@1\",\"quote\":\"The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.\"}]},{\"text\":\"The chosen shadow-table approach allows rollback without blocking existing writes.\",\"evidence_ids\":[\"BV-11@1#16000:17452\"],\"supports\":[{\"evidence_id\":\"BV-11@1#16000:17452\",\"quote\":\"Ledger migration chose a shadow table to allow rollback without blocking existing writes.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2318,
+        "completion_tokens": 178,
+        "total_tokens": 2496,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 2190
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "1a0926d1-f6b3-4219-bab6-6597b98c6e4a",
+      "object": "chat.completion",
+      "created": 1791362856,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2476,
+        "completion_tokens": 29,
+        "total_tokens": 2505,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 2348
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

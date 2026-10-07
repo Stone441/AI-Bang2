@@ -1,0 +1,81 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "For the BV-20261007 Slack probe thread, the value approved after the final correction is amber (correction 3), which supersedes correction 2's green value. Correction 2 itself superseded the root amber value set in the original thread.",
+        "evidence_ids": [
+          "slack:C0C6R70SGG4/1791364196.524909@977460312587581392",
+          "slack:C0C6R70SGG4/1791364699.192759@56399498513313818"
+        ],
+        "supports": [
+          {
+            "evidence_id": "slack:C0C6R70SGG4/1791364196.524909@977460312587581392",
+            "quote": "BV-20261007 slack correction 2: approved probe value green; supersedes the root amber value. No customer promise."
+          },
+          {
+            "evidence_id": "slack:C0C6R70SGG4/1791364699.192759@56399498513313818",
+            "quote": "BV-20261007 slack correction 3: approved probe value amber; supersedes correction 2 green. No customer promise."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "480511a2-ad72-4ea6-87ec-110e1cc7da26",
+      "object": "chat.completion",
+      "created": 1791373083,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"For the BV-20261007 Slack probe thread, the value approved after the final correction is amber (correction 3), which supersedes correction 2's green value. Correction 2 itself superseded the root amber value set in the original thread.\",\"evidence_ids\":[\"slack:C0C6R70SGG4/1791364196.524909@977460312587581392\",\"slack:C0C6R70SGG4/1791364699.192759@56399498513313818\"],\"supports\":[{\"evidence_id\":\"slack:C0C6R70SGG4/1791364196.524909@977460312587581392\",\"quote\":\"BV-20261007 slack correction 2: approved probe value green; supersedes the root amber value. No customer promise.\"},{\"evidence_id\":\"slack:C0C6R70SGG4/1791364699.192759@56399498513313818\",\"quote\":\"BV-20261007 slack correction 3: approved probe value amber; supersedes correction 2 green. No customer promise.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1570,
+        "completion_tokens": 242,
+        "total_tokens": 1812,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1058
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "50f0a059-fb95-47f1-bb20-a9b2e71ebc12",
+      "object": "chat.completion",
+      "created": 1791373103,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\n  \"question_covered\": true,\n  \"verdicts\": [\n    {\n      \"index\": 0,\n      \"supported\": false\n    }\n  ]\n}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1723,
+        "completion_tokens": 36,
+        "total_tokens": 1759,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 1467
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

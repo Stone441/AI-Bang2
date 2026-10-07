@@ -1,0 +1,53 @@
+test_cli_opt_in_invalid_identity_or_single_source_before_credentials (test_container_discovery.DiscoveryBoundary.test_cli_opt_in_invalid_identity_or_single_source_before_credentials) ... ok
+test_default_fixed_ids_then_four_source_discovery_becomes_answerable (test_container_discovery.DiscoveryBoundary.test_default_fixed_ids_then_four_source_discovery_becomes_answerable) ... ok
+test_drive_incomplete_and_cross_parent_never_publish_or_advance_checkpoint (test_container_discovery.DiscoveryBoundary.test_drive_incomplete_and_cross_parent_never_publish_or_advance_checkpoint) ... ok
+test_jira_project_substitution_and_comment_scope_never_discovered (test_container_discovery.DiscoveryBoundary.test_jira_project_substitution_and_comment_scope_never_discovered) ... ok
+test_numeric_retry_after_retained_without_reading_error_body (test_container_discovery.DiscoveryBoundary.test_numeric_retry_after_retained_without_reading_error_body) ... ok
+test_pagination_uses_fixed_endpoint_and_rejects_external_or_changed_container_next (test_container_discovery.DiscoveryBoundary.test_pagination_uses_fixed_endpoint_and_rejects_external_or_changed_container_next) ... ok
+test_product_ops_cannot_inherit_discovery_even_with_native_read_token (test_container_discovery.DiscoveryBoundary.test_product_ops_cannot_inherit_discovery_even_with_native_read_token) ... ok
+test_rate_limit_backoff_restart_and_checkpoint_do_not_skip_failures (test_container_discovery.DiscoveryBoundary.test_rate_limit_backoff_restart_and_checkpoint_do_not_skip_failures) ... ok
+test_slack_thread_requires_current_synthetic_parent_and_exact_reply_reads (test_container_discovery.DiscoveryBoundary.test_slack_thread_requires_current_synthetic_parent_and_exact_reply_reads) ... FAIL
+test_title_marker_is_not_synthetic_provenance_and_non_candidates_no_body (test_container_discovery.DiscoveryBoundary.test_title_marker_is_not_synthetic_provenance_and_non_candidates_no_body) ... FAIL
+test_updates_deletes_and_old_history_without_rebuilding_other_sources (test_container_discovery.DiscoveryBoundary.test_updates_deletes_and_old_history_without_rebuilding_other_sources) ... ok
+test_version_collision_rolls_back_catalog_and_publication (test_container_discovery.DiscoveryBoundary.test_version_collision_rolls_back_catalog_and_publication) ... ERROR
+test_wrong_container_identity_channel_and_scope_fail_closed (test_container_discovery.DiscoveryBoundary.test_wrong_container_identity_channel_and_scope_fail_closed) ... ok
+
+======================================================================
+ERROR: test_version_collision_rolls_back_catalog_and_publication (test_container_discovery.DiscoveryBoundary.test_version_collision_rolls_back_catalog_and_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_container_discovery.py", line 231, in test_version_collision_rolls_back_catalog_and_publication
+    self.assertEqual(self.pilot.query(self.actor,'novelty')['evidence'][0]['source'],'drive')
+                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py", line 128, in query
+    return self.engine.query(actor, question, history_id)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 51, in query
+    self.world.prepare(actor,self.store,self.audit,rid)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py", line 73, in prepare
+    raise ValueError('Content version collision')
+ValueError: Content version collision
+
+======================================================================
+FAIL: test_slack_thread_requires_current_synthetic_parent_and_exact_reply_reads (test_container_discovery.DiscoveryBoundary.test_slack_thread_requires_current_synthetic_parent_and_exact_reply_reads)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_container_discovery.py", line 210, in test_slack_thread_requires_current_synthetic_parent_and_exact_reply_reads
+    self.assertNotIn('thread novelty',json.dumps(self.pilot.query(self.actor,'thread novelty')['evidence']))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'thread novelty' unexpectedly found in '[{"evidence_id": "slack:C0C6R70SGG4/1791142154.000001@716913826320611768", "resource_id": "slack:C0C6R70SGG4/1791142154.000001", "version": 716913826320611768, "source": "slack", "title": "#synthetic-payments \\u00b7 1791142154.000001", "locator": {"channel_id": "C0C6R70SGG4", "content_sha256": "9f2fd53a067f9b8bcc3b76aae91b873e79db26f496d6c32e623fe00f67158899", "message_ts": "1791142154.000001", "thread_ts": "1791142153.000001"}, "text": "[SYNTHETIC] thread novelty", "source_updated_at": "2026-10-04T19:29:14.000001+00:00", "indexed_at": "2026-10-06T05:32:50.714053+00:00", "source_url": "https://test.slack.com/archives/C0C6R70SGG4/p1791142154000001"}, {"evidence_id": "confluence:98565@1", "resource_id": "confluence:98565", "version": 1, "source": "confluence", "title": "[SYNTHETIC] novelty", "locator": {"page_id": "98565", "version": 1}, "text": "[SYNTHETIC] novelty payment-service discovery", "source_updated_at": "2026-10-06T00:00:00Z", "indexed_at": "2026-10-06T05:32:50.713631+00:00", "source_url": "https://test.atlassian.net/wiki/pages/viewpage.action?pageId=98565"}, {"evidence_id": "jira:10015@601034454519989283", "resource_id": "jira:10015", "version": 601034454519989283, "source": "jira", "title": "[SYNTHETIC] novelty", "locator": {"content_sha256": "8574da6e76f4423b8679ac726e53fdacfd0931b245ee1c5314e57517a3c7156b", "issue_id": "10015", "issue_key": "KAN-6"}, "text": "KAN-6\\nStatus: In Progress\\nAssignee: Unassigned\\n[SYNTHETIC] novelty payment-service discovery", "source_updated_at": "2026-10-06T00:00:00Z", "indexed_at": "2026-10-06T05:32:50.713886+00:00", "source_url": "https://test.atlassian.net/browse/KAN-6"}, {"evidence_id": "drive:FILE2@1", "resource_id": "drive:FILE2", "version": 1, "source": "drive", "title": "[SYNTHETIC] FILE2", "locator": {"content_sha256": "09934b6e95f6f34e177fc58311458bd19a34de51fbb1d8823ddf36d87bb6b1c6", "file_id": "FILE2", "format": "text/plain", "revision_id": "REV1", "version": 1}, "text": "[SYNTHETIC] novelty payment-service discovery", "source_updated_at": "2026-10-06T00:00:00Z", "indexed_at": "2026-10-06T05:32:50.713778+00:00", "source_url": "https://drive.google.com/file/d/FILE2/view"}]'
+
+======================================================================
+FAIL: test_title_marker_is_not_synthetic_provenance_and_non_candidates_no_body (test_container_discovery.DiscoveryBoundary.test_title_marker_is_not_synthetic_provenance_and_non_candidates_no_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_container_discovery.py", line 182, in test_title_marker_is_not_synthetic_provenance_and_non_candidates_no_body
+    self.assertNotIn('private raw body',json.dumps(self.pilot.engine.model.calls))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'private raw body' unexpectedly found in '[{"question": "private raw body", "evidence": []}]'
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.045s
+
+FAILED (failures=2, errors=1)

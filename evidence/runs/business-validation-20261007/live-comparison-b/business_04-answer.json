@@ -1,0 +1,101 @@
+{
+  "request_id": "e86e4828f3ff4c48ad483e2b4d44f7fe",
+  "question": "Does enterprise SSO cutover include contractors?",
+  "answered_at": "2026-10-07T08:50:21.581715+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v3",
+  "claims": [
+    {
+      "text": "No. The enterprise SSO cutover applies only to internal employees; contractors remain on the legacy gateway.",
+      "evidence_ids": [
+        "BV-04@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-04@1",
+          "quote": "Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-04@1",
+      "resource_id": "BV-04",
+      "version": 1,
+      "source": "drive",
+      "title": "authentication / Cutover scope",
+      "locator": {
+        "section": "Cutover scope"
+      },
+      "text": "[SYNTHETIC]\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:50:06.426962+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-04"
+    },
+    {
+      "evidence_id": "BV-07@1",
+      "resource_id": "BV-07",
+      "version": 1,
+      "source": "slack",
+      "title": "integration / USD exception",
+      "locator": {
+        "section": "USD exception"
+      },
+      "text": "[SYNTHETIC]\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:50:06.427014+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-07"
+    },
+    {
+      "evidence_id": "BV-12@1",
+      "resource_id": "BV-12",
+      "version": 1,
+      "source": "drive",
+      "title": "migration / Cutover ticket",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:50:06.427165+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    }
+  ],
+  "actor": "eng_a",
+  "model_call": {
+    "query_id": "e86e4828f3ff4c48ad483e2b4d44f7fe",
+    "model": "deepseek-flash",
+    "reservation_id": "1164b898547341259ace00399c9eb371",
+    "prompt_tokens": 482,
+    "completion_tokens": 75,
+    "total_tokens": 557,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 235,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "e86e4828f3ff4c48ad483e2b4d44f7fe",
+    "model": "deepseek-flash",
+    "reservation_id": "9515cc1cac9f4239bf6754c49549a595",
+    "prompt_tokens": 526,
+    "completion_tokens": 21,
+    "total_tokens": 547,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 183,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

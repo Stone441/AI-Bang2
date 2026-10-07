@@ -1,21 +1,32 @@
 # 实际实现与信任边界 · 2026-10-04
 
+2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
+
+2026-10-07当前实现2a73bd0：actor预过滤后在CPU计算binary-TF BM25，最多16基础候选、12授权link种子与8扩展、24精确窗口；本地SQLite保存资源/版本、证据、回答及审计，不是向量数据库，无embedding/语义检索/专门重排。关联cutoff只修复fixture已有source-authored links；native四源正文关系尚未解析。synthesis-v4独立draft/review使用既有DeepSeek flash，整答gate不变，通用区分审批/撤回和问题范围。AUTH-017 bounded worker异步发布、选中资料各阶段native复查；unknown/version changed停止完整结论。48同世界五fixture与380回归通过；完整native/质量与人审并未通过。
+
 本文件描述代码当前事实；03 仍为完整产品目标，不据本地原型降低目标。
+
+2026-10-06 当前实现覆盖：fixture独立authority及四源native delegated reader并存；AUTH-017 opt-in固定容器轮询发现新增、已知对象逐次当前读取，失败不推进完整checkpoint。身份/权限/原文版本均服务端取得。词法检索保留标识符及普通英文连字符词拆分，精确重叠窗口经R3A已批准全文/版本/切片关系允许合成出口；无embedding/外部向量组件或共享answer cache。选词/extractive与opt-in synthesis-v3分模式，draft/review均重鉴权并使用原USD20账本；明确准备/意图/尝试/有效usage/输出/HTTP交付尝试。签名验证是操作员离线副本的既有CodeBuddy CLI，不是生产独立custody。
+
+English UI为独立问答；history只在依赖重鉴权后显示，新增服务端问题/生成时间、旧记录不推断缺失字段。preview重查后才给HTTPS原平台入口，fixture://不伪造URL，诊断折叠；迟到响应/退出清空保留。普通答案下载与history_id HTTP依赖均按ADR-040移除。下方此前仅fixture/尚未授权/仅memory等历史陈述由本段及最新AUTH/STATUS覆盖；外部服务开放/G1/G2尚未验收。
 
 ```mermaid
 flowchart LR
   UI[English web UI] --> HTTP[Loopback HTTP / opaque session / CSRF]
-  HTTP --> Query[Keyword retrieval + authorized one-hop links]
-  Query --> ACL[Current fixture authority check]
+  HTTP --> Query[Lexical exact windows + authorized one-hop links]
+  Query --> ACL[Current fixture or native authority / version check]
   Index[(SQLite current versions / local policy snapshot)] --> Query
   Source[Independent synthetic source.json] --> ACL
+  Native[Approved Confluence / Jira / Slack / Drive native readers] --> ACL
+  Native --> Discovery[AUTH-017 opt-in fixed-container discovery]
+  Discovery --> Sync
   Source --> Sync[Request-driven incremental jobs]
   Sync --> Index
-  ACL --> Model[Fake extractive provider]
+  ACL --> Model[Fake / live selection / opt-in synthesis + review]
   Model --> Guard[Exact citation support + current access/version recheck]
   Guard --> Audit[(SQLite append audit chain)]
   Audit --> UI
-  HTTP --> History[History / preview / export access recheck]
+  HTTP --> History[History / preview current access recheck]
   HTTP --> Inquiry[Scoped structured audit inquiry]
   Inquiry --> Audit
   Audit -. offline export .-> Signature[CodeBuddy Ed25519 checkpoint CLI / verifier]

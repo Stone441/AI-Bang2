@@ -1,0 +1,57 @@
+{
+  "mode": "offline_signed_replay_fixture_source_live_model",
+  "candidate": "f8ecbed24b0dbb7d65a8eda9fc95ef271b752693",
+  "input": "evidence/runs/business-validation-20261007/heldout-f8ecbed-live/audit.json",
+  "input_sha256": "4748acd91044920e9df2f3dfa0dccd5a4868fd24d11fb3f4b05ff80c035edad6",
+  "source_unchanged": true,
+  "event_counts": {
+    "request_started": 12,
+    "evidence_used": 218,
+    "model_dispatch_intent": 19,
+    "model_dispatch_attempted": 19,
+    "model_usage_received": 19,
+    "model_output_accepted": 18,
+    "model_output_rejected": 1,
+    "response_committed": 11,
+    "request_failed": 1
+  },
+  "signature": {
+    "anchored": {
+      "chain_valid": true,
+      "events": 956,
+      "head_hash": "04d63033b881ee72a66f74937b4c2877fde75eb2e568ce67ec177e9246bf16fd",
+      "through_seq": 956
+    },
+    "boundaries": [
+      "Same-host, same-account signing cannot resist full compromise of that account; this is a logical demonstration, not a production independence boundary.",
+      "Audit v1 events carry no stream_id; stream identity is enforced only as an external expectation parameter on the checkpoint, so cross-stream transplant prevention is checked, not proven by the event schema itself.",
+      "Events after through_seq are not covered by the checkpoint signature; replacement or truncation inside the unanchored tail is undetectable by this checkpoint.",
+      "Verification recomputes canonical hashes from parsed JSON; it detects content tampering, not non-canonical re-serialization of identical content."
+    ],
+    "exported_events": 956,
+    "signature": {
+      "algorithm": "ed25519",
+      "detail": "ok",
+      "verified": true
+    },
+    "stream_id": {
+      "checkpoint": "ai-bang2-business-heldout-f8ecbed",
+      "expected": "ai-bang2-business-heldout-f8ecbed",
+      "match": true
+    },
+    "tail": {
+      "count": 0,
+      "present": false
+    },
+    "verdict": "anchored_valid"
+  },
+  "private_test_key_deleted": true,
+  "auditor": "explicit local fixture auditor",
+  "limits": [
+    "Same-machine disposable signing key, not independent custody",
+    "Fixture business sources and actual model calls; not native plus model integration",
+    "Activity is not proof of human reading"
+  ],
+  "finished_at": "2026-10-07T10:49:08.861521+00:00",
+  "status": "verified_local_subset"
+}

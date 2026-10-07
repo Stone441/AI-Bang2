@@ -1,4 +1,5 @@
 """Reproducible authored lexical/window cases; not a semantic benchmark."""
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -10,7 +11,9 @@ from brain.store import Store
 from scripts.build_metadata import revision
 
 
-def run():
+def run(output=Path('evidence/runs/retrieval-local')):
+    if output.exists():
+        raise FileExistsError('Preserve old retrieval evidence; choose --output <new-directory>')
     world = FixtureWorld()
     r = world.resources['C-01']
     r.update(title='Synthetic operations manual', links=[], text=(
@@ -42,15 +45,18 @@ def run():
                   'limitations': ['Authored examples, not held-out quality or semantic accuracy.',
                                   'Small English lexical alias map; no embeddings or reranker.',
                                   'Fixed overlapping character windows can split sentences; maximum three per resource.',
-                                  'DeepSeek synthetic guard unchanged: windows without a valid marker are rejected.',
+                                  'Window model egress requires server-approved original/version/exact slice provenance (R3A); this fake-only runner does not validate live model egress.',
                                   'No performance or whole-corpus completeness guarantee.'],
                   'source_hashes': {str(p): hashlib.sha256(p.read_bytes()).hexdigest()
                                     for p in [Path('brain/retrieval.py'), Path('brain/engine.py'), Path(__file__)]}}
-        target = Path('evidence/runs/retrieval-local'); target.mkdir(parents=True, exist_ok=True)
+        target = output; target.mkdir(parents=True, exist_ok=False)
         (target/'results.json').write_text(json.dumps(report, indent=2) + '\n')
         print('5 authored retrieval cases passed_local_subset; fixture/fake only')
     finally:
         store.db.close()
 
 
-if __name__ == '__main__': run()
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path, default=Path('evidence/runs/retrieval-local'))
+    run(parser.parse_args().output)

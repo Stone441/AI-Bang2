@@ -1,0 +1,89 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "PAY-102 Done does not authorize general customer release. It records code completion only, and the release decision states that a controlled pilot is approved, general availability is not approved, and PAY-102 Done is not customer release approval.",
+        "evidence_ids": [
+          "J-02@1",
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "f760506e-e842-46e9-83bf-e9dd3bc09101",
+      "object": "chat.completion",
+      "created": 1791385152,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"PAY-102 Done does not authorize general customer release. It records code completion only, and the release decision states that a controlled pilot is approved, general availability is not approved, and PAY-102 Done is not customer release approval.\",\"evidence_ids\":[\"J-02@1\",\"D-02@1\"],\"supports\":[{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"},{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"}]}]}",
+            "reasoning_content": "We need answer question: Does PAY-102 Done authorize general customer release? We need output JSON with claims. Need use evidence. Need determine answer: No, PAY-102 Done does not authorize general customer release. We have evidence J-02@1 explicitly: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" D-02@1: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" So we can make one claim. Need include evidence_ids and supports. At most four claims. Direct answer. Need concise factual conclusion. Claim text: \"PAY-102 Done does not authorize general customer release; it only records code completion, and general availability is not approved.\" But must be supported. Use J-02@1 and D-02@1. Quotes must be exact contiguous passages copied from evidence. J-02@1 text: \"[SYNTHETIC]\\nPAY-102 code fix: Done. Code completion does not approve general customer release.\" We can quote exact: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" But note [SYNTHETIC] maybe not part? We copy from text. It includes [SYNTHETIC]\\n... We can include that? Probably exact contiguous passage from that evidence. Could include without [SYNTHETIC]? The quote must be copied from text. It's okay to copy a contiguous substring. D-02@1: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" We can quote that. Claim: \"PAY-102 Done does not authorize general customer release; the release decision approved a controlled pilot only and states general availability is not approved, and PAY-102 Done is not customer release approval.\" That covers. Evidence IDs: J-02@1 and D-02@1. Supports each with quote. Need ensure every explicit identifier appears in copied support quotes. Claim contains PAY-102, general customer release? Quote J-02 includes PAY-102 and general customer release. D-02 includes PAY-102 Done and customer release approval and GA. Good.\n\nCould also mention controlled pilot? The question asks authorize general customer release. Answer no. D-02 confirms controlled pilot approved, GA not approved. We can include. Is that necessary qualification? Yes, to show what it is instead. But maybe one claim enough.\n\nNeed JSON only. Ensure schema. Use claims list. We can have one claim with two supports. Need supports array with evidence_id and quote. The evidence_ids list must exactly equal evidence_id values in supports. So evidence_ids: [\"J-02@1\",\"D-02@1\"]. Each support has evidence_id same.\n\nQuote for J-02: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" That is exact contiguous? Original: \"[SYNTHETIC]\\nPAY-102 code fix: Done. Code completion does not approve general customer release.\" Yes substring after newline. Good.\n\nQuote for D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" Exact. Good.\n\nClaim text: \"PAY-102 Done does not authorize general customer release. It records code completion only, and the release decision states controlled pilot approved, GA not approved, and PAY-102 Done is not customer release approval.\" Length under 600. Good. Does it mention \"authorize\"? Yes. The answer is no. Good.\n\nNeed no extra. Ensure no markdown. Just JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1349,
+        "completion_tokens": 915,
+        "total_tokens": 2264,
+        "prompt_tokens_details": {
+          "cached_tokens": 1152
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 770
+        },
+        "prompt_cache_hit_tokens": 1152,
+        "prompt_cache_miss_tokens": 197
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "c0b1fea6-cd44-43a1-8868-2026982077a2",
+      "object": "chat.completion",
+      "created": 1791385156,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON. Need review claim. Need determine question_covered and verdicts. We have one claim with evidence J-02@1 and D-02@1. Need assess supported and responsive. Question: \"Does PAY-102 Done authorize general customer release?\" Claim: \"PAY-102 Done does not authorize general customer release. It records code completion only, and the release decision states that a controlled pilot is approved, general availability is not approved, and PAY-102 Done is not customer release approval.\" Evidence J-02: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"\n\nClaim fully supported by quoted evidence? J-02 says code completion does not approve general customer release. D-02 says controlled pilot approved, GA not approved, PAY-102 Done is not customer release approval. \"It records code completion only\" — J-02 says code fix Done. \"records code completion only\" maybe implies no approval, supported by \"Code completion does not approve...\" But \"only\" could be slight. Need assess. D-02 supports pilot approved, GA not approved, not customer release approval. The combined claim directly answers question. Supported true. Responsive true. question_covered true? Question asks \"Does PAY-102 Done authorize general customer release?\" Claim answers no, with nuance. Covered. Need exactly one verdict for claim index 0. JSON only. Ensure schema. final."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1476,
+        "completion_tokens": 349,
+        "total_tokens": 1825,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 323
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 964
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The Atlas connector cannot serve personal Singapore SGD accounts; it supports Singapore business SGD accounts, not personal accounts.",
+        "evidence_ids": [
+          "BV-06@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-06@1",
+            "quote": "The Atlas connector supports Singapore business SGD accounts, not personal accounts."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "58f754c7-c24f-44bf-bc13-e1c358b82853",
+      "object": "chat.completion",
+      "created": 1791385619,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The Atlas connector cannot serve personal Singapore SGD accounts; it supports Singapore business SGD accounts, not personal accounts.\",\"evidence_ids\":[\"BV-06@1\"],\"supports\":[{\"evidence_id\":\"BV-06@1\",\"quote\":\"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\"}]}]}",
+            "reasoning_content": "We need answer: Can the Atlas connector serve personal Singapore SGD accounts? Evidence BV-06@1 says supports Singapore business SGD accounts, not personal. Table: Personal SGD Not supported. So claim: No, it cannot; personal SGD not supported. Also note business SGD pilot supported. Need quote. Use minimal claims. Maybe one claim suffices. Quote: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" or include table. We can use one claim with quote. Need ensure exact contiguous passage. Evidence text includes [SYNTHETIC] then sentence. We can quote: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" That is contiguous. Or quote table? \" Personal SGD \\t Not supported\" not contiguous exactly maybe okay? Better quote sentence. Claim: The Atlas connector cannot serve personal Singapore SGD accounts; it supports Singapore business SGD accounts, not personal accounts. That covers. Evidence_ids: [\"BV-06@1\"], supports same. That's all. Ensure JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1115,
+        "completion_tokens": 279,
+        "total_tokens": 1394,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 208
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 219
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "4c5ff23a-8632-4f10-ace0-90b339bbc8be",
+      "object": "chat.completion",
+      "created": 1791385621,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. We have one claim: \"The Atlas connector cannot serve personal Singapore SGD accounts; it supports Singapore business SGD accounts, not personal accounts.\" Evidence BV-06@1 says supports Singapore business SGD accounts, not personal accounts. Table: Singapore business SGD Pilot supported; Personal SGD Not supported. Claim supported? It says cannot serve personal Singapore SGD accounts. Evidence says Not supported. However note \"Pilot supported\" for business SGD. Claim says \"supports Singapore business SGD accounts\" maybe implies fully? But evidence says pilot supported. The claim text: \"The Atlas connector cannot serve personal Singapore SGD accounts; it supports Singapore business SGD accounts, not personal accounts.\" It does not mention pilot. Is that a missing limitation? The evidence says Singapore business SGD Pilot supported. The claim \"supports Singapore business SGD accounts\" could be misleading by omitting pilot. But main question is personal Singapore SGD accounts. Claim says cannot serve personal; supported by \"Personal SGD Not supported\". It also says supports Singapore business SGD accounts, not personal accounts. The \"supports Singapore business SGD accounts\" is supported partially? Evidence says pilot supported, so it supports in pilot scope, not necessarily all Singapore business SGD accounts. The exact claim \"supports Singapore business SGD accounts\" without pilot limitation might be unsupported due to overbroad. But the question asks \"Can Atlas connector serve personal Singapore SGD accounts?\" The answer is no, per evidence. Claim includes that and contrast. Responsive? Yes, answers question. Need verdict supported true? Need decide. The instructions: Mark supported true only if FULL factual claim follows from cited evidence, including scope, dates, negation and qualifications, with no unsupported inference. The claim has \"cannot serve personal Singapore SGD accounts\" supported. \"it supports Singapore business SGD accounts, not personal accounts\" The latter is exact quote though evidence includes \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" But table says \"Singapore business SGD - Pilot supported\"; \"Personal SGD - Not supported\". The quote itself is in evidence. The claim says exactly quote plus cannot. So supported? The evidence explicitly says supports Singapore business SGD accounts, not personal accounts. Even if table qualifies pilot, the quote says supports. Since full factual claim is supported by cited evidence text. No unsupported inference. Responsive true. question_covered? The question: Can Atlas connector serve personal Singapore SGD accounts? Claim answers no. So true.\n\nNeed output exactly one verdict for every supplied claim. JSON: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}\n\nNeed ensure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1163,
+        "completion_tokens": 566,
+        "total_tokens": 1729,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 540
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 651
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

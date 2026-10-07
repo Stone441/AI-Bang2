@@ -1,0 +1,76 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "In the payment-service incident thread, the 09:00 cache invalidation hypothesis was withdrawn at 09:15.",
+        "evidence_ids": [
+          "S-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "S-01@1",
+            "quote": "09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "17a2e2f5-f077-44ee-bc60-6df79f09132d",
+      "object": "chat.completion",
+      "created": 1791373020,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"In the payment-service incident thread, the 09:00 cache invalidation hypothesis was withdrawn at 09:15.\",\"evidence_ids\":[\"S-01@1\"],\"supports\":[{\"evidence_id\":\"S-01@1\",\"quote\":\"09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1168,
+        "completion_tokens": 83,
+        "total_tokens": 1251,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 784
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "9a1cc3f5-c5bc-4d30-a6ad-d7599c9b29de",
+      "object": "chat.completion",
+      "created": 1791373021,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1157,
+        "completion_tokens": 21,
+        "total_tokens": 1178,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 901
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

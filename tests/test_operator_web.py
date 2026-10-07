@@ -59,6 +59,40 @@ class OperatorIdentity(unittest.TestCase):
             with self.assertRaises(ValueError): OperatorApp(reader, self.app.store, 'eng_b')
             get.assert_not_called()
 
+    def test_synthesis_overrides_reject_other_modes_before_listener_or_credentials(self):
+        for overrides in (['--reasoning-effort','low'],['--output-tokens','2048']):
+            for mode in ([],['--model','deepseek']):
+                with self.subTest(overrides=overrides,mode=mode), \
+                     contextlib.redirect_stdout(io.StringIO()), \
+                     patch('brain.operator_web.create_server') as server, \
+                     patch('scripts.confluence_probe.load_reader') as load:
+                    self.assertEqual(main(['--config','missing','--live',*mode,*overrides]),2)
+                    server.assert_not_called();load.assert_not_called()
+
+    def test_trusted_synthesis_launch_passes_config_without_starting_real_service(self):
+        from unittest.mock import Mock
+        app=Mock();app.engine.mode='confluence_mock_fake_model'
+        app.actor.tenant='pilot';app.bootstrap_ticket.return_value='mock-test-ticket'
+        server=Mock();server.server_port=0
+        server.serve_forever.side_effect=KeyboardInterrupt
+        with tempfile.TemporaryDirectory() as directory, \
+             contextlib.redirect_stdout(io.StringIO()), \
+             patch('brain.operator_web.Path',return_value=Path(directory)), \
+             patch('brain.operator_web.create_server',return_value=server), \
+             patch('brain.operator_web.OperatorApp',return_value=app), \
+             patch('scripts.confluence_probe.load_reader'), \
+             patch('brain.deepseek.check_price_review'), \
+             patch('sys.stdin.isatty',return_value=True), \
+             patch('getpass.getpass',return_value='test-key-no-network'), \
+             patch('brain.deepseek.DeepSeekEvidenceModel') as selection, \
+             patch('brain.synthesis.DeepSeekSynthesisModel') as synthesis:
+            self.assertEqual(main(['--config','mock','--live','--model','deepseek',
+                '--answer-style','synthesis','--reasoning-effort','low','--output-tokens','2048']),0)
+            self.assertEqual(synthesis.call_args.kwargs,
+                {'synthetic_only':True,'reasoning_effort':'low','output_tokens':2048})
+            self.assertIs(app.engine.model,synthesis.return_value)
+            selection.assert_not_called();server.server_close.assert_called_once()
+
     def test_port_conflict_is_reported_before_any_credential_request(self):
         output = io.StringIO()
         with contextlib.redirect_stdout(output), \

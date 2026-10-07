@@ -1,0 +1,101 @@
+{
+  "review_commit": "cf827bb12c022e63f8e1b498c565d79d20ed25e6",
+  "mode": "independent_offline_function_probes",
+  "retrieval_blob_verified": "eeceea5a67c44b6541cd42907137f80a160d4c7e",
+  "guard_source": "transcribed pure-function excerpts from brain/deepseek.py at pinned commit",
+  "input_origin": "synthetic single-resource text from scripts/retrieval_acceptance.py",
+  "date_guard": [
+    {
+      "date": "2026-10-05",
+      "result": "allowed"
+    },
+    {
+      "date": "2026-10-06",
+      "result": "blocked",
+      "reason": "Current model price review required"
+    },
+    {
+      "date": "2026-10-16",
+      "result": "blocked",
+      "reason": "Current model price review required"
+    }
+  ],
+  "retrieval_cases": [
+    {
+      "question": "Orion incident retry budget",
+      "query_tokens": [
+        "budget",
+        "incident",
+        "orion",
+        "retry"
+      ],
+      "matched_windows": [
+        [
+          8,
+          20000,
+          22400
+        ],
+        [
+          8,
+          22000,
+          24400
+        ]
+      ],
+      "target_found": true
+    },
+    {
+      "question": "Orion outage retracted explanation",
+      "query_tokens": [
+        "explanation",
+        "incident",
+        "orion",
+        "withdrawn"
+      ],
+      "matched_windows": [
+        [
+          8,
+          20000,
+          22400
+        ],
+        [
+          8,
+          22000,
+          24400
+        ]
+      ],
+      "target_found": true
+    },
+    {
+      "question": "interruption annulled hypothesis",
+      "query_tokens": [
+        "annulled",
+        "hypothesis",
+        "interruption"
+      ],
+      "matched_windows": [],
+      "target_found": false
+    },
+    {
+      "question": "Which hypothesis was abandoned?",
+      "query_tokens": [
+        "abandoned",
+        "hypothesis"
+      ],
+      "matched_windows": [],
+      "target_found": false
+    }
+  ],
+  "late_window_model_guard": {
+    "evidence_id": "C-01@1#20000:22400",
+    "exact_original_slice": true,
+    "contains_relevant_fact": true,
+    "marked_synthetic": false,
+    "inferred_provider_behavior": "generate rejects nonempty evidence set containing this window before reserve/network"
+  },
+  "limits": [
+    "Not a full 311-test rerun.",
+    "No native platform or model calls; no browser or user-process inspection.",
+    "Vocabulary results are a one-document synthetic probe, not a business accuracy rate.",
+    "Guard integration consequence follows from static generate() inspection, not a live call."
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "request_id": "cb17c156c05c476cbe1a0c0d5a9c0392",
+  "question": "Is the original cache theory still the payment-service incident’s accepted explanation?",
+  "answered_at": "2026-10-06T06:31:22.667973+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "[SYNTHETIC]\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "evidence_ids": [
+        "S-01@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nPAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+      "evidence_ids": [
+        "J-01@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+      "evidence_ids": [
+        "C-01@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "evidence_ids": [
+        "D-01@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "evidence_ids": [
+        "J-02@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya.",
+      "evidence_ids": [
+        "J-03@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "S-01@1",
+      "resource_id": "S-01",
+      "version": 1,
+      "source": "slack",
+      "title": "Private incident discussion",
+      "locator": {
+        "channel": "incident",
+        "messages": [
+          "1790816400.000001",
+          "1790817300.000001",
+          "1790820000.000001"
+        ],
+        "thread": "1790816400.000001"
+      },
+      "text": "[SYNTHETIC]\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:31:22.666743+00:00",
+      "source_url": "fixture://synthetic-demo/slack/S-01"
+    },
+    {
+      "evidence_id": "J-01@1",
+      "resource_id": "J-01",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-101 Payment-service incident",
+      "locator": {
+        "field": "description"
+      },
+      "text": "[SYNTHETIC]\nPAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:31:22.666696+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-01"
+    },
+    {
+      "evidence_id": "C-01@1",
+      "resource_id": "C-01",
+      "version": 1,
+      "source": "confluence",
+      "title": "Payment-service runbook",
+      "locator": {
+        "paragraph": 1,
+        "section": "Failover procedure"
+      },
+      "text": "[SYNTHETIC]\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:31:22.666636+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-01"
+    },
+    {
+      "evidence_id": "D-01@1",
+      "resource_id": "D-01",
+      "version": 1,
+      "source": "drive",
+      "title": "Final payment-service postmortem",
+      "locator": {
+        "paragraph": 1,
+        "section": "Confirmed root cause"
+      },
+      "text": "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:31:22.666790+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-01"
+    },
+    {
+      "evidence_id": "J-02@1",
+      "resource_id": "J-02",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-102 Retry configuration fix",
+      "locator": {
+        "field": "status and description"
+      },
+      "text": "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:31:22.666713+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-02"
+    },
+    {
+      "evidence_id": "J-03@1",
+      "resource_id": "J-03",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-103 Protective measures",
+      "locator": {
+        "field": "status and assignee"
+      },
+      "text": "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-06T06:31:22.666728+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-03"
+    }
+  ],
+  "actor": "eng_a"
+}

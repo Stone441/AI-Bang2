@@ -1,0 +1,98 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No general availability release date is confirmed for payment-retry; general availability is not approved. The approved scope to name instead is the controlled pilot.",
+        "evidence_ids": [
+          "C-02@1",
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          },
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          }
+        ]
+      },
+      {
+        "text": "Payment-retry should be described only within the approved controlled pilot scope, since the GA date and expansion beyond pilot customers are unconfirmed.",
+        "evidence_ids": [
+          "D-03@1",
+          "S-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-03@1",
+            "quote": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+          },
+          {
+            "evidence_id": "S-02@1",
+            "quote": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "3e00d1b5-ed54-4fd4-81b8-db0c7dee268b",
+      "object": "chat.completion",
+      "created": 1791370053,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No general availability release date is confirmed for payment-retry; general availability is not approved. The approved scope to name instead is the controlled pilot.\",\"evidence_ids\":[\"C-02@1\",\"D-02@1\"],\"supports\":[{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"},{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"}]},{\"text\":\"Payment-retry should be described only within the approved controlled pilot scope, since the GA date and expansion beyond pilot customers are unconfirmed.\",\"evidence_ids\":[\"D-03@1\",\"S-02@1\"],\"supports\":[{\"evidence_id\":\"D-03@1\",\"quote\":\"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\"},{\"evidence_id\":\"S-02@1\",\"quote\":\"Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1087,
+        "completion_tokens": 257,
+        "total_tokens": 1344,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 959
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "12ca8b4d-5a12-4c86-8b03-f18f5aa69108",
+      "object": "chat.completion",
+      "created": 1791370054,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1329,
+        "completion_tokens": 29,
+        "total_tokens": 1358,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 1201
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

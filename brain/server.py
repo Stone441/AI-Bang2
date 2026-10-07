@@ -13,6 +13,8 @@ from .confluence import JsonTransport
 from .engine import Engine
 from .sources import FixtureWorld
 from .store import Store
+from .runtime_version import runtime_version
+from .deepseek import PriceReviewRequired
 
 WEB=Path(__file__).resolve().parents[1]/'web'
 
@@ -104,7 +106,8 @@ def create_server(app, port=0):
                     return self.send(200,(WEB/filename).read_bytes(),mime)
                 if method=='GET' and path=='/api/health':
                     return self.send(200,{'mode':app.engine.mode,'live_enabled':any(isinstance(r.transport, JsonTransport) for r in getattr(app.world,'readers',{}).values()),
-                                          'auth_kind':app.auth_kind,'login_path':app.login_path})
+                                          'auth_kind':app.auth_kind,'login_path':app.login_path,
+                                          'runtime_version':runtime_version()})
                 if method=='POST' and path==app.login_path:
                     actor=app.authenticate(data)
                     token=secrets.token_urlsafe(32); csrf=secrets.token_urlsafe(32)
@@ -140,6 +143,9 @@ def create_server(app, port=0):
                     from .audit_query import parse_inquiry
                     return self.send(200,app.audit.inquire(actor,parse_inquiry(data['question'])))
                 return self.send(404,{'error':'Unavailable'})
+            except PriceReviewRequired:
+                self.send(503,{'error':'The model is paused pending an operator price review. Contact the operator; retrying will not resolve this.',
+                               'code':'model_price_review_required'})
             except PermissionError:
                 self.send(403,{'error':'Unavailable'})
             except (ValueError,TypeError,KeyError):
@@ -148,9 +154,13 @@ def create_server(app, port=0):
                 self.send(503,{'error':'Request could not be completed safely. Please try again.'})
 
         def do_GET(self):
-            with self.server.application.store.lock: self.dispatch('GET')
+            app=self.server.application
+            with getattr(app,'request_lock',app.store.lock):
+                with app.store.lock:self.dispatch('GET')
         def do_POST(self):
-            with self.server.application.store.lock: self.dispatch('POST')
+            app=self.server.application
+            with getattr(app,'request_lock',app.store.lock):
+                with app.store.lock:self.dispatch('POST')
     server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
     server.application=app
     # Cookies have no browser port isolation. Select only this bound server's

@@ -1,0 +1,88 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Current settlement is daily, and the proposed November hourly schedule is not approved.",
+        "evidence_ids": [
+          "BV-32@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-32@1",
+            "quote": "The proposed November hourly schedule is not approved. Current settlement is daily."
+          }
+        ]
+      },
+      {
+        "text": "SET-610 is owned by Eva and is In Progress because bank confirmation is missing.",
+        "evidence_ids": [
+          "BV-33@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-33@1",
+            "quote": "SET-610 is In Progress because bank confirmation is missing. Owner: Eva."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "29659433-8fcc-4436-b329-d0034d83d66d",
+      "object": "chat.completion",
+      "created": 1791377875,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Current settlement is daily, and the proposed November hourly schedule is not approved.\",\"evidence_ids\":[\"BV-32@1\"],\"supports\":[{\"evidence_id\":\"BV-32@1\",\"quote\":\"The proposed November hourly schedule is not approved. Current settlement is daily.\"}]},{\"text\":\"SET-610 is owned by Eva and is In Progress because bank confirmation is missing.\",\"evidence_ids\":[\"BV-33@1\"],\"supports\":[{\"evidence_id\":\"BV-33@1\",\"quote\":\"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2155,
+        "completion_tokens": 129,
+        "total_tokens": 2284,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1643
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "1bc7001c-5b9b-4404-8d8d-532089107b9f",
+      "object": "chat.completion",
+      "created": 1791377876,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2214,
+        "completion_tokens": 37,
+        "total_tokens": 2251,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 1830
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "started_at": "2026-10-06T06:33:14.154685+00:00",
+  "commit": "45d7b27a98a25299cc3c962dcaac7d5ad13c4a0d",
+  "mode": "fixture_fake_excerpts_quality_diagnostic",
+  "source_state": "Current worktree hashes are authoritative; commit identifies baseline until committed.",
+  "case_origin": "First six variants authored by read-only review agent before evaluation; not human blind benchmark.",
+  "native_source_api": "not_run",
+  "native_permission_persona": "not_run",
+  "browser": "not_run",
+  "G1": "not_run",
+  "G2": "not_run",
+  "semantic_review": "pending",
+  "results": [
+    {
+      "case": "safeguard",
+      "actor_mode": "fixture_eng_a",
+      "question": "What must the operator check before using the approved payment-service failover procedure?",
+      "required_atomic_facts": [
+        "inspect timeout budget before approved failover"
+      ],
+      "error_type": null,
+      "request_id": "418def8adb324d489d109fa95f55f614",
+      "claims_only": [
+        "[SYNTHETIC]\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "[SYNTHETIC]\nPAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+        "[SYNTHETIC]\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+        "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "[SYNTHETIC]\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+        "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+        "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "[SYNTHETIC]\nPayment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+        "[SYNTHETIC]\nExternal partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+        "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya."
+      ],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 65,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "cause_and_counterevidence",
+      "actor_mode": "fixture_eng_a",
+      "question": "Which fault actually produced duplicate payment requests, and what earlier explanation was ruled out?",
+      "required_atomic_facts": [
+        "retry configuration mismatched timeout budget",
+        "duplicate requests backlog",
+        "early cache hypothesis withdrawn"
+      ],
+      "error_type": null,
+      "request_id": "010bd03802684238afbf73c8e4e1ff61",
+      "claims_only": [
+        "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+        "[SYNTHETIC]\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "[SYNTHETIC]\nPAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+        "[SYNTHETIC]\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+        "[SYNTHETIC]\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+        "[SYNTHETIC]\nPayment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+        "[SYNTHETIC]\nExternal partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+        "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya."
+      ],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 65,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "followup_status",
+      "actor_mode": "fixture_eng_a",
+      "question": "For the payment-service follow-up work, separate the completed repair from safeguards still being worked on, and name the safeguard owner.",
+      "required_atomic_facts": [
+        "PAY-102 Done",
+        "PAY-103 In Progress",
+        "Maya safeguard owner"
+      ],
+      "error_type": null,
+      "request_id": "6e05ed02ec2f438982ed3b42d7b9ec97",
+      "claims_only": [
+        "[SYNTHETIC]\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "[SYNTHETIC]\nPAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+        "[SYNTHETIC]\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+        "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+        "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "[SYNTHETIC]\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+        "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya.",
+        "[SYNTHETIC]\nPayment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+        "[SYNTHETIC]\nExternal partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+        "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release."
+      ],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 65,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "product_scope_date",
+      "actor_mode": "fixture_product_ops",
+      "question": "Can support promise payment-retry to customers outside the pilot, or give them a general launch date?",
+      "required_atomic_facts": [
+        "controlled pilot only",
+        "GA not approved",
+        "general date unconfirmed"
+      ],
+      "error_type": null,
+      "request_id": "fb9acc88d55d4e3b8e0eaa71bbcadfb5",
+      "claims_only": [
+        "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "[SYNTHETIC]\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+        "[SYNTHETIC]\nPayment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+        "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release."
+      ],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 31,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "code_not_release",
+      "actor_mode": "fixture_product_ops",
+      "question": "Does PAY-102 being done authorize a general customer rollout?",
+      "required_atomic_facts": [
+        "no; code completion is not release approval"
+      ],
+      "error_type": null,
+      "request_id": "6749afb900a84f079af33281a6e0ccae",
+      "claims_only": [
+        "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "[SYNTHETIC]\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+      ],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 25,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "withdrawn_explanation",
+      "actor_mode": "fixture_eng_a",
+      "question": "Is the original cache theory still the payment-service incident’s accepted explanation?",
+      "required_atomic_facts": [
+        "cache hypothesis withdrawn",
+        "final retry configuration / timeout budget mismatch"
+      ],
+      "error_type": null,
+      "request_id": "3ce9e8b797854a5a93d02cea7af8be3b",
+      "claims_only": [
+        "[SYNTHETIC]\nPAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+        "[SYNTHETIC]\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+        "[SYNTHETIC]\nRunbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+        "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+        "[SYNTHETIC]\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+        "[SYNTHETIC]\nPayment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+        "[SYNTHETIC]\nExternal partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+        "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya."
+      ],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 65,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "missing_evidence",
+      "actor_mode": "fixture_eng_a",
+      "question": "unfindablezebra",
+      "required_atomic_facts": [
+        "no claims and no evidence"
+      ],
+      "error_type": null,
+      "request_id": "6aad87c396c54147b6ec0b94c19b4953",
+      "claims_only": [],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 3,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    },
+    {
+      "case": "long_similar_entity",
+      "actor_mode": "fixture_eng_a",
+      "question": "In the Orion incident, which early explanation was withdrawn and what caused the duplicate requests?",
+      "required_atomic_facts": [
+        "Orion cache explanation withdrawn",
+        "Orion retry budget mismatch",
+        "do not answer Vega DNS cause"
+      ],
+      "error_type": null,
+      "request_id": "9bd3aea75a6a45ac8b9d71147a4ca415",
+      "claims_only": [
+        ".\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nOrion incident: cache explanation withdrawn; retry budget mismatch caused duplicate requests.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppe",
+        "ekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nRoutine housekeeping.\nVega incident: DNS caused packet loss; no cache theory was withdrawn.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix",
+        "usekeeping.\nVega incident: DNS caused packet loss; no cache theory was withdrawn.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix.\nAppendix",
+        "[SYNTHETIC]\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+        "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+        "[SYNTHETIC]\nPAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+        "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya."
+      ],
+      "exact_supports_validated": "not_applicable",
+      "audit_chain": {
+        "valid": true,
+        "events": 42,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "semantic_recall_coverage_support_errors": "pending_separate_review"
+    }
+  ],
+  "status": "captured_for_semantic_review",
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/quality_acceptance.py": "270ff79a823a27b6e3fb660174df69bab454da444ba667ba13a9d7d240027628",
+    "brain/engine.py": "404a571c23fcacd47e68e5bd316a0560a7e9dfb4ecbc9e0aa51735c286a080df",
+    "brain/retrieval.py": "5a7298f70933b467765c74a2ac299ca7cb74d9b8752c13e6fad5205beebd0331",
+    "brain/synthesis.py": "f4062b084651af8cfa7696ad58a5b98c74408b8f02ede218d9a08f8e8ef8949f",
+    "brain/deepseek.py": "eaf8a088603b99ff5af62e4461293dc0ae16c571271722a07a114a33f333ddbc",
+    "brain/budget.py": "cd0f195cec3741ab6741648ee4391cf841e63bd12f1e718ebcc4b6fd66b106fb",
+    "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730"
+  },
+  "finished_at": "2026-10-06T06:33:14.187255+00:00"
+}

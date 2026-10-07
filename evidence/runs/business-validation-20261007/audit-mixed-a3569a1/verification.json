@@ -1,0 +1,161 @@
+{
+  "started_at": "2026-10-07T15:00:32.873964+00:00",
+  "commit": "a3569a1b1b8915cfbde967719e99b6d3d902d7a3",
+  "mode": "fixture_fake_model",
+  "native_api": "not_run",
+  "native_auditor": "not_run",
+  "human_G1": "not_run",
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/audit_mixed_acceptance.py": "33611306bd0a256907331e01e4206ceb6544a100621ee2d952e2913599f92fe3",
+    "brain/audit.py": "83235d7556b378963cb15c2ac677b42959b648d6cfda7858ec48afcff6c7b048",
+    "brain/audit_query.py": "6cdc70aa02d460b4805e08bc2eb873c87366415a133f05e2eede6591dac5306b",
+    "brain/engine.py": "818d16530e1ee7ff709cc00530ca521e00e366effad9d2e77836c758f0c62ff6",
+    "tools/audit_verifier/verify.py": "1f55bc501cb40d60f07607d3825c93e3e065e025b22c5e9acb544871fef91580"
+  },
+  "status": "verified_local_subset",
+  "outcome_cases": [
+    "success",
+    "partial_authorization",
+    "authorization_denied",
+    "question_failed"
+  ],
+  "oracle_event_count": 208,
+  "pagination_pages": 30,
+  "stable_snapshot": 210,
+  "pagination_oracle_matches": true,
+  "role_denials": [
+    "eng_a",
+    "security"
+  ],
+  "auditor_scope_denied": true,
+  "failed_request_not_stored": true,
+  "signature_cases": {
+    "original": {
+      "anchored": {
+        "chain_valid": true,
+        "events": 305,
+        "head_hash": "f19cc728ba5ed41785d1f3081dbf2b13af806e50056489360374eb5fb60789bb",
+        "through_seq": 305
+      },
+      "boundaries": [
+        "Same-host, same-account signing cannot resist full compromise of that account; this is a logical demonstration, not a production independence boundary.",
+        "Audit v1 events carry no stream_id; stream identity is enforced only as an external expectation parameter on the checkpoint, so cross-stream transplant prevention is checked, not proven by the event schema itself.",
+        "Events after through_seq are not covered by the checkpoint signature; replacement or truncation inside the unanchored tail is undetectable by this checkpoint.",
+        "Verification recomputes canonical hashes from parsed JSON; it detects content tampering, not non-canonical re-serialization of identical content."
+      ],
+      "exported_events": 305,
+      "signature": {
+        "algorithm": "ed25519",
+        "detail": "ok",
+        "verified": true
+      },
+      "stream_id": {
+        "checkpoint": "ai-bang2-fixture-mixed-outcomes",
+        "expected": "ai-bang2-fixture-mixed-outcomes",
+        "match": true
+      },
+      "tail": {
+        "count": 0,
+        "present": false
+      },
+      "verdict": "anchored_valid"
+    },
+    "modified": {
+      "anchored": {
+        "chain_valid": false,
+        "reason": "chain_mismatch",
+        "sequence": 1,
+        "through_seq": 305
+      },
+      "boundaries": [
+        "Same-host, same-account signing cannot resist full compromise of that account; this is a logical demonstration, not a production independence boundary.",
+        "Audit v1 events carry no stream_id; stream identity is enforced only as an external expectation parameter on the checkpoint, so cross-stream transplant prevention is checked, not proven by the event schema itself.",
+        "Events after through_seq are not covered by the checkpoint signature; replacement or truncation inside the unanchored tail is undetectable by this checkpoint.",
+        "Verification recomputes canonical hashes from parsed JSON; it detects content tampering, not non-canonical re-serialization of identical content."
+      ],
+      "exported_events": 305,
+      "signature": {
+        "algorithm": "ed25519",
+        "detail": "ok",
+        "verified": true
+      },
+      "stream_id": {
+        "checkpoint": "ai-bang2-fixture-mixed-outcomes",
+        "expected": "ai-bang2-fixture-mixed-outcomes",
+        "match": true
+      },
+      "verdict": "anchored_chain_invalid"
+    },
+    "middle_deleted": {
+      "anchored": {
+        "chain_valid": false,
+        "exported_events": 304,
+        "note": "checkpoint covers more events than exported; consistent with deletion of the signed tail",
+        "reason": "covered_events_missing",
+        "through_seq": 305
+      },
+      "boundaries": [
+        "Same-host, same-account signing cannot resist full compromise of that account; this is a logical demonstration, not a production independence boundary.",
+        "Audit v1 events carry no stream_id; stream identity is enforced only as an external expectation parameter on the checkpoint, so cross-stream transplant prevention is checked, not proven by the event schema itself.",
+        "Events after through_seq are not covered by the checkpoint signature; replacement or truncation inside the unanchored tail is undetectable by this checkpoint.",
+        "Verification recomputes canonical hashes from parsed JSON; it detects content tampering, not non-canonical re-serialization of identical content."
+      ],
+      "exported_events": 304,
+      "signature": {
+        "algorithm": "ed25519",
+        "detail": "ok",
+        "verified": true
+      },
+      "stream_id": {
+        "checkpoint": "ai-bang2-fixture-mixed-outcomes",
+        "expected": "ai-bang2-fixture-mixed-outcomes",
+        "match": true
+      },
+      "verdict": "covered_events_missing"
+    },
+    "covered_tail_deleted": {
+      "anchored": {
+        "chain_valid": false,
+        "exported_events": 304,
+        "note": "checkpoint covers more events than exported; consistent with deletion of the signed tail",
+        "reason": "covered_events_missing",
+        "through_seq": 305
+      },
+      "boundaries": [
+        "Same-host, same-account signing cannot resist full compromise of that account; this is a logical demonstration, not a production independence boundary.",
+        "Audit v1 events carry no stream_id; stream identity is enforced only as an external expectation parameter on the checkpoint, so cross-stream transplant prevention is checked, not proven by the event schema itself.",
+        "Events after through_seq are not covered by the checkpoint signature; replacement or truncation inside the unanchored tail is undetectable by this checkpoint.",
+        "Verification recomputes canonical hashes from parsed JSON; it detects content tampering, not non-canonical re-serialization of identical content."
+      ],
+      "exported_events": 304,
+      "signature": {
+        "algorithm": "ed25519",
+        "detail": "ok",
+        "verified": true
+      },
+      "stream_id": {
+        "checkpoint": "ai-bang2-fixture-mixed-outcomes",
+        "expected": "ai-bang2-fixture-mixed-outcomes",
+        "match": true
+      },
+      "verdict": "covered_events_missing"
+    }
+  },
+  "private_test_key_deleted": true,
+  "original_unchanged": true,
+  "audit_chain": {
+    "valid": true,
+    "events": 305,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "limitations": [
+    "Fixture identities and sources; not native auditor authentication.",
+    "Developer oracle is not independent human acceptance.",
+    "Same-machine disposable signing key is not independent key custody.",
+    "Unsigned/uncovered tail deletion boundary remains as demonstrated in audit-replay.",
+    "Audit reconstructs application operations, not human reading."
+  ],
+  "finished_at": "2026-10-07T15:00:33.246621+00:00"
+}
