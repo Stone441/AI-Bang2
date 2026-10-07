@@ -15,6 +15,7 @@ from brain.discovery import ContainerDiscovery
 from brain.keychain import MacKeychain
 from brain.store import Store
 from scripts.build_metadata import revision
+from scripts.run_cost import usage_cost
 from scripts.native_discovery_acceptance import prepare,saved_credentials
 from scripts.quality_acceptance import CapturedSynthesis
 
@@ -69,7 +70,10 @@ def run(output):
         print('capture_failed:',type(exc).__name__,flush=True)
     finally:
         if worker:worker.close()
-        if ledger:report['budget_after']=ledger.summary();ledger.close()
+        if ledger:
+            report['budget_after']=ledger.summary()
+            if store and 'pilot' in locals():report['run_usage_cost']=usage_cost(pilot.audit.export())
+            ledger.close()
         if store:store.db.close()
         report['finished_at']=now();save('verification.json',report)
 

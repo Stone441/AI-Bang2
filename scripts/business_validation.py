@@ -23,6 +23,7 @@ from brain.deepseek import check_price_review
 from brain.keychain import MacKeychain
 from scripts.quality_acceptance import CapturedSynthesis
 from scripts.build_metadata import revision
+from scripts.run_cost import usage_cost
 from brain.retrieval import bm25_windows, spans, tokens
 
 FACTS = [
@@ -237,7 +238,7 @@ def run(output, strategy='lexical', noise=0, live_model=False, selected_cases=No
                 'process_peak_rss_bytes':peak if sys.platform=='darwin' else peak*1024,
                 'memory_measurement':'process peak, includes Python and evaluation artifacts; not index-only',
                 'source_native_calls':0,'model_network_calls':'see actual audit attempts' if live_model else 0,
-                'paid_query_cost':'original ledger delta, not invoice' if live_model else 0},
+                'paid_query_cost':usage_cost(audit.export()) if live_model else 0},
             'core_objects':len(world.resources)-noise,'noise_objects':noise,'retrieval_strategy':strategy,
             'development_questions':len(questions),
             'held_out':'Not run by this development harness; see separate retained-set records',
