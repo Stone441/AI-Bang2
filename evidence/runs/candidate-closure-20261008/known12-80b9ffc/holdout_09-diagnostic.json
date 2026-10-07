@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "bfc705e5-01ab-492a-af8f-b0d5eed7b0f6",
+      "object": "chat.completion",
+      "created": 1791393324,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer JSON only. Need determine if question identifies business entity/event. Question: \"For the migration scheduled later this month, may I apply its new rule today to the production integration?\" It asks about one unspecified migration, new rule, production integration. Evidence covers multiple events. There is migration MIG-301, ledger migration, rollback signal, rehearsal September, October rule. It doesn't identify specific migration? \"migration scheduled later this month\" maybe MIG-301? Evidence BV-12 MIG-301 is In Progress, remaining blocker unmatched settlement totals. BV-14 September rehearsal superseded by October five-basis-point rule. BV-13 rollback ledger migration if differences exceed five basis points. No evidence about applying new rule today to production integration. Also no production integration? There is integration evidence about Atlas connector, USD, launch ticket INT-210. Question asks permission: \"may I apply its new rule today to the production integration?\" Need maybe answer no/insufficient. But instructions: First check whether question identifies a business entity or event. If it asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event. A plan name alone does not identify its business event. Do not use retrieved details to invent missing referent. So likely empty claims. Need decide. The question mentions \"the migration scheduled later this month\" and \"its new rule\". Evidence has multiple migrations: MIG-301 In Progress, ledger migration, migration rehearsal, October rule. No specified migration event identifier. It doesn't identify which migration. Also \"production integration\" ambiguous. Thus return {\"claims\":[]}. Must be JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3878,
+        "completion_tokens": 352,
+        "total_tokens": 4230,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 346
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 3110
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

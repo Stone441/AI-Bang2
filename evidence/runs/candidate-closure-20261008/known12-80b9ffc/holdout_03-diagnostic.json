@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "d03cc156-5e72-47bf-8658-610273511535",
+      "object": "chat.completion",
+      "created": 1791393281,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"Which cache theory did the incident channel abandon, and may an engineer who is not in that channel inspect its old discussion?\" We need return JSON claims. Need check evidence. Question asks about incident channel, cache theory abandoned, and whether engineer not in channel may inspect old discussion. Evidence does not seem to mention cache theory or incident channel abandonment. There is access offboarding rule: \"Removal from a source channel prevents future citation and history access; previously saved copies cannot be recalled.\" But question presupposes unspecified incident channel and cache theory. No evidence identifies which cache theory or incident channel. Also question asks may an engineer not in that channel inspect old discussion? Evidence BV-29: Removal from source channel prevents future citation and history access. That could answer no? But it's about removal from source channel, not engineer not in channel. Also BV-28 approved guidance not incident details. No explicit cache theory. We must not choose an unstated referent. Return empty claims? But there might be candidate facts? The instructions: \"If the question does not identify the event, entity or policy, give explicitly scoped candidate facts or return an empty claims list; do not choose a single unstated referent or inherit one from an earlier question.\" Here question asks about \"the incident channel\" and \"cache theory\" but evidence has multiple incidents (payment-service, webhook). No evidence specifies cache theory. Also no evidence about incident channel discussion. So insufficient support. Return {\"claims\":[]}. Ensure JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2142,
+        "completion_tokens": 316,
+        "total_tokens": 2458,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 310
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 1374
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

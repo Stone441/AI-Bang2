@@ -1,5 +1,16 @@
 # 安装、启动、测试与演示
 
+封版验证候选 **80b9ffc**：`deepseek-flash-grounded-synthesis-v10`、显式可信low/8192、每阶段60秒有界模型等待；原生接口仍30秒上限。检索/分块/数据目标保持，默认operator none/1024不变。原0bc90ae主要质量证据为v8 low4096，不能代作v10结果。固定配置/hash及本轮实际证据见`evidence/runs/candidate-closure-20261008/`；本轮已知12题和native/model均为独立CLI验证，不证明任何页面实例已加载。
+
+未来已有对应实例启动/访问授权后，使用以下完整可信命令；`<approved-port>`须为另行核准的具体实例，不沿用49161旧授权、不动8094/8100：
+
+```sh
+python3 -m scripts.model_readiness
+python3 -m brain.operator_web --source multi --config .runtime/operator-bundle.json --actor eng_b --oauth-client .runtime/drive-oauth-client.json --port <approved-port> --live --model deepseek --credential-store macos-keychain --answer-style synthesis --reasoning-effort low --output-tokens 8192 --discovery-auth017
+```
+
+启动前还须读取原账本剩余/unknown reservation，核native身份及原固定容器；价格跨日失效就真实复核，不改旧日期绕过、不清账。不使用`make live-synthesis`默认参数冒称本候选。服务启动后保存startup fingerprint、health模式与一次实际回答/引用版本，不能只靠health或Git merge证明新版生效。此次未启动/重启服务，browser仍工具saved denial blocked。连贯18分钟回看在SAFETY_REVIEW顶部，页面现场补验须正式许可。
+
 2026-10-07固定候选0bc90ae采用显式可信`--model deepseek --answer-style synthesis --reasoning-effort low --output-tokens 4096`；AUTH017统一发现另用既有`--source multi --actor eng_b --discovery-auth017`与原审核config/Keychain/Drive OAuth。默认仍none/1024；已有运行进程未加载此候选。启动前核具体服务/版本和对应授权，不启动49161或动8094/8100；先model_readiness/当日官方价格、原USD20账本及native身份，失效停用、不改旧日期、不清预算。当前核心命令/文件hash记录在candidate指纹和各verification.json；这些验证不是浏览器或G1/G2通过。
 
 以下较早版本的状态描述为历史记录，由顶部候选记录覆盖；通用安全操作要求仍有效。

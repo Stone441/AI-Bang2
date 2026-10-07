@@ -1,0 +1,47 @@
+{
+  "commit": "805c05d",
+  "mode": "clean_git_archive_fixture_mock",
+  "results": [
+    {
+      "name": "tests",
+      "returncode": 0,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ]
+    },
+    {
+      "name": "syntax",
+      "returncode": 0,
+      "command": [
+        "node",
+        "--check",
+        "web/app.js"
+      ]
+    },
+    {
+      "name": "operator-node",
+      "returncode": 0,
+      "command": [
+        "node",
+        "tests/frontend_operator_security.js"
+      ]
+    },
+    {
+      "name": "audit-node",
+      "returncode": 0,
+      "command": [
+        "node",
+        "tests/frontend_audit_review.js"
+      ]
+    }
+  ],
+  "live_model": "not_run",
+  "native": "not_run",
+  "browser": "blocked"
+}

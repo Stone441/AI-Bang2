@@ -1,0 +1,89 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No general release date can be quoted for the payment-retry general launch: general availability is not approved, and no general release date is confirmed. The approved scope to name instead is the controlled pilot.",
+        "evidence_ids": [
+          "C-02@1",
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          },
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "31dd559f-4923-4dd5-a78e-caed1e53218a",
+      "object": "chat.completion",
+      "created": 1791392917,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No general release date can be quoted for the payment-retry general launch: general availability is not approved, and no general release date is confirmed. The approved scope to name instead is the controlled pilot.\",\"evidence_ids\":[\"C-02@1\",\"D-02@1\"],\"supports\":[{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"},{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"}]}]}",
+            "reasoning_content": "We need answer question: \"What release date can I quote for the general payment-retry launch, and which approved scope should I name instead?\" Need output JSON only with claims. Need identify evidence. We must answer directly. We have evidence about payment-retry. Question asks release date for general payment-retry launch, and approved scope to name instead. Evidence: C-02 says Payment-retry available only to controlled pilot. GA not approved. No general release date confirmed. D-03 says describe payment-retry only within approved pilot scope. Unconfirmed: general availability date and expansion beyond pilot customers. D-02 says release decision: controlled pilot approved. GA not approved. PAY-102 Done is not customer release approval. S-02 says Payment-retry remains a controlled pilot. No GA date confirmed; use capability page and release approval. J-02 PAY-102 code fix Done. Code completion does not approve general customer release. So no general release date can be quoted. Approved scope is controlled pilot. Need claim(s). Could have one claim: No general release date is confirmed for payment-retry general availability; general availability is not approved; the approved scope is the controlled pilot. Support quote from C-02: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" That covers both? It states no release date, approved scope controlled pilot. Also D-02 supports release decision controlled pilot approved, GA not approved. But one claim with quote from C-02 enough? Need maybe include D-02 to support approved scope? But one claim can cite both. Need be concise. Also question: \"What release date can I quote for the general payment-retry launch, and which approved scope should I name instead?\" We should say no general release date can be quoted; general availability not approved; instead name controlled pilot as approved scope. Need quote exact contiguous passage. C-02 text exactly: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" That's contiguous. That supports \"no general release date confirmed; GA not approved; approved scope controlled pilot.\" Could also cite D-02 for controlled pilot approved. But one quote sufficient? It says controlled pilot approved in D-02 but C-02 says available only to controlled pilot, not approved. The question asks approved scope. D-02 explicitly \"controlled pilot approved.\" We might need cite D-02. Could make claim: \"No general release date can be quoted for payment-retry general availability: GA is not approved, and the approved scope is the controlled pilot.\" Supports: C-02 quote for no GA date and GA not approved, and D-02 quote for controlled pilot approved. But supports require each quote from that evidence. We can include two citations. Evidence_ids list [\"C-02@1\",\"D-02@1\"]. Supports [{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"}, {\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"}]. That seems good. But the instruction says each claim at most 600 chars. This is fine. Could answer in one claim. Need stop. But let's ensure no issue with \"general payment-retry launch\" maybe \"PAY-102\" code fix done? Not release approval. No general release date. The approved scope should be controlled pilot. Good.\n\nPotential issue: \"What release date can I quote for the general payment-retry launch\" Answer: none, no general release date confirmed. \"which approved scope should I name instead?\" controlled pilot. Could say \"No general release date is confirmed; instead, name the controlled pilot as the approved scope.\" That is enough.\n\nNeed JSON object with claims array. Ensure evidence_ids exactly equal supports evidence_id values. Use only necessary citations. Maybe one claim with two citations. Let's craft. No extra. Ensure no markdown. Final only JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2011,
+        "completion_tokens": 1014,
+        "total_tokens": 3025,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 867
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 1371
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "892c8294-7a05-4a81-b0a9-c33f61130e3d",
+      "object": "chat.completion",
+      "created": 1791392922,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review evidence support and question coverage. Need exactly one verdict per claim. There is one claim. Need determine if supported and responsive.\n\nQuestion: \"What release date can I quote for the general payment-retry launch, and which approved scope should I name instead?\" This asks release date for general payment-retry launch, and approved scope should name instead. Likely answer: no general release date can be quoted; GA not approved; approved scope is controlled pilot. Claim text: \"No general release date can be quoted for the payment-retry general launch: general availability is not approved, and no general release date is confirmed. The approved scope to name instead is the controlled pilot.\" Evidence C-02@1 says Payment-retry available only to controlled pilot. GA not approved. No general release date confirmed. D-02@1 says Release decision: controlled pilot approved. GA not approved. PAY-102 Done not customer release approval. Seems supported. Responsive true: answers both parts: no date, approved scope pilot. Need check if any issue: \"general payment-retry launch\" maybe \"general launch\" = GA? The evidence says GA not approved, no general release date confirmed. Approved scope controlled pilot. Yes.\n\nNeed output JSON with question_covered true, verdicts index 0 supported true responsive true. Ensure exact schema. No extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2116,
+        "completion_tokens": 306,
+        "total_tokens": 2422,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 280
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1604
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

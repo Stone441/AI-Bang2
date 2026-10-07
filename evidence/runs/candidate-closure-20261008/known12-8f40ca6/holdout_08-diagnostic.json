@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "0a518774-a3a5-4a42-b1fe-bdfce040b716",
+      "object": "chat.completion",
+      "created": 1791392478,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"If the authentication cutover fails halfway, which rollback steps remain approved for the affected environment?\" We need determine from evidence. We must output JSON claims. Need parse evidence. Question about authentication cutover failing halfway, rollback steps approved for affected environment. Evidence includes many synthetic items. We need find relevant. Authentication cutover? Evidence BV-04: Enterprise SSO cutover applies to internal employees only; contractors remain on legacy gateway. BV-13: Roll back the ledger migration if settlement differences exceed five basis points. Not authentication. BV-12: MIG-301 In Progress. migration. BV-02: AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena. BV-03, BV-18 about authentication signing design: shared-secret proposal withdrawn, per-client asymmetric signing accepted. BV-01 token rotation decision. BV-05 future policy. No explicit rollback steps for authentication cutover. Maybe there is no evidence of rollback steps. The question presupposes authentication cutover fails halfway and asks which rollback steps remain approved for affected environment. We likely cannot answer; insufficient support. But maybe there is a trick: authentication cutover applies to internal employees only; contractors remain on legacy gateway. That might be a scope fact but not rollback steps. Need see if any rollback steps approved? Evidence BV-13 says roll back ledger migration if settlement differences exceed five basis points. That's migration, not authentication. BV-31 settlement scope. C-01 payment-service runbook failover. Not authentication cutover. BV-20 webhook pilot. No.\n\nQuestion maybe not answerable because no evidence about authentication cutover rollback steps. The instruction: \"If the question does not identify the event, entity or policy, give explicitly scoped candidate facts or return an empty claims list; do not choose a single unstated referent...\" Here question identifies \"authentication cutover\" but evidence may not have that phrase except \"Enterprise SSO cutover\" maybe authentication. But no rollback steps. We should probably return empty claims? But maybe we can state no approved rollback steps for auth cutover are in evidence. But empty claims means insufficient support. The format requires claims list; can have claim saying no evidence? But that would be a claim about absence, not supported by evidence? The instruction says \"absence of a record is neither an explicit negative nor proof about every possible source.\" So we shouldn't claim no rollback steps exist. We can only say the cited passages do not establish rollback steps. But claim must be supported by cited evidence? A claim \"The evidence does not establish...\" may not need support? But schema requires evidence_ids and supports quotes. Could have a claim that \"No rollback steps for the authentication cutover are specified in the supplied evidence.\" But that is meta and not supported by quote? Could quote a passage that doesn't mention it? Not good.\n\nMaybe there is a rollback step in BV-01? \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" Could that be a rollback step? no.\n\nMaybe \"rollback steps remain approved for the affected environment\" could refer to authentication cutover failing halfway. If cutover applies to internal employees only, affected environment is internal employees. Remaining approved rollback steps might be the legacy gateway for contractors? Hmm BV-04: Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway. If SSO cutover fails halfway for internal employees, contractors remain on legacy gateway. But that's not a rollback step for affected environment (internal employees). It's scope.\n\nCould there be approved failover procedure for payment-service? C-01: Runbook v1: inspect payment-service timeout budget and follow approved failover procedure. Not authentication.\n\nMaybe the question is a trap: \"If the authentication cutover fails halfway, which rollback steps remain approved for the affected environment?\" There is no evidence of authentication cutover rollback. We should answer with empty claims? The prompt says \"An empty claims list means insufficient support.\" That seems appropriate. But maybe they expect us to identify no relevant evidence. Let's consider if we can provide a claim: \"The supplied evidence does not identify any approved rollback steps for an authentication cutover; it only records authentication cutover scope (internal employees only) and a blocked migration ticket AUTH-204.\" But each claim must be fully supported by cited evidence. Could quote BV-04 and BV-02? Claim: \"The supplied evidence does not establish approved rollback steps for an authentication cutover; it records that the SSO cutover applies to internal employees only and AUTH-204 is blocked.\" Is that a factual conclusion? It is about absence, but not directly supported by a passage. The absence is inferred from lack of evidence. The instruction says absence of record not proof. But we can say \"The cited passages do not establish...\" That is a meta-conclusion, not a factual claim about the world. It might be allowed? However schema wants claims with support quotes. Could support with quote from BV-04: \"Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\" That quote supports the scope but not absence. The claim about absence would not be supported. The prompt: \"Each claim must be fully supported by its cited evidence.\" So no.\n\nThus likely empty claims. But maybe they want to see if model avoids hallucinating. I'll output {\"claims\":[]}. But let's double-check if any rollback step is actually approved for authentication. BV-13 rollback ledger migration; maybe \"authentication cutover\" could be part of enterprise SSO, but rollback step might be \"roll back the ledger migration\" no. Not relevant.\n\nWhat about BV-18: \"shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" That's an authentication decision, not rollback.\n\nNo. So empty claims.\n\nBut the prompt says \"Answer the question directly in English.\" Empty claims means insufficient support. But JSON only. We must comply. Output JSON with empty claims array."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1892,
+        "completion_tokens": 1266,
+        "total_tokens": 3158,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1260
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1380
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

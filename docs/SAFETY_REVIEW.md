@@ -18,6 +18,20 @@
 
 G0/G1/G2 are internal team decision gates, not competition grades. This checklist does not grant approval or mark a review complete.
 
+## 封版候选连贯观看 · 18分钟（80b9ffc，准备未执行）
+
+由操作者展示，团队只判断问题、答案、引用及可见行为。当前无新operator实例，8094/8100未动，49161停止；browser仍为工具saved site denial blocked。先用以下真实结果回看完成连贯展示；现场页面步骤须等正式站点许可及具体实例启动/访问授权，不换入口绕过，不把回看称为新页面测试。新模型配置为v10 low/8192，原0bc90ae/v8 low4096证据仍有效但分列。当前最终回归运行中，表中预期不是预填通过。
+
+| 我操作什么 | 预期看到什么 | 检查什么 | 记录什么 |
+|---|---|---|---|
+| 0–2分【当前候选/配置回看】展示candidate-80b9ffc-fingerprint及当日readiness，说明没有新页面实例 | 代码80b9ffc、v10 low/8192；默认none/1024；数据/代码hash及运行模式清楚 | 团队是否知道历史证据、fixture、native和live model各证明什么 | 观看者/时间/版本/模式，页面现场not_run |
+| 2–5分【当前fixture源＋live model结果回看】读known12-80b9ffc的01/02/06问题、最终claims、quote，及11的澄清/范围结果 | failover检查、Done不等于发布批准、pilot/no GA日期；未批准不等于放弃，不自动选未指定事件 | 是否回答原问题、必要限制是否清楚，空答的澄清是否可用，引用是否支持结论 | 每题业务判断pass/fail/partial；这是已知题结果回看，非盲测或native |
+| 5–8分【当前native＋live model结果回看】读native-timing-80b9ffc两问、最终答案和各一个single-preview，再看分段时间 | Slack最终amber替代green；产品pilot/GA/date/Done边界；引用版本/原文与答案一致 | 答案是否可用于工作、单引用是否易核对、等待时间能否接受 | 两题判断、实际query/生成/review/单preview时间；现场native/live model not_run，不另行付费 |
+| 8–10分【历史四源native＋fake回看】并排看four-source-timeline三阶段正文/版本与发布时间区间；补当前最终Slack语义结果 | 四源amber→green→amber，Slack为新reply；原metadata/发布/摘录时间分开 | 是否看懂内容何时变化；哪些缺测不能叫SLA | 观察结果；历史三阶段不是逐阶段live model或自动新鲜度通过 |
+| 10–13分【新版fixture结果回看；页面许可解决后可现场补】展示five-scenes-80b9ffc的S02更新旧引用拒绝、S03受限/允许对照、S04同身份撤权后旧历史/引用 | 新版本能答，旧版本不再可读；受限资料不泄露，其他允许资料仍可答；无聊天继承/答案下载 | 业务能否理解更新与拒绝；是否仍看到旧受限内容 | 三种行为业务判断；fixture与历史native撤权分开，页面键盘/导航/历史可见交互保持not_run |
+| 13–16分【当前故障＋审计回看】读known12的12来源故障与对应审计；看five-scenes的S05受限审计查询，再对照原audit-mixed四结果及配对签名记录 | 未知来源先停答，无model dispatch；可以串起身份/问题/授权/证据/最终结果或失败 | 是否清楚为什么没有答案；能否用记录还原发生了什么 | 可/不可还原项及提示可理解性；不要求团队判断数据库/密码学，独立custody未通过 |
+| 16–18分【原延期＋收尾】回看AUTH019两项原问题/失败，并汇总今天实际观察 | 原延期仍为failed/partial，新回归结果和完整矩阵缺口另列 | 是否把回看当页面通过、把一次成功当稳定率、把判断当G1/G2 | 原两项延期意见与最多三项待决；G1/G2只由明确真人观看记录及具体批准产生 |
+
 ## 固定候选18分钟观看流程（准备，未执行）
 
 固定应用/测试331bd28；6d79ed2仅状态/证据。当前浏览器blocked是工具保存站点拒绝，**不是页面验证失败**；49161已停止。现在可执行历史证据回看，表内新版fixture交互仅在正式站点许可解决、具体服务/版本/隔离模式及启动与实例访问授权确认后执行；不更换端口/工具/入口绕过。无法进入的步骤记录not_run，改看对应既有记录，不把回看计作新交互通过。团队只判断答案和可见交互，操作者负责服务准备。总计约18分钟；不预填观察结果或G1/G2。

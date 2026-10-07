@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "9be231cf-b037-49fb-aadc-a3cd3aedebcf",
+      "object": "chat.completion",
+      "created": 1791392476,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" Need infer from evidence? We have synthetic evidence. Need see if any evidence addresses identity trust and migration request. Evidence: BV-30@1: \"When current source access cannot be verified, do not treat a prior allow decision as current permission.\" That's about access authority, not migration request identity. BV-02@1: AUTH-204 blocked because mobile clients cannot refresh expired tokens. BV-05@1 token expiry. BV-12@1 MIG-301 in progress, blocker unmatched settlement totals. BV-13 rollback. BV-14 etc. BV-11 migration design rationale. None mention \"which identity must be trusted before accepting the migration request\" or \"where verified\". Maybe question presupposes something not in evidence. Need return empty claims? But maybe there is implicit? Let's parse.\n\nQuestion: \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" This likely asks about a migration request identity trust. Evidence has no explicit \"migration request\" acceptance identity. BV-12 is migration cutover ticket MIG-301. BV-11 mentions \"Current ledger migration decision\" shadow table. No identity verification location. BV-05 authentication policy about service tokens expire. Could be service token identity? But question asks \"which identity must be trusted before accepting the migration request\" maybe \"current source access\" from BV-30? \"When current source access cannot be verified, do not treat a prior allow decision as current permission.\" This is about verifying current source access, not migration request. No \"where verified\". So insufficient support. Need empty claims list. But instructions: if question does not identify event/entity/policy, give explicitly scoped candidate facts or return empty claims list. Here no evidence supports. So {\"claims\":[]}.\n\nBut let's be careful: Could answer with claim stating no evidence establishes? The format requires claims, empty means insufficient support. So return {\"claims\":[]}.\n\nNeed ensure JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3337,
+        "completion_tokens": 432,
+        "total_tokens": 3769,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 426
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 2825
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

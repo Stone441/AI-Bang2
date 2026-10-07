@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "aaa7e96c-aec3-4278-82c9-181e034ee994",
+      "object": "chat.completion",
+      "created": 1791392924,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question. Need decide if evidence supports. Question: \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" This sounds asks specific identity and verification location for migration request. Evidence includes migration ticket MIG-301, rollback, auth blocker AUTH-204 etc. No passage about accepting migration request, trusted identity, where verified. Maybe BV-30 about current source access cannot be verified, do not treat prior allow decision as current permission. But no identity, no migration request acceptance. BV-15 proposed not approved etc. None.\n\nNeed return empty claims if insufficient. Let's ensure no hidden. Evidence BV-02 AUTH-204 blocked mobile cannot refresh tokens. No identity. BV-05 service tokens expire. No. So empty claims. JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3411,
+        "completion_tokens": 170,
+        "total_tokens": 3581,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 164
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 2771
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

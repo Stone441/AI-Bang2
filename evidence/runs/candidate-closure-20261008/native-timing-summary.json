@@ -1,0 +1,58 @@
+{
+  "code_commit": "80b9ffcc757c1f42a7d37798383fdd2e0e846115",
+  "mode": "native_api_live_model_synthesis",
+  "actor": "eng_b",
+  "cases": [
+    {
+      "case": "slack_latest",
+      "error_type": null,
+      "query_to_return_seconds": 78.2866576249944,
+      "single_preview_seconds": 27.16634954197798,
+      "query_categories": {
+        "lock_wait": 8.33999365568161e-07,
+        "authorization": 69.05188132688636,
+        "native_http": 69.02799066714942,
+        "generation": 6.867828040965833,
+        "review": 2.205475374998059
+      },
+      "preview_categories": {
+        "lock_wait": 25.521975666983053,
+        "native_http": 1.6412750830641016,
+        "authorization": 1.6420774169964716
+      }
+    },
+    {
+      "case": "product_scope",
+      "error_type": null,
+      "query_to_return_seconds": 97.22518299997319,
+      "single_preview_seconds": 25.540016625018325,
+      "query_categories": {
+        "lock_wait": 1.1249794624745846e-06,
+        "authorization": 75.00890303403139,
+        "native_http": 74.98146800836548,
+        "generation": 19.728991167037748,
+        "review": 2.306635875022039
+      },
+      "preview_categories": {
+        "lock_wait": 24.95522170799086,
+        "native_http": 0.5825855840230361,
+        "authorization": 0.5828805420314893
+      }
+    }
+  ],
+  "usage": {
+    "unique_usage_receipts": 4,
+    "accounted_upper_micro_usd": 13569,
+    "attempts_without_recorded_usage": 0,
+    "basis": "Unique settled usage receipts in this captured audit; not vendor invoice.",
+    "missing_usage_warning": "Missing usage keeps its reservation; zero settled receipt sum does not mean a free call.",
+    "global_snapshot_warning": "Shared-ledger snapshots may include other concurrent runs or pending reservations."
+  },
+  "interpretation": [
+    "Authorization wall includes native HTTP; do not add them.",
+    "Preview total includes discovery worker lock wait; native permission checks remain mandatory.",
+    "Existing retrieval_snapshot_prefilter uses zero native reads only for eligibility, never current authorization.",
+    "Two synthetic questions, one execution; no percentile, SLA, whole-persona, native fault or browser proof.",
+    "Old133/146 seconds included all previews and cannot be used as an apples-to-apples latency baseline."
+  ]
+}
