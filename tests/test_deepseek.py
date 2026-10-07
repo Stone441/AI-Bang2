@@ -33,6 +33,13 @@ class Transport:
 
 
 class DeepSeekBoundary(unittest.TestCase):
+    def test_invalid_sampling_configuration_cannot_dispatch_or_reserve(self):
+        for temperature in [True,-1,3,float('nan'),float('inf'),'0']:
+            with self.subTest(temperature=temperature),self.assertRaises(ValueError):
+                DeepSeekEvidenceModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+                                      transport=self.transport,today=PRICE_DATE,temperature=temperature)
+        self.assertEqual(self.transport.calls,[])
+        self.assertEqual(self.ledger.summary()['accounted_micro_usd'],0)
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.path = str(Path(self.tmp.name) / 'budget.sqlite')
@@ -53,6 +60,7 @@ class DeepSeekBoundary(unittest.TestCase):
         self.assertEqual(request.full_url, ENDPOINT)
         payload = json.loads(request.data)
         self.assertEqual(payload['thinking'], {'type': 'disabled'})
+        self.assertEqual(payload['temperature'],0)
         self.assertFalse(payload['stream']); self.assertNotIn('tools', payload)
         self.assertEqual(payload['response_format'], {'type': 'json_object'})
         self.assertNotIn('source_url', payload['messages'][1]['content'])

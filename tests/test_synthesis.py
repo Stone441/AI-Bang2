@@ -89,6 +89,13 @@ class GroundedSynthesis(unittest.TestCase):
         self.assertEqual(self.ledger.summary()['pending_requests'],0)
         self.assertEqual(self.ledger.summary()['settled_micro_usd'],cost_upper(100,20))
 
+    def test_sampling_configuration_is_shared_by_both_authorized_stages(self):
+        self.model.temperature=0
+        result=self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
+        self.assertEqual(result['review_status'],'accepted')
+        self.assertEqual([p['temperature'] for p in self.transport.calls],[0,0])
+        self.assertTrue(all(p['thinking']=={'type':'disabled'} for p in self.transport.calls))
+
     def test_each_claim_requires_its_own_identifier_context_in_an_exact_quote(self):
         from dataclasses import replace
         evidence=replace(self.evidence,text='[SYNTHETIC] TASK-742 is In Progress. Owner: Noor. The remaining blocker is unmatched totals.')

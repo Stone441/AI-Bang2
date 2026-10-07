@@ -4,6 +4,7 @@ The LLM selects supplied evidence IDs; the server assembles original text.
 Peak/cache-miss cost is a conservative accounting upper bound, not an invoice.
 """
 import json
+import math
 import re
 import uuid
 from datetime import date, datetime
@@ -83,7 +84,10 @@ class DeepSeekEvidenceModel:
     # rather than assuming one character or byte equals one token.
     reservation = cost_upper(CONTEXT_TOKENS, OUTPUT_TOKENS)
 
-    def __init__(self, key, ledger, *, synthetic_only=False, transport=None, today=None):
+    def __init__(self, key, ledger, *, synthetic_only=False, transport=None, today=None, temperature=0):
+        if temperature is not None and (type(temperature) not in (int, float) or not math.isfinite(temperature) or not 0 <= temperature <= 2):
+            raise ValueError('Finite sampling temperature in [0,2] required')
+        self.temperature = temperature
         if synthetic_only is not True:
             raise ValueError('Synthetic approval and current price review required')
         check_price_review(today)
@@ -113,6 +117,8 @@ class DeepSeekEvidenceModel:
         payload = {'model': MODEL, 'thinking': {'type': 'disabled'}, 'stream': False,
                    'max_tokens': OUTPUT_TOKENS, 'response_format': {'type': 'json_object'},
                    'messages': self.messages(question, evidence)}
+        if self.temperature is not None:
+            payload['temperature'] = self.temperature
         body = json.dumps(payload, ensure_ascii=False).encode()
         if len(body) > 100_000:
             raise ModelInputRejected('Model input exceeds pilot limit')
