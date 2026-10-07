@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No: the webhook backlog came from an exhausted worker pool, not DNS resolution.",
+        "evidence_ids": [
+          "BV-16@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-16@1",
+            "quote": "The webhook backlog came from an exhausted worker pool, not DNS resolution."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "df363d4a-4834-412e-b27b-2cdb899aaa86",
+      "object": "chat.completion",
+      "created": 1791385653,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No: the webhook backlog came from an exhausted worker pool, not DNS resolution.\",\"evidence_ids\":[\"BV-16@1\"],\"supports\":[{\"evidence_id\":\"BV-16@1\",\"quote\":\"The webhook backlog came from an exhausted worker pool, not DNS resolution.\"}]}]}",
+            "reasoning_content": "We need answer: Was DNS the cause of webhook backlog? Evidence BV-16 says came from exhausted worker pool, not DNS. BV-11 says DNS was historical webhook hypothesis, archived, no current decision. Need claim. Also possibly BV-19 about response, not cause. D-01 payment-service, not webhook. Need direct answer. At most four claims. We need support quote. Claim: No, DNS was not cause; backlog came from exhausted worker pool. Evidence BV-16@1 quote exact. Also maybe DNS was historical hypothesis, no current decision. That is relevant qualification. Could combine? Claim 1: The webhook backlog was not caused by DNS; it came from an exhausted worker pool. Cite BV-16. Claim 2: DNS was a historical webhook hypothesis in a retired rehearsal; no current decision recorded. Cite BV-11@1#0:2400 with quote \"DNS was a historical webhook hypothesis.\" Maybe enough. Ensure exact contiguous. That quote exists. But no current decision? Could quote \"DNS was a historical webhook hypothesis.\\nArchived migration rehearsal entry 0: batch 0, checksum 0; no current decision recorded.\" That's contiguous, includes identifier? no identifier needed. Claim 2 maybe not necessary? User asks was DNS cause. Claim 1 answers. But maybe mention historical hypothesis is a qualification? Not strictly necessary? The source says not DNS. Could stop with one claim. But include BV-11 as qualification? It says DNS was historical hypothesis, no current decision. That supports it was considered but not cause. Might be useful but could be background. The question direct: Was DNS cause? Answer no with cause. One claim sufficient. But instructions: identify requested part. Yes. Use minimum. Could include claim 2 as qualification that DNS was historical hypothesis? Not necessary to answer. But if the question presupposes DNS possibly, the direct cause says not DNS. One claim enough. However, evidence BV-16 is synthetic, source context webhook. Fine.\n\nNeed JSON with claims. Supports list with evidence_id and quote. The evidence_id in claim and support must match. Use BV-16@1 quote: \"The webhook backlog came from an exhausted worker pool, not DNS resolution.\" That is exact. Answer: No. Claim text maybe \"No: the webhook backlog came from an exhausted worker pool, not DNS resolution.\" That's concise factual conclusion. Evidence_ids [\"BV-16@1\"]. Supports. That is fully supported. Should we include that DNS was historical hypothesis? If answer only no, maybe enough. But the claim says not DNS. It does not address historical hypothesis. Fine. But the question \"Was DNS the cause of the webhook backlog?\" The answer \"No\" is explicit in quote. Good.\n\nNeed maybe no extra claims. The source BV-11 says DNS historical hypothesis; but if we don't cite, is that okay? It could be relevant limitation: DNS was a historical hypothesis, no current decision. But not cause. Could be considered background. Minimum. I think one claim. But ensure no universal assertion. \"The webhook backlog came from an exhausted worker pool, not DNS resolution.\" That is source's statement, not universal. Fine.\n\nLet's output JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1958,
+        "completion_tokens": 742,
+        "total_tokens": 2700,
+        "prompt_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 673
+        },
+        "prompt_cache_hit_tokens": 1792,
+        "prompt_cache_miss_tokens": 166
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "3b9c7000-4a5e-4e71-9eb6-704a27789698",
+      "object": "chat.completion",
+      "created": 1791385657,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer user's meta-evaluation. Need return JSON only with schema. Need evaluate question and claim. We need determine question_covered and verdicts. We have one claim index 0: \"No: the webhook backlog came from an exhausted worker pool, not DNS resolution.\" evidence BV-16@1 text exactly same. So supported true. Responsive? Question: \"Was DNS the cause of the webhook backlog?\" Claim answers no, says exhausted worker pool not DNS. Explicit requested part yes. So responsive true.\n\nNeed question_covered: Does claims address EVERY requested part supported by supplied evidence? Question asks was DNS cause of webhook backlog. Claim addresses yes/no. So true. Need consider other evidence? There is D-01 final payment-service postmortem: final root cause retry configuration mismatched timeout budget causing backlog duplicate requests. This seems about payment-service, not webhook? Question webhook backlog. It may contradict? It says final payment-service postmortem, not webhook. Evidence BV-16 says webhook backlog exhausted worker pool not DNS. D-01 about payment-service backlog duplicate requests. Different scope. BV-11 retired webhook rehearsal says DNS was historical webhook hypothesis; no current decision. But BV-16 explicit. Claim supported. Should we mark supported true? Yes exactly quote. But need check full evidence: BV-16@1 exactly. The claim is scoped to webhook backlog. It says not DNS. Evidence says same. Supported.\n\nNeed ensure no hidden issue: The evidence BV-16 is synthetic but we treat as evidence. The claim's supports cite BV-16@1. Yes.\n\nQuestion_covered true. Verdicts array one object index 0 supported true responsive true.\n\nNeed JSON only. Use exact schema. Final."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2004,
+        "completion_tokens": 392,
+        "total_tokens": 2396,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 366
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1492
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

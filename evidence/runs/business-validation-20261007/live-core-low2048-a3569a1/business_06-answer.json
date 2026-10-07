@@ -1,0 +1,129 @@
+{
+  "request_id": "8b9a1e7c78854e8aa85b55b742710614",
+  "question": "Can the Atlas connector serve personal Singapore SGD accounts?",
+  "answered_at": "2026-10-07T14:59:53.787824+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v8",
+  "claims": [
+    {
+      "text": "No, the Atlas connector does not support personal Singapore SGD accounts; it supports Singapore business SGD accounts.",
+      "evidence_ids": [
+        "BV-06@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-06@1",
+          "quote": "The Atlas connector supports Singapore business SGD accounts, not personal accounts."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-06@1",
+      "resource_id": "BV-06",
+      "version": 1,
+      "source": "confluence",
+      "title": "integration / SGD account eligibility",
+      "locator": {
+        "section": "SGD account eligibility"
+      },
+      "text": "[SYNTHETIC]\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.\n\nAtlas account eligibility\nAccount\tScope\n\n Singapore business SGD \t Pilot supported \n\n Personal SGD \t Not supported \n",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889691+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-06"
+    },
+    {
+      "evidence_id": "BV-07@1",
+      "resource_id": "BV-07",
+      "version": 1,
+      "source": "slack",
+      "title": "integration / USD exception",
+      "locator": {
+        "section": "USD exception"
+      },
+      "text": "[SYNTHETIC]\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889707+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-07"
+    },
+    {
+      "evidence_id": "BV-31@1",
+      "resource_id": "BV-31",
+      "version": 1,
+      "source": "slack",
+      "title": "settlement / Settlement scope",
+      "locator": {
+        "section": "Settlement scope"
+      },
+      "text": "[SYNTHETIC]\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.890118+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-31"
+    },
+    {
+      "evidence_id": "BV-10@1",
+      "resource_id": "BV-10",
+      "version": 1,
+      "source": "jira",
+      "title": "integration / Scope confirmation",
+      "locator": {
+        "section": "Scope confirmation"
+      },
+      "text": "[SYNTHETIC]\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889748+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-10"
+    },
+    {
+      "evidence_id": "BV-22@1",
+      "resource_id": "BV-22",
+      "version": 1,
+      "source": "jira",
+      "title": "reconciliation / Batch deadline",
+      "locator": {
+        "section": "Batch deadline"
+      },
+      "text": "[SYNTHETIC]\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889990+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-22"
+    }
+  ],
+  "actor": "product_ops",
+  "model_call": {
+    "query_id": "8b9a1e7c78854e8aa85b55b742710614",
+    "model": "deepseek-flash",
+    "reservation_id": "c99cadd87756435da76ed9afccc7017a",
+    "prompt_tokens": 1115,
+    "completion_tokens": 564,
+    "total_tokens": 1679,
+    "reserved_micro_usd": 317031,
+    "accounted_upper_micro_usd": 1012,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "8b9a1e7c78854e8aa85b55b742710614",
+    "model": "deepseek-flash",
+    "reservation_id": "675a3300629d45ffb5335a22fe52154a",
+    "prompt_tokens": 1162,
+    "completion_tokens": 444,
+    "total_tokens": 1606,
+    "reserved_micro_usd": 317031,
+    "accounted_upper_micro_usd": 882,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

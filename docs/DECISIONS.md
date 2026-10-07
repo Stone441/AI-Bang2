@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-07 ADR-059（固定本轮候选）：选择0bc90ae synthesis-v8可信low/4096。2048在完整开发03 review及native产品generation实证length/no final，失败与费用保留；4096单题诊断、全24及当前native两题均返回正确且精确引用。398clean/五fixture/Node和当前审计签名配对通过。选择依据是这些实际观测，不宣称sampling因果、稳定率或旧保留失败修复；不再继续提高cap。默认none/1024不变，opt-in可信启动，不新增HTTP参数/权限/费用上限，不自动retry。回滚省略flag或保留v6候选，无schema/源修改。业务增强范围按5.3收尾，与G1/G2、完整技术验收及未支持能力分列。
+
 2026-10-07有界cap跟进：a3569a1完整24题为21正确事实返回＋2空＋03复核length失败（2048个reasoning tokens，无final）。仅新增可信4096候选档，生成/复核同cap、按实际cap预留和usage上限检查；默认1024保持，未知cap8192等仍拒绝，4097超4096实测mock冻结并保留reservation。原03失败保留、不自动重试；先单题诊断，再据实际结果决定是否形成候选，不预称全通过。原生a3569a1进程仍保持启动时加载的2048配置。
 
 2026-10-07 ADR-058（有界同模型推理诊断）：v7/v8 none/1024的7作者开发题分别6/5返回，03正确未知仍被review拒绝、32冗余仍存在；原记录保留。81dd33e low/1024实际六题正确，一题1024输出全用于reasoning后length无final；73b1e3e新增可信cap1024/2048、两阶段一致预留和usage校验，395回归；low/2048七题本次正确、18137microUSD原预算结算。只读复核不是独立人工或稳定性证明。为形成可检验应用配置，operator允许可信启动low/2048 opt-in并拒绝fake/excerpts滥用，默认none/1024不变；不增加HTTP客户端控制、不改quote/whole-review/权限、不自动retry。native runner同cap动态preflight。回滚可省略两个新flag，无数据/凭据迁移；采用为统一候选需完整当前开发和native证据，不据七题提前完成Goal。

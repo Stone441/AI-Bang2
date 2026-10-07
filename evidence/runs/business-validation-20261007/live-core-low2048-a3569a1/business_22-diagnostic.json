@@ -1,0 +1,89 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The current Singapore weekday reconciliation deadline is 18:00 SGT; the old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+        "evidence_ids": [
+          "BV-22@1",
+          "BV-25@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-22@1",
+            "quote": "For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline."
+          },
+          {
+            "evidence_id": "BV-25@1",
+            "quote": "The old 17:00 deadline applies only to the retired September pilot, not current weekday batches."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "7e3d6530-a5db-4eaf-9da9-59a146c4fc01",
+      "object": "chat.completion",
+      "created": 1791385235,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The current Singapore weekday reconciliation deadline is 18:00 SGT; the old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\",\"evidence_ids\":[\"BV-22@1\",\"BV-25@1\"],\"supports\":[{\"evidence_id\":\"BV-22@1\",\"quote\":\"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\"},{\"evidence_id\":\"BV-25@1\",\"quote\":\"The old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\"}]}]}",
+            "reasoning_content": "We need answer question: What is current Singapore weekday reconciliation deadline? Evidence BV-22 says deadline 18:00 SGT for Singapore weekday batches; weekend no same-day. BV-25 says old 17:00 applies only to retired September pilot, not current weekday batches. So current deadline is 18:00 SGT. Need claim with support quotes. At most four claims, concise. We can make one claim: \"The current Singapore weekday reconciliation deadline is 18:00 SGT.\" Support quote from BV-22: \"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\" Also maybe include BV-25 to clarify old 17:00 not current. But question asks current deadline; one claim enough. However need ensure identifier? No explicit ticket ID. The quote has \"Singapore weekday batches the deadline is 18:00 SGT\". Good. We can include BV-25 quote: \"The old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\" That supports that 17:00 not current. But one claim can cite both. Need evidence_ids list exactly matches supports. So supports: BV-22 with quote, BV-25 with quote. Claim text: \"The current Singapore weekday reconciliation deadline is 18:00 SGT; the old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\" That combines. It is one claim. Check length under 600. Fine.\n\nNeed JSON object with claims. Ensure no extra. Use exact quotes. BV-22 quote: \"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\" That includes weekend irrelevant but okay. BV-25 quote: \"The old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\" Good.\n\nFinal JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1380,
+        "completion_tokens": 520,
+        "total_tokens": 1900,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 389
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 868
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "713dc06e-9563-4e61-8ea6-7d66b6c036ae",
+      "object": "chat.completion",
+      "created": 1791385237,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review claim support and question coverage. Need determine if claim supported and responsive, question covered. Need one verdict per claim. There is one claim. Need evaluate.\n\nQuestion: \"What is the current Singapore weekday reconciliation deadline?\"\n\nClaim: \"The current Singapore weekday reconciliation deadline is 18:00 SGT; the old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\"\n\nEvidence:\nBV-22@1: \"[SYNTHETIC]\\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\"\nBV-25@1: \"[SYNTHETIC]\\nThe old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\"\n\nNeed assess supported true? The claim says current Singapore weekday reconciliation deadline is 18:00 SGT. BV-22 says For Singapore weekday batches deadline is 18:00 SGT. Does that establish \"current\"? The question asks current. Evidence says deadline is present tense. \"For Singapore weekday batches the deadline is 18:00 SGT\" likely current? But does it explicitly say current? It implies current. Claim's second part old 17:00 deadline applies only to retired September pilot, not current weekday batches. BV-25 exactly. So supported? Need be careful: \"retired September pilot\" is in evidence quote. Yes. \"current weekday batches\" also. So supported true.\n\nResponsive: It answers explicit requested part: current deadline. Yes. It also qualifies old deadline. Responsive true.\n\nQuestion coverage: only asks deadline. Claim covers. true.\n\nNeed output JSON exactly. Ensure one verdict for claim index 0. Format: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}\n\nNeed no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1493,
+        "completion_tokens": 410,
+        "total_tokens": 1903,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 981
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

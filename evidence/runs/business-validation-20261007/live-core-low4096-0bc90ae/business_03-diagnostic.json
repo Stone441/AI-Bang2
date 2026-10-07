@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The cited passage does not establish that an authentication signing proposal was rejected; it records that the shared-secret proposal was withdrawn and that per-client asymmetric signing was accepted.",
+        "evidence_ids": [
+          "BV-18@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-18@1",
+            "quote": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "f402e522-be50-4d89-b2de-16edea332ecb",
+      "object": "chat.completion",
+      "created": 1791385602,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The cited passage does not establish that an authentication signing proposal was rejected; it records that the shared-secret proposal was withdrawn and that per-client asymmetric signing was accepted.\",\"evidence_ids\":[\"BV-18@1\"],\"supports\":[{\"evidence_id\":\"BV-18@1\",\"quote\":\"[SYNTHETIC]\\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\"}]}]}",
+            "reasoning_content": "We need answer question: Which authentication signing proposal was rejected? Evidence: BV-03 says shared-secret proposal under consideration. BV-18 says shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted. Question asks rejected. Source explicitly says withdrawn, not rejected. We must distinguish. Need answer: The shared-secret proposal? But it was withdrawn, not rejected. We should state that the cited passage does not establish rejection; it records withdrawal, and per-client asymmetric signing was accepted. Need JSON claims. Use at most four claims. Need evidence_ids exactly match supports. We need quote exact contiguous passage. Could use BV-18 quote: \"[SYNTHETIC]\\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" But note quote must be contiguous passage from that evidence. That's fine, includes newline and [SYNTHETIC]. The claim: \"The shared-secret authentication signing proposal was withdrawn, not rejected; per-client asymmetric signing was accepted.\" But \"not rejected\" is explicit? Passage doesn't say not rejected. We can say \"The cited passage records withdrawal, not rejection, of the shared-secret proposal; per-client asymmetric signing was accepted.\" That is supported: says withdrawn. Does it establish not rejected? It doesn't say rejected. We can say it does not establish rejection. The claim should not assert \"not rejected\" as fact unless supported. But we can say \"The shared-secret proposal was withdrawn; the passage does not state it was rejected.\" That is supported? Passage says withdrawn, and absence of rejection in passage. But universal? It says \"The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" It doesn't explicitly say not rejected. However, if asked \"which proposal was rejected?\" we can answer: The shared-secret proposal? But source says withdrawn. We need clarify. The question presupposes rejected. We should say: The cited material does not establish a rejected proposal; it records that the shared-secret proposal was withdrawn and per-client asymmetric signing was accepted. That's good. Need one claim maybe. Use BV-18 only. Could also cite BV-03 for under consideration? But question asks rejected. We can mention it was under consideration then withdrawn? But minimum. Use one claim. Quote from BV-18. Evidence_ids: [\"BV-18@1\"]. Supports with same. Claim text under 600. Let's draft: \"The cited material does not establish that any authentication signing proposal was rejected; it records that the shared-secret proposal was withdrawn and that per-client asymmetric signing was accepted.\" Is this fully supported by BV-18? \"does not establish that any authentication signing proposal was rejected\" is an absence conclusion. The passage doesn't mention rejection. It says withdrawn. This is acceptable? It might be okay as stating what passage doesn't establish. But universal \"any\" maybe too broad. Scope to cited material: \"This cited passage does not establish a rejected authentication signing proposal; it records...\" That's fine. But claim must be supported by evidence. The evidence supports \"shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" It doesn't support \"does not establish any rejected proposal\" except by absence. The instruction allows \"When the question presupposes a state or outcome not established by the cited passage, explicitly say that this passage does not establish the requested state, then give the state it actually records.\" So yes.\n\nNeed ensure quote exactly contiguous from text. The text: \"[SYNTHETIC]\\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" We can copy whole. That is 113 chars? okay.\n\nNo external. Final JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1267,
+        "completion_tokens": 872,
+        "total_tokens": 2139,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 772
+        },
+        "prompt_cache_hit_tokens": 1024,
+        "prompt_cache_miss_tokens": 243
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "41b81929-b1ef-4a55-a86c-d9b1ceb4f5e1",
+      "object": "chat.completion",
+      "created": 1791385607,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review evidence support and question coverage. Need determine question \"Which authentication signing proposal was rejected?\" Claims: one claim text: \"The cited passage does not establish that an authentication signing proposal was rejected; it records that the shared-secret proposal was withdrawn and that per-client asymmetric signing was accepted.\" Evidence BV-18@1 quote: \"10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" Need decide supported and responsive, question_covered.\n\nWe need careful. The question asks which authentication signing proposal was rejected? Claim says cited passage does not establish rejected; records shared-secret proposal withdrawn and per-client asymmetric accepted. Is that claim supported by evidence? Evidence BV-18@1 says shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted. Does it establish rejected? No, withdrawn not necessarily rejected. The claim itself scopes to cited passage. It says \"does not establish that an authentication signing proposal was rejected; it records that shared-secret proposal was withdrawn and that per-client asymmetric signing was accepted.\" This is a meta-claim about evidence. Supported? The cited passage indeed records withdrawal and accepted. It does not establish rejected. But we need determine if \"shared-secret proposal was withdrawn\" equals? Withdrawn is not rejected. The claim correctly says not establish rejection. So supported true likely.\n\nResponsive? Question asks \"Which authentication signing proposal was rejected?\" The claim answers by saying no proposal established as rejected; it identifies shared-secret proposal withdrawn and per-client asymmetric accepted. Does this answer explicit requested part? For a which question with unestablished premise, an explicit acknowledgement scoped to cited material plus recorded state can cover requested part. The claim does acknowledge that passage does not establish rejection and gives actual recorded states. That seems responsive true: it addresses which proposal rejected by saying none established, and names shared-secret withdrawn. Should be responsive true.\n\nQuestion_covered: Does claim address every requested part? The only requested part is which proposal was rejected. The claim covers by stating evidence doesn't establish rejection and gives recorded alternative. So question_covered true? Need consider evidence includes BV-03@1: \"09:00 authentication signing design: shared-secret proposal under consideration.\" BV-18 says withdrawn. No rejected. Question asks rejected; claim says not establish. So covers? likely yes. But need check if \"shared-secret proposal was withdrawn\" maybe could be considered rejected? Withdrawn not rejected. The question says which proposal was rejected. There is no rejected in evidence. The claim explicitly acknowledges unestablished requested state. Thus question_covered true. Need one verdict index 0. supported true, responsive true. Return JSON.\n\nBut let's ensure no hidden issue: \"A proposed or unapproved item is not necessarily rejected, cancelled or withdrawn.\" Evidence says withdrawn explicitly for shared-secret. So okay. \"Require explicit source support for each claimed state transition.\" Claim says records shared-secret proposal was withdrawn. Supported by quote. \"per-client asymmetric signing was accepted\" supported. \"The cited passage does not establish that an authentication signing proposal was rejected\" is a negative about evidence. We examine full evidence. BV-18 does not contain rejected. BV-03 under consideration. No rejection. So supported. Question coverage: It asks \"Which authentication signing proposal was rejected?\" Claim doesn't name rejected proposal, but says no rejection established. Since premise unestablished, this can cover. Yes.\n\nNeed JSON exactly schema: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}. Final only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1343,
+        "completion_tokens": 770,
+        "total_tokens": 2113,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 744
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 831
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

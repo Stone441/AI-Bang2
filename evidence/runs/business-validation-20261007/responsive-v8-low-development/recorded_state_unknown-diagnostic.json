@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The cited plan does not establish rejection or cancellation of dual-region active writes; it records that they were proposed but not approved, and the accepted migration uses one writer as the operating mode.",
+        "evidence_ids": [
+          "BV-15@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-15@1",
+            "quote": "Dual-region active writes were proposed but not approved; the accepted migration uses one writer."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "86765a20-b365-4d5d-a8e3-a0f6ff06c3f1",
+      "object": "chat.completion",
+      "created": 1791379695,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The cited plan does not establish rejection or cancellation of dual-region active writes; it records that they were proposed but not approved, and the accepted migration uses one writer as the operating mode.\",\"evidence_ids\":[\"BV-15@1\"],\"supports\":[{\"evidence_id\":\"BV-15@1\",\"quote\":\"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\"}]}]}",
+            "reasoning_content": "We need answer question: For dual-region active-writes proposal, does cited plan establish rejection or cancellation, and what operating mode is approved? We need use evidence. Relevant BV-15@1 says: Dual-region active writes were proposed but not approved; the accepted migration uses one writer. This says not approved, not rejection/cancellation. Operating mode approved: one writer (accepted migration uses one writer). Need maybe claim: The plan does not establish rejection or cancellation; it records proposal but not approved. Approved operating mode: single writer. Need quote exact. Evidence ID BV-15@1. Text: \"[SYNTHETIC]\\nDual-region active writes were proposed but not approved; the accepted migration uses one writer.\" Quote contiguous passage: \"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\" That includes identifier? No ticket ID. Fine. Claim 1: The cited plan does not establish rejection or cancellation of dual-region active writes; it states they were proposed but not approved. Support quote. Claim 2: The accepted migration uses one writer as the approved operating mode. Could combine into one claim? Question asks two parts: does plan establish rejection/cancellation, and what operating mode approved. We can combine: \"The cited plan does not establish rejection or cancellation; dual-region active writes were proposed but not approved, and the accepted migration uses one writer.\" That covers both. But need ensure no universal. Use one claim. At most 600 chars. Good. Evidence_ids list exactly supports. {\"claims\":[{\"text\":\"The cited plan does not establish rejection or cancellation of dual-region active writes; it records that they were proposed but not approved, and the accepted migration uses one writer as the operating mode.\",\"evidence_ids\":[\"BV-15@1\"],\"supports\":[{\"evidence_id\":\"BV-15@1\",\"quote\":\"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\"}]}]} Is that enough? Yes. Need JSON only. Ensure quote exact contiguous passage from evidence text. It doesn't include [SYNTHETIC]? We can copy from text, not source_context. Quote can be contiguous from evidence text. The text starts \"[SYNTHETIC]\\nDual-region...\" We can omit [SYNTHETIC]? It says exact contiguous passage copied from that evidence. If we quote \"Dual-region...\" it's contiguous within text after newline. That's okay. It is exact contiguous passage. Need no extra. Good."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2364,
+        "completion_tokens": 629,
+        "total_tokens": 2993,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 535
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1852
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "a0ca9fa0-3825-45a0-8d0b-a3f2ae33f900",
+      "object": "chat.completion",
+      "created": 1791379698,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim against evidence. Question: \"For the dual-region active-writes proposal, does the cited plan establish rejection or cancellation, and what operating mode is approved?\" Claim: \"The cited plan does not establish rejection or cancellation of dual-region active writes; it records that they were proposed but not approved, and the accepted migration uses one writer as the operating mode.\" Evidence BV-15@1: \"[SYNTHETIC] Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\" Need determine supported and responsive. Evidence directly supports claim? It says proposed but not approved; accepted migration uses one writer. Claim says does not establish rejection or cancellation; records proposed but not approved; accepted migration uses one writer as operating mode. This seems supported. But need check nuances: \"does not establish rejection or cancellation\" — evidence says \"proposed but not approved\", not explicitly rejection/cancellation. That supports that cited plan doesn't establish rejection/cancellation? It records not approved, not rejected/cancelled. Yes. \"operating mode is approved\" evidence says accepted migration uses one writer, not explicitly \"approved operating mode\"? It says accepted migration uses one writer. The question asks \"what operating mode is approved?\" The claim says accepted migration uses one writer as operating mode. Supported? \"accepted migration\" implies approved migration? The evidence: \"the accepted migration uses one writer.\" This supports one writer operating mode. Responsive: It answers both parts: no rejection/cancellation, operating mode one writer. Yes. Need one verdict index 0. question_covered true? Claim addresses every requested part? Question asks does cited plan establish rejection or cancellation, and what operating mode is approved. Claim covers. So true.\n\nNeed ensure no other evidence matters? We only need claim. Return JSON exactly."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2435,
+        "completion_tokens": 407,
+        "total_tokens": 2842,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 381
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1923
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

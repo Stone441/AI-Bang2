@@ -1,5 +1,9 @@
 # 安装、启动、测试与演示
 
+2026-10-07固定候选0bc90ae采用显式可信`--model deepseek --answer-style synthesis --reasoning-effort low --output-tokens 4096`；AUTH017统一发现另用既有`--source multi --actor eng_b --discovery-auth017`与原审核config/Keychain/Drive OAuth。默认仍none/1024；已有运行进程未加载此候选。启动前核具体服务/版本和对应授权，不启动49161或动8094/8100；先model_readiness/当日官方价格、原USD20账本及native身份，失效停用、不改旧日期、不清预算。当前核心命令/文件hash记录在candidate指纹和各verification.json；这些验证不是浏览器或G1/G2通过。
+
+以下较早版本的状态描述为历史记录，由顶部候选记录覆盖；通用安全操作要求仍有效。
+
 2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
 
 2026-10-07最新局部结果：固定代码2a73bd0，380 clean archive/同48世界五fixture/两Node通过；当前eng_b两题native＋真实模型经只读复核5claims/28windows/四阶段当前allow/四usage与账本3207microUSD增量一致。配对272事件签名副本及混合208事件oracle另列local。全persona、故障live、四源native删除/新鲜度SLA、native正文关联、Docs支持未完成；browser saved site denial blocked，human业务判断/ROI/G1/G2 not_run。旧f8ecbed保留题失败及AUTH019延期保留，不从四开发题改称通过。完整证据见business-validation-20261007，旧版本表保持历史。

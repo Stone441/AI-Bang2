@@ -1,0 +1,143 @@
+[
+  {
+    "id": "release",
+    "actor": "product_ops",
+    "question": "Does PAY-102 Done authorize general customer release?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "J-02",
+      "D-02"
+    ],
+    "required_claim_spans": [
+      "Code completion does not approve general customer release",
+      "GA) not approved"
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_03",
+    "actor": "eng_a",
+    "question": "Which authentication signing proposal was rejected?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-18"
+    ],
+    "required_claim_spans": [
+      "The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_12",
+    "actor": "eng_a",
+    "question": "Who owns MIG-301 and what is still blocking cutover?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-12"
+    ],
+    "required_claim_spans": [
+      "MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_16",
+    "actor": "eng_a",
+    "question": "Was DNS the cause of the webhook backlog?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-16"
+    ],
+    "required_claim_spans": [
+      "The webhook backlog came from an exhausted worker pool, not DNS resolution."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_32",
+    "actor": "product_ops",
+    "question": "Can we promise the November hourly settlement schedule?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-32"
+    ],
+    "required_claim_spans": [
+      "The proposed November hourly schedule is not approved. Current settlement is daily."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "recorded_state_unknown",
+    "actor": "eng_a",
+    "question": "For the dual-region active-writes proposal, does the cited plan establish rejection or cancellation, and what operating mode is approved?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "Explicit question scope, no inherited history",
+    "required_evidence": [
+      "BV-15"
+    ],
+    "required_claim_spans": [],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "semantic_oracle": "The plan records proposed/not approved dual-region active-writes; it does not establish rejection or cancellation. Single-writer approved. Do not claim never rejected/cancelled, or that all sources lack such records.",
+    "oracle_kind": "author development oracle frozen before execution; no exact phrase test of semantic correctness"
+  },
+  {
+    "id": "requested_schedule_owner",
+    "actor": "product_ops",
+    "question": "What settlement schedule is current, is the proposed November hourly schedule approved, and who owns SET-610 and what is blocking it?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "Explicit question scope, no inherited history",
+    "required_evidence": [
+      "BV-34",
+      "BV-33"
+    ],
+    "required_claim_spans": [],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "semantic_oracle": "Current daily, proposed November hourly not approved, SET-610 In Progress, Eva owns it, missing bank confirmation. Requested owner/blocker must remain; no unrelated escalation advice.",
+    "oracle_kind": "author development oracle frozen before execution; no exact phrase test of semantic correctness"
+  }
+]

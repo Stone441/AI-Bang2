@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The cited evidence does not establish that an authentication signing proposal was rejected; it records that the shared-secret signing proposal was withdrawn and per-client asymmetric signing was accepted.",
+        "evidence_ids": [
+          "BV-18@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-18@1",
+            "quote": "10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "8909cacf-0b1d-40af-8a72-df550582915d",
+      "object": "chat.completion",
+      "created": 1791379676,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The cited evidence does not establish that an authentication signing proposal was rejected; it records that the shared-secret signing proposal was withdrawn and per-client asymmetric signing was accepted.\",\"evidence_ids\":[\"BV-18@1\"],\"supports\":[{\"evidence_id\":\"BV-18@1\",\"quote\":\"10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\"}]}]}",
+            "reasoning_content": "We need answer: Which authentication signing proposal was rejected? Evidence: BV-03 says shared-secret proposal under consideration. BV-18 says shared-secret proposal was withdrawn; per-client asymmetric signing was accepted. Question asks rejected. Source says withdrawn, not rejected. We must state passage does not establish rejected; records withdrawn. Also maybe accepted asymmetric. Need claim. Must use minimum. Explicit identifier? No ticket ID. Quote exact contiguous. Evidence BV-18 text: \"10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" That supports. We need answer directly: The shared-secret proposal was withdrawn, not rejected. But question presupposes rejected; source says withdrawn. So claim: The cited passage does not establish that the shared-secret authentication signing proposal was rejected; it records that the shared-secret proposal was withdrawn and per-client asymmetric signing was accepted. Evidence_ids [\"BV-18@1\"], supports quote. That covers. Maybe include BV-03 under consideration? Not needed, but maybe \"shared-secret proposal\" identification. BV-18 includes shared-secret proposal. Could also cite BV-03 to show it was a signing proposal under consideration. But BV-18 says shared-secret proposal. Should we include BV-03? The question: which authentication signing proposal was rejected? Need identify. BV-18 identifies. One claim enough. Must not say rejected. State lack. Check exact quote from BV-18: \"[SYNTHETIC]\\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" We can quote exact contiguous passage. The [SYNTHETIC] is text? It is in text. We can include or omit? Better quote from \"10:00...\"? It says exact contiguous passage copied from that evidence. We can copy \"10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" That's contiguous within text, excludes [SYNTHETIC]\\n. That's okay? Exact contiguous passage, yes. Ensure 12-1200 chars. Claim text: \"The cited evidence does not establish that an authentication signing proposal was rejected; it records that the shared-secret signing proposal was withdrawn and per-client asymmetric signing was accepted.\" Supports quote. Evidence_ids exactly [\"BV-18@1\"]. Good. But maybe the question asks \"Which authentication signing proposal was rejected?\" We answer directly: none was recorded as rejected; shared-secret was withdrawn. That is sufficient. Need JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1267,
+        "completion_tokens": 619,
+        "total_tokens": 1886,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 527
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 755
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "d3d940e3-c358-4aa0-a74e-8573e03dcd22",
+      "object": "chat.completion",
+      "created": 1791379679,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"Which authentication signing proposal was rejected?\" Claims: one claim: \"The cited evidence does not establish that an authentication signing proposal was rejected; it records that the shared-secret signing proposal was withdrawn and per-client asymmetric signing was accepted.\" Evidence BV-18@1 quote: 10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\n\nNeed determine supported and responsive. Claim says cited evidence does not establish rejection; it records withdrawn and accepted. Does evidence support? Full claim: does not establish rejected, records shared-secret withdrawn, per-client accepted. Quote explicitly says shared-secret withdrawn, per-client asymmetric accepted. \"Does not establish rejected\" is a negative about evidence; is it supported? The evidence doesn't mention rejected. But claim scoped to cited evidence. Yes likely supported. Responsive? Question asks which proposal was rejected. Claim says evidence doesn't establish rejection; records withdrawn and accepted. This addresses question by indicating no rejection established, and provides actual states. It is a necessary qualification? It directly answers that premise (rejected) not established. Should be responsive true because answers requested part by clarifying no rejected proposal; may cover question? We need question_covered true only if claims address every requested part supported by evidence. The question asks \"Which authentication signing proposal was rejected?\" The claim says evidence does not establish rejection; it records shared-secret withdrawn and per-client accepted. This addresses the question's premise. Question_covered true? Need evaluate. There is only one claim. It is scoped to cited evidence. It acknowledges requested outcome unknown/unestablished in cited material. Per instruction: \"For an unestablished requested state, an explicit acknowledgement scoped to the cited material plus its actually recorded state can cover that requested part, provided no supplied evidence establishes the requested state for that same entity and scope. This applies also to a which/who question with an unestablished premise: do not require an invented positive answer to cover it. Giving a different recorded state without that acknowledgement is incomplete.\" So yes question_covered true likely.\n\nNeed produce verdict index 0. supported true? Let's scrutinize: Claim: \"The cited evidence does not establish that an authentication signing proposal was rejected; it records that the shared-secret signing proposal was withdrawn and per-client asymmetric signing was accepted.\" The cited evidence quote: \"The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.\" Does \"withdrawn\" equal not rejected? The evidence doesn't say rejected. Claim \"does not establish ... was rejected\" is meta. But is the claim fully factual from evidence? It asserts evidence does not establish rejection. That's based on reading evidence; no explicit rejected. Since provided evidence only has that quote. Yes.\n\nCould there be subtle: The evidence says \"shared-secret proposal was withdrawn\" and \"per-client asymmetric signing was accepted.\" The claim calls shared-secret signing proposal. Yes.\n\nResponsive: The question \"Which authentication signing proposal was rejected?\" It answers no rejection established; shared-secret withdrawn not rejected. It supplies necessary qualification. Good.\n\nNeed output exactly JSON. Ensure no extra. Use schema."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1336,
+        "completion_tokens": 679,
+        "total_tokens": 2015,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 653
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 824
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

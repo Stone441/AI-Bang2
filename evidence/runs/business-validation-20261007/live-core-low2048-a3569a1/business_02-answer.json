@@ -1,0 +1,87 @@
+{
+  "request_id": "1339444f96d4461bb96467132f28e0f0",
+  "question": "What blocks AUTH-204 and who owns it?",
+  "answered_at": "2026-10-07T14:59:27.461292+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v8",
+  "claims": [
+    {
+      "text": "AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and Lena owns it.",
+      "evidence_ids": [
+        "BV-02@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-02@1",
+          "quote": "AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-21@1",
+      "resource_id": "BV-21",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Ownership decision",
+      "locator": {
+        "section": "Ownership decision"
+      },
+      "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889976+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-21"
+    },
+    {
+      "evidence_id": "BV-02@1",
+      "resource_id": "BV-02",
+      "version": 1,
+      "source": "jira",
+      "title": "authentication / Migration blocker",
+      "locator": {
+        "section": "Migration blocker"
+      },
+      "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889629+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-02"
+    }
+  ],
+  "actor": "eng_a",
+  "model_call": {
+    "query_id": "1339444f96d4461bb96467132f28e0f0",
+    "model": "deepseek-flash",
+    "reservation_id": "d57b4bd83218445ea41f3caa147984a6",
+    "prompt_tokens": 882,
+    "completion_tokens": 272,
+    "total_tokens": 1154,
+    "reserved_micro_usd": 317031,
+    "accounted_upper_micro_usd": 591,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "1339444f96d4461bb96467132f28e0f0",
+    "model": "deepseek-flash",
+    "reservation_id": "0608fec97b86470babab162e783802ff",
+    "prompt_tokens": 934,
+    "completion_tokens": 231,
+    "total_tokens": 1165,
+    "reserved_micro_usd": 317031,
+    "accounted_upper_micro_usd": 558,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

@@ -1,0 +1,290 @@
+{
+  "request_id": "14b963b761ff4eb5b7d69acb79367472",
+  "question": "What settlement schedule is current, is the proposed November hourly schedule approved, and who owns SET-610 and what is blocking it?",
+  "answered_at": "2026-10-07T13:20:01.850747+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v8",
+  "claims": [
+    {
+      "text": "Current settlement is daily; the proposed November hourly schedule is not approved.",
+      "evidence_ids": [
+        "BV-32@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-32@1",
+          "quote": "The proposed November hourly schedule is not approved. Current settlement is daily."
+        }
+      ]
+    },
+    {
+      "text": "SET-610 is owned by Eva and is In Progress because bank confirmation is missing.",
+      "evidence_ids": [
+        "BV-33@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-33@1",
+          "quote": "SET-610 is In Progress because bank confirmation is missing. Owner: Eva."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-32@1",
+      "resource_id": "BV-32",
+      "version": 1,
+      "source": "drive",
+      "title": "settlement / Future settlement schedule",
+      "locator": {
+        "section": "Future settlement schedule"
+      },
+      "text": "[SYNTHETIC]\nThe proposed November hourly schedule is not approved. Current settlement is daily.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.880323+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-32"
+    },
+    {
+      "evidence_id": "BV-33@1",
+      "resource_id": "BV-33",
+      "version": 1,
+      "source": "confluence",
+      "title": "settlement / Settlement dependency",
+      "locator": {
+        "section": "Settlement dependency"
+      },
+      "text": "[SYNTHETIC]\nSET-610 is In Progress because bank confirmation is missing. Owner: Eva.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.880350+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-33"
+    },
+    {
+      "evidence_id": "BV-15@1",
+      "resource_id": "BV-15",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Unapproved alternative",
+      "locator": {
+        "section": "Unapproved alternative"
+      },
+      "text": "[SYNTHETIC]\nDual-region active writes were proposed but not approved; the accepted migration uses one writer.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.879896+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-15"
+    },
+    {
+      "evidence_id": "BV-21@1",
+      "resource_id": "BV-21",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Ownership decision",
+      "locator": {
+        "section": "Ownership decision"
+      },
+      "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.880053+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-21"
+    },
+    {
+      "evidence_id": "BV-34@1",
+      "resource_id": "BV-34",
+      "version": 1,
+      "source": "jira",
+      "title": "settlement / Contradictory proposal",
+      "locator": {
+        "section": "Contradictory proposal"
+      },
+      "text": "[SYNTHETIC]\nAn unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.880377+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-34"
+    },
+    {
+      "evidence_id": "BV-31@1",
+      "resource_id": "BV-31",
+      "version": 1,
+      "source": "slack",
+      "title": "settlement / Settlement scope",
+      "locator": {
+        "section": "Settlement scope"
+      },
+      "text": "[SYNTHETIC]\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.880298+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-31"
+    },
+    {
+      "evidence_id": "BV-12@1",
+      "resource_id": "BV-12",
+      "version": 1,
+      "source": "drive",
+      "title": "migration / Cutover ticket",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.879814+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    },
+    {
+      "evidence_id": "BV-13@1",
+      "resource_id": "BV-13",
+      "version": 1,
+      "source": "confluence",
+      "title": "migration / Rollback signal",
+      "locator": {
+        "section": "Rollback signal"
+      },
+      "text": "[SYNTHETIC]\nRoll back the ledger migration if settlement differences exceed five basis points.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.879842+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-13"
+    },
+    {
+      "evidence_id": "BV-35@1",
+      "resource_id": "BV-35",
+      "version": 1,
+      "source": "slack",
+      "title": "settlement / Escalation guidance",
+      "locator": {
+        "section": "Escalation guidance"
+      },
+      "text": "[SYNTHETIC]\nIf bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.880403+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-35"
+    },
+    {
+      "evidence_id": "BV-11@1#16000:17452",
+      "resource_id": "BV-11",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Database design rationale",
+      "locator": {
+        "section": "Database design rationale",
+        "text_window": {
+          "start": 16000,
+          "end": 17452,
+          "unit": "unicode_characters",
+          "strategy": "fixed-2400-overlap-400-v1"
+        }
+      },
+      "text": "try 166: batch 2822, checksum 5146; no current decision recorded.\nArchived migration rehearsal entry 167: batch 2839, checksum 5177; no current decision recorded.\nArchived migration rehearsal entry 168: batch 2856, checksum 5208; no current decision recorded.\nArchived migration rehearsal entry 169: batch 2873, checksum 5239; no current decision recorded.\nArchived migration rehearsal entry 170: batch 2890, checksum 5270; no current decision recorded.\nArchived migration rehearsal entry 171: batch 2907, checksum 5301; no current decision recorded.\nArchived migration rehearsal entry 172: batch 2924, checksum 5332; no current decision recorded.\nArchived migration rehearsal entry 173: batch 2941, checksum 5363; no current decision recorded.\nArchived migration rehearsal entry 174: batch 2958, checksum 5394; no current decision recorded.\nArchived migration rehearsal entry 175: batch 2975, checksum 5425; no current decision recorded.\nArchived migration rehearsal entry 176: batch 2992, checksum 5456; no current decision recorded.\nArchived migration rehearsal entry 177: batch 3009, checksum 5487; no current decision recorded.\nArchived migration rehearsal entry 178: batch 3026, checksum 5518; no current decision recorded.\nArchived migration rehearsal entry 179: batch 3043, checksum 5549; no current decision recorded.\n# Current ledger migration decision\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.879671+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "evidence_id": "BV-28@1",
+      "resource_id": "BV-28",
+      "version": 1,
+      "source": "drive",
+      "title": "access / Approved public guidance",
+      "locator": {
+        "section": "Approved public guidance"
+      },
+      "text": "[SYNTHETIC]\nPartner users may read approved integration eligibility guidance; incident details are not public guidance.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.880226+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-28"
+    },
+    {
+      "evidence_id": "BV-20@1",
+      "resource_id": "BV-20",
+      "version": 1,
+      "source": "drive",
+      "title": "webhook / External commitment",
+      "locator": {
+        "section": "External commitment"
+      },
+      "text": "[SYNTHETIC]\nWebhook latency targets apply to the pilot only; no general customer latency guarantee is approved.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.880024+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-20"
+    },
+    {
+      "evidence_id": "D-02@1",
+      "resource_id": "D-02",
+      "version": 1,
+      "source": "drive",
+      "title": "Payment-retry release approval",
+      "locator": {
+        "paragraph": 1,
+        "section": "Approval decision"
+      },
+      "text": "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.879276+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-02"
+    },
+    {
+      "evidence_id": "C-02@1",
+      "resource_id": "C-02",
+      "version": 1,
+      "source": "confluence",
+      "title": "Payment-retry capability",
+      "locator": {
+        "paragraph": 1,
+        "section": "Supported rollout"
+      },
+      "text": "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.878994+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-02"
+    },
+    {
+      "evidence_id": "D-03@1",
+      "resource_id": "D-03",
+      "version": 1,
+      "source": "drive",
+      "title": "Operations readiness",
+      "locator": {
+        "paragraph": 1,
+        "section": "Customer communication"
+      },
+      "text": "[SYNTHETIC]\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T13:19:48.879301+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-03"
+    }
+  ],
+  "actor": "product_ops",
+  "model_call": {
+    "query_id": "14b963b761ff4eb5b7d69acb79367472",
+    "model": "deepseek-flash",
+    "reservation_id": "679c23ec05af4792a9a9c20e92979fae",
+    "prompt_tokens": 2188,
+    "completion_tokens": 128,
+    "total_tokens": 2316,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 810,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "14b963b761ff4eb5b7d69acb79367472",
+    "model": "deepseek-flash",
+    "reservation_id": "0333888461524936bdfb536cdb999313",
+    "prompt_tokens": 2300,
+    "completion_tokens": 37,
+    "total_tokens": 2337,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 735,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

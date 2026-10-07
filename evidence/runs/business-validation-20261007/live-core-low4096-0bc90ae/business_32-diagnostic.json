@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No, the November hourly settlement schedule cannot be promised: the proposed November hourly schedule is not approved, and current settlement is daily.",
+        "evidence_ids": [
+          "BV-32@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-32@1",
+            "quote": "The proposed November hourly schedule is not approved. Current settlement is daily."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "4fc7be86-04fe-4dc3-b1ba-6696d640d84e",
+      "object": "chat.completion",
+      "created": 1791385677,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No, the November hourly settlement schedule cannot be promised: the proposed November hourly schedule is not approved, and current settlement is daily.\",\"evidence_ids\":[\"BV-32@1\"],\"supports\":[{\"evidence_id\":\"BV-32@1\",\"quote\":\"The proposed November hourly schedule is not approved. Current settlement is daily.\"}]}]}",
+            "reasoning_content": "We need answer: Can we promise the November hourly settlement schedule? Evidence: BV-32 says proposed November hourly schedule is not approved. Current settlement is daily. So cannot promise. Need JSON claims. We need only necessary claims. Probably one claim: The proposed November hourly schedule is not approved; current settlement is daily. That answers. Maybe also mention if bank confirmation absent don't promise completed settlement? But question about November hourly settlement schedule. Could include no. But must use minimum. One claim with evidence BV-32. However need evidence_ids exact supports. Use quote exact contiguous passage from evidence. \"The proposed November hourly schedule is not approved. Current settlement is daily.\" That's one quote. Claim: \"The November hourly settlement schedule cannot be promised: the proposed schedule is not approved, and current settlement is daily.\" That's supported. Evidence ID BV-32@1. That likely enough.\n\nBut check if there is any other relevant: BV-35 says if bank confirmation absent, ask Eva; do not promise completed settlement. That's about completed settlement, not November hourly schedule. Maybe not needed. BV-33 SET-610 In Progress because bank confirmation missing. Owner Eva. Not directly hourly schedule. BV-31 same-day settlement approved for Singapore SGD pilot accounts; MYR outside. Not November hourly. So only BV-32.\n\nQuestion: \"Can we promise the November hourly settlement schedule?\" Answer: No, because proposed not approved, current daily. That's one claim. Ensure no external. JSON.\n\nNeed no markdown. Return exactly JSON object with claims array. Quote exact contiguous. Good."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1231,
+        "completion_tokens": 402,
+        "total_tokens": 1633,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 325
+        },
+        "prompt_cache_hit_tokens": 1024,
+        "prompt_cache_miss_tokens": 207
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "237cc677-c6ad-4252-9147-8826f41edd7d",
+      "object": "chat.completion",
+      "created": 1791385679,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer review. Need return JSON only. Need evaluate claim. Need understand question: \"Can we promise the November hourly settlement schedule?\" Claim: \"No, the November hourly settlement schedule cannot be promised: the proposed November hourly schedule is not approved, and current settlement is daily.\" Evidence BV-32@1 quote: \"The proposed November hourly schedule is not approved. Current settlement is daily.\" So claim supported? It says proposed November hourly schedule not approved. Yes. Current settlement daily. Yes. It concludes cannot be promised. Is that entailed? Not approved + current daily implies not promise? The question asks can we promise November hourly schedule. If proposed schedule not approved, can't promise? Reasonable. Need check responsive true? It answers explicit requested part: No cannot promise, with reasons. Likely yes.\n\nQuestion_covered? Claim addresses question. Need maybe only one claim. It covers no. Evidence includes other possible relevant: BV-35 says do not promise a completed settlement if bank confirmation absent. But question about November hourly schedule. Claim covers. Should be question_covered true.\n\nNeed output exactly JSON with verdicts one per claim. {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}. Ensure no extra.\n\nDouble-check potential issue: Claim states \"proposed November hourly schedule is not approved\" from evidence \"The proposed November hourly schedule is not approved.\" Yes. \"current settlement is daily\" Yes. \"cannot be promised\" maybe inference from not approved; question asks can we promise. Is it supported? Evidence doesn't explicitly say \"cannot be promised\" but not approved means cannot promise? Could be if not approved, shouldn't promise. The claim says cannot be promised: the proposed schedule not approved. That is a direct rationale. Supported likely. If strict factual entailment, \"cannot be promised\" is a normative conclusion. Does evidence support? It says not approved. Could one promise an unapproved schedule? No? The question asks \"Can we promise...\" We need answer. The claim includes \"cannot be promised\" as conclusion. Is that supported? In context, if not approved, cannot promise. Probably acceptable. Also evidence BV-35 says \"do not promise a completed settlement\" in different context if bank confirmation absent. But not needed.\n\nResponsive true yes.\n\nNeed final JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1285,
+        "completion_tokens": 508,
+        "total_tokens": 1793,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 482
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 773
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

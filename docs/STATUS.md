@@ -1,5 +1,11 @@
 # Current status
 
+2026-10-07统一业务增强候选固定为 **0bc90ae**：synthesis-v8，可信显式low/4096；默认none/1024保持，当前8094/8100未重启。398干净归档回归、同48世界五fixture、JS语法及两Node通过；完整24作者开发题真实模型为22正确事实回答＋2正确空答，零异常，经只读Agent逐题核原问题/quotes/relevance，非稳定率或盲测。eng_b当前原生＋真实模型两题均正确，Slack最终amber替代green、产品pilot/GA/date/Done边界齐全；耗时含preview133.132/146.085秒，非SLA。本流费用上界core46985/native12302microUSD；原账本settled390875/pending0，不从共享差额归费用。当前core完整签名、native分页/七签名边界及fixture四结果审计已配对，非独立custody或人阅读证明。四源AUTH021创建/修正原native/fake证据按原版本保留。
+
+剩余分列：原保留集f8ecbed失败未重跑、未改写为修复；AUTH019仅原长文Orion与自然题冗余两项延期，不扩大。native正文一跳解析、Google Docs/OCR/全附件/DM及生产SSO/KMS/WORM未实现或不支持；embedding方案C无已批准provider/依赖，blocked。完整native生命周期/故障/身份矩阵、新鲜度SLA及质量稳定性仍未验；性能仍有缺口。产品browser为工具saved site denial blocked（49161停止），不是产品失败；真人业务/ROI/G1/G2、录屏、外部开放、推送合并/发布/比赛提交not_run。本轮完成以EXECUTION_BRIEF5.3的业务增强与有模式边界的统一候选为范围，不宣称全部开发或技术验收完成。
+
+下方较早阶段记录保留为历史，本段为当前状态。
+
 2026-10-07可信operator启动配置已完成：low/2048 opt-in、fake/excerpts在listener/凭据前拒绝；实际构造传参mock验证和397完整fixture/mock回归通过。新接线native/live复验仍not_run，原73b1e3e七题证据不得冒充新应用接线验收。
 
 2026-10-07当前HEAD 73b1e3e为v8可信有界推理实验；上一统一native候选3ceb625/v6保留。395干净archive回归、五fixture、两Node及语法通过。相同7作者开发题low/1024为6正确返回＋1输出cap截断；low/2048实际7题正确返回、8claim精确quote、14有效stop回执，上界18137microUSD，累计settled276156/pending0。只读Agent逐题复核，4项exact-span探针不匹配不等于语义失败；不是盲测、稳定质量或原保留失败已修复。当前在接入可信operator启动参数，默认none/1024保持，完整24题及同版native复验待做，不将开发harness当产品已加载。Drive file URLs权限已被原Chrome工具实际接受，AUTH021四源三阶段证据已完成，不重复写入；此许可不解除49161产品saved site denial。browser blocked/G1/G2 not_run，8094/8100未动，Goal active。

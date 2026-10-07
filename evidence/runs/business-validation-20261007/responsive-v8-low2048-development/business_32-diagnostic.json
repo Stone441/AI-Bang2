@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No — the proposed November hourly schedule is not approved; current settlement is daily.",
+        "evidence_ids": [
+          "BV-32@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-32@1",
+            "quote": "The proposed November hourly schedule is not approved. Current settlement is daily."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "df77ad4b-db6e-48d3-9bdf-1e0774a44f92",
+      "object": "chat.completion",
+      "created": 1791384636,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No — the proposed November hourly schedule is not approved; current settlement is daily.\",\"evidence_ids\":[\"BV-32@1\"],\"supports\":[{\"evidence_id\":\"BV-32@1\",\"quote\":\"The proposed November hourly schedule is not approved. Current settlement is daily.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Can we promise the November hourly settlement schedule?\" Need output JSON with claims. Need use evidence. We need determine supported answer. Evidence: BV-32@1 says proposed November hourly schedule is not approved. Current settlement is daily. BV-35@1 says if bank confirmation absent, ask Eva for status; do not promise a completed settlement. BV-33@1 says SET-610 In Progress because bank confirmation is missing. Owner: Eva. BV-34@1 unsigned draft says MYR settlement available; proposal not approved operating rule. BV-31@1 same-day settlement approved for Singapore SGD pilot accounts; MYR outside scope. BV-12 and BV-13 migration not relevant maybe? Question asks \"Can we promise the November hourly settlement schedule?\" We need answer directly. Likely no, because proposed November hourly schedule is not approved. Also do not promise completed settlement if bank confirmation absent? But question about November hourly settlement schedule. The direct answer: No, the proposed November hourly schedule is not approved; current settlement is daily. Also perhaps if bank confirmation absent, do not promise completed settlement. But \"November hourly settlement schedule\" explicitly. Evidence BV-32 says not approved. That is enough. Could also mention SET-610 in progress because bank confirmation missing? But question asks can we promise the schedule. The schedule not approved is direct. We can make one claim: No, the proposed November hourly schedule is not approved; current settlement is daily. Evidence BV-32@1 quote: \"The proposed November hourly schedule is not approved. Current settlement is daily.\" That covers. Might also mention do not promise completed settlement if bank confirmation absent, but that's about settlement completion not schedule. However question \"Can we promise the November hourly settlement schedule?\" If bank confirmation missing, do not promise completed settlement. But the schedule itself not approved. We need minimum claims. One claim enough. But maybe need include that the proposed schedule is not approved, so cannot promise. That is fully supported. Let's craft JSON.\n\nNeed ensure claims at most four. Each claim text <=600. Evidence_ids exactly supports evidence_id. Quote exact contiguous passage from evidence. For BV-32@1: text includes \"[SYNTHETIC]\\nThe proposed November hourly schedule is not approved. Current settlement is daily.\" We copy exact contiguous passage. Should we include [SYNTHETIC]? The quote must be exact contiguous passage copied from text. Could copy without [SYNTHETIC]? It says exact contiguous passage copied from that evidence. The text begins \"[SYNTHETIC]\\nThe proposed...\" If we omit [SYNTHETIC], is it contiguous? \"The proposed...\" is contiguous within text after newline. That's okay? It says exact contiguous passage copied from that evidence. Usually can copy substring. We can include \"The proposed November hourly schedule is not approved. Current settlement is daily.\" That's a contiguous passage. Good. No identifier. Evidence ID BV-32@1.\n\nQuestion: \"Can we promise the November hourly settlement schedule?\" Answer directly: No. So claim text: \"No — the proposed November hourly schedule is not approved; current settlement is daily.\" Evidence_ids: [\"BV-32@1\"]. supports: [{\"evidence_id\":\"BV-32@1\",\"quote\":\"The proposed November hourly schedule is not approved. Current settlement is daily.\"}]\n\nShould we mention bank confirmation? The question about promising schedule. The schedule not approved is sufficient. But maybe there is nuance: \"If bank confirmation is absent, ask Eva for status; do not promise a completed settlement.\" That's a separate requested part? The question asks \"Can we promise the November hourly settlement schedule?\" The answer no because not approved. The bank confirmation missing is about settlement completion, not schedule. But maybe to promise the schedule, you also need bank confirmation? Hmm. The direct evidence: BV-32 says not approved. That alone answers. The guidance about bank confirmation is operational advice not asked? It says do not promise a completed settlement. It is related to settlement but not schedule. The question asks \"Can we promise the November hourly settlement schedule?\" If bank confirmation absent, do not promise completed settlement. But schedule not approved already. We should not include unrelated.\n\nCould include another claim: \"SET-610 is In Progress because bank confirmation is missing; owner Eva.\" But that's not answering can we promise schedule. It's background about a ticket. Omitting is fine. The instruction: \"Identify every requested part... combine overlapping conclusions rather than spending multiple claims on same point.\" Only requested part is can promise? Yes. One claim.\n\nNeed ensure no external knowledge. JSON only. Use exact schema. Final."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1231,
+        "completion_tokens": 1033,
+        "total_tokens": 2264,
+        "prompt_tokens_details": {
+          "cached_tokens": 1024
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 966
+        },
+        "prompt_cache_hit_tokens": 1024,
+        "prompt_cache_miss_tokens": 207
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "5772046c-302b-4a84-a633-2987feadab48",
+      "object": "chat.completion",
+      "created": 1791384641,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"Can we promise the November hourly settlement schedule?\" Claims: one claim: \"No — the proposed November hourly schedule is not approved; current settlement is daily.\" Evidence BV-32@1 text exactly: \"The proposed November hourly schedule is not approved. Current settlement is daily.\" So supported true. Responsive? It answers question: Can we promise? No because not approved; current daily. Yes responsive. question_covered? Need every requested part. Question asks can we promise November hourly settlement schedule. Claim says no, not approved, current daily. That covers. Need only one verdict. JSON schema. Ensure supported true, responsive true. question_covered true.\n\nNeed consider if \"No\" included in claim text as part? The claim includes \"No — ...\" Evidence doesn't explicitly say \"No\" but logically implies cannot promise? The claim: \"No — the proposed November hourly schedule is not approved; current settlement is daily.\" The supported part includes \"No\" maybe inferred. Does full factual claim follow? Evidence says proposed not approved, current daily. Does that support \"No, cannot promise\"? It supports not approved; likely responsive. The claim doesn't say \"cannot promise\" directly? It says \"No — the proposed...\". It's a negative answer to question. Given evidence, yes. Could be okay. Need maybe supported true.\n\nBut must examine full evidence: BV-35 says if bank confirmation absent, ask Eva, do not promise completed settlement. BV-33 says SET-610 In Progress missing bank confirmation. Could be relevant to promising settlement? Question about November hourly schedule. Evidence BV-32 directly. Additional evidence about completed settlement maybe not. But claim only references BV-32. Supported true.\n\nQuestion coverage: Does claim address \"Can we promise the November hourly settlement schedule?\" Yes. The answer No plus reason. Good.\n\nNeed return exact JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1275,
+        "completion_tokens": 417,
+        "total_tokens": 1692,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 391
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 763
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

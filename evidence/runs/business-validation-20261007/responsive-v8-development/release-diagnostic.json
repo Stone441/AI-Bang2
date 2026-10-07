@@ -1,0 +1,105 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "PAY-102 Done does not authorize general customer release; it records code completion only, and code completion does not approve general customer release.",
+        "evidence_ids": [
+          "J-02@1",
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "D-02@1",
+            "quote": "PAY-102 Done is not customer release approval."
+          }
+        ]
+      },
+      {
+        "text": "The recorded release decision is a controlled pilot approval; general availability (GA) was not approved.",
+        "evidence_ids": [
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved."
+          }
+        ]
+      },
+      {
+        "text": "Payment-retry is available only to the controlled pilot, and no general release date is confirmed.",
+        "evidence_ids": [
+          "C-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "bb5bdb55-ac86-4989-ad48-64c1432eb068",
+      "object": "chat.completion",
+      "created": 1791379189,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"PAY-102 Done does not authorize general customer release; it records code completion only, and code completion does not approve general customer release.\",\"evidence_ids\":[\"J-02@1\",\"D-02@1\"],\"supports\":[{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"},{\"evidence_id\":\"D-02@1\",\"quote\":\"PAY-102 Done is not customer release approval.\"}]},{\"text\":\"The recorded release decision is a controlled pilot approval; general availability (GA) was not approved.\",\"evidence_ids\":[\"D-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved.\"}]},{\"text\":\"Payment-retry is available only to the controlled pilot, and no general release date is confirmed.\",\"evidence_ids\":[\"C-02@1\"],\"supports\":[{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1324,
+        "completion_tokens": 253,
+        "total_tokens": 1577,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 1324
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "eeda4b8f-5d32-422c-ad66-9f67235e0f0a",
+      "object": "chat.completion",
+      "created": 1791379190,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true},{\"index\":2,\"supported\":true,\"responsive\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1572,
+        "completion_tokens": 49,
+        "total_tokens": 1621,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 1572
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,5 +1,11 @@
 # Demonstration candidate and remaining acceptance
 
+2026-10-07统一业务增强候选固定为 **0bc90ae**：synthesis-v8，可信显式low/4096；默认none/1024保持，当前8094/8100未重启。398干净归档回归、同48世界五fixture、JS语法及两Node通过；完整24作者开发题真实模型为22正确事实回答＋2正确空答，零异常，经只读Agent逐题核原问题/quotes/relevance，非稳定率或盲测。eng_b当前原生＋真实模型两题均正确，Slack最终amber替代green、产品pilot/GA/date/Done边界齐全；耗时含preview133.132/146.085秒，非SLA。本流费用上界core46985/native12302microUSD；原账本settled390875/pending0，不从共享差额归费用。当前core完整签名、native分页/七签名边界及fixture四结果审计已配对，非独立custody或人阅读证明。四源AUTH021创建/修正原native/fake证据按原版本保留。
+
+剩余分列：原保留集f8ecbed失败未重跑、未改写为修复；AUTH019仅原长文Orion与自然题冗余两项延期，不扩大。native正文一跳解析、Google Docs/OCR/全附件/DM及生产SSO/KMS/WORM未实现或不支持；embedding方案C无已批准provider/依赖，blocked。完整native生命周期/故障/身份矩阵、新鲜度SLA及质量稳定性仍未验；性能仍有缺口。产品browser为工具saved site denial blocked（49161停止），不是产品失败；真人业务/ROI/G1/G2、录屏、外部开放、推送合并/发布/比赛提交not_run。本轮完成以EXECUTION_BRIEF5.3的业务增强与有模式边界的统一候选为范围，不宣称全部开发或技术验收完成。
+
+下方较早阶段记录保留为历史，本段为当前状态。
+
 2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
 
 2026-10-07本地材料草稿（未提交/未获G2）：当前代码2a73bd0；模式与质量结果以STATUS及business-validation-20261007为准，旧331bd28证据继续按原版本保留。标题 **ContextLedger**；7-word blurb **Enterprise answers with permissions, citations and audit.** 16:9封面：[SVG](../assets/submission/contextledger-cover.svg) / [1600×900 PNG](../assets/submission/contextledger-cover.png)，实际本地渲染检查，不是产品浏览器截图。

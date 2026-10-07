@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "MIG-301 is owned by Chen, and the remaining blocker is unmatched settlement totals.",
+        "evidence_ids": [
+          "BV-12@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-12@1",
+            "quote": "MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "900f7cfb-7ade-4327-be81-0288579c3d6b",
+      "object": "chat.completion",
+      "created": 1791384625,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"MIG-301 is owned by Chen, and the remaining blocker is unmatched settlement totals.\",\"evidence_ids\":[\"BV-12@1\"],\"supports\":[{\"evidence_id\":\"BV-12@1\",\"quote\":\"MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\"}]}]}",
+            "reasoning_content": "We need answer question: Who owns MIG-301 and what is still blocking cutover? Need JSON claims. Evidence: BV-12@1 says MIG-301 In Progress. Owner: Chen. Remaining blocker is unmatched settlement totals. That directly answers both. We can make one claim maybe combine. But question asks who owns and what blocking. One claim can include both? Need concise factual conclusion. Evidence support quote exact. \"MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\" This quote includes ticket ID and owner and blocker. We can include one claim: MIG-301 is owned by Chen and blocked by unmatched settlement totals. But support quote must include identifier. Quote from BV-12@1 exactly: \"[SYNTHETIC]\\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\" Is that contiguous? Yes. But claim says owned by Chen and blocked by unmatched settlement totals. The quote says owner Chen, remaining blocker unmatched settlement totals. Good. Evidence_ids [\"BV-12@1\"]. supports with evidence_id same and quote. Need maybe no other evidence. Check if question asks \"who owns MIG-301 and what is still blocking cutover?\" We can answer in one claim. At most four claims, minimum. Need JSON only. Ensure no extra text. Use exact quote maybe without [SYNTHETIC]? The text has [SYNTHETIC]\\n. Quote exact contiguous passage copied from evidence. We can copy \"MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\" That is contiguous passage from text but does it include identifier? yes MIG-301. It omits [SYNTHETIC]\\n, but contiguous? The passage appears after [SYNTHETIC]\\n, so it's contiguous within text. That's fine. Need exact contiguous passage copied. It is a substring. Good.\n\nBut maybe question \"what is still blocking cutover?\" The blocker is unmatched settlement totals. Good.\n\nWe need no external. final JSON.\n\nEnsure valid JSON with \"claims\":[...]. Each claim: {\"text\":\"...\",\"evidence_ids\":[\"BV-12@1\"],\"supports\":[{\"evidence_id\":\"BV-12@1\",\"quote\":\"MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.\"}]}. Text at most 600. Good.\n\nNeed ensure no Markdown."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1416,
+        "completion_tokens": 591,
+        "total_tokens": 2007,
+        "prompt_tokens_details": {
+          "cached_tokens": 1280
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 516
+        },
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 136
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "d6a3d492-6d04-4a6d-b95d-6126561f4b64",
+      "object": "chat.completion",
+      "created": 1791384628,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review evidence support and question coverage. Need one verdict per claim. Claim: \"MIG-301 is owned by Chen, and the remaining blocker is unmatched settlement totals.\" Evidence BV-12@1 text exactly: MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals. So supported true. Responsive? Question: \"Who owns MIG-301 and what is still blocking cutover?\" Claim answers owner Chen and remaining blocker unmatched settlement totals. Yes responsive true.\n\nNeed question_covered true if claims address every requested part supported by supplied evidence. Claim addresses both owner and blocker. But need be careful: \"what is still blocking cutover?\" Evidence says remaining blocker is unmatched settlement totals. But does it say blocking cutover? It says MIG-301 is In Progress. Owner Chen. Remaining blocker is unmatched settlement totals. The question asks MIG-301 owner and blocking cutover. It likely covers. However, we must examine full evidence. Other evidence: BV-21 about ownership reconciliation exceptions, ingestion failures. BV-04 SSO cutover scope contractors legacy. BV-11 archived migration rehearsals no current decision; current ledger migration decision shadow table. None contradict. Claim says remaining blocker unmatched settlement totals. Supported. Question covered? The claim is only one. It addresses both. So true.\n\nNeed output exactly schema. Ensure JSON valid."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1468,
+        "completion_tokens": 315,
+        "total_tokens": 1783,
+        "prompt_tokens_details": {
+          "cached_tokens": 1280
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 289
+        },
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 188
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

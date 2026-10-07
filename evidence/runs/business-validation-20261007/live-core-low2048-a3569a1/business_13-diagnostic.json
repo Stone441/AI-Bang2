@@ -1,0 +1,89 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Roll back the ledger migration if settlement differences exceed five basis points; this is the October five-basis-point rule, which supersedes the September ten-basis-point threshold.",
+        "evidence_ids": [
+          "BV-13@1",
+          "BV-14@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-13@1",
+            "quote": "Roll back the ledger migration if settlement differences exceed five basis points."
+          },
+          {
+            "evidence_id": "BV-14@1",
+            "quote": "The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "a21f890b-2f12-4caa-aa36-f456fc61a601",
+      "object": "chat.completion",
+      "created": 1791385214,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Roll back the ledger migration if settlement differences exceed five basis points; this is the October five-basis-point rule, which supersedes the September ten-basis-point threshold.\",\"evidence_ids\":[\"BV-13@1\",\"BV-14@1\"],\"supports\":[{\"evidence_id\":\"BV-13@1\",\"quote\":\"Roll back the ledger migration if settlement differences exceed five basis points.\"},{\"evidence_id\":\"BV-14@1\",\"quote\":\"The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.\"}]}]}",
+            "reasoning_content": "We need answer: \"When should the ledger migration be rolled back?\" Evidence BV-13 says roll back if settlement differences exceed five basis points. BV-14 says September rehearsal used ten-bps threshold; superseded by October five-bps rule. So answer: rollback if settlement differences exceed five basis points (October rule). Need cite BV-13 and BV-14 maybe. At most four claims. Combine. Also maybe BV-12 says remaining blocker unmatched settlement totals. But question asks when rollback. We can state threshold. Need ensure quote exact contiguous. BV-13 text: \"[SYNTHETIC]\\nRoll back the ledger migration if settlement differences exceed five basis points.\" We can quote \"Roll back the ledger migration if settlement differences exceed five basis points.\" BV-14: \"The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.\" We can use to clarify current rule. Maybe one claim enough: \"Roll back the ledger migration if settlement differences exceed five basis points (the October five-basis-point rule supersedes the September ten-basis-point threshold).\" Need support quotes. Use BV-13 and BV-14. That's one claim. Check identifiers: none. Fine. Need JSON only. Evidence_ids list exactly supports IDs. So claim supports two. That covers. Maybe mention not established? No. The question presupposes? \"When should...\" Answer directly. No need extra. Ensure no external. Quote exact. BV-14 quote exact. Both within 1200 chars. Evidence IDs: [\"BV-13@1\",\"BV-14@1\"]. Supports with quotes. Claim text concise. Done."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3183,
+        "completion_tokens": 470,
+        "total_tokens": 3653,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 344
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 2671
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "325f43ef-a161-4f5c-80d4-541aa1ce0aed",
+      "object": "chat.completion",
+      "created": 1791385217,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"When should the ledger migration be rolled back?\" Claim: \"Roll back the ledger migration if settlement differences exceed five basis points; this is the October five-basis-point rule, which supersedes the September ten-basis-point threshold.\" Evidence BV-13 says roll back if settlement differences exceed five basis points. BV-14 says September rehearsal used ten-bps threshold; it is superseded by October five-bps rule. Need determine supported/responsive. Claim combines two evidence. Full factual claim: rollback condition if settlement differences exceed five bps; October five-bps rule supersedes September ten-bps threshold. Evidence supports. Responsive: question asks when should rollback be? Yes condition. Need question_covered true if claims address every requested part. Only one claim. It covers. Need output exactly one verdict. Ensure no extra. But let's deeply inspect potential issues: Evidence BV-13 text exactly \"Roll back the ledger migration if settlement differences exceed five basis points.\" Source context title migration / Rollback signal. BV-14 text \"The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.\" Does that support \"this is the October five-basis-point rule\" and \"supersedes September ten-basis-point threshold.\" Yes. But is \"October five-basis-point rule\" the rule? BV-14 says superseded by October five-basis-point rule. BV-13 says rollback if exceed five bps, likely the rule. Claim says \"this is the October five-basis-point rule\" maybe BV-13 not explicitly \"October\", but BV-14 identifies October five-bps rule. The combined evidence supports. No unsupported inference? It links BV-13 condition with October rule. BV-14 says October rule supersedes September. BV-13 condition five bps. It's reasonable. Need consider source_context? Evidence BV-14 source title \"migration / Past rehearsal\" and BV-13 \"migration / Rollback signal\". No contradictions. Claim includes \"which supersedes the September ten-basis-point threshold.\" Supported by BV-14. Responsive yes. question_covered true.\n\nBut we need be careful about \"when should ledger migration be rolled back?\" Could answer condition. Claim says rollback if settlement differences exceed five bps. Good.\n\nReturn JSON format exactly: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}\n\nNeed no markdown."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3291,
+        "completion_tokens": 551,
+        "total_tokens": 3842,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 525
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 2779
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

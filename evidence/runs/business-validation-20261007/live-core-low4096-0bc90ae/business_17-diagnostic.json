@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "HOOK-411 load shedding is in progress; its owner is Ravi.",
+        "evidence_ids": [
+          "BV-17@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-17@1",
+            "quote": "HOOK-411 load shedding is In Progress. Owner: Ravi."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "0b122900-092c-49ef-8920-f483a363399f",
+      "object": "chat.completion",
+      "created": 1791385660,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"HOOK-411 load shedding is in progress; its owner is Ravi.\",\"evidence_ids\":[\"BV-17@1\"],\"supports\":[{\"evidence_id\":\"BV-17@1\",\"quote\":\"HOOK-411 load shedding is In Progress. Owner: Ravi.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Which webhook safeguard is still in progress and who owns it?\" Need identify webhook safeguard in progress and owner. Evidence: BV-17@1: \"[SYNTHETIC]\\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.\" That directly says HOOK-411 load shedding is In Progress and owner Ravi. Is \"load shedding\" a webhook safeguard? It's HOOK-411 likely webhook. Source context webhook fix status. So claim: HOOK-411 load shedding is still in progress, owned by Ravi. Need quote exact passage. Evidence BV-17@1. Maybe include full? We can claim concise. Need ensure identifier appears in quote: \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" That includes HOOK-411. Good.\n\nOther evidence? BV-19@1 mentions pause noncritical jobs before adding workers; do not retry every webhook. That's a procedure, not in progress. BV-20@1 webhook latency targets pilot only. BV-16 cause. So only BV-17@1.\n\nWe should output JSON with claims. Max four claims, but one claim enough. Use minimum. Need claim text at most 600 chars. Supports with evidence_id and quote. Evidence_ids must exactly equal supports IDs. So one claim with evidence_ids [\"BV-17@1\"], supports [{\"evidence_id\":\"BV-17@1\",\"quote\":\"HOOK-411 load shedding is In Progress. Owner: Ravi.\"}]. Note text includes [SYNTHETIC] newline. Quote from text, contiguous. The quote should be copied from text. We can quote \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" That is contiguous in evidence. Good.\n\nQuestion: \"Which webhook safeguard is still in progress and who owns it?\" Answer: HOOK-411 load shedding is in progress; owner Ravi. Claim text: \"HOOK-411 load shedding is in progress; its owner is Ravi.\" That's fine. Ensure no extra identifiers? It includes HOOK-411. Quote includes HOOK-411 and Owner: Ravi. Good.\n\nNeed no external. JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1989,
+        "completion_tokens": 542,
+        "total_tokens": 2531,
+        "prompt_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 474
+        },
+        "prompt_cache_hit_tokens": 1792,
+        "prompt_cache_miss_tokens": 197
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "62a70aad-be7c-4af0-8bdd-cbfdb9d6af68",
+      "object": "chat.completion",
+      "created": 1791385662,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim and question coverage. Need determine if claim supported and responsive. Question: \"Which webhook safeguard is still in progress and who owns it?\" Claim: \"HOOK-411 load shedding is in progress; its owner is Ravi.\" Evidence BV-17@1: HOOK-410 worker expansion Done. HOOK-411 load shedding In Progress. Owner: Ravi. This directly supports. Responsive? It answers which webhook safeguard still in progress and owner. Yes. question_covered? Need ensure every requested part: which safeguard and owner. Claim covers both. Need consider whether \"load shedding\" is webhook safeguard? Evidence source title webhook / Webhook fix status. It says HOOK-411 load shedding In Progress. Owner Ravi. So yes. Need output exactly one verdict. JSON format: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}. Ensure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2034,
+        "completion_tokens": 230,
+        "total_tokens": 2264,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 204
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1522
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

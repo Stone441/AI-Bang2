@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No, the Atlas connector does not support personal Singapore SGD accounts; it supports Singapore business SGD accounts.",
+        "evidence_ids": [
+          "BV-06@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-06@1",
+            "quote": "The Atlas connector supports Singapore business SGD accounts, not personal accounts."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "febc6a9a-fd69-4201-861c-13fae4cdf130",
+      "object": "chat.completion",
+      "created": 1791385188,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No, the Atlas connector does not support personal Singapore SGD accounts; it supports Singapore business SGD accounts.\",\"evidence_ids\":[\"BV-06@1\"],\"supports\":[{\"evidence_id\":\"BV-06@1\",\"quote\":\"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\"}]}]}",
+            "reasoning_content": "We need answer: Can Atlas connector serve personal Singapore SGD accounts? Evidence BV-06 says supports Singapore business SGD accounts, not personal accounts. Table: Personal SGD Not supported. So answer: No. Need JSON with claims. At most four. We need cite BV-06@1 with quote. Claim: The Atlas connector does not support personal Singapore SGD accounts; it supports Singapore business SGD accounts. Evidence id BV-06@1. Quote exact contiguous passage. The text: \"[SYNTHETIC]\\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported \\n\" We can copy relevant contiguous. Need quote 12-1200 chars. Use one claim. Could also mention pilot supported for business but not necessary? Question asks can it serve personal. Answer no. Claim text: \"No, the Atlas connector does not support personal Singapore SGD accounts; it supports Singapore business SGD accounts.\" Quote: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" That's contiguous exact. Also table says Personal SGD Not supported. We could include both in one quote? Need exact contiguous passage from evidence. The sentence \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" is contiguous. It covers. Add second citation same evidence? Could cite table quote \"Personal SGD \\t Not supported\" but maybe not needed. The evidence_ids list must exactly equal supports evidence_id values. We can have one support. If we want use table quote, can add second support same ID with different quote? \"Personal SGD \\t Not supported\" is contiguous? In text: \" Personal SGD \\t Not supported \\n\". It is contiguous. But one quote enough. We need claim fully supported. Yes. No need other evidence. Return JSON only. Ensure no extra text. Use exact quote copied from text. The quote should be exact contiguous passage copied from evidence. I can copy \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" That includes no newline. It's exact. Good. Claim text at most 600 chars. Use one claim. Evidence_ids [\"BV-06@1\"]. Supports [{\"evidence_id\":\"BV-06@1\",\"quote\":\"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\"}]. That answers. Final JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1115,
+        "completion_tokens": 564,
+        "total_tokens": 1679,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 494
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 603
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "d0584aae-593e-40f8-bdea-a03ed4416518",
+      "object": "chat.completion",
+      "created": 1791385191,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON. Need review evidence support and question coverage. Question: \"Can the Atlas connector serve personal Singapore SGD accounts?\" Claim: \"No, the Atlas connector does not support personal Singapore SGD accounts; it supports Singapore business SGD accounts.\" Evidence BV-06@1 text: \"[SYNTHETIC] The Atlas connector supports Singapore business SGD accounts, not personal accounts. Atlas account eligibility Account Scope: Singapore business SGD Pilot supported; Personal SGD Not supported\". Need evaluate supported and responsive. Claim says does not support personal Singapore SGD accounts; supports Singapore business SGD accounts. Evidence explicitly says supports business SGD, not personal accounts; table personal SGD Not supported. Supported true? Need consider scope: business SGD is pilot supported, not full support? Claim says \"it supports Singapore business SGD accounts\" without qualification. Evidence table says Singapore business SGD - Pilot supported. The quoted sentence says supports Singapore business SGD accounts, not personal accounts. Full evidence includes \"Pilot supported\" for business. Claim might overstate as general support rather than pilot supported. But the main asked: can serve personal Singapore SGD accounts? Claim: No, does not support personal; it supports business SGD. The business part maybe additional but not necessary. Does full factual claim follow? \"does not support personal Singapore SGD accounts\" follows from \"Personal SGD Not supported\". \"it supports Singapore business SGD accounts\" - evidence says \"supports Singapore business SGD accounts\" and table says \"Pilot supported\". In claim, \"supports Singapore business SGD accounts\" is okay? But maybe \"supports\" vs \"pilot supported\" not necessarily full GA. However the claim is not saying generally available or approved? It says supports. Evidence says \"The Atlas connector supports Singapore business SGD accounts\" exactly. Table says Pilot supported. So supported true. Responsive true: answers explicit question. Question coverage: only one claim, addresses question. So true. Need return JSON exactly. Ensure one verdict for every claim. Verdict index 0. supported true, responsive true. question_covered true. Final JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1162,
+        "completion_tokens": 444,
+        "total_tokens": 1606,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 418
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 650
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

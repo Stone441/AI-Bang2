@@ -1,0 +1,96 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Same-day settlement is not approved for MYR accounts. It is approved for Singapore SGD pilot accounts, and MYR accounts are outside that scope.",
+        "evidence_ids": [
+          "BV-31@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-31@1",
+            "quote": "Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope."
+          }
+        ]
+      },
+      {
+        "text": "An unsigned draft stating MYR settlement is available is a proposal, not the approved operating rule.",
+        "evidence_ids": [
+          "BV-34@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-34@1",
+            "quote": "An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "addc0d0f-e251-45f8-9248-a3afcd7d20a6",
+      "object": "chat.completion",
+      "created": 1791385240,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Same-day settlement is not approved for MYR accounts. It is approved for Singapore SGD pilot accounts, and MYR accounts are outside that scope.\",\"evidence_ids\":[\"BV-31@1\"],\"supports\":[{\"evidence_id\":\"BV-31@1\",\"quote\":\"Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\"}]},{\"text\":\"An unsigned draft stating MYR settlement is available is a proposal, not the approved operating rule.\",\"evidence_ids\":[\"BV-34@1\"],\"supports\":[{\"evidence_id\":\"BV-34@1\",\"quote\":\"An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Is same-day settlement approved for MYR accounts?\" Need JSON claims. Evidence: BV-31 says same-day settlement approved for Singapore SGD pilot accounts; MYR accounts outside scope. So answer: No, same-day settlement not approved for MYR accounts; approved only for Singapore SGD pilot accounts; MYR outside scope. Also BV-34 unsigned draft says MYR settlement available; proposal not approved operating rule. Need maybe include that draft exists but not approved. Question asks approval. Need claim(s). Minimum one or two claims. Claim1: Same-day settlement is not approved for MYR accounts; it is approved for Singapore SGD pilot accounts and MYR accounts are outside that scope. Evidence BV-31 quote. Claim2: An unsigned draft saying MYR settlement is available is a proposal, not the approved operating rule. Evidence BV-34. That addresses potential contradictory. Is that needed? The question asks is approved. The direct answer no. But maybe include draft qualification to avoid ambiguity. Need at most four. We can use one or two. Ensure every identifier? No ticket IDs. Use exact contiguous passages. For BV-31 text: \"[SYNTHETIC]\\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\" We can quote \"Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\" That's contiguous. Claim: \"Same-day settlement is approved for Singapore SGD pilot accounts, not MYR accounts; MYR accounts are outside this scope.\" support quote same. That directly answers. Could include BV-34 quote: \"An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.\" Claim: \"A draft stating MYR settlement is available is an unsigned proposal, not the approved operating rule.\" That qualifies. But maybe claim about draft is necessary? It addresses contradictory source. The question asks approval; if there is a contradictory draft, we can mention. But \"minimum number of claims needed\" maybe one claim sufficient. However, to be robust, include draft as separate claim? It is a necessary qualification? The direct answer no; but the draft could mislead. The source explicitly says it's proposal not approved. I think two claims: 1) not approved for MYR, approved for SGD pilot. 2) unsigned draft claiming MYR settlement available is proposal not approved rule. This covers all. Ensure evidence_ids exactly supports: BV-31@1, BV-34@1. Each claim has supports with evidence_id and quote. Quote from BV-34: \"An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.\" Good. Need JSON only. Use claims array. Each text ≤600. No extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1905,
+        "completion_tokens": 730,
+        "total_tokens": 2635,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 574
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1393
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "79dc5847-d828-45a2-916a-301fa30dd52c",
+      "object": "chat.completion",
+      "created": 1791385244,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claims and question coverage. We need review evidence support and question coverage separately. Questions: \"Is same-day settlement approved for MYR accounts?\" Claims:\n1. Same-day settlement is not approved for MYR accounts. It is approved for Singapore SGD pilot accounts, and MYR accounts are outside that scope.\nEvidence BV-31@1: \"Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\" Does this support \"not approved for MYR accounts\"? It says MYR outside scope of approval for SGD pilot. Does outside this scope mean not approved for MYR? The context: approval for Singapore SGD pilot accounts only; MYR outside scope. That reasonably entails MYR not approved? Need be careful: \"outside this scope\" could mean not covered by that approval. Claim says not approved for MYR accounts. Evidence explicitly says MYR accounts are outside this scope. That supports not approved? I think yes. Also \"It is approved for Singapore SGD pilot accounts\" supported. Claim responsive to question? Yes directly answers. So claim 1 supported true, responsive true.\n2. \"An unsigned draft stating MYR settlement is available is a proposal, not the approved operating rule.\" Evidence BV-34@1 exactly says that. Supported true. Responsive? It addresses MYR settlement availability? The question asks same-day settlement approved for MYR. The claim clarifies a draft says MYR settlement available is proposal, not approved rule. This is relevant qualification/answer to approval status? It is about MYR settlement approval status, perhaps responsive as necessary qualification that an unsigned draft not approval. Yes responsive true likely. Question covered? Need every requested part: only whether same-day settlement approved for MYR accounts. Claim 1 directly says not approved and scope. Claim 2 clarifies draft. Together cover. question_covered true. Need exactly one verdict for every claim. JSON format. Ensure no extra. Verdicts indices 0 and 1. supported true responsive true. Final JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2044,
+        "completion_tokens": 455,
+        "total_tokens": 2499,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 417
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1532
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

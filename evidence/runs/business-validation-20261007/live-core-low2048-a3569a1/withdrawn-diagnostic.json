@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The withdrawn payment-service explanation was the cache-invalidation hypothesis, described as an early hypothesis at 09:00 and withdrawn at 09:15.",
+        "evidence_ids": [
+          "S-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "S-01@1",
+            "quote": "09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "9722d057-6762-442c-aa93-336c911f294c",
+      "object": "chat.completion",
+      "created": 1791385139,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The withdrawn payment-service explanation was the cache-invalidation hypothesis, described as an early hypothesis at 09:00 and withdrawn at 09:15.\",\"evidence_ids\":[\"S-01@1\"],\"supports\":[{\"evidence_id\":\"S-01@1\",\"quote\":\"09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Which payment-service explanation was withdrawn?\" Need infer from evidence. We need produce JSON claims. We need identify explicit requested part. Evidence S-01 says Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 final postmortem confirmed retry configuration and timeout budget mismatch. So answer: cache invalidation hypothesis was withdrawn. Need claim with evidence_id S-01@1 quote exact contiguous passage. Maybe quote \"09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\" That directly answers. We should include maybe final cause? Question asks which payment-service explanation was withdrawn. So one claim: The payment-service cache-invalidation hypothesis (an early hypothesis) was withdrawn. Support quote from S-01@1: \"09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\" Ensure exact text. Need check S-01 text: \"[SYNTHETIC]\\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.\" The quote can be \"09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\" That's contiguous. Claim should be concise. Might mention final confirmed cause? Not needed, but could qualify that final cause was retry config timeout mismatch. But question only asks which explanation withdrawn. Need not include final. Could maybe include final to contrast? But instructions say don't fill with background. The answer is enough. Need include evidence_ids [\"S-01@1\"], supports [{\"evidence_id\":\"S-01@1\",\"quote\":\"09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\"}]. Claim text: \"The withdrawn payment-service explanation was the cache-invalidation hypothesis (described as an early hypothesis at 09:00 and withdrawn at 09:15).\" This is supported. Should we mention \"cache hypothesis\" exact. Good.\n\nNeed ensure no other claims? Question singular. We can stop with one claim. Must be JSON object only. Ensure valid JSON. Use only evidence. Good.\n\nBut let's think about potential trap: There's also BV-18 about shared-secret proposal withdrawn, but that's authentication signing, not payment-service. So not relevant. We must not use it. Good.\n\nNeed answer directly in English. Claims list. At most four. One claim. Claim text at most 600 chars. Supports quote 12-1200 chars. Our quote length ~90. Good.\n\nEnsure evidence_ids exactly equals supports evidence_id values. Yes.\n\nFinal only JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1832,
+        "completion_tokens": 689,
+        "total_tokens": 2521,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 600
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1320
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "e08d55db-449c-4b8f-9382-0cb9575f8f65",
+      "object": "chat.completion",
+      "created": 1791385142,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer review. Need return JSON only. Need evaluate claim against evidence. Question: \"Which payment-service explanation was withdrawn?\" Claims array one claim: \"The withdrawn payment-service explanation was the cache-invalidation hypothesis, described as an early hypothesis at 09:00 and withdrawn at 09:15.\" Evidence S-01@1 quote exactly: \"[SYNTHETIC]\\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.\" Need determine supported and responsive. Claim: withdrawn payment-service explanation was cache-invalidation hypothesis, described as early hypothesis at 09:00 and withdrawn at 09:15. Evidence supports. Is it responsive to \"Which payment-service explanation was withdrawn?\" Yes answers which. Question_covered? Only one requested part, claim addresses. Need include every claim verdict. Index 0. supported true, responsive true. Need JSON exactly.\n\nNeed consider if any misleading? The evidence is synthetic but provided. Claim says cache-invalidation hypothesis; evidence says cache invalidation early hypothesis, cache hypothesis withdrawn. Slight \"cache-invalidation hypothesis\" matches. Good. Return {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1898,
+        "completion_tokens": 317,
+        "total_tokens": 2215,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 291
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1386
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

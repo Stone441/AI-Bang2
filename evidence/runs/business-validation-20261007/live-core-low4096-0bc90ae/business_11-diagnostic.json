@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Ledger migration chose a shadow table to allow rollback without blocking existing writes.",
+        "evidence_ids": [
+          "BV-11@1#16000:17452"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-11@1#16000:17452",
+            "quote": "Ledger migration chose a shadow table to allow rollback without blocking existing writes."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "cc6a4161-50b4-4505-bc38-5b3541af7165",
+      "object": "chat.completion",
+      "created": 1791385639,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Ledger migration chose a shadow table to allow rollback without blocking existing writes.\",\"evidence_ids\":[\"BV-11@1#16000:17452\"],\"supports\":[{\"evidence_id\":\"BV-11@1#16000:17452\",\"quote\":\"Ledger migration chose a shadow table to allow rollback without blocking existing writes.\"}]}]}",
+            "reasoning_content": "We need answer question: Why did ledger migration select a shadow table? Need JSON claims with evidence. We have evidence BV-11@1#16000:17452 includes explicit: \"# Current ledger migration decision\\nLedger migration chose a shadow table to allow rollback without blocking existing writes.\" That directly answers. Need one claim. Include quote exact contiguous passage. Evidence id list must equal supports evidence_id. So claim text: \"Ledger migration chose a shadow table to allow rollback without blocking existing writes.\" evidence_ids [\"BV-11@1#16000:17452\"], supports same with quote exact passage. Need ensure quote from text, can include newline? Exact contiguous passage. The text has \"# Current ledger migration decision\\nLedger migration chose a shadow table to allow rollback without blocking existing writes.\" We can quote just the sentence \"Ledger migration chose a shadow table to allow rollback without blocking existing writes.\" That's contiguous. It is 88 chars. That supports. One claim. Stop. Need valid JSON. Ensure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2981,
+        "completion_tokens": 295,
+        "total_tokens": 3276,
+        "prompt_tokens_details": {
+          "cached_tokens": 2816
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 214
+        },
+        "prompt_cache_hit_tokens": 2816,
+        "prompt_cache_miss_tokens": 165
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "c2e4ec83-1e29-4ffd-88ed-64ca4489989a",
+      "object": "chat.completion",
+      "created": 1791385641,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. We need evaluate claim. Question: \"Why did ledger migration select a shadow table?\" Claim: \"Ledger migration chose a shadow table to allow rollback without blocking existing writes.\" Evidence BV-11@1#16000:17452 text includes at end \"# Current ledger migration decision\\nLedger migration chose a shadow table to allow rollback without blocking existing writes.\" So claim exactly supported. Responsive? Answers why: because allow rollback without blocking existing writes. Yes. Question coverage? Only one requested part. Claim covers it. Other evidence irrelevant maybe. Need output question_covered true, verdicts index 0 supported true responsive true. Ensure JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3039,
+        "completion_tokens": 166,
+        "total_tokens": 3205,
+        "prompt_tokens_details": {
+          "cached_tokens": 2816
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 140
+        },
+        "prompt_cache_hit_tokens": 2816,
+        "prompt_cache_miss_tokens": 223
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

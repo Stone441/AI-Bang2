@@ -1,0 +1,178 @@
+{
+  "request_id": "437a4692f3ca412cb67106bddd3be7e3",
+  "question": "Was DNS the cause of the webhook backlog?",
+  "answered_at": "2026-10-07T15:00:27.057314+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v8",
+  "claims": [
+    {
+      "text": "No. The webhook backlog came from an exhausted worker pool, not DNS resolution.",
+      "evidence_ids": [
+        "BV-16@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-16@1",
+          "quote": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-16@1",
+      "resource_id": "BV-16",
+      "version": 1,
+      "source": "drive",
+      "title": "webhook / Webhook incident cause",
+      "locator": {
+        "section": "Webhook incident cause"
+      },
+      "text": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889907+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-16"
+    },
+    {
+      "evidence_id": "BV-19@1",
+      "resource_id": "BV-19",
+      "version": 1,
+      "source": "slack",
+      "title": "webhook / Current response procedure",
+      "locator": {
+        "section": "Current response procedure"
+      },
+      "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889949+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-19"
+    },
+    {
+      "evidence_id": "D-01@1",
+      "resource_id": "D-01",
+      "version": 1,
+      "source": "drive",
+      "title": "Final payment-service postmortem",
+      "locator": {
+        "paragraph": 1,
+        "section": "Confirmed root cause"
+      },
+      "text": "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889554+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-01"
+    },
+    {
+      "evidence_id": "BV-17@1",
+      "resource_id": "BV-17",
+      "version": 1,
+      "source": "confluence",
+      "title": "webhook / Webhook fix status",
+      "locator": {
+        "section": "Webhook fix status"
+      },
+      "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889920+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-17"
+    },
+    {
+      "evidence_id": "BV-20@1",
+      "resource_id": "BV-20",
+      "version": 1,
+      "source": "drive",
+      "title": "webhook / External commitment",
+      "locator": {
+        "section": "External commitment"
+      },
+      "text": "[SYNTHETIC]\nWebhook latency targets apply to the pilot only; no general customer latency guarantee is approved.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889962+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-20"
+    },
+    {
+      "evidence_id": "BV-11@1#0:2400",
+      "resource_id": "BV-11",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Database design rationale",
+      "locator": {
+        "section": "Database design rationale",
+        "text_window": {
+          "start": 0,
+          "end": 2400,
+          "unit": "unicode_characters",
+          "strategy": "fixed-2400-overlap-400-v1"
+        }
+      },
+      "text": "[SYNTHETIC]\n# Retired webhook rehearsal\nDNS was a historical webhook hypothesis.\nArchived migration rehearsal entry 0: batch 0, checksum 0; no current decision recorded.\nArchived migration rehearsal entry 1: batch 17, checksum 31; no current decision recorded.\nArchived migration rehearsal entry 2: batch 34, checksum 62; no current decision recorded.\nArchived migration rehearsal entry 3: batch 51, checksum 93; no current decision recorded.\nArchived migration rehearsal entry 4: batch 68, checksum 124; no current decision recorded.\nArchived migration rehearsal entry 5: batch 85, checksum 155; no current decision recorded.\nArchived migration rehearsal entry 6: batch 102, checksum 186; no current decision recorded.\nArchived migration rehearsal entry 7: batch 119, checksum 217; no current decision recorded.\nArchived migration rehearsal entry 8: batch 136, checksum 248; no current decision recorded.\nArchived migration rehearsal entry 9: batch 153, checksum 279; no current decision recorded.\nArchived migration rehearsal entry 10: batch 170, checksum 310; no current decision recorded.\nArchived migration rehearsal entry 11: batch 187, checksum 341; no current decision recorded.\nArchived migration rehearsal entry 12: batch 204, checksum 372; no current decision recorded.\nArchived migration rehearsal entry 13: batch 221, checksum 403; no current decision recorded.\nArchived migration rehearsal entry 14: batch 238, checksum 434; no current decision recorded.\nArchived migration rehearsal entry 15: batch 255, checksum 465; no current decision recorded.\nArchived migration rehearsal entry 16: batch 272, checksum 496; no current decision recorded.\nArchived migration rehearsal entry 17: batch 289, checksum 527; no current decision recorded.\nArchived migration rehearsal entry 18: batch 306, checksum 558; no current decision recorded.\nArchived migration rehearsal entry 19: batch 323, checksum 589; no current decision recorded.\nArchived migration rehearsal entry 20: batch 340, checksum 620; no current decision recorded.\nArchived migration rehearsal entry 21: batch 357, checksum 651; no current decision recorded.\nArchived migration rehearsal entry 22: batch 374, checksum 682; no current decision recorded.\nArchived migration rehearsal entry 23: batch 391, checksum 713; no current decision recorded.\nArchived migration rehearsal entry 24: batch 408, checksum 744; no current decision r",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889764+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "evidence_id": "J-02@1",
+      "resource_id": "J-02",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-102 Retry configuration fix",
+      "locator": {
+        "field": "status and description"
+      },
+      "text": "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889471+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-02"
+    },
+    {
+      "evidence_id": "J-03@1",
+      "resource_id": "J-03",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-103 Protective measures",
+      "locator": {
+        "field": "status and assignee"
+      },
+      "text": "[SYNTHETIC]\nPAY-103 protective measures: In Progress. Owner: Maya.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T14:58:52.889486+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-03"
+    }
+  ],
+  "actor": "eng_a",
+  "model_call": {
+    "query_id": "437a4692f3ca412cb67106bddd3be7e3",
+    "model": "deepseek-flash",
+    "reservation_id": "f51db43cce0e4905b3e483b9486d8c45",
+    "prompt_tokens": 1958,
+    "completion_tokens": 749,
+    "total_tokens": 2707,
+    "reserved_micro_usd": 317031,
+    "accounted_upper_micro_usd": 1487,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "437a4692f3ca412cb67106bddd3be7e3",
+    "model": "deepseek-flash",
+    "reservation_id": "af9e9922d58f4226b92c3420433d0611",
+    "prompt_tokens": 2011,
+    "completion_tokens": 291,
+    "total_tokens": 2302,
+    "reserved_micro_usd": 317031,
+    "accounted_upper_micro_usd": 953,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

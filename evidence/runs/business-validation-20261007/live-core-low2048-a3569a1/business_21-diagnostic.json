@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Mina owns reconciliation exceptions; the platform team owns ingestion failures.",
+        "evidence_ids": [
+          "BV-21@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-21@1",
+            "quote": "Mina owns reconciliation exceptions; the platform team owns ingestion failures."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "ddd2dd4b-8d1d-4984-8932-af0102acfbfb",
+      "object": "chat.completion",
+      "created": 1791385232,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\",\"evidence_ids\":[\"BV-21@1\"],\"supports\":[{\"evidence_id\":\"BV-21@1\",\"quote\":\"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\"}]}]}",
+            "reasoning_content": "We need answer question: Who owns reconciliation exceptions versus ingestion failures? Evidence BV-21@1 directly states: \"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\" Need produce JSON claims. One claim sufficient. Must include evidence_ids and supports with quote. Quote exact contiguous passage from evidence. Evidence text includes \"[SYNTHETIC]\\n\" then sentence. Should we include that? Quote should be from text, can include [SYNTHETIC]\\n? It's part of text. But claim: Mina owns reconciliation exceptions; platform team owns ingestion failures. Support quote: \"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\" That is contiguous from text after [SYNTHETIC]\\n. Is it exact? Yes, if we omit [SYNTHETIC]\\n, it's a contiguous passage? The text is \"[SYNTHETIC]\\nMina owns...\". The substring \"Mina owns...\" is contiguous. That's fine. Use one claim. Claim max 600 chars. JSON only. Ensure evidence_ids exactly equal supports evidence_id. So {\"claims\":[{\"text\":\"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\",\"evidence_ids\":[\"BV-21@1\"],\"supports\":[{\"evidence_id\":\"BV-21@1\",\"quote\":\"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\"}]}]} Need no extra. Done."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1085,
+        "completion_tokens": 358,
+        "total_tokens": 1443,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 295
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 573
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "ba2b01a1-bf22-435f-ab59-44dcd5431680",
+      "object": "chat.completion",
+      "created": 1791385234,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"Who owns reconciliation exceptions versus ingestion failures?\" Claim: \"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\" Evidence BV-21@1 exactly same text. Source title \"reconciliation / Ownership decision\" locator Ownership decision. It directly supports. Responsive? It answers who owns both parts. question_covered true? Need one claim covers both requested parts. Evidence supports exactly. Need return JSON with question_covered true, verdicts index 0 supported true responsive true. Ensure exact schema."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1125,
+        "completion_tokens": 141,
+        "total_tokens": 1266,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 115
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 613
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

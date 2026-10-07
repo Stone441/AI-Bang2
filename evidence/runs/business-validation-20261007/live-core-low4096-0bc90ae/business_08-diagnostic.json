@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification.",
+        "evidence_ids": [
+          "BV-08@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-08@1",
+            "quote": "Partner-led onboarding requires manual verification; direct onboarding supports automated verification."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "9800321e-f23f-4114-bd47-ab5dcb01f379",
+      "object": "chat.completion",
+      "created": 1791385631,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification.\",\"evidence_ids\":[\"BV-08@1\"],\"supports\":[{\"evidence_id\":\"BV-08@1\",\"quote\":\"Partner-led onboarding requires manual verification; direct onboarding supports automated verification.\"}]}]}",
+            "reasoning_content": "We need answer question: How does partner onboarding differ from direct onboarding? Evidence: BV-08@1 says partner-led onboarding requires manual verification; direct onboarding supports automated verification. BV-28@1 about partner users may read approved integration eligibility guidance; incident details not public guidance. That seems not relevant to onboarding difference. Need produce JSON with claims. At most 4 claims, each concise factual conclusion, evidence_ids, supports with quote exact contiguous passage. Question asks difference. We can state: Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification. Need quote from BV-08@1 exactly. Evidence_ids [\"BV-08@1\"]. Supports quote. That covers. Maybe need mention no other difference? Not necessary. We should only use minimum. The claim text can be \"Partner-led onboarding requires manual verification; direct onboarding supports automated verification.\" That's directly supported by quote. Quote exact passage: \"[SYNTHETIC]\\nPartner-led onboarding requires manual verification; direct onboarding supports automated verification.\" But note text includes [SYNTHETIC]\\n. We can copy the passage exactly? It's contiguous. The quote should be exact contiguous passage copied from that evidence. We can include [SYNTHETIC]\\n? That is in text. But if quote includes \"[SYNTHETIC]\" it's okay. Better copy the sentence after [SYNTHETIC]\\n? The passage is \"Partner-led onboarding requires manual verification; direct onboarding supports automated verification.\" Is that contiguous? Yes starting after [SYNTHETIC]\\n. But exact contiguous passage copied from evidence text; can omit prefix if contiguous? The text is \"[SYNTHETIC]\\nPartner-led...\". The substring \"Partner-led...\" is contiguous. Good. Need JSON object with claims array.\n\nWe should consider whether BV-28@1 relevant? It doesn't discuss onboarding difference. Not needed. So one claim.\n\nEnsure no extra. Final JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 879,
+        "completion_tokens": 465,
+        "total_tokens": 1344,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 401
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 239
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "6932fe2c-dc5c-4ac6-bea5-1ad2ee96bd3e",
+      "object": "chat.completion",
+      "created": 1791385633,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review evidence support and question coverage. We have question: \"How does partner onboarding differ from direct onboarding?\" Claims: one claim: \"Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification.\" Evidence BV-08@1 text exactly same sentence. Need judge supported and responsive. Need question_covered? It addresses explicit requested how differs. Claim supported by BV-08@1 directly. Responsive true. Only one claim. Need JSON exactly. Ensure no extra. But must consider if evidence is synthetic and source title? It's untrusted data, but we can use. The claim matches evidence exactly. Supported true. Responsive true. question_covered true because claim addresses every requested part? Question asks how differ. Claim provides difference. Yes.\n\nNeed return {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}. Exactly."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 920,
+        "completion_tokens": 215,
+        "total_tokens": 1135,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 189
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 152
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

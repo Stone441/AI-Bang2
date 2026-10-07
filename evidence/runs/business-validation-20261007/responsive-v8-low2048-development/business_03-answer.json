@@ -1,0 +1,161 @@
+{
+  "request_id": "36bc2f7bae3f4d5fb2812bb15899b5f8",
+  "question": "Which authentication signing proposal was rejected?",
+  "answered_at": "2026-10-07T14:50:25.843009+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v8",
+  "claims": [
+    {
+      "text": "The authentication signing proposal recorded as withdrawn—the cited passage does not establish that it was rejected—was the shared-secret proposal; per-client asymmetric signing was accepted.",
+      "evidence_ids": [
+        "BV-18@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-18@1",
+          "quote": "The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-03@1",
+      "resource_id": "BV-03",
+      "version": 1,
+      "source": "slack",
+      "title": "authentication / Rejected design thread",
+      "locator": {
+        "channel": "synthetic-auth",
+        "message": "BV-03",
+        "root": "BV-03"
+      },
+      "text": "[SYNTHETIC]\n09:00 authentication signing design: shared-secret proposal under consideration.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:50:12.303342+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-03"
+    },
+    {
+      "evidence_id": "BV-18@1",
+      "resource_id": "BV-18",
+      "version": 1,
+      "source": "slack",
+      "title": "Authentication signing design reply",
+      "locator": {
+        "channel": "synthetic-auth",
+        "message": "BV-18",
+        "root": "BV-03"
+      },
+      "text": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:50:12.303802+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-18"
+    },
+    {
+      "evidence_id": "BV-01@1",
+      "resource_id": "BV-01",
+      "version": 1,
+      "source": "confluence",
+      "title": "authentication / Token rotation decision",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "[SYNTHETIC]\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:50:12.303304+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-01"
+    },
+    {
+      "evidence_id": "BV-34@1",
+      "resource_id": "BV-34",
+      "version": 1,
+      "source": "jira",
+      "title": "settlement / Contradictory proposal",
+      "locator": {
+        "section": "Contradictory proposal"
+      },
+      "text": "[SYNTHETIC]\nAn unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:50:12.304057+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-34"
+    },
+    {
+      "evidence_id": "BV-04@1",
+      "resource_id": "BV-04",
+      "version": 1,
+      "source": "drive",
+      "title": "authentication / Cutover scope",
+      "locator": {
+        "section": "Cutover scope"
+      },
+      "text": "[SYNTHETIC]\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:50:12.303361+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-04"
+    },
+    {
+      "evidence_id": "BV-02@1",
+      "resource_id": "BV-02",
+      "version": 1,
+      "source": "jira",
+      "title": "authentication / Migration blocker",
+      "locator": {
+        "section": "Migration blocker"
+      },
+      "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:50:12.303323+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-02"
+    },
+    {
+      "evidence_id": "BV-05@1",
+      "resource_id": "BV-05",
+      "version": 1,
+      "source": "confluence",
+      "title": "authentication / Future policy",
+      "locator": {
+        "section": "Future policy"
+      },
+      "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T14:50:12.303379+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-05"
+    }
+  ],
+  "actor": "eng_a",
+  "model_call": {
+    "query_id": "36bc2f7bae3f4d5fb2812bb15899b5f8",
+    "model": "deepseek-flash",
+    "reservation_id": "23270af396e84525ab8e08a710c770ef",
+    "prompt_tokens": 1267,
+    "completion_tokens": 663,
+    "total_tokens": 1930,
+    "reserved_micro_usd": 317031,
+    "accounted_upper_micro_usd": 1176,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "36bc2f7bae3f4d5fb2812bb15899b5f8",
+    "model": "deepseek-flash",
+    "reservation_id": "458cea3ea1754aa293a0371a1e7cdc27",
+    "prompt_tokens": 1329,
+    "completion_tokens": 1085,
+    "total_tokens": 2414,
+    "reserved_micro_usd": 317031,
+    "accounted_upper_micro_usd": 1701,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "AUTH-204 is blocked by mobile clients' inability to refresh expired tokens; Lena owns it.",
+        "evidence_ids": [
+          "BV-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-02@1",
+            "quote": "AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "6308e690-0795-4be8-9752-27212b5ae22c",
+      "object": "chat.completion",
+      "created": 1791385599,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"AUTH-204 is blocked by mobile clients' inability to refresh expired tokens; Lena owns it.\",\"evidence_ids\":[\"BV-02@1\"],\"supports\":[{\"evidence_id\":\"BV-02@1\",\"quote\":\"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\"}]}]}",
+            "reasoning_content": "We need answer question: What blocks AUTH-204 and who owns it? Evidence. Need JSON claims. Must use only evidence. Claim: AUTH-204 is blocked because mobile clients cannot refresh expired tokens; owner Lena. Need quote exact contiguous passage from evidence. Evidence BV-02@1 text: \"[SYNTHETIC]\\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\" We can quote \"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\" That includes identifier. Claim text concise. Evidence_ids [\"BV-02@1\"]. Supports with evidence_id and quote. Need at most 4 claims, minimum. One claim covers both blocker and owner. Ensure quote 12-1200 chars. Yes. No other evidence relevant. Output JSON only. Ensure supports array has same ID. Claim text: \"AUTH-204 is blocked by mobile clients' inability to refresh expired tokens; Lena owns it.\" But quote exact. That is supported. Need every explicit identifier in claim appears in quote: AUTH-204, Lena yes. Blocked? quote has \"Blocked\". Good.\n\nFinal JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 882,
+        "completion_tokens": 320,
+        "total_tokens": 1202,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 244
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 242
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "c619d98e-e69d-4d91-a1f2-867b1c78ca79",
+      "object": "chat.completion",
+      "created": 1791385601,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer review. Need parse. Question: \"What blocks AUTH-204 and who owns it?\" Claims: one claim: \"AUTH-204 is blocked by mobile clients' inability to refresh expired tokens; Lena owns it.\" evidence BV-02@1 quote exactly: \"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\" Need judge supported and responsive. Evidence directly supports. Need question_covered? It addresses both requested parts: what blocks and who owns. Claim covers. So true. Need JSON only with schema exactly. Verdict index 0 supported true responsive true. question_covered true. Ensure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 935,
+        "completion_tokens": 162,
+        "total_tokens": 1097,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 136
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 423
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

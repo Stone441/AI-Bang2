@@ -1,0 +1,89 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Same-day settlement is not approved for MYR accounts: the approved scope is Singapore SGD pilot accounts, and an unsigned draft saying MYR settlement is available is only a proposal, not the approved operating rule.",
+        "evidence_ids": [
+          "BV-31@1",
+          "BV-34@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-31@1",
+            "quote": "Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope."
+          },
+          {
+            "evidence_id": "BV-34@1",
+            "quote": "An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "b9911ead-cbb5-4622-a8a3-0059307149a9",
+      "object": "chat.completion",
+      "created": 1791385672,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Same-day settlement is not approved for MYR accounts: the approved scope is Singapore SGD pilot accounts, and an unsigned draft saying MYR settlement is available is only a proposal, not the approved operating rule.\",\"evidence_ids\":[\"BV-31@1\",\"BV-34@1\"],\"supports\":[{\"evidence_id\":\"BV-31@1\",\"quote\":\"Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\"},{\"evidence_id\":\"BV-34@1\",\"quote\":\"An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.\"}]}]}",
+            "reasoning_content": "We need answer: Is same-day settlement approved for MYR accounts? Evidence BV-31 says same-day settlement approved for Singapore SGD pilot accounts; MYR outside scope. BV-34 says unsigned draft says MYR settlement available; proposal, not approved operating rule. Need answer directly. Likely no, not approved; evidence says outside scope and draft is proposal. Need claims with quotes. At most four claims, concise. We can make one claim: Same-day settlement for MYR accounts is not approved; approved scope is Singapore SGD pilot accounts, and a draft claiming MYR availability is a proposal not approved operating rule. Need cite BV-31 and BV-34. Quote exact contiguous passage. BV-31 text: \"[SYNTHETIC]\\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\" Need copy only from text, can include without [SYNTHETIC]? It says exact contiguous passage copied from that evidence. [SYNTHETIC] is part of text? We can quote \"Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\" That's contiguous. BV-34: \"An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.\" Good. Claim text should be concise factual conclusion. \"Same-day settlement is not approved for MYR accounts: the approved scope is Singapore SGD pilot accounts, and an unsigned draft saying MYR settlement is available is only a proposal, not the approved operating rule.\" That is supported. Evidence IDs [\"BV-31@1\",\"BV-34@1\"]. Supports with same IDs and quotes. Ensure no extra IDs. That answers. Should we mention \"MYR accounts are outside this scope\" vs not approved? The question asks \"Is same-day settlement approved for MYR accounts?\" The evidence says outside scope; not approved. Claim okay. Need JSON only. No markdown. Let's craft. Must be valid JSON. Use exactly schema. One claim maybe sufficient. But we need ensure \"Every explicit identifier such as ticket ID in a claim must appear in copied support quotes.\" No ticket IDs. Good. \"source_context contains original source title and locator...\" We don't include source_context. Fine. At most four citations per claim, but one or two. One claim with two citations. The evidence_ids list exactly equals evidence_id values in supports. We have two. Good. The quote for BV-31 is 101 chars? Let's count. \"Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\" Around 101. Fine. BV-34 quote 101? \"An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.\" Fine. JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1905,
+        "completion_tokens": 712,
+        "total_tokens": 2617,
+        "prompt_tokens_details": {
+          "cached_tokens": 1664
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 576
+        },
+        "prompt_cache_hit_tokens": 1664,
+        "prompt_cache_miss_tokens": 241
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "d2e485f2-3b41-47be-9c3b-c8a7be60e8ea",
+      "object": "chat.completion",
+      "created": 1791385675,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review claim. Question: Is same-day settlement approved for MYR accounts? Claim: \"Same-day settlement is not approved for MYR accounts: the approved scope is Singapore SGD pilot accounts, and an unsigned draft saying MYR settlement is available is only a proposal, not the approved operating rule.\" Evidence: BV-31 says same-day settlement approved for Singapore SGD pilot; MYR outside scope. BV-34 says unsigned draft says MYR settlement available; proposal not approved operating rule. Claim asks not approved for MYR. Supported? Need be careful: \"Same-day settlement is not approved for MYR accounts\" Is \"outside this scope\" plus draft proposal not approved. Does evidence explicitly say not approved for MYR? BV-31: approved for Singapore SGD pilot; MYR accounts outside this scope. That means MYR not in approved scope. BV-34: draft says MYR settlement available; proposal not approved operating rule. So not approved. Good.\n\nNeed responsive? Question asks \"Is same-day settlement approved for MYR accounts?\" Claim directly answers no with reasoning. True.\n\nQuestion_covered? Only one requested part. Claim covers. So true.\n\nNeed output exactly: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}\n\nEnsure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2023,
+        "completion_tokens": 300,
+        "total_tokens": 2323,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 274
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1511
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

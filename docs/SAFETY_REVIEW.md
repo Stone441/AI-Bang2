@@ -1,5 +1,7 @@
 # Team safety review and submission checks
 
+2026-10-07候选0bc90ae低推理4096已有398archive、24开发模型和native2当前证据；浏览器仍saved拒绝blocked，真人3×4任务、ROI/G1/G2未运行。现有题卡只准备，当前不安排用户操作、不据开发者/Agent判断补造人类验收。
+
 2026-10-07 BV-05仅准备的3×4任务卡，全部human not_run；不要求用户现在操作，不发送邀请。浏览器saved site denial解除并核候选服务授权后，开发者操作，团队只判断答案/交互；每人记录人工查源与候选的用时、正确/错误事实、拒答是否合理及引用是否足够，不能从Agent模拟推ROI。采用交错顺序避免全部先看答案：A先手工后候选，B相反，C交替。
 
 | 人员 | 四项业务任务（同48对象fixture，非native/live现场） | 记录 |
