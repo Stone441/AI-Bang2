@@ -1,0 +1,110 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No, payment-retry cannot be offered to all customers now: it is limited to the controlled pilot, general availability (GA) is not approved, and no general release date is confirmed.",
+        "evidence_ids": [
+          "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+          "confluence:164283@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          },
+          {
+            "evidence_id": "confluence:164283@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          }
+        ]
+      },
+      {
+        "text": "No, PAY-102 Done does not approve general availability; it is a code fix whose completion is not customer release approval and does not mean protective measures or GA are complete.",
+        "evidence_ids": [
+          "jira:10013@336836842918391821",
+          "jira:10014@110363006380417182"
+        ],
+        "supports": [
+          {
+            "evidence_id": "jira:10013@336836842918391821",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "jira:10014@110363006380417182",
+            "quote": "PAY-102 code fix being Done does not mean protective measures or general availability are complete."
+          }
+        ]
+      },
+      {
+        "text": "Approved scope is a controlled pilot only; expansion beyond pilot customers and any general availability date are unconfirmed, so only payment-retry within the approved pilot scope may be described.",
+        "evidence_ids": [
+          "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+            "quote": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "e313ed85-04c1-4e7d-959f-190f9e3d792a",
+      "object": "chat.completion",
+      "created": 1791370413,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No, payment-retry cannot be offered to all customers now: it is limited to the controlled pilot, general availability (GA) is not approved, and no general release date is confirmed.\",\"evidence_ids\":[\"drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6\",\"confluence:164283@1\"],\"supports\":[{\"evidence_id\":\"drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"},{\"evidence_id\":\"confluence:164283@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"}]},{\"text\":\"No, PAY-102 Done does not approve general availability; it is a code fix whose completion is not customer release approval and does not mean protective measures or GA are complete.\",\"evidence_ids\":[\"jira:10013@336836842918391821\",\"jira:10014@110363006380417182\"],\"supports\":[{\"evidence_id\":\"jira:10013@336836842918391821\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"},{\"evidence_id\":\"jira:10014@110363006380417182\",\"quote\":\"PAY-102 code fix being Done does not mean protective measures or general availability are complete.\"}]},{\"text\":\"Approved scope is a controlled pilot only; expansion beyond pilot customers and any general availability date are unconfirmed, so only payment-retry within the approved pilot scope may be described.\",\"evidence_ids\":[\"drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6\"],\"supports\":[{\"evidence_id\":\"drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6\",\"quote\":\"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1610,
+        "completion_tokens": 480,
+        "total_tokens": 2090,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 1482
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "ff7022a9-36ea-4bb4-8457-15041caa3241",
+      "object": "chat.completion",
+      "created": 1791370435,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true},{\"index\":2,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2081,
+        "completion_tokens": 37,
+        "total_tokens": 2118,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 1953
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

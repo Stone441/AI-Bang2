@@ -1,0 +1,195 @@
+{
+  "request_id": "9699c4a85a0445dd9621c24116f715f1",
+  "question": "What is the current Singapore weekday reconciliation deadline?",
+  "answered_at": "2026-10-07T08:41:12.038511+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "evidence_ids": [
+        "BV-22@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+      "evidence_ids": [
+        "BV-25@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "evidence_ids": [
+        "BV-21@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.",
+      "evidence_ids": [
+        "BV-06@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "evidence_ids": [
+        "BV-07@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "evidence_ids": [
+        "BV-10@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "evidence_ids": [
+        "BV-31@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "evidence_ids": [
+        "BV-23@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+      "evidence_ids": [
+        "BV-24@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-22@1",
+      "resource_id": "BV-22",
+      "version": 1,
+      "source": "jira",
+      "title": "reconciliation / Batch deadline",
+      "locator": {
+        "section": "Batch deadline"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:41:12.006719+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-22"
+    },
+    {
+      "evidence_id": "BV-25@1",
+      "resource_id": "BV-25",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Old operating note",
+      "locator": {
+        "section": "Old operating note"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:41:12.006768+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-25"
+    },
+    {
+      "evidence_id": "BV-21@1",
+      "resource_id": "BV-21",
+      "version": 1,
+      "source": "confluence",
+      "title": "reconciliation / Ownership decision",
+      "locator": {
+        "section": "Ownership decision"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:41:12.006703+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-21"
+    },
+    {
+      "evidence_id": "BV-06@1",
+      "resource_id": "BV-06",
+      "version": 1,
+      "source": "jira",
+      "title": "integration / SGD account eligibility",
+      "locator": {
+        "section": "SGD account eligibility"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:41:12.006462+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-06"
+    },
+    {
+      "evidence_id": "BV-07@1",
+      "resource_id": "BV-07",
+      "version": 1,
+      "source": "slack",
+      "title": "integration / USD exception",
+      "locator": {
+        "section": "USD exception"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:41:12.006479+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-07"
+    },
+    {
+      "evidence_id": "BV-10@1",
+      "resource_id": "BV-10",
+      "version": 1,
+      "source": "jira",
+      "title": "integration / Scope confirmation",
+      "locator": {
+        "section": "Scope confirmation"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:41:12.006527+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-10"
+    },
+    {
+      "evidence_id": "BV-31@1",
+      "resource_id": "BV-31",
+      "version": 1,
+      "source": "slack",
+      "title": "settlement / Settlement scope",
+      "locator": {
+        "section": "Settlement scope"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:41:12.006854+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-31"
+    },
+    {
+      "evidence_id": "BV-23@1",
+      "resource_id": "BV-23",
+      "version": 1,
+      "source": "slack",
+      "title": "reconciliation / Missing input",
+      "locator": {
+        "section": "Missing input"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:41:12.006734+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-23"
+    },
+    {
+      "evidence_id": "BV-24@1",
+      "resource_id": "BV-24",
+      "version": 1,
+      "source": "drive",
+      "title": "reconciliation / Pilot blocker",
+      "locator": {
+        "section": "Pilot blocker"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:41:12.006752+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-24"
+    }
+  ],
+  "actor": "product_ops"
+}

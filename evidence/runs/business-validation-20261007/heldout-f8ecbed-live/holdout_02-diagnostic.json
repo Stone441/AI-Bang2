@@ -1,0 +1,88 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "General availability is not promised: payment-retry is limited to the controlled pilot and GA is not approved, with no general release date confirmed. A partner should not tell customers it launches until a general release date is confirmed.",
+        "evidence_ids": [
+          "C-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          }
+        ]
+      },
+      {
+        "text": "The externally shared material partners can use is the shared payment-retry capability page, which covers pilot limits; externally it provides no launch date or GA promise.",
+        "evidence_ids": [
+          "S-03@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "S-03@1",
+            "quote": "External partners can consult the shared payment-retry capability page for pilot limits."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "0623cd0d-0003-4556-a8fa-bac07c39aa83",
+      "object": "chat.completion",
+      "created": 1791370045,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"General availability is not promised: payment-retry is limited to the controlled pilot and GA is not approved, with no general release date confirmed. A partner should not tell customers it launches until a general release date is confirmed.\",\"evidence_ids\":[\"C-02@1\"],\"supports\":[{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"}]},{\"text\":\"The externally shared material partners can use is the shared payment-retry capability page, which covers pilot limits; externally it provides no launch date or GA promise.\",\"evidence_ids\":[\"S-03@1\"],\"supports\":[{\"evidence_id\":\"S-03@1\",\"quote\":\"External partners can consult the shared payment-retry capability page for pilot limits.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 470,
+        "completion_tokens": 184,
+        "total_tokens": 654,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 342
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "a8451423-96b4-49bc-be5d-b743f9969fc0",
+      "object": "chat.completion",
+      "created": 1791370046,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 629,
+        "completion_tokens": 29,
+        "total_tokens": 658,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 501
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

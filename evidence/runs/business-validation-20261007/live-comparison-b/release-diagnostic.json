@@ -1,0 +1,115 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "PAY-102 being Done does not authorize general customer release.",
+        "evidence_ids": [
+          "J-02@1",
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          }
+        ]
+      },
+      {
+        "text": "The approved release scope is a controlled pilot; payment-retry is limited to that pilot.",
+        "evidence_ids": [
+          "D-02@1",
+          "C-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved."
+          },
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved."
+          }
+        ]
+      },
+      {
+        "text": "No general availability date is confirmed.",
+        "evidence_ids": [
+          "C-02@1",
+          "S-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-02@1",
+            "quote": "No general release date is confirmed."
+          },
+          {
+            "evidence_id": "S-02@1",
+            "quote": "No GA date is confirmed; use the capability page and release approval."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "2aaf37a2-2943-4a96-9913-a818f1fc4406",
+      "object": "chat.completion",
+      "created": 1791363012,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"PAY-102 being Done does not authorize general customer release.\",\"evidence_ids\":[\"J-02@1\",\"D-02@1\"],\"supports\":[{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"},{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"}]},{\"text\":\"The approved release scope is a controlled pilot; payment-retry is limited to that pilot.\",\"evidence_ids\":[\"D-02@1\",\"C-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved.\"},{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved.\"}]},{\"text\":\"No general availability date is confirmed.\",\"evidence_ids\":[\"C-02@1\",\"S-02@1\"],\"supports\":[{\"evidence_id\":\"C-02@1\",\"quote\":\"No general release date is confirmed.\"},{\"evidence_id\":\"S-02@1\",\"quote\":\"No GA date is confirmed; use the capability page and release approval.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 720,
+        "completion_tokens": 289,
+        "total_tokens": 1009,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 592
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "680a2db9-c611-491a-9229-b61d43ae0a95",
+      "object": "chat.completion",
+      "created": 1791363013,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":false,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true},{\"index\":2,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1005,
+        "completion_tokens": 37,
+        "total_tokens": 1042,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 877
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

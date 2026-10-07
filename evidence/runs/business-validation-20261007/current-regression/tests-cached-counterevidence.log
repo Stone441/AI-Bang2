@@ -1,0 +1,28 @@
+test_background_query_avoids_all_object_refresh_and_keeps_native_boundaries (test_business_cached_query.BusinessCachedQueryTests.test_background_query_avoids_all_object_refresh_and_keeps_native_boundaries) ... ok
+test_current_native_unknown_stops_full_answer_before_model (test_business_cached_query.BusinessCachedQueryTests.test_current_native_unknown_stops_full_answer_before_model) ... ok
+test_failed_backlogged_expired_or_stopped_worker_is_not_no_evidence (test_business_cached_query.BusinessCachedQueryTests.test_failed_backlogged_expired_or_stopped_worker_is_not_no_evidence) ... ok
+test_http_waiting_for_worker_does_not_hold_store_lock (test_business_cached_query.BusinessCachedQueryTests.test_http_waiting_for_worker_does_not_hold_store_lock) ... ok
+test_native_new_counterevidence_stops_answer_until_publication (test_business_cached_query.BusinessCachedQueryTests.test_native_new_counterevidence_stops_answer_until_publication) ... ERROR
+test_restart_needs_new_publication_and_other_actor_does_not_inherit_snapshot (test_business_cached_query.BusinessCachedQueryTests.test_restart_needs_new_publication_and_other_actor_does_not_inherit_snapshot) ... ok
+test_revocation_cannot_reuse_worker_snapshot_or_old_history (test_business_cached_query.BusinessCachedQueryTests.test_revocation_cannot_reuse_worker_snapshot_or_old_history) ... ok
+
+======================================================================
+ERROR: test_native_new_counterevidence_stops_answer_until_publication (test_business_cached_query.BusinessCachedQueryTests.test_native_new_counterevidence_stops_answer_until_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_business_cached_query.py", line 59, in test_native_new_counterevidence_stops_answer_until_publication
+    current=self.pilot.query(self.actor,'novelty')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py", line 157, in query
+    return self.engine.query(actor, question, history_id)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 100, in query
+    if not self.check(actor,r,rid,'before_model'): continue
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 52, in check
+    raise SourceUnavailable('Current source coverage unavailable; retry later')
+brain.confluence.SourceUnavailable: Current source coverage unavailable; retry later
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.544s
+
+FAILED (errors=1)

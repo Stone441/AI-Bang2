@@ -1,0 +1,88 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The final root cause of the payment-service duplicate requests was a mismatch between the retry configuration and the timeout budget, which caused a backlog of duplicate requests.",
+        "evidence_ids": [
+          "D-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-01@1",
+            "quote": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests."
+          }
+        ]
+      },
+      {
+        "text": "An early hypothesis involving cache invalidation at 09:00 was withdrawn at 09:15; the final postmortem at 10:00 confirmed the retry configuration and timeout budget mismatch.",
+        "evidence_ids": [
+          "S-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "S-01@1",
+            "quote": "09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "df9d9ee8-2d45-4587-925a-8e761fc226ad",
+      "object": "chat.completion",
+      "created": 1791362829,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\n  \"claims\": [\n    {\n      \"text\": \"The final root cause of the payment-service duplicate requests was a mismatch between the retry configuration and the timeout budget, which caused a backlog of duplicate requests.\",\n      \"evidence_ids\": [\n        \"D-01@1\"\n      ],\n      \"supports\": [\n        {\n          \"evidence_id\": \"D-01@1\",\n          \"quote\": \"Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.\"\n        }\n      ]\n    },\n    {\n      \"text\": \"An early hypothesis involving cache invalidation at 09:00 was withdrawn at 09:15; the final postmortem at 10:00 confirmed the retry configuration and timeout budget mismatch.\",\n      \"evidence_ids\": [\n        \"S-01@1\"\n      ],\n      \"supports\": [\n        {\n          \"evidence_id\": \"S-01@1\",\n          \"quote\": \"09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch.\"\n        }\n      ]\n    }\n  ]\n}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 950,
+        "completion_tokens": 249,
+        "total_tokens": 1199,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 822
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "60ccff5d-00af-4ddc-be0f-2f8088b37543",
+      "object": "chat.completion",
+      "created": 1791362831,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1124,
+        "completion_tokens": 29,
+        "total_tokens": 1153,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 996
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

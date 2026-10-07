@@ -1,0 +1,43 @@
+................................../opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py:806: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10b28a020>
+  def __setattr__(self, name, value):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+..........................................................................E...................................................................................................................................................{"status": "failed"}
+Drive: reused read-only authorization and verified native account.
+.................................................................../opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:345: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10b963a60>
+  obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:345: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10b963880>
+  obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:345: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10b9635b0>
+  obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:345: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10b963c40>
+  obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+...............................................
+======================================================================
+ERROR: test_poller_lifecycle_stops_before_store_close_and_keeps_queries_serial (test_container_discovery.DiscoveryBoundary.test_poller_lifecycle_stops_before_store_close_and_keeps_queries_serial)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_container_discovery.py", line 318, in test_poller_lifecycle_stops_before_store_close_and_keeps_queries_serial
+    self.assertEqual({e['source'] for e in self.pilot.query(self.actor,'novelty')['evidence']},set(AUTH017))
+                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py", line 157, in query
+    return self.engine.query(actor, question, history_id)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 59, in query
+    self.world.prepare(actor,self.store,self.audit,rid)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py", line 66, in prepare
+    published=discovery.query_snapshot(actor) if discovery else None
+              ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/discovery.py", line 383, in query_snapshot
+    raise SourceUnavailable('Current source coverage unavailable; retry later')
+brain.confluence.SourceUnavailable: Current source coverage unavailable; retry later
+
+----------------------------------------------------------------------
+Ran 370 tests in 16.610s
+
+FAILED (errors=1)
+{"status": "failed", "checks": {}}

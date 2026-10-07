@@ -1,0 +1,195 @@
+{
+  "request_id": "62b2ebd9522046439ff90ac01f828c96",
+  "question": "When should the ledger migration be rolled back?",
+  "answered_at": "2026-10-07T08:36:40.847931+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRoll back the ledger migration if settlement differences exceed five basis points.",
+      "evidence_ids": [
+        "BV-13@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "evidence_ids": [
+        "BV-11@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+      "evidence_ids": [
+        "BV-30@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nDual-region active writes were proposed but not approved; the accepted migration uses one writer.",
+      "evidence_ids": [
+        "BV-15@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "evidence_ids": [
+        "BV-23@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRemoval from a source channel prevents future citation and history access; previously saved copies cannot be recalled.",
+      "evidence_ids": [
+        "BV-29@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "evidence_ids": [
+        "BV-02@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "evidence_ids": [
+        "BV-12@1"
+      ]
+    },
+    {
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.",
+      "evidence_ids": [
+        "BV-14@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-13@1",
+      "resource_id": "BV-13",
+      "version": 1,
+      "source": "confluence",
+      "title": "migration / Rollback signal",
+      "locator": {
+        "section": "Rollback signal"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRoll back the ledger migration if settlement differences exceed five basis points.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:36:40.819893+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-13"
+    },
+    {
+      "evidence_id": "BV-11@1",
+      "resource_id": "BV-11",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Database design rationale",
+      "locator": {
+        "section": "Database design rationale"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:36:40.819858+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "evidence_id": "BV-30@1",
+      "resource_id": "BV-30",
+      "version": 1,
+      "source": "jira",
+      "title": "access / Unknown authority",
+      "locator": {
+        "section": "Unknown authority"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:36:40.820145+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-30"
+    },
+    {
+      "evidence_id": "BV-15@1",
+      "resource_id": "BV-15",
+      "version": 1,
+      "source": "slack",
+      "title": "migration / Unapproved alternative",
+      "locator": {
+        "section": "Unapproved alternative"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nDual-region active writes were proposed but not approved; the accepted migration uses one writer.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:36:40.819925+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-15"
+    },
+    {
+      "evidence_id": "BV-23@1",
+      "resource_id": "BV-23",
+      "version": 1,
+      "source": "slack",
+      "title": "reconciliation / Missing input",
+      "locator": {
+        "section": "Missing input"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:36:40.820041+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-23"
+    },
+    {
+      "evidence_id": "BV-29@1",
+      "resource_id": "BV-29",
+      "version": 1,
+      "source": "confluence",
+      "title": "access / Offboarding rule",
+      "locator": {
+        "section": "Offboarding rule"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nRemoval from a source channel prevents future citation and history access; previously saved copies cannot be recalled.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:36:40.820127+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-29"
+    },
+    {
+      "evidence_id": "BV-02@1",
+      "resource_id": "BV-02",
+      "version": 1,
+      "source": "jira",
+      "title": "authentication / Migration blocker",
+      "locator": {
+        "section": "Migration blocker"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:36:40.819705+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-02"
+    },
+    {
+      "evidence_id": "BV-12@1",
+      "resource_id": "BV-12",
+      "version": 1,
+      "source": "drive",
+      "title": "migration / Cutover ticket",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:36:40.819877+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    },
+    {
+      "evidence_id": "BV-14@1",
+      "resource_id": "BV-14",
+      "version": 1,
+      "source": "jira",
+      "title": "migration / Past rehearsal",
+      "locator": {
+        "section": "Past rehearsal"
+      },
+      "text": "SYNTHETIC BUSINESS VALIDATION\nThe September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T08:36:40.819909+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-14"
+    }
+  ],
+  "actor": "eng_a"
+}

@@ -1,6 +1,6 @@
 # Backlog · 2026-10-05
 
-2026-10-07新工程open：BV-03 legacy/fixture real-model来源unknown通用修复verified local（17定向/377完整与只读审查，新native/live not_run）；BV-02 未批准≠已放弃及歧义单答案误答，1000压力J-03漏召回。保留集已消费，不据其调固定f8ecbed或冒称新盲测；后续修复须独立开发复现与新版本验证。这些并非外部授权blocked或AUTH-019新增延期。BV-04当前native/live副本配对签名已完成，独立custody仍not_run；BV-05人工3×4任务/ROI及browser未执行。
+2026-10-07新工程open：BV-03 legacy/fixture real-model来源unknown通用修复verified local（17定向/377 clean archive/五fixture/2Node/HTTP与只读审查，新native/live not_run）；BV-02 未批准≠已放弃及歧义单答案误答，1000压力J-03漏召回。保留集已消费，不据其调固定f8ecbed或冒称新盲测；后续修复须独立开发复现与新版本验证。这些并非外部授权blocked或AUTH-019新增延期。BV-04当前native/live副本配对签名已完成，独立custody仍not_run；BV-05人工3×4任务/ROI及browser未执行。
 
 2026-10-07当前BV：00 verified local；01 48对象/24开发题/1000压力基线已运行，保留12题未消费；02 本地lexical/BM25与single live A/B已运行，B试用默认，1000集J-03漏召回仍open；03 四源AUTH-021新probe及两次修正native API/fake subset verified，cached反证/故障和HTTP锁修复local，性能/固定新版仍待验证；04 资源方向审计local已实现，当前签名回放待做；05 browser saved denial blocked、人任务not_run；06 f8ecbed固定实现与clean archive373/五fixture/Node/HTTP已通过，保留集/当前native与配对证据尚待完成。AUTH-019保留，旧331bd28可回退。
 

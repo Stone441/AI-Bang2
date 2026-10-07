@@ -1,0 +1,2181 @@
+{
+  "filters": {
+    "resource_id": "J-03",
+    "actor": null,
+    "as_of": 1227,
+    "page_size": 50
+  },
+  "events": [
+    {
+      "actor": "eng_a",
+      "event_type": "request_started",
+      "hash": "acb83eace2fd9da5c9ac0c8732c19af8f70fe256f6c9a13edf9d29bc4b723f76",
+      "payload": {
+        "candidate_strategy": "authority prefilter + lexical aliases + exact windows + authorized one-hop links",
+        "history_id": null,
+        "mode": "fixture_fake_model",
+        "query": "What caused the payment-service duplicate requests?",
+        "query_kind": "independent"
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "request_id": "b9a2b2cb29d641bea5d850e53f68bcca",
+      "schema_version": 1,
+      "seq": 1,
+      "timestamp": "2026-10-07T09:06:57.106018+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "3f7ae6d601c51ef04dea85c049caecb310d9221ca5ed11cf43d73546c2e46d53",
+      "payload": {
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "score": 0,
+        "source": "jira"
+      },
+      "previous_hash": "8985d47746c39e77621019b788ed23b4b26f8cc70a1e495053fde6c4f9f7020f",
+      "request_id": "b9a2b2cb29d641bea5d850e53f68bcca",
+      "schema_version": 1,
+      "seq": 41,
+      "timestamp": "2026-10-07T09:06:57.120715+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "a0310676ff859b84fdadcd9d95f5b48aab1267ab560473d01d718d082992e6e6",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.120726+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "3f7ae6d601c51ef04dea85c049caecb310d9221ca5ed11cf43d73546c2e46d53",
+      "request_id": "b9a2b2cb29d641bea5d850e53f68bcca",
+      "schema_version": 1,
+      "seq": 42,
+      "timestamp": "2026-10-07T09:06:57.120733+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "f2bc2da1130323cba9ecc4c67e7991d7e041d199c475bb75f81f41743315559c",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.121151+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "9b6f031b1fead2afda16f40ddff556f2f62d1456fe04b36530272768adb2aef3",
+      "request_id": "b9a2b2cb29d641bea5d850e53f68bcca",
+      "schema_version": 1,
+      "seq": 60,
+      "timestamp": "2026-10-07T09:06:57.121157+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "evidence_used",
+      "hash": "78effd736396be0376496642a1b2059db0a49bf748558f1282d96c1e277c8c8c",
+      "payload": {
+        "evidence_id": "J-03@1",
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "source": "jira",
+        "stage": "prepared_for_answer",
+        "version": 1
+      },
+      "previous_hash": "61e29fd3e18e7d982e24a615214731fc792ad4d0d079cc0f43a3e522447f8e76",
+      "request_id": "b9a2b2cb29d641bea5d850e53f68bcca",
+      "schema_version": 1,
+      "seq": 78,
+      "timestamp": "2026-10-07T09:06:57.121405+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "generation_completed",
+      "hash": "67ac1a6b91ebb9643ed91fca03c127edad1a5e93dcb3b88ef8a8536d95701974",
+      "payload": {
+        "cited": [
+          "C-01@1",
+          "J-01@1",
+          "D-01@1",
+          "S-01@1",
+          "C-02@1",
+          "BV-05@1",
+          "D-03@1",
+          "NOISE-0000@1",
+          "NOISE-0001@1",
+          "NOISE-0002@1",
+          "NOISE-0003@1",
+          "NOISE-0004@1",
+          "NOISE-0005@1",
+          "NOISE-0006@1",
+          "NOISE-0007@1",
+          "NOISE-0008@1",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "78effd736396be0376496642a1b2059db0a49bf748558f1282d96c1e277c8c8c",
+      "request_id": "b9a2b2cb29d641bea5d850e53f68bcca",
+      "schema_version": 1,
+      "seq": 79,
+      "timestamp": "2026-10-07T09:06:57.121467+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "ed52174bbf2389f53ea8c266159c88d5ac4316ba37528182e0f384bba355106e",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.121863+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "6049cb28908496a376c71b802026f00609bf414c45f0cc0cb62197f4fe306390",
+      "request_id": "b9a2b2cb29d641bea5d850e53f68bcca",
+      "schema_version": 1,
+      "seq": 97,
+      "timestamp": "2026-10-07T09:06:57.121868+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "response_committed",
+      "hash": "ecb8a0bef8cebb31c8fe7d9d5ac61706aed2f45c482366df7f55eb702135a1e0",
+      "payload": {
+        "response": {
+          "actor": "eng_a",
+          "answered_at": "2026-10-07T09:06:57.121879+00:00",
+          "claims": [
+            {
+              "evidence_ids": [
+                "C-01@1"
+              ],
+              "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+            },
+            {
+              "evidence_ids": [
+                "J-01@1"
+              ],
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook."
+            },
+            {
+              "evidence_ids": [
+                "D-01@1"
+              ],
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+            },
+            {
+              "evidence_ids": [
+                "S-01@1"
+              ],
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2."
+            },
+            {
+              "evidence_ids": [
+                "C-02@1"
+              ],
+              "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+            },
+            {
+              "evidence_ids": [
+                "BV-05@1"
+              ],
+              "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes."
+            },
+            {
+              "evidence_ids": [
+                "D-03@1"
+              ],
+              "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0000@1"
+              ],
+              "text": "SYNTHETIC catalog entry 0: warehouse rack 0, inspection interval 1 days, owner catalog-worker-0. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10000."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0001@1"
+              ],
+              "text": "SYNTHETIC catalog entry 1: warehouse rack 1, inspection interval 2 days, owner catalog-worker-1. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10001."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0002@1"
+              ],
+              "text": "SYNTHETIC catalog entry 2: warehouse rack 2, inspection interval 3 days, owner catalog-worker-2. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10002."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0003@1"
+              ],
+              "text": "SYNTHETIC catalog entry 3: warehouse rack 3, inspection interval 4 days, owner catalog-worker-3. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10003."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0004@1"
+              ],
+              "text": "SYNTHETIC catalog entry 4: warehouse rack 4, inspection interval 5 days, owner catalog-worker-4. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10004."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0005@1"
+              ],
+              "text": "SYNTHETIC catalog entry 5: warehouse rack 5, inspection interval 6 days, owner catalog-worker-5. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10005."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0006@1"
+              ],
+              "text": "SYNTHETIC catalog entry 6: warehouse rack 6, inspection interval 7 days, owner catalog-worker-6. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10006."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0007@1"
+              ],
+              "text": "SYNTHETIC catalog entry 7: warehouse rack 7, inspection interval 8 days, owner catalog-worker-7. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10007."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0008@1"
+              ],
+              "text": "SYNTHETIC catalog entry 8: warehouse rack 8, inspection interval 9 days, owner catalog-worker-8. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10008."
+            },
+            {
+              "evidence_ids": [
+                "J-02@1"
+              ],
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+            },
+            {
+              "evidence_ids": [
+                "J-03@1"
+              ],
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya."
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "C-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089735+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Failover procedure"
+              },
+              "resource_id": "C-01",
+              "source": "confluence",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-01",
+              "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+              "title": "Payment-service runbook",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089828+00:00",
+              "locator": {
+                "field": "description"
+              },
+              "resource_id": "J-01",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-01",
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "title": "PAY-101 Payment-service incident",
+              "version": 1
+            },
+            {
+              "evidence_id": "D-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089928+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Confirmed root cause"
+              },
+              "resource_id": "D-01",
+              "source": "drive",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/D-01",
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "title": "Final payment-service postmortem",
+              "version": 1
+            },
+            {
+              "evidence_id": "S-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089875+00:00",
+              "locator": {
+                "channel": "incident",
+                "messages": [
+                  "1790816400.000001",
+                  "1790817300.000001",
+                  "1790820000.000001"
+                ],
+                "thread": "1790816400.000001"
+              },
+              "resource_id": "S-01",
+              "source": "slack",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/S-01",
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+              "title": "Private incident discussion",
+              "version": 1
+            },
+            {
+              "evidence_id": "C-02@1",
+              "indexed_at": "2026-10-07T09:06:57.089784+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Supported rollout"
+              },
+              "resource_id": "C-02",
+              "source": "confluence",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-02",
+              "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+              "title": "Payment-retry capability",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-05@1",
+              "indexed_at": "2026-10-07T09:06:57.090051+00:00",
+              "locator": {
+                "section": "Future policy"
+              },
+              "resource_id": "BV-05",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/BV-05",
+              "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+              "title": "authentication / Future policy",
+              "version": 1
+            },
+            {
+              "evidence_id": "D-03@1",
+              "indexed_at": "2026-10-07T09:06:57.089958+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Customer communication"
+              },
+              "resource_id": "D-03",
+              "source": "drive",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/D-03",
+              "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+              "title": "Operations readiness",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0000@1",
+              "indexed_at": "2026-10-07T09:06:57.090562+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0000",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0000",
+              "text": "SYNTHETIC catalog entry 0: warehouse rack 0, inspection interval 1 days, owner catalog-worker-0. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10000.",
+              "title": "Synthetic unrelated catalog 0",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0001@1",
+              "indexed_at": "2026-10-07T09:06:57.090577+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0001",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0001",
+              "text": "SYNTHETIC catalog entry 1: warehouse rack 1, inspection interval 2 days, owner catalog-worker-1. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10001.",
+              "title": "Synthetic unrelated catalog 1",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0002@1",
+              "indexed_at": "2026-10-07T09:06:57.090593+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0002",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0002",
+              "text": "SYNTHETIC catalog entry 2: warehouse rack 2, inspection interval 3 days, owner catalog-worker-2. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10002.",
+              "title": "Synthetic unrelated catalog 2",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0003@1",
+              "indexed_at": "2026-10-07T09:06:57.090608+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0003",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0003",
+              "text": "SYNTHETIC catalog entry 3: warehouse rack 3, inspection interval 4 days, owner catalog-worker-3. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10003.",
+              "title": "Synthetic unrelated catalog 3",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0004@1",
+              "indexed_at": "2026-10-07T09:06:57.090622+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0004",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0004",
+              "text": "SYNTHETIC catalog entry 4: warehouse rack 4, inspection interval 5 days, owner catalog-worker-4. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10004.",
+              "title": "Synthetic unrelated catalog 4",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0005@1",
+              "indexed_at": "2026-10-07T09:06:57.090636+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0005",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0005",
+              "text": "SYNTHETIC catalog entry 5: warehouse rack 5, inspection interval 6 days, owner catalog-worker-5. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10005.",
+              "title": "Synthetic unrelated catalog 5",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0006@1",
+              "indexed_at": "2026-10-07T09:06:57.090650+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0006",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0006",
+              "text": "SYNTHETIC catalog entry 6: warehouse rack 6, inspection interval 7 days, owner catalog-worker-6. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10006.",
+              "title": "Synthetic unrelated catalog 6",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0007@1",
+              "indexed_at": "2026-10-07T09:06:57.090664+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0007",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0007",
+              "text": "SYNTHETIC catalog entry 7: warehouse rack 7, inspection interval 8 days, owner catalog-worker-7. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10007.",
+              "title": "Synthetic unrelated catalog 7",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0008@1",
+              "indexed_at": "2026-10-07T09:06:57.090678+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0008",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0008",
+              "text": "SYNTHETIC catalog entry 8: warehouse rack 8, inspection interval 9 days, owner catalog-worker-8. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10008.",
+              "title": "Synthetic unrelated catalog 8",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-02@1",
+              "indexed_at": "2026-10-07T09:06:57.089844+00:00",
+              "locator": {
+                "field": "status and description"
+              },
+              "resource_id": "J-02",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-02",
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "title": "PAY-102 Retry configuration fix",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-03@1",
+              "indexed_at": "2026-10-07T09:06:57.089860+00:00",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "resource_id": "J-03",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03",
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "title": "PAY-103 Protective measures",
+              "version": 1
+            }
+          ],
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "question": "What caused the payment-service duplicate requests?",
+          "request_id": "b9a2b2cb29d641bea5d850e53f68bcca",
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ]
+        }
+      },
+      "previous_hash": "ed52174bbf2389f53ea8c266159c88d5ac4316ba37528182e0f384bba355106e",
+      "request_id": "b9a2b2cb29d641bea5d850e53f68bcca",
+      "schema_version": 1,
+      "seq": 98,
+      "timestamp": "2026-10-07T09:06:57.121915+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "request_started",
+      "hash": "a7ea914b602280ed9109ac6c7da8ab05fabbd41acca468153e9f65fbc699037a",
+      "payload": {
+        "candidate_strategy": "authority prefilter + lexical aliases + exact windows + authorized one-hop links",
+        "history_id": null,
+        "mode": "fixture_fake_model",
+        "query": "Which payment-service explanation was withdrawn?",
+        "query_kind": "independent"
+      },
+      "previous_hash": "ecb8a0bef8cebb31c8fe7d9d5ac61706aed2f45c482366df7f55eb702135a1e0",
+      "request_id": "755f2c081164495cac8f26c29838cf77",
+      "schema_version": 1,
+      "seq": 99,
+      "timestamp": "2026-10-07T09:06:57.122709+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "39653ff1cf56b8e9ada1f2bd9ecda7ed2fc2f360900757ce3cb0c81be828fef7",
+      "payload": {
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "score": 0,
+        "source": "jira"
+      },
+      "previous_hash": "672db4d18f2a2dc6d9fa46c4920ee59ba08a224dc2722d940689bba549a0d9b3",
+      "request_id": "755f2c081164495cac8f26c29838cf77",
+      "schema_version": 1,
+      "seq": 139,
+      "timestamp": "2026-10-07T09:06:57.137348+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "dd6aa412707f94cdb54cd9e63197eb08090a689bceabcc8d2505b464132e5335",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.137360+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "39653ff1cf56b8e9ada1f2bd9ecda7ed2fc2f360900757ce3cb0c81be828fef7",
+      "request_id": "755f2c081164495cac8f26c29838cf77",
+      "schema_version": 1,
+      "seq": 140,
+      "timestamp": "2026-10-07T09:06:57.137366+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "854b3fc4a498b8648bd2dce39e8db72bff4f8696bbbc838fa2d7d94916e740d3",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.137824+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "7f3cfba8fc8498c9b17f8b086a7751b286e4f8958867d3ef436b007559f148de",
+      "request_id": "755f2c081164495cac8f26c29838cf77",
+      "schema_version": 1,
+      "seq": 158,
+      "timestamp": "2026-10-07T09:06:57.137831+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "evidence_used",
+      "hash": "4b02924fb302cfba72059a5d4ecac786a01ede596418874c861a945705e29515",
+      "payload": {
+        "evidence_id": "J-03@1",
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "source": "jira",
+        "stage": "prepared_for_answer",
+        "version": 1
+      },
+      "previous_hash": "18b140b2a05fc63e85f3026457e4819b8d60c647b73e115bb5fdba3f4e143580",
+      "request_id": "755f2c081164495cac8f26c29838cf77",
+      "schema_version": 1,
+      "seq": 176,
+      "timestamp": "2026-10-07T09:06:57.138104+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "generation_completed",
+      "hash": "803fb73c45ea7bc781a8c8199169dbfe7f65639167fcf4f783452aa5e3e55415",
+      "payload": {
+        "cited": [
+          "C-01@1",
+          "J-01@1",
+          "S-01@1",
+          "C-02@1",
+          "D-01@1",
+          "BV-05@1",
+          "BV-18@1",
+          "D-03@1",
+          "NOISE-0000@1",
+          "NOISE-0001@1",
+          "NOISE-0002@1",
+          "NOISE-0003@1",
+          "NOISE-0004@1",
+          "NOISE-0005@1",
+          "NOISE-0006@1",
+          "NOISE-0007@1",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "4b02924fb302cfba72059a5d4ecac786a01ede596418874c861a945705e29515",
+      "request_id": "755f2c081164495cac8f26c29838cf77",
+      "schema_version": 1,
+      "seq": 177,
+      "timestamp": "2026-10-07T09:06:57.138171+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "934740abec137e28c59e93f820996dc3222f661477400b3a306b11a29551f932",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.138608+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "89f7574a9b2024117096c5300de974bf25a35a1f59ef0f073b640a2ccd87e6cc",
+      "request_id": "755f2c081164495cac8f26c29838cf77",
+      "schema_version": 1,
+      "seq": 195,
+      "timestamp": "2026-10-07T09:06:57.138614+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "response_committed",
+      "hash": "ee135965038e5758d2bbefb2f64b6fb35c88532ce022e1ee53a4e152edfa8e47",
+      "payload": {
+        "response": {
+          "actor": "eng_a",
+          "answered_at": "2026-10-07T09:06:57.138626+00:00",
+          "claims": [
+            {
+              "evidence_ids": [
+                "C-01@1"
+              ],
+              "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+            },
+            {
+              "evidence_ids": [
+                "J-01@1"
+              ],
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook."
+            },
+            {
+              "evidence_ids": [
+                "S-01@1"
+              ],
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2."
+            },
+            {
+              "evidence_ids": [
+                "C-02@1"
+              ],
+              "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+            },
+            {
+              "evidence_ids": [
+                "D-01@1"
+              ],
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+            },
+            {
+              "evidence_ids": [
+                "BV-05@1"
+              ],
+              "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes."
+            },
+            {
+              "evidence_ids": [
+                "BV-18@1"
+              ],
+              "text": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted."
+            },
+            {
+              "evidence_ids": [
+                "D-03@1"
+              ],
+              "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0000@1"
+              ],
+              "text": "SYNTHETIC catalog entry 0: warehouse rack 0, inspection interval 1 days, owner catalog-worker-0. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10000."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0001@1"
+              ],
+              "text": "SYNTHETIC catalog entry 1: warehouse rack 1, inspection interval 2 days, owner catalog-worker-1. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10001."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0002@1"
+              ],
+              "text": "SYNTHETIC catalog entry 2: warehouse rack 2, inspection interval 3 days, owner catalog-worker-2. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10002."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0003@1"
+              ],
+              "text": "SYNTHETIC catalog entry 3: warehouse rack 3, inspection interval 4 days, owner catalog-worker-3. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10003."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0004@1"
+              ],
+              "text": "SYNTHETIC catalog entry 4: warehouse rack 4, inspection interval 5 days, owner catalog-worker-4. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10004."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0005@1"
+              ],
+              "text": "SYNTHETIC catalog entry 5: warehouse rack 5, inspection interval 6 days, owner catalog-worker-5. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10005."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0006@1"
+              ],
+              "text": "SYNTHETIC catalog entry 6: warehouse rack 6, inspection interval 7 days, owner catalog-worker-6. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10006."
+            },
+            {
+              "evidence_ids": [
+                "NOISE-0007@1"
+              ],
+              "text": "SYNTHETIC catalog entry 7: warehouse rack 7, inspection interval 8 days, owner catalog-worker-7. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10007."
+            },
+            {
+              "evidence_ids": [
+                "J-02@1"
+              ],
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+            },
+            {
+              "evidence_ids": [
+                "J-03@1"
+              ],
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya."
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "C-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089735+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Failover procedure"
+              },
+              "resource_id": "C-01",
+              "source": "confluence",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-01",
+              "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+              "title": "Payment-service runbook",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089828+00:00",
+              "locator": {
+                "field": "description"
+              },
+              "resource_id": "J-01",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-01",
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "title": "PAY-101 Payment-service incident",
+              "version": 1
+            },
+            {
+              "evidence_id": "S-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089875+00:00",
+              "locator": {
+                "channel": "incident",
+                "messages": [
+                  "1790816400.000001",
+                  "1790817300.000001",
+                  "1790820000.000001"
+                ],
+                "thread": "1790816400.000001"
+              },
+              "resource_id": "S-01",
+              "source": "slack",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/S-01",
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+              "title": "Private incident discussion",
+              "version": 1
+            },
+            {
+              "evidence_id": "C-02@1",
+              "indexed_at": "2026-10-07T09:06:57.089784+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Supported rollout"
+              },
+              "resource_id": "C-02",
+              "source": "confluence",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-02",
+              "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+              "title": "Payment-retry capability",
+              "version": 1
+            },
+            {
+              "evidence_id": "D-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089928+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Confirmed root cause"
+              },
+              "resource_id": "D-01",
+              "source": "drive",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/D-01",
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "title": "Final payment-service postmortem",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-05@1",
+              "indexed_at": "2026-10-07T09:06:57.090051+00:00",
+              "locator": {
+                "section": "Future policy"
+              },
+              "resource_id": "BV-05",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/BV-05",
+              "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+              "title": "authentication / Future policy",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-18@1",
+              "indexed_at": "2026-10-07T09:06:57.090308+00:00",
+              "locator": {
+                "channel": "synthetic-auth",
+                "message": "BV-18",
+                "root": "BV-03"
+              },
+              "resource_id": "BV-18",
+              "source": "slack",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/BV-18",
+              "text": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+              "title": "Authentication signing design reply",
+              "version": 1
+            },
+            {
+              "evidence_id": "D-03@1",
+              "indexed_at": "2026-10-07T09:06:57.089958+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Customer communication"
+              },
+              "resource_id": "D-03",
+              "source": "drive",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/D-03",
+              "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+              "title": "Operations readiness",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0000@1",
+              "indexed_at": "2026-10-07T09:06:57.090562+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0000",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0000",
+              "text": "SYNTHETIC catalog entry 0: warehouse rack 0, inspection interval 1 days, owner catalog-worker-0. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10000.",
+              "title": "Synthetic unrelated catalog 0",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0001@1",
+              "indexed_at": "2026-10-07T09:06:57.090577+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0001",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0001",
+              "text": "SYNTHETIC catalog entry 1: warehouse rack 1, inspection interval 2 days, owner catalog-worker-1. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10001.",
+              "title": "Synthetic unrelated catalog 1",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0002@1",
+              "indexed_at": "2026-10-07T09:06:57.090593+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0002",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0002",
+              "text": "SYNTHETIC catalog entry 2: warehouse rack 2, inspection interval 3 days, owner catalog-worker-2. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10002.",
+              "title": "Synthetic unrelated catalog 2",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0003@1",
+              "indexed_at": "2026-10-07T09:06:57.090608+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0003",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0003",
+              "text": "SYNTHETIC catalog entry 3: warehouse rack 3, inspection interval 4 days, owner catalog-worker-3. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10003.",
+              "title": "Synthetic unrelated catalog 3",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0004@1",
+              "indexed_at": "2026-10-07T09:06:57.090622+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0004",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0004",
+              "text": "SYNTHETIC catalog entry 4: warehouse rack 4, inspection interval 5 days, owner catalog-worker-4. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10004.",
+              "title": "Synthetic unrelated catalog 4",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0005@1",
+              "indexed_at": "2026-10-07T09:06:57.090636+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0005",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0005",
+              "text": "SYNTHETIC catalog entry 5: warehouse rack 5, inspection interval 6 days, owner catalog-worker-5. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10005.",
+              "title": "Synthetic unrelated catalog 5",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0006@1",
+              "indexed_at": "2026-10-07T09:06:57.090650+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0006",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0006",
+              "text": "SYNTHETIC catalog entry 6: warehouse rack 6, inspection interval 7 days, owner catalog-worker-6. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10006.",
+              "title": "Synthetic unrelated catalog 6",
+              "version": 1
+            },
+            {
+              "evidence_id": "NOISE-0007@1",
+              "indexed_at": "2026-10-07T09:06:57.090664+00:00",
+              "locator": {
+                "section": "Token rotation decision"
+              },
+              "resource_id": "NOISE-0007",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/NOISE-0007",
+              "text": "SYNTHETIC catalog entry 7: warehouse rack 7, inspection interval 8 days, owner catalog-worker-7. Token rotation migration payment scope status and approval are catalog column labels, not business decisions. Inventory code SKU-10007.",
+              "title": "Synthetic unrelated catalog 7",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-02@1",
+              "indexed_at": "2026-10-07T09:06:57.089844+00:00",
+              "locator": {
+                "field": "status and description"
+              },
+              "resource_id": "J-02",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-02",
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "title": "PAY-102 Retry configuration fix",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-03@1",
+              "indexed_at": "2026-10-07T09:06:57.089860+00:00",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "resource_id": "J-03",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03",
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "title": "PAY-103 Protective measures",
+              "version": 1
+            }
+          ],
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "question": "Which payment-service explanation was withdrawn?",
+          "request_id": "755f2c081164495cac8f26c29838cf77",
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ]
+        }
+      },
+      "previous_hash": "934740abec137e28c59e93f820996dc3222f661477400b3a306b11a29551f932",
+      "request_id": "755f2c081164495cac8f26c29838cf77",
+      "schema_version": 1,
+      "seq": 196,
+      "timestamp": "2026-10-07T09:06:57.138664+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "request_started",
+      "hash": "a24444efa5d1f3a1374a1f4120fcbce5ba56db2b32046f6871b7c10bb877852c",
+      "payload": {
+        "candidate_strategy": "authority prefilter + lexical aliases + exact windows + authorized one-hop links",
+        "history_id": null,
+        "mode": "fixture_fake_model",
+        "query": "As of 2026-10-07, before November, how long do service tokens last?",
+        "query_kind": "independent"
+      },
+      "previous_hash": "57563b2b91046f3806ac156bc819cbb58c4fbab28e9f0b733aea63e40f4ecf78",
+      "request_id": "744287d861d748c694fbaf3f8c4f695a",
+      "schema_version": 1,
+      "seq": 487,
+      "timestamp": "2026-10-07T09:06:57.260363+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "7b19e5887927c5ecdcff1706681a58bf9dfedb129451e7acd64ea0f1787f1ef0",
+      "payload": {
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "score": 0,
+        "source": "jira"
+      },
+      "previous_hash": "d2464160b6dbc78c5a7e61c922fd27905959233fb07cdf795fb7a266622647bd",
+      "request_id": "744287d861d748c694fbaf3f8c4f695a",
+      "schema_version": 1,
+      "seq": 512,
+      "timestamp": "2026-10-07T09:06:57.273592+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "0feb13b6a68102cd7d6ed021b1c4a33ddd9f3ecd3e457f71eff9f1e478905429",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.273603+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "7b19e5887927c5ecdcff1706681a58bf9dfedb129451e7acd64ea0f1787f1ef0",
+      "request_id": "744287d861d748c694fbaf3f8c4f695a",
+      "schema_version": 1,
+      "seq": 513,
+      "timestamp": "2026-10-07T09:06:57.273609+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "80fd988b0a6d8930492c958e627bb7595b966beb2c359f0b22fce975f9b109c1",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.273865+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "791941ff004eda18512ab689e1699d41d92a05cb33c29c830c2b6ab526fbb60b",
+      "request_id": "744287d861d748c694fbaf3f8c4f695a",
+      "schema_version": 1,
+      "seq": 524,
+      "timestamp": "2026-10-07T09:06:57.273871+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "evidence_used",
+      "hash": "71892eba2001e48a610e51bb0edd0142745d5d2a62cde546705f1e7f924c14a9",
+      "payload": {
+        "evidence_id": "J-03@1",
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "source": "jira",
+        "stage": "prepared_for_answer",
+        "version": 1
+      },
+      "previous_hash": "a816576f8a317892ad213bcd22a97490c72fc367fefe845b85c20898e84e3572",
+      "request_id": "744287d861d748c694fbaf3f8c4f695a",
+      "schema_version": 1,
+      "seq": 535,
+      "timestamp": "2026-10-07T09:06:57.274017+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "generation_completed",
+      "hash": "6b8422eb8ee2b0267280c5b2c8f0926597830088370104ee81a04113076e030a",
+      "payload": {
+        "cited": [
+          "BV-05@1",
+          "C-01@1",
+          "J-01@1",
+          "BV-02@1",
+          "BV-19@1",
+          "BV-30@1",
+          "BV-32@1",
+          "S-01@1",
+          "D-01@1",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "71892eba2001e48a610e51bb0edd0142745d5d2a62cde546705f1e7f924c14a9",
+      "request_id": "744287d861d748c694fbaf3f8c4f695a",
+      "schema_version": 1,
+      "seq": 536,
+      "timestamp": "2026-10-07T09:06:57.274059+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "a9886c8aba4678d44ac82005d0676d5944ea3c26c805ec7696e17f1de556b3fa",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.274309+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "cfae8c140aa7f97c9f98a6cf83740b2134517045e47f30214dd77991999ded28",
+      "request_id": "744287d861d748c694fbaf3f8c4f695a",
+      "schema_version": 1,
+      "seq": 547,
+      "timestamp": "2026-10-07T09:06:57.274315+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "response_committed",
+      "hash": "ff4523725f6048b9c96417ba1454a13643188b614d465f694c57c276dcfb503b",
+      "payload": {
+        "response": {
+          "actor": "eng_a",
+          "answered_at": "2026-10-07T09:06:57.274325+00:00",
+          "claims": [
+            {
+              "evidence_ids": [
+                "BV-05@1"
+              ],
+              "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes."
+            },
+            {
+              "evidence_ids": [
+                "C-01@1"
+              ],
+              "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+            },
+            {
+              "evidence_ids": [
+                "J-01@1"
+              ],
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook."
+            },
+            {
+              "evidence_ids": [
+                "BV-02@1"
+              ],
+              "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena."
+            },
+            {
+              "evidence_ids": [
+                "BV-19@1"
+              ],
+              "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook."
+            },
+            {
+              "evidence_ids": [
+                "BV-30@1"
+              ],
+              "text": "[SYNTHETIC]\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission."
+            },
+            {
+              "evidence_ids": [
+                "BV-32@1"
+              ],
+              "text": "[SYNTHETIC]\nThe proposed November hourly schedule is not approved. Current settlement is daily."
+            },
+            {
+              "evidence_ids": [
+                "S-01@1"
+              ],
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2."
+            },
+            {
+              "evidence_ids": [
+                "D-01@1"
+              ],
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+            },
+            {
+              "evidence_ids": [
+                "J-02@1"
+              ],
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+            },
+            {
+              "evidence_ids": [
+                "J-03@1"
+              ],
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya."
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "BV-05@1",
+              "indexed_at": "2026-10-07T09:06:57.090051+00:00",
+              "locator": {
+                "section": "Future policy"
+              },
+              "resource_id": "BV-05",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/BV-05",
+              "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+              "title": "authentication / Future policy",
+              "version": 1
+            },
+            {
+              "evidence_id": "C-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089735+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Failover procedure"
+              },
+              "resource_id": "C-01",
+              "source": "confluence",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/C-01",
+              "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+              "title": "Payment-service runbook",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089828+00:00",
+              "locator": {
+                "field": "description"
+              },
+              "resource_id": "J-01",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-01",
+              "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+              "title": "PAY-101 Payment-service incident",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-02@1",
+              "indexed_at": "2026-10-07T09:06:57.090006+00:00",
+              "locator": {
+                "section": "Migration blocker"
+              },
+              "resource_id": "BV-02",
+              "source": "jira",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/BV-02",
+              "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+              "title": "authentication / Migration blocker",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-19@1",
+              "indexed_at": "2026-10-07T09:06:57.090323+00:00",
+              "locator": {
+                "section": "Current response procedure"
+              },
+              "resource_id": "BV-19",
+              "source": "slack",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/BV-19",
+              "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+              "title": "webhook / Current response procedure",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-30@1",
+              "indexed_at": "2026-10-07T09:06:57.090477+00:00",
+              "locator": {
+                "section": "Unknown authority"
+              },
+              "resource_id": "BV-30",
+              "source": "jira",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/BV-30",
+              "text": "[SYNTHETIC]\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+              "title": "access / Unknown authority",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-32@1",
+              "indexed_at": "2026-10-07T09:06:57.090505+00:00",
+              "locator": {
+                "section": "Future settlement schedule"
+              },
+              "resource_id": "BV-32",
+              "source": "drive",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/BV-32",
+              "text": "[SYNTHETIC]\nThe proposed November hourly schedule is not approved. Current settlement is daily.",
+              "title": "settlement / Future settlement schedule",
+              "version": 1
+            },
+            {
+              "evidence_id": "S-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089875+00:00",
+              "locator": {
+                "channel": "incident",
+                "messages": [
+                  "1790816400.000001",
+                  "1790817300.000001",
+                  "1790820000.000001"
+                ],
+                "thread": "1790816400.000001"
+              },
+              "resource_id": "S-01",
+              "source": "slack",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/S-01",
+              "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+              "title": "Private incident discussion",
+              "version": 1
+            },
+            {
+              "evidence_id": "D-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089928+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Confirmed root cause"
+              },
+              "resource_id": "D-01",
+              "source": "drive",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/D-01",
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "title": "Final payment-service postmortem",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-02@1",
+              "indexed_at": "2026-10-07T09:06:57.089844+00:00",
+              "locator": {
+                "field": "status and description"
+              },
+              "resource_id": "J-02",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-02",
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "title": "PAY-102 Retry configuration fix",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-03@1",
+              "indexed_at": "2026-10-07T09:06:57.089860+00:00",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "resource_id": "J-03",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03",
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "title": "PAY-103 Protective measures",
+              "version": 1
+            }
+          ],
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "question": "As of 2026-10-07, before November, how long do service tokens last?",
+          "request_id": "744287d861d748c694fbaf3f8c4f695a",
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ]
+        }
+      },
+      "previous_hash": "a9886c8aba4678d44ac82005d0676d5944ea3c26c805ec7696e17f1de556b3fa",
+      "request_id": "744287d861d748c694fbaf3f8c4f695a",
+      "schema_version": 1,
+      "seq": 548,
+      "timestamp": "2026-10-07T09:06:57.274349+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "request_started",
+      "hash": "6aa612b7261deab817f540cd42679daec6a45d95f5d05d3ee10cc8cd1cb848c2",
+      "payload": {
+        "candidate_strategy": "authority prefilter + lexical aliases + exact windows + authorized one-hop links",
+        "history_id": null,
+        "mode": "fixture_fake_model",
+        "query": "Was DNS the cause of the webhook backlog?",
+        "query_kind": "independent"
+      },
+      "previous_hash": "b9f0c53453205650746aba762d1ecbf9268e9f48e844d96d5a432a0478ffb10b",
+      "request_id": "9822e2c84d3f4caf9da5f463da58e8b3",
+      "schema_version": 1,
+      "seq": 939,
+      "timestamp": "2026-10-07T09:06:57.392310+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "55e64a66f8cd5b7a3f312b7d3c5d82144d4471b253d3eb31bbf44cffaf0e9fa5",
+      "payload": {
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "score": 0,
+        "source": "jira"
+      },
+      "previous_hash": "e71d50f6bbc3813284874bdeb488ec19cf59022a33813bc3e20c0b4df9c16d2b",
+      "request_id": "9822e2c84d3f4caf9da5f463da58e8b3",
+      "schema_version": 1,
+      "seq": 955,
+      "timestamp": "2026-10-07T09:06:57.405803+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "071551c633c332031f64aeaf8a3dfc71f95605ee60a0c4859bf764bff88fc7c6",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.405814+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "55e64a66f8cd5b7a3f312b7d3c5d82144d4471b253d3eb31bbf44cffaf0e9fa5",
+      "request_id": "9822e2c84d3f4caf9da5f463da58e8b3",
+      "schema_version": 1,
+      "seq": 956,
+      "timestamp": "2026-10-07T09:06:57.405820+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "fdd17811f22818d2d8fb4f0bfb1b0496c3afbebb5f59f299333e1ff24e9e92ac",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.406026+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "4fccbdba6b77763f2a8af681df57bc54f451087b82193644ea0d6a669b1af1e9",
+      "request_id": "9822e2c84d3f4caf9da5f463da58e8b3",
+      "schema_version": 1,
+      "seq": 964,
+      "timestamp": "2026-10-07T09:06:57.406032+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "evidence_used",
+      "hash": "b1ad20985ac46239399c0a537036ba12605219f65ec7a85d64cbfd6842c0b543",
+      "payload": {
+        "evidence_id": "J-03@1",
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "source": "jira",
+        "stage": "prepared_for_answer",
+        "version": 1
+      },
+      "previous_hash": "7a863437af92257660064ff262d771c61b9de3d5572218d34582de27352475f3",
+      "request_id": "9822e2c84d3f4caf9da5f463da58e8b3",
+      "schema_version": 1,
+      "seq": 972,
+      "timestamp": "2026-10-07T09:06:57.406154+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "generation_completed",
+      "hash": "ec14c74ac370a05ac615f1ec776475cb29fe42ac8b8f5d5733ba85ecb6fd2813",
+      "payload": {
+        "cited": [
+          "BV-16@1",
+          "BV-19@1",
+          "BV-11@1#0:2400",
+          "D-01@1",
+          "BV-20@1",
+          "BV-17@1",
+          "J-02@1",
+          "J-03@1"
+        ],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "b1ad20985ac46239399c0a537036ba12605219f65ec7a85d64cbfd6842c0b543",
+      "request_id": "9822e2c84d3f4caf9da5f463da58e8b3",
+      "schema_version": 1,
+      "seq": 973,
+      "timestamp": "2026-10-07T09:06:57.406192+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "8635cbdeb9465c25283cfd2f82e829585e92b53f386bf93f03c18a8377a6ae2e",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.406388+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "91f6b2bbccc9dfeb7210dde84cafeb9d1c7074599b5713ca1d28a56e27ca7143",
+      "request_id": "9822e2c84d3f4caf9da5f463da58e8b3",
+      "schema_version": 1,
+      "seq": 981,
+      "timestamp": "2026-10-07T09:06:57.406394+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "response_committed",
+      "hash": "d0810d0bbfcd804e44eafc8f154fe0eba80c158fde0f4958f62354e0b151fb2e",
+      "payload": {
+        "response": {
+          "actor": "eng_a",
+          "answered_at": "2026-10-07T09:06:57.406405+00:00",
+          "claims": [
+            {
+              "evidence_ids": [
+                "BV-16@1"
+              ],
+              "text": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution."
+            },
+            {
+              "evidence_ids": [
+                "BV-19@1"
+              ],
+              "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook."
+            },
+            {
+              "evidence_ids": [
+                "BV-11@1#0:2400"
+              ],
+              "text": "[SYNTHETIC]\n# Retired webhook rehearsal\nDNS was a historical webhook hypothesis.\nArchived migration rehearsal entry 0: batch 0, checksum 0; no current decision recorded.\nArchived migration rehearsal entry 1: batch 17, checksum 31; no current decision recorded.\nArchived migration rehearsal entry 2: batch 34, checksum 62; no current decision recorded.\nArchived migration rehearsal entry 3: batch 51, checksum 93; no current decision recorded.\nArchived migration rehearsal entry 4: batch 68, checksum 124; no current decision recorded.\nArchived migration rehearsal entry 5: batch 85, checksum 155; no current decision recorded.\nArchived migration rehearsal entry 6: batch 102, checksum 186; no current decision recorded.\nArchived migration rehearsal entry 7: batch 119, checksum 217; no current decision recorded.\nArchived migration rehearsal entry 8: batch 136, checksum 248; no current decision recorded.\nArchived migration rehearsal entry 9: batch 153, checksum 279; no current decision recorded.\nArchived migration rehearsal entry 10: batch 170, checksum 310; no current decision recorded.\nArchived migration rehearsal entry 11: batch 187, checksum 341; no current decision recorded.\nArchived migration rehearsal entry 12: batch 204, checksum 372; no current decision recorded.\nArchived migration rehearsal entry 13: batch 221, checksum 403; no current decision recorded.\nArchived migration rehearsal entry 14: batch 238, checksum 434; no current decision recorded.\nArchived migration rehearsal entry 15: batch 255, checksum 465; no current decision recorded.\nArchived migration rehearsal entry 16: batch 272, checksum 496; no current decision recorded.\nArchived migration rehearsal entry 17: batch 289, checksum 527; no current decision recorded.\nArchived migration rehearsal entry 18: batch 306, checksum 558; no current decision recorded.\nArchived migration rehearsal entry 19: batch 323, checksum 589; no current decision recorded.\nArchived migration rehearsal entry 20: batch 340, checksum 620; no current decision recorded.\nArchived migration rehearsal entry 21: batch 357, checksum 651; no current decision recorded.\nArchived migration rehearsal entry 22: batch 374, checksum 682; no current decision recorded.\nArchived migration rehearsal entry 23: batch 391, checksum 713; no current decision recorded.\nArchived migration rehearsal entry 24: batch 408, checksum 744; no current decision r"
+            },
+            {
+              "evidence_ids": [
+                "D-01@1"
+              ],
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+            },
+            {
+              "evidence_ids": [
+                "BV-20@1"
+              ],
+              "text": "[SYNTHETIC]\nWebhook latency targets apply to the pilot only; no general customer latency guarantee is approved."
+            },
+            {
+              "evidence_ids": [
+                "BV-17@1"
+              ],
+              "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi."
+            },
+            {
+              "evidence_ids": [
+                "J-02@1"
+              ],
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+            },
+            {
+              "evidence_ids": [
+                "J-03@1"
+              ],
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya."
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "BV-16@1",
+              "indexed_at": "2026-10-07T09:06:57.090280+00:00",
+              "locator": {
+                "section": "Webhook incident cause"
+              },
+              "resource_id": "BV-16",
+              "source": "drive",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/BV-16",
+              "text": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.",
+              "title": "webhook / Webhook incident cause",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-19@1",
+              "indexed_at": "2026-10-07T09:06:57.090323+00:00",
+              "locator": {
+                "section": "Current response procedure"
+              },
+              "resource_id": "BV-19",
+              "source": "slack",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/BV-19",
+              "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+              "title": "webhook / Current response procedure",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-11@1#0:2400",
+              "indexed_at": "2026-10-07T09:06:57.090141+00:00",
+              "locator": {
+                "section": "Database design rationale",
+                "text_window": {
+                  "end": 2400,
+                  "start": 0,
+                  "strategy": "fixed-2400-overlap-400-v1",
+                  "unit": "unicode_characters"
+                }
+              },
+              "resource_id": "BV-11",
+              "source": "slack",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/BV-11",
+              "text": "[SYNTHETIC]\n# Retired webhook rehearsal\nDNS was a historical webhook hypothesis.\nArchived migration rehearsal entry 0: batch 0, checksum 0; no current decision recorded.\nArchived migration rehearsal entry 1: batch 17, checksum 31; no current decision recorded.\nArchived migration rehearsal entry 2: batch 34, checksum 62; no current decision recorded.\nArchived migration rehearsal entry 3: batch 51, checksum 93; no current decision recorded.\nArchived migration rehearsal entry 4: batch 68, checksum 124; no current decision recorded.\nArchived migration rehearsal entry 5: batch 85, checksum 155; no current decision recorded.\nArchived migration rehearsal entry 6: batch 102, checksum 186; no current decision recorded.\nArchived migration rehearsal entry 7: batch 119, checksum 217; no current decision recorded.\nArchived migration rehearsal entry 8: batch 136, checksum 248; no current decision recorded.\nArchived migration rehearsal entry 9: batch 153, checksum 279; no current decision recorded.\nArchived migration rehearsal entry 10: batch 170, checksum 310; no current decision recorded.\nArchived migration rehearsal entry 11: batch 187, checksum 341; no current decision recorded.\nArchived migration rehearsal entry 12: batch 204, checksum 372; no current decision recorded.\nArchived migration rehearsal entry 13: batch 221, checksum 403; no current decision recorded.\nArchived migration rehearsal entry 14: batch 238, checksum 434; no current decision recorded.\nArchived migration rehearsal entry 15: batch 255, checksum 465; no current decision recorded.\nArchived migration rehearsal entry 16: batch 272, checksum 496; no current decision recorded.\nArchived migration rehearsal entry 17: batch 289, checksum 527; no current decision recorded.\nArchived migration rehearsal entry 18: batch 306, checksum 558; no current decision recorded.\nArchived migration rehearsal entry 19: batch 323, checksum 589; no current decision recorded.\nArchived migration rehearsal entry 20: batch 340, checksum 620; no current decision recorded.\nArchived migration rehearsal entry 21: batch 357, checksum 651; no current decision recorded.\nArchived migration rehearsal entry 22: batch 374, checksum 682; no current decision recorded.\nArchived migration rehearsal entry 23: batch 391, checksum 713; no current decision recorded.\nArchived migration rehearsal entry 24: batch 408, checksum 744; no current decision r",
+              "title": "migration / Database design rationale",
+              "version": 1
+            },
+            {
+              "evidence_id": "D-01@1",
+              "indexed_at": "2026-10-07T09:06:57.089928+00:00",
+              "locator": {
+                "paragraph": 1,
+                "section": "Confirmed root cause"
+              },
+              "resource_id": "D-01",
+              "source": "drive",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/D-01",
+              "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+              "title": "Final payment-service postmortem",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-20@1",
+              "indexed_at": "2026-10-07T09:06:57.090336+00:00",
+              "locator": {
+                "section": "External commitment"
+              },
+              "resource_id": "BV-20",
+              "source": "drive",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/BV-20",
+              "text": "[SYNTHETIC]\nWebhook latency targets apply to the pilot only; no general customer latency guarantee is approved.",
+              "title": "webhook / External commitment",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-17@1",
+              "indexed_at": "2026-10-07T09:06:57.090294+00:00",
+              "locator": {
+                "section": "Webhook fix status"
+              },
+              "resource_id": "BV-17",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/BV-17",
+              "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+              "title": "webhook / Webhook fix status",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-02@1",
+              "indexed_at": "2026-10-07T09:06:57.089844+00:00",
+              "locator": {
+                "field": "status and description"
+              },
+              "resource_id": "J-02",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-02",
+              "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+              "title": "PAY-102 Retry configuration fix",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-03@1",
+              "indexed_at": "2026-10-07T09:06:57.089860+00:00",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "resource_id": "J-03",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03",
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "title": "PAY-103 Protective measures",
+              "version": 1
+            }
+          ],
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "question": "Was DNS the cause of the webhook backlog?",
+          "request_id": "9822e2c84d3f4caf9da5f463da58e8b3",
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ]
+        }
+      },
+      "previous_hash": "8635cbdeb9465c25283cfd2f82e829585e92b53f386bf93f03c18a8377a6ae2e",
+      "request_id": "9822e2c84d3f4caf9da5f463da58e8b3",
+      "schema_version": 1,
+      "seq": 982,
+      "timestamp": "2026-10-07T09:06:57.406424+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "request_started",
+      "hash": "5f9348459a1266cb0f55ae3a7c0e96429b274154997ff7c3d5b9e80279ae9327",
+      "payload": {
+        "candidate_strategy": "authority prefilter + lexical aliases + exact windows + authorized one-hop links",
+        "history_id": null,
+        "mode": "fixture_fake_model",
+        "query": "Which webhook safeguard is still in progress and who owns it?",
+        "query_kind": "independent"
+      },
+      "previous_hash": "d0810d0bbfcd804e44eafc8f154fe0eba80c158fde0f4958f62354e0b151fb2e",
+      "request_id": "67f2840232a1494593eb33c8fb391f24",
+      "schema_version": 1,
+      "seq": 983,
+      "timestamp": "2026-10-07T09:06:57.409567+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "candidate_evaluated",
+      "hash": "43489f290dc4b7096cc5ee4a45d8f39a09f6736e71c9062edab0977e3f284877",
+      "payload": {
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "score": 2,
+        "source": "jira"
+      },
+      "previous_hash": "3fc3c78b0f713c5b49aa6a25f66bc3485c1782fb7b76db51c3bedb4516feb38a",
+      "request_id": "67f2840232a1494593eb33c8fb391f24",
+      "schema_version": 1,
+      "seq": 1000,
+      "timestamp": "2026-10-07T09:06:57.423102+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "47d4f5bb1eea4a3ed4e15f390ce9de217ecd422074de6fe09d681d0a2478dfac",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.423115+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_model",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "43489f290dc4b7096cc5ee4a45d8f39a09f6736e71c9062edab0977e3f284877",
+      "request_id": "67f2840232a1494593eb33c8fb391f24",
+      "schema_version": 1,
+      "seq": 1001,
+      "timestamp": "2026-10-07T09:06:57.423122+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "cf23348a7f07b82bb289d485b85630d883ba6a073b9b19e18c6ddfa704951c6a",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.423361+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "model_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "a176c2de77eda6e248b009c53c6a69ea3db93e2b5920d5a3ba73a89c43091fc7",
+      "request_id": "67f2840232a1494593eb33c8fb391f24",
+      "schema_version": 1,
+      "seq": 1010,
+      "timestamp": "2026-10-07T09:06:57.423367+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "evidence_used",
+      "hash": "94ee311c513df5f18e7a56cedf2afba7150c7673a1086675e6aa61136043ec53",
+      "payload": {
+        "evidence_id": "J-03@1",
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "source": "jira",
+        "stage": "prepared_for_answer",
+        "version": 1
+      },
+      "previous_hash": "46cd73e6d39cce2afb0eefa6fa4279a83ed735a8b04ef70fa1e90eae8dc0e3e6",
+      "request_id": "67f2840232a1494593eb33c8fb391f24",
+      "schema_version": 1,
+      "seq": 1019,
+      "timestamp": "2026-10-07T09:06:57.423509+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "generation_completed",
+      "hash": "75d8c31e584dd78649a9ef184fab272953a9581da7a6630fe6c93b502cf5bcbb",
+      "payload": {
+        "cited": [
+          "BV-16@1",
+          "BV-17@1",
+          "BV-19@1",
+          "BV-20@1",
+          "BV-11@1#0:2400",
+          "BV-12@1",
+          "BV-21@1",
+          "BV-33@1",
+          "J-03@1"
+        ],
+        "model": "fake-extractive-v1"
+      },
+      "previous_hash": "94ee311c513df5f18e7a56cedf2afba7150c7673a1086675e6aa61136043ec53",
+      "request_id": "67f2840232a1494593eb33c8fb391f24",
+      "schema_version": 1,
+      "seq": 1020,
+      "timestamp": "2026-10-07T09:06:57.423550+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "authorization_decided",
+      "hash": "76aa4f9eaebe0655b46e88cc4e682964a1d96413def279bfd5369c2db6737e68",
+      "payload": {
+        "checked_at": "2026-10-07T09:06:57.423777+00:00",
+        "method": "fixture-current-source-policy",
+        "phase": "before_dispatch",
+        "policy_version": 1,
+        "resource_id": "J-03",
+        "resource_scope": "payment-service",
+        "result": "allow",
+        "source": "jira",
+        "version": 1
+      },
+      "previous_hash": "3a7a41664a9f49da4a0476a6ca517f742a04446cc8264418e27792f0082086af",
+      "request_id": "67f2840232a1494593eb33c8fb391f24",
+      "schema_version": 1,
+      "seq": 1029,
+      "timestamp": "2026-10-07T09:06:57.423783+00:00"
+    },
+    {
+      "actor": "eng_a",
+      "event_type": "response_committed",
+      "hash": "f8d29bf62e08881e8ee952002cfee660fb4974c091cfeea6a3f8e49be403faa8",
+      "payload": {
+        "response": {
+          "actor": "eng_a",
+          "answered_at": "2026-10-07T09:06:57.423796+00:00",
+          "claims": [
+            {
+              "evidence_ids": [
+                "BV-16@1"
+              ],
+              "text": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution."
+            },
+            {
+              "evidence_ids": [
+                "BV-17@1"
+              ],
+              "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi."
+            },
+            {
+              "evidence_ids": [
+                "BV-19@1"
+              ],
+              "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook."
+            },
+            {
+              "evidence_ids": [
+                "BV-20@1"
+              ],
+              "text": "[SYNTHETIC]\nWebhook latency targets apply to the pilot only; no general customer latency guarantee is approved."
+            },
+            {
+              "evidence_ids": [
+                "BV-11@1#0:2400"
+              ],
+              "text": "[SYNTHETIC]\n# Retired webhook rehearsal\nDNS was a historical webhook hypothesis.\nArchived migration rehearsal entry 0: batch 0, checksum 0; no current decision recorded.\nArchived migration rehearsal entry 1: batch 17, checksum 31; no current decision recorded.\nArchived migration rehearsal entry 2: batch 34, checksum 62; no current decision recorded.\nArchived migration rehearsal entry 3: batch 51, checksum 93; no current decision recorded.\nArchived migration rehearsal entry 4: batch 68, checksum 124; no current decision recorded.\nArchived migration rehearsal entry 5: batch 85, checksum 155; no current decision recorded.\nArchived migration rehearsal entry 6: batch 102, checksum 186; no current decision recorded.\nArchived migration rehearsal entry 7: batch 119, checksum 217; no current decision recorded.\nArchived migration rehearsal entry 8: batch 136, checksum 248; no current decision recorded.\nArchived migration rehearsal entry 9: batch 153, checksum 279; no current decision recorded.\nArchived migration rehearsal entry 10: batch 170, checksum 310; no current decision recorded.\nArchived migration rehearsal entry 11: batch 187, checksum 341; no current decision recorded.\nArchived migration rehearsal entry 12: batch 204, checksum 372; no current decision recorded.\nArchived migration rehearsal entry 13: batch 221, checksum 403; no current decision recorded.\nArchived migration rehearsal entry 14: batch 238, checksum 434; no current decision recorded.\nArchived migration rehearsal entry 15: batch 255, checksum 465; no current decision recorded.\nArchived migration rehearsal entry 16: batch 272, checksum 496; no current decision recorded.\nArchived migration rehearsal entry 17: batch 289, checksum 527; no current decision recorded.\nArchived migration rehearsal entry 18: batch 306, checksum 558; no current decision recorded.\nArchived migration rehearsal entry 19: batch 323, checksum 589; no current decision recorded.\nArchived migration rehearsal entry 20: batch 340, checksum 620; no current decision recorded.\nArchived migration rehearsal entry 21: batch 357, checksum 651; no current decision recorded.\nArchived migration rehearsal entry 22: batch 374, checksum 682; no current decision recorded.\nArchived migration rehearsal entry 23: batch 391, checksum 713; no current decision recorded.\nArchived migration rehearsal entry 24: batch 408, checksum 744; no current decision r"
+            },
+            {
+              "evidence_ids": [
+                "BV-12@1"
+              ],
+              "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals."
+            },
+            {
+              "evidence_ids": [
+                "BV-21@1"
+              ],
+              "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures."
+            },
+            {
+              "evidence_ids": [
+                "BV-33@1"
+              ],
+              "text": "[SYNTHETIC]\nSET-610 is In Progress because bank confirmation is missing. Owner: Eva."
+            },
+            {
+              "evidence_ids": [
+                "J-03@1"
+              ],
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya."
+            }
+          ],
+          "evidence": [
+            {
+              "evidence_id": "BV-16@1",
+              "indexed_at": "2026-10-07T09:06:57.090280+00:00",
+              "locator": {
+                "section": "Webhook incident cause"
+              },
+              "resource_id": "BV-16",
+              "source": "drive",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/BV-16",
+              "text": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.",
+              "title": "webhook / Webhook incident cause",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-17@1",
+              "indexed_at": "2026-10-07T09:06:57.090294+00:00",
+              "locator": {
+                "section": "Webhook fix status"
+              },
+              "resource_id": "BV-17",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/BV-17",
+              "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+              "title": "webhook / Webhook fix status",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-19@1",
+              "indexed_at": "2026-10-07T09:06:57.090323+00:00",
+              "locator": {
+                "section": "Current response procedure"
+              },
+              "resource_id": "BV-19",
+              "source": "slack",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/BV-19",
+              "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+              "title": "webhook / Current response procedure",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-20@1",
+              "indexed_at": "2026-10-07T09:06:57.090336+00:00",
+              "locator": {
+                "section": "External commitment"
+              },
+              "resource_id": "BV-20",
+              "source": "drive",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/BV-20",
+              "text": "[SYNTHETIC]\nWebhook latency targets apply to the pilot only; no general customer latency guarantee is approved.",
+              "title": "webhook / External commitment",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-11@1#0:2400",
+              "indexed_at": "2026-10-07T09:06:57.090141+00:00",
+              "locator": {
+                "section": "Database design rationale",
+                "text_window": {
+                  "end": 2400,
+                  "start": 0,
+                  "strategy": "fixed-2400-overlap-400-v1",
+                  "unit": "unicode_characters"
+                }
+              },
+              "resource_id": "BV-11",
+              "source": "slack",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/slack/BV-11",
+              "text": "[SYNTHETIC]\n# Retired webhook rehearsal\nDNS was a historical webhook hypothesis.\nArchived migration rehearsal entry 0: batch 0, checksum 0; no current decision recorded.\nArchived migration rehearsal entry 1: batch 17, checksum 31; no current decision recorded.\nArchived migration rehearsal entry 2: batch 34, checksum 62; no current decision recorded.\nArchived migration rehearsal entry 3: batch 51, checksum 93; no current decision recorded.\nArchived migration rehearsal entry 4: batch 68, checksum 124; no current decision recorded.\nArchived migration rehearsal entry 5: batch 85, checksum 155; no current decision recorded.\nArchived migration rehearsal entry 6: batch 102, checksum 186; no current decision recorded.\nArchived migration rehearsal entry 7: batch 119, checksum 217; no current decision recorded.\nArchived migration rehearsal entry 8: batch 136, checksum 248; no current decision recorded.\nArchived migration rehearsal entry 9: batch 153, checksum 279; no current decision recorded.\nArchived migration rehearsal entry 10: batch 170, checksum 310; no current decision recorded.\nArchived migration rehearsal entry 11: batch 187, checksum 341; no current decision recorded.\nArchived migration rehearsal entry 12: batch 204, checksum 372; no current decision recorded.\nArchived migration rehearsal entry 13: batch 221, checksum 403; no current decision recorded.\nArchived migration rehearsal entry 14: batch 238, checksum 434; no current decision recorded.\nArchived migration rehearsal entry 15: batch 255, checksum 465; no current decision recorded.\nArchived migration rehearsal entry 16: batch 272, checksum 496; no current decision recorded.\nArchived migration rehearsal entry 17: batch 289, checksum 527; no current decision recorded.\nArchived migration rehearsal entry 18: batch 306, checksum 558; no current decision recorded.\nArchived migration rehearsal entry 19: batch 323, checksum 589; no current decision recorded.\nArchived migration rehearsal entry 20: batch 340, checksum 620; no current decision recorded.\nArchived migration rehearsal entry 21: batch 357, checksum 651; no current decision recorded.\nArchived migration rehearsal entry 22: batch 374, checksum 682; no current decision recorded.\nArchived migration rehearsal entry 23: batch 391, checksum 713; no current decision recorded.\nArchived migration rehearsal entry 24: batch 408, checksum 744; no current decision r",
+              "title": "migration / Database design rationale",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-12@1",
+              "indexed_at": "2026-10-07T09:06:57.090223+00:00",
+              "locator": {
+                "section": "Cutover ticket"
+              },
+              "resource_id": "BV-12",
+              "source": "drive",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/drive/BV-12",
+              "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+              "title": "migration / Cutover ticket",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-21@1",
+              "indexed_at": "2026-10-07T09:06:57.090352+00:00",
+              "locator": {
+                "section": "Ownership decision"
+              },
+              "resource_id": "BV-21",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/BV-21",
+              "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+              "title": "reconciliation / Ownership decision",
+              "version": 1
+            },
+            {
+              "evidence_id": "BV-33@1",
+              "indexed_at": "2026-10-07T09:06:57.090520+00:00",
+              "locator": {
+                "section": "Settlement dependency"
+              },
+              "resource_id": "BV-33",
+              "source": "confluence",
+              "source_updated_at": "2026-10-07T12:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/confluence/BV-33",
+              "text": "[SYNTHETIC]\nSET-610 is In Progress because bank confirmation is missing. Owner: Eva.",
+              "title": "settlement / Settlement dependency",
+              "version": 1
+            },
+            {
+              "evidence_id": "J-03@1",
+              "indexed_at": "2026-10-07T09:06:57.089860+00:00",
+              "locator": {
+                "field": "status and assignee"
+              },
+              "resource_id": "J-03",
+              "source": "jira",
+              "source_updated_at": "2026-10-01T09:00:00+08:00",
+              "source_url": "fixture://synthetic-demo/jira/J-03",
+              "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+              "title": "PAY-103 Protective measures",
+              "version": 1
+            }
+          ],
+          "mode": "fixture_fake_model",
+          "model": "fake-extractive-v1",
+          "question": "Which webhook safeguard is still in progress and who owns it?",
+          "request_id": "67f2840232a1494593eb33c8fb391f24",
+          "uncertainties": [
+            "Source excerpts only; live AI synthesis is not enabled."
+          ]
+        }
+      },
+      "previous_hash": "76aa4f9eaebe0655b46e88cc4e682964a1d96413def279bfd5369c2db6737e68",
+      "request_id": "67f2840232a1494593eb33c8fb391f24",
+      "schema_version": 1,
+      "seq": 1030,
+      "timestamp": "2026-10-07T09:06:57.423818+00:00"
+    }
+  ],
+  "total": 40,
+  "as_of": 1227,
+  "next_after": null,
+  "semantics": "Events through this application; not proof of human reading."
+}

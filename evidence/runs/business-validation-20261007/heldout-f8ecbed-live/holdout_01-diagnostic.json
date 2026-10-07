@@ -1,0 +1,110 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "During payment-service failover, the timeout budget must already be inspected and the approved failover procedure followed.",
+        "evidence_ids": [
+          "C-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-01@1",
+            "quote": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+          }
+        ]
+      },
+      {
+        "text": "Completing PAY-102 still does not provide customer release approval, and code completion does not approve general customer release.",
+        "evidence_ids": [
+          "D-02@1",
+          "J-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "PAY-102 Done is not customer release approval."
+          },
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          }
+        ]
+      },
+      {
+        "text": "Only a controlled pilot was approved; general availability (GA) is not approved and no general release date is confirmed.",
+        "evidence_ids": [
+          "D-02@1",
+          "C-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved."
+          },
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "94f92472-696b-4226-a0c8-c07ff02eab8a",
+      "object": "chat.completion",
+      "created": 1791370042,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"During payment-service failover, the timeout budget must already be inspected and the approved failover procedure followed.\",\"evidence_ids\":[\"C-01@1\"],\"supports\":[{\"evidence_id\":\"C-01@1\",\"quote\":\"Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.\"}]},{\"text\":\"Completing PAY-102 still does not provide customer release approval, and code completion does not approve general customer release.\",\"evidence_ids\":[\"D-02@1\",\"J-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"PAY-102 Done is not customer release approval.\"},{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"}]},{\"text\":\"Only a controlled pilot was approved; general availability (GA) is not approved and no general release date is confirmed.\",\"evidence_ids\":[\"D-02@1\",\"C-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved.\"},{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1165,
+        "completion_tokens": 292,
+        "total_tokens": 1457,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 1037
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "39ec2294-281c-48d9-a2fc-d49bf99ac5dd",
+      "object": "chat.completion",
+      "created": 1791370044,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true},{\"index\":2,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1448,
+        "completion_tokens": 37,
+        "total_tokens": 1485,
+        "prompt_tokens_details": {
+          "cached_tokens": 128
+        },
+        "prompt_cache_hit_tokens": 128,
+        "prompt_cache_miss_tokens": 1320
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}
