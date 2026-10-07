@@ -84,7 +84,11 @@ class DeepSeekEvidenceModel:
     # rather than assuming one character or byte equals one token.
     reservation = cost_upper(CONTEXT_TOKENS, OUTPUT_TOKENS)
 
-    def __init__(self, key, ledger, *, synthetic_only=False, transport=None, today=None, temperature=0):
+    def __init__(self, key, ledger, *, synthetic_only=False, transport=None, today=None, temperature=0,
+                 reasoning_effort='none'):
+        if reasoning_effort not in ('none', 'low'):
+            raise ValueError('Supported trusted reasoning effort required')
+        self.reasoning_effort = reasoning_effort
         if temperature is not None and (type(temperature) not in (int, float) or not math.isfinite(temperature) or not 0 <= temperature <= 2):
             raise ValueError('Finite sampling temperature in [0,2] required')
         self.temperature = temperature
@@ -114,10 +118,12 @@ class DeepSeekEvidenceModel:
                 or len(evidence) > 24 or len({e.evidence_id for e in evidence}) != len(evidence)
                 or any(not self.synthetic_input_allowed(e, provenance) for e in evidence)):
             raise ModelInputRejected('Model input is outside the synthetic pilot boundary')
-        payload = {'model': MODEL, 'thinking': {'type': 'disabled'}, 'stream': False,
+        payload = {'model': MODEL, 'thinking': {'type': 'disabled' if self.reasoning_effort == 'none' else 'enabled'}, 'stream': False,
                    'max_tokens': OUTPUT_TOKENS, 'response_format': {'type': 'json_object'},
                    'messages': self.messages(question, evidence)}
-        if self.temperature is not None:
+        if self.reasoning_effort != 'none':
+            payload['reasoning_effort'] = self.reasoning_effort
+        elif self.temperature is not None:
             payload['temperature'] = self.temperature
         body = json.dumps(payload, ensure_ascii=False).encode()
         if len(body) > 100_000:

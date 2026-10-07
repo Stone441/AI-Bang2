@@ -1,5 +1,7 @@
 # Local contracts v1
 
+2026-10-07有限reasoning配置实验：可信Python/开发runner可指定reasoning_effort none/low，默认none保持非thinking；low以thinking enabled+reasoning_effort low发送且省略无效temperature，两模型阶段一致。仍DeepSeek Flash、原端点/合成范围/1024输出cap/保守peak价格/原共享USD20/reservation；仅parse最终content，不用reasoning_content作为claim或原文。错误配置在reserve前拒绝，思考tokens计入供应商completion usage；未知usage保留预留。不是新模型/客户端授权字段，是否采用待实际比较，不因选项存在标通过。
+
 2026-10-07 synthesis-v8诊断：v7已生成有范围的未知，但review错误coverage拒绝，背景仍responsive true。v8仅澄清review coverage语句：未知前提有范围明确回应、原文记录状态及无同实体/范围正面证据可以覆盖所问项，不要求编造positive；同实体其他属性不是所问属性的回答，必要限定须改变该回答解释。supported/responsive/question_covered仍全严格true，未删除quote/权限/whole-answer断言；效果待实际验证，v7失败原件保留。
 
 2026-10-07 synthesis-v7开发契约：内部review每claim verdict精确含index/supported/responsive；supported与responsive必须分别是布尔true，未知/缺字段/false拒绝整答，不局部删claim放行。question_covered还需明确回应未由引用资料建立的问题前提；“未建立”不等于显式否定或全源无记录。生成先按请求项分配事实，背景只因主题相近不算相关，实际请求的owner/blocker仍需覆盖。公共claim格式、原文/源context、逐阶段权限、原账本/温度0不变；当前语义效果待实际验证，v6旧结果保持原版本。

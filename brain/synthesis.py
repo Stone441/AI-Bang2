@@ -132,7 +132,7 @@ class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
         authorize('review_dispatch')
         reviewer = EvidenceReview(self._key, self.ledger, synthetic_only=True,
                                   transport=self.transport, today=self._today(), claims=draft['claims'],
-                                  temperature=self.temperature)
+                                  temperature=self.temperature, reasoning_effort=self.reasoning_effort)
         review = reviewer.generate(question, evidence, request_id=request_id, provenance=provenance,
                                    observe=observe, stage='review')
         return {**draft, 'claim_format': self.claim_format,

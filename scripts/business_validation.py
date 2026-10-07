@@ -144,7 +144,8 @@ def cases(ids):
             for cid,actor,q,required,atoms in data]
 
 
-def run(output, strategy='lexical', noise=0, live_model=False, selected_cases=None, temperature=0):
+def run(output, strategy='lexical', noise=0, live_model=False, selected_cases=None, temperature=0,
+        reasoning_effort='none'):
     output.mkdir(parents=True,exist_ok=False)
     started_at=now()
     loaded_hashes={str(p):hashlib.sha256(p.read_bytes()).hexdigest()
@@ -183,7 +184,8 @@ def run(output, strategy='lexical', noise=0, live_model=False, selected_cases=No
         config=json.loads((Path('.runtime')/bundle['sources']['jira']).read_text())
         key=MacKeychain().get('deepseek',config['tenant'],'eng_b','deepseek-flash')
         if not key:raise ValueError('Approved app-owned model key unavailable')
-        model=CapturedSynthesis(key,ledger,synthetic_only=True,temperature=temperature)
+        model=CapturedSynthesis(key,ledger,synthetic_only=True,temperature=temperature,
+                                reasoning_effort=reasoning_effort)
     index_started=time.perf_counter()
     store=Store();store.initialize(world)
     index_seconds=time.perf_counter()-index_started
@@ -242,6 +244,8 @@ def run(output, strategy='lexical', noise=0, live_model=False, selected_cases=No
             'core_objects':len(world.resources)-noise,'noise_objects':noise,'retrieval_strategy':strategy,
             'development_questions':len(questions),
             'sampling_temperature':temperature,
+            'reasoning_effort':reasoning_effort,
+            'effective_temperature':temperature if reasoning_effort=='none' else None,
             'sampling_scope':'same value for generation/review; None omits parameter; not a determinism guarantee',
             'held_out':'Not run by this development harness; see separate retained-set records',
             'diagnostic_failures':failures,'results':results,'audit_chain':verify_chain(audit.export()),
@@ -260,6 +264,7 @@ if __name__ == '__main__':
     parser.add_argument('--live-model',action='store_true')
     parser.add_argument('--cases-file',type=Path)
     parser.add_argument('--temperature',type=float,choices=[0,1],default=0)
+    parser.add_argument('--reasoning-effort',choices=['none','low'],default='none')
     args=parser.parse_args()
     selected=json.loads(args.cases_file.read_text()) if args.cases_file else None
-    run(args.output,args.strategy,args.noise,args.live_model,selected,args.temperature)
+    run(args.output,args.strategy,args.noise,args.live_model,selected,args.temperature,args.reasoning_effort)

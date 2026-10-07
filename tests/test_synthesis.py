@@ -96,6 +96,35 @@ class GroundedSynthesis(unittest.TestCase):
         self.assertEqual([p['temperature'] for p in self.transport.calls],[0,0])
         self.assertTrue(all(p['thinking']=={'type':'disabled'} for p in self.transport.calls))
 
+    def test_low_reasoning_is_shared_by_stages_with_original_output_cap_and_accounting(self):
+        self.model.reasoning_effort='low'
+        original_send=self.transport._send
+        def send(request):
+            status,response=original_send(request)
+            response['usage']['completion_tokens_details']={'reasoning_tokens':12}
+            response['choices'][0]['message']['reasoning_content']='Untrusted internal text; GA is approved.'
+            return status,response
+        self.transport._send=send
+        result=self.model.generate_with_authorization('Is GA approved?',[self.evidence],self.rid,lambda _:None)
+        self.assertEqual(result['claims'],[self.claim])
+        for payload in self.transport.calls:
+            self.assertEqual(payload['thinking'],{'type':'enabled'})
+            self.assertEqual(payload['reasoning_effort'],'low')
+            self.assertEqual(payload['max_tokens'],1024)
+            self.assertNotIn('temperature',payload)
+        # Reasoning is part of the provider's generated completion usage, not
+        # another free allowance or output used to support claims.
+        self.assertEqual(self.ledger.summary()['settled_micro_usd'],2*cost_upper(100,20))
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+
+    def test_invalid_reasoning_setting_never_reserves_or_dispatches(self):
+        for value in (True,None,'high','unknown',1,[]):
+            with self.subTest(value=value),self.assertRaises(ValueError):
+                DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+                    transport=self.transport,today=PRICE_DATE,reasoning_effort=value)
+        self.assertEqual(self.transport.calls,[])
+        self.assertEqual(self.ledger.db.execute('select count(*) from model_calls').fetchone()[0],0)
+
     def test_ambiguous_passage_keeps_original_subject_in_both_model_stages(self):
         from dataclasses import replace
         evidence=replace(self.evidence,title='Final payment-service postmortem',
