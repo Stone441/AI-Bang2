@@ -1,6 +1,6 @@
 # Local contracts v1
 
-2026-10-07最新事实：应用b03ddd6/v5，后续ba6c815仅费用harness；当前完整质量未通过，精确引文与模型review不能排除错误not rejected推断。native Slack本次review拒绝，产品具体题通过；历史版本结果不升级。当前模式/费用/失败见STATUS与business-validation-20261007/final-v5-readonly-review。browser/G1/G2不由本地测试或材料核验通过。
+2026-10-07 ADR-056：64b705a trusted Python/operator配置temperature默认0，允许有限数值[0,2]；None显式保留provider默认。generation/review相同值，thinking=disabled；客户端/浏览器无采样授权字段。三开发题各四次同输入比较支持可回滚选择，非确定性/语义保证。原模型、预算、原文窗口、每claim引用及whole-answer gate不变；当前business16误归/business12结构失败证明精确引用＋同模型review仍非语义完备。旧原件保留，当前结果见STATUS。
 
 2026-10-07 synthesis-v4：提案、审批、完成和撤回分别要求明确支持；非审批不推出取消/放弃。无明确问题指代时允许有范围候选事实或空claims，空claims可加通用范围澄清提示。现有结构、精确引用验证、逐阶段权限及整答review gate不变；模型review不能证明语义正确。
 

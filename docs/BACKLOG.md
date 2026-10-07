@@ -1,6 +1,6 @@
 # Backlog · 2026-10-05
 
-2026-10-07当前open工程：BV-02 b03/v5 business03错误not rejected仍会通过同模型review，须修缺证据→否定的出口；business11/native Slack正确draft被coverage/support误拒须离线定位，不无依据反复收费。business08/32背景问题仍open，非自动AUTH019延期。实际最新语义计数/版本/费用见STATUS及final-v5-readonly-review，24题不称20全对。BV-06基本草稿/真实腾讯proof本地核验已做，Goal尚未达到。
+2026-10-07最新BV-02工程：64b705a温度0已实际选择/386 clean archive及两native/model题通过，但24开发题仍有business16跨事件误导和business12独立quote标识失败，09/32相关性未通过。失败已用当前捕获离线复现（sampling-fixed-failure-diagnosis）；下一最小工程检查资源/事件上下文交给模型的实际方式及逐claim引文构造，不弱化quote/review，不为全绿无诊断付费循环，不重用保留集。新失败open，非AUTH019延期；其余模式/成本见STATUS，Goal active。
 
 2026-10-07当前：2a73bd0 clean archive380/同48世界五fixture/两Node、新版native/live两题及配对签名完成；新故障路径仍仅local/mock证明，native完整新鲜度/多persona/Docs/native关系解析未完成。BV-05浏览器和human/ROI not_run；BV-06材料有本地title/blurb/description/16:9封面草稿，统一范围审计待完成。性能两题含preview约119/128秒，不能称实时/半小时SLA已证。其余条目为各阶段历史，顶部事实优先。
 

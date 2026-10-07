@@ -1,6 +1,6 @@
 # Acceptance coverage · local candidate
 
-2026-10-07最新事实：应用b03ddd6/v5，后续ba6c815仅费用harness；当前完整质量未通过，精确引文与模型review不能排除错误not rejected推断。native Slack本次review拒绝，产品具体题通过；历史版本结果不升级。当前模式/费用/失败见STATUS与business-validation-20261007/final-v5-readonly-review。browser/G1/G2不由本地测试或材料核验通过。
+2026-10-07当前固定实现64b705a（synthesis-v5，generation/review温度0）：386 clean archive回归、同48世界五fixture及两Node/语法检查通过，仅local/mock。24开发题经逐条只读复核为20核心正确返回（09/32仍有背景）＋1跨事件误导（business16把payment-service根因放入webhook答）＋2正确空答＋1有证据generation结构失败（business12第二claim的quote缺MIG-301，未进入review）；整体质量未通过。eng_b两道当前native＋真实模型正确，28精确窗口及四阶段授权allow；两题耗时含preview119.789/127.671秒，非SLA。当前core/native usage上界18016/3288microUSD，共享账本settled194985/pending0，起点含并发reservation不可用accounted差归成本。当前签名/分页副本本地验证，非独立custody或人工阅读。证据：business-validation-20261007/sampling-fixed-readonly-review、clean-sampling-fixed、sampling-comparison、audit-native-sampling-fixed及audit-core-sampling-fixed。三题各四次温度比较仅开发诊断，不是盲测或稳定质量率；旧失败及AUTH019范围保留。browser saved site denial blocked，49161停止，8094/8100未动；新失败仍open工程，Goal active，G1/G2/人工/ROI/发布not_run。
 
 2026-10-07最新局部结果：固定代码2a73bd0，380 clean archive/同48世界五fixture/两Node通过；当前eng_b两题native＋真实模型经只读复核5claims/28windows/四阶段当前allow/四usage与账本3207microUSD增量一致。配对272事件签名副本及混合208事件oracle另列local。全persona、故障live、四源native删除/新鲜度SLA、native正文关联、Docs支持未完成；browser saved site denial blocked，human业务判断/ROI/G1/G2 not_run。旧f8ecbed保留题失败及AUTH019延期保留，不从四开发题改称通过。完整证据见business-validation-20261007，旧版本表保持历史。
 

@@ -1,0 +1,181 @@
+{
+  "request_id": "36a0eb8d762242738b6a6925b497ea9c",
+  "question": "Can we promise the November hourly settlement schedule?",
+  "answered_at": "2026-10-07T12:02:20.268583+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v5",
+  "claims": [
+    {
+      "text": "The proposed November hourly schedule is not approved; current settlement is daily.",
+      "evidence_ids": [
+        "BV-32@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-32@1",
+          "quote": "The proposed November hourly schedule is not approved. Current settlement is daily."
+        }
+      ]
+    },
+    {
+      "text": "If bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+      "evidence_ids": [
+        "BV-35@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-35@1",
+          "quote": "If bank confirmation is absent, ask Eva for status; do not promise a completed settlement."
+        }
+      ]
+    },
+    {
+      "text": "SET-610 is In Progress because bank confirmation is missing, with Eva as owner.",
+      "evidence_ids": [
+        "BV-33@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-33@1",
+          "quote": "SET-610 is In Progress because bank confirmation is missing. Owner: Eva."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-32@1",
+      "resource_id": "BV-32",
+      "version": 1,
+      "source": "drive",
+      "title": "settlement / Future settlement schedule",
+      "locator": {
+        "section": "Future settlement schedule"
+      },
+      "text": "[SYNTHETIC]\nThe proposed November hourly schedule is not approved. Current settlement is daily.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:01:39.409765+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-32"
+    },
+    {
+      "evidence_id": "BV-35@1",
+      "resource_id": "BV-35",
+      "version": 1,
+      "source": "slack",
+      "title": "settlement / Escalation guidance",
+      "locator": {
+        "section": "Escalation guidance"
+      },
+      "text": "[SYNTHETIC]\nIf bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:01:39.409842+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-35"
+    },
+    {
+      "evidence_id": "BV-33@1",
+      "resource_id": "BV-33",
+      "version": 1,
+      "source": "confluence",
+      "title": "settlement / Settlement dependency",
+      "locator": {
+        "section": "Settlement dependency"
+      },
+      "text": "[SYNTHETIC]\nSET-610 is In Progress because bank confirmation is missing. Owner: Eva.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:01:39.409790+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-33"
+    },
+    {
+      "evidence_id": "BV-12@1",
+      "resource_id": "BV-12",
+      "version": 1,
+      "source": "drive",
+      "title": "migration / Cutover ticket",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:01:39.409279+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    },
+    {
+      "evidence_id": "BV-34@1",
+      "resource_id": "BV-34",
+      "version": 1,
+      "source": "jira",
+      "title": "settlement / Contradictory proposal",
+      "locator": {
+        "section": "Contradictory proposal"
+      },
+      "text": "[SYNTHETIC]\nAn unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:01:39.409817+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-34"
+    },
+    {
+      "evidence_id": "BV-13@1",
+      "resource_id": "BV-13",
+      "version": 1,
+      "source": "confluence",
+      "title": "migration / Rollback signal",
+      "locator": {
+        "section": "Rollback signal"
+      },
+      "text": "[SYNTHETIC]\nRoll back the ledger migration if settlement differences exceed five basis points.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:01:39.409305+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-13"
+    },
+    {
+      "evidence_id": "BV-31@1",
+      "resource_id": "BV-31",
+      "version": 1,
+      "source": "slack",
+      "title": "settlement / Settlement scope",
+      "locator": {
+        "section": "Settlement scope"
+      },
+      "text": "[SYNTHETIC]\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T12:01:39.409742+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-31"
+    }
+  ],
+  "actor": "product_ops",
+  "model_call": {
+    "query_id": "36a0eb8d762242738b6a6925b497ea9c",
+    "model": "deepseek-flash",
+    "reservation_id": "bf18e96276e74707908c1480a7eb2f3f",
+    "prompt_tokens": 814,
+    "completion_tokens": 195,
+    "total_tokens": 1009,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 479,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "36a0eb8d762242738b6a6925b497ea9c",
+    "model": "deepseek-flash",
+    "reservation_id": "e5c6b00315c042a2ad0c7c8f0c9b9f91",
+    "prompt_tokens": 927,
+    "completion_tokens": 37,
+    "total_tokens": 964,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 323,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

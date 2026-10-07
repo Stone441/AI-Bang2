@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-07 ADR-056（DEV-BV-02受控采样）：同代码/世界/三开发题，各4次temperature1为9返回/3失败，temperature0为12返回，同题文字一致，成本12081/12016microUSD；不是12独立题、盲测、稳定性或成本收益证明。选择64b705a温度0为可回滚默认，generation/review一致，None显式省略配置；非有限/越界/bool配置在reserve/dispatch前拒绝。原thinking disabled、v5、逐阶段权限、精确quote与整答gate不变，不新增客户端控制。386干净archive/五fixture/Node通过；24开发题实际20核心正确＋1跨事件误导＋2空＋1结构失败，native两题正确，仅局部改善。原失败不改，新问题继续open非AUTH019；回滚可由可信构造配置1/None或还原本次代码，无schema/凭据迁移、费用/授权扩大。
+
 2026-10-07 ADR-055（费用归属，验收harness）：并发两个获批验收使native预算起点含另一任务pending315802，global accounted差不能当退款或本轮费用。新增run_cost仅按本流unique settled usage receipt汇总，重复不重计、冲突/非法/未结算receipt拒绝，缺usage单列且不清原reservation；报告保留共享snapshot并明确限制。原captured JSON不改，另parallel-v5-cost-attribution证明core18392/native3155/settled增21547。3定向及当前实际44+4receipt离线核验通过，应用brain和模型v5未改变。
 
 2026-10-07 ADR-054（DEV-BV-02上下文/量词）：当前v4完整24开发集实际20核心事实/2正确无调用空答/2有证据失败；20并非全部质量通过，因背景和MYR唯一来源过概括。另5独立措辞开发题再次复现逐claim ID上下文校验拒绝。仅synthesis-v5补通用prompt：每claim独立含ID、可复制邻接连续原文但禁止补造quote；one draft/example不推出所有说法/唯一来源，review显式拒绝该扩大。parse/gate/权限/预算未改。5题同世界同问题v4→v5为1结构拒绝→5返回，需语义复核/完整新版证据，不称盲测或旧保留失败修复。381完整fixture/mock与15synthesis定向通过；不重新开放AUTH019，旧24失败保存。

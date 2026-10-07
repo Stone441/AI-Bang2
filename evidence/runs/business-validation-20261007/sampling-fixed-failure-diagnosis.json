@@ -1,0 +1,58 @@
+{
+  "commit": "64b705ad544dd4849e327fb20182300758a4cc53",
+  "mode": "offline_validation_of_current_64b705a_captures",
+  "new_model_calls": 0,
+  "business_16": {
+    "question": "Was DNS the cause of the webhook backlog?",
+    "misleading_claim": {
+      "text": "The final root cause was retry configuration mismatched to the timeout budget, causing a backlog of duplicate requests, confirmed at 10:00 +08:00.",
+      "evidence_ids": [
+        "D-01@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "D-01@1",
+          "quote": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00."
+        }
+      ]
+    },
+    "citation_title": "Final payment-service postmortem",
+    "quote_validator_accepts": true,
+    "finding": "Exact quote validity does not establish event attribution; same-model review accepted it."
+  },
+  "business_12": {
+    "draft": {
+      "claims": [
+        {
+          "text": "MIG-301 is In Progress and is owned by Chen.",
+          "evidence_ids": [
+            "BV-12@1"
+          ],
+          "supports": [
+            {
+              "evidence_id": "BV-12@1",
+              "quote": "MIG-301 is In Progress. Owner: Chen."
+            }
+          ]
+        },
+        {
+          "text": "The remaining blocker for MIG-301 is unmatched settlement totals.",
+          "evidence_ids": [
+            "BV-12@1"
+          ],
+          "supports": [
+            {
+              "evidence_id": "BV-12@1",
+              "quote": "The remaining blocker is unmatched settlement totals."
+            }
+          ]
+        }
+      ]
+    },
+    "vendor_responses": 1,
+    "finding": "Second claim MIG-301 identifier absent in its own quote; no review dispatch.",
+    "current_offline_reproduced_error": "Claim identifier lacks quoted support"
+  },
+  "next_engineering": "Investigate explicit resource/event context delivery and independent per-claim identifier construction; do not weaken exact quotation or whole-answer review.",
+  "diagnostic_harness_first_attempt": "KeyError resource_id: world records use id, not Evidence resource_id; corrected lookup only, original model captures unchanged."
+}

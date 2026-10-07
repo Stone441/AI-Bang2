@@ -1,0 +1,93 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "PAY-102 Done does not authorize general customer release; it is not customer release approval.",
+        "evidence_ids": [
+          "J-02@1",
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "D-02@1",
+            "quote": "PAY-102 Done is not customer release approval."
+          }
+        ]
+      },
+      {
+        "text": "The release decision approved a controlled pilot, but general availability (GA) was not approved.",
+        "evidence_ids": [
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "b7946e03-4074-444c-aa69-aab3c45be255",
+      "object": "chat.completion",
+      "created": 1791374505,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"PAY-102 Done does not authorize general customer release; it is not customer release approval.\",\"evidence_ids\":[\"J-02@1\",\"D-02@1\"],\"supports\":[{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"},{\"evidence_id\":\"D-02@1\",\"quote\":\"PAY-102 Done is not customer release approval.\"}]},{\"text\":\"The release decision approved a controlled pilot, but general availability (GA) was not approved.\",\"evidence_ids\":[\"D-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 894,
+        "completion_tokens": 166,
+        "total_tokens": 1060,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 254
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "34a603ef-4147-42fa-9500-06580183ae7a",
+      "object": "chat.completion",
+      "created": 1791374506,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 977,
+        "completion_tokens": 29,
+        "total_tokens": 1006,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 721
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

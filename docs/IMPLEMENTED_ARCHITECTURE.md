@@ -1,6 +1,6 @@
 # 实际实现与信任边界 · 2026-10-04
 
-2026-10-07最新事实：应用b03ddd6/v5，后续ba6c815仅费用harness；当前完整质量未通过，精确引文与模型review不能排除错误not rejected推断。native Slack本次review拒绝，产品具体题通过；历史版本结果不升级。当前模式/费用/失败见STATUS与business-validation-20261007/final-v5-readonly-review。browser/G1/G2不由本地测试或材料核验通过。
+2026-10-07当前固定实现64b705a（synthesis-v5，generation/review温度0）：386 clean archive回归、同48世界五fixture及两Node/语法检查通过，仅local/mock。24开发题经逐条只读复核为20核心正确返回（09/32仍有背景）＋1跨事件误导（business16把payment-service根因放入webhook答）＋2正确空答＋1有证据generation结构失败（business12第二claim的quote缺MIG-301，未进入review）；整体质量未通过。eng_b两道当前native＋真实模型正确，28精确窗口及四阶段授权allow；两题耗时含preview119.789/127.671秒，非SLA。当前core/native usage上界18016/3288microUSD，共享账本settled194985/pending0，起点含并发reservation不可用accounted差归成本。当前签名/分页副本本地验证，非独立custody或人工阅读。证据：business-validation-20261007/sampling-fixed-readonly-review、clean-sampling-fixed、sampling-comparison、audit-native-sampling-fixed及audit-core-sampling-fixed。三题各四次温度比较仅开发诊断，不是盲测或稳定质量率；旧失败及AUTH019范围保留。browser saved site denial blocked，49161停止，8094/8100未动；新失败仍open工程，Goal active，G1/G2/人工/ROI/发布not_run。
 
 2026-10-07当前实现2a73bd0：actor预过滤后在CPU计算binary-TF BM25，最多16基础候选、12授权link种子与8扩展、24精确窗口；本地SQLite保存资源/版本、证据、回答及审计，不是向量数据库，无embedding/语义检索/专门重排。关联cutoff只修复fixture已有source-authored links；native四源正文关系尚未解析。synthesis-v4独立draft/review使用既有DeepSeek flash，整答gate不变，通用区分审批/撤回和问题范围。AUTH-017 bounded worker异步发布、选中资料各阶段native复查；unknown/version changed停止完整结论。48同世界五fixture与380回归通过；完整native/质量与人审并未通过。
 
