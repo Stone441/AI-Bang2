@@ -40,7 +40,7 @@ def validate_claim(claim, evidence):
 
 
 class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
-    name = 'deepseek-flash-grounded-synthesis-v4'
+    name = 'deepseek-flash-grounded-synthesis-v5'
     claim_format = 'grounded_synthesis_v1'
     answer_notice = ('Synthesized from current authorized evidence; exact supporting quotes and a separate '
                      'model review were checked. Model review can miss errors; verify important conclusions.')
@@ -56,6 +56,12 @@ class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
              'Do not fill remaining claim slots with background, unrelated release decisions or follow-ups. '
              'Do not attribute facts about another or unspecified incident to the named incident. '
              'Every explicit identifier such as a ticket ID in a claim must appear in its copied support quotes. '
+             'This applies independently to EVERY claim, even when another claim cites the same passage. '
+             'For a continuation sentence without its identifier, copy a contiguous quote including '
+             'the preceding identifier-bearing sentence; never add an identifier to the quoted text. '
+             'Do not turn one example, draft or source into an exhaustive statement about all claims '
+             'or their only possible origin. Universal and exclusive assertions require explicit '
+             'support for that complete scope; otherwise state only the particular fact recorded. '
              'Identify every requested part, allocate claims to cover all supported parts, and combine '
              'overlapping conclusions rather than spending multiple claims on the same point. '
              'Do not replace requested actions or safeguards with background incident history. '
@@ -121,7 +127,10 @@ class EvidenceReview(DeepSeekEvidenceModel):
              'Mark supported true only if the FULL factual claim follows from cited evidence, '
              'including scope, dates, negation and qualifications, with no unsupported inference. '
              'A proposed or unapproved item is not necessarily rejected, cancelled or withdrawn. '
-             'Require explicit source support for each claimed state transition. A claim scoped to '
+             'Require explicit source support for each claimed state transition. '
+             'Reject universal or exclusive inferences about all statements or their sole origin '
+             'when the evidence only establishes a particular draft, example or source. '
+             'A claim scoped to '
              'what its cited passage establishes may acknowledge an unknown requested outcome; '
              'that acknowledgement is not proof of the outcome or exhaustive source coverage. '
              'For an unspecified referent, reject an unconditional single-entity answer; clearly '

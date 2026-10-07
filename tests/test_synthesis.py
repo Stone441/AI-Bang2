@@ -89,6 +89,19 @@ class GroundedSynthesis(unittest.TestCase):
         self.assertEqual(self.ledger.summary()['pending_requests'],0)
         self.assertEqual(self.ledger.summary()['settled_micro_usd'],cost_upper(100,20))
 
+    def test_each_claim_requires_its_own_identifier_context_in_an_exact_quote(self):
+        from dataclasses import replace
+        evidence=replace(self.evidence,text='[SYNTHETIC] TASK-742 is In Progress. Owner: Noor. The remaining blocker is unmatched totals.')
+        owner={'text':'TASK-742 is owned by Noor.', 'evidence_ids':[evidence.evidence_id],
+               'supports':[{'evidence_id':evidence.evidence_id,'quote':'TASK-742 is In Progress. Owner: Noor.'}]}
+        blocker={'text':'TASK-742 is blocked by unmatched totals.', 'evidence_ids':[evidence.evidence_id],
+                 'supports':[{'evidence_id':evidence.evidence_id,'quote':'The remaining blocker is unmatched totals.'}]}
+        self.assertEqual(validate_claim(owner,[evidence]),owner)
+        # Neither another claim nor the unquoted prefix of the same evidence grants grounding.
+        with self.assertRaises(ValueError):validate_claim(blocker,[evidence])
+        blocker['supports'][0]['quote']='TASK-742 is In Progress. Owner: Noor. The remaining blocker is unmatched totals.'
+        self.assertEqual(validate_claim(blocker,[evidence]),blocker)
+
     def test_cross_event_quote_provenance_does_not_override_negative_review(self):
         from dataclasses import replace
         evidence=replace(self.evidence,text='[SYNTHETIC] Vega incident: DNS caused packet loss. Orion incident: retry budget mismatch caused duplicate requests.')
