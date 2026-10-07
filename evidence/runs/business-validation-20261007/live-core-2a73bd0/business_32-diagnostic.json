@@ -1,0 +1,105 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The proposed November hourly settlement schedule is not approved, and current settlement is daily. Because it is unapproved, it should not be promised.",
+        "evidence_ids": [
+          "BV-32@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-32@1",
+            "quote": "The proposed November hourly schedule is not approved. Current settlement is daily."
+          }
+        ]
+      },
+      {
+        "text": "A completed settlement should not be promised where bank confirmation is absent; in that case, ask Eva for status. SET-610 is In Progress because bank confirmation is missing, and Eva is the owner.",
+        "evidence_ids": [
+          "BV-35@1",
+          "BV-33@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-35@1",
+            "quote": "If bank confirmation is absent, ask Eva for status; do not promise a completed settlement."
+          },
+          {
+            "evidence_id": "BV-33@1",
+            "quote": "SET-610 is In Progress because bank confirmation is missing. Owner: Eva."
+          }
+        ]
+      },
+      {
+        "text": "Same-day settlement is approved only for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+        "evidence_ids": [
+          "BV-31@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-31@1",
+            "quote": "Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "92043d74-78f7-46d8-b54e-f64bb666a199",
+      "object": "chat.completion",
+      "created": 1791372656,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The proposed November hourly settlement schedule is not approved, and current settlement is daily. Because it is unapproved, it should not be promised.\",\"evidence_ids\":[\"BV-32@1\"],\"supports\":[{\"evidence_id\":\"BV-32@1\",\"quote\":\"The proposed November hourly schedule is not approved. Current settlement is daily.\"}]},{\"text\":\"A completed settlement should not be promised where bank confirmation is absent; in that case, ask Eva for status. SET-610 is In Progress because bank confirmation is missing, and Eva is the owner.\",\"evidence_ids\":[\"BV-35@1\",\"BV-33@1\"],\"supports\":[{\"evidence_id\":\"BV-35@1\",\"quote\":\"If bank confirmation is absent, ask Eva for status; do not promise a completed settlement.\"},{\"evidence_id\":\"BV-33@1\",\"quote\":\"SET-610 is In Progress because bank confirmation is missing. Owner: Eva.\"}]},{\"text\":\"Same-day settlement is approved only for Singapore SGD pilot accounts; MYR accounts are outside this scope.\",\"evidence_ids\":[\"BV-31@1\"],\"supports\":[{\"evidence_id\":\"BV-31@1\",\"quote\":\"Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 728,
+        "completion_tokens": 271,
+        "total_tokens": 999,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 344
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "5df5e839-c790-4be3-9fe0-0aa70183dfdd",
+      "object": "chat.completion",
+      "created": 1791372657,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":false,\"verdicts\":[{\"index\":0,\"supported\":false},{\"index\":1,\"supported\":false},{\"index\":2,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 982,
+        "completion_tokens": 37,
+        "total_tokens": 1019,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 726
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

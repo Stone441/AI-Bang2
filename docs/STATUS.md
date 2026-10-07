@@ -1,5 +1,8 @@
 # Current status
 
+2026-10-07当前候选：应用/模型b03ddd6（v5），HEAD ba6c815仅追加验收harness费用归属及3测试，brain逐字节一致。b03 clean archive381/同48世界五fixture/两Node通过；新版24开发题实际**19核心正确返回（部分背景）+1含状态否定误推+2正确空答+2有证据拒答**，不能写20质量通过。business03把withdrawn写成not rejected未获支持；business08背景污染后拒答，business11正确晚段答案coverage误拒。当前native Slack正确草稿review拒绝，产品题局部正确；不能沿用2a73bd0 Slack通过给v5贴通过。费用按unique usage归属：core18392+native3155=21547microUSD，账本settled149584/pending0；native前快照含别任务315802 reservation，accounted负差不是退款。新harness防止再用共享快照差当单轮费用，ba6c815 clean archive384回归通过。7真实CodeBuddy截图/原生conversation ZIP/hash与16:9/7词简介已实际核验；原ZIP三Markdown字节一致，01/根README未改。completion-audit-current明确Goal尚未达到；下一普通工程任务是修复“未证明否定≠确定否定”的输出及离线定位coverage误拒，不重新消费保留集/放宽gate。browser saved denial blocked、49161停止、8094/8100未动；AUTH019不扩大，人工/ROI/G1/G2/发布仍not_run。
+
+
 2026-10-07固定新版2a73bd0：clean archive380回归、48同世界五fixture、web/app.js语法与两Node前端检查通过；错误frontend路径的首轮失败保留。audit-mixed新版四结果/208事件oracle/30页通过。新版eng_b原生＋真实模型两题返回正确Slack最终amber替代green、pilot/noGA/no确认日期/Done≠发布批准；3207microUSD，原账本累计102690/pending0，272事件副本分页及7签名边界通过。native-model-2a73bd0及current-2a73bd0-association保存精确版本关系；这不是unknown故障路径的live验证、完整四源freshness/SLA或全质量通过。两题含preview各118.815/128.086秒，性能不足仍open。产品browser blocked saved site denial，不是页面测试失败；49161停止，8094/8100未动。保留题状态误答原失败未重跑/未称修复，AUTH-019延期不变。普通native链接解析和Google Docs导出仍未实现；人业务判断/ROI/G1/G2/提交not_run。Goal active，下一核对业务任务缺口及未实现项的最小必要范围，不默认候选冻结等于开发完成。
 
 

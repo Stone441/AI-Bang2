@@ -1,5 +1,9 @@
 # Decisions / ADR
 
+2026-10-07 ADR-055（费用归属，验收harness）：并发两个获批验收使native预算起点含另一任务pending315802，global accounted差不能当退款或本轮费用。新增run_cost仅按本流unique settled usage receipt汇总，重复不重计、冲突/非法/未结算receipt拒绝，缺usage单列且不清原reservation；报告保留共享snapshot并明确限制。原captured JSON不改，另parallel-v5-cost-attribution证明core18392/native3155/settled增21547。3定向及当前实际44+4receipt离线核验通过，应用brain和模型v5未改变。
+
+2026-10-07 ADR-054（DEV-BV-02上下文/量词）：当前v4完整24开发集实际20核心事实/2正确无调用空答/2有证据失败；20并非全部质量通过，因背景和MYR唯一来源过概括。另5独立措辞开发题再次复现逐claim ID上下文校验拒绝。仅synthesis-v5补通用prompt：每claim独立含ID、可复制邻接连续原文但禁止补造quote；one draft/example不推出所有说法/唯一来源，review显式拒绝该扩大。parse/gate/权限/预算未改。5题同世界同问题v4→v5为1结构拒绝→5返回，需语义复核/完整新版证据，不称盲测或旧保留失败修复。381完整fixture/mock与15synthesis定向通过；不重新开放AUTH019，旧24失败保存。
+
 2026-10-07 ADR-052（DEV-BV-02关联cutoff）：复现1048对象下J-03虽有弱词匹配却在保留16项之外，旧全部候选seed集合误阻止D-01原有链接扩展。仅将去重集合限制为保留16项，保持12种子/8扩展/24窗口及各阶段目标鉴权；不改原文、添加问题关键词或继承历史。相同资料/24题1000压力BM25的J-03诊断关闭，lexical对照仍漏，非整体质量通过；3新增撤权/原文测试、380完整fixture/mock通过。原生链接解析仍未实现，不能将fixture链接结果称为native一跳能力。
 
 2026-10-07 ADR-053（DEV-BV-02状态/歧义）：synthesis-v4通用区分提案、审批、完成与撤回；未批准不意味着取消，指代未明确时只能给有范围的候选事实或空claims。review保持整答gate、精确quote及全部verdict/coverage断言；空claims加通用范围澄清提示，不引入历史继承。4独立开发问题实际v3/v4比较，资料/问题/输入保持相同，engine及prompt变化均保留hash；v3首题正确受限草稿被review拒绝，v4四题返回正确受限或有范围事实，单次开发诊断非稳定质量率。费用3833+4004microUSD，原账本累计99483，不清预算。f8ecbed保留题不重跑/不调成通过，AUTH-019延期不变；当前新版native/live全矩阵仍需另证。

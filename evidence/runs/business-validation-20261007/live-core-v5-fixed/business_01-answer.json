@@ -1,0 +1,73 @@
+{
+  "request_id": "3cd69b24bffa4f4ea4d2577e23ad85d3",
+  "question": "Why does token rotation preserve sessions?",
+  "answered_at": "2026-10-07T11:37:07.903156+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v5",
+  "claims": [
+    {
+      "text": "Rotation preserves sessions using overlapping signing keys, with sessions remaining valid for fifteen minutes.",
+      "evidence_ids": [
+        "BV-01@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-01@1",
+          "quote": "Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-01@1",
+      "resource_id": "BV-01",
+      "version": 1,
+      "source": "confluence",
+      "title": "authentication / Token rotation decision",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "text": "[SYNTHETIC]\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:36:58.040219+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-01"
+    }
+  ],
+  "actor": "eng_a",
+  "model_call": {
+    "query_id": "3cd69b24bffa4f4ea4d2577e23ad85d3",
+    "model": "deepseek-flash",
+    "reservation_id": "74833afbab584ed3860fdca0e9de8ef2",
+    "prompt_tokens": 566,
+    "completion_tokens": 65,
+    "total_tokens": 631,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 248,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "3cd69b24bffa4f4ea4d2577e23ad85d3",
+    "model": "deepseek-flash",
+    "reservation_id": "4410b793f5b64c998e5b4e4c13b84151",
+    "prompt_tokens": 537,
+    "completion_tokens": 21,
+    "total_tokens": 558,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 187,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

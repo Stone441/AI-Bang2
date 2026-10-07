@@ -1,0 +1,88 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The webhook backlog came from an exhausted worker pool, not DNS resolution.",
+        "evidence_ids": [
+          "BV-16@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-16@1",
+            "quote": "The webhook backlog came from an exhausted worker pool, not DNS resolution."
+          }
+        ]
+      },
+      {
+        "text": "DNS was a historical webhook hypothesis in a retired webhook rehearsal.",
+        "evidence_ids": [
+          "BV-11@1#0:2400"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-11@1#0:2400",
+            "quote": "# Retired webhook rehearsal\nDNS was a historical webhook hypothesis."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "96f42733-47ec-4595-be2c-347c3cd207b8",
+      "object": "chat.completion",
+      "created": 1791373048,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The webhook backlog came from an exhausted worker pool, not DNS resolution.\",\"evidence_ids\":[\"BV-16@1\"],\"supports\":[{\"evidence_id\":\"BV-16@1\",\"quote\":\"The webhook backlog came from an exhausted worker pool, not DNS resolution.\"}]},{\"text\":\"DNS was a historical webhook hypothesis in a retired webhook rehearsal.\",\"evidence_ids\":[\"BV-11@1#0:2400\"],\"supports\":[{\"evidence_id\":\"BV-11@1#0:2400\",\"quote\":\"# Retired webhook rehearsal\\nDNS was a historical webhook hypothesis.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1464,
+        "completion_tokens": 136,
+        "total_tokens": 1600,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 952
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "c962a869-021e-4ef0-a47b-b88b4844b769",
+      "object": "chat.completion",
+      "created": 1791373049,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true},{\"index\":1,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1511,
+        "completion_tokens": 29,
+        "total_tokens": 1540,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 1255
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

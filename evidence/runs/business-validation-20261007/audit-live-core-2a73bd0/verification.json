@@ -1,0 +1,40 @@
+{
+  "mode": "offline_signed_copy_of_fixture_source_live_model_audit",
+  "source": "evidence/runs/business-validation-20261007/live-core-2a73bd0/audit.json",
+  "sha256": "7d2d2a2d37afd44b6d8452af6e3e1e7e4dcde0ac001bf3b48f94c779cdb8a740",
+  "events": 1481,
+  "actual": {
+    "anchored": {
+      "chain_valid": true,
+      "events": 1481,
+      "head_hash": "08486bb27923dcaef458ca7c606ea52f7d148de160173a30b840d724b9a784f1",
+      "through_seq": 1481
+    },
+    "boundaries": [
+      "Same-host, same-account signing cannot resist full compromise of that account; this is a logical demonstration, not a production independence boundary.",
+      "Audit v1 events carry no stream_id; stream identity is enforced only as an external expectation parameter on the checkpoint, so cross-stream transplant prevention is checked, not proven by the event schema itself.",
+      "Events after through_seq are not covered by the checkpoint signature; replacement or truncation inside the unanchored tail is undetectable by this checkpoint.",
+      "Verification recomputes canonical hashes from parsed JSON; it detects content tampering, not non-canonical re-serialization of identical content."
+    ],
+    "exported_events": 1481,
+    "signature": {
+      "algorithm": "ed25519",
+      "detail": "ok",
+      "verified": true
+    },
+    "stream_id": {
+      "checkpoint": "bv-core-2a73bd0",
+      "expected": "bv-core-2a73bd0",
+      "match": true
+    },
+    "tail": {
+      "count": 0,
+      "present": false
+    },
+    "verdict": "anchored_valid"
+  },
+  "private_key_deleted": true,
+  "independent_custody": "not_proved",
+  "human_reading": "not_proved",
+  "original_unchanged": true
+}

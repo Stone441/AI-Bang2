@@ -1,0 +1,76 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "SGD connector approval does not cover business USD accounts; Singapore business USD accounts require a separate connector approval.",
+        "evidence_ids": [
+          "BV-07@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-07@1",
+            "quote": "Singapore business USD accounts require a separate connector approval; SGD approval does not include USD."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "2c625de5-bced-4620-975d-60319214df19",
+      "object": "chat.completion",
+      "created": 1791373038,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"SGD connector approval does not cover business USD accounts; Singapore business USD accounts require a separate connector approval.\",\"evidence_ids\":[\"BV-07@1\"],\"supports\":[{\"evidence_id\":\"BV-07@1\",\"quote\":\"Singapore business USD accounts require a separate connector approval; SGD approval does not include USD.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 905,
+        "completion_tokens": 74,
+        "total_tokens": 979,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 393
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "95ca6c24-34fb-49dc-b882-6ff7edfcd6ac",
+      "object": "chat.completion",
+      "created": 1791373039,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 885,
+        "completion_tokens": 21,
+        "total_tokens": 906,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 629
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

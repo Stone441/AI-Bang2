@@ -1,0 +1,93 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The payment-service protective measures tracked by PAY-103 are In Progress, and the owner is Maya.",
+        "evidence_ids": [
+          "J-03@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-03@1",
+            "quote": "PAY-103 protective measures: In Progress. Owner: Maya."
+          }
+        ]
+      },
+      {
+        "text": "Payment-retry remains a controlled pilot, with general availability (GA) not approved and no confirmed general release date.",
+        "evidence_ids": [
+          "S-02@1",
+          "C-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "S-02@1",
+            "quote": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval."
+          },
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "78a25a0a-ba93-4124-b3dd-de1e6f89945d",
+      "object": "chat.completion",
+      "created": 1791372621,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The payment-service protective measures tracked by PAY-103 are In Progress, and the owner is Maya.\",\"evidence_ids\":[\"J-03@1\"],\"supports\":[{\"evidence_id\":\"J-03@1\",\"quote\":\"PAY-103 protective measures: In Progress. Owner: Maya.\"}]},{\"text\":\"Payment-retry remains a controlled pilot, with general availability (GA) not approved and no confirmed general release date.\",\"evidence_ids\":[\"S-02@1\",\"C-02@1\"],\"supports\":[{\"evidence_id\":\"S-02@1\",\"quote\":\"Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.\"},{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1241,
+        "completion_tokens": 191,
+        "total_tokens": 1432,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 985
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "7e34cf2b-2678-4f25-9fa2-66dc54ead99b",
+      "object": "chat.completion",
+      "created": 1791372622,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\": true, \"verdicts\": [{\"index\": 0, \"supported\": true}, {\"index\": 1, \"supported\": true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1409,
+        "completion_tokens": 36,
+        "total_tokens": 1445,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 1153
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Same-day settlement is not approved for MYR accounts; the approval applies only to Singapore SGD pilot accounts, and MYR accounts are outside that scope.",
+        "evidence_ids": [
+          "BV-31@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-31@1",
+            "quote": "Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope."
+          }
+        ]
+      },
+      {
+        "text": "Any statement that MYR settlement is available rests only on an unsigned draft proposal, not on the approved operating rule.",
+        "evidence_ids": [
+          "BV-34@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-34@1",
+            "quote": "An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "f26dafb3-15af-48fa-a256-c31a6d25ebcf",
+      "object": "chat.completion",
+      "created": 1791372653,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Same-day settlement is not approved for MYR accounts; the approval applies only to Singapore SGD pilot accounts, and MYR accounts are outside that scope.\",\"evidence_ids\":[\"BV-31@1\"],\"supports\":[{\"evidence_id\":\"BV-31@1\",\"quote\":\"Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.\"}]},{\"text\":\"Any statement that MYR settlement is available rests only on an unsigned draft proposal, not on the approved operating rule.\",\"evidence_ids\":[\"BV-34@1\"],\"supports\":[{\"evidence_id\":\"BV-34@1\",\"quote\":\"An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1147,
+        "completion_tokens": 160,
+        "total_tokens": 1307,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 763
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "34164e8c-8a2a-4e69-81d1-682ccbafc3a4",
+      "object": "chat.completion",
+      "created": 1791372655,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\n  \"question_covered\": true,\n  \"verdicts\": [\n    {\n      \"index\": 0,\n      \"supported\": true\n    },\n    {\n      \"index\": 1,\n      \"supported\": true\n    }\n  ]\n}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1279,
+        "completion_tokens": 53,
+        "total_tokens": 1332,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 1023
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}
