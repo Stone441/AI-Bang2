@@ -18,9 +18,10 @@ from brain.store import Store
 from scripts.build_metadata import revision
 from scripts.business_validation import build_world
 from scripts.quality_acceptance import CapturedSynthesis
+from scripts.run_cost import usage_cost
 
 
-def run(cases_path, output, live=False):
+def run(cases_path, output, live=False, reasoning_effort='none', output_tokens=1024):
     raw=cases_path.read_bytes();cases=json.loads(raw)
     if len(cases)!=12:raise ValueError('Released 12-question set required')
     output.mkdir(parents=True,exist_ok=False)
@@ -31,7 +32,9 @@ def run(cases_path, output, live=False):
             'questions_sha256':hashlib.sha256(raw).hexdigest(),
             'source_hashes':{str(p):hashlib.sha256(p.read_bytes()).hexdigest()
                 for p in [Path(__file__),*sorted(Path('brain').glob('*.py'))]},
-            'retention':'Agent-held until f8ecbed implementation freeze; not human blind evaluation',
+            'retention':'Known-question regression of previously seen released12; not blind or a new heldout evaluation',
+            'reasoning_effort':reasoning_effort,'output_token_cap':output_tokens,
+            'reservation_per_call_micro_usd':CapturedSynthesis.reservation_for(output_tokens),
             'native':'not_run','browser':'blocked_saved_site_denial','G1':'not_run','G2':'not_run',
             'semantic_quality':'pending_readonly_review' if live else 'not_evaluated_fake'}
     world,_=build_world();ledger=None;store=None;results=[]
@@ -44,12 +47,13 @@ def run(cases_path, output, live=False):
             budget=Path('.runtime/deepseek-budget.sqlite')
             if not budget.is_file():raise ValueError('Original budget required')
             ledger=BudgetLedger(str(budget));report['budget_before']=ledger.summary()
-            if report['budget_before']['blocked_for_review'] or report['budget_before']['available_micro_usd']<2*len(cases)*CapturedSynthesis.reservation:
+            if report['budget_before']['blocked_for_review'] or report['budget_before']['available_micro_usd']<2*len(cases)*CapturedSynthesis.reservation_for(output_tokens):
                 raise ValueError('Original budget unavailable')
             config=json.loads((Path('.runtime')/bundle['sources']['jira']).read_text())
             key=MacKeychain().get('deepseek',config['tenant'],'eng_b','deepseek-flash')
             if not key:raise ValueError('Approved model key unavailable')
-            model=CapturedSynthesis(key,ledger,synthetic_only=True)
+            model=CapturedSynthesis(key,ledger,synthetic_only=True,
+                reasoning_effort=reasoning_effort,output_tokens=output_tokens)
             for resource in world.resources.values():
                 if not resource['text'].startswith('[SYNTHETIC]'):resource['text']='[SYNTHETIC]\n'+resource['text']
         else:model=FakeExtractiveModel()
@@ -79,6 +83,7 @@ def run(cases_path, output, live=False):
             if live:save(case['id']+'-diagnostic.json',{'draft':model.draft_output,'vendor_responses':model.response_diagnostics})
             save('progress.json',results);print(case['id'],error or 'answer',flush=True)
         save('audit.json',audit.export());report['chain']=verify_chain(audit.export())
+        if live:report['run_usage_cost']=usage_cost(audit.export())
         report['status']='captured_for_review';report['results']=results
     except Exception as exc:
         report['status']='failed';report['error_type']=type(exc).__name__
@@ -93,5 +98,7 @@ def run(cases_path, output, live=False):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--cases',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
-    parser.add_argument('--live-model',action='store_true');args=parser.parse_args()
-    run(args.cases,args.output,args.live_model)
+    parser.add_argument('--live-model',action='store_true')
+    parser.add_argument('--reasoning-effort',choices=['none','low'],default='none')
+    parser.add_argument('--output-tokens',type=int,choices=[1024,2048,4096],default=1024);args=parser.parse_args()
+    run(args.cases,args.output,args.live_model,args.reasoning_effort,args.output_tokens)

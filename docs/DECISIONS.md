@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-08 AUTH-023：用户本次再次明确“推到GitHub并合并到main”，批准当前fix/candidate-closure-20261008增量经本地检查后推送既有仓库并通过PR合并main。仅交付现有验证runner、当日实际价格复核及准确状态；原ZIP/SQLite/秘密不上传，不重启、不部署、不新增模型费用。尚未执行的封版live回归/耗时/时间线任务保持未完成，G1/G2不变。
+
 2026-10-08 AUTH-022：用户明确“推到GitHub并合并到main”，批准本轮feat/business-validation-20261007已有已验证代码与公共合成证据推送至既有Stone441/AI-Bang2，并通过PR合并main。保护原ZIP、未跟踪运行数据库/私密工具证明；不改变仓库可见性、不重启服务、不部署/新增模型费用、不替代G1/G2或比赛提交。运行模型的每日价格guard保持，Oct7证据不当作Oct8readiness。
 
 2026-10-07 ADR-059（固定本轮候选）：选择0bc90ae synthesis-v8可信low/4096。2048在完整开发03 review及native产品generation实证length/no final，失败与费用保留；4096单题诊断、全24及当前native两题均返回正确且精确引用。398clean/五fixture/Node和当前审计签名配对通过。选择依据是这些实际观测，不宣称sampling因果、稳定率或旧保留失败修复；不再继续提高cap。默认none/1024不变，opt-in可信启动，不新增HTTP参数/权限/费用上限，不自动retry。回滚省略flag或保留v6候选，无schema/源修改。业务增强范围按5.3收尾，与G1/G2、完整技术验收及未支持能力分列。
