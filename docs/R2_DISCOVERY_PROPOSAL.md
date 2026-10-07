@@ -29,3 +29,9 @@
 - [Slack conversations.history](https://docs.slack.dev/reference/methods/conversations.history/)：user history scopes；内部应用与商业非Marketplace的限流不同，不能凭app安装即假设50+/min。
 
 2026-10-06 用户明确回复“批准上述四个固定范围”。授权仅下表既有eng_b身份、四个固定容器及Slack既有root时间窗，其他边界不变。实现已verified local/mock；native发现子集已verified，完整生命周期时延仍not_run。
+
+## 2026-10-07 BV原生变化补缺的具体范围（未执行，非默认授权）
+
+复用AUTH-017四容器及eng_b只读身份，不改旧种植对象/原审计；每源新建一份独立[SYNTHETIC] BV-20261007资料：Confluence space131227、Jira KAN/10001、Slack C0C6R70SGG4（既有合成root之后）、Drive folder1EMYjaNhzBFQ3TXHC6ukEwN6otVIIeOEv。标题均“[SYNTHETIC] BV-20261007 change probe <source>”。正文v1“[SYNTHETIC] BV-20261007 <source>: approved probe value amber; no customer promise.”，v2只把amber改green。各创建一次、更新两次（amber→green→amber），记录确认时刻→发现→发布→首次正确fake回答。Slack用一条新root及对应修正reply，不编辑已有root；删除/撤权另核具体需要，不本轮自动删除。
+
+程序现有凭据只读，源端操作必须在已批准管理渠道或由owner执行；不搜管理员凭据、不申请写scope。此具体动作尚未从旧一次性操作推导批准；本轮先继续本地/只读验证。没有新增scope/账号、模型费用、服务重启、公开或真实业务数据。

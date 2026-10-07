@@ -1,5 +1,14 @@
 # Decisions / ADR
 
+2026-10-07 ADR-050（DEV-BV-03 有界查询）：仅可信operator的AUTH-017后台模式启用bounded_queries；活跃worker最新四源cycle完整/无backlog且进程内发布距今不超过120秒，同tenant/actor/resource/version候选可用本地snapshot，不把它称为当前allow。选中资料仍有before_model/model_dispatch/review/before_dispatch及preview/history native复查；同一请求同阶段的resource/version多个窗口共享一次native check，阶段间不共享allow，每个窗口仍核对版本；unknown及明确content/version-changed deny停止整答，防止漏掉新版反证后仍回答；真实ACL deny仍过滤，旧preview/history仍返回不可用。worker失败、积压、过期或停止明确503，不将缺可能改变结论的源当知识不足。进程重启必须重新发布，DB checkpoint不恢复trusted snapshot。旧库默认显式逐问刷新保留；HTTP统一pilot.lock→store.lock顺序，避免发布与HTTP锁反转。120秒是保守运行有效性阈值，不是freshness/SLA；100对象/page上限及全局锁仍限制规模。无旧服务重启。
+
+2026-10-07 ADR-049（DEV-BV-02选择，待当前完整回归/保留集）：采用本地binary-TF BM25作为当前候选默认排序，保留Engine显式lexical回退；只在actor权限预过滤后的精确原文窗口统计IDF/长度，不增加embedding/向量库/模型重排，不改窗口、引用、预算或各阶段native鉴权。相同48对象/24开发题、模型/prompt与资料字节的单次live A/B中，A为16条事实回答+2条正确空回答+6条失败，B为20+2+2；这是单次随机模型诊断，非稳定质量率。1000干扰两者仍漏J-03，B并未证明全质量通过；AUTH-019保留。本实现只是CPU查询时评分，尚非持久FTS/章节索引；回退参数不改旧证据，后续须验证安全及未见题。
+
+2026-10-07 AUTH-021：用户对R2_DISCOVERY_PROPOSAL具体范围回复“批准上述具体合成种植/修正范围”。仅四AUTH-017固定容器内各新增独立[SYNTHETIC] BV-20261007资料及amber→green→amber修正，Slack独立新root/reply；不改旧资料、不删除、不扩scope/账号/费用、不重启服务。通过已批准owner管理渠道写，现有程序凭据保持只读；记录发现至正确fake回答逐次时间，不宣称SLA。
+
+2026-10-07 AUTH-020（本轮具体指令）：用户采用Business_Iteration_Pack方向，延续既有本地可逆开发与验证；不扩大新权限/provider/费用、外部写入、服务重启、推送合并、公开部署/提交。保留ADR-040、AUTH-019及原共享预算；Orion仅短诊断，不自行重新开放修复或改变整答拒绝。基准9b9c193，feat/business-validation-20261007；01/旧研究审查证据不改。
+
+
 ## AUTH-019 · 2026-10-06 · Explicit quality deferral for consolidated team candidate
 
 用户对固定331bd28、357archive/五fixture场景、实际真模型失败/诊断与影响的具体提案明确回复“批准明确延期并交团队验收”。仅允许将long named-event/similar-event review拒答及部分自然回答非必答背景两项保留为已知质量缺口，交团队集中语义验收；冻结时不能称通过。原review gate、所有有效断言/失败与原USD20账本保留，不是G1/G2/发布/提交批准，也不改变浏览器实际工具许可。browser保存站点拒绝仍须通过正常许可机制解除；用户回复“没有找到许可入口”，位置未知，browser/screenshots not_run。仅Agent自建49161 fixture已结束，未来新实例需重新核归属/模式及许可。不能换端口/工具/代理/关闭安全设置。

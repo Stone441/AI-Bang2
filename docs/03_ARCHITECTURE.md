@@ -1,5 +1,8 @@
 # 架构基线、信任边界与实现契约
 
+2026-10-07 as-is优先：331bd28为SQLite＋词法/固定字符窗口＋原生逐阶段授权＋可选DeepSeek生成/review；非下方早期pgvector/FastAPI推荐栈。BV实验依次对比A现有词法、B全文/BM25及原文章节上下文；C语义召回须有批准provider/本地依赖，否则blocked。引用原文与检索上下文分离，resource/version/security scope不变；重大选择记DECISIONS，不预填embedding上线。
+
+
 > 状态：**拟议架构，尚无运行验证。** Codex应在首阶段依据实际API、开发环境和测试证据收敛；普通实现细节可自行调整，放宽权限、审计或对外承诺须人确认。  
 > 官方要求：[01](01_OFFICIAL_BRIEF.md)；业务策略：[02](02_PRODUCT_STRATEGY.md)；验收：[05](05_ACCEPTANCE_TESTS.md)。  
 > 本文中`Txx`为文末外部技术资料，2026-09-27查阅，不是赛事规则。
@@ -502,3 +505,5 @@ The SQLite pilot derives exact overlapping text windows from each published reso
 Ranking uses local lexical overlap and a small explicit English alias map, up to three windows per resource, 24 total evidence objects and 16,000 text characters. This is not the planned vector/hybrid/reranker architecture. Fixed windows can cut sentences, overlap and omit context; there is no background chunk index or scale benchmark. DeepSeek’s existing synthetic input guard remains unchanged; a late slice without the approved marker is rejected, so fixture long-window success does not prove live long-document model support.
 
 2026-10-06 产品范围修订（用户批准，ADR-040）：独立问答取代自动追问；HTTP query仅接受question，history_id拒绝400。Engine旧本地harness位置参数仅兼容接收但不查询/补充任何历史依赖，审计history_id=null/query_kind=independent。取消Export answer及回答下载路由，覆盖此前关于用户导出的实现描述；历史、引用及原文版本仍重新鉴权，不取消安全断言。
+
+2026-10-07 DEV-BV-02 当前工作树选择：Engine默认本地binary-TF BM25，lexical显式回退；两者共用权限预过滤、16000字符/24证据预算、精确固定窗口及native逐阶段检查。BM25每问在本地visible窗口计算，不是持久全文索引、embedding、向量数据库或语义重排。实验/运行证据见business-validation-20261007；此前as-is词法段落为旧候选事实，尚未重启任何旧服务。

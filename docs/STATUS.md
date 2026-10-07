@@ -1,5 +1,8 @@
 # Current status
 
+2026-10-07业务增强Goal active，分支feat/business-validation-20261007、基准9b9c193；当前工作树尚未固定为新commit。48对象/24开发题与1000干扰集已运行：single live A/B为16事实+2正确空答+6失败与20+2+2，非稳定质量率；1000集仍漏J-03。当前采用binary-TF BM25，非embedding/向量或语义检索。资源方向审计、表格cell关系、有界后台查询已实现；371 fixture/mock完整回归通过后，新增审查反证修复的7项定向回归通过，完整新回归待运行。AUTH-021四源新probe已完成amber→green→amber，native API/fake model检查通过，Slack最新值语义选择未证明，查询数十秒/含排队，非SLA。所有原失败/附件保留；见evidence/runs/business-validation-20261007。12保留题未消费、统一fixed candidate与签名证据仍待完成。browser saved site denial blocked；49161停止、8094/8100未动；AUTH-019延期、G1/G2 not_run。
+
+
 验收准备补充（2026-10-06）：已核331bd28→6d79ed2仅8份docs及147份本轮evidence，无实现/测试/配置/构建差异；357及五场景结果对应331bd28，不需因文档提交重跑。两项延期原问题/actual和R2八断言见[DEMO_CANDIDATE](DEMO_CANDIDATE.md)，18分钟观看四列见[SAFETY_REVIEW](SAFETY_REVIEW.md)。本次仅文档整理，不启动服务、不新增费用或开发线；browser blocked（saved site denial）/页面not_run/G1/G2 not_run。记录分支docs/fixed-candidate-acceptance-prep，原候选不变。
 
 ## 当前接续总表 · 2026-10-06（优先于下方历史记录）

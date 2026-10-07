@@ -1,5 +1,8 @@
 # 交付路线、三人协作与编码Agent执行手册
 
+2026-10-07当前执行链：DEV-BV-00短接线→01业务真值/实际基线→02限时检索对比，与03四源变化/规模故障、04权限审计推进→05体验/业务观察→06固定候选。具体[EXECUTION_BRIEF](iterations/2026-10-07-business-validation/EXECUTION_BRIEF.md)，任务状态只在BACKLOG/STATUS。已有CodeBuddy贡献不重做；外部动作/G1/G2仍各自授权。
+
+
 > 状态：**执行计划，不是完成报告。** 本文日期、任务分工和工具任务为团队建议；官方规则只以[01](01_OFFICIAL_BRIEF.md)及后续经核实的澄清为依据。  
 > 输入：[产品方案](02_PRODUCT_STRATEGY.md)、[架构](03_ARCHITECTURE.md)、[验收](05_ACCEPTANCE_TESTS.md)。
 

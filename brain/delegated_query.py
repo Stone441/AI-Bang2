@@ -62,6 +62,16 @@ class DelegatedAuthority:
         return reader.read(actor,native_id,expected_version)
 
     def prepare(self, actor, store, audit, request_id):
+        discovery=getattr(self,'discovery',None)
+        published=discovery.query_snapshot(actor) if discovery else None
+        if published is not None:
+            self.snapshots[actor.user_id]={rid:version for rid,version in published.items()
+                if (current:=store.get(rid)) and current['tenant']==actor.tenant
+                and current['version']==version and current['active']}
+            audit.append('source_changed',actor.user_id,request_id,
+                         {'phase':'retrieval_snapshot_prefilter','resource_scope':'payment-service',
+                          'native_reads':0,'is_current_authorization':False})
+            return
         self.snapshots[actor.user_id] = {}
         for source, reader in sorted(self.readers.items()):
             dynamic = self.discovered_ids.get(actor.user_id, {}).get(source, frozenset())

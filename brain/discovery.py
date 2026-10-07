@@ -54,7 +54,9 @@ class NativeCounter:
 
 
 class ContainerDiscovery:
-    def __init__(self, pilot, actor, *, scope=None, clock=time.monotonic):
+    def __init__(self, pilot, actor, *, scope=None, clock=time.monotonic, bounded_queries=False):
+        if type(bounded_queries) is not bool:raise ValueError('Trusted boolean query policy required')
+        self.bounded_queries=bounded_queries
         self.pilot, self.actor, self.clock = pilot, actor, clock
         self.scope = dict(AUTH017 if scope is None else scope)
         a = pilot.authority
@@ -74,6 +76,9 @@ class ContainerDiscovery:
         self.failures={s:0 for s in self.scope}; self.due={s:0 for s in self.scope}
         self.offsets={s:0 for s in self.scope}
         self.last={}
+        self.background_started=False
+        self.published_at={};self.published_versions={}
+        a.discovery=self
         with pilot.engine.store.transaction() as db:
             db.execute('CREATE TABLE IF NOT EXISTS discovery_catalog (actor TEXT, source TEXT, native_id TEXT, mapping TEXT NOT NULL, PRIMARY KEY(actor,source,native_id))')
             db.execute('CREATE TABLE IF NOT EXISTS discovery_state (actor TEXT, source TEXT, body TEXT NOT NULL, PRIMARY KEY(actor,source))')
@@ -332,6 +337,9 @@ class ContainerDiscovery:
             a.discovered_ids.setdefault(self.actor.user_id,{})[source]=dynamic
             a.approved_synthetic_resource_ids=frozenset(a.approved_synthetic_resource_ids)|frozenset(source+':'+i for i in staged)
             for native,resource in staged.items():a.resources[resource['id']]=resource
+            if status=='complete':
+                self.published_at[source]=self.clock()
+                self.published_versions[source]={r['id']:r['version'] for r in staged.values()}
             self.failures[source]=0
             timing={'listing_seconds':listed-started,'read_seconds':fetched-listed,'publish_seconds':self.clock()-fetched}
         except Exception as error:
@@ -355,12 +363,28 @@ class ContainerDiscovery:
 
     def start(self):
         if self.thread is not None:raise ValueError('Discovery already started')
+        self.background_started=True
         def poll():
             while not self.stop_event.is_set():
                 try:self.run_once()
                 except Exception:self.stop_event.set()  # Audit/store failure stops unattended polling.
                 self.stop_event.wait(1)
         self.thread=threading.Thread(target=poll,name='auth017-discovery',daemon=True);self.thread.start()
+
+    def query_snapshot(self, actor):
+        """Local candidate eligibility only. Final native checks remain mandatory.
+
+        A stopped/failed/backlogged/expired worker cannot silently imply a complete
+        answer. No DB checkpoint alone restores this process-local snapshot.
+        """
+        if not self.bounded_queries or actor!=self.actor or not self.background_started:return None
+        if (self.stop_event.is_set() or self.thread is None or not self.thread.is_alive()
+                or any(self.last.get(s,{}).get('status')!='complete'
+                       or s not in self.published_at or self.clock()-self.published_at[s]>120
+                       for s in self.scope)):
+            raise SourceUnavailable('Current source coverage unavailable; retry later')
+        return {rid:version for source in self.scope
+                for rid,version in self.published_versions[source].items()}
 
     def close(self):
         self.stop_event.set()

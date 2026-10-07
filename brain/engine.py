@@ -4,7 +4,7 @@ from .contracts import Actor, Evidence, MODE, TENANT, now
 from .sources import policy_allows
 from .model_receipt import public_receipt
 
-from .retrieval import tokens, ranked_windows, window_evidence, resolve_window
+from .retrieval import tokens, ranked_windows, bm25_windows, spans, window_evidence, resolve_window
 
 
 class FakeExtractiveModel:
@@ -18,10 +18,13 @@ class FakeExtractiveModel:
 
 
 class Engine:
-    def __init__(self, store, world, audit, model=None, *, tenant=TENANT, mode=MODE):
+    def __init__(self, store, world, audit, model=None, *, tenant=TENANT, mode=MODE,
+                 retrieval_strategy='bm25'):
+        if retrieval_strategy not in ('lexical','bm25'):raise ValueError('Unsupported retrieval strategy')
         self.store,self.world,self.audit=store,world,audit
         self.model=model or FakeExtractiveModel()
         self.tenant,self.mode=tenant,mode
+        self.retrieval_strategy=retrieval_strategy
         self.before_dispatch=None
 
     def prefilter(self, actor, resource):
@@ -38,6 +41,15 @@ class Engine:
         self.audit.append('authorization_decided',actor.user_id,request_id,
                           {'resource_id':resource['id'],'source':resource['source'],'version':resource['version'],
                            'phase':phase,'resource_scope':'payment-service',**asdict(decision)})
+        discovery=getattr(self.world,'discovery',None)
+        content_changed=(decision.result=='deny' and decision.method in {
+            source+'-'+change for source in ('confluence','jira','slack','drive')
+            for change in ('content-changed','version-changed')})
+        if ((decision.result=='unknown' or content_changed) and phase not in ('preview',)
+                and discovery is not None
+                and discovery.bounded_queries and discovery.background_started and actor==discovery.actor):
+            from .confluence import SourceUnavailable
+            raise SourceUnavailable('Current source coverage unavailable; retry later')
         return decision.result=='allow'
 
     def query(self, actor:Actor, question, history_id=None):
@@ -45,18 +57,22 @@ class Engine:
         if not isinstance(question,str) or not question.strip() or len(question)>4000:
             raise ValueError('Question must contain 1–4000 characters')
         rid=uuid.uuid4().hex
-        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + lexical aliases + exact windows + authorized one-hop links','history_id':None,'query_kind':'independent'})
+        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + '+self.retrieval_strategy+' + lexical aliases + exact windows + authorized one-hop links','history_id':None,'query_kind':'independent'})
         try:
             if hasattr(self.world, 'prepare'):
                 self.world.prepare(actor,self.store,self.audit,rid)
             query_tokens=tokens(question)
+            visible=[r for r in self.store.resources()
+                     if r['tenant']==actor.tenant and self.prefilter(actor,r)]
+            bm25=bm25_windows(visible,query_tokens) if self.retrieval_strategy=='bm25' else None
+            def rank(resource, *, supplementary=False):
+                if bm25 is None:return ranked_windows(resource,query_tokens,supplementary=supplementary)
+                return bm25.get(resource['id']) or ([(0,*spans(resource['text'])[0])] if supplementary else [])
             # Legacy in-process history_id is accepted for old harness compatibility only.
             # Independent queries never read or supplement previous answer dependencies.
             candidates=[]
-            for resource in self.store.resources():
-                if resource['tenant']!=actor.tenant: continue
-                if not self.prefilter(actor,resource): continue
-                windows=ranked_windows(resource,query_tokens)
+            for resource in visible:
+                windows=rank(resource)
                 score=windows[0][0] if windows else 0
                 if score: candidates.append((score,resource))
             candidates.sort(key=lambda pair:(-pair[0],pair[1]['id']))
@@ -84,7 +100,7 @@ class Engine:
                 if not self.check(actor,r,rid,'before_model'): continue
                 current=self.world.resources[r['id']]
                 if current['version']!=r['version'] or not current['active']: continue
-                for _,start,end in ranked_windows(r,query_tokens,supplementary=True):
+                for _,start,end in rank(r,supplementary=True):
                     eid,locator,text=window_evidence(r,start,end)
                     if len(selected)>=24: break
                     if len(text)>budget: continue
@@ -92,20 +108,22 @@ class Engine:
                     selected.append(Evidence(eid,r['id'],r['version'],r['source'],r['title'],locator,text,r['source_updated_at'],r['indexed_at'],r['source_url']))
             # Recheck the complete selected set immediately before model dispatch.
             # A later candidate read may have observed a permission/content change.
-            for e in selected:
-                resource=self.store.get(e.resource_id)
-                if (not resource or not self.check(actor,resource,rid,'model_dispatch')
-                        or self.world.resources[e.resource_id]['version']!=e.version):
-                    raise PermissionError('Evidence changed; please ask again')
+            def authorize_selected(phase):
+                checked=set()  # Request/phase local; never reuse a prior stage's allow.
+                for e in selected:
+                    resource=self.store.get(e.resource_id)
+                    key=(e.resource_id,e.version)
+                    if (not resource or resource['version']!=e.version
+                            or (key not in checked and not self.check(actor,resource,rid,phase))
+                            or self.world.resources[e.resource_id]['version']!=e.version):
+                        raise PermissionError('Evidence changed; please ask again')
+                    checked.add(key)
+            authorize_selected('model_dispatch')
             for e in selected:
                 self.audit.append('evidence_used',actor.user_id,rid,{'evidence_id':e.evidence_id,'resource_id':e.resource_id,'source':e.source,'version':e.version,'stage':'prepared_for_answer','resource_scope':'payment-service'})
             def authorize_model_stage(phase):
                 if phase!='review_dispatch': raise ValueError('Invalid model stage')
-                for e in selected:
-                    resource=self.store.get(e.resource_id)
-                    if (not resource or not self.check(actor,resource,rid,phase)
-                            or self.world.resources[e.resource_id]['version']!=e.version):
-                        raise PermissionError('Evidence changed; please ask again')
+                authorize_selected(phase)
                 for e in selected:
                     self.audit.append('evidence_used',actor.user_id,rid,
                                       {'evidence_id':e.evidence_id,'resource_id':e.resource_id,
@@ -161,11 +179,7 @@ class Engine:
                                   review_status='accepted')
             self.audit.append('generation_completed',actor.user_id,rid,generation)
             if self.before_dispatch: self.before_dispatch()
-            for e in selected:
-                resource=self.store.get(e.resource_id)
-                if (not resource or resource['version']!=e.version or not self.check(actor,resource,rid,'before_dispatch')
-                        or self.world.resources[e.resource_id]['version']!=e.version):
-                    raise PermissionError('Evidence changed; please ask again')
+            authorize_selected('before_dispatch')
             response={'request_id':rid,'question':question,'answered_at':now(),'mode':self.mode,'model':self.model.name,'claims':claims,
                       'uncertainties':[getattr(self.model,'answer_notice','Source excerpts only; live AI synthesis is not enabled.')] if claims else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}

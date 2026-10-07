@@ -4,6 +4,8 @@ Windows never combine resources/security scopes. Offsets count Python Unicode
 characters, and the ID identifies a canonical window of one immutable version.
 """
 import re
+import math
+from collections import Counter
 
 STOP = set('what which the a an of is are was were to in on and or from with can we i me you your my do does it for all today latest current including caused use show details just'.split())
 # Small, explicit lexical aliases, not a claim of general semantic retrieval.
@@ -70,3 +72,31 @@ def resolve_window(resource, eid):
         candidate, locator, text = window_evidence(resource, start, end)
         if candidate == eid: return locator, text
     raise ValueError('Invalid evidence window')
+
+
+def bm25_windows(resources, query_tokens):
+    """Local experimental BM25 over exact windows of prefiltered resources.
+
+    No extra source/model calls and no edited citation text. Aliases/compound
+    handling are identical to lexical baseline, isolating the scoring change.
+    """
+    documents=[]
+    for resource in resources:
+        for start,end in spans(resource['text']):
+            terms=tokens(resource['title']) | tokens(resource['text'][start:end])
+            documents.append((resource['id'],start,end,terms))
+    count=len(documents)
+    if not count:return {}
+    frequencies=Counter(t for _,_,_,terms in documents for t in terms)
+    average=sum(len(terms) for _,_,_,terms in documents)/count or 1
+    result={r['id']:[] for r in resources}
+    for rid,start,end,terms in documents:
+        score=0.0
+        for term in query_tokens & terms:
+            # Binary TF preserves current set-tokenization; this experiment
+            # changes inverse-document frequency and length normalization.
+            idf=math.log(1+(count-frequencies[term]+0.5)/(frequencies[term]+0.5))
+            score+=idf*2.2/(1+1.2*(0.25+0.75*len(terms)/average))
+        if score:result[rid].append((score,start,end))
+    return {rid:sorted(windows,key=lambda w:(-w[0],w[1]))[:3]
+            for rid,windows in result.items()}

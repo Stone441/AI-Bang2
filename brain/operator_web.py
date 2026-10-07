@@ -48,6 +48,7 @@ class OperatorApp:
         else:
             self._single_source(reader, store, actor_id, live)
         self.engine, self.world, self.audit = self.pilot.engine, self.pilot.authority, self.pilot.audit
+        self.request_lock=self.pilot.lock
         self.store, self.sessions = store, {}
         self._ticket = secrets.token_urlsafe(32)
         self._ticket_expires = time.monotonic() + 600
@@ -78,7 +79,7 @@ class OperatorApp:
         return self.actor
 
     def refresh(self):
-        pass  # Engine performs per-query native refresh; no fixture source exists.
+        pass  # Engine uses trusted published candidates or explicit native refresh.
 
 
 def main(argv=None):
@@ -204,7 +205,7 @@ def main(argv=None):
         if args.discovery_auth017:
             from .discovery import ContainerDiscovery
             stage='discovery_configuration'
-            discovery=ContainerDiscovery(app.pilot,app.actor)
+            discovery=ContainerDiscovery(app.pilot,app.actor,bounded_queries=True)
             discovery.start()
         server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.

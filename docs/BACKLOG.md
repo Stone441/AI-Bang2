@@ -1,5 +1,8 @@
 # Backlog · 2026-10-05
 
+2026-10-07当前BV：00 verified local；01 48对象/24开发题/1000压力基线已运行，保留12题未消费；02 本地lexical/BM25与single live A/B已运行，B试用默认，1000集J-03漏召回仍open；03 四源AUTH-021新probe及两次修正native API/fake subset verified，cached反证/故障和HTTP锁修复local，性能/固定新版仍待验证；04 资源方向审计local已实现，当前签名回放待做；05 browser saved denial blocked、人任务not_run；06 固定候选与clean archive待完成。AUTH-019保留，旧331bd28可回退。
+
+
 ## 当前任务 · 2026-10-06
 
 本轮停止主动开发，仅保留固定候选并准备团队观看。331bd28/6d79ed2差异、两项延期原问题与R2八断言已整理到DEMO_CANDIDATE；18分钟流程在SAFETY_REVIEW，未执行，browser blocked。

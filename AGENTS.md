@@ -1,5 +1,8 @@
 # AI-Bang2 · Agent working instructions
 
+本轮业务增强入口：先读最新STATUS/DECISIONS，再读docs/iterations/2026-10-07-business-validation/EXECUTION_BRIEF.md；研究不是官方要求，具体授权仍按AUTH。
+
+
 ## Project and authority
 
 本仓库用于Tencent Cloud AI CAN DO IT Hackathon Singapore 2026，FinTech / Aspire赛道：**The Internal Brain**。三位NTU成员负责业务判断、接入授权、安全验收和最终提交；Codex主导设计细化、编码、测试、集成与任务推进。CodeBuddy/WorkBuddy必须有真实开发贡献及证据，不能由其他Agent伪造。

@@ -89,12 +89,19 @@ class StorageText(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.parts = []
+        self.cell_depth = 0
+        self.row_cells = 0
 
     def handle_starttag(self, tag, attrs):
         if tag not in self.SAFE:
             raise SourceUnavailable()
+        if tag in {'td','th'}:
+            if self.row_cells:self.parts.append('\t')
+            self.row_cells+=1
+            self.cell_depth += 1
+        if tag=='tr':self.row_cells=0
         if tag in {'p', 'br', 'li', 'tr', 'div', 'hr'} or tag.startswith('h'):
-            self.parts.append('\n')
+            self.parts.append(' ' if self.cell_depth and tag != 'tr' else '\n')
 
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag, attrs)
@@ -102,7 +109,12 @@ class StorageText(HTMLParser):
     def handle_endtag(self, tag):
         if tag not in self.SAFE:
             raise SourceUnavailable()
-        self.parts.append('\n' if tag in {'p', 'li', 'tr', 'div', 'pre'} else '')
+        if tag in {'td','th'}:
+            self.cell_depth = max(0,self.cell_depth-1)
+        # Preserve column boundaries without inventing text or scope metadata.
+        # Source-authored cell text stays in order; tabs separate its cells.
+        self.parts.append((' ' if self.cell_depth and tag != 'tr' else '\n')
+                          if tag in {'p', 'li', 'tr', 'div', 'pre'} else '')
 
     def handle_data(self, data):
         self.parts.append(data)
@@ -207,7 +219,9 @@ class ConfluenceReader:
                 raise SourceUnavailable()
             parser = StorageText()
             parser.feed(body['value']); parser.close()
-            text = '\n'.join(line.strip() for line in ''.join(parser.parts).splitlines() if line.strip())
+            # Keep empty leading/trailing table cells; removing tabs shifts scope/value columns.
+            text = '\n'.join(line.strip(' \r') for line in ''.join(parser.parts).splitlines()
+                             if line.strip() or '\t' in line)
             if not text or not isinstance(data.get('title'), str):
                 raise SourceUnavailable()
             # Canonical backend URL, never an untrusted upstream link.

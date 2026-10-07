@@ -154,9 +154,13 @@ def create_server(app, port=0):
                 self.send(503,{'error':'Request could not be completed safely. Please try again.'})
 
         def do_GET(self):
-            with self.server.application.store.lock: self.dispatch('GET')
+            app=self.server.application
+            with getattr(app,'request_lock',app.store.lock):
+                with app.store.lock:self.dispatch('GET')
         def do_POST(self):
-            with self.server.application.store.lock: self.dispatch('POST')
+            app=self.server.application
+            with getattr(app,'request_lock',app.store.lock):
+                with app.store.lock:self.dispatch('POST')
     server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
     server.application=app
     # Cookies have no browser port isolation. Select only this bound server's
