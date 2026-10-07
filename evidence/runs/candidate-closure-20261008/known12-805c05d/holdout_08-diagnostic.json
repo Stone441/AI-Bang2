@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "940d6b66-effa-46cf-8cfb-d7cf5df13fba",
+      "object": "chat.completion",
+      "created": 1791392925,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer: If authentication cutover fails halfway, which rollback steps remain approved for affected environment? We need find evidence about authentication cutover rollback steps approved. Evidence IDs about authentication: BV-04 scope: Enterprise SSO cutover applies to internal employees only; contractors remain legacy. BV-13 rollback ledger migration if settlement differences exceed 5 bps (not auth). BV-01 rotation overlapping keys sessions 15 min. BV-12 migration ticket. BV-35 settlement. BV-23 reconciliation. BV-03 auth signing design shared-secret proposal under consideration. BV-02 AUTH-204 blocked mobile cannot refresh expired tokens. BV-05 service tokens expire. BV-18 shared-secret withdrawn, per-client asymmetric accepted. BV-32 settlement schedule. BV-28 access. BV-34 settlement. C-01 payment-service runbook failover. BV-20 webhook. BV-31 settlement.\n\nNo explicit authentication cutover rollback steps. The question presupposes authentication cutover fails halfway, rollback steps approved. We have no evidence of approved rollback steps for authentication cutover. There is BV-04 scope, BV-01 token rotation, BV-02 blocker, BV-03/BV-18 signing design. None mention rollback steps approved. We should probably return empty claims? But instructions: If question does not identify event, entity or policy, give scoped candidate facts or empty claims. Here question identifies \"authentication cutover\" and \"affected environment\". Evidence has \"Enterprise SSO cutover\" scope. But no rollback steps. Could we say no approved rollback steps documented? Absence of record is not explicit negative. We cannot assert none. Maybe return empty claims because insufficient support. But maybe we need answer directly? The prompt says answer question directly in English. If insufficient support, empty claims. The question asks \"which rollback steps remain approved\" - evidence doesn't list any authentication rollback steps. We should not fill with unrelated migration rollback (ledger migration) or payment-service failover. So likely empty claims.\n\nBut let's double-check: Is there any evidence about authentication cutover rollback? BV-04 scope: \"Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\" This is scope, not rollback steps. BV-01: \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" Could be a rollback step? It's token rotation decision. BV-02: AUTH-204 blocked because mobile clients cannot refresh expired tokens. Maybe implies rollback? No. BV-03: shared-secret proposal under consideration. BV-18: shared-secret withdrawn, per-client asymmetric signing accepted. These are design decisions, not rollback steps. C-01 is payment-service runbook failover, not authentication. So no evidence of approved rollback steps for authentication cutover. Thus empty claims.\n\nBut need output JSON only: {\"claims\":[]}. That likely.\n\nHowever, maybe question expects \"none remain approved\" because no evidence? But instruction: absence of record is neither explicit negative nor proof. So empty claims is appropriate.\n\nLet's ensure no claims. Output: {\"claims\":[]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1966,
+        "completion_tokens": 663,
+        "total_tokens": 2629,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 657
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 1326
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

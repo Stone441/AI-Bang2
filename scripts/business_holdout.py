@@ -100,5 +100,5 @@ if __name__=='__main__':
     parser.add_argument('--cases',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--live-model',action='store_true')
     parser.add_argument('--reasoning-effort',choices=['none','low'],default='none')
-    parser.add_argument('--output-tokens',type=int,choices=[1024,2048,4096],default=1024);args=parser.parse_args()
+    parser.add_argument('--output-tokens',type=int,choices=[1024,2048,4096,8192],default=1024);args=parser.parse_args()
     run(args.cases,args.output,args.live_model,args.reasoning_effort,args.output_tokens)

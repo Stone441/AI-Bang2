@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The evidence does not establish that any migration plan was dropped; it records dual-region active writes as proposed but not approved, while the accepted migration uses one writer.",
+        "evidence_ids": [
+          "BV-15@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-15@1",
+            "quote": "Dual-region active writes were proposed but not approved; the accepted migration uses one writer."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "fec7d4bf-55d0-4603-8857-e5f5b9a24430",
+      "object": "chat.completion",
+      "created": 1791393003,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The evidence does not establish that any migration plan was dropped; it records dual-region active writes as proposed but not approved, while the accepted migration uses one writer.\",\"evidence_ids\":[\"BV-15@1\"],\"supports\":[{\"evidence_id\":\"BV-15@1\",\"quote\":\"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\"}]}]}",
+            "reasoning_content": "We need answer: Which migration plan was dropped? Need infer from evidence. We need JSON claims. Need find evidence about dropped plan. Evidence BV-15: \"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\" This indicates dual-region active writes proposed but not approved. Is that \"dropped\"? Not exactly: not approved, not necessarily dropped. Question asks \"Which migration plan was dropped?\" We must not treat lack of approval as rejection/cancellation. Evidence says proposed but not approved; accepted migration uses one writer. Does that establish dropped? Dropped means abandoned/rejected maybe not explicitly. Need be careful. The source records unapproved alternative. The question presupposes a dropped plan. We should state passage does not establish dropped; it records proposed but not approved. But maybe there is another evidence: BV-14: September rehearsal threshold superseded by October rule. That's threshold plan superseded? \"The September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.\" A plan? It says threshold superseded, not migration plan dropped. BV-11 current ledger migration decision chose a shadow table. Not dropped.\n\nCould answer: The dual-region active writes proposal was not approved; the accepted migration uses one writer. But \"dropped\" not explicitly. We need address question directly. We can claim: No evidence explicitly states a migration plan was dropped; the recorded unapproved alternative is dual-region active writes, proposed but not approved, while accepted migration uses one writer. But the question asks which plan was dropped. We can say the passage does not establish that it was dropped; it only records proposed but not approved. Need maybe one claim with support BV-15 quote. Since question presupposes outcome not established, explicitly say this passage does not establish requested state, then give state it records. That fits.\n\nNeed use minimum claims. One claim enough. Evidence_ids: [\"BV-15@1\"]. Quote exact contiguous: \"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\" That's 86 chars. Claim text: \"The evidence does not establish that any migration plan was dropped; it records dual-region active writes as proposed but not approved, while the accepted migration uses one writer.\" This includes identifier? It names plan. Does it need identifier? No ticket ID. It has dual-region active writes. Good. Ensure no external. At most 600. Supports quote. JSON only.\n\nNeed check if \"dropped\" perhaps can be inferred as not approved? The instruction says lack of approval does not establish rejection, cancellation or abandonment. So yes.\n\nWe should not use other evidence. Answer directly in English. Return JSON only.\n\nFinal JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3051,
+        "completion_tokens": 656,
+        "total_tokens": 3707,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 567
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 2411
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "52613a81-4be6-43a7-9b89-1034302c91f5",
+      "object": "chat.completion",
+      "created": 1791393007,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review claim and evidence. Need decide supported and responsive, question_covered. Question: \"Which migration plan was dropped?\" This is a which question with unestablished premise? Need evaluate supplied claim: \"The evidence does not establish that any migration plan was dropped; it records dual-region active writes as proposed but not approved, while the accepted migration uses one writer.\" Evidence BV-15@1 quote: \"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\" Claim references evidence BV-15@1. Need determine if full factual claim follows. It says evidence does not establish any migration plan was dropped; records dual-region active writes proposed but not approved; accepted migration uses one writer. This is scoped to evidence. Does BV-15 support? Yes: dual-region active writes proposed but not approved; accepted migration uses one writer. \"dropped\" not established? Proposed but not approved doesn't necessarily mean dropped. The claim says does not establish any dropped. That seems accurate based on evidence? Need examine all evidence? There may be other evidence about migration plans, dropped? No evidence explicitly dropped. BV-12 MIG-301 In Progress. BV-13 rollback if settlement differences exceed. BV-02 auth blocker. BV-14 rehearsal threshold. BV-15 unapproved alternative. BV-11 archived rehearsal entries no current decision; current ledger migration chose shadow table. No dropped. Question \"Which migration plan was dropped?\" likely premise false/unestablished. Claim scoped to evidence. Responsive? It answers explicit requested part? The question asks which plan was dropped. Claim says no evidence any plan was dropped; records proposed not approved etc. This addresses premise by saying unestablished. Under instructions: For an unestablished requested state, explicit acknowledgement scoped to cited material plus actually recorded state can cover requested part, provided no supplied evidence establishes requested state for same entity and scope. This applies also to which/who question with unestablished premise: do not require invented positive answer to cover it. Giving different recorded state without acknowledgement is incomplete. Claim includes acknowledgement \"evidence does not establish any migration plan was dropped\" plus recorded state. So responsive true? It answers by denying premise/unestablished. Need question_covered true only if claims address every requested part. The only requested part \"Which migration plan was dropped?\" Claim addresses that no plan dropped based on evidence. So question_covered true likely.\n\nNeed produce verdict for index 0. supported true? Need check claim text includes \"The evidence does not establish that any migration plan was dropped\" — Is this fully supported by cited evidence? BV-15 doesn't mention dropped. We must consider full evidence. There is no evidence of dropped. But \"evidence does not establish\" is meta about supplied evidence. The claim cites only BV-15@1. Does that passage alone show no any migration plan dropped? It only says dual-region active writes proposed but not approved; accepted migration uses one writer. That doesn't establish that no migration plan dropped across all evidence. But claim wording \"The evidence does not establish...\" with evidence_ids [\"BV-15@1\"] maybe \"the evidence\" refers to that cited evidence. It says records dual-region active writes as proposed but not approved, accepted migration uses one writer. That passage doesn't say anything about dropped. Is \"does not establish\" true? Yes, the passage itself does not establish any dropped plan. But does it support \"any migration plan\"? It only addresses one alternative. It doesn't address all possible migration plans. However the claim is scoped: evidence does not establish any migration plan was dropped; it records dual-region... This could be interpreted as based on evidence, no dropped plan. The evidence BV-15 doesn't mention dropped; but absence of mention not proof. The instruction says: \"A claim scoped to what its cited passage establishes may acknowledge an unknown requested outcome; that acknowledgement is not proof of the outcome or exhaustive source coverage.\" For unspecified referent, reject unconditional single-entity answer; clearly scoped candidate facts may be valid without resolving missing referent. Here claim is scoped to evidence. It acknowledges unestablished. That is acceptable if no supplied evidence establishes requested state. Need maybe support true because the specific facts are supported; the \"does not establish\" is an acknowledgement of unestablished. Responsive true because covers question premise. Question_covered true? It says no plan dropped, but does it cover \"which migration plan\" with no positive? Yes per instructions which/who unestablished premise: don't require invented positive answer; explicit acknowledgement scoped plus recorded state can cover. So covered true.\n\nNeed ensure no other issue: Evidence BV-15 quote exactly: \"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\" Claim: \"The evidence does not establish that any migration plan was dropped; it records dual-region active writes as proposed but not approved, while the accepted migration uses one writer.\" That's supported. Does \"proposed but not approved\" imply \"dropped\"? No, claim doesn't say dropped. Good.\n\nNeed output exactly schema. Ensure one verdict. JSON only. Use true/false. So final: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}\n\nBut let's be careful: The prompt says \"Mark supported true only if the FULL factual claim follows from cited evidence, including scope, dates, negation and qualifications, with no unsupported inference. A proposed or unapproved item is not necessarily rejected, cancelled or withdrawn. Require explicit source support for each claimed state transition.\" Claim says \"The evidence does not establish that any migration plan was dropped\" — This is a negative epistemic statement. Is that supported? It is based on absence in evidence, not from cited passage. But the cited passage doesn't mention dropped. The meta claim about evidence not establishing is generally acceptable? In these tasks, claims that \"evidence does not establish X\" can be supported if evidence doesn't contain X? But we must judge entailment from cited evidence. The passage doesn't say it. However the claim includes \"it records...\" which is supported. The first clause is about evidence not establishing. Since we can inspect evidence, yes it does not establish. But support should be from cited evidence? The instruction: \"Mark supported true only if the FULL factual claim follows from cited evidence\". The full claim includes that no migration plan was dropped? Actually \"does not establish\" is not a factual claim about world but about evidence. It follows from the evidence's content (absence). But maybe not from quote alone? The quote has no dropped. One could say yes, the cited passage does not establish dropped. So supported true.\n\nNeed maybe responsive? The claim says no evidence establishes dropped, which directly addresses \"which dropped\" by saying premise unestablished. Yes.\n\nQuestion_covered true? Only one claim. It addresses every requested part? The question asks which migration plan was dropped. If no plan was dropped, answer is \"none/evidence doesn't establish\". Claim explicitly. Yes.\n\nThus final."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3093,
+        "completion_tokens": 1488,
+        "total_tokens": 4581,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1462
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 2581
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

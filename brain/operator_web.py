@@ -96,7 +96,7 @@ def main(argv=None):
                         help='Synthesis uses two budgeted calls and exact grounding plus model review')
     parser.add_argument('--reasoning-effort', choices=['none','low'], default='none',
                         help='Trusted synthesis launch configuration; never supplied by browser questions')
-    parser.add_argument('--output-tokens', type=int, choices=[1024,2048,4096], default=1024)
+    parser.add_argument('--output-tokens', type=int, choices=[1024,2048,4096,8192], default=1024)
     parser.add_argument('--credential-store',choices=['memory','macos-keychain'],default='memory',
                         help='Explicit opt-in: save/reuse app-owned credentials in this Mac Keychain')
     parser.add_argument('--replace-credential',choices=['confluence','jira','slack','drive','deepseek'],

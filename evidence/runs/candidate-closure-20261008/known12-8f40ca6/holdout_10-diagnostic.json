@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "ec85fde6-455d-4894-9d46-07c9d90662df",
+      "object": "chat.completion",
+      "created": 1791392513,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"For the smallest supported integration tier, which region and retry limit belong to the same table row?\"\n\nNeed infer from evidence. We need identify smallest supported integration tier, region and retry limit in same table row. Evidence has synthetic. We need parse. There is mention Atlas connector supports Singapore business SGD accounts, not personal accounts. \"Atlas account eligibility Account Scope: Singapore business SGD Pilot supported; Personal SGD Not supported.\" But question asks \"smallest supported integration tier\" and \"which region and retry limit belong to the same table row?\" Hmm. There might be a table with tiers, regions, retry limits. Evidence doesn't show retry limit table. We have J-02 PAY-102 Retry configuration fix. No actual retry limit value. BV-19: For webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook. No retry limit. Maybe no support. Need answer with claims only if supported. The question presupposes a table row with region and retry limit for smallest supported integration tier. No evidence gives retry limit. So likely empty claims or claim that insufficient evidence. But schema requires claims list. If insufficient support, empty claims list. However maybe we must answer directly? The instructions: \"If the question does not identify the event, entity or policy, give explicitly scoped candidate facts or return an empty claims list; do not choose a single unstated referent...\" Here question asks smallest supported integration tier. Not explicitly defined. Evidence mentions \"Pilot supported\" for Singapore business SGD. That may be smallest supported integration tier? But no retry limit. No table row with region and retry limit. Thus insufficient support. Return {\"claims\":[]}? But maybe they expect no claims. Let's examine all evidence for retry limit and tiers. None has retry limit numbers. Only \"Payment-retry is available only to controlled pilot...\" and \"PAY-102 Retry configuration fix\". But no region + retry limit in same row. So empty claims list is appropriate.\n\nNeed final JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2311,
+        "completion_tokens": 438,
+        "total_tokens": 2749,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 432
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1799
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

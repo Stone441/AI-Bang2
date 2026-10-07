@@ -268,7 +268,7 @@ if __name__ == '__main__':
     parser.add_argument('--cases-file',type=Path)
     parser.add_argument('--temperature',type=float,choices=[0,1],default=0)
     parser.add_argument('--reasoning-effort',choices=['none','low'],default='none')
-    parser.add_argument('--output-tokens',type=int,choices=[1024,2048,4096],default=1024)
+    parser.add_argument('--output-tokens',type=int,choices=[1024,2048,4096,8192],default=1024)
     args=parser.parse_args()
     selected=json.loads(args.cases_file.read_text()) if args.cases_file else None
     run(args.output,args.strategy,args.noise,args.live_model,selected,args.temperature,args.reasoning_effort,args.output_tokens)

@@ -1,0 +1,106 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "During payment-service failover, the runbook directs inspecting the payment-service timeout budget and following the approved failover procedure.",
+        "evidence_ids": [
+          "C-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-01@1",
+            "quote": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+          }
+        ]
+      },
+      {
+        "text": "Completing PAY-102 (the retry code fix marked Done) still does not provide customer release approval or general availability (GA) approval.",
+        "evidence_ids": [
+          "D-02@1",
+          "J-02@1",
+          "C-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "PAY-102 Done is not customer release approval."
+          },
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "C-02@1",
+            "quote": "General availability (GA) is not approved."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "f1df334b-c53b-4ab4-ba97-bc2184719670",
+      "object": "chat.completion",
+      "created": 1791393251,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"During payment-service failover, the runbook directs inspecting the payment-service timeout budget and following the approved failover procedure.\",\"evidence_ids\":[\"C-01@1\"],\"supports\":[{\"evidence_id\":\"C-01@1\",\"quote\":\"Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.\"}]},{\"text\":\"Completing PAY-102 (the retry code fix marked Done) still does not provide customer release approval or general availability (GA) approval.\",\"evidence_ids\":[\"D-02@1\",\"J-02@1\",\"C-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"PAY-102 Done is not customer release approval.\"},{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"},{\"evidence_id\":\"C-02@1\",\"quote\":\"General availability (GA) is not approved.\"}]}]}",
+            "reasoning_content": "We need answer. Need parse question: \"During payment-service failover, what must already be checked, and what approval does completing PAY-102 still not provide?\" Need evidence. Need determine if unspecified? It asks about payment-service failover, what must already be checked. Evidence C-01: Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure. This likely says during failover inspect timeout budget? It says \"inspect the payment-service timeout budget and follow approved failover procedure.\" Must already be checked? Maybe timeout budget. Need be careful: C-01 is runbook v1 failover procedure. It says inspect timeout budget. Is that \"must already be checked\"? The question wording \"During payment-service failover, what must already be checked\" likely answer timeout budget. Also PAY-102 completing still not provide customer release approval / general availability? Evidence D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" J-02: PAY-102 code fix: Done. Code completion does not approve general customer release. C-02 maybe payment-retry GA not approved. Need answer: must already be checked timeout budget? \"inspect the payment-service timeout budget\". Approval not provided: general availability / customer release approval. Need cite.\n\nNeed follow format. We need claims. Maybe two claims.\n\nClaim 1: During payment-service failover, the payment-service timeout budget must be checked/inspected and the approved failover procedure followed. But question asks \"what must already be checked\" maybe only timeout budget. Evidence C-01: \"Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.\" Quote exact. Should we include \"must\" from question? Source says inspect, not must. We can phrase: \"The runbook says to inspect the payment-service timeout budget and follow the approved failover procedure.\" That answers. But \"must already be checked\" maybe \"timeout budget\" (already checked). Need not overstate must. Maybe claim: \"During payment-service failover, the runbook directs inspecting the payment-service timeout budget (and following the approved failover procedure).\" Cite C-01. It says \"inspect\" imperative, okay.\n\nClaim 2: Completing PAY-102 (code fix Done) does not provide general customer release approval / GA approval. Evidence D-02: \"PAY-102 Done is not customer release approval.\" J-02: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" C-02: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved.\" We can cite D-02 and J-02 and C-02 maybe. The question: \"what approval does completing PAY-102 still not provide?\" Answer: customer release approval / general availability (GA) approval. D-02 says PAY-102 Done is not customer release approval. J-02 says code completion does not approve general customer release. C-02 says GA not approved. Need avoid \"only\" if quote includes? C-02 says \"available only to controlled pilot\" and GA not approved. We can cite D-02 and J-02 maybe enough. Claim text: \"Completing PAY-102 (code fix Done) still does not provide customer release approval or general availability (GA) approval.\" Is that fully supported? D-02: \"PAY-102 Done is not customer release approval.\" J-02: \"Code completion does not approve general customer release.\" C-02: \"General availability (GA) is not approved.\" Supports GA. But careful: C-02 subject payment-retry, likely same. D-02 says controlled pilot approved, GA not approved. J-02 says PAY-102 code fix. So okay. Need quote each evidence. Use citations: D-02 quote \"PAY-102 Done is not customer release approval.\" J-02 quote \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" C-02 quote \"General availability (GA) is not approved.\" But claim says customer release approval or GA approval. D-02 and J-02 say customer release; C-02 says GA. Good.\n\nNeed ensure evidence_ids exactly equal supports IDs. At most four citations per claim. Use only necessary.\n\nNeed maybe \"what must already be checked\" perhaps \"timeout budget\" already checked? The runbook says inspect. Maybe \"must already be checked\" in failover? Could be \"payment-service timeout budget\" from final root cause? Let's examine: Question: \"During payment-service failover, what must already be checked, and what approval does completing PAY-102 still not provide?\" There's evidence C-01 runbook: \"inspect the payment-service timeout budget and follow approved failover procedure.\" This likely directly. D-02 says PAY-102 Done not customer release approval. J-02 same. C-02 says controlled pilot only, GA not approved. So answer two parts.\n\nNeed maybe not choose unspecified? It identifies payment-service failover and PAY-102. Good.\n\nNeed format JSON. Use no markdown. Need claims array. Each claim has text, evidence_ids, supports. Let's craft.\n\nClaim 1 text: \"During payment-service failover, the runbook directs inspecting the payment-service timeout budget and following the approved failover procedure.\" Evidence_ids [\"C-01@1\"] supports [{evidence_id:\"C-01@1\", quote:\"Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.\"}]. This includes both checked and procedure. Is \"must already be checked\" maybe \"what must already be checked\" answer \"timeout budget\". It also includes following procedure. Fine.\n\nClaim 2 text: \"Completing PAY-102 (the retry code fix marked Done) does not provide customer release approval or general availability (GA) approval.\" Evidence_ids [\"D-02@1\",\"J-02@1\",\"C-02@1\"] supports quotes. Need each quote exact contiguous from text. D-02 text: \"[SYNTHETIC]\\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" We can quote \"PAY-102 Done is not customer release approval.\" That's exact contiguous within D-02. J-02: \"[SYNTHETIC]\\nPAY-102 code fix: Done. Code completion does not approve general customer release.\" Quote \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" C-02: \"[SYNTHETIC]\\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" Quote \"General availability (GA) is not approved.\" That's exact. But text \"does not provide customer release approval or general availability (GA) approval\" — D-02/J-02 support customer release, C-02 supports GA. Note D-02 also \"General availability (GA) not approved\" but we cite quote only last sentence; support quotes are separate; evidence text can support more? The claim must be fully supported by cited evidence. If quote only \"PAY-102 Done is not customer release approval\" doesn't mention GA, but C-02 quote does. J-02 quote mentions general customer release. Good.\n\nCould we say \"Completing PAY-102 still does not provide general customer release approval; general availability (GA) is not approved.\" That's clear.\n\nNeed maybe mention controlled pilot? Not asked except \"what approval completing PAY-102 still not provide\" answer GA/customer release. No need mention pilot.\n\nPotential issue: \"PAY-102 code fix: Done\" is in quote. Claim says completing PAY-102, okay. It says \"code fix marked Done.\" Good.\n\nNeed ensure no identifiers in claim not in support quotes? PAY-102 appears in D-02 quote and J-02 quote. GA appears in C-02 quote. \"customer release approval\" appears in D-02 and J-02. Good.\n\nShould we include C-02? evidence_ids exactly equal supports. Yes.\n\nNeed final JSON only. Ensure no extra. Use valid JSON. No markdown."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2268,
+        "completion_tokens": 1952,
+        "total_tokens": 4220,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1737
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 2268
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "40184705-12ce-4059-95c3-b7573525f863",
+      "object": "chat.completion",
+      "created": 1791393259,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review claims. Need determine question covered, verdicts per claim. Need be careful.\n\nQuestion: \"During payment-service failover, what must already be checked, and what approval does completing PAY-102 still not provide?\"\n\nWe need assess claims.\n\nClaim 1: \"During payment-service failover, the runbook directs inspecting the payment-service timeout budget and following the approved failover procedure.\"\nEvidence C-01@1: Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure. Source context title Payment-service runbook, section Failover procedure. This supports. Responsive? It answers first part \"what must already be checked\" during failover: inspect timeout budget and follow approved failover procedure. Yes. But wording \"must already be checked\" maybe \"inspect timeout budget\". \"approved failover procedure\" maybe follow. Supported.\n\nClaim 2: \"Completing PAY-102 (the retry code fix marked Done) still does not provide customer release approval or general availability (GA) approval.\"\nEvidence D-02@1: Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\nJ-02@1: PAY-102 code fix: Done. Code completion does not approve general customer release.\nC-02@1: Payment-retry available only to controlled pilot. General availability (GA) is not approved. No general release date confirmed.\n\nClaim says completing PAY-102 (the retry code fix marked Done) still does not provide customer release approval or GA approval. Supported? D-02 says PAY-102 Done is not customer release approval. J-02 says code completion does not approve general customer release. C-02 says GA not approved. It combines. Is \"completing PAY-102\" marked Done? J-02: PAY-102 code fix: Done. Good. Does not provide customer release approval: D-02 \"PAY-102 Done is not customer release approval\"; J-02 \"Code completion does not approve general customer release.\" GA approval: C-02 \"GA not approved.\" But is GA approval tied to PAY-102? The question asks \"what approval does completing PAY-102 still not provide?\" Claim says still does not provide customer release approval or GA approval. Evidence supports that PAY-102 Done is not customer release approval, and GA not approved. But does it show completing PAY-102 doesn't provide GA approval? C-02 is about payment-retry capability; context likely same? It says Payment-retry available only to controlled pilot. General availability (GA) is not approved. It doesn't explicitly say PAY-102 completion. But J-02 says code completion does not approve general customer release. GA approval maybe general customer release? D-02 also says controlled pilot approved; GA not approved. This seems sufficient. However, \"Completing PAY-102 still does not provide ... GA approval\" Could be supported by J-02 \"Code completion does not approve general customer release\" and C-02 \"GA not approved.\" The claim says customer release approval or GA approval. D-02 explicit customer release. J-02 general customer release. C-02 GA. Good.\n\nResponsive? Yes second part asks what approval does completing PAY-102 still not provide. It answers customer release and GA approval. Need ensure \"still not provide\" maybe indicates after completing. Yes.\n\nQuestion covered: both requested parts: during failover what must already be checked; and what approval PAY-102 completion still not provide. Claim1 covers first. Claim2 covers second. So question_covered true.\n\nPotential issue: Claim1 \"must already be checked\" vs evidence \"inspect\" and \"follow approved procedure\"; \"already be checked\" could mean prior to failover? Evidence says runbook failover procedure directs inspect and follow. The question wording \"During payment-service failover, what must already be checked\" Maybe the answer is \"payment-service timeout budget\" already checked? Actually claim says runbook directs inspecting timeout budget and following approved failover procedure. It says \"During payment-service failover...\" The evidence C-01 is section Failover procedure. Good.\n\nNeed produce JSON exactly one verdict per claim. indices 0,1 supported/responsive. Both true likely.\n\nNeed ensure no unsupported \"Completing PAY-102 (the retry code fix marked Done)\" citation D-02 says PAY-102 Done not customer release approval; J-02 says PAY-102 code fix: Done. Good. \"retry code fix\" yes title PAY-102 Retry configuration fix? J-02 title. It says code fix. Good.\n\nCould there be issue with \"customer release approval\" vs \"general customer release\" vs \"customer release approval\" D-02 exact. Good.\n\n\"or general availability (GA) approval\" C-02 exact GA not approved. But C-02 says payment-retry GA is not approved, maybe it is a capability, same product. The claim says completing PAY-102 still does not provide GA approval. J-02 code completion does not approve general customer release. C-02 GA not approved. This is supported enough? Maybe \"general availability (GA) approval\" is not explicitly \"PAY-102 doesn't provide GA approval\"; but C-02 says GA not approved. The question asks what approval completing PAY-102 still not provide. If GA is not approved, completing doesn't provide it. But could be evidence about different event? Same payment-retry? likely.\n\nNeed final JSON. Ensure no markdown."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2343,
+        "completion_tokens": 1189,
+        "total_tokens": 3532,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1151
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 1703
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

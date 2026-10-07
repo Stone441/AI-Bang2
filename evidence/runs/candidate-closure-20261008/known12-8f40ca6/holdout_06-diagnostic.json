@@ -1,0 +1,89 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No general release date can be quoted for the general payment-retry launch; GA is not approved and no general release date is confirmed. Instead, name the approved controlled-pilot scope only.",
+        "evidence_ids": [
+          "C-02@1",
+          "D-03@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          },
+          {
+            "evidence_id": "D-03@1",
+            "quote": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "22fb2efe-35e8-4368-9bb3-174c5dfb3f81",
+      "object": "chat.completion",
+      "created": 1791392468,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No general release date can be quoted for the general payment-retry launch; GA is not approved and no general release date is confirmed. Instead, name the approved controlled-pilot scope only.\",\"evidence_ids\":[\"C-02@1\",\"D-03@1\"],\"supports\":[{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"},{\"evidence_id\":\"D-03@1\",\"quote\":\"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\"}]}]}",
+            "reasoning_content": "We need answer question: \"What release date can I quote for the general payment-retry launch, and which approved scope should I name instead?\" Need output JSON claims. We need infer from evidence. Question asks release date for general payment-retry launch, and which approved scope to name instead. Evidence: C-02 says Payment-retry available only to controlled pilot. GA not approved. No general release date confirmed. D-03: Describe payment-retry only within approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers. D-02: Release decision: controlled pilot approved. GA not approved. PAY-102 Done is not customer release approval. S-02: Payment-retry remains controlled pilot. No GA date confirmed; use capability page and release approval. J-02: PAY-102 code fix Done. Code completion does not approve general customer release. Others maybe about Atlas, webhook, settlement, not payment-retry? Need only relevant. Need answer: no general release date can be quoted; instead name approved controlled pilot scope. Maybe include that GA not approved. Need maybe mention PAY-102 Done not customer release approval? The question asks \"What release date can I quote for the general payment-retry launch, and which approved scope should I name instead?\" So answer: No general release date is confirmed/approved; general availability not approved. Instead, describe payment-retry only within approved pilot scope (controlled pilot). That likely covers. Need use claims. Could make one or two claims. Need support quotes from evidence. We must include evidence_ids in supports. Need exact contiguous passages copied. We can quote from C-02: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" That supports both parts. D-03: \"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\" That supports instead scope. Maybe combine into one claim with two citations. But claim text must be concise factual conclusion. Claim: \"No general release date for payment-retry can be quoted; GA is not approved. The approved scope to name instead is the controlled pilot only.\" Supports quote C-02 passage. Also D-03 passage. Need perhaps separate? At most four claims. We can do one claim with both. But need ensure every explicit identifier? No ticket ID. Fine.\n\nCould also include D-02 for pilot approved. Maybe quote \"[SYNTHETIC]\\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" But claim might mention PAY-102? Not needed. Better avoid.\n\nWe need answer direct. Maybe claim 1: \"No general release date is confirmed for payment-retry, and general availability is not approved.\" supports C-02 quote \"No general release date is confirmed.\" and D-02 \"General availability (GA) not approved.\" But one quote per citation? We can include two citations.\n\nClaim 2: \"The approved scope to describe instead is the controlled pilot only.\" supports D-03 quote \"Describe payment-retry only within the approved pilot scope.\" and C-02 \"Payment-retry is available only to the controlled pilot.\" Maybe combine with claim 1? The instruction: use minimum number claims. One claim can cover both parts. But a claim at most 600 chars. Let's craft one claim:\n\n\"No general release date can be quoted for the general payment-retry launch; GA is not approved and no general release date is confirmed. Instead, name the approved controlled-pilot scope only.\" Supports:\n- evidence_id C-02@1, quote \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"\n- evidence_id D-03@1, quote \"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\"\n\nThat covers. But note quote includes \"[SYNTHETIC]\\n\"? We should copy exact contiguous passage from text, not source_context. The text includes \"[SYNTHETIC]\\n...\" We can include the synthetic? It says copy support quotes only from text, never from source_context. The text field begins \"[SYNTHETIC]\\nPayment-retry ...\" Should we include [SYNTHETIC]? Exact contiguous passage can start after. Usually can start at \"Payment-retry...\" That is contiguous within text. Fine. The evidence_ids list must exactly equal evidence_id values in supports. We have C-02@1, D-03@1. Good.\n\nBut maybe D-02 also says controlled pilot approved. D-03 says describe within approved pilot scope. C-02 says available only to controlled pilot. That's enough.\n\nNeed ensure no other requested part? \"which approved scope should I name instead?\" Approved scope = controlled pilot. Maybe \"approved pilot scope\" not \"controlled pilot\"? D-03: \"approved pilot scope\". C-02: \"controlled pilot\". So answer: controlled pilot / approved pilot scope. We can say \"controlled pilot (the approved pilot scope)\". Good.\n\nPotential issue: The question presupposes a release date for general payment-retry launch. We must explicitly say no date can be quoted. We do.\n\nNeed output JSON only. Use schema: {\"claims\":[{\"text\":\"...\",\"evidence_ids\":[\"C-02@1\",\"D-03@1\"],\"supports\":[{\"evidence_id\":\"C-02@1\",\"quote\":\"...\"},{\"evidence_id\":\"D-03@1\",\"quote\":\"...\"}]}]}. Good.\n\nNeed ensure quote length 12-1200. Fine.\n\nLet's final."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1937,
+        "completion_tokens": 1331,
+        "total_tokens": 3268,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1187
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1425
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "32c35945-4a96-4a8c-ba00-258bd544cb77",
+      "object": "chat.completion",
+      "created": 1791392474,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"What release date can I quote for the general payment-retry launch, and which approved scope should I name instead?\" Claims: one claim text: \"No general release date can be quoted for the general payment-retry launch; GA is not approved and no general release date is confirmed. Instead, name the approved controlled-pilot scope only.\" Evidence C-02@1, D-03@1. Need determine question_covered, verdicts. Need see if claim supported and responsive. It answers both parts? Release date: no general release date can be quoted, GA not approved, no general date confirmed. Which approved scope should name instead: controlled-pilot scope only. Evidence C-02: Payment-retry available only to controlled pilot. GA not approved. No general release date confirmed. D-03: Describe payment-retry only within approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers. So supported. Responsive: Answers release date (none can be quoted) and approved scope (controlled pilot). Yes. Need one verdict for claim index 0. question_covered true because every requested part addressed. Need include verdicts array exactly one. JSON.\n\nNeed ensure no extra text."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2063,
+        "completion_tokens": 285,
+        "total_tokens": 2348,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 259
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1551
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

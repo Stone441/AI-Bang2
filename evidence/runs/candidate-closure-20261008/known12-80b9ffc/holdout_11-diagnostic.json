@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "cf88c72d-c107-4e4a-b2ee-ce4b390aabb8",
+      "object": "chat.completion",
+      "created": 1791393350,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer: \"Which migration plan was dropped?\" We need check evidence. We have multiple evidence. Need determine if question identifies a business entity or event? It asks \"Which migration plan was dropped?\" It references an unspecified migration plan? Evidence covers multiple events/plans. Need decide if insufficient to select. We must return claims or empty. Need follow instructions: If asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event. A plan name alone does not identify its business event. Do not use retrieved details to invent missing referent. So likely empty claims. But let's inspect: Evidence includes MIG-301 In Progress, rollback ledger migration, AUTH-204 blocked, September rehearsal, dual-region active writes proposed but not approved, accepted migration uses one writer, ledger migration chose shadow table. Question: \"Which migration plan was dropped?\" None explicitly says a plan was dropped. There is \"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\" This is an unapproved alternative, not dropped. \"proposed but not approved\" not dropped? The question asks dropped. Evidence doesn't establish any plan dropped. It says proposed but not approved. That's not necessarily dropped. Also multiple migration things. No plan named dropped. So answer should be empty claims? Need maybe return {\"claims\":[]}. Need ensure no external. The instruction says if question does not identify event, entity, policy, give explicitly scoped candidate facts or return empty claims. Here question asks which migration plan was dropped. Evidence doesn't identify any dropped plan. It has \"not approved\" but that's different state; unapproved doesn't mean dropped. And \"Roll back the ledger migration if...\" is conditional. So empty claims. But maybe we should include a claim: \"The dual-region active writes were proposed but not approved; the accepted migration uses one writer.\" This answers \"which migration plan was dropped?\" Not exactly dropped, but could be considered not approved alternative. But question presupposes dropped. We must not turn proposal/approval into rejection/cancellation. The source records proposed but not approved; not dropped. Could claim: \"This material does not establish that any migration plan was dropped; it records that dual-region active writes were proposed but not approved, and the accepted migration uses one writer.\" But instructions: If question presupposes state not established, explicitly say that this passage does not establish requested state, then give state it actually records. That seems appropriate. But also if question doesn't identify event, return empty claims. But here there is an unapproved alternative. However \"Which migration plan was dropped?\" could be answer: dual-region active writes proposed but not approved? But not dropped. The question asks which was dropped. Evidence says \"proposed but not approved\" not dropped. Should we return a claim with that? The claim would say \"No dropped plan is established; the recorded alternative was dual-region active writes, proposed but not approved.\" But is that a factual conclusion? It is a conclusion with evidence. The instructions allow explicit say passage doesn't establish requested state. But final must JSON. Which is better? Need determine.\n\nLet's parse instructions carefully.\n\n\"First check whether the question identifies a business entity or event. If it asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event. A plan name alone does not identify its business event. Do not use retrieved details to invent the missing referent.\"\n\nQuestion: \"Which migration plan was dropped?\" It does not specify a business entity/event. It asks about one unspecified migration plan. Evidence covers multiple events: MIG-301, ledger migration, AUTH-204, September rehearsal, dual-region writes, ledger shadow table. So return empty claims instead of selecting an event.\n\nBut maybe the \"dual-region active writes proposed but not approved\" is the only candidate for \"dropped\"? But not explicitly dropped. Still question is unspecified. The rule says if asks about one unspecified migration... while evidence covers multiple events, return empty claims. So yes empty.\n\n\"Answer the question directly in English. Use minimum claims...\" If empty, no claims. \"An empty claims list means insufficient support.\" So final {\"claims\":[]}. Need no extra. Ensure valid JSON.\n\nBut let's consider possibility: We might include one claim: \"The evidence does not establish that any migration plan was dropped; it records that dual-region active writes were proposed but not approved and the accepted migration uses one writer.\" But question asks which plan was dropped. The instruction says \"If the question presupposes a state or outcome not established by the cited passage, explicitly say that this passage does not establish the requested state, then give the state it actually records.\" That suggests maybe we should answer with a claim. But earlier \"If it asks about one unspecified migration... return empty claims.\" There is tension. Which takes precedence? The question \"Which migration plan was dropped?\" presupposes a dropped plan. Evidence doesn't establish any dropped. Also unspecified. The instruction: \"If it asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event.\" That seems directly applicable. So empty.\n\nCould there be any evidence that a plan was dropped? \"Dual-region active writes were proposed but not approved; the accepted migration uses one writer.\" In some contexts, not approved could be dropped? But not explicitly. \"dropped\" means abandoned/cancelled. Lack of approval does not establish rejection, cancellation or abandonment. So no.\n\nThus final should be {\"claims\":[]}. Use JSON only. Done."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3160,
+        "completion_tokens": 1182,
+        "total_tokens": 4342,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1176
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 2392
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

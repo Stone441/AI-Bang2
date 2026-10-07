@@ -37,3 +37,20 @@ class TimingTests(unittest.TestCase):
         self.assertEqual(len(measured.summary('background_discovery')['samples']), 1)
         self.assertEqual(len(measured.summary('preview')['samples']), 1)
         self.assertEqual([s['category'] for s in measured.summary('query')['samples']], ['generation'])
+
+    def test_lock_wait_releases_original_lock_on_failure(self):
+        measured = Measurements()
+        lock = threading.RLock()
+        with measured.phase('query'):
+            with self.assertRaises(RuntimeError):
+                with measured.acquire(lock):
+                    raise RuntimeError('failure')
+        acquired = []
+        def other_thread():
+            acquired.append(lock.acquire(blocking=False))
+            if acquired[-1]: lock.release()
+        worker = threading.Thread(target=other_thread)
+        worker.start()
+        worker.join()
+        self.assertEqual(acquired, [True])
+        self.assertEqual([s['category'] for s in measured.summary('query')['samples']], ['lock_wait'])

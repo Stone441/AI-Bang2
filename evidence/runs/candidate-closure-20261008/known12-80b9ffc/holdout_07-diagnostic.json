@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "c4690ee5-5164-4ea3-a5c0-214bddf770b5",
+      "object": "chat.completion",
+      "created": 1791393312,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" Need return JSON claims. Need inspect evidence. We must determine if question identifies business entity/event? It asks about migration request, identity must be trusted before accepting, and where verified. Evidence includes migration ticket etc. There are multiple migration-related evidence: MIG-301, ledger migration, migration blocker AUTH-204, etc. The question is unspecified migration? It says \"the migration request\" perhaps generic. Evidence covers multiple events. Need first check whether question identifies a business entity or event. It asks about \"the migration request\" but no specific migration ID. Evidence covers multiple migration events (MIG-301, ledger migration, database design rationale, etc.). Do any evidence mention trusted identity and where verified? Let's read evidence. BV-23 missing bank files. BV-05 tokens expire. BV-30 source access unknown. BV-19 webhook. BV-29 offboarding. BV-12 MIG-301 In Progress, owner Chen, blocker unmatched settlement totals. BV-13 rollback ledger migration if settlement differences exceed 5 bps. BV-02 AUTH-204 blocked because mobile clients cannot refresh expired tokens. BV-14 September rehearsal. BV-15 dual-region active writes proposed not approved; accepted migration uses one writer. BV-11 windows contain archived migration rehearsal entries no current decision, current ledger migration decision shadow table rollback. No identity verification for accepting migration request. None mention \"identity must be trusted\" or \"verified\". Maybe question is unanswerable. Need return empty claims if insufficient support. But maybe evidence BV-30 \"When current source access cannot be verified, do not treat a prior allow decision as current permission.\" Could relate to identity? Not migration request. BV-02 AUTH-204 blocked because mobile clients cannot refresh expired tokens. Could be identity? It says authentication migration blocker, but not trusted identity before accepting migration request. No explicit identity verification location. So likely empty claims.\n\nNeed ensure final JSON only. The instruction says if question does not identify event/entity/policy, give explicitly scoped candidate facts or return empty claims; do not choose single unstated referent. Question asks \"the migration request\" unspecified; evidence covers multiple. Return {\"claims\":[]}. But maybe we should consider if any evidence directly answers? Let's search: \"identity must be trusted before accepting migration request\" no. \"where verified\" no. No evidence. So empty claims. Need final JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3520,
+        "completion_tokens": 526,
+        "total_tokens": 4046,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 520
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 2752
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

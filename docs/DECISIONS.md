@@ -1,5 +1,11 @@
 # Decisions / ADR
 
+2026-10-08封版Git交付：沿用用户本轮明确“推到GitHub并合并到main”的既有指令，交付同一封版任务的必要修复80b9ffc及公共合成证据，目标仍Stone441/AI-Bang2/main；不是部署、服务重启、范围/预算扩张或G1/G2。保留PR #6准备提交与Git服务错误原件，本轮修复另经PR交付。ADR-060为本次诊断决策；旧ADR-047原记录不改。
+
+2026-10-08 ADR-060补充真实诊断：805c05d/v9 low8192的02不再截断，但can consult→only directs被review正确否决；09 review30秒超时无回执，保留324404microUSD reservation；11仍过泛any migration且无ledger范围。v10强化许可/义务/独占范围保真及未指定单事件的澄清空答；模型专用ModelTransport对8192有界60秒，原生JsonTransport30秒上限不改、无自动retry。native本轮两题均有最终答案和单preview计时，仍须新v10回归确认。
+
+2026-10-08 ADR-060封版诊断：固定8f40ca6/v8 low4096实际known12的02/09 review与native product generation均finish_reason=length、4096全部reasoning，原失败保留。增加可信显式8192上限（每次保守reserve 324404microUSD），默认none/1024不变，原USD20 ceiling/账本不变、无自动重试。v9仅加强不明确referent必须在claim用引用正文标业务对象/事件，不能自动选检索规则。原全文/quote/coverage/review/权限gate不放宽。独立运行验证后才选候选，若失败保留并继续诊断；回滚可恢复4096集合及v8。耗时runner仅加RLock acquisition计时，同锁重入不改runtime。
+
 2026-10-08 AUTH-023：用户本次再次明确“推到GitHub并合并到main”，批准当前fix/candidate-closure-20261008增量经本地检查后推送既有仓库并通过PR合并main。仅交付现有验证runner、当日实际价格复核及准确状态；原ZIP/SQLite/秘密不上传，不重启、不部署、不新增模型费用。尚未执行的封版live回归/耗时/时间线任务保持未完成，G1/G2不变。
 
 2026-10-08 AUTH-022：用户明确“推到GitHub并合并到main”，批准本轮feat/business-validation-20261007已有已验证代码与公共合成证据推送至既有Stone441/AI-Bang2，并通过PR合并main。保护原ZIP、未跟踪运行数据库/私密工具证明；不改变仓库可见性、不重启服务、不部署/新增模型费用、不替代G1/G2或比赛提交。运行模型的每日价格guard保持，Oct7证据不当作Oct8readiness。

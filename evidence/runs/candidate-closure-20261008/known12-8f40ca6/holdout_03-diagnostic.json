@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "26543d22-7128-489e-b27f-41b620b913da",
+      "object": "chat.completion",
+      "created": 1791392444,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"Which cache theory did the incident channel abandon, and may an engineer who is not in that channel inspect its old discussion?\"\n\nWe need use evidence. Need determine if supported. Question presupposes incident channel abandoned a cache theory, and asks if engineer not in channel may inspect old discussion.\n\nEvidence list. Let's inspect relevant. There is no \"incident channel\" or \"cache theory\" explicitly. Evidence BV-29@1: \"Removal from a source channel prevents future citation and history access; previously saved copies cannot be recalled.\" BV-30@1: \"When current source access cannot be verified, do not treat a prior allow decision as current permission.\" BV-28@1: \"Partner users may read approved integration eligibility guidance; incident details are not public guidance.\" No cache theory mentioned. Possibly \"webhook backlog came from exhausted worker pool, not DNS resolution\" (BV-16@1) is a theory? DNS resolution maybe cache? No. Incident channel? Not present. Could be no claims. But maybe question asks which cache theory did incident channel abandon: evidence doesn't mention cache theory or incident channel. We need answer directly in English. If insufficient support, empty claims list. But maybe there is implied: \"The webhook backlog came from an exhausted worker pool, not DNS resolution.\" That is a cause, not cache theory. No incident channel. \"Removal from a source channel prevents future citation and history access...\" That addresses channel history access: may an engineer not in that channel inspect old discussion? Actually says removal from source channel prevents future citation and history access; previously saved copies cannot be recalled. If engineer not in that channel? They are not removed? \"Removal from a source channel prevents future citation and history access\" implies non-members? Maybe not. The question: \"may an engineer who is not in that channel inspect its old discussion?\" BV-29 says removal from a source channel prevents future citation and history access. It does not say about an engineer not in channel; if not in channel maybe no access. But it says removal prevents history access. Does this address? If someone is not in channel, they are outside, likely no access? But no explicit. Also BV-30 says when current source access cannot be verified, do not treat prior allow as current permission. Not directly.\n\nWe need identify requested parts: 1) Which cache theory did incident channel abandon? 2) May engineer not in that channel inspect old discussion? No evidence for cache theory. Could answer empty claims list due insufficient support. But the instructions: \"If the question does not identify the event, entity or policy, give explicitly scoped candidate facts or return an empty claims list; do not choose a single unstated referent...\" Here question mentions incident channel and cache theory, but evidence has various incidents? No cache theory. It doesn't identify event. So likely empty claims list. But maybe we can say not enough support. The output schema requires claims array. We can return {\"claims\":[]}.\n\nBut let's consider if any evidence could support \"old discussion access\": BV-29: \"Removal from a source channel prevents future citation and history access; previously saved copies cannot be recalled.\" This could be used to answer may engineer not in channel inspect? If engineer is not in channel, they didn't have access? Actually \"removal from source channel\" means someone removed from channel cannot access history. If an engineer is not in channel from the start, maybe similar? But source only says removal. Not enough. Also no cache theory. So empty claims.\n\nNeed ensure final JSON only. So final: {\"claims\":[]}."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1959,
+        "completion_tokens": 752,
+        "total_tokens": 2711,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 746
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1447
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

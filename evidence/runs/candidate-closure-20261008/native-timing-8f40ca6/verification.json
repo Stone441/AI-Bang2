@@ -1,0 +1,5687 @@
+{
+  "started_at": "2026-10-07T17:00:06.597356+00:00",
+  "commit": "8f40ca68cfbb0e9e440a5efff94d29485983b3c3",
+  "mode": "native_api_live_model_synthesis",
+  "actor": "eng_b",
+  "source_writes": false,
+  "service_restarts": false,
+  "browser": "blocked_saved_site_denial",
+  "G1": "not_run",
+  "G2": "not_run",
+  "semantic_quality": "pending_readonly_review",
+  "sampling_temperature": 0,
+  "reasoning_effort": "low",
+  "output_token_cap": 4096,
+  "effective_temperature": null,
+  "reservation_per_call_micro_usd": 319488,
+  "source_hashes": {
+    "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/scripts/business_current_native_model.py": "dad2ab7e855a38ca62243e1945288a1f55db17702386fd4a29eed26b1a8c1e89",
+    "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
+    "brain/audit.py": "83235d7556b378963cb15c2ac677b42959b648d6cfda7858ec48afcff6c7b048",
+    "brain/audit_query.py": "6cdc70aa02d460b4805e08bc2eb873c87366415a133f05e2eede6591dac5306b",
+    "brain/budget.py": "cd0f195cec3741ab6741648ee4391cf841e63bd12f1e718ebcc4b6fd66b106fb",
+    "brain/confluence.py": "dce74d46a0f0cc6add1432c79a68c752364c63942b63179c510b1268e9af2c41",
+    "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
+    "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
+    "brain/credential_input.py": "7736f24b27ad95d8751479144c3c9e52a80a836100e6551b14296fdab62620f4",
+    "brain/deepseek.py": "2b793d01b07d6228c11f9d4bc824308b21e960497082dcb3cd1e8705931fe4f2",
+    "brain/delegated_query.py": "1fdfcbd4a99a20ffe909014206909ca43c70b1366c621910a7931de69c0e2b27",
+    "brain/discovery.py": "7c4bd2b7df82de14624c714658cf5cb76afee3fc03cfd929b82cd53b2f1b65fb",
+    "brain/drive.py": "e2fe84429b34ef2b2ad496188ed20beaf9e6442e5cef625a8f6edc085548f41d",
+    "brain/drive_oauth.py": "4e72272cc0daaa1f290a12738e195594b0fd384e59227a8f0f038835c68cd86e",
+    "brain/engine.py": "818d16530e1ee7ff709cc00530ca521e00e366effad9d2e77836c758f0c62ff6",
+    "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
+    "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
+    "brain/keychain.py": "329010f678201d0e1592c658c6f5e0f220b71a4d602e2d395fc103dd216514a9",
+    "brain/model_receipt.py": "4055abbc3f8bd9804dcfedc49c2a440ad5fe08771ffd914b1b5f563f8238c431",
+    "brain/operator_web.py": "6782b8de308dcdce8ba27d22fa09f5b57e9fe87f69a166238967beaf72761a75",
+    "brain/retrieval.py": "2792ef2d007e113c23edd3f7b6130384537d1f611e2a064ed2683b97034f7181",
+    "brain/runtime_version.py": "f3cddf0e6da0a33e5e8c85512d2bfab3373b26627baa79a11ef117650ef51d91",
+    "brain/server.py": "0bb6900f802fa0bbe5a26c621001984e31223f71b6c9296085471c66e22b45b9",
+    "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
+    "brain/sources.py": "02b8f29842422938f87dcad4a9f75b25bf5ee24ce4c04067afe51915ec6a61fe",
+    "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
+    "brain/synthesis.py": "c59b13f6bf41e3459d3ab6d75a0b6d0fb73644ae4513c43cdbebe6e0320ef918",
+    "brain/synthetic_provenance.py": "1cd96724152507e90c5aa873c27520407d458e6d6a96c21d9f39897d77bfc396"
+  },
+  "budget_before": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 710363,
+    "settled_micro_usd": 390875,
+    "available_micro_usd": 19289637,
+    "pending_requests": 1,
+    "blocked_for_review": false
+  },
+  "results": [
+    {
+      "case": "slack_latest",
+      "question": "For the BV-20261007 Slack probe thread, which value is approved after the final correction, and which earlier correction does it supersede?",
+      "error_type": null,
+      "elapsed_including_preview_seconds": 109.49435470899334,
+      "query_to_return_seconds": 82.37110379198566,
+      "single_preview_seconds": 27.121901500038803,
+      "preview_evidence_id": "slack:C0C6R70SGG4/1791364699.192759@56399498513313818",
+      "query_timing": {
+        "samples": [
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2729681659839116
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26903004199266434
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2890825839713216
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.831544499960728
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2546013329993002
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26870399998733774
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.31718449998879805
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.257847250031773
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2753103750292212
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2930145420250483
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.6674590000184253
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.25052195898024365
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2655962079879828
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3027274999767542
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2809166249935515
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.28061249997699633
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3014886250020936
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.6826965829823166
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3338594589731656
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3553489579935558
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.16429370897822082
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.8538383749546483
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2835553340264596
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.5066285830107518
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.9886270420392975
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.39573400001972914
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.1750637080403976
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.2867858750396408
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.49923570797545835
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.7862740409909748
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2588380000088364
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2814805000089109
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2734513750183396
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8140827079769224
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.29280833300435916
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3696330420207232
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8889018329791725
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.40648633299861103
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.958416124980431
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3302118330029771
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2745392500073649
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3056337499874644
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.9109094589948654
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.2579216249869205
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.354398375027813
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3540148749598302
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.9666835829848424
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2984817089745775
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3729165840195492
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8812548329588026
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.40021462499862537
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.9533489579916932
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.32355620904127136
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3488996250089258
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3596648749662563
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 1.03242979204515
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.27724345796741545
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.41488108300836757
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 1.0343629159615375
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.4075174589524977
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.1346762079629116
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.27293408301193267
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.25975291698705405
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.30138770799385384
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8345478749834001
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26326045795576647
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26716208300786093
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3054699159692973
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2623714999645017
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.27467783400788903
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2938956660218537
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.667656583013013
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.25879970903042704
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2773397909477353
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2913239170447923
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2643587499624118
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2713829999556765
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.27747887501027435
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.641573833010625
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.31032612500712276
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.34758445800980553
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.28564487502444535
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.9438025830313563
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2801986249978654
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.406864249962382
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8338967500021681
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3667908749775961
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.8883067909628153
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.35926774999825284
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.4431837910087779
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.802756707998924
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26174020796315745
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26678508304758
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.29064033302711323
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.81958566600224
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2679976249928586
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.4204979159985669
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.877713333000429
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.48542054201243445
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.052006000012625
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.27514108404284343
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2784694159636274
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2774176670354791
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8313838330213912
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.32419829204445705
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.36158395797247067
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3921961250016466
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 1.0783027500147
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.35620666603790596
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.44438499998068437
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8944290419458412
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.37343316699843854
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.068956666975282
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.2846843749866821
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.34677495900541544
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.32446858298499137
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.9561255419976078
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.29586858296534047
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.43196608300786465
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8430476249777712
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.4599673750344664
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.0314802500070073
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "generation",
+            "source": "deepseek",
+            "seconds": 6.432605166977737
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.27923995902528986
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2624204580206424
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3066449170000851
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8486040839925408
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26048387499758974
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2627570840413682
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.896942583960481
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2624246249906719
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 1.3439422919764183
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2937913340283558
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 3.321111583034508
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2698094999650493
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.27521266700932756
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.29293554194737226
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2951102500082925
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2674441249691881
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.30155520798871294
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.702817249984946
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.2943126669852063
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3664132919511758
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3085303750121966
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.9695787919918075
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.272567291976884
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.43274041602853686
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8582691670162603
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.41304866602877155
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.977245791000314
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.3898926670080982
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.40259725000942126
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.7927897499757819
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2504517500055954
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.270981915993616
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.27925658295862377
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8009060409967788
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3153362500015646
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.4046776249888353
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8776974589563906
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.37368508300278336
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.971902624994982
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2700835840078071
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2716107500018552
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.29805520799709484
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8402720830054022
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.277672124968376
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3415739579941146
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.1390074579976499
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.7585514999809675
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2959891249774955
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3803406670340337
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8706435830099508
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.39700583298690617
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.944347291951999
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.31344616698333994
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.1567331250407733
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.17518520797602832
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.6457896250067279
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2905308329500258
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.47787870798492804
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8313352079712786
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.4015145410085097
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.0018293340108357
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "review",
+            "source": "deepseek",
+            "seconds": 4.536405792052392
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.272544166946318
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2774939580122009
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3014300420181826
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.851780500030145
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26928195799700916
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26185429200995713
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2879235409782268
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2605131250456907
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2653710839804262
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2937538329861127
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.6392169159953482
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2653935829875991
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2686720830388367
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.30762112501543015
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.29228137497557327
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2676251250086352
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.28220641700318083
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.68463462498039
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3178291249787435
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.2963229169836268
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.34719662502175197
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.9615791660035029
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2728480829973705
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3643434580299072
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8591898329905234
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.46195099997567013
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.958826666988898
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.34818749997066334
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.4007541669998318
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.7492955419584177
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2658007919671945
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2909776669694111
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2826932080206461
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.839990750013385
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2720317079802044
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.4086617500288412
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.9797473750077188
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.41927008295897394
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.080282165959943
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.25662712496705353
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26463270897511393
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3296480419812724
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8512762500322424
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3150715830270201
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.15879895904799923
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.2618791670538485
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.7360243339790031
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2939941670047119
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.47009045898448676
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8684057079954073
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.39671733300201595
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.029726291017141
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3171252919710241
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.34436866600299254
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3436096659861505
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 1.0054102079593576
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2855242909863591
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.40186783397803083
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8374429169925861
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3676545000053011
+          },
+          {
+            "phase": "slack_latest:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.8930706669925712
+          }
+        ],
+        "seconds_by_category": {
+          "authorization": 71.24076795275323,
+          "generation": 6.432605166977737,
+          "native_http": 71.21638249832904,
+          "review": 4.536405792052392
+        },
+        "boundary": "Authorization wall time includes native HTTP; do not add these overlapping totals. Model timings are transport wall time."
+      },
+      "preview_timing": {
+        "samples": [
+          {
+            "phase": "slack_latest:single_preview",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2996936659910716
+          },
+          {
+            "phase": "slack_latest:single_preview",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3507738749613054
+          },
+          {
+            "phase": "slack_latest:single_preview",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2931547079933807
+          },
+          {
+            "phase": "slack_latest:single_preview",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2709000839968212
+          },
+          {
+            "phase": "slack_latest:single_preview",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26708779198816046
+          },
+          {
+            "phase": "slack_latest:single_preview",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2825828330242075
+          },
+          {
+            "phase": "slack_latest:single_preview",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.7649882499827072
+          }
+        ],
+        "seconds_by_category": {
+          "authorization": 1.7649882499827072,
+          "native_http": 1.764192957954947
+        },
+        "boundary": "Authorization wall time includes native HTTP; do not add these overlapping totals. Model timings are transport wall time."
+      }
+    },
+    {
+      "case": "product_scope",
+      "question": "Can we offer payment-retry to all customers now, does PAY-102 Done approve general availability, and what approved scope and confirmed release date can we communicate?",
+      "error_type": "ModelUnavailable",
+      "elapsed_including_preview_seconds": 53.349190291017294,
+      "query_to_return_seconds": null,
+      "single_preview_seconds": null,
+      "preview_evidence_id": null,
+      "query_timing": {
+        "samples": [
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.28232870798092335
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3683655420318246
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8456968750106171
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.37255699996603653
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.8695112080313265
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2701927910093218
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3678544160211459
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 1.3593050840427168
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.4056416659732349
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.4034703329671174
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3538835420040414
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3576922499923967
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.26495754200732335
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.9769872079486959
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.3776267080102116
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.41172112501226366
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.7897268750239164
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.3437089590006508
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.38709999999264255
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.7309940829873085
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2699514590203762
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.37041104200761765
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.9560015830211341
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3468896249542013
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.943625667016022
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2559074999880977
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.28141758299898356
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.29826570802833885
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8359360410249792
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2662276669871062
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2620404159533791
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.30995566700585186
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8387010839651339
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.269911959010642
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.35310108395060524
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3065639170235954
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.9297220839653164
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.24949912499869242
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.34781266597565264
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3337058329489082
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.9314480829634704
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.29241291695507243
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3686919999890961
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8117874999879859
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.4056519999867305
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.878959333000239
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.3461355839972384
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.3787523329956457
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.7251285829697736
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.28039379097754136
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.272586458013393
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.283155707991682
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26708454196341336
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2590982500114478
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2980721249477938
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.6613637080299668
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.25742695800727233
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2724090829724446
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.30367575003765523
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2621863749809563
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2734828329994343
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.29610570799559355
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.6667181249940768
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.24800116603728384
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2652527909958735
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.28927762497914955
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8029735409654677
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.26245629199547693
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.39800008304882795
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8751808330416679
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.38452374999178573
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.9204803750035353
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.2790672500268556
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.35555587499402463
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.9255869169719517
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3988949579652399
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.9595523329917341
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.265943749982398
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.34760554099921137
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.34283874998800457
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.9566878750338219
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.35887016699416563
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.37768391700228676
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.7366916249739006
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.2798590420279652
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.3693423339864239
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.6495524159981869
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.27634187502553686
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3910694579826668
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8714630830218084
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.40516729198861867
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 1.9446077499887906
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2593762920005247
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2624729999806732
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2935103340423666
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8156692080083303
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2636537089711055
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2782099160249345
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2906811670400202
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.833051041001454
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.1351009999634698
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3481589159928262
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3599769999855198
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.8433860419900157
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.1272326250327751
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.34537362499395385
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "confluence",
+            "seconds": 0.3495910409837961
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "confluence",
+            "seconds": 0.8224529580329545
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.29310929198982194
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.3883666659821756
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.8874777919845656
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "drive",
+            "seconds": 0.5877452080021612
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "drive",
+            "seconds": 2.157181375019718
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.34201295900857076
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "jira",
+            "seconds": 0.4090317910304293
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "jira",
+            "seconds": 0.7512112089898437
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26147666602628306
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26750466699013487
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.28938074997859076
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26661191595485434
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2717945000040345
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3131443749880418
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.670445750001818
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2650306249852292
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.26360000000568107
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2972598750493489
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2532471250160597
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2662831249763258
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.27648745803162456
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 1.622360417037271
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2595396660035476
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.2789914589957334
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "native_http",
+            "source": "slack",
+            "seconds": 0.3052656669751741
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "authorization",
+            "source": "slack",
+            "seconds": 0.8442529579624534
+          },
+          {
+            "phase": "product_scope:query",
+            "category": "generation",
+            "source": "deepseek",
+            "seconds": 15.74738204095047
+          }
+        ],
+        "seconds_by_category": {
+          "authorization": 37.51284928788664,
+          "generation": 15.74738204095047,
+          "native_http": 37.50008791277651
+        },
+        "boundary": "Authorization wall time includes native HTTP; do not add these overlapping totals. Model timings are transport wall time."
+      },
+      "preview_timing": {
+        "samples": [],
+        "seconds_by_category": {},
+        "boundary": "Authorization wall time includes native HTTP; do not add these overlapping totals. Model timings are transport wall time."
+      }
+    }
+  ],
+  "timing_samples": [
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3720867920201272
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.35179016704205424
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.337943084014114
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.9231069999514148
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.37180725001962855
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.25421483302488923
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3296072090161033
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3197779170004651
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3277754159644246
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.30929429101524875
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3422830000054091
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.29173779202392325
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.549771000049077
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3224079579813406
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4022167500224896
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 1.1811272089835256
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.39314370800275356
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.28780179197201505
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4295020420104265
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 1.1518909169826657
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.5039346659905277
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.27381916699232534
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.37381016701692715
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 1.0540825829957612
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.45143058302346617
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.29337858397047967
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 2.3252422079676762
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 1.1081620000186376
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4578303749440238
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.43750795803498477
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.5280382499913685
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.2742968749953434
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.43156341603025794
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.37055354099720716
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3729215829516761
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.356461749994196
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.31369524996262044
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3406948749907315
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.19610162498429418
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2784953329828568
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27884074999019504
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.31329849996836856
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2520390840363689
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2575936670182273
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3021590829594061
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29663370799971744
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2702599170152098
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3058787499903701
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28558287501800805
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.30503716599196196
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26656608399935067
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27678833302343264
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3015572500298731
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26815416698809713
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26489154098089784
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29879983299179
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2526183750014752
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2729131249943748
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.31216512504033744
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2776169170392677
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26913241599686444
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3123526659910567
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26683466602116823
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27147066697943956
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28293104097247124
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27822183299576864
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2630192500073463
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28531616600230336
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26527799997711554
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28318666701670736
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29934874997707084
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2715277920360677
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.25844575004884973
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29307200002949685
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2729681659839116
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26903004199266434
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2890825839713216
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.831544499960728
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2546013329993002
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26870399998733774
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.31718449998879805
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.257847250031773
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2753103750292212
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2930145420250483
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.6674590000184253
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.25052195898024365
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2655962079879828
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3027274999767542
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2809166249935515
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28061249997699633
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3014886250020936
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.6826965829823166
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3338594589731656
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3553489579935558
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.16429370897822082
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.8538383749546483
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2835553340264596
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.5066285830107518
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.9886270420392975
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.39573400001972914
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.1750637080403976
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.2867858750396408
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.49923570797545835
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.7862740409909748
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2588380000088364
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2814805000089109
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2734513750183396
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8140827079769224
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.29280833300435916
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3696330420207232
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8889018329791725
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.40648633299861103
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.958416124980431
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3302118330029771
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2745392500073649
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3056337499874644
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.9109094589948654
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.2579216249869205
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.354398375027813
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3540148749598302
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.9666835829848424
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2984817089745775
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3729165840195492
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8812548329588026
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.40021462499862537
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.9533489579916932
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.32355620904127136
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3488996250089258
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3596648749662563
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 1.03242979204515
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.27724345796741545
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.41488108300836757
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 1.0343629159615375
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4075174589524977
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.1346762079629116
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27293408301193267
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.25975291698705405
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.30138770799385384
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8345478749834001
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26326045795576647
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26716208300786093
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3054699159692973
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2623714999645017
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27467783400788903
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2938956660218537
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.667656583013013
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.25879970903042704
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2773397909477353
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2913239170447923
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2643587499624118
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2713829999556765
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27747887501027435
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.641573833010625
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.31032612500712276
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34758445800980553
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.28564487502444535
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.9438025830313563
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2801986249978654
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.406864249962382
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8338967500021681
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3667908749775961
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.8883067909628153
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.35926774999825284
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.4431837910087779
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.802756707998924
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26174020796315745
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26678508304758
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29064033302711323
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.81958566600224
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2679976249928586
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4204979159985669
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.877713333000429
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.48542054201243445
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.052006000012625
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27514108404284343
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2784694159636274
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2774176670354791
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8313838330213912
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.32419829204445705
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.36158395797247067
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3921961250016466
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 1.0783027500147
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.35620666603790596
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.44438499998068437
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8944290419458412
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.37343316699843854
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.068956666975282
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.2846843749866821
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34677495900541544
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.32446858298499137
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.9561255419976078
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.29586858296534047
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.43196608300786465
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8430476249777712
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4599673750344664
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.0314802500070073
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "generation",
+      "source": "deepseek",
+      "seconds": 6.432605166977737
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27923995902528986
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2624204580206424
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3066449170000851
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8486040839925408
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26048387499758974
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2627570840413682
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.896942583960481
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2624246249906719
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 1.3439422919764183
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2937913340283558
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 3.321111583034508
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2698094999650493
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27521266700932756
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29293554194737226
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2951102500082925
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2674441249691881
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.30155520798871294
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.702817249984946
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.2943126669852063
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3664132919511758
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3085303750121966
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.9695787919918075
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.272567291976884
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.43274041602853686
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8582691670162603
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.41304866602877155
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.977245791000314
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3898926670080982
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.40259725000942126
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.7927897499757819
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2504517500055954
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.270981915993616
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27925658295862377
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8009060409967788
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3153362500015646
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4046776249888353
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8776974589563906
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.37368508300278336
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.971902624994982
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2700835840078071
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2716107500018552
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29805520799709484
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8402720830054022
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.277672124968376
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3415739579941146
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.1390074579976499
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.7585514999809675
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2959891249774955
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3803406670340337
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8706435830099508
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.39700583298690617
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.944347291951999
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.31344616698333994
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.1567331250407733
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.17518520797602832
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.6457896250067279
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2905308329500258
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.47787870798492804
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8313352079712786
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4015145410085097
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.0018293340108357
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "review",
+      "source": "deepseek",
+      "seconds": 4.536405792052392
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.272544166946318
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2774939580122009
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3014300420181826
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.851780500030145
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26928195799700916
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26185429200995713
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2879235409782268
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2605131250456907
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2653710839804262
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2937538329861127
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.6392169159953482
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2653935829875991
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2686720830388367
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.30762112501543015
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29228137497557327
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2676251250086352
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28220641700318083
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.68463462498039
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3178291249787435
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.2963229169836268
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34719662502175197
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.9615791660035029
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2728480829973705
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3643434580299072
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8591898329905234
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.46195099997567013
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.958826666988898
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.34818749997066334
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.4007541669998318
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.7492955419584177
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2658007919671945
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2909776669694111
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2826932080206461
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.839990750013385
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2720317079802044
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4086617500288412
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.9797473750077188
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.41927008295897394
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.080282165959943
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.25662712496705353
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26463270897511393
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3296480419812724
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8512762500322424
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3150715830270201
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.15879895904799923
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.2618791670538485
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.7360243339790031
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2939941670047119
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.47009045898448676
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8684057079954073
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.39671733300201595
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.029726291017141
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3171252919710241
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34436866600299254
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3436096659861505
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 1.0054102079593576
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2855242909863591
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.40186783397803083
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8374429169925861
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3676545000053011
+    },
+    {
+      "phase": "slack_latest:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.8930706669925712
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3110453329863958
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3781949590193108
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34101274999557063
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3635738749871962
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3363487920141779
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.1315063750371337
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.2811701669706963
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3583362080389634
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.31572887499351054
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3300535840098746
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34687408298486844
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.29001670895377174
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4977380000054836
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2869130420149304
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.37044116703327745
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 1.0371482910122722
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.33945758402114734
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.31516633299179375
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4359057500259951
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.954368999984581
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.41129700001329184
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2769938329583965
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4102264160173945
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8441313750226982
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.40665937500307336
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2674627919914201
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.37115916702896357
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8507698330213316
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3890011670300737
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.28442387498216704
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3792477920069359
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.1485419159871526
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.38754308299394324
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.33312025002669543
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.4086409169831313
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.33709375001490116
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.4078229580190964
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3533216249779798
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3927134579862468
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2703597499639727
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3137951249955222
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2816494169528596
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2599873330327682
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26003762503387406
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2933132920297794
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2870214590220712
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27148058405146
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2577463750494644
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29296341695589945
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2743452920112759
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2944030829821713
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2685654999804683
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2750452500185929
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27039370796410367
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27612674998817965
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27061350003350526
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26875541696790606
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27586666704155505
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2979582499829121
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26887279096990824
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.25389829196501523
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29912041599163786
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.25972125004045665
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2708754999912344
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29651229101000354
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2570686250110157
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2794736250070855
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2728622919530608
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26096879196120426
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27293679100694135
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2755683329887688
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2636249160277657
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2680442089913413
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28317441703984514
+    },
+    {
+      "phase": "slack_latest:single_preview",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2996936659910716
+    },
+    {
+      "phase": "slack_latest:single_preview",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3507738749613054
+    },
+    {
+      "phase": "slack_latest:single_preview",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2931547079933807
+    },
+    {
+      "phase": "slack_latest:single_preview",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2709000839968212
+    },
+    {
+      "phase": "slack_latest:single_preview",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26708779198816046
+    },
+    {
+      "phase": "slack_latest:single_preview",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2825828330242075
+    },
+    {
+      "phase": "slack_latest:single_preview",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.7649882499827072
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.28232870798092335
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3683655420318246
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8456968750106171
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.37255699996603653
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.8695112080313265
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2701927910093218
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3678544160211459
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 1.3593050840427168
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4056416659732349
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.4034703329671174
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3538835420040414
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3576922499923967
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.26495754200732335
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.9769872079486959
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3776267080102116
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.41172112501226366
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.7897268750239164
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3437089590006508
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.38709999999264255
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.7309940829873085
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2699514590203762
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.37041104200761765
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.9560015830211341
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3468896249542013
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.943625667016022
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2559074999880977
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28141758299898356
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29826570802833885
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8359360410249792
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2662276669871062
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2620404159533791
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.30995566700585186
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8387010839651339
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.269911959010642
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.35310108395060524
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3065639170235954
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.9297220839653164
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.24949912499869242
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34781266597565264
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3337058329489082
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.9314480829634704
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.29241291695507243
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3686919999890961
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8117874999879859
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.4056519999867305
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.878959333000239
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3461355839972384
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3787523329956457
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.7251285829697736
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28039379097754136
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.272586458013393
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.283155707991682
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26708454196341336
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2590982500114478
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2980721249477938
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.6613637080299668
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.25742695800727233
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2724090829724446
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.30367575003765523
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2621863749809563
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2734828329994343
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.29610570799559355
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.6667181249940768
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.24800116603728384
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2652527909958735
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28927762497914955
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8029735409654677
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.26245629199547693
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.39800008304882795
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8751808330416679
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.38452374999178573
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.9204803750035353
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.2790672500268556
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.35555587499402463
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.9255869169719517
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3988949579652399
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.9595523329917341
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.265943749982398
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34760554099921137
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34283874998800457
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.9566878750338219
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.35887016699416563
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.37768391700228676
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.7366916249739006
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.2798590420279652
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.3693423339864239
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.6495524159981869
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.27634187502553686
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3910694579826668
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8714630830218084
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.40516729198861867
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 1.9446077499887906
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2593762920005247
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2624729999806732
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2935103340423666
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8156692080083303
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2636537089711055
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2782099160249345
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2906811670400202
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.833051041001454
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.1351009999634698
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3481589159928262
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3599769999855198
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.8433860419900157
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.1272326250327751
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.34537362499395385
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.3495910409837961
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "confluence",
+      "seconds": 0.8224529580329545
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.29310929198982194
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.3883666659821756
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.8874777919845656
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "drive",
+      "seconds": 0.5877452080021612
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "drive",
+      "seconds": 2.157181375019718
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.34201295900857076
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "jira",
+      "seconds": 0.4090317910304293
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "jira",
+      "seconds": 0.7512112089898437
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26147666602628306
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26750466699013487
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.28938074997859076
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26661191595485434
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2717945000040345
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3131443749880418
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.670445750001818
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2650306249852292
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.26360000000568107
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2972598750493489
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2532471250160597
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2662831249763258
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.27648745803162456
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 1.622360417037271
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2595396660035476
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.2789914589957334
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "native_http",
+      "source": "slack",
+      "seconds": 0.3052656669751741
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "authorization",
+      "source": "slack",
+      "seconds": 0.8442529579624534
+    },
+    {
+      "phase": "product_scope:query",
+      "category": "generation",
+      "source": "deepseek",
+      "seconds": 15.74738204095047
+    },
+    {
+      "phase": "background_discovery",
+      "category": "native_http",
+      "source": "confluence",
+      "seconds": 0.1275504999794066
+    }
+  ],
+  "chain": {
+    "valid": true,
+    "events": 188,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "status": "captured_for_review",
+  "budget_after": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 444061,
+    "settled_micro_usd": 444061,
+    "available_micro_usd": 19555939,
+    "pending_requests": 0,
+    "blocked_for_review": false
+  },
+  "run_usage_cost": {
+    "unique_usage_receipts": 3,
+    "accounted_upper_micro_usd": 10832,
+    "attempts_without_recorded_usage": 0,
+    "basis": "Unique settled usage receipts in this captured audit; not vendor invoice.",
+    "missing_usage_warning": "Missing usage keeps its reservation; zero settled receipt sum does not mean a free call.",
+    "global_snapshot_warning": "Shared-ledger snapshots may include other concurrent runs or pending reservations."
+  },
+  "finished_at": "2026-10-07T17:03:19.651071+00:00"
+}

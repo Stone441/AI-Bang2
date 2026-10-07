@@ -27,6 +27,14 @@ class Measurements:
             self.samples.append({'phase':getattr(self.local,'phase','background_discovery'),
                 'category':category,'source':source,'seconds':time.monotonic()-start})
 
+    @contextmanager
+    def acquire(self, lock):
+        self.call('lock_wait', 'local', lock.acquire)
+        try:
+            yield
+        finally:
+            lock.release()
+
     def summary(self, phase):
         samples = [s for s in self.samples if s['phase'] == phase]
         return {'samples':samples,'seconds_by_category':{category:sum(s['seconds'] for s in samples

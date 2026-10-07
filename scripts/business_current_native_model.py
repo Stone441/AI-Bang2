@@ -32,7 +32,7 @@ def run(output, temperature=0, reasoning_effort='none', output_tokens=1024):
             'effective_temperature':None if reasoning_effort=='low' else temperature,
             'reservation_per_call_micro_usd':CapturedSynthesis.reservation_for(output_tokens),
             'source_hashes':{str(p):hashlib.sha256(p.read_bytes()).hexdigest()
-                            for p in [Path(__file__),*sorted(Path('brain').glob('*.py'))]}}
+                            for p in [Path(__file__),Path('scripts/validation_timing.py'),*sorted(Path('brain').glob('*.py'))]}}
     ledger=store=worker=None
     try:
         check_price_review()
@@ -72,16 +72,20 @@ def run(output, temperature=0, reasoning_effort='none', output_tokens=1024):
             start=time.monotonic();model.draft_output=None;model.response_diagnostics=[];error=None
             query_seconds=preview_seconds=None;preview_id=None
             try:
-                with measured.phase(label+':query'):answer=pilot.query(actor,question)
+                with measured.phase(label+':query'):
+                    with measured.acquire(pilot.lock):answer=pilot.query(actor,question)
                 query_seconds=time.monotonic()-start
                 if answer['claims']:
                     preview_id=answer['claims'][0]['evidence_ids'][0]
                     preview_started=time.monotonic()
-                    with measured.phase(label+':single_preview'):preview=pilot.evidence(actor,preview_id)
+                    with measured.phase(label+':single_preview'):
+                        with measured.acquire(pilot.lock):preview=pilot.evidence(actor,preview_id)
                     preview_seconds=time.monotonic()-preview_started
                     save(label+'-single-preview.json',preview)
             except Exception as exc:
-                error=type(exc).__name__;answer={'request_id':pilot.audit.export()[-1]['request_id'],'claims':[],'evidence':[]}
+                error=type(exc).__name__
+                if query_seconds is None:query_seconds=time.monotonic()-start
+                answer={'request_id':pilot.audit.export()[-1]['request_id'],'claims':[],'evidence':[]}
             save(label+'-answer.json',answer)
             save(label+'-diagnostic.json',{'draft':model.draft_output,'vendor_responses':model.response_diagnostics})
             results.append({'case':label,'question':question,'error_type':error,'elapsed_including_preview_seconds':time.monotonic()-start,
@@ -112,6 +116,6 @@ if __name__=='__main__':
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--temperature',type=float,choices=[0,1],default=0)
     parser.add_argument('--reasoning-effort',choices=['none','low'],default='none')
-    parser.add_argument('--output-tokens',type=int,choices=[1024,2048,4096],default=1024);args=parser.parse_args()
+    parser.add_argument('--output-tokens',type=int,choices=[1024,2048,4096,8192],default=1024);args=parser.parse_args()
     if not args.live:raise SystemExit('not_run: explicit --live required')
     run(args.output,args.temperature,args.reasoning_effort,args.output_tokens)
