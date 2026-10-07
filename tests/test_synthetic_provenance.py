@@ -37,7 +37,7 @@ class WindowProvenance(unittest.TestCase):
                 self.calls.append(payload)
                 content = json.loads(payload['messages'][1]['content'])
                 if 'claims' in content:
-                    output = {'question_covered': True, 'verdicts': [{'index':0,'supported':True}]}
+                    output = {'question_covered': True, 'verdicts': [{'index':0,'supported':True,'responsive':True}]}
                 elif 'claims' in payload['messages'][0]['content']:
                     e = next(e for e in content['evidence'] if 'retry budget exhausted' in e['text'])
                     output = {'claims':[{'text':'Use the standby queue after retry budget exhaustion.',

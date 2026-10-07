@@ -44,7 +44,7 @@ class GroundedSynthesis(unittest.TestCase):
             'evidence_ids':[self.evidence.evidence_id],
             'supports':[{'evidence_id':self.evidence.evidence_id,
                 'quote':'Pilot approved for ten customers. GA is not approved.'}]}
-        self.transport=SequentialTransport({'claims':[self.claim]},[{'index':0,'supported':True}])
+        self.transport=SequentialTransport({'claims':[self.claim]},[{'index':0,'supported':True,'responsive':True}])
         self.model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
             transport=self.transport,today=PRICE_DATE)
         self.rid='a'*32
@@ -146,16 +146,16 @@ class GroundedSynthesis(unittest.TestCase):
                'supports':[{'evidence_id':evidence.evidence_id,'quote':'Vega incident: DNS caused packet loss.'}]}
         # Exact quote provenance alone cannot prove named-event entailment.
         self.assertEqual(validate_claim(claim,[evidence]),claim)
-        self.transport.outputs=[{'claims':[claim]}, {'question_covered':True,'verdicts':[{'index':0,'supported':False}]}]
+        self.transport.outputs=[{'claims':[claim]}, {'question_covered':True,'verdicts':[{'index':0,'supported':False,'responsive':True}]}]
         with self.assertRaises(ModelUnavailable):
             self.model.generate_with_authorization('What caused Orion?', [evidence], self.rid, lambda _:None)
         self.assertEqual(len(self.transport.calls),2)
         self.assertEqual(self.ledger.summary()['pending_requests'],0)
 
     def test_review_rejects_false_unknown_duplicate_incomplete_or_boolean_index(self):
-        for verdicts in ([{'index':0,'supported':False}],[],[{'index':0,'supported':'true'}],
-                         [{'index':True,'supported':True}],[{'index':1,'supported':True}],
-                         [{'index':0,'supported':True},{'index':0,'supported':True}]):
+        for verdicts in ([{'index':0,'supported':False,'responsive':True}],[],[{'index':0,'supported':'true','responsive':True}],
+                         [{'index':True,'supported':True,'responsive':True}],[{'index':1,'supported':True,'responsive':True}],
+                         [{'index':0,'supported':True,'responsive':True},{'index':0,'supported':True,'responsive':True}]):
             with self.subTest(verdicts=verdicts):
                 self.transport.calls=[];self.transport.outputs[1]={'verdicts':verdicts, 'question_covered':True}
                 with self.assertRaises(ModelUnavailable):
@@ -170,11 +170,27 @@ class GroundedSynthesis(unittest.TestCase):
             self.model.generate_with_authorization('Question',[self.evidence],self.rid,deny)
         self.assertEqual(len(self.transport.calls),1)
 
+    def test_supported_background_or_unknown_relevance_rejects_whole_answer(self):
+        for relevance in (False, None, 'true', 1, 'missing'):
+            with self.subTest(responsive=relevance):
+                verdict={'index':0,'supported':True}
+                if relevance!='missing':verdict['responsive']=relevance
+                self.transport.calls=[]
+                self.transport.outputs[1]={'question_covered':True,'verdicts':[verdict]}
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate_with_authorization('Is GA approved?',
+                        [self.evidence],self.rid,lambda _:None)
+                self.assertEqual(len(self.transport.calls),2)
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+        self.assertEqual(self.ledger.summary()['settled_micro_usd'],10*cost_upper(100,20))
+        outcomes=[r[0] for r in self.ledger.db.execute('select outcome from model_calls')]
+        self.assertEqual(outcomes.count('output_rejected'),5)
+
     def test_supported_but_incomplete_answer_or_unknown_coverage_is_rejected(self):
         # A factual pilot answer omits the requested operational safeguards.
         for coverage in (False, None, 'true', 1, 'missing'):
             with self.subTest(coverage=coverage):
-                review={'verdicts':[{'index':0,'supported':True}]}
+                review={'verdicts':[{'index':0,'supported':True,'responsive':True}]}
                 if coverage!='missing':review['question_covered']=coverage
                 self.transport.outputs[1]=review;self.transport.calls=[]
                 with self.assertRaises(ModelUnavailable):
@@ -250,7 +266,7 @@ class GroundedSynthesis(unittest.TestCase):
         claim=copy.deepcopy(self.claim);claim['text']='GA is approved.'
         self.assertEqual(validate_claim(claim,[self.evidence]),claim)
         self.transport.outputs[0]={'claims':[claim]}
-        self.transport.outputs[1]={'verdicts':[{'index':0,'supported':False}], 'question_covered':True}
+        self.transport.outputs[1]={'verdicts':[{'index':0,'supported':False,'responsive':True}], 'question_covered':True}
         with self.assertRaises(ModelUnavailable):
             self.model.generate_with_authorization('Question',[self.evidence],self.rid,lambda _:None)
 

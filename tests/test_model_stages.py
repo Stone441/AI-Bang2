@@ -29,7 +29,7 @@ class ModelStages(unittest.TestCase):
                 if self.failure=='timeout':raise TimeoutError('private upstream details')
                 content=json.loads(self.calls[-1]['messages'][1]['content'])
                 if 'claims' in content:
-                    output={'question_covered':self.failure!='review','verdicts':[{'index':0,'supported':True}]}
+                    output={'question_covered':self.failure!='review','verdicts':[{'index':0,'supported':True,'responsive':True}]}
                 elif 'claims' in self.calls[-1]['messages'][0]['content']:
                     e=content['evidence'][0]
                     output={'claims':[{'text':'Source-backed excerpt.', 'evidence_ids':[e['evidence_id']],

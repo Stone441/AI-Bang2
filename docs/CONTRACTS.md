@@ -1,5 +1,7 @@
 # Local contracts v1
 
+2026-10-07 synthesis-v7开发契约：内部review每claim verdict精确含index/supported/responsive；supported与responsive必须分别是布尔true，未知/缺字段/false拒绝整答，不局部删claim放行。question_covered还需明确回应未由引用资料建立的问题前提；“未建立”不等于显式否定或全源无记录。生成先按请求项分配事实，背景只因主题相近不算相关，实际请求的owner/blocker仍需覆盖。公共claim格式、原文/源context、逐阶段权限、原账本/温度0不变；当前语义效果待实际验证，v6旧结果保持原版本。
+
 2026-10-07 synthesis-v6开发：生成/review传入同一已鉴权Evidence的原title/locator作为source_context，与text分开；不据问题推定资源事件，不将context作为指令、原文quote或权限。SyntheticProvenance原来已核title/locator一致，保留批准资源/version/原文切片和整答gate；既有100KB payload上限在reserve前执行。388/389 archive、完整24开发题和两native/model题已验证对应版本；03未知表达及32背景仍未通过，不继承旧版本结果或宣称全部质量通过。
 
 2026-10-07 ADR-056：64b705a trusted Python/operator配置temperature默认0，允许有限数值[0,2]；None显式保留provider默认。generation/review相同值，thinking=disabled；客户端/浏览器无采样授权字段。三开发题各四次同输入比较支持可回滚选择，非确定性/语义保证。原模型、预算、原文窗口、每claim引用及whole-answer gate不变；64b705a的business16误归/business12结构失败证明精确引用＋同模型review仍非语义完备。旧原件保留，当前结果见STATUS。
