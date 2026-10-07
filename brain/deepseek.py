@@ -84,8 +84,16 @@ class DeepSeekEvidenceModel:
     # rather than assuming one character or byte equals one token.
     reservation = cost_upper(CONTEXT_TOKENS, OUTPUT_TOKENS)
 
+    @staticmethod
+    def reservation_for(output_tokens):
+        if type(output_tokens) is not int or output_tokens not in (1024, 2048):
+            raise ValueError('Bounded trusted output token cap required')
+        return cost_upper(CONTEXT_TOKENS, output_tokens)
+
     def __init__(self, key, ledger, *, synthetic_only=False, transport=None, today=None, temperature=0,
-                 reasoning_effort='none'):
+                 reasoning_effort='none', output_tokens=OUTPUT_TOKENS):
+        self.reservation = self.reservation_for(output_tokens)
+        self.output_tokens = output_tokens
         if reasoning_effort not in ('none', 'low'):
             raise ValueError('Supported trusted reasoning effort required')
         self.reasoning_effort = reasoning_effort
@@ -119,7 +127,7 @@ class DeepSeekEvidenceModel:
                 or any(not self.synthetic_input_allowed(e, provenance) for e in evidence)):
             raise ModelInputRejected('Model input is outside the synthetic pilot boundary')
         payload = {'model': MODEL, 'thinking': {'type': 'disabled' if self.reasoning_effort == 'none' else 'enabled'}, 'stream': False,
-                   'max_tokens': OUTPUT_TOKENS, 'response_format': {'type': 'json_object'},
+                   'max_tokens': self.output_tokens, 'response_format': {'type': 'json_object'},
                    'messages': self.messages(question, evidence)}
         if self.reasoning_effort != 'none':
             payload['reasoning_effort'] = self.reasoning_effort
@@ -147,7 +155,7 @@ class DeepSeekEvidenceModel:
             p, o, total = (usage[k] for k in ('prompt_tokens', 'completion_tokens', 'total_tokens'))
             if any(type(v) is not int or v < 0 for v in (p, o, total)) or total != p + o:
                 raise ValueError()
-            if p > CONTEXT_TOKENS or o > OUTPUT_TOKENS:
+            if p > CONTEXT_TOKENS or o > self.output_tokens:
                 self.ledger.freeze_for_review()
                 self.ledger.model_outcome(reservation_id, 'usage_exceeded')
                 raise ValueError()

@@ -145,7 +145,7 @@ def cases(ids):
 
 
 def run(output, strategy='lexical', noise=0, live_model=False, selected_cases=None, temperature=0,
-        reasoning_effort='none'):
+        reasoning_effort='none', output_tokens=1024):
     output.mkdir(parents=True,exist_ok=False)
     started_at=now()
     loaded_hashes={str(p):hashlib.sha256(p.read_bytes()).hexdigest()
@@ -179,13 +179,14 @@ def run(output, strategy='lexical', noise=0, live_model=False, selected_cases=No
         budget=Path('.runtime/deepseek-budget.sqlite')
         if not budget.is_file():raise ValueError('Original approved ledger required')
         ledger=BudgetLedger(str(budget));budget_before=ledger.summary()
-        if budget_before['blocked_for_review'] or budget_before['available_micro_usd']<2*len(questions)*CapturedSynthesis.reservation:
+        requested_reservation=CapturedSynthesis.reservation_for(output_tokens)
+        if budget_before['blocked_for_review'] or budget_before['available_micro_usd']<2*len(questions)*requested_reservation:
             raise ValueError('Original budget unavailable; no key read or dispatch')
         config=json.loads((Path('.runtime')/bundle['sources']['jira']).read_text())
         key=MacKeychain().get('deepseek',config['tenant'],'eng_b','deepseek-flash')
         if not key:raise ValueError('Approved app-owned model key unavailable')
         model=CapturedSynthesis(key,ledger,synthetic_only=True,temperature=temperature,
-                                reasoning_effort=reasoning_effort)
+                                reasoning_effort=reasoning_effort,output_tokens=output_tokens)
     index_started=time.perf_counter()
     store=Store();store.initialize(world)
     index_seconds=time.perf_counter()-index_started
@@ -245,6 +246,8 @@ def run(output, strategy='lexical', noise=0, live_model=False, selected_cases=No
             'development_questions':len(questions),
             'sampling_temperature':temperature,
             'reasoning_effort':reasoning_effort,
+            'output_token_cap':output_tokens,
+            'reservation_per_call_micro_usd':CapturedSynthesis.reservation_for(output_tokens),
             'effective_temperature':temperature if reasoning_effort=='none' else None,
             'sampling_scope':'same value for generation/review; None omits parameter; not a determinism guarantee',
             'held_out':'Not run by this development harness; see separate retained-set records',
@@ -265,6 +268,7 @@ if __name__ == '__main__':
     parser.add_argument('--cases-file',type=Path)
     parser.add_argument('--temperature',type=float,choices=[0,1],default=0)
     parser.add_argument('--reasoning-effort',choices=['none','low'],default='none')
+    parser.add_argument('--output-tokens',type=int,choices=[1024,2048],default=1024)
     args=parser.parse_args()
     selected=json.loads(args.cases_file.read_text()) if args.cases_file else None
-    run(args.output,args.strategy,args.noise,args.live_model,selected,args.temperature,args.reasoning_effort)
+    run(args.output,args.strategy,args.noise,args.live_model,selected,args.temperature,args.reasoning_effort,args.output_tokens)

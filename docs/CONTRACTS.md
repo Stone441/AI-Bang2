@@ -1,5 +1,7 @@
 # Local contracts v1
 
+2026-10-07有界输出cap实验：low/1024一题全部tokens用于reasoning、finish_reason length无最终内容，原失败不升级。可信Python/runner允许1024或2048（默认1024）；instance reservation按1M context＋实际cap peak估计，preflight按同cap两次/题，genreview一致，usage越实例cap仍冻结/保留reservation，缺usage不退款。不是增加原USD20上限、换provider/账号/数据或自动retry；新增显式2048开发对比，效果待实际输出。
+
 2026-10-07有限reasoning配置实验：可信Python/开发runner可指定reasoning_effort none/low，默认none保持非thinking；low以thinking enabled+reasoning_effort low发送且省略无效temperature，两模型阶段一致。仍DeepSeek Flash、原端点/合成范围/1024输出cap/保守peak价格/原共享USD20/reservation；仅parse最终content，不用reasoning_content作为claim或原文。错误配置在reserve前拒绝，思考tokens计入供应商completion usage；未知usage保留预留。不是新模型/客户端授权字段，是否采用待实际比较，不因选项存在标通过。
 
 2026-10-07 synthesis-v8诊断：v7已生成有范围的未知，但review错误coverage拒绝，背景仍responsive true。v8仅澄清review coverage语句：未知前提有范围明确回应、原文记录状态及无同实体/范围正面证据可以覆盖所问项，不要求编造positive；同实体其他属性不是所问属性的回答，必要限定须改变该回答解释。supported/responsive/question_covered仍全严格true，未删除quote/权限/whole-answer断言；效果待实际验证，v7失败原件保留。

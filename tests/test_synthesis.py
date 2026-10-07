@@ -125,6 +125,42 @@ class GroundedSynthesis(unittest.TestCase):
         self.assertEqual(self.transport.calls,[])
         self.assertEqual(self.ledger.db.execute('select count(*) from model_calls').fetchone()[0],0)
 
+    def test_expanded_output_cap_is_shared_by_stages_and_pre_reserved(self):
+        from brain.deepseek import CONTEXT_TOKENS
+        model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+            transport=self.transport,today=PRICE_DATE,reasoning_effort='low',output_tokens=2048)
+        result=model.generate_with_authorization('Is GA approved?',[self.evidence],self.rid,lambda _:None)
+        self.assertEqual([p['max_tokens'] for p in self.transport.calls],[2048,2048])
+        expected=cost_upper(CONTEXT_TOKENS,2048)
+        self.assertEqual(model.reservation,expected)
+        self.assertEqual([result[k]['reserved_micro_usd'] for k in ('model_call','model_review')],
+                         [expected,expected])
+
+    def test_invalid_output_cap_rejected_without_budget_or_dispatch(self):
+        for cap in (True,0,1025,4096,'2048',None):
+            with self.subTest(cap=cap),self.assertRaises(ValueError):
+                DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+                    transport=self.transport,today=PRICE_DATE,output_tokens=cap)
+        self.assertEqual(self.transport.calls,[])
+        self.assertEqual(self.ledger.db.execute('select count(*) from model_calls').fetchone()[0],0)
+
+    def test_usage_above_expanded_requested_cap_freezes_without_release_or_review(self):
+        model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+            transport=self.transport,today=PRICE_DATE,reasoning_effort='low',output_tokens=2048)
+        original_send=self.transport._send
+        def send(request):
+            status,response=original_send(request)
+            response['usage'].update(completion_tokens=2049,total_tokens=2149)
+            return status,response
+        self.transport._send=send
+        with self.assertRaises(ModelUnavailable):
+            model.generate_with_authorization('Is GA approved?',[self.evidence],self.rid,lambda _:None)
+        summary=self.ledger.summary()
+        self.assertTrue(summary['blocked_for_review'])
+        self.assertEqual(summary['pending_requests'],1)
+        self.assertEqual(summary['accounted_micro_usd'],model.reservation)
+        self.assertEqual(len(self.transport.calls),1)
+
     def test_ambiguous_passage_keeps_original_subject_in_both_model_stages(self):
         from dataclasses import replace
         evidence=replace(self.evidence,title='Final payment-service postmortem',
