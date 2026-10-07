@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-07有界cap跟进：a3569a1完整24题为21正确事实返回＋2空＋03复核length失败（2048个reasoning tokens，无final）。仅新增可信4096候选档，生成/复核同cap、按实际cap预留和usage上限检查；默认1024保持，未知cap8192等仍拒绝，4097超4096实测mock冻结并保留reservation。原03失败保留、不自动重试；先单题诊断，再据实际结果决定是否形成候选，不预称全通过。原生a3569a1进程仍保持启动时加载的2048配置。
+
 2026-10-07 ADR-058（有界同模型推理诊断）：v7/v8 none/1024的7作者开发题分别6/5返回，03正确未知仍被review拒绝、32冗余仍存在；原记录保留。81dd33e low/1024实际六题正确，一题1024输出全用于reasoning后length无final；73b1e3e新增可信cap1024/2048、两阶段一致预留和usage校验，395回归；low/2048七题本次正确、18137microUSD原预算结算。只读复核不是独立人工或稳定性证明。为形成可检验应用配置，operator允许可信启动low/2048 opt-in并拒绝fake/excerpts滥用，默认none/1024不变；不增加HTTP客户端控制、不改quote/whole-review/权限、不自动retry。native runner同cap动态preflight。回滚可省略两个新flag，无数据/凭据迁移；采用为统一候选需完整当前开发和native证据，不据七题提前完成Goal。
 
 2026-10-07 ADR-057（DEV-BV-02原资源上下文）：当前捕获的D-01正文只说Final root cause，v5传给模型时丢失已鉴权title里的payment-service。3ceb625/v6将原title/locator作为source_context单独送gen/review，明确识别来源事件、context不作指令/quote/权限；SyntheticProvenance已核这两字段一致，新增2a039aa负测试实证篡改在reserve前拒绝。18synthesis/7provenance定向、388＋追加test389 clean archive及五fixture/Node通过。同48世界4开发诊断和全24题均返回，原12/16错误本次未重现，但03未知表达、32无关背景仍open。两native/model题本版本正确，费用按回执4137/22146/5100microUSD，各原件/共享snapshot保留。原quote/parser、预算、温度0/逐阶段权限及whole-answer gate不变；收益只能归本次上下文输入及说明整体，非组件因果或稳定准确率。可还原synthesis.py到64b705a回滚，无schema/凭据/源写入迁移。Goal active，原AUTH/人工/发布边界不扩。

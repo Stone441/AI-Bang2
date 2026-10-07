@@ -86,7 +86,7 @@ class DeepSeekEvidenceModel:
 
     @staticmethod
     def reservation_for(output_tokens):
-        if type(output_tokens) is not int or output_tokens not in (1024, 2048):
+        if type(output_tokens) is not int or output_tokens not in (1024, 2048, 4096):
             raise ValueError('Bounded trusted output token cap required')
         return cost_upper(CONTEXT_TOKENS, output_tokens)
 

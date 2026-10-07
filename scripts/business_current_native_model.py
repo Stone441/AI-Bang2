@@ -88,6 +88,6 @@ if __name__=='__main__':
     parser.add_argument('--output',type=Path,required=True)
     parser.add_argument('--temperature',type=float,choices=[0,1],default=0)
     parser.add_argument('--reasoning-effort',choices=['none','low'],default='none')
-    parser.add_argument('--output-tokens',type=int,choices=[1024,2048],default=1024);args=parser.parse_args()
+    parser.add_argument('--output-tokens',type=int,choices=[1024,2048,4096],default=1024);args=parser.parse_args()
     if not args.live:raise SystemExit('not_run: explicit --live required')
     run(args.output,args.temperature,args.reasoning_effort,args.output_tokens)

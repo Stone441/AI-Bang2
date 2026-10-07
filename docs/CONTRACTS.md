@@ -1,5 +1,7 @@
 # Local contracts v1
 
+2026-10-07有界cap跟进：a3569a1完整24题为21正确事实返回＋2空＋03复核length失败（2048个reasoning tokens，无final）。仅新增可信4096候选档，生成/复核同cap、按实际cap预留和usage上限检查；默认1024保持，未知cap8192等仍拒绝，4097超4096实测mock冻结并保留reservation。原03失败保留、不自动重试；先单题诊断，再据实际结果决定是否形成候选，不预称全通过。原生a3569a1进程仍保持启动时加载的2048配置。
+
 2026-10-07可信operator启动增量：--reasoning-effort none|low、--output-tokens 1024|2048默认none/1024；非默认仅DeepSeek synthesis允许，fake/excerpts在listener/凭据前拒绝。两阶段继承配置。native诊断同参数及actual-cap preflight；HTTP用户不能选择。未重启运行中服务。
 
 2026-10-07有界输出cap实验：low/1024一题全部tokens用于reasoning、finish_reason length无最终内容，原失败不升级。可信Python/runner允许1024或2048（默认1024）；instance reservation按1M context＋实际cap peak估计，preflight按同cap两次/题，genreview一致，usage越实例cap仍冻结/保留reservation，缺usage不退款。不是增加原USD20上限、换provider/账号/数据或自动retry；新增显式2048开发对比，效果待实际输出。
