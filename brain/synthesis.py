@@ -40,7 +40,7 @@ def validate_claim(claim, evidence):
 
 
 class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
-    name = 'deepseek-flash-grounded-synthesis-v3'
+    name = 'deepseek-flash-grounded-synthesis-v4'
     claim_format = 'grounded_synthesis_v1'
     answer_notice = ('Synthesized from current authorized evidence; exact supporting quotes and a separate '
                      'model review were checked. Model review can miss errors; verify important conclusions.')
@@ -62,6 +62,12 @@ class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
              'Each claim must be fully supported by its cited evidence; preserve scope, uncertainty, dates '
              'and contradictory/limiting evidence. Do not turn pilot approval into general availability, '
              'planned work into completion or an intermediate hypothesis into the final cause. '
+             'Treat proposal, approval, completion and withdrawal as separate states: lack of approval '
+             'does not establish rejection, cancellation or abandonment. State only the transition '
+             'the source explicitly records; distinguish what a cited passage establishes from what '
+             'it leaves unknown. If the question does not identify the event, entity or policy, '
+             'give explicitly scoped candidate facts or return an empty claims list; do not choose '
+             'a single unstated referent or inherit one from an earlier question. '
              'Use one quote (12–1200 characters) per citation, at most four citations per claim. '
              'Use only the citations necessary to support that claim. The evidence_ids list MUST '
              'exactly equal the evidence_id values in supports: never list additional relevant IDs '
@@ -114,6 +120,12 @@ class EvidenceReview(DeepSeekEvidenceModel):
              '[{"index":0,"supported":true}]}, exactly one verdict for every supplied claim. '
              'Mark supported true only if the FULL factual claim follows from cited evidence, '
              'including scope, dates, negation and qualifications, with no unsupported inference. '
+             'A proposed or unapproved item is not necessarily rejected, cancelled or withdrawn. '
+             'Require explicit source support for each claimed state transition. A claim scoped to '
+             'what its cited passage establishes may acknowledge an unknown requested outcome; '
+             'that acknowledgement is not proof of the outcome or exhaustive source coverage. '
+             'For an unspecified referent, reject an unconditional single-entity answer; clearly '
+             'scoped candidate facts may be valid without resolving the missing referent. '
              'Reject extraneous background claims that answer no requested part, and cross-event attribution. '
              'Determine the explicit entity, event and scope of each claim and its cited passages first. '
              'Evidence about a different or unspecified event is not contradictory evidence for a named '

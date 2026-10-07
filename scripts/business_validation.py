@@ -143,12 +143,14 @@ def cases(ids):
             for cid,actor,q,required,atoms in data]
 
 
-def run(output, strategy='lexical', noise=0, live_model=False):
+def run(output, strategy='lexical', noise=0, live_model=False, selected_cases=None):
     output.mkdir(parents=True,exist_ok=False)
     started_at=now()
     loaded_hashes={str(p):hashlib.sha256(p.read_bytes()).hexdigest()
                    for p in [Path(__file__),*sorted(Path('brain').glob('*.py'))]}
-    world,ids=build_world(); questions=cases(ids)
+    world,ids=build_world(); questions=cases(ids) if selected_cases is None else selected_cases
+    if not isinstance(questions,list) or not 1<=len(questions)<=24:
+        raise ValueError('Bounded development case list required')
     ledger=model=None;budget_before=None
     if live_model:
         if noise:raise ValueError('Live runs are core only; no paid scale loop')
@@ -238,7 +240,7 @@ def run(output, strategy='lexical', noise=0, live_model=False):
                 'paid_query_cost':'original ledger delta, not invoice' if live_model else 0},
             'core_objects':len(world.resources)-noise,'noise_objects':noise,'retrieval_strategy':strategy,
             'development_questions':len(questions),
-            'held_out':'12 questions retained by read-only reviewer; not consumed here',
+            'held_out':'Not run by this development harness; see separate retained-set records',
             'diagnostic_failures':failures,'results':results,'audit_chain':verify_chain(audit.export()),
             'live_model':'captured_pending_semantic_review' if live_model else 'not_run','native':'not_run','browser':'blocked_saved_site_denial','G1':'not_run','G2':'not_run',
             'quality_semantic_pass':'not_claimed; exact-span probes are not a semantic judge'}
@@ -253,4 +255,7 @@ if __name__ == '__main__':
     parser.add_argument('--strategy',choices=['lexical','bm25'],default='lexical')
     parser.add_argument('--noise',type=int,choices=[0,1000],default=0)
     parser.add_argument('--live-model',action='store_true')
-    args=parser.parse_args();run(args.output,args.strategy,args.noise,args.live_model)
+    parser.add_argument('--cases-file',type=Path)
+    args=parser.parse_args()
+    selected=json.loads(args.cases_file.read_text()) if args.cases_file else None
+    run(args.output,args.strategy,args.noise,args.live_model,selected)

@@ -86,7 +86,9 @@ class Engine:
             candidates.sort(key=lambda pair:(-pair[0],pair[1]['id']))
             # Expand only links from currently authorized seeds. Targets still receive their
             # own local prefilter and final source check below; links never grant access.
-            seed_ids={r['id'] for _,r in candidates}
+            # Only retained candidates are seeds. A weak lexical hit below the
+            # cutoff must still be eligible as an authorized linked target.
+            seed_ids={r['id'] for _,r in candidates[:16]}
             expansions=[]
             for _,seed in candidates[:12]:
                 # This check only authorizes link expansion. Linkless candidates
@@ -193,6 +195,8 @@ class Engine:
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
             if self.audit.request_has_unknown(actor.user_id,rid):
                 response['uncertainties']=['Some source checks could not be completed. These results may omit relevant information; retry before relying on a complete conclusion.']
+            elif not claims and getattr(self.model,'claim_format',None)=='grounded_synthesis_v1':
+                response['uncertainties'].append('If you mean a particular event or policy, name it and its scope so I can check the relevant evidence.')
             if 'model_call' in generation: response['model_call']=generation['model_call']
             if synthesis:
                 response.update(claim_format=generation['claim_format'],model_review=review_receipt,
