@@ -51,7 +51,7 @@ def validate_claim(claim, evidence):
 
 
 class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
-    name = 'deepseek-flash-grounded-synthesis-v9'
+    name = 'deepseek-flash-grounded-synthesis-v10'
     claim_format = 'grounded_synthesis_v1'
     answer_notice = ('Synthesized from current authorized evidence; exact supporting quotes and a separate '
                      'model review were checked. Model review can miss errors; verify important conclusions.')
@@ -62,6 +62,10 @@ class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
              'Return JSON only: {"claims":[{"text":"concise factual conclusion",'
              '"evidence_ids":["supplied ID"],"supports":[{"evidence_id":"same ID",'
              '"quote":"exact contiguous passage copied from that evidence"}]}]}. '
+             'First check whether the question identifies a business entity or event. If it asks about '
+             'one unspecified migration, rule or incident while evidence covers multiple events, '
+             'return {"claims":[]} instead of selecting an event. A plan name alone does not '
+             'identify its business event. Do not use retrieved details to invent the missing referent. '
              'Use at most four claims, each at most 600 characters. Answer the question directly in English. '
              'Use the minimum number of claims needed and STOP when requested parts are covered. '
              'Before writing each claim, identify the explicit requested part it answers or the '
@@ -85,6 +89,9 @@ class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
              'Identify every requested part, allocate claims to cover all supported parts, and combine '
              'overlapping conclusions rather than spending multiple claims on the same point. '
              'Do not replace requested actions or safeguards with background incident history. '
+             'Preserve source modality exactly: permission (can/may), requirement (must), and '
+             'recommendation are distinct. Do not turn permission into a direction, obligation '
+             'or exclusive instruction; do not add only unless the source establishes exclusivity. '
              'Each claim must be fully supported by its cited evidence; preserve scope, uncertainty, dates '
              'and contradictory/limiting evidence. Do not turn pilot approval into general availability, '
              'planned work into completion or an intermediate hypothesis into the final cause. '

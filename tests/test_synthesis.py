@@ -125,6 +125,17 @@ class GroundedSynthesis(unittest.TestCase):
         self.assertEqual(self.transport.calls,[])
         self.assertEqual(self.ledger.db.execute('select count(*) from model_calls').fetchone()[0],0)
 
+    def test_expanded_model_deadline_does_not_relax_native_transport(self):
+        from brain.confluence import JsonTransport
+        from brain.deepseek import ModelTransport
+        for cap, timeout in ((1024,30),(4096,30),(8192,60)):
+            model=DeepSeekSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,
+                today=PRICE_DATE,output_tokens=cap)
+            self.assertEqual(model.transport.timeout,timeout)
+        with self.assertRaises(ValueError): JsonTransport(timeout=60)
+        for timeout in (True,0,31,61):
+            with self.assertRaises(ValueError): ModelTransport(timeout=timeout)
+
     def test_expanded_output_cap_is_shared_by_stages_and_pre_reserved(self):
         from brain.deepseek import CONTEXT_TOKENS
         for cap in (2048,4096,8192):

@@ -77,6 +77,15 @@ def marked_synthetic_text(text, source):
                     for fid in fixtures.get(source, ())))
 
 
+class ModelTransport(JsonTransport):
+    """Bounded provider deadline, separate from native-source transport limits."""
+    def __init__(self, timeout=30):
+        if type(timeout) is not int or timeout not in (30, 60):
+            raise ValueError('Bounded model transport deadline required')
+        super().__init__(timeout=30, max_bytes=100_000)
+        self.timeout = timeout
+
+
 class DeepSeekEvidenceModel:
     name = 'deepseek-flash-evidence-selection-v1'
     answer_notice = 'Live model selected source excerpts; free-form synthesis is not enabled.'
@@ -109,7 +118,7 @@ class DeepSeekEvidenceModel:
             raise ValueError('Invalid model credential')
         self._key, self.ledger = key, ledger
         self._today = lambda: today or datetime.now(ZoneInfo('Asia/Singapore')).date()
-        self.transport = transport or JsonTransport(timeout=30, max_bytes=100_000)
+        self.transport = transport or ModelTransport(timeout=60 if output_tokens == 8192 else 30)
 
     def generate_for_request(self, question, evidence, request_id):
         return self.generate(question, evidence, request_id=request_id)
