@@ -1,0 +1,477 @@
+[
+  {
+    "id": "cause",
+    "actor": "eng_a",
+    "question": "What caused the payment-service duplicate requests?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "D-01"
+    ],
+    "required_claim_spans": [
+      "retry configuration mismatched the timeout budget"
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "withdrawn",
+    "actor": "eng_a",
+    "question": "Which payment-service explanation was withdrawn?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "S-01"
+    ],
+    "required_claim_spans": [
+      "cache hypothesis was withdrawn"
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "followup",
+    "actor": "eng_a",
+    "question": "What is the payment-service safeguard status and owner?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "J-03"
+    ],
+    "required_claim_spans": [
+      "In Progress",
+      "Maya"
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "release",
+    "actor": "product_ops",
+    "question": "Does PAY-102 Done authorize general customer release?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "J-02",
+      "D-02"
+    ],
+    "required_claim_spans": [
+      "Code completion does not approve general customer release",
+      "GA) not approved"
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "no_information",
+    "actor": "eng_a",
+    "question": "unfindablebusinesszebra",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [],
+    "required_claim_spans": [],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "insufficient_evidence",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "restricted",
+    "actor": "product_ops",
+    "question": "CANARY_BV_RESTRICTED",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [],
+    "required_claim_spans": [],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "permission_denial",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_01",
+    "actor": "eng_a",
+    "question": "Why does token rotation preserve sessions?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-01"
+    ],
+    "required_claim_spans": [
+      "Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_02",
+    "actor": "eng_a",
+    "question": "What blocks AUTH-204 and who owns it?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-02"
+    ],
+    "required_claim_spans": [
+      "AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_03",
+    "actor": "eng_a",
+    "question": "Which authentication signing proposal was rejected?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-18"
+    ],
+    "required_claim_spans": [
+      "The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_04",
+    "actor": "eng_a",
+    "question": "Does enterprise SSO cutover include contractors?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-04"
+    ],
+    "required_claim_spans": [
+      "Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_05",
+    "actor": "eng_a",
+    "question": "As of 2026-10-07, before November, how long do service tokens last?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-05"
+    ],
+    "required_claim_spans": [
+      "Beginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_06",
+    "actor": "product_ops",
+    "question": "Can the Atlas connector serve personal Singapore SGD accounts?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-06"
+    ],
+    "required_claim_spans": [
+      "The Atlas connector supports Singapore business SGD accounts, not personal accounts."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_07",
+    "actor": "product_ops",
+    "question": "Does SGD connector approval cover business USD accounts?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-07"
+    ],
+    "required_claim_spans": [
+      "Singapore business USD accounts require a separate connector approval; SGD approval does not include USD."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_08",
+    "actor": "product_ops",
+    "question": "How does partner onboarding differ from direct onboarding?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-08"
+    ],
+    "required_claim_spans": [
+      "Partner-led onboarding requires manual verification; direct onboarding supports automated verification."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_09",
+    "actor": "product_ops",
+    "question": "Does INT-210 Done mean commercial launch is approved?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-09"
+    ],
+    "required_claim_spans": [
+      "INT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_11",
+    "actor": "eng_a",
+    "question": "Why did ledger migration select a shadow table?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-11"
+    ],
+    "required_claim_spans": [
+      "Ledger migration chose a shadow table to allow rollback without blocking existing writes."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_12",
+    "actor": "eng_a",
+    "question": "Who owns MIG-301 and what is still blocking cutover?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-12"
+    ],
+    "required_claim_spans": [
+      "MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_13",
+    "actor": "eng_a",
+    "question": "When should the ledger migration be rolled back?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-13"
+    ],
+    "required_claim_spans": [
+      "Roll back the ledger migration if settlement differences exceed five basis points."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_16",
+    "actor": "eng_a",
+    "question": "Was DNS the cause of the webhook backlog?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-16"
+    ],
+    "required_claim_spans": [
+      "The webhook backlog came from an exhausted worker pool, not DNS resolution."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_17",
+    "actor": "eng_a",
+    "question": "Which webhook safeguard is still in progress and who owns it?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-17"
+    ],
+    "required_claim_spans": [
+      "HOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_21",
+    "actor": "eng_a",
+    "question": "Who owns reconciliation exceptions versus ingestion failures?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-21"
+    ],
+    "required_claim_spans": [
+      "Mina owns reconciliation exceptions; the platform team owns ingestion failures."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_22",
+    "actor": "product_ops",
+    "question": "What is the current Singapore weekday reconciliation deadline?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-22"
+    ],
+    "required_claim_spans": [
+      "For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_31",
+    "actor": "product_ops",
+    "question": "Is same-day settlement approved for MYR accounts?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-31"
+    ],
+    "required_claim_spans": [
+      "Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  },
+  {
+    "id": "business_32",
+    "actor": "product_ops",
+    "question": "Can we promise the November hourly settlement schedule?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "explicit scope in question; no automatic previous question",
+    "required_evidence": [
+      "BV-32"
+    ],
+    "required_claim_spans": [
+      "The proposed November hourly schedule is not approved. Current settlement is daily."
+    ],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "oracle_kind": "author-defined exact facts for excerpt coverage; not semantic judge"
+  }
+]

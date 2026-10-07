@@ -1,0 +1,76 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and its owner is Lena.",
+        "evidence_ids": [
+          "BV-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-02@1",
+            "quote": "AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "08de7d86-c36e-4946-ad98-1abd2a8b4918",
+      "object": "chat.completion",
+      "created": 1791375355,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and its owner is Lena.\",\"evidence_ids\":[\"BV-02@1\"],\"supports\":[{\"evidence_id\":\"BV-02@1\",\"quote\":\"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\"}]}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 721,
+        "completion_tokens": 75,
+        "total_tokens": 796,
+        "prompt_tokens_details": {
+          "cached_tokens": 384
+        },
+        "prompt_cache_hit_tokens": 384,
+        "prompt_cache_miss_tokens": 337
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "e8b9fc57-a211-42ce-8b5f-c9c8f499f5b1",
+      "object": "chat.completion",
+      "created": 1791375356,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true}]}"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 711,
+        "completion_tokens": 21,
+        "total_tokens": 732,
+        "prompt_tokens_details": {
+          "cached_tokens": 256
+        },
+        "prompt_cache_hit_tokens": 256,
+        "prompt_cache_miss_tokens": 455
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

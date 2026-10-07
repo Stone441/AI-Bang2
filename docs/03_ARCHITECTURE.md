@@ -1,6 +1,8 @@
 # 架构基线、信任边界与实现契约
 
-2026-10-07 as-is优先：331bd28为SQLite＋词法/固定字符窗口＋原生逐阶段授权＋可选DeepSeek生成/review；非下方早期pgvector/FastAPI推荐栈。BV实验依次对比A现有词法、B全文/BM25及原文章节上下文；C语义召回须有批准provider/本地依赖，否则blocked。引用原文与检索上下文分离，resource/version/security scope不变；重大选择记DECISIONS，不预填embedding上线。
+2026-10-07 as-is补充：当前3ceb625采用SQLite、CPU binary-TF BM25及原文固定窗口，无embedding/向量库/语义检索/专门重排；synthesis-v6把授权Evidence的原title/locator单独source_context交gen/review，精确text不改；原合成来源核对包含context一致性，title不能替代引文或grant权限。当前实现/模式/不足见STATUS，非新增语义检索或重排。
+
+2026-10-07历史基线：331bd28为SQLite＋词法/固定字符窗口＋原生逐阶段授权＋可选DeepSeek生成/review；非下方早期pgvector/FastAPI推荐栈。BV实验依次对比A现有词法、B全文/BM25及原文章节上下文；C语义召回须有批准provider/本地依赖，否则blocked。引用原文与检索上下文分离，resource/version/security scope不变；重大选择记DECISIONS，不预填embedding上线。
 
 
 > 状态：**拟议架构，尚无运行验证。** Codex应在首阶段依据实际API、开发环境和测试证据收敛；普通实现细节可自行调整，放宽权限、审计或对外承诺须人确认。  
