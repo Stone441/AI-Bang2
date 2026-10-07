@@ -1,5 +1,7 @@
 # 安装、启动、测试与演示
 
+2026-10-07最新局部结果：固定代码2a73bd0，380 clean archive/同48世界五fixture/两Node通过；当前eng_b两题native＋真实模型经只读复核5claims/28windows/四阶段当前allow/四usage与账本3207microUSD增量一致。配对272事件签名副本及混合208事件oracle另列local。全persona、故障live、四源native删除/新鲜度SLA、native正文关联、Docs支持未完成；browser saved site denial blocked，human业务判断/ROI/G1/G2 not_run。旧f8ecbed保留题失败及AUTH019延期保留，不从四开发题改称通过。完整证据见business-validation-20261007，旧版本表保持历史。
+
 2026-10-07业务增强候选实现f8ecbed：373 clean archive/五fixture/2Node/HTTP通过；binary-TF BM25、表格cell关系、资源方向审计、有界后台查询及版本反证停答已实现。四源AUTH-021新probe和两次修正native API/fake当前16断言通过，加载hash匹配候选；query约43–58秒，非SLA。12保留题冻结后一次live评测及只读语义审查已完成，具体见business-validation-20261007/heldout-review.json：有明确正确答案和safe unsupported，也有歧义/状态误答、部分答案和来源故障告知不足，不能称质量全通过；两项AUTH-019原延期不覆盖这些新失败。当前native/模型签名副本分别核验，同机测试key非独立custody；产品browser仍saved site denial blocked，49161停止、8094/8100不动；G1/G2、人类任务/ROI及发布提交not_run。Goal active，新增工程缺口仍由Codex继续负责。最新本地候选c825143非后台unknown通用修复有17定向、377 clean archive/五fixture/2Node/HTTP及只读复审通过；它尚未形成新native/live/browser结果，不能继承f8ecbed两题实际运行。
 
 新增只读/隔离命令（每次新目录，勿覆盖历史）：`python3 -m scripts.business_native_changes --live --root evidence/runs/business-validation-20261007/native-change-owner --phase amber-return --capture-name <new-label> --background`；当前源码回归`python3 -m scripts.rebuild_acceptance --ref f8ecbed --output <new-directory>`。native model使用`python3 -m scripts.business_current_native_model --live --output <new-directory>`，先真实model_readiness/原账本，复用原AUTH与Keychain，不启动HTTP/源写入/新费用范围。保留题已消费，不再作为未见题重复调参。上传file URL许可只用于owner三版本上传，已完成，用户可关闭；不自动修改设置。

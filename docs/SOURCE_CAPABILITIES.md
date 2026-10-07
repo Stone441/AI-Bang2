@@ -1,5 +1,7 @@
 # Source capability ledger
 
+2026-10-07 Google Docs可行性核对（非实现/新格式授权）：现有drive.readonly在官方[files.export](https://developers.google.com/workspace/drive/api/reference/rest/v3/files/export)允许导出，Docs可输出[text/plain](https://developers.google.com/workspace/drive/api/guides/ref-export-formats)，导出上限10MB。当前reader只支持已批准UTF-8 text/plain blob，未实现Docs导出、格式规范化、导出前后version一致性或旧版本证据定位；scope可调用不等于任意文件/格式已获业务授权。本轮无Docs创建/读取或新增API启用，现有native probe仍text/plain；Docs标unsupported，后续按具体格式/资源范围决定。
+
 2026-10-04：仅核对官方文档，没有使用任何凭据，没有真实平台 API 调用。四源均 `fixture_only`，live 验收 `blocked`（账号、数据/scope 授权待定）。fixture 策略用于测试原生差异，不是平台 ACL 的完整复制。
 
 | Source | 本地策略覆盖 | 真实权限方案 / 待实测 |

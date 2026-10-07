@@ -1,0 +1,110 @@
+{
+  "request_id": "4b890cb95fbf489584f9d1cdf1a138f4",
+  "question": "Which architecture option was withdrawn?",
+  "answered_at": "2026-10-07T11:14:18.194637+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v4",
+  "claims": [
+    {
+      "text": "The shared-secret proposal was withdrawn; per-client asymmetric signing was accepted.",
+      "evidence_ids": [
+        "BV-18@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "BV-18@1",
+          "quote": "The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-18@1",
+      "resource_id": "BV-18",
+      "version": 1,
+      "source": "slack",
+      "title": "Authentication signing design reply",
+      "locator": {
+        "channel": "synthetic-auth",
+        "message": "BV-18",
+        "root": "BV-03"
+      },
+      "text": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:14:15.163302+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-18"
+    },
+    {
+      "evidence_id": "S-01@1",
+      "resource_id": "S-01",
+      "version": 1,
+      "source": "slack",
+      "title": "Private incident discussion",
+      "locator": {
+        "channel": "incident",
+        "messages": [
+          "1790816400.000001",
+          "1790817300.000001",
+          "1790820000.000001"
+        ],
+        "thread": "1790816400.000001"
+      },
+      "text": "[SYNTHETIC]\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T11:14:15.162470+00:00",
+      "source_url": "fixture://synthetic-demo/slack/S-01"
+    },
+    {
+      "evidence_id": "D-01@1",
+      "resource_id": "D-01",
+      "version": 1,
+      "source": "drive",
+      "title": "Final payment-service postmortem",
+      "locator": {
+        "paragraph": 1,
+        "section": "Confirmed root cause"
+      },
+      "text": "[SYNTHETIC]\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T11:14:15.162557+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-01"
+    }
+  ],
+  "actor": "eng_a",
+  "model_call": {
+    "query_id": "4b890cb95fbf489584f9d1cdf1a138f4",
+    "model": "deepseek-flash",
+    "reservation_id": "d5e7b4aa52ea4110a086fafe5ff21fcd",
+    "prompt_tokens": 632,
+    "completion_tokens": 66,
+    "total_tokens": 698,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 269,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "4b890cb95fbf489584f9d1cdf1a138f4",
+    "model": "deepseek-flash",
+    "reservation_id": "f0ffd3a86fd147928a1ac18c732410ce",
+    "prompt_tokens": 664,
+    "completion_tokens": 21,
+    "total_tokens": 685,
+    "reserved_micro_usd": 315802,
+    "accounted_upper_micro_usd": 225,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

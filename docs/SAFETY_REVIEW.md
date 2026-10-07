@@ -1,5 +1,15 @@
 # Team safety review and submission checks
 
+2026-10-07 BV-05仅准备的3×4任务卡，全部human not_run；不要求用户现在操作，不发送邀请。浏览器saved site denial解除并核候选服务授权后，开发者操作，团队只判断答案/交互；每人记录人工查源与候选的用时、正确/错误事实、拒答是否合理及引用是否足够，不能从Agent模拟推ROI。采用交错顺序避免全部先看答案：A先手工后候选，B相反，C交替。
+
+| 人员 | 四项业务任务（同48对象fixture，非native/live现场） | 记录 |
+|---|---|---|
+| A 工程 | 事故最终原因；撤回假设；follow-up owner/status；最新版runbook | 各次开始/结束、答案/来源错误、查证能否完成 |
+| B 产品 | payment-retry适用范围；Done是否批准GA；确认发布日期；提案审批与取消区别 | 各次开始/结束、范围/状态错误、是否需要澄清 |
+| C 安全/使用 | 允许问题与受限问题对照；无证据问题；同会话撤权后旧引用/历史；按人/资料查看审计 | 可见内容、拒答可理解性、旧内容是否仍可见、是否能还原操作 |
+
+这些题卡不充当盲测集；底层实现、撤权注入和日志验证由开发者负责。若以后改为native/live model，分别核具体身份/服务/模型readiness/原预算并记录模式，不能沿用fixture结果。
+
 2026-10-07业务增强候选实现f8ecbed：373 clean archive/五fixture/2Node/HTTP通过；binary-TF BM25、表格cell关系、资源方向审计、有界后台查询及版本反证停答已实现。四源AUTH-021新probe和两次修正native API/fake当前16断言通过，加载hash匹配候选；query约43–58秒，非SLA。12保留题冻结后一次live评测及只读语义审查已完成，具体见business-validation-20261007/heldout-review.json：有明确正确答案和safe unsupported，也有歧义/状态误答、部分答案和来源故障告知不足，不能称质量全通过；两项AUTH-019原延期不覆盖这些新失败。当前native/模型签名副本分别核验，同机测试key非独立custody；产品browser仍saved site denial blocked，49161停止、8094/8100不动；G1/G2、人类任务/ROI及发布提交not_run。Goal active，新增工程缺口仍由Codex继续负责。最新本地候选c825143非后台unknown通用修复有17定向、377 clean archive/五fixture/2Node/HTTP及只读复审通过；它尚未形成新native/live/browser结果，不能继承f8ecbed两题实际运行。
 
 2026-10-06 integrated worktree: R5 source preview links, question/time history and collapsed diagnostics have local DOM/HTTP evidence. R3 frozen variants evaluate final claims/supports/omissions separately from evidence recall; long-event review/relevance failures remain explicitly failed/partial, with user-approved deferral to this consolidated team review. Current source/commit/mode and browser permission are recorded in STATUS and ACCEPTANCE_STATUS. R3A/R4 team viewing is not a prerequisite for other local development.

@@ -1,5 +1,10 @@
 # Decisions / ADR
 
+2026-10-07 ADR-052（DEV-BV-02关联cutoff）：复现1048对象下J-03虽有弱词匹配却在保留16项之外，旧全部候选seed集合误阻止D-01原有链接扩展。仅将去重集合限制为保留16项，保持12种子/8扩展/24窗口及各阶段目标鉴权；不改原文、添加问题关键词或继承历史。相同资料/24题1000压力BM25的J-03诊断关闭，lexical对照仍漏，非整体质量通过；3新增撤权/原文测试、380完整fixture/mock通过。原生链接解析仍未实现，不能将fixture链接结果称为native一跳能力。
+
+2026-10-07 ADR-053（DEV-BV-02状态/歧义）：synthesis-v4通用区分提案、审批、完成与撤回；未批准不意味着取消，指代未明确时只能给有范围的候选事实或空claims。review保持整答gate、精确quote及全部verdict/coverage断言；空claims加通用范围澄清提示，不引入历史继承。4独立开发问题实际v3/v4比较，资料/问题/输入保持相同，engine及prompt变化均保留hash；v3首题正确受限草稿被review拒绝，v4四题返回正确受限或有范围事实，单次开发诊断非稳定质量率。费用3833+4004microUSD，原账本累计99483，不清预算。f8ecbed保留题不重跑/不调成通过，AUTH-019延期不变；当前新版native/live全矩阵仍需另证。
+
+
 2026-10-07 ADR-051（DEV-BV-03 legacy completeness）：为补齐已识别的非后台来源故障断点，按actor/request参数化读取当前unknown记录。真实synthesis首次发送前发现unknown则零调用；review/最终提交前新unknown停止后续阶段，不抹去已有attempt/usage/费用。fake仅保留允许摘录并显示通用coverage不完整提示，不泄露源名/隐藏对象/计数；ACL deny仍过滤，preview/history不可用语义不变。17定向/377完整fixture/mock及只读复审通过；不是重开AUTH-019或按保留题调f8ecbed，新native/live模型证据不继承。回退f8ecbed可恢复旧行为，旧证据保留。
 
 2026-10-07 ADR-050（DEV-BV-03 有界查询）：仅可信operator的AUTH-017后台模式启用bounded_queries；活跃worker最新四源cycle完整/无backlog且进程内发布距今不超过120秒，同tenant/actor/resource/version候选可用本地snapshot，不把它称为当前allow。选中资料仍有before_model/model_dispatch/review/before_dispatch及preview/history native复查；同一请求同阶段的resource/version多个窗口共享一次native check，阶段间不共享allow，每个窗口仍核对版本；unknown及明确content/version-changed deny停止整答，防止漏掉新版反证后仍回答；真实ACL deny仍过滤，旧preview/history仍返回不可用。worker失败、积压、过期或停止明确503，不将缺可能改变结论的源当知识不足。进程重启必须重新发布，DB checkpoint不恢复trusted snapshot。旧库默认显式逐问刷新保留；HTTP统一pilot.lock→store.lock顺序，避免发布与HTTP锁反转。120秒是保守运行有效性阈值，不是freshness/SLA；100对象/page上限及全局锁仍限制规模。无旧服务重启。

@@ -1,8 +1,13 @@
 # Backlog · 2026-10-05
 
+2026-10-07当前：2a73bd0 clean archive380/同48世界五fixture/两Node、新版native/live两题及配对签名完成；新故障路径仍仅local/mock证明，native完整新鲜度/多persona/Docs/native关系解析未完成。BV-05浏览器和human/ROI not_run；BV-06材料有本地title/blurb/description/16:9封面草稿，统一范围审计待完成。性能两题含preview约119/128秒，不能称实时/半小时SLA已证。其余条目为各阶段历史，顶部事实优先。
+
+2026-10-07增量接续：BV-02关联cutoff verified local（380回归/1000干扰同世界比较），状态/歧义v4有4题live开发诊断；旧f8ecbed保留题失败维持failed，不宣称已修复。BV-03新版unknown修复已本地验证；2a73bd0 clean archive380/同世界五fixture/两Node已通过；下一native/model读回、配对审计。BV-06同48世界五fixture已实际运行，16:9本地封面草稿已渲染检查；材料及当前版本模式对齐仍in_progress。BV-05 browser saved denial blocked、真人业务判断/ROI not_run；不安排用户现在操作。
+
+
 2026-10-07新工程open：BV-03 legacy/fixture real-model来源unknown通用修复verified local（17定向/377 clean archive/五fixture/2Node/HTTP与只读审查，新native/live not_run）；BV-02 未批准≠已放弃及歧义单答案误答，1000压力J-03漏召回。保留集已消费，不据其调固定f8ecbed或冒称新盲测；后续修复须独立开发复现与新版本验证。这些并非外部授权blocked或AUTH-019新增延期。BV-04当前native/live副本配对签名已完成，独立custody仍not_run；BV-05人工3×4任务/ROI及browser未执行。
 
-2026-10-07当前BV：00 verified local；01 48对象/24开发题/1000压力基线已运行，保留12题未消费；02 本地lexical/BM25与single live A/B已运行，B试用默认，1000集J-03漏召回仍open；03 四源AUTH-021新probe及两次修正native API/fake subset verified，cached反证/故障和HTTP锁修复local，性能/固定新版仍待验证；04 资源方向审计local已实现，当前签名回放待做；05 browser saved denial blocked、人任务not_run；06 f8ecbed固定实现与clean archive373/五fixture/Node/HTTP已通过，保留集/当前native与配对证据尚待完成。AUTH-019保留，旧331bd28可回退。
+历史阶段快照（由顶部当前记录覆盖）：2026-10-07当前BV：00 verified local；01 48对象/24开发题/1000压力基线已运行，保留12题未消费；02 本地lexical/BM25与single live A/B已运行，B试用默认，1000集J-03漏召回仍open；03 四源AUTH-021新probe及两次修正native API/fake subset verified，cached反证/故障和HTTP锁修复local，性能/固定新版仍待验证；04 资源方向审计local已实现，当前签名回放待做；05 browser saved denial blocked、人任务not_run；06 f8ecbed固定实现与clean archive373/五fixture/Node/HTTP已通过，保留集/当前native与配对证据尚待完成。AUTH-019保留，旧331bd28可回退。
 
 
 ## 当前任务 · 2026-10-06

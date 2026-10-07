@@ -1,0 +1,76 @@
+[
+  {
+    "id": "state_dev_01",
+    "actor": "eng_a",
+    "question": "Is the proposed dual-region active-writes migration approved, and does its status establish that the plan was cancelled?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "Explicit question scope; no history inheritance",
+    "required_evidence": [
+      "BV-15"
+    ],
+    "required_claim_spans": [],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "semantic_oracle": "Not approved; no explicit cancellation established. Do not infer withdrawal from missing approval.",
+    "oracle_kind": "developer-authored diagnostic, not unseen benchmark"
+  },
+  {
+    "id": "state_dev_02",
+    "actor": "eng_a",
+    "question": "Which architecture option was withdrawn?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "Explicit question scope; no history inheritance",
+    "required_evidence": [],
+    "required_claim_spans": [],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "clarify_or_scoped_answer",
+    "semantic_oracle": "Architecture option lacks identity. Ask for scope or separate named authentication/ledger candidates without equating unapproved with withdrawn.",
+    "oracle_kind": "developer-authored diagnostic, not unseen benchmark"
+  },
+  {
+    "id": "state_dev_03",
+    "actor": "eng_a",
+    "question": "For authentication signing, what proposal was withdrawn and what replaced it?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "Explicit question scope; no history inheritance",
+    "required_evidence": [
+      "BV-18"
+    ],
+    "required_claim_spans": [],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "semantic_oracle": "Shared-secret signing withdrawn; asymmetric accepted. Named event must stay in scope.",
+    "oracle_kind": "developer-authored diagnostic, not unseen benchmark"
+  },
+  {
+    "id": "state_dev_04",
+    "actor": "eng_a",
+    "question": "What is the approval status of the dual-region active-writes proposal?",
+    "question_time": "2026-10-07T12:00:00+08:00",
+    "scope": "Explicit question scope; no history inheritance",
+    "required_evidence": [
+      "BV-15"
+    ],
+    "required_claim_spans": [],
+    "forbidden_evidence": [
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "expected_behavior": "answer",
+    "semantic_oracle": "Proposed but not approved; accepted migration uses one writer. No invented rejection/cancellation.",
+    "oracle_kind": "developer-authored diagnostic, not unseen benchmark"
+  }
+]

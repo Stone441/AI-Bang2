@@ -1,0 +1,243 @@
+{
+  "request_id": "59fa8e8efaa8463fbc375ad0d79fa1a8",
+  "question": "As of 2026-10-07, before November, how long do service tokens last?",
+  "answered_at": "2026-10-07T11:03:41.580333+00:00",
+  "mode": "fixture_fake_model",
+  "model": "fake-extractive-v1",
+  "claims": [
+    {
+      "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+      "evidence_ids": [
+        "BV-05@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nThe proposed November hourly schedule is not approved. Current settlement is daily.",
+      "evidence_ids": [
+        "BV-32@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+      "evidence_ids": [
+        "BV-30@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+      "evidence_ids": [
+        "BV-19@1"
+      ]
+    },
+    {
+      "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "evidence_ids": [
+        "BV-02@1"
+      ]
+    },
+    {
+      "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+      "evidence_ids": [
+        "J-01@1"
+      ]
+    },
+    {
+      "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+      "evidence_ids": [
+        "C-01@1"
+      ]
+    },
+    {
+      "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "evidence_ids": [
+        "D-01@1"
+      ]
+    },
+    {
+      "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "evidence_ids": [
+        "S-01@1"
+      ]
+    },
+    {
+      "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "evidence_ids": [
+        "J-02@1"
+      ]
+    },
+    {
+      "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+      "evidence_ids": [
+        "J-03@1"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Source excerpts only; live AI synthesis is not enabled."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "BV-05@1",
+      "resource_id": "BV-05",
+      "version": 1,
+      "source": "confluence",
+      "title": "authentication / Future policy",
+      "locator": {
+        "section": "Future policy"
+      },
+      "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.252289+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-05"
+    },
+    {
+      "evidence_id": "BV-32@1",
+      "resource_id": "BV-32",
+      "version": 1,
+      "source": "drive",
+      "title": "settlement / Future settlement schedule",
+      "locator": {
+        "section": "Future settlement schedule"
+      },
+      "text": "[SYNTHETIC]\nThe proposed November hourly schedule is not approved. Current settlement is daily.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.253122+00:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-32"
+    },
+    {
+      "evidence_id": "BV-30@1",
+      "resource_id": "BV-30",
+      "version": 1,
+      "source": "jira",
+      "title": "access / Unknown authority",
+      "locator": {
+        "section": "Unknown authority"
+      },
+      "text": "[SYNTHETIC]\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.253073+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-30"
+    },
+    {
+      "evidence_id": "BV-19@1",
+      "resource_id": "BV-19",
+      "version": 1,
+      "source": "slack",
+      "title": "webhook / Current response procedure",
+      "locator": {
+        "section": "Current response procedure"
+      },
+      "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.252783+00:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-19"
+    },
+    {
+      "evidence_id": "BV-02@1",
+      "resource_id": "BV-02",
+      "version": 1,
+      "source": "jira",
+      "title": "authentication / Migration blocker",
+      "locator": {
+        "section": "Migration blocker"
+      },
+      "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.252213+00:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-02"
+    },
+    {
+      "evidence_id": "J-01@1",
+      "resource_id": "J-01",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-101 Payment-service incident",
+      "locator": {
+        "field": "description"
+      },
+      "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.251915+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-01"
+    },
+    {
+      "evidence_id": "C-01@1",
+      "resource_id": "C-01",
+      "version": 1,
+      "source": "confluence",
+      "title": "Payment-service runbook",
+      "locator": {
+        "paragraph": 1,
+        "section": "Failover procedure"
+      },
+      "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.251775+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-01"
+    },
+    {
+      "evidence_id": "D-01@1",
+      "resource_id": "D-01",
+      "version": 1,
+      "source": "drive",
+      "title": "Final payment-service postmortem",
+      "locator": {
+        "paragraph": 1,
+        "section": "Confirmed root cause"
+      },
+      "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.252083+00:00",
+      "source_url": "fixture://synthetic-demo/drive/D-01"
+    },
+    {
+      "evidence_id": "S-01@1",
+      "resource_id": "S-01",
+      "version": 1,
+      "source": "slack",
+      "title": "Private incident discussion",
+      "locator": {
+        "channel": "incident",
+        "messages": [
+          "1790816400.000001",
+          "1790817300.000001",
+          "1790820000.000001"
+        ],
+        "thread": "1790816400.000001"
+      },
+      "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.251996+00:00",
+      "source_url": "fixture://synthetic-demo/slack/S-01"
+    },
+    {
+      "evidence_id": "J-02@1",
+      "resource_id": "J-02",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-102 Retry configuration fix",
+      "locator": {
+        "field": "status and description"
+      },
+      "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.251942+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-02"
+    },
+    {
+      "evidence_id": "J-03@1",
+      "resource_id": "J-03",
+      "version": 1,
+      "source": "jira",
+      "title": "PAY-103 Protective measures",
+      "locator": {
+        "field": "status and assignee"
+      },
+      "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-07T11:03:41.251971+00:00",
+      "source_url": "fixture://synthetic-demo/jira/J-03"
+    }
+  ],
+  "actor": "eng_a"
+}

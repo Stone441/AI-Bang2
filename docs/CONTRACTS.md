@@ -1,5 +1,8 @@
 # Local contracts v1
 
+2026-10-07 synthesis-v4：提案、审批、完成和撤回分别要求明确支持；非审批不推出取消/放弃。无明确问题指代时允许有范围候选事实或空claims，空claims可加通用范围澄清提示。现有结构、精确引用验证、逐阶段权限及整答review gate不变；模型review不能证明语义正确。
+
+
 2026-10-07 DEV-BV-03 source fault completeness: unknown source authorization in this actor/request (including legacy preparation) stops the next synthesis/review dispatch or final commit. Unknown found before the first send means zero model calls; unknown found after generation/review does not erase prior attempts or charges. Fixture extractive diagnostics may retain allowed excerpts, but return a generic incomplete-coverage notice instead of implying verified absence. No source names, hidden objects, counts or paths are disclosed; audit still retains the original decisions. This extends completeness handling without changing ACL deny filtering or model review acceptance.
 
 2026-10-07 DEV-BV-03 bounded publication: published candidate snapshot never grants current permission. Current native unknown or explicit content/version-changed denial stops the question before sending or committing an answer. ACL denial filters inaccessible candidates. Preview/history retain unavailable semantics; only a fresh complete publication makes the new content eligible. Same-request same-stage resource/version windows share one check; separate model/review/answer stages always reauthorize. No client flags or old checkpoint authorize this path.

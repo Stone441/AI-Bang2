@@ -1,0 +1,55 @@
+{
+  "mode": "fixture_sources_live_model_synthesis_development",
+  "not_blind": true,
+  "before": "state-dev-v3-before",
+  "after": "state-dev-v4-after",
+  "source_bytes_and_questions": "same; see captured world/development-cases hashes",
+  "changes": "engine generic empty-claims clarification and synthesis-v4 generation/review prompts; not prompt-only",
+  "review": "developer read actual claims/drafts; prior authorized readonly Agent reviewed identical records",
+  "cases": [
+    {
+      "case": "state_dev_01",
+      "before_claims": [],
+      "after_claims": [
+        "The proposed dual-region active-writes migration was not approved; the accepted migration uses one writer. The evidence does not state that the dual-region proposal was cancelled or otherwise formally terminated, so its non-approval does not establish cancellation."
+      ],
+      "assessment": "Correct limited draft was rejected before; correctly qualified nonapproval/cancellation distinction returned after."
+    },
+    {
+      "case": "state_dev_02",
+      "before_claims": [
+        "The shared-secret proposal was the architecture option withdrawn; per-client asymmetric signing was accepted."
+      ],
+      "after_claims": [
+        "The shared-secret proposal was withdrawn; per-client asymmetric signing was accepted."
+      ],
+      "assessment": "Before chose implicit single architecture referent; after states candidate shared-secret fact, but explicit authentication scope or clarification would be clearer."
+    },
+    {
+      "case": "state_dev_03",
+      "before_claims": [
+        "For authentication signing, the shared-secret proposal was withdrawn and replaced by per-client asymmetric signing, which was accepted."
+      ],
+      "after_claims": [
+        "For authentication signing, the shared-secret proposal was withdrawn, and per-client asymmetric signing was accepted."
+      ],
+      "assessment": "Correct before/after; after removes unnecessary background support."
+    },
+    {
+      "case": "state_dev_04",
+      "before_claims": [
+        "The dual-region active-writes proposal was proposed but not approved; the accepted migration uses one writer."
+      ],
+      "after_claims": [
+        "The dual-region active-writes proposal was proposed but not approved; the accepted migration uses one writer."
+      ],
+      "assessment": "Correct nonapproval distinction before/after."
+    }
+  ],
+  "limits": [
+    "Single run of four development questions; not stable quality rate.",
+    "Original f8ecbed heldout failures remain original failures; retained set not rerun.",
+    "No AUTH-019 reopening or review-gate relaxation."
+  ],
+  "budget_delta_micro_usd": 7837
+}
