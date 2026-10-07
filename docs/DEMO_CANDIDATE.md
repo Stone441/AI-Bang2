@@ -1,5 +1,7 @@
 # Demonstration candidate and remaining acceptance
 
+2026-10-07业务增强候选实现f8ecbed：373 clean archive/五fixture/2Node/HTTP通过；binary-TF BM25、表格cell关系、资源方向审计、有界后台查询及版本反证停答已实现。四源AUTH-021新probe和两次修正native API/fake当前16断言通过，加载hash匹配候选；query约43–58秒，非SLA。12保留题冻结后一次live评测及只读语义审查已完成，具体见business-validation-20261007/heldout-review.json：有明确正确答案和safe unsupported，也有歧义/状态误答、部分答案和来源故障告知不足，不能称质量全通过；两项AUTH-019原延期不覆盖这些新失败。当前native/模型签名副本分别核验，同机测试key非独立custody；产品browser仍saved site denial blocked，49161停止、8094/8100不动；G1/G2、人类任务/ROI及发布提交not_run。Goal active，新增工程缺口仍由Codex继续负责。非后台unknown的通用修复另有17定向/377完整fixture/mock及只读复审通过；它尚未形成新native/live/browser结果，不能继承f8ecbed两题实际运行。
+
 ## 精简验收准备 · 2026-10-06
 
 候选保持不变。本次只核对/整理文档，不启动服务、不调用源API或付费模型。`331bd28`→`6d79ed2`的155个变更路径全部属于docs（8个）或本轮evidence（147个），实现、测试、fixture、配置与构建文件无差异。357项/17.406s、五fixture场景、两Node及HTTP结果明确对应[331bd28干净归档](../evidence/runs/review-integrated-20261006/rebuild-scope-current/verification.json)。6d79ed2是状态/证据提交，不需要因该提交补实现回归；不能把这等同于新浏览器或完整native/live model验收。模型/native各轮仍按原记录的基准commit和实际工作树hash解释，不改写成331bd28新执行。

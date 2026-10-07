@@ -42,6 +42,10 @@ class Engine:
                           {'resource_id':resource['id'],'source':resource['source'],'version':resource['version'],
                            'phase':phase,'resource_scope':'payment-service',**asdict(decision)})
         discovery=getattr(self.world,'discovery',None)
+        if (decision.result=='unknown' and phase!='preview'
+                and getattr(self.model,'claim_format',None)=='grounded_synthesis_v1'):
+            from .confluence import SourceUnavailable
+            raise SourceUnavailable('Current source coverage unavailable; retry later')
         content_changed=(decision.result=='deny' and decision.method in {
             source+'-'+change for source in ('confluence','jira','slack','drive')
             for change in ('content-changed','version-changed')})
@@ -61,6 +65,10 @@ class Engine:
         try:
             if hasattr(self.world, 'prepare'):
                 self.world.prepare(actor,self.store,self.audit,rid)
+            if (getattr(self.model,'claim_format',None)=='grounded_synthesis_v1'
+                    and self.audit.request_has_unknown(actor.user_id,rid)):
+                from .confluence import SourceUnavailable
+                raise SourceUnavailable('Current source coverage unavailable; retry later')
             query_tokens=tokens(question)
             visible=[r for r in self.store.resources()
                      if r['tenant']==actor.tenant and self.prefilter(actor,r)]
@@ -183,6 +191,8 @@ class Engine:
             response={'request_id':rid,'question':question,'answered_at':now(),'mode':self.mode,'model':self.model.name,'claims':claims,
                       'uncertainties':[getattr(self.model,'answer_notice','Source excerpts only; live AI synthesis is not enabled.')] if claims else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
+            if self.audit.request_has_unknown(actor.user_id,rid):
+                response['uncertainties']=['Some source checks could not be completed. These results may omit relevant information; retry before relying on a complete conclusion.']
             if 'model_call' in generation: response['model_call']=generation['model_call']
             if synthesis:
                 response.update(claim_format=generation['claim_format'],model_review=review_receipt,

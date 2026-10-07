@@ -57,6 +57,15 @@ class Audit:
         with self.store.lock:
             return [json.loads(r[0]) for r in self.store.db.execute('SELECT body FROM audit ORDER BY seq')]
 
+    def request_has_unknown(self, actor, request_id):
+        """Internal completeness check; never exposes source/object diagnostics."""
+        with self.store.lock:
+            return self.store.db.execute("SELECT 1 FROM audit WHERE "
+                "json_extract(body,'$.actor')=? AND json_extract(body,'$.request_id')=? "
+                "AND json_extract(body,'$.event_type')='authorization_decided' "
+                "AND json_extract(body,'$.payload.result')='unknown' LIMIT 1",
+                (actor,request_id)).fetchone() is not None
+
     def inquire(self, actor, filters):
         if actor.user_id!='auditor':
             raise PermissionError('Unavailable')

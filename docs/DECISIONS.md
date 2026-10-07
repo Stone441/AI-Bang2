@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-07 ADR-051（DEV-BV-03 legacy completeness）：为补齐已识别的非后台来源故障断点，按actor/request参数化读取当前unknown记录。真实synthesis首次发送前发现unknown则零调用；review/最终提交前新unknown停止后续阶段，不抹去已有attempt/usage/费用。fake仅保留允许摘录并显示通用coverage不完整提示，不泄露源名/隐藏对象/计数；ACL deny仍过滤，preview/history不可用语义不变。17定向/377完整fixture/mock及只读复审通过；不是重开AUTH-019或按保留题调f8ecbed，新native/live模型证据不继承。回退f8ecbed可恢复旧行为，旧证据保留。
+
 2026-10-07 ADR-050（DEV-BV-03 有界查询）：仅可信operator的AUTH-017后台模式启用bounded_queries；活跃worker最新四源cycle完整/无backlog且进程内发布距今不超过120秒，同tenant/actor/resource/version候选可用本地snapshot，不把它称为当前allow。选中资料仍有before_model/model_dispatch/review/before_dispatch及preview/history native复查；同一请求同阶段的resource/version多个窗口共享一次native check，阶段间不共享allow，每个窗口仍核对版本；unknown及明确content/version-changed deny停止整答，防止漏掉新版反证后仍回答；真实ACL deny仍过滤，旧preview/history仍返回不可用。worker失败、积压、过期或停止明确503，不将缺可能改变结论的源当知识不足。进程重启必须重新发布，DB checkpoint不恢复trusted snapshot。旧库默认显式逐问刷新保留；HTTP统一pilot.lock→store.lock顺序，避免发布与HTTP锁反转。120秒是保守运行有效性阈值，不是freshness/SLA；100对象/page上限及全局锁仍限制规模。无旧服务重启。
 
 2026-10-07 ADR-049（DEV-BV-02选择，待当前完整回归/保留集）：采用本地binary-TF BM25作为当前候选默认排序，保留Engine显式lexical回退；只在actor权限预过滤后的精确原文窗口统计IDF/长度，不增加embedding/向量库/模型重排，不改窗口、引用、预算或各阶段native鉴权。相同48对象/24开发题、模型/prompt与资料字节的单次live A/B中，A为16条事实回答+2条正确空回答+6条失败，B为20+2+2；这是单次随机模型诊断，非稳定质量率。1000干扰两者仍漏J-03，B并未证明全质量通过；AUTH-019保留。本实现只是CPU查询时评分，尚非持久FTS/章节索引；回退参数不改旧证据，后续须验证安全及未见题。
