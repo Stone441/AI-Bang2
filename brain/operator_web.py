@@ -94,11 +94,18 @@ def main(argv=None):
     parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
     parser.add_argument('--answer-style', choices=['excerpts','synthesis'], default='excerpts',
                         help='Synthesis uses two budgeted calls and exact grounding plus model review')
+    parser.add_argument('--reasoning-effort', choices=['none','low'], default='none',
+                        help='Trusted synthesis launch configuration; never supplied by browser questions')
+    parser.add_argument('--output-tokens', type=int, choices=[1024,2048], default=1024)
     parser.add_argument('--credential-store',choices=['memory','macos-keychain'],default='memory',
                         help='Explicit opt-in: save/reuse app-owned credentials in this Mac Keychain')
     parser.add_argument('--replace-credential',choices=['confluence','jira','slack','drive','deepseek'],
                         help='Re-enter only one credential for this launch; keep all others')
     args = parser.parse_args(argv)
+    if (args.reasoning_effort!='none' or args.output_tokens!=1024) and (
+            args.model!='deepseek' or args.answer_style!='synthesis'):
+        print('not_run: reasoning/output overrides require DeepSeek synthesis; no credentials or platform calls performed.')
+        return 2
     if args.discovery_auth017 and (args.source!='multi' or args.actor!='eng_b'):
         print('not_run: AUTH-017 discovery requires multi-source eng_b; no credentials or platform calls performed.')
         return 2
@@ -191,10 +198,12 @@ def main(argv=None):
                 with warnings.catch_warnings():
                     warnings.simplefilter('error', getpass.GetPassWarning)
                     key = getpass.getpass('DeepSeek API key (hidden): ').strip()
-            model = DeepSeekEvidenceModel(key, ledger, synthetic_only=True)
             if args.answer_style=='synthesis':
                 from .synthesis import DeepSeekSynthesisModel
-                model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True)
+                model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True,
+                    reasoning_effort=args.reasoning_effort,output_tokens=args.output_tokens)
+            else:
+                model = DeepSeekEvidenceModel(key, ledger, synthetic_only=True)
             if credential_store and new_key:
                 credential_store.put('deepseek',app.actor.tenant,args.actor,'deepseek-flash',key)
             del key

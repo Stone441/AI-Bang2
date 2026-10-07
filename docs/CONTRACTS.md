@@ -1,5 +1,7 @@
 # Local contracts v1
 
+2026-10-07可信operator启动增量：--reasoning-effort none|low、--output-tokens 1024|2048默认none/1024；非默认仅DeepSeek synthesis允许，fake/excerpts在listener/凭据前拒绝。两阶段继承配置。native诊断同参数及actual-cap preflight；HTTP用户不能选择。未重启运行中服务。
+
 2026-10-07有界输出cap实验：low/1024一题全部tokens用于reasoning、finish_reason length无最终内容，原失败不升级。可信Python/runner允许1024或2048（默认1024）；instance reservation按1M context＋实际cap peak估计，preflight按同cap两次/题，genreview一致，usage越实例cap仍冻结/保留reservation，缺usage不退款。不是增加原USD20上限、换provider/账号/数据或自动retry；新增显式2048开发对比，效果待实际输出。
 
 2026-10-07有限reasoning配置实验：可信Python/开发runner可指定reasoning_effort none/low，默认none保持非thinking；low以thinking enabled+reasoning_effort low发送且省略无效temperature，两模型阶段一致。仍DeepSeek Flash、原端点/合成范围/1024输出cap/保守peak价格/原共享USD20/reservation；仅parse最终content，不用reasoning_content作为claim或原文。错误配置在reserve前拒绝，思考tokens计入供应商completion usage；未知usage保留预留。不是新模型/客户端授权字段，是否采用待实际比较，不因选项存在标通过。

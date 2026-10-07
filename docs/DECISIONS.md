@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-07 ADR-058（有界同模型推理诊断）：v7/v8 none/1024的7作者开发题分别6/5返回，03正确未知仍被review拒绝、32冗余仍存在；原记录保留。81dd33e low/1024实际六题正确，一题1024输出全用于reasoning后length无final；73b1e3e新增可信cap1024/2048、两阶段一致预留和usage校验，395回归；low/2048七题本次正确、18137microUSD原预算结算。只读复核不是独立人工或稳定性证明。为形成可检验应用配置，operator允许可信启动low/2048 opt-in并拒绝fake/excerpts滥用，默认none/1024不变；不增加HTTP客户端控制、不改quote/whole-review/权限、不自动retry。native runner同cap动态preflight。回滚可省略两个新flag，无数据/凭据迁移；采用为统一候选需完整当前开发和native证据，不据七题提前完成Goal。
+
 2026-10-07 ADR-057（DEV-BV-02原资源上下文）：当前捕获的D-01正文只说Final root cause，v5传给模型时丢失已鉴权title里的payment-service。3ceb625/v6将原title/locator作为source_context单独送gen/review，明确识别来源事件、context不作指令/quote/权限；SyntheticProvenance已核这两字段一致，新增2a039aa负测试实证篡改在reserve前拒绝。18synthesis/7provenance定向、388＋追加test389 clean archive及五fixture/Node通过。同48世界4开发诊断和全24题均返回，原12/16错误本次未重现，但03未知表达、32无关背景仍open。两native/model题本版本正确，费用按回执4137/22146/5100microUSD，各原件/共享snapshot保留。原quote/parser、预算、温度0/逐阶段权限及whole-answer gate不变；收益只能归本次上下文输入及说明整体，非组件因果或稳定准确率。可还原synthesis.py到64b705a回滚，无schema/凭据/源写入迁移。Goal active，原AUTH/人工/发布边界不扩。
 
 2026-10-07 ADR-056（DEV-BV-02受控采样）：同代码/世界/三开发题，各4次temperature1为9返回/3失败，temperature0为12返回，同题文字一致，成本12081/12016microUSD；不是12独立题、盲测、稳定性或成本收益证明。选择64b705a温度0为可回滚默认，generation/review一致，None显式省略配置；非有限/越界/bool配置在reserve/dispatch前拒绝。原thinking disabled、v5、逐阶段权限、精确quote与整答gate不变，不新增客户端控制。386干净archive/五fixture/Node通过；24开发题实际20核心正确＋1跨事件误导＋2空＋1结构失败，native两题正确，仅局部改善。原失败不改，新问题继续open非AUTH019；回滚可由可信构造配置1/None或还原本次代码，无schema/凭据迁移、费用/授权扩大。

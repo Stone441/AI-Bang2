@@ -1,5 +1,9 @@
 # Current status
 
+2026-10-07可信operator启动配置已完成：low/2048 opt-in、fake/excerpts在listener/凭据前拒绝；实际构造传参mock验证和397完整fixture/mock回归通过。新接线native/live复验仍not_run，原73b1e3e七题证据不得冒充新应用接线验收。
+
+2026-10-07当前HEAD 73b1e3e为v8可信有界推理实验；上一统一native候选3ceb625/v6保留。395干净archive回归、五fixture、两Node及语法通过。相同7作者开发题low/1024为6正确返回＋1输出cap截断；low/2048实际7题正确返回、8claim精确quote、14有效stop回执，上界18137microUSD，累计settled276156/pending0。只读Agent逐题复核，4项exact-span探针不匹配不等于语义失败；不是盲测、稳定质量或原保留失败已修复。当前在接入可信operator启动参数，默认none/1024保持，完整24题及同版native复验待做，不将开发harness当产品已加载。Drive file URLs权限已被原Chrome工具实际接受，AUTH021四源三阶段证据已完成，不重复写入；此许可不解除49161产品saved site denial。browser blocked/G1/G2 not_run，8094/8100未动，Goal active。
+
 2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
 
 

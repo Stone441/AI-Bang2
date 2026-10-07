@@ -1,5 +1,9 @@
 # Backlog · 2026-10-05
 
+2026-10-07可信operator启动配置已完成：low/2048 opt-in、fake/excerpts在listener/凭据前拒绝；实际构造传参mock验证和397完整fixture/mock回归通过。新接线native/live复验仍not_run，原73b1e3e七题证据不得冒充新应用接线验收。
+
+2026-10-07 BV-02接续：73b1e3e low/2048在7作者开发题上本次均正确，low/1024的32截断未重现；需完成可信operator配置接入及固定同版完整24开发/native两题验证。395archive及精确quote、cap/reservation负测试通过；不重跑已消费保留集、不把原失败改写通过、不自动付费重试。BV-05产品browser仍saved拒绝blocked，与已完成Drive上传许可独立。
+
 2026-10-07最新BV-02：3ceb625传递授权原title/locator；388 archive及两native/model题实际通过，2a039aa仅context篡改负测试/389 archive，runtime相同。完整24题22核心事实正确＋2空，business12/16原失败本轮未重现；business03问题前提/未知表达不足、32无关背景仍open，非AUTH019延期。下一以通用“问题所问状态与原文已证实状态”开发例和回答相关性继续定位，不弱化quote/review，不重跑保留集或无新诊断付费循环。当前模式/成本见STATUS，Goal active。
 
 2026-10-07当前：2a73bd0 clean archive380/同48世界五fixture/两Node、新版native/live两题及配对签名完成；新故障路径仍仅local/mock证明，native完整新鲜度/多persona/Docs/native关系解析未完成。BV-05浏览器和human/ROI not_run；BV-06材料有本地title/blurb/description/16:9封面草稿，统一范围审计待完成。性能两题含preview约119/128秒，不能称实时/半小时SLA已证。其余条目为各阶段历史，顶部事实优先。
