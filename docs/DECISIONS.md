@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-08 AUTH-027：用户在49161具体实例授权待回复的上下文明确“批准授权”，批准新的http://127.0.0.1:49161仅本机试用实例，应用cdbd62b/main2eabeb8字节、eng_b、AUTH017四源合成容器只读、独立SQLite、DeepSeek synthesis-v10 low8192及原USD20账本；最多6次问答尝试，新增结算达到USD0.20或出现新unknown后停止新问题，已在途调用完成（非供应商硬费用上限）。使用已准备launch-page-trial.py，团队本人打开操作，不自动化被拒绝产品browser，不动8094/8100、不写业务源、不增加预算、不推送合并、不授予G1/G2。已启动本次实例；四源首轮complete、隔离索引与原账本及限额接线核实，页面由团队操作/实际问答和反馈仍待完成；一次性ticket不入Git。
+
 2026-10-08 AUTH-026：用户明确批准“这3次创建＋4次更新及测量”。仅AUTH017既有Jira KAN、Slack C0C6R70SGG4、Drive指定文件夹各新建1个独立[SYNTHETIC] CLOSEOUT-20261008 automatic freshness probe/copper，再各1次silver修正；Slack以该root新增reply。另仅允许AUTH024页1572865 copper→silver一次。owner管理UI执行，独立只读CLI持续自动60秒后台＋fake测量；零新模型费，不删除/改权限/旧业务资料，不重复AUTH024创建。执行完成，3创建＋4修正一次性额度已全部消费；原观测被并发版本变化问答停答中断，失败保留、独立只读恢复，持续与恢复样本分列，详见targeted-closeout-20261008。新页面服务实例启动仍待独立授权，源操作不授予服务/推送/合并/G1/G2许可。
 
 2026-10-08 AUTH-025：用户明确“推送并合并到main”，批准DEV-PERF-01已验证应用cdbd62b及32cb71c证据/状态增量推送既有Stone441/AI-Bang2，经PR合并main。只含本任务代码、测试、公共合成证据和文档；未跟踪ZIP/SQLite/队员产物不上传，不部署/重启8094/8100，不扩源/费用/权限，不改变G1/G2。下方“未push/merge”为证据冻结时状态；实际Git交付以本次PR合并状态及main commit为准。

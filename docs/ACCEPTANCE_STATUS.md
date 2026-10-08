@@ -1,5 +1,7 @@
 # Acceptance coverage · local candidate
 
+2026-10-08 AUTH027实际试用实例已启动：http://127.0.0.1:49161，cdbd62b应用/eng_b/native四源只读＋DeepSeek v10 low8192，独立索引、原USD20账本，6次尝试及结算/新unknown停止限制。四源首轮complete，startup hash dc2903d72e3fec6c30156b84d351cee23d1d9be8bebfd5d756e1f5f2afe7ceb4；启动快照page-trial-startup.json，无ticket。实际入口已直接交给团队，首组两题/引用/History操作及反馈待做；启动与模型构造不等于真人或live问答通过。8094/8100/browser拒绝/G1/G2不变。下方“实例许可pending/未启动”为旧准备快照。
+
 2026-10-08 定向收尾：main已合并为 **2eabeb8**（PR8），应用仍 **cdbd62b**；当前独立fix/targeted-closeout-20261008无runtime修改。known05明确payment-service对照实际输入J03并正确回答Done/In Progress/no GA，15.026秒、5179microUSD；旧题/oracle/partial保留，不能推断仅歧义所致。统计细化core24=21直接事实＋1前提纠正事实＋2纯空；known12=3完整＋1部分＋1前提纠正事实＋6纯空＋1预期unknown。AUTH026仅3创建＋4更新已消费，7项均新值native发现/fake证据使用；三创建及Drive更新为持续自动，CF在原后台发布但fake恢复后成功，Jira/Slack更新为重启恢复，非全7持续时延通过。并发源版本变化停答原件保留，两审计链341/795有效仅本地；原生更新时间到发布不能称精确commit或SLA，多次自动样本/p95及完整native撤权删除仍未验。账本settled760885/available18914711、原pending1/324404保留；AUTH019不变。具体页面实例许可仍待回复，未启动49161、不动8094/8100；browser/G1/G2不变，新分支未push/merge。证据evidence/runs/targeted-closeout-20261008。
 
 

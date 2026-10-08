@@ -1,5 +1,7 @@
 # 安装、启动、测试与演示
 
+2026-10-08 AUTH027实际试用实例已启动：http://127.0.0.1:49161，cdbd62b应用/eng_b/native四源只读＋DeepSeek v10 low8192，独立索引、原USD20账本，6次尝试及结算/新unknown停止限制。四源首轮complete，startup hash dc2903d72e3fec6c30156b84d351cee23d1d9be8bebfd5d756e1f5f2afe7ceb4；启动快照page-trial-startup.json，无ticket。实际入口已直接交给团队，首组两题/引用/History操作及反馈待做；启动与模型构造不等于真人或live问答通过。8094/8100/browser拒绝/G1/G2不变。下方“实例许可pending/未启动”为旧准备快照。
+
 2026-10-08 页面试用启动准备（not_run，具体49161实例许可仍待回复）：`evidence/runs/targeted-closeout-20261008/launch-page-trial.py`为独立operator启动限额脚本，候选brain/scripts/tests/web不改；启动时先核cdbd62b无差异，新建私有`.runtime/page-trial-20261008`及隔离索引，仅symlink原USD20账本，拒绝重复使用已有trial状态。只在许可明确后执行`PYTHONPATH=. python3 evidence/runs/targeted-closeout-20261008/launch-page-trial.py`（私密启动日志含一次性ticket，不能提交）；eng_b/四源AUTH017只读/正常后台/DeepSeek v10 low8192。最多6次问答尝试；结算增量达到200000microUSD或出现新unknown即拒绝下一题，已在途调用完成，非供应商硬费用上限；原未知reservation保留。6次/结算阈值/new unknown/旧reservation/状态不可复用已用临时fixture账本验证，未绑定端口/读Keychain/访问native/调用模型。
 
 批准启动且后台四源就绪后，才提供带一次性ticket的实际入口；由团队本人打开、操作。第一组操作：问`What is the latest approved mitigation for the payment incident?`，打开返回的一条引用核原文；再问`For payment-service, which code fix is complete, which preventive work remains in progress, and is general customer release approved?`；进入History重看刚才的问题、答案与Sources新鲜度，报告实际等待时间、结论是否有用及具体错误。答案须按当前native数据判断，不把fixture对照结果当live预期。Codex只记录服务审计/预算/模式和团队反馈，不自动化被拒绝的产品browser；非G1/G2审批。
