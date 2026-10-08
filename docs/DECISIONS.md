@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-09 AUTH-031：用户明确“批准此前申请，继续任务”，批准v11集中复验，总额度48→93，仅原两题各3次产品HTTP＋原24/known12质量36题＋团队本人最多3题。原49161/eng_b/AUTH017四源合成只读/DeepSeek provider/low8192/USD20账本/旧unknown保留，累计新增结算USD0.50或新unknown停止接纳，不写源、不动8094/8100、不推送部署、不绕过browser拒绝。
+
 2026-10-08 ADR-063（candidate/local，live未验证）：AUTH030复验holdout10返回账户资格行而非请求的integration tier/region/retry，第一原题已检索C01批准操作但仅给审批未知。v11只收紧“未建立请求状态时可报告实际状态”的例外为同对象同属性，并要求latest顺序未知时覆盖已有支持的批准操作且单列顺序限制；generation/review一致。原结构/quote/gate/provider/low8192/预算不变，可能增加拒答，时间与费用改善未验证。回滚还原synthesis.py为v10。当前49161仍加载v10，不继承新候选结果；集中申请45次额外验证（native6/quality36/human最多3），总93、原累计USD0.50/newunknown停止，许可pending，不执行。
 
 2026-10-08 AUTH-030：用户明确“批准解锁动作”，批准AUTH029总问题额度42→48，仅补跑原known12剩余07–12六题；原USD0.50新增结算停止阈值、新unknown停止、provider/low8192/USD20账本/旧unknown/实例与源只读边界保持，不批准额外native问答、源写入、推送或部署。

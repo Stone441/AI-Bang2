@@ -19,7 +19,7 @@ ENDPOINT = 'https://api.deepseek.com/chat/completions'
 MODEL = 'deepseek-flash'
 # Official pricing re-read on this Singapore date; evidence is kept separately.
 # Never advance this date without reviewing the official model/rates.
-PRICE_DATE = date(2026, 10, 8)
+PRICE_DATE = date(2026, 10, 9)
 PRICE_SOURCE = 'https://api-docs.deepseek.com/quick_start/pricing/'
 CONTEXT_TOKENS = 1_048_576
 OUTPUT_TOKENS = 1024

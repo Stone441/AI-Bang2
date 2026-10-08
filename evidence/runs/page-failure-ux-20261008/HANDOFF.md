@@ -1,3 +1,9 @@
+# Latest AUTH031 live checkpoint — 2026-10-09
+
+2026-10-09 AUTH031实际复验完成（native6＋quality36，尚余3真人题）：v11/同provider低推理8192，四源合成只读、正常后台。Q2三次均事实完整；Q1两次覆盖不足答案（仍漏C01已批准操作）＋一次review拒绝，不称首题修复完成。原24=21事实＋2合理空＋business31一次review拒绝；known12=01/06完整＋8合理空/澄清＋02一次review拒绝＋12预期Drive unknown停答。三review拒绝均stop、额外claim responsive=false，已知usage结算，无自动重试/新增unknown，不能推断cap不足。610进度采样最长0.003752秒；三本轮引用preview与History HTTP200，非人验。今日官方峰值费率真实核查不变，PRICE_DATE改9；436完整本地回归通过。账本settled1075716/available18599880、原unknown324404保持；AUTH031增138008microUSD、Goal累计303803microUSD。额度90/93，剩余3专供真人。49161新human实例已加载v11，私有0600 token，不记录完整一次性链接；后台正常运行。v11候选质量未通过，不推广为稳定候选；G1/G2/browser工具拒绝/AUTH019不变。两次入口helper启动失败无凭据/模型调用，原件保留；8094/8100未动，未push/merge/deploy。证据v11-final-review.json、v11-native-six/、v11-quality36/、human-entry-ready.json。
+
+Human PTY session29158 (verify live PID before process changes). Token lifetime10min; no tool browser bypass. Team may manually copy token from private human-bootstrap-token and paste after base URL fragment. If expired, use same approved launch_human.py after verifying/stopping only49161 owned process; do not reset admission/history/ledger. No auto queries left in this authorization: remaining3 belong to human. Read-only HTTP monitoring allowed. Do not repeat36/core or original six without new scope. Quality failures and broad first question remain substantive; no more speculative prompt/model changes without evidence and corresponding verification.
+
 # Candidate v11 — pending live authorization
 
 Local synthesis.py now v11 prompt/review scope correction (ADR063). Existing49161 remains v10. v11-proposed-schedule.json freezes original2x3 and original24/known12 hashes, human max3. Request total48→93 is pending, no response is not permission. Do not run/clear48 counter or silently change provider/low8192. Latest quality36 findings remain the original v10 evidence.

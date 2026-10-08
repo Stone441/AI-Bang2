@@ -40,3 +40,7 @@ Remaining: broad mitigation question quality and/or agreed approval scope; last6
 ## AUTH030 supplement
 
 User approved total48 solely for remaining six. All six results saved in quality-remaining6/, model/source/config unchanged. Combined semantic examination: quality-combined-review.json. Cases07/09/11 clarify,08 limited insufficient evidence,10 partial table relevance,12 expected premodel Drive-unknown stop. No fabricated retry value, but not all task answers complete. New supplement costUSD0.021044; goal totalUSD0.165795. Old unknown324404 unchanged, no newunknown. Admission48/48 reached; no further question authorization. Historical not_run retained rather than overwritten. No product-code change or repeated paid suite.
+
+## AUTH031 actual v11 run — 2026-10-09
+
+2026-10-09 AUTH031实际复验完成（native6＋quality36，尚余3真人题）：v11/同provider低推理8192，四源合成只读、正常后台。Q2三次均事实完整；Q1两次覆盖不足答案（仍漏C01已批准操作）＋一次review拒绝，不称首题修复完成。原24=21事实＋2合理空＋business31一次review拒绝；known12=01/06完整＋8合理空/澄清＋02一次review拒绝＋12预期Drive unknown停答。三review拒绝均stop、额外claim responsive=false，已知usage结算，无自动重试/新增unknown，不能推断cap不足。610进度采样最长0.003752秒；三本轮引用preview与History HTTP200，非人验。今日官方峰值费率真实核查不变，PRICE_DATE改9；436完整本地回归通过。账本settled1075716/available18599880、原unknown324404保持；AUTH031增138008microUSD、Goal累计303803microUSD。额度90/93，剩余3专供真人。49161新human实例已加载v11，私有0600 token，不记录完整一次性链接；后台正常运行。v11候选质量未通过，不推广为稳定候选；G1/G2/browser工具拒绝/AUTH019不变。两次入口helper启动失败无凭据/模型调用，原件保留；8094/8100未动，未push/merge/deploy。证据v11-final-review.json、v11-native-six/、v11-quality36/、human-entry-ready.json。

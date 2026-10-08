@@ -23,7 +23,7 @@ class Admission:
   with self.lock,open(self.path.with_suffix('.lock'),'a') as lock:
    os.chmod(self.path.with_suffix('.lock'),0o600);fcntl.flock(lock,fcntl.LOCK_EX)
    prior=json.loads(self.path.read_text());self.attempts=prior['attempts'];self.maximum=prior['max_attempts']
-   if self.maximum not in (42,48):raise ValueError('Unapproved attempt configuration')
+   if self.maximum not in (42,48,93):raise ValueError('Unapproved attempt configuration')
    status=self.ledger.summary()
    if self.attempts>=self.maximum or status['settled_micro_usd']-self.baseline['settled_micro_usd']>=500000 or status['blocked_for_review'] or self.pending_ids()-self.pending:
     self.save();raise TrialAdmissionPaused('Trial limit reached; ask the operator to review before continuing.')
