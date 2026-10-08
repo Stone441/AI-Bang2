@@ -1,0 +1,34 @@
+======================================================================
+ERROR: test_current_native_unknown_stops_full_answer_before_model (tests.test_business_cached_query.BusinessCachedQueryTests.test_current_native_unknown_stops_full_answer_before_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_business_cached_query.py", line 40, in test_current_native_unknown_stops_full_answer_before_model
+    recovered=self.pilot.query(self.actor,'novelty')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py", line 250, in query
+    return self.engine.query(actor, question, history_id)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 100, in query
+    return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 166, in _query
+    allowed=self.checks(actor,[r for _,r in candidates[:24]],rid,'before_model')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 88, in checks
+    return [self.check_result(actor,phase,d) for d in decisions]
+            ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 69, in check_result
+    raise SourceUnavailable('Current source coverage unavailable; retry later')
+brain.confluence.SourceUnavailable: Current source coverage unavailable; retry later
+
+======================================================================
+FAIL: test_native_new_counterevidence_recovers_once_and_invalidates_old_history (tests.test_business_cached_query.BusinessCachedQueryTests.test_native_new_counterevidence_recovers_once_and_invalidates_old_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_business_cached_query.py", line 64, in test_native_new_counterevidence_recovers_once_and_invalidates_old_history
+    with self.assertRaises(SourceUnavailable):self.pilot.query(self.actor,'novelty')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: SourceUnavailable not raised
+
+----------------------------------------------------------------------
+Ran 60 tests in 5.221s
+
+FAILED (failures=1, errors=1)

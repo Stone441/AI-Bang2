@@ -1,0 +1,81 @@
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py:460: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x108ec06d0>
+  new = type(cls.__name__, bases, {'__doc__': cls.__doc__})
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+{"status": "failed"}
+Drive: reused read-only authorization and verified native account.
+<string>:2: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x110a246d0>
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<string>:2: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x110a255d0>
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<string>:2: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x110a254e0>
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<string>:2: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x110a25030>
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+======================================================================
+ERROR: test_source_exception_preserves_ordered_decisions_and_stops_lane (test_parallel_authorization.ParallelAuthorizationTests.test_source_exception_preserves_ordered_decisions_and_stops_lane)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_parallel_authorization.py", line 61, in test_source_exception_preserves_ordered_decisions_and_stops_lane
+    with self.assertRaises(SourceUnavailable):pilot.query(actor,'novelty')
+                                              ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py", line 250, in query
+    return self.engine.query(actor, question, history_id)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 108, in query
+    return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 166, in _query
+    if not self.check(actor,seed,rid,'link_seed'): continue
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 46, in check
+    decision=self.world.adapter(resource['source']).check_read(actor,resource['id'])
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py", line 182, in check_read
+    decision,content=self._checked_read(actor,resource,self.readers.get(source),
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.discovered_ids.get(actor.user_id,{}).get(source,frozenset()))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1247, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_parallel_authorization.py", line 58, in read
+    if resource['source']=='jira':raise RuntimeError('Unsafe vendor detail must not escape')
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Unsafe vendor detail must not escape
+
+======================================================================
+FAIL: test_comment_scope_is_separate_and_revocation_protects_old_citation (test_delegated_query.CombinedQuery.test_comment_scope_is_separate_and_revocation_protects_old_citation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_delegated_query.py", line 68, in test_comment_scope_is_separate_and_revocation_protects_old_citation
+    self.assertEqual([e['resource_id'] for e in first['evidence']], ['jira:10003/comment/20001'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['jira:10003/comment/20001', 'jira:10003'] != ['jira:10003/comment/20001']
+
+First list contains 1 additional elements.
+First extra element 1:
+'jira:10003'
+
+- ['jira:10003/comment/20001', 'jira:10003']
+?                            --------------
+
++ ['jira:10003/comment/20001']
+
+======================================================================
+FAIL: test_linkless_sources_reduce_reads_but_keep_all_model_permission_boundaries (test_delegated_query.CombinedQuery.test_linkless_sources_reduce_reads_but_keep_all_model_permission_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_delegated_query.py", line 95, in test_linkless_sources_reduce_reads_but_keep_all_model_permission_boundaries
+    self.assertEqual(sum(c.args[1]=='10003' for c in jira_read.call_args_list),4)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 5 != 4
+
+----------------------------------------------------------------------
+Ran 458 tests in 25.318s
+
+FAILED (failures=2, errors=1)
+{"status": "failed", "checks": {}}

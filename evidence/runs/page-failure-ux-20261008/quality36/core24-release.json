@@ -1,0 +1,96 @@
+{
+  "group": "core24",
+  "id": "release",
+  "question": "Does PAY-102 Done authorize general customer release?",
+  "expected_behavior": "answer",
+  "error": null,
+  "elapsed_seconds": 5.517844999965746,
+  "answer": {
+    "request_id": "9d15152b8cc44f6b8ffc33da8be3bbc6",
+    "question": "Does PAY-102 Done authorize general customer release?",
+    "answered_at": "2026-10-08T10:18:57.933874+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v10",
+    "claims": [
+      {
+        "text": "PAY-102 Done is not customer release approval; the release decision approved a controlled pilot but did not approve general availability.",
+        "evidence_ids": [
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "J-02@1",
+        "resource_id": "J-02",
+        "version": 1,
+        "source": "jira",
+        "title": "PAY-102 Retry configuration fix",
+        "locator": {
+          "field": "status and description"
+        },
+        "text": "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.162908+00:00",
+        "source_url": "fixture://synthetic-demo/jira/J-02"
+      },
+      {
+        "evidence_id": "D-02@1",
+        "resource_id": "D-02",
+        "version": 1,
+        "source": "drive",
+        "title": "Payment-retry release approval",
+        "locator": {
+          "paragraph": 1,
+          "section": "Approval decision"
+        },
+        "text": "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163006+00:00",
+        "source_url": "fixture://synthetic-demo/drive/D-02"
+      }
+    ],
+    "actor": "product_ops",
+    "model_call": {
+      "query_id": "9d15152b8cc44f6b8ffc33da8be3bbc6",
+      "model": "deepseek-flash",
+      "reservation_id": "03cc1f7c039a475983dfd3b9b7db6ae7",
+      "prompt_tokens": 1085,
+      "completion_tokens": 897,
+      "total_tokens": 1982,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 1402,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "9d15152b8cc44f6b8ffc33da8be3bbc6",
+      "model": "deepseek-flash",
+      "reservation_id": "1f48a882cae543a880daa2044dc7c68f",
+      "prompt_tokens": 1016,
+      "completion_tokens": 284,
+      "total_tokens": 1300,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 646,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

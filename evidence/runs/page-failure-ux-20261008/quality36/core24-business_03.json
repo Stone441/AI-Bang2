@@ -1,0 +1,169 @@
+{
+  "group": "core24",
+  "id": "business_03",
+  "question": "Which authentication signing proposal was rejected?",
+  "expected_behavior": "answer",
+  "error": null,
+  "elapsed_seconds": 10.459974249999505,
+  "answer": {
+    "request_id": "98d1d628b55b44599595be9a21794e19",
+    "question": "Which authentication signing proposal was rejected?",
+    "answered_at": "2026-10-08T10:19:16.273116+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v10",
+    "claims": [
+      {
+        "text": "The shared-secret authentication signing proposal was withdrawn, not shown as rejected; per-client asymmetric signing was accepted.",
+        "evidence_ids": [
+          "BV-18@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-18@1",
+            "quote": "The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "BV-03@1",
+        "resource_id": "BV-03",
+        "version": 1,
+        "source": "slack",
+        "title": "authentication / Rejected design thread",
+        "locator": {
+          "channel": "synthetic-auth",
+          "message": "BV-03",
+          "root": "BV-03"
+        },
+        "text": "[SYNTHETIC]\n09:00 authentication signing design: shared-secret proposal under consideration.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163083+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-03"
+      },
+      {
+        "evidence_id": "BV-18@1",
+        "resource_id": "BV-18",
+        "version": 1,
+        "source": "slack",
+        "title": "Authentication signing design reply",
+        "locator": {
+          "channel": "synthetic-auth",
+          "message": "BV-18",
+          "root": "BV-03"
+        },
+        "text": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163368+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-18"
+      },
+      {
+        "evidence_id": "BV-01@1",
+        "resource_id": "BV-01",
+        "version": 1,
+        "source": "confluence",
+        "title": "authentication / Token rotation decision",
+        "locator": {
+          "section": "Token rotation decision"
+        },
+        "text": "[SYNTHETIC]\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163054+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-01"
+      },
+      {
+        "evidence_id": "BV-34@1",
+        "resource_id": "BV-34",
+        "version": 1,
+        "source": "jira",
+        "title": "settlement / Contradictory proposal",
+        "locator": {
+          "section": "Contradictory proposal"
+        },
+        "text": "[SYNTHETIC]\nAn unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163590+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-34"
+      },
+      {
+        "evidence_id": "BV-04@1",
+        "resource_id": "BV-04",
+        "version": 1,
+        "source": "drive",
+        "title": "authentication / Cutover scope",
+        "locator": {
+          "section": "Cutover scope"
+        },
+        "text": "[SYNTHETIC]\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163098+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-04"
+      },
+      {
+        "evidence_id": "BV-02@1",
+        "resource_id": "BV-02",
+        "version": 1,
+        "source": "jira",
+        "title": "authentication / Migration blocker",
+        "locator": {
+          "section": "Migration blocker"
+        },
+        "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163069+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-02"
+      },
+      {
+        "evidence_id": "BV-05@1",
+        "resource_id": "BV-05",
+        "version": 1,
+        "source": "confluence",
+        "title": "authentication / Future policy",
+        "locator": {
+          "section": "Future policy"
+        },
+        "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163112+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-05"
+      }
+    ],
+    "actor": "eng_a",
+    "model_call": {
+      "query_id": "98d1d628b55b44599595be9a21794e19",
+      "model": "deepseek-flash",
+      "reservation_id": "3f6deca33cd44e9bba2124960a3edcb0",
+      "prompt_tokens": 1450,
+      "completion_tokens": 711,
+      "total_tokens": 2161,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 1289,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "98d1d628b55b44599595be9a21794e19",
+      "model": "deepseek-flash",
+      "reservation_id": "15a77b4bd1284f399efdde281eea4d6b",
+      "prompt_tokens": 1368,
+      "completion_tokens": 1293,
+      "total_tokens": 2661,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 1962,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

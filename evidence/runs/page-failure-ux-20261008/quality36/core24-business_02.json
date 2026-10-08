@@ -1,0 +1,95 @@
+{
+  "group": "core24",
+  "id": "business_02",
+  "question": "What blocks AUTH-204 and who owns it?",
+  "expected_behavior": "answer",
+  "error": null,
+  "elapsed_seconds": 2.8482473340118304,
+  "answer": {
+    "request_id": "1e7930e652a346119f2312ce72ff3087",
+    "question": "What blocks AUTH-204 and who owns it?",
+    "answered_at": "2026-10-08T10:19:05.812785+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v10",
+    "claims": [
+      {
+        "text": "AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and its owner is Lena.",
+        "evidence_ids": [
+          "BV-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-02@1",
+            "quote": "AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "BV-21@1",
+        "resource_id": "BV-21",
+        "version": 1,
+        "source": "confluence",
+        "title": "reconciliation / Ownership decision",
+        "locator": {
+          "section": "Ownership decision"
+        },
+        "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163412+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-21"
+      },
+      {
+        "evidence_id": "BV-02@1",
+        "resource_id": "BV-02",
+        "version": 1,
+        "source": "jira",
+        "title": "authentication / Migration blocker",
+        "locator": {
+          "section": "Migration blocker"
+        },
+        "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163069+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-02"
+      }
+    ],
+    "actor": "eng_a",
+    "model_call": {
+      "query_id": "1e7930e652a346119f2312ce72ff3087",
+      "model": "deepseek-flash",
+      "reservation_id": "e21f828cdc744d8ca81aec74aefa86a6",
+      "prompt_tokens": 1065,
+      "completion_tokens": 418,
+      "total_tokens": 1483,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 822,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "1e7930e652a346119f2312ce72ff3087",
+      "model": "deepseek-flash",
+      "reservation_id": "4fc3f2ff1aba440daf6ea6d5641a5e0f",
+      "prompt_tokens": 985,
+      "completion_tokens": 134,
+      "total_tokens": 1119,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 457,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

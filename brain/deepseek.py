@@ -4,6 +4,7 @@ The LLM selects supplied evidence IDs; the server assembles original text.
 Peak/cache-miss cost is a conservative accounting upper bound, not an invoice.
 """
 import json
+import hashlib
 import math
 import re
 import uuid
@@ -29,6 +30,14 @@ OUTPUT_RATE = 1_200_000
 
 class ModelUnavailable(Exception):
     """Fixed safe error only; no upstream body, credential or prompt."""
+
+
+class ModelOutputRejected(ModelUnavailable):
+    """Known usage settled, output failed validation; no draft released."""
+
+
+class ModelRequestUnavailable(ModelUnavailable):
+    """Transport/usage unknown; reservation retained for operator review."""
 
 
 class ModelInputRejected(ModelUnavailable):
@@ -149,15 +158,31 @@ class DeepSeekEvidenceModel:
                           'Content-Type': 'application/json', 'Accept': 'application/json'}, method='POST')
         reservation_id = self.ledger.reserve(self.reservation, query_id=request_id if request_id is not None else uuid.uuid4().hex, model=MODEL)
         self.ledger.dispatch(reservation_id)  # Crash/timeout preserves the full reservation.
+        diagnostic = {}
+        def capture_metadata(response):
+            if not isinstance(response,dict):return
+            response_id=response.get('id')
+            if isinstance(response_id,str) and 0<len(response_id)<=200:
+                diagnostic['response_id_sha256']=hashlib.sha256(response_id.encode()).hexdigest()
+            choices=response.get('choices')
+            choice=choices[0] if isinstance(choices,list) and len(choices)==1 and isinstance(choices[0],dict) else {}
+            finish=choice.get('finish_reason')
+            message=choice.get('message',{})
+            content=message.get('content') if isinstance(message,dict) else None
+            model=response.get('model')
+            diagnostic.update(finish_reason=finish if finish in ('stop','length','content_filter','tool_calls') else 'unrecognized',
+                              returned_model=model if model in (MODEL,'DeepSeek-V4.1-Flash') else 'unrecognized',
+                              visible_output_characters=len(content) if isinstance(content,str) else 0)
         def record(event):
             if observe is not None:
                 observe(event, {'stage':stage, 'model':MODEL, 'reservation_id':reservation_id,
                                 'evidence_ids':[e.evidence_id for e in evidence],
-                                'receipt':self.ledger.model_receipt(reservation_id)})
+                                'receipt':self.ledger.model_receipt(reservation_id), 'diagnostic':dict(diagnostic)})
         record('model_dispatch_intent')
         try:
             record('model_dispatch_attempted')
             status, response = self.transport._send(request)
+            capture_metadata(response)
             if status != 200 or not isinstance(response, dict):
                 raise ValueError()
             usage = response['usage']
@@ -172,26 +197,61 @@ class DeepSeekEvidenceModel:
             receipt = self.ledger.model_receipt(reservation_id)
             if receipt['outcome'] == 'pending':
                 self.ledger.model_outcome(reservation_id, 'usage_unavailable')
-            raise ModelUnavailable('Model request unavailable; budget reservation retained') from None
+            diagnostic['validation_failure']='transport_or_usage'
+            record('model_request_unavailable')
+            raise ModelRequestUnavailable('Model request unavailable; budget reservation retained') from None
         # Known usage is charged conservatively even if its answer is rejected.
         self.ledger.settle(reservation_id, cost_upper(p, o), usage={
             'prompt_tokens':p, 'completion_tokens':o, 'total_tokens':total})
         record('model_usage_received')  # Validated usage, not an accepted answer.
+        # Only allowlisted metadata: never raw content, reasoning or upstream IDs.
+        choices = response.get('choices')
+        choice = choices[0] if isinstance(choices,list) and len(choices)==1 and isinstance(choices[0],dict) else {}
+        message = choice.get('message') if isinstance(choice.get('message'),dict) else {}
+        content = message.get('content')
+        finish = choice.get('finish_reason')
+        returned_model = response.get('model')
+        diagnostic.update(finish_reason=finish if finish in ('stop','length','content_filter','tool_calls') else 'unrecognized',
+                          returned_model=returned_model if returned_model in (MODEL,'DeepSeek-V4.1-Flash') else 'unrecognized',
+                          visible_output_characters=len(content) if isinstance(content,str) else 0,
+                          usage={'prompt_tokens':p,'completion_tokens':o,'total_tokens':total})
+        details=usage.get('completion_tokens_details',{})
+        reasoning=details.get('reasoning_tokens') if isinstance(details,dict) else None
+        if type(reasoning) is int and 0<=reasoning<=o:diagnostic['reasoning_tokens']=reasoning
+        category='model_identifier'
         try:
             if response['model'] not in (MODEL, 'DeepSeek-V4.1-Flash'):
                 raise ValueError()
+            category='truncated' if finish=='length' else 'finish_reason'
             choices = response['choices']
             if len(choices) != 1 or choices[0]['finish_reason'] != 'stop':
                 raise ValueError()
+            category='message_structure'
             message = choices[0]['message']
             if message.get('role') != 'assistant' or message.get('tool_calls'):
                 raise ValueError()
-            output = json.loads(message['content'], object_pairs_hook=unique_object)
+            category='empty_content'
+            if not isinstance(content,str) or not content.strip():raise ValueError()
+            category='json'
+            output = json.loads(content, object_pairs_hook=unique_object)
+            category='structure'
+            if stage=='review' and isinstance(output,dict):
+                diagnostic['review_question_covered']=output.get('question_covered') if type(output.get('question_covered')) is bool else None
+                verdicts=output.get('verdicts')
+                if isinstance(verdicts,list) and len(verdicts)<=4:
+                    diagnostic['review_verdicts']=[{k:v.get(k) if type(v.get(k)) is bool else None for k in ('supported','responsive')} for v in verdicts if isinstance(v,dict)]
             claims = self.parse_output(output, evidence)
-        except Exception:
+        except Exception as error:
+            # Parser messages are mapped locally; never persist arbitrary exception text.
+            categories={'Grounding quote does not match current evidence':'quote',
+                'Citation lacks grounding quote':'quote','Claim identifier lacks quoted support':'claim',
+                'Invalid grounded claim':'claim','Invalid grounded citation':'claim',
+                'Incomplete model review':'review','Claim not fully supported and responsive':'review'}
+            diagnostic['validation_failure']=categories.get(str(error),category)
             self.ledger.model_outcome(reservation_id, 'output_rejected')
             record('model_output_rejected')
-            raise ModelUnavailable('Model output could not be supported by current evidence') from None
+            raise ModelOutputRejected('Model output could not be supported by current evidence') from None
+        diagnostic['validation_failure']=None
         self.ledger.model_outcome(reservation_id, 'accepted')
         record('model_output_accepted')
         return {'claims': claims, 'uncertainties': [self.answer_notice],

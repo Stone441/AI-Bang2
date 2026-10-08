@@ -1,5 +1,10 @@
 # Decisions / ADR
 
+2026-10-08 AUTH-029：用户明确批准本轮修改后新127.0.0.1:49161仅本机eng_b实例与复验；AUTH017四源合成容器只读、原DeepSeek provider、USD20账本及原unknown324404保留。两原题各固定3次HTTP＋一次原24/已知12质量回归，最多42道问题；新增结算达到USD0.50或新unknown停止接纳，在途收尾。可信模型配置变化需另给具体候选后批准；不写源、不动8094/8100、不push/merge/deploy、不绕过browser拒绝。此授权独立于已结束AUTH027。
+
+2026-10-08 ADR-062（implemented；native业务质量仍partial）：本Goal替代此前仅记录UX的临时决定。仅模型调用前明确source-version-changed可一次同步重新读取当前资料、重新验证同身份/容器/完整正文并原子发布，再从检索重做；不等待后台publisher，不复用旧allow/旧证据，不覆盖旧versions/audit。unknown、权限拒绝、429/网络及模型调用后变化不恢复；持续变化停答。恢复尝试/结果append-only记入新version_recovery事件。模型诊断仅保存allowlist finish_reason/returned_model、usage/reasoning token计数、可见输出长度与本地校验类别，不保存内部推理/原始response/上游任意标识。会话runtime接口只给模式、模型、四源配置/最近核查/核查中与已完成答使用状态，独立内存锁，无源调用/对象信息/审计权扩展。默认及可信low8192不变；436本地/三Node/五fixture通过，HTTP第二题3/3完成、第一题两拒绝一次partial，质量30/36已执行，剩余6受额度限制；回滚本分支实现，无数据或凭据迁移。
+
+
 2026-10-08 AUTH-028：用户明确“合并并提交到main，同时给出阶段性反馈”，批准本轮fix/targeted-closeout-20261008的定向known05、AUTH026合成自动新鲜度、AUTH027实际试用失败/人工UX反馈及本地operator辅助脚本和状态文档推送既有Stone441/AI-Bang2，经PR合并main。应用brain/scripts/tests/web保持cdbd62b字节；不上传ZIP/SQLite/.runtime/凭据/一次性ticket，不新增源写入、费用、服务启动或UX实现，不改变G1/G2。未push/merge为此前证据冻结快照，实际Git交付以此次PR状态和main commit为准。
 
 2026-10-08 用户试用反馈决定：两题均失败，停止进一步使用；等待计时/工作状态、模型和四源连接信息展示及整体简陋UX仅记录问题。用户明确本轮不进行改动，由ChatGPT Chat思考后给后续指导。保留cdbd62b/main基线与失败；结束此次临时49161实例，后续新启动仍按具体实例授权，8094/8100/G1/G2不变。

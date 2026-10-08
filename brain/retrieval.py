@@ -100,3 +100,26 @@ def bm25_windows(resources, query_tokens):
         if score:result[rid].append((score,start,end))
     return {rid:sorted(windows,key=lambda w:(-w[0],w[1]))[:3]
             for rid,windows in result.items()}
+
+# Decision/state vocabulary alone does not establish a shared subject. This is
+# query-relative local candidate relevance, never source access authorization.
+SUBJECT_NEUTRAL=set('approved approval general customer customers code fix complete completion preventive progress remains work status owner done current latest release decision scope date confirmed which why how whether only no not beyond all any supports supported support'.split())
+
+
+def subject_related(resources, query_tokens):
+    """Require a topic match when a question names a subject.
+
+    The engine may expand source-authored IDs only after authorizing each seed.
+    No title/probe-name rules, rewritten text or model call.
+    A question containing only generic state words retains the existing ranking.
+    """
+    anchors=query_tokens-SUBJECT_NEUTRAL
+    if not anchors:return resources
+    terms={r['id']:tokens(r['title'])|tokens(r['text']) for r in resources}
+    direct={rid for rid,value in terms.items() if value&anchors}
+    return [r for r in resources if r['id'] in direct]
+
+
+def source_identifiers(resource):
+    return {term for term in tokens(resource['title'])|tokens(resource['text'])
+            if re.fullmatch(r'[a-z][a-z0-9]{1,15}-[0-9]+',term)}

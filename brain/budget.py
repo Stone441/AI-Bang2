@@ -14,6 +14,10 @@ class BudgetExceeded(Exception):
     pass
 
 
+class TrialAdmissionPaused(BudgetExceeded):
+    """Specific operator trial attempts/cost/unknown gate, not USD20 exhaustion."""
+
+
 class BudgetLedger:
     APPROVED_MAX = 20_000_000  # AUTH-003: USD 20 equivalent pilot ceiling.
 

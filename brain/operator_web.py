@@ -49,6 +49,9 @@ class OperatorApp:
             self._single_source(reader, store, actor_id, live)
         self.engine, self.world, self.audit = self.pilot.engine, self.pilot.authority, self.pilot.audit
         self.request_lock=self.pilot.lock
+        from .run_state import SessionRuns
+        import threading
+        self.session_runs=SessionRuns();self.admission_lock=threading.Lock();self.active_queries=set()
         self.store, self.sessions = store, {}
         self._ticket = secrets.token_urlsafe(32)
         self._ticket_expires = time.monotonic() + 600

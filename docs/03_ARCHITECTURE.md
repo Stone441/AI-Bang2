@@ -511,3 +511,9 @@ Ranking uses local lexical overlap and a small explicit English alias map, up to
 2026-10-06 产品范围修订（用户批准，ADR-040）：独立问答取代自动追问；HTTP query仅接受question，history_id拒绝400。Engine旧本地harness位置参数仅兼容接收但不查询/补充任何历史依赖，审计history_id=null/query_kind=independent。取消Export answer及回答下载路由，覆盖此前关于用户导出的实现描述；历史、引用及原文版本仍重新鉴权，不取消安全断言。
 
 2026-10-07 DEV-BV-02 当前工作树选择：Engine默认本地binary-TF BM25，lexical显式回退；两者共用权限预过滤、16000字符/24证据预算、精确固定窗口及native逐阶段检查。BM25每问在本地visible窗口计算，不是持久全文索引、embedding、向量数据库或语义重排。实验/运行证据见business-validation-20261007；此前as-is词法段落为旧候选事实，尚未重启任何旧服务。
+
+### 2026-10-08增量契约（ADR-062，验证中）
+
+- `GET /api/runtime`：已验证session，返回`mode/model/sources/run`。四源只含`source/configured/mode/last_check_at/last_check_result/checking/used_in_answer`；run只含服务端request_id、真实phase/status、elapsed、安全error_code、完成答sources_used。无对象标题/数量/ID，轮询不调用源，不使用pilot/store长锁。
+- `POST /api/query`保持只接受question；服务端生成关联ID、禁止同session在途重复。失败响应仅安全code/message/request_id，不返回草稿。用户明确重新点击才可付费重试。
+- 新append-only `version_recovery`记录attempt/result/model_called，诊断附于模型事件：allowlist元数据和计数，不记录推理正文/原始输出。旧日志不改。

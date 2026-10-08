@@ -7,7 +7,7 @@ import time
 import uuid
 from urllib.parse import urlencode, urlsplit, parse_qs
 
-from .confluence import JsonTransport, SourceUnavailable, SourceRateLimited
+from .confluence import JsonTransport, SourceUnavailable, SourceRateLimited, SourceRefreshing
 from .contracts import Actor, now
 from .deepseek import marked_synthetic_text
 from .drive import BASE, ID
@@ -77,6 +77,7 @@ class ContainerDiscovery:
         self.failures={s:0 for s in self.scope}; self.due={s:0 for s in self.scope}
         self.offsets={s:0 for s in self.scope}
         self.last={}
+        self.checking=frozenset()
         self.background_started=False
         self.published_at={};self.published_versions={}
         a.discovery=self
@@ -269,6 +270,7 @@ class ContainerDiscovery:
             with self.pilot.lock:return copy.deepcopy(self.last)
 
     def _cycle(self, source):
+        self.checking=frozenset([source])
         started=self.clock();observed=now();budget=[0,0];staged={};resolved={};reads=0
         status='complete';reason=None;retry_after=0
         counter=NativeCounter(self.base_readers[source].transport,self.stop_event)
@@ -334,6 +336,7 @@ class ContainerDiscovery:
             self._finish_cycle(source,status,reason,retry_after,observed,budget,counter,staged,started,{},rid)
 
     def _finish_cycle(self, source, status, reason, retry_after, observed, budget, counter, staged, started, timing, rid):
+        self.checking=frozenset()
         store=self.pilot.engine.store
         delay=max(60,min(3600,60*2**min(self.failures[source],6)),retry_after)
         self.due[source]=self.clock()+delay
@@ -414,9 +417,11 @@ class ContainerDiscovery:
         if not self.bounded_queries or actor!=self.actor or not self.background_started:return None
         if (self.stop_event.is_set() or self.thread is None or not self.thread.is_alive()
                 or any(self.last.get(s,{}).get('status')!='complete'
-                       or s not in self.published_at or self.clock()-self.published_at[s]>120
+                       or s not in self.published_at
                        for s in self.scope)):
             raise SourceUnavailable('Current source coverage unavailable; retry later')
+        if any(self.clock()-self.published_at[s]>120 for s in self.scope):
+            raise SourceRefreshing('Current source snapshot is refreshing; try later')
         return {rid:version for source in self.scope
                 for rid,version in self.published_versions[source].items()}
 

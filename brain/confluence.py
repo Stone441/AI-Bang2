@@ -19,6 +19,10 @@ class SourceUnavailable(Exception):
     """Intentionally carries no upstream response or credential details."""
 
 
+class SourceRefreshing(SourceUnavailable):
+    """A previously complete local snapshot expired; no native allow is implied."""
+
+
 class SourceRateLimited(SourceUnavailable):
     def __init__(self, retry_after=60):
         self.retry_after = retry_after

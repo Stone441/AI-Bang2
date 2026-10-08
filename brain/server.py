@@ -3,6 +3,8 @@ import argparse
 import json
 import secrets
 import time
+import threading
+from .run_state import SessionRuns, runtime_status
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -91,7 +93,8 @@ def create_server(app, port=0):
             app=self.server.application
             try:
                 self.gate()
-                app.refresh()
+                path=unquote(urlparse(self.path).path)
+                if path not in ("/api/runtime", "/api/session", "/api/logout", "/api/health", "/", "/app.js", "/style.css"):app.refresh()
                 path=unquote(urlparse(self.path).path)
                 data={}
                 if method=='POST':
@@ -116,16 +119,48 @@ def create_server(app, port=0):
                 session,token=self.auth(); actor=session['actor']
                 if method=='POST' and not secrets.compare_digest(self.headers.get('X-CSRF-Token',''),session['csrf']):
                     raise PermissionError('Unavailable')
+                if method=='GET' and path=='/api/runtime':
+                    return self.send(200,runtime_status(app,actor,app.session_runs.snapshot(token)))
                 if method=='GET' and path=='/api/session':
                     return self.send(200,{'actor':actor.user_id,'csrf':session['csrf'],'mode':app.engine.mode})
                 if method=='POST' and path=='/api/logout':
+                    app.session_runs.discard(token)
                     del app.sessions[token]
                     return self.send(200,{'ok':True},cookie=f'{self.server.session_cookie_name}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0')
                 if method=='POST' and path=='/api/query':
                     if set(data)-{'question'}: raise ValueError('Unsupported query fields')
                     if time.monotonic()-session['last_query']<0.1: return self.send(429,{'error':'Please wait briefly before asking again.'})
                     session['last_query']=time.monotonic()
-                    result=app.engine.query(actor,data.get('question'))
+                    question=data.get('question')
+                    if not isinstance(question,str) or not question.strip() or len(question)>4000:
+                        raise ValueError('Invalid question')
+                    rid=app.session_runs.begin(token)
+                    try:
+                        result=app.engine.query(actor,data.get('question'),request_id=rid,
+                            progress=lambda phase:app.session_runs.phase(token,rid,phase))
+                    except Exception as error:
+                        from .deepseek import ModelUnavailable,ModelOutputRejected,ModelInputRejected
+                        from .budget import BudgetExceeded,TrialAdmissionPaused
+                        from .engine import VersionChanged
+                        from .confluence import SourceUnavailable,SourceRefreshing
+                        code=('model_price_review_required' if isinstance(error,PriceReviewRequired) else
+                              'trial_admission_paused' if isinstance(error,TrialAdmissionPaused) else
+                              'model_budget_unavailable' if isinstance(error,BudgetExceeded) else
+                              'model_input_rejected' if isinstance(error,ModelInputRejected) else
+                              'model_output_unavailable' if isinstance(error,ModelOutputRejected) else
+                              'model_request_unavailable' if isinstance(error,ModelUnavailable) else
+                              'source_refreshing' if isinstance(error,(VersionChanged,SourceRefreshing)) else 'source_unconfirmed')
+                        messages={'trial_admission_paused':'This trial is paused at its authorized attempt, cost or unknown-usage limit. Contact the operator; no new model call was made.',
+                                  'model_budget_unavailable':'The model budget is paused. Contact the operator before another attempt.',
+                                  'model_input_rejected':'This question cannot be sent within the approved model boundary. Contact the operator.',
+                                  'model_request_unavailable':'Model delivery or usage could not be confirmed. The budget reservation is retained. Contact the operator before another attempt.',
+                                  'model_output_unavailable':'The model output did not pass validation. No draft is shown. You may explicitly try again; this can incur another model charge.',
+                                  'source_refreshing':'Sources changed while this question was checked. Please wait briefly and explicitly try again.',
+                                  'source_unconfirmed':'Current access or source integrity could not be confirmed. Try later or contact the operator.',
+                                  'model_price_review_required':'The model needs a price review. Contact the operator; retrying will not resolve this.'}
+                        app.session_runs.finish(token,rid,code=code)
+                        return self.send(503,{'error':messages[code],'code':code,'request_id':rid})
+                    app.session_runs.finish(token,rid,result=result)
                     app.audit.append('response_dispatch_attempted',actor.user_id,result['request_id'],{'transport':'http','meaning':'server attempted dispatch, not user read'})
                     return self.send(200,result)
                 if method=='GET' and path.startswith('/api/evidence/'):
@@ -155,14 +190,33 @@ def create_server(app, port=0):
 
         def do_GET(self):
             app=self.server.application
+            if urlparse(self.path).path in ('/api/runtime','/api/session','/api/health','/','/app.js','/style.css'):
+                return self.dispatch('GET')
             with getattr(app,'request_lock',app.store.lock):
                 with app.store.lock:self.dispatch('GET')
         def do_POST(self):
             app=self.server.application
+            if urlparse(self.path).path=='/api/logout':return self.dispatch('POST')
+            # Admit one query per session before waiting on the query lock.
+            if urlparse(self.path).path=='/api/query':
+                try:
+                    self.gate();session,token=self.auth()
+                except PermissionError:return self.send(403,{'error':'Unavailable'})
+                with app.admission_lock:
+                    if token in app.active_queries:return self.send(409,{'error':'A question is already running.','code':'query_busy'})
+                    app.active_queries.add(token)
+                try:
+                    with getattr(app,'request_lock',app.store.lock):
+                        with app.store.lock:self.dispatch('POST')
+                finally:
+                    with app.admission_lock:app.active_queries.discard(token)
+                return
             with getattr(app,'request_lock',app.store.lock):
                 with app.store.lock:self.dispatch('POST')
     server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
     server.application=app
+    if app is not None:
+        app.session_runs=SessionRuns();app.admission_lock=threading.Lock();app.active_queries=set()
     # Cookies have no browser port isolation. Select only this bound server's
     # cookie; tokens from other operators and legacy cookies never authenticate.
     server.session_cookie_name=f'aibang2_session_{server.server_port}'
