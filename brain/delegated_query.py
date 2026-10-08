@@ -14,6 +14,7 @@ from .contracts import Decision, now
 from .engine import Engine
 from .store import canonical
 from .deepseek import marked_synthetic_text
+from .source_cooldown import SourceCooldownTransport
 
 
 class DelegatedAuthority:
@@ -24,6 +25,9 @@ class DelegatedAuthority:
         types = {'confluence': ConfluenceReader, 'jira': JiraReader, 'slack': SlackReader, 'drive': DriveReader}
         if any(not isinstance(reader, types[source]) for source, reader in self.readers.items()):
             raise ValueError('Reader source mapping mismatch')
+        for reader in self.readers.values():
+            if isinstance(reader.transport,JsonTransport) and not isinstance(reader.transport,SourceCooldownTransport):
+                reader.transport=SourceCooldownTransport(reader.transport)
         tenants = {r.tenant for r in self.readers.values()}
         if len(tenants) != 1:
             raise ValueError('Readers must belong to one tenant')

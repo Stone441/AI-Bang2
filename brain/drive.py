@@ -6,7 +6,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request
 
-from .confluence import Delegation, JsonTransport, SourceUnavailable
+from .confluence import Delegation, JsonTransport, SourceUnavailable, SourceRateLimited
 from .contracts import Decision, now
 
 BASE = 'https://www.googleapis.com/drive/v3'
@@ -30,7 +30,12 @@ class DriveTransport(JsonTransport):
                 if len(payload) > self.max_bytes: raise SourceUnavailable()
                 return 200, payload
         except HTTPError as error:
-            status = error.code; error.close()
+            status = error.code
+            retry = error.headers.get('Retry-After', '') if error.headers else ''
+            error.close()
+            if status == 429:
+                delay = int(retry) if isinstance(retry,str) and retry.isdecimal() and len(retry)<=5 else 60
+                raise SourceRateLimited(max(1,min(86400,delay))) from None
             return status, None
         except (URLError, OSError, ValueError):
             raise SourceUnavailable() from None
