@@ -75,5 +75,24 @@
     "new_unknown_reservations": [],
     "boundary": "Admission stops new questions at6 attempts, settled threshold, or new unknown usage; in-flight call completes. Not provider billing cap."
   },
-  "next": "Observe second team question and collect actual page error/usefulness feedback; original first failure remains failed."
+  "next": "Observe second team question and collect actual page error/usefulness feedback; original first failure remains failed.",
+  "prior_cli_comparison": {
+    "baseline": "evidence/runs/lock-contention-20261008/native-cooldown-final",
+    "cases": [
+      {
+        "question": "For the BV-20261007 Slack probe thread, which value is approved after the final correction, and which earlier correction does it supersede?",
+        "matches_trial_question": false,
+        "model_input_evidence_id_count": 13,
+        "request_id": "9f72eb6b78bf4597983334ddf4312a83"
+      },
+      {
+        "question": "Can we offer payment-retry to all customers now, does PAY-102 Done approve general availability, and what approved scope and confirmed release date can we communicate?",
+        "matches_trial_question": false,
+        "model_input_evidence_id_count": 15,
+        "request_id": "44c923bec29a474494cadbfb332d4cd7"
+      }
+    ],
+    "current_input_evidence_id_count": 16,
+    "boundary": "Prior two successful native CLI questions differ from actual broad mitigation question. They are not a matched-query baseline for this failure;13/15 vs16 inputs cannot isolate browser, new probes, or cap as cause."
+  }
 }
