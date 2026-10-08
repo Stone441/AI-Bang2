@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The ledger migration chose a shadow table to allow rollback without blocking existing writes.",
+        "evidence_ids": [
+          "BV-11@1#16000:17452"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-11@1#16000:17452",
+            "quote": "Current ledger migration decision\nLedger migration chose a shadow table to allow rollback without blocking existing writes."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "766f67b2-7d0c-405c-a189-b74e4699594e",
+      "object": "chat.completion",
+      "created": 1791443873,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The ledger migration chose a shadow table to allow rollback without blocking existing writes.\",\"evidence_ids\":[\"BV-11@1#16000:17452\"],\"supports\":[{\"evidence_id\":\"BV-11@1#16000:17452\",\"quote\":\"Current ledger migration decision\\nLedger migration chose a shadow table to allow rollback without blocking existing writes.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Why did ledger migration select a shadow table?\" Need output JSON claims. We need examine evidence. Evidence BV-11@1#16000:17452 contains \"Current ledger migration decision\\nLedger migration chose a shadow table to allow rollback without blocking existing writes.\" That directly answers. Need claim with evidence id and support quote. We need maybe only one claim. Check if question identifies business entity/event? \"ledger migration\" unspecified? Evidence has current ledger migration decision. It matches. So answer: Because it allows rollback without blocking existing writes. Need quote exact contiguous passage copied from evidence. Quote from text: \"Current ledger migration decision\\nLedger migration chose a shadow table to allow rollback without blocking existing writes.\" Or just sentence. Exact contiguous. Use evidence_id BV-11@1#16000:17452. supports with quote. No other claims needed. Ensure JSON schema. Claims array one. The claim text: \"The ledger migration chose a shadow table to allow rollback without blocking existing writes.\" That's supported. Evidence_ids exactly [\"BV-11@1#16000:17452\"]. Supports one.\n\nNeed ensure no extra. Use JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3164,
+        "completion_tokens": 331,
+        "total_tokens": 3495,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 245
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 2268
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "3cd045df-d7d3-4031-a62d-fe15b3ba4fca",
+      "object": "chat.completion",
+      "created": 1791443875,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only with question_covered and verdicts one per claim. Need analyze. We have question: \"Why did ledger migration select a shadow table?\" Claims: one claim says \"The ledger migration chose a shadow table to allow rollback without blocking existing writes.\" Evidence_ids [\"BV-11@1#16000:17452\"], supports quote.\n\nNeed judge supported and responsive. Evidence BV-11@1#16000:17452 text includes many archived migration rehearsal entries \"no current decision recorded.\" Then \"# Current ledger migration decision\\nLedger migration chose a shadow table to allow rollback without blocking existing writes.\" So claim matches exactly. Full factual claim follows from cited evidence? It names ledger migration selected shadow table reason. Evidence says current ledger migration decision: chose shadow table to allow rollback without blocking existing writes. Supported true. Responsive? Question asks why ledger migration select a shadow table. Claim answers reason. Yes true.\n\nQuestion_covered? Claims address every requested part? Question asks why. Claim gives reason. Yes true. Need exactly one verdict for claim. Ensure no other claims. So output JSON. But need consider any potential issue: evidence source title \"migration / Database design rationale\"; claim matches. No contradictions? There is BV-15 unapproved alternative about dual-region active writes proposed but not approved; accepted migration uses one writer. Not contradictory to shadow table reason. BV-13 rollback if settlement differences exceed five bps; BV-14 threshold; irrelevant. The claim says \"allow rollback without blocking existing writes.\" Evidence exactly. So supported true, responsive true. question_covered true.\n\nReturn only JSON object. Ensure schema."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3094,
+        "completion_tokens": 365,
+        "total_tokens": 3459,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 339
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 2582
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

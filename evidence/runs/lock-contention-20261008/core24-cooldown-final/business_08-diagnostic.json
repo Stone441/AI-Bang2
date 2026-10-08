@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification.",
+        "evidence_ids": [
+          "BV-08@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-08@1",
+            "quote": "Partner-led onboarding requires manual verification; direct onboarding supports automated verification."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "48d42a5a-e002-4e06-b91e-a23536ca6dc9",
+      "object": "chat.completion",
+      "created": 1791444576,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification.\",\"evidence_ids\":[\"BV-08@1\"],\"supports\":[{\"evidence_id\":\"BV-08@1\",\"quote\":\"Partner-led onboarding requires manual verification; direct onboarding supports automated verification.\"}]}]}",
+            "reasoning_content": "We need answer question: How does partner onboarding differ from direct onboarding? Evidence BV-08@1 directly states: \"Partner-led onboarding requires manual verification; direct onboarding supports automated verification.\" That answers difference. BV-28@1 about partner users may read approved integration eligibility guidance; incident details not public guidance. Not relevant to onboarding difference. So one claim. Need JSON. Claim text concise. Evidence_ids [\"BV-08@1\"]. supports with evidence_id same, quote exact passage. Quote can be entire sentence: \"Partner-led onboarding requires manual verification; direct onboarding supports automated verification.\" That's 98 chars? within 12-1200. Good. Return only JSON. Ensure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1062,
+        "completion_tokens": 205,
+        "total_tokens": 1267,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 141
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 166
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "4e94a769-5a62-495e-a1ad-b40509aad3ce",
+      "object": "chat.completion",
+      "created": 1791444578,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review evidence support and question coverage. We have question: \"How does partner onboarding differ from direct onboarding?\" Claims: one claim: \"Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification.\" Evidence_ids BV-08@1. Supports quote same.\n\nEvidence BV-08@1 text synthetic: \"[SYNTHETIC]\\nPartner-led onboarding requires manual verification; direct onboarding supports automated verification.\" source title integration / Partner channel rule. This directly supports claim. But need assess question coverage. Question asks difference. Claim states a difference: manual vs automated verification. This seems addresses explicit requested part? It answers how differs, at least one aspect. Need determine if all requested parts? Question broad \"How does partner onboarding differ from direct onboarding?\" No other requested parts. Claim supported true and responsive true. There is extra evidence BV-28 irrelevant. Need output JSON exactly with question_covered true, verdicts one for index 0 supported true responsive true. Ensure exactly one verdict for every supplied claim. No extra. Need be cautious synthetic but okay. However, maybe evidence is synthetic and title \"integration / Partner channel rule\", locator \"Partner channel rule\". The claim uses \"Partner-led onboarding\" vs evidence \"Partner-led onboarding\". Direct onboarding. It is supported by exact quote. Responsive because directly answers difference. So final.\n\nBut need think about any hidden nuance: \"How does partner onboarding differ from direct onboarding?\" Claim says \"Partner-led onboarding requires manual verification, whereas direct onboarding supports automated verification.\" That is a difference. Evidence is same sentence. It directly entails. Good.\n\nNeed output JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 970,
+        "completion_tokens": 360,
+        "total_tokens": 1330,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 334
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 202
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

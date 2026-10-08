@@ -1,0 +1,101 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "For payment-service failover, the cited runbook directs inspecting the payment-service timeout budget and following the approved failover procedure.",
+        "evidence_ids": [
+          "C-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-01@1",
+            "quote": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure."
+          }
+        ]
+      },
+      {
+        "text": "Completing PAY-102 still does not provide customer release approval; general availability (GA) is not approved, and code completion does not approve general customer release.",
+        "evidence_ids": [
+          "D-02@1",
+          "J-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          },
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "22c4de60-84ec-4496-ae95-5a8d2e1c87a6",
+      "object": "chat.completion",
+      "created": 1791443808,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"For payment-service failover, the cited runbook directs inspecting the payment-service timeout budget and following the approved failover procedure.\",\"evidence_ids\":[\"C-01@1\"],\"supports\":[{\"evidence_id\":\"C-01@1\",\"quote\":\"Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.\"}]},{\"text\":\"Completing PAY-102 still does not provide customer release approval; general availability (GA) is not approved, and code completion does not approve general customer release.\",\"evidence_ids\":[\"D-02@1\",\"J-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"},{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"}]}]}",
+            "reasoning_content": "We need answer question: During payment-service failover, what must already be checked, and what approval does completing PAY-102 still not provide? Need use evidence. Need parse.\n\nQuestion asks two parts: (1) During payment-service failover, what must already be checked? (2) What approval does completing PAY-102 still not provide?\n\nWe need find evidence. Evidence C-01: Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure. This likely says during failover, check timeout budget? \"inspect the payment-service timeout budget\" maybe must already be checked. But wording \"must already be checked\" perhaps from runbook? It says inspect. Need maybe \"payment-service timeout budget\" must be checked. We'll phrase scoped.\n\nPAY-102: J-02: PAY-102 code fix: Done. Code completion does not approve general customer release. D-02: Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval. So completing PAY-102 does not provide general customer release approval / general availability? Need answer: \"completing PAY-102 still does not provide general customer release approval.\" Also D-02 says controlled pilot approved, GA not approved, PAY-102 Done is not customer release approval. So likely \"general customer release approval\" or \"GA approval\". We need cite D-02 and J-02 maybe.\n\nNeed ensure claims concise, evidence_ids match supports. Use at most four claims. We can make two claims maybe: one for failover check, one for PAY-102 approval. Need include support quotes.\n\nLet's craft:\n\nClaim 1: During payment-service failover, the payment-service timeout budget must be inspected and the approved failover procedure followed. But question wording \"what must already be checked\" maybe \"timeout budget\" maybe \"inspect the payment-service timeout budget\". Does evidence say \"must already be checked\"? C-01 says \"inspect the payment-service timeout budget and follow the approved failover procedure.\" That is imperative. It doesn't say already. The question presupposes \"must already be checked\" maybe perhaps from failover precondition? But C-01 says inspect. We should preserve modality: \"Runbook v1 directs inspecting the payment-service timeout budget and following the approved failover procedure.\" We can say during payment-service failover, per runbook, inspect timeout budget and follow approved procedure. But question asks \"what must already be checked\" not exactly. Is there evidence about \"must already be checked\"? Maybe no. Could say evidence does not establish \"already checked\"; it records a runbook instruction to inspect. But we need answer. The runbook likely means timeout budget. Should we include qualification: \"The cited runbook says to inspect it, not that it must already have been checked.\" Hmm.\n\nNeed be precise: C-01 text: \"Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.\" It's an instruction. If question asks \"what must already be checked\", maybe answer: payment-service timeout budget. But \"must already be checked\" is stronger. The evidence does not explicitly say \"must already be checked\", only \"inspect\". We can claim: \"The payment-service runbook says to inspect the payment-service timeout budget and follow the approved failover procedure.\" That covers what is checked (timeout budget) and approved procedure. But question specifically \"must already be checked\" maybe no. We can say \"The cited runbook directs checking the payment-service timeout budget; it does not state 'already'.\" Hmm. Need avoid unsupported.\n\nSecond claim: \"Completing PAY-102 (code fix Done) does not provide general customer release approval; controlled pilot approved, GA not approved, PAY-102 Done is not customer release approval.\" Use D-02 quote: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" That directly answers. Maybe J-02: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" That also.\n\nQuestion: \"what approval does completing PAY-102 still not provide?\" Answer: general customer release approval or general availability approval. Evidence D-02 says \"PAY-102 Done is not customer release approval.\" So completing PAY-102 does not provide customer release approval. Also GA not approved. We can mention both? \"It does not provide customer release approval; general availability (GA) is not approved.\" That seems.\n\nNeed ensure every explicit identifier (PAY-102) appears in copied support quotes. In claim about PAY-102, if mention PAY-102, quote must contain PAY-102. D-02 quote has PAY-102. J-02 has PAY-102. Good. For C-01 no identifier? okay.\n\nNeed maybe include \"approved failover procedure\" must follow? Question \"what must already be checked\" maybe only timeout budget. Answer direct.\n\nWe need JSON with claims array. Each claim has text, evidence_ids, supports with evidence_id and quote. Use at most four citations per claim. At most four claims. We'll do two claims.\n\nClaim 1:\ntext: \"For payment-service failover, the cited runbook directs inspecting the payment-service timeout budget and following the approved failover procedure; it does not establish that the budget must already have been checked.\"\nevidence_ids: [\"C-01@1\"]\nsupports: [{evidence_id:\"C-01@1\", quote:\"Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.\"}]\nBut quote length? 94 chars? okay. This claim includes \"does not establish that the budget must already have been checked.\" Is that necessary qualification? The question presupposes \"must already be checked\"; if evidence only says inspect, we should clarify. But maybe might be seen as overcomplicating. We can phrase: \"The payment-service runbook says to inspect the payment-service timeout budget before/while following the approved failover procedure.\" But \"before\" not in text. \"and follow\" no order. Better: \"The payment-service runbook directs inspecting the payment-service timeout budget and following the approved failover procedure.\" That answers what is checked. No need \"already\". But question asks \"what must already be checked\" - if we don't address \"already\", maybe okay? We could say \"The cited runbook records a check of the payment-service timeout budget as part of failover; it does not use the phrase 'must already be checked'.\" Hmm.\n\nMaybe the answer expected: \"timeout budget\" and \"general customer release approval.\" Let's keep first claim simple and accurate.\n\nClaim 2:\ntext: \"Completing PAY-102 still does not provide customer release approval; general availability (GA) is not approved, and PAY-102 code fix Done does not approve general customer release.\"\nevidence_ids: [\"D-02@1\", \"J-02@1\"]\nsupports: [\n {evidence_id:\"D-02@1\", quote:\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"},\n {evidence_id:\"J-02@1\", quote:\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"}\n]\nNeed quote length okay. D-02 quote length ~122? Let's count: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" 118? okay under 1200. J-02 quote length ~89. Good.\n\nThis claim mentions \"customer release approval\" and \"general customer release\" and \"GA\". Supported. It also says \"controlled pilot approved\" not necessary? The question asks what approval does not provide; \"GA not approved\" and \"not customer release approval.\" Controlled pilot approved maybe background? Could omit to be concise. But D-02 quote includes it; okay. Maybe claim text: \"Completing PAY-102 still does not provide general customer release approval; general availability (GA) is not approved.\" That covers. We could include \"controlled pilot approved\" as context? Not asked. Better omit.\n\nClaim 2 text: \"Completing PAY-102 still does not provide customer release approval; general availability (GA) is not approved, and code completion does not approve general customer release.\"\nSupports same.\n\nNeed ensure \"PAY-102\" appears in text and quote. Yes.\n\nCould maybe combine into one claim? Question has two parts; two claims appropriate.\n\nPotential issue: \"what must already be checked\" maybe there is another evidence BV? But no. C-01 only. The runbook says inspect timeout budget. Good.\n\nNeed final JSON only. Use exact schema. No markdown. Ensure no trailing commas. Let's produce.\n\nBut let's examine if there is any other relevant: D-01 final root cause: retry configuration mismatched timeout budget. That supports timeout budget relevance. But question asks during failover what must already be checked. Maybe could say \"timeout budget\". C-01 enough.\n\nWhat about PAY-102 approval: D-02 says \"controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" J-02 says \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Perfect.\n\nNeed maybe include \"payload: The cited runbook directs inspecting the payment-service timeout budget and following the approved failover procedure.\" That's direct.\n\nLet's craft final.\n\nCheck evidence_ids exactly equal supports evidence_id values. Claim1 evidence_ids [\"C-01@1\"], supports evidence_id C-01@1. Claim2 evidence_ids [\"D-02@1\",\"J-02@1\"], supports D-02@1 and J-02@1. Good.\n\nNo extra ids. Good.\n\nFinal JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2268,
+        "completion_tokens": 2271,
+        "total_tokens": 4539,
+        "prompt_tokens_details": {
+          "cached_tokens": 2048
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2065
+        },
+        "prompt_cache_hit_tokens": 2048,
+        "prompt_cache_miss_tokens": 220
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "7f214ea0-ccf6-454b-8e80-c6f9bd937f17",
+      "object": "chat.completion",
+      "created": 1791443818,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review claims vs evidence and question. Need determine question_covered and verdicts for each claim. We need parse.\n\nQuestion: \"During payment-service failover, what must already be checked, and what approval does completing PAY-102 still not provide?\"\n\nThis has two requested parts:\n1. During payment-service failover, what must already be checked? Likely runbook says inspect payment-service timeout budget and follow approved failover procedure. Claim 1 addresses.\n2. What approval does completing PAY-102 still not provide? Evidence D-02 says PAY-102 Done is not customer release approval; GA not approved. J-02 says code completion does not approve general customer release. Claim 2 addresses.\n\nNeed assess claims.\n\nClaim 1: \"For payment-service failover, the cited runbook directs inspecting the payment-service timeout budget and following the approved failover procedure.\"\nEvidence C-01@1: \"[SYNTHETIC] Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.\" source title Payment-service runbook, section Failover procedure. This supports. It answers first part? \"what must already be checked\" — inspecting timeout budget and follow approved failover procedure. Note \"already be checked\" maybe \"inspect timeout budget\". Yes.\n\nClaim 2: \"Completing PAY-102 still does not provide customer release approval; general availability (GA) is not approved, and code completion does not approve general customer release.\"\nEvidence D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" J-02: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Supports all parts. Scope: PAY-102, customer release approval, GA not approved. Yes.\n\nNeed ensure full factual claim follows. Could there be issue: \"completing PAY-102\" vs \"PAY-102 Done\" and \"code fix Done\". Yes.\n\nQuestion coverage: both requested parts covered by claims. So true.\n\nNeed output exactly one verdict for every supplied claim: index 0 and 1. supported and responsive.\n\nClaim1 responsive true? It answers \"what must already be checked\" during failover. Yes. Claim2 responsive true? Answers approval not provided. Yes.\n\nNeed JSON only. Use schema. {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true}]}\n\nDouble-check any subtlety? The claim 1 mentions \"following approved failover procedure\" but question asks \"what must already be checked\" perhaps \"what must already be checked\" includes \"timeout budget\" and \"approved failover procedure\" maybe not checked. But evidence directs both. responsive. Claim says \"cited runbook directs inspecting ... and following ...\" That matches.\n\nClaim2: It says \"general availability (GA) is not approved\" supported by D-02. \"code completion does not approve general customer release\" supported J-02. \"Completing PAY-102 still does not provide customer release approval\" supported D-02. Good.\n\nNo contradictions? Evidence C-02 also supports but not used. Fine.\n\nNeed final JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2329,
+        "completion_tokens": 719,
+        "total_tokens": 3048,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 681
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 1689
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

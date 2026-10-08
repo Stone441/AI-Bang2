@@ -38,9 +38,14 @@ class Engine:
 
     def check(self, actor, resource, request_id, phase):
         decision=self.world.adapter(resource['source']).check_read(actor,resource['id'])
+        self.record_check(actor,resource,request_id,phase,decision)
+        return self.check_result(actor,phase,decision)
+
+    def record_check(self, actor, resource, request_id, phase, decision):
         self.audit.append('authorization_decided',actor.user_id,request_id,
                           {'resource_id':resource['id'],'source':resource['source'],'version':resource['version'],
                            'phase':phase,'resource_scope':'payment-service',**asdict(decision)})
+    def check_result(self, actor, phase, decision):
         discovery=getattr(self.world,'discovery',None)
         if (decision.result=='unknown' and phase!='preview'
                 and getattr(self.model,'claim_format',None)=='grounded_synthesis_v1'):
@@ -55,6 +60,16 @@ class Engine:
             from .confluence import SourceUnavailable
             raise SourceUnavailable('Current source coverage unavailable; retry later')
         return decision.result=='allow'
+
+    def checks(self, actor, resources, request_id, phase):
+        batch=getattr(self.world,'check_many',None)
+        discovery=getattr(self.world,'discovery',None)
+        if not (batch and discovery and discovery.bounded_queries and discovery.background_started
+                and actor==discovery.actor):
+            return [self.check(actor,r,request_id,phase) for r in resources]
+        decisions=batch(actor,resources,phase=phase)
+        for r,decision in zip(resources,decisions):self.record_check(actor,r,request_id,phase,decision)
+        return [self.check_result(actor,phase,decision) for decision in decisions]
 
     def query(self, actor:Actor, question, history_id=None):
         self.validate_actor(actor)
@@ -107,7 +122,9 @@ class Engine:
             selected=[]; budget=16000
             for score,r in candidates[:24]:
                 self.audit.append('candidate_evaluated',actor.user_id,rid,{'resource_id':r['id'],'source':r['source'],'score':score,'resource_scope':'payment-service'})
-                if not self.check(actor,r,rid,'before_model'): continue
+            allowed=self.checks(actor,[r for _,r in candidates[:24]],rid,'before_model')
+            for (score,r),can_read in zip(candidates[:24],allowed):
+                if not can_read: continue
                 current=self.world.resources[r['id']]
                 if current['version']!=r['version'] or not current['active']: continue
                 for _,start,end in rank(r,supplementary=True):
@@ -119,15 +136,16 @@ class Engine:
             # Recheck the complete selected set immediately before model dispatch.
             # A later candidate read may have observed a permission/content change.
             def authorize_selected(phase):
-                checked=set()  # Request/phase local; never reuse a prior stage's allow.
+                resources={}
                 for e in selected:
                     resource=self.store.get(e.resource_id)
-                    key=(e.resource_id,e.version)
-                    if (not resource or resource['version']!=e.version
-                            or (key not in checked and not self.check(actor,resource,rid,phase))
-                            or self.world.resources[e.resource_id]['version']!=e.version):
+                    if not resource or resource['version']!=e.version:
                         raise PermissionError('Evidence changed; please ask again')
-                    checked.add(key)
+                    resources[(e.resource_id,e.version)]=resource
+                allowed=self.checks(actor,list(resources.values()),rid,phase)
+                if not all(allowed) or any(self.world.resources[rid]['version']!=version
+                                          for rid,version in resources):
+                    raise PermissionError('Evidence changed; please ask again')
             authorize_selected('model_dispatch')
             for e in selected:
                 self.audit.append('evidence_used',actor.user_id,rid,{'evidence_id':e.evidence_id,'resource_id':e.resource_id,'source':e.source,'version':e.version,'stage':'prepared_for_answer','resource_scope':'payment-service'})

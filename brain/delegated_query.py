@@ -1,6 +1,8 @@
 """Shared trusted-operator query boundary; this is not a browser login endpoint."""
 import json
 import threading
+from concurrent.futures import ThreadPoolExecutor
+from contextvars import copy_context
 from dataclasses import asdict
 
 from .audit import Audit
@@ -12,6 +14,7 @@ from .contracts import Decision, now
 from .engine import Engine
 from .store import canonical
 from .deepseek import marked_synthetic_text
+from .source_cooldown import SourceCooldownTransport
 
 
 class DelegatedAuthority:
@@ -22,6 +25,9 @@ class DelegatedAuthority:
         types = {'confluence': ConfluenceReader, 'jira': JiraReader, 'slack': SlackReader, 'drive': DriveReader}
         if any(not isinstance(reader, types[source]) for source, reader in self.readers.items()):
             raise ValueError('Reader source mapping mismatch')
+        for reader in self.readers.values():
+            if isinstance(reader.transport,JsonTransport) and not isinstance(reader.transport,SourceCooldownTransport):
+                reader.transport=SourceCooldownTransport(reader.transport)
         tenants = {r.tenant for r in self.readers.values()}
         if len(tenants) != 1:
             raise ValueError('Readers must belong to one tenant')
@@ -117,22 +123,75 @@ class DelegatedAuthority:
             raise ValueError('Unconfigured source')
         return self
 
-    def check_read(self, actor, resource_id):
-        resource = self.resources.get(resource_id)
-        if not resource or actor.tenant != self.tenant:
-            return Decision('unknown', now(), 'delegated-pilot-unmapped', 0)
-        source, native_id = resource['source'], resource['native_id']
-        reader = self.readers.get(source)
-        dynamic = self.discovered_ids.get(actor.user_id, {}).get(source, frozenset())
+    def _checked_read(self, actor, resource, reader, dynamic):
+        source,native_id=resource['source'],resource['native_id']
         if reader is None or native_id not in self.native_ids[source] | dynamic:
-            return Decision('unknown', now(), 'delegated-pilot-unmapped', 0)
-        decision, content = self.read_current(actor,source,native_id,resource['version'])
-        if decision.result == 'allow':
-            if (content is None or not self.same_content(resource, content)
-                    or (native_id in dynamic and not marked_synthetic_text(content['text'],source))):
-                return Decision('deny', now(), source + '-content-changed', 0)
-            self.resources[resource_id] = self.resource(content, actor.tenant, resource)
+            return Decision('unknown',now(),'delegated-pilot-unmapped',0),None
+        if source=='slack' and native_id in dynamic:
+            parent=reader.messages.get(native_id)
+            if parent is not None:
+                root=native_id.split('/')[0]+'/'+parent
+                decision,content=reader.read(actor,root)
+                if decision.result!='allow' or content is None or not marked_synthetic_text(content['text'],source):
+                    return Decision('unknown',now(),'discovered-thread-parent-unavailable',0),None
+        decision,content=reader.read(actor,native_id,resource['version'])
+        if decision.result=='allow' and (content is None or not self.same_content(resource,content)
+                or (native_id in dynamic and not marked_synthetic_text(content['text'],source))):
+            return Decision('deny',now(),source+'-content-changed',0),None
+        return decision,content
+
+    def check_read(self, actor, resource_id):
+        resource=self.resources.get(resource_id)
+        if not resource or actor.tenant!=self.tenant:
+            return Decision('unknown',now(),'delegated-pilot-unmapped',0)
+        source=resource['source']
+        decision,content=self._checked_read(actor,resource,self.readers.get(source),
+            self.discovered_ids.get(actor.user_id,{}).get(source,frozenset()))
+        if decision.result=='allow':self.resources[resource_id]=self.resource(content,actor.tenant,resource)
         return decision
+
+    def check_many(self, actor, resources, *, phase):
+        """One serial lane per source, at most four; caller holds pilot.lock.
+
+        Workers only read request-local mappings/content. All mutable authority
+        updates and ordered audit writes remain on the requesting thread.
+        No cached allow, retry, smaller evidence set or within-source fanout.
+        """
+        discovery=getattr(self,'discovery',None)
+        if not (discovery and discovery.bounded_queries and discovery.background_started
+                and actor==discovery.actor):
+            return [self.check_read(actor,r['id']) for r in resources]
+        groups={}
+        for index,r in enumerate(resources):
+            resource=dict(self.resources[r['id']])
+            source=resource['source']
+            groups.setdefault(source,[]).append((index,resource))
+        readers=dict(self.readers)
+        dynamic=dict(self.discovered_ids.get(actor.user_id,{}))
+        def lane(source,items):
+            results=[];unavailable=False
+            for i,r in items:
+                if unavailable:
+                    decision,content=Decision('unknown',now(),'source-lane-not-attempted',0),None
+                else:
+                    try:decision,content=self._checked_read(actor,r,readers[source],dynamic.get(source,frozenset()))
+                    except Exception:
+                        decision,content=Decision('unknown',now(),'source-lane-unavailable',0),None
+                # Unknown (including rate limiting) ends this lane, never retries
+                # or proceeds to more objects after the source becomes unavailable.
+                unavailable=decision.result=='unknown'
+                results.append((i,r,decision,content))
+            return results
+        results=[]
+        with ThreadPoolExecutor(max_workers=min(4,len(groups)) or 1) as pool:
+            futures=[pool.submit(copy_context().run,lane,source,items) for source,items in groups.items()]
+            for future in futures:results.extend(future.result())
+        ordered=sorted(results,key=lambda item:item[0]);decisions=[]
+        for _,resource,decision,content in ordered:
+            if decision.result=='allow':
+                self.resources[resource['id']]=self.resource(content,actor.tenant,resource)
+            decisions.append(decision)
+        return decisions
 
 
 class DelegatedQueryPilot:

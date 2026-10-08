@@ -73,6 +73,7 @@ class ContainerDiscovery:
             raise ValueError('Existing mappings must fit exact approved containers')
         self.base_readers = dict(a.readers)
         self.stop_event=threading.Event(); self.thread=None
+        self.cycle_lock=threading.Lock()  # Serialize poll/manual cycles, never native I/O with request lock.
         self.failures={s:0 for s in self.scope}; self.due={s:0 for s in self.scope}
         self.offsets={s:0 for s in self.scope}
         self.last={}
@@ -247,20 +248,25 @@ class ContainerDiscovery:
                         mappings[self.scope[source]+'/'+ts]=parent
         return mappings
 
-    def _disable(self, source, native):
-        a=self.pilot.authority;rid=source+':'+native
-        with self.pilot.engine.store.transaction() as db:
-            db.execute('UPDATE resources SET active=0 WHERE id=?',(rid,))
-        if rid in a.resources:a.resources[rid]=dict(a.resources[rid],active=False)
-        for snapshot in a.snapshots.values():snapshot.pop(rid,None)
+    def _disable(self, source, native, baseline):
+        # Deny/unknown stops local eligibility immediately, before further I/O.
+        with self.pilot.lock:
+            a=self.pilot.authority;rid=source+':'+native
+            row=self.pilot.engine.store.db.execute('SELECT version,active FROM resources WHERE id=?',(rid,)).fetchone()
+            state=(row['version'],row['active']) if row else None
+            if state!=baseline.get(rid):raise DiscoveryFailure('publication_superseded')
+            with self.pilot.engine.store.transaction() as db:
+                db.execute('UPDATE resources SET active=0 WHERE id=?',(rid,))
+            if rid in a.resources:a.resources[rid]=dict(a.resources[rid],active=False)
+            for snapshot in a.snapshots.values():snapshot.pop(rid,None)
 
     def run_once(self):
-        with self.pilot.lock:
+        with self.cycle_lock:
             for source in sorted(self.scope):
                 if self.stop_event.is_set():break
                 if self.clock()<self.due[source]:continue
                 self._cycle(source)
-            return copy.deepcopy(self.last)
+            with self.pilot.lock:return copy.deepcopy(self.last)
 
     def _cycle(self, source):
         started=self.clock();observed=now();budget=[0,0];staged={};resolved={};reads=0
@@ -270,7 +276,11 @@ class ContainerDiscovery:
         try:
             reader=copy.copy(self.base_readers[source]);reader.transport=counter
             credential=self._credential(source,reader)
-            mappings=self._known(source);previously_known=set(mappings)
+            with self.pilot.lock:
+                mappings=self._known(source)
+                baseline={row['id']:(row['version'],row['active']) for row in store.db.execute(
+                    'SELECT id,version,active FROM resources')}
+            previously_known=set(mappings)
             self._list(source,reader,credential,mappings,budget)
             listed=self.clock()
             expanded=self._reader(source,mappings,counter)
@@ -288,14 +298,14 @@ class ContainerDiscovery:
                     root=native.split('/')[0]+'/'+parent
                     decision,original=expanded.read(self.actor,root)
                     if decision.result!='allow' or original is None or not marked_synthetic_text(original['text'],source):
-                        self._disable(source,native)
+                        self._disable(source,native,baseline)
                         if decision.result=='unknown':raise DiscoveryFailure('parent_unavailable')
                         if native in previously_known:resolved[native]=mappings[native]
                         continue
                 if budget[1]>=100:status='backlog';reason='object_backlog';break
                 reads+=1;budget[1]+=1;decision,content=expanded.read(self.actor,native)
                 if decision.result!='allow' or content is None:
-                    self._disable(source,native)
+                    self._disable(source,native,baseline)
                     if decision.result=='unknown':raise DiscoveryFailure('native_read_unknown')
                     if native in previously_known:resolved[native]=mappings[native]
                     continue
@@ -303,51 +313,34 @@ class ContainerDiscovery:
                         or not marked_synthetic_text(content['text'],source)
                         or (native not in previously_known and source in ('confluence','jira','drive')
                             and not candidate_label(source,content['title']))):
-                    self._disable(source,native)
+                    self._disable(source,native,baseline)
                     if native in previously_known:resolved[native]=mappings[native]
                     continue
                 resource=a.resource(content,self.actor.tenant)
                 resource['observed_at']=observed;resource['source_confirmed_at']=content['source_updated_at']
-                current=store.get(resource['id'])
-                if current and source in ('confluence','drive') and content['version']<current['version']:
-                    raise DiscoveryFailure('version_regressed')
-                if current and a.same_content(current,content):
-                    resource['indexed_at']=current['indexed_at']
-                    resource['observed_at']=current.get('observed_at',observed)
                 staged[native]=resource;resolved[native]=mappings[native]
             fetched=self.clock()
-            # Persist source publication intent before making objects queryable.
-            self.pilot.audit.append('source_changed',self.actor.user_id,rid,
-                {'source':source,'resource_scope':'payment-service','phase':'discovery_publication_prepared',
-                 'observed_at':observed,'objects':[r['id'] for r in staged.values()]})
-            # All changes/catalog become current together; errors roll back publication.
-            with store.transaction() as db:
-                for native,resource in staged.items():
-                    old=db.execute('SELECT body FROM versions WHERE id=? AND version=?',(resource['id'],resource['version'])).fetchone()
-                    if old and not a.same_content(json.loads(old[0]),resource):raise DiscoveryFailure('version_collision')
-                    db.execute('INSERT INTO resources VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET version=excluded.version,active=excluded.active,body=excluded.body',
-                               (resource['id'],resource['version'],1,canonical(resource)))
-                    db.execute('INSERT OR IGNORE INTO versions VALUES(?,?,?)',(resource['id'],resource['version'],canonical(resource)))
-                for native,mapping in resolved.items():
-                    db.execute('INSERT INTO discovery_catalog VALUES(?,?,?,?) ON CONFLICT(actor,source,native_id) DO UPDATE SET mapping=excluded.mapping',
-                               (self.actor.user_id,source,native,canonical(mapping)))
-            # Rebuild expanded reader from committed IDs only; unvalidated candidates never grant read access.
-            committed=self._known(source);a.readers[source]=self._reader(source,committed)
-            dynamic=frozenset(committed)-a.native_ids[source]
-            a.discovered_ids.setdefault(self.actor.user_id,{})[source]=dynamic
-            a.approved_synthetic_resource_ids=frozenset(a.approved_synthetic_resource_ids)|frozenset(source+':'+i for i in staged)
-            for native,resource in staged.items():a.resources[resource['id']]=resource
-            if status=='complete':
-                self.published_at[source]=self.clock()
-                self.published_versions[source]={r['id']:r['version'] for r in staged.values()}
-            self.failures[source]=0
-            timing={'listing_seconds':listed-started,'read_seconds':fetched-listed,'publish_seconds':self.clock()-fetched}
+            with self.pilot.lock:
+                self._publish(source,staged,resolved,observed,rid,baseline)
+                self.failures[source]=0
+                timing={'listing_seconds':listed-started,'read_seconds':fetched-listed,'publish_seconds':self.clock()-fetched}
+                self._finish_cycle(source,status,reason,retry_after,observed,budget,counter,staged,started,timing,rid)
+            return
         except Exception as error:
             status='failed';reason=error.code if isinstance(error,DiscoveryFailure) else 'discovery_unavailable'
             retry_after=error.retry_after if isinstance(error,(DiscoveryFailure,SourceRateLimited)) else 0
-            self.failures[source]+=1;timing={}
+            self.failures[source]+=1
+        with self.pilot.lock:
+            self._finish_cycle(source,status,reason,retry_after,observed,budget,counter,staged,started,{},rid)
+
+    def _finish_cycle(self, source, status, reason, retry_after, observed, budget, counter, staged, started, timing, rid):
+        store=self.pilot.engine.store
         delay=max(60,min(3600,60*2**min(self.failures[source],6)),retry_after)
         self.due[source]=self.clock()+delay
+        # Invalidate eligibility before audit/store writes; a failed report cannot
+        # leave an older complete snapshot looking healthy after partial work.
+        self.last[source]={'status':'failed'}
+        self.published_at.pop(source,None);self.published_versions.pop(source,None)
         prior=store.db.execute('SELECT body FROM discovery_state WHERE actor=? AND source=?',(self.actor.user_id,source)).fetchone()
         checkpoint=json.loads(prior[0]).get('last_successful_checkpoint_at') if prior else None
         report={'source':source,'actor':self.actor.user_id,'scope':self.scope[source],'status':status,'reason':reason,
@@ -360,6 +353,47 @@ class ContainerDiscovery:
             db.execute('INSERT INTO discovery_state VALUES(?,?,?) ON CONFLICT(actor,source) DO UPDATE SET body=excluded.body',
                        (self.actor.user_id,source,canonical(report)))
         self.last[source]=report
+        if status=='complete':
+            self.published_at[source]=self.clock()
+            self.published_versions[source]={r['id']:r['version'] for r in staged.values()}
+
+    def _publish(self, source, staged, resolved, observed, rid,baseline):
+        """Caller holds pilot.lock; no native I/O in this atomic publication."""
+        if self.stop_event.is_set():raise DiscoveryFailure('stopped')
+        a=self.pilot.authority;store=self.pilot.engine.store
+        for resource in staged.values():
+            content=resource
+            current=store.get(resource['id'])
+            if current and source in ('confluence','drive') and content['version']<current['version']:
+                raise DiscoveryFailure('version_regressed')
+            row=store.db.execute('SELECT version,active FROM resources WHERE id=?',(resource['id'],)).fetchone()
+            state=(row['version'],row['active']) if row else None
+            if state!=baseline.get(resource['id']) and (not current or not a.same_content(current,content)):
+                raise DiscoveryFailure('publication_superseded')
+            if current and a.same_content(current,content):
+                resource['indexed_at']=current['indexed_at']
+                resource['observed_at']=current.get('observed_at',observed)
+        # Persist source publication intent before making objects queryable.
+        self.pilot.audit.append('source_changed',self.actor.user_id,rid,
+            {'source':source,'resource_scope':'payment-service','phase':'discovery_publication_prepared',
+             'observed_at':observed,'objects':[r['id'] for r in staged.values()]})
+        # All changes/catalog become current together; errors roll back publication.
+        with store.transaction() as db:
+            for native,resource in staged.items():
+                old=db.execute('SELECT body FROM versions WHERE id=? AND version=?',(resource['id'],resource['version'])).fetchone()
+                if old and not a.same_content(json.loads(old[0]),resource):raise DiscoveryFailure('version_collision')
+                db.execute('INSERT INTO resources VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET version=excluded.version,active=excluded.active,body=excluded.body',
+                           (resource['id'],resource['version'],1,canonical(resource)))
+                db.execute('INSERT OR IGNORE INTO versions VALUES(?,?,?)',(resource['id'],resource['version'],canonical(resource)))
+            for native,mapping in resolved.items():
+                db.execute('INSERT INTO discovery_catalog VALUES(?,?,?,?) ON CONFLICT(actor,source,native_id) DO UPDATE SET mapping=excluded.mapping',
+                           (self.actor.user_id,source,native,canonical(mapping)))
+        # Rebuild expanded reader from committed IDs only; unvalidated candidates never grant read access.
+        committed=self._known(source);a.readers[source]=self._reader(source,committed)
+        dynamic=frozenset(committed)-a.native_ids[source]
+        a.discovered_ids.setdefault(self.actor.user_id,{})[source]=dynamic
+        a.approved_synthetic_resource_ids=frozenset(a.approved_synthetic_resource_ids)|frozenset(source+':'+i for i in staged)
+        for native,resource in staged.items():a.resources[resource['id']]=resource
 
     def start(self):
         if self.thread is not None:raise ValueError('Discovery already started')

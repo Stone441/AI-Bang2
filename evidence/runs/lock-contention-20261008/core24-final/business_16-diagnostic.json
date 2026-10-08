@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No, DNS was not the cause of the webhook backlog; the backlog came from an exhausted worker pool, not DNS resolution.",
+        "evidence_ids": [
+          "BV-16@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-16@1",
+            "quote": "The webhook backlog came from an exhausted worker pool, not DNS resolution."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "12a2d09b-ab4f-4c8e-8b0d-9106c5004e79",
+      "object": "chat.completion",
+      "created": 1791443891,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No, DNS was not the cause of the webhook backlog; the backlog came from an exhausted worker pool, not DNS resolution.\",\"evidence_ids\":[\"BV-16@1\"],\"supports\":[{\"evidence_id\":\"BV-16@1\",\"quote\":\"The webhook backlog came from an exhausted worker pool, not DNS resolution.\"}]}]}",
+            "reasoning_content": "We need answer: Was DNS the cause of webhook backlog? Evidence: BV-16 says webhook backlog came from exhausted worker pool, not DNS resolution. So answer no. We need return JSON claims. Need cite evidence. Use claim text concise. Evidence_ids must exactly match supports. We can one claim: No, DNS was not the cause; the webhook backlog came from an exhausted worker pool, not DNS resolution. Support quote from BV-16@1 exact: \"The webhook backlog came from an exhausted worker pool, not DNS resolution.\" That supports. Need maybe also note BV-11 says DNS was historical hypothesis, but not needed. Question asks cause. We can use BV-16 only. Ensure claim text English. JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2141,
+        "completion_tokens": 229,
+        "total_tokens": 2370,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 151
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 1245
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "0388edf2-5493-4b5e-832d-9b42fde8eb24",
+      "object": "chat.completion",
+      "created": 1791443892,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: Was DNS the cause of webhook backlog? Claim: No, DNS was not cause; backlog came from exhausted worker pool, not DNS resolution. Evidence BV-16@1 quote exactly same. Supported? Yes. Responsive? Yes answers question. Need question_covered true? Claims address requested part. Only one claim. It says no and cause. Supported by evidence. Need verdicts index 0 supported true responsive true. Need ensure no issue: Evidence synthetic says webhook backlog came from exhausted worker pool, not DNS resolution. Claim matches. So JSON.\n\nNeed include exactly one verdict for every supplied claim. Question covered true. Verdicts array. Ensure JSON valid."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2063,
+        "completion_tokens": 174,
+        "total_tokens": 2237,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 148
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1551
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

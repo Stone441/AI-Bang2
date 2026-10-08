@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and its owner is Lena.",
+        "evidence_ids": [
+          "BV-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-02@1",
+            "quote": "AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "655cb51d-dd2b-484c-912c-4ac6784823e9",
+      "object": "chat.completion",
+      "created": 1791444548,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and its owner is Lena.\",\"evidence_ids\":[\"BV-02@1\"],\"supports\":[{\"evidence_id\":\"BV-02@1\",\"quote\":\"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\"}]}]}",
+            "reasoning_content": "We need answer question: What blocks AUTH-204 and who owns it? Need return JSON claims. We have evidence. BV-02@1: AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena. That directly answers both parts. BV-21@1 not relevant. Need claim with evidence_ids and supports quote exact contiguous passage. We should use one claim covering both: \"AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and its owner is Lena.\" Need support quote from BV-02@1. Evidence text includes [SYNTHETIC]\\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena. We can quote exact contiguous passage maybe \"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\" That includes identifier. Need evidence_ids [\"BV-02@1\"] and supports [{\"evidence_id\":\"BV-02@1\",\"quote\":\"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\"}] Ensure quote 12-1200 chars. Yes. One claim. Need check if question identifies business entity or event? It identifies ticket AUTH-204. Evidence covers it. So fine. Return JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1065,
+        "completion_tokens": 340,
+        "total_tokens": 1405,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 264
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 169
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "f9ea5d01-e1de-4d36-ae07-46f033274928",
+      "object": "chat.completion",
+      "created": 1791444550,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review evidence support and question coverage. We need parse. Question: \"What blocks AUTH-204 and who owns it?\" Claims: one claim: \"AUTH-204 is blocked because mobile clients cannot refresh expired tokens, and its owner is Lena.\" Evidence BV-02@1 exactly says \"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\" So supported true. Responsive true? It answers both blocks and owner. Question covered true if claims address every requested part supported by supplied evidence. There is one claim covering what blocks and owner. So question_covered true. Verdict index 0 supported true responsive true. Need JSON only exactly schema. Ensure valid JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 985,
+        "completion_tokens": 177,
+        "total_tokens": 1162,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 151
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 217
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

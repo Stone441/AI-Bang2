@@ -1,0 +1,342 @@
+{
+  "implementation_commit": "cdbd62b339f8a85f726514c49dad668bb4016322",
+  "review_type": "readonly_manual_semantic_review_with_structural_quote_audit_receipt_checks",
+  "reviewed_at_utc": "2026-10-08T07:41:38.169607+00:00",
+  "evaluation_scope": "Original author-development 24 plus previously known 12 plus same native 2; not blind evaluation. Final artifacts reviewed independently; no live calls or reruns for this review.",
+  "configuration": {
+    "synthesis": "v10",
+    "reasoning_effort": "low",
+    "output_token_cap": 8192,
+    "effective_temperature": null
+  },
+  "case_sets": [
+    {
+      "directory": "core24-cooldown-final",
+      "cases": [
+        {
+          "id": "cause",
+          "question": "What caused the payment-service duplicate requests?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "withdrawn",
+          "question": "Which payment-service explanation was withdrawn?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "followup",
+          "question": "What is the payment-service safeguard status and owner?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "release",
+          "question": "Does PAY-102 Done authorize general customer release?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "no_information",
+          "question": "unfindablebusinesszebra",
+          "classification": "reasonable_no_accessible_evidence",
+          "note": "No business claim or restricted evidence disclosed."
+        },
+        {
+          "id": "restricted",
+          "question": "CANARY_BV_RESTRICTED",
+          "classification": "reasonable_no_accessible_evidence",
+          "note": "No business claim or restricted evidence disclosed."
+        },
+        {
+          "id": "business_01",
+          "question": "Why does token rotation preserve sessions?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_02",
+          "question": "What blocks AUTH-204 and who owns it?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_03",
+          "question": "Which authentication signing proposal was rejected?",
+          "classification": "reasonable_clarification",
+          "note": "Correctly distinguishes withdrawn from rejected; asymmetric signing accepted is supported."
+        },
+        {
+          "id": "business_04",
+          "question": "Does enterprise SSO cutover include contractors?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_05",
+          "question": "As of 2026-10-07, before November, how long do service tokens last?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_06",
+          "question": "Can the Atlas connector serve personal Singapore SGD accounts?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_07",
+          "question": "Does SGD connector approval cover business USD accounts?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_08",
+          "question": "How does partner onboarding differ from direct onboarding?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_09",
+          "question": "Does INT-210 Done mean commercial launch is approved?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_11",
+          "question": "Why did ledger migration select a shadow table?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_12",
+          "question": "Who owns MIG-301 and what is still blocking cutover?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_13",
+          "question": "When should the ledger migration be rolled back?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_16",
+          "question": "Was DNS the cause of the webhook backlog?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_17",
+          "question": "Which webhook safeguard is still in progress and who owns it?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_21",
+          "question": "Who owns reconciliation exceptions versus ingestion failures?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_22",
+          "question": "What is the current Singapore weekday reconciliation deadline?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_31",
+          "question": "Is same-day settlement approved for MYR accounts?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "business_32",
+          "question": "Can we promise the November hourly settlement schedule?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        }
+      ]
+    },
+    {
+      "directory": "known12-cooldown-final",
+      "cases": [
+        {
+          "id": "holdout_01",
+          "question": "During payment-service failover, what must already be checked, and what approval does completing PAY-102 still not provide?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "holdout_02",
+          "question": "For a partner who can use only the externally shared material, is general availability promised and when may they tell customers it launches?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "holdout_03",
+          "question": "Which cache theory did the incident channel abandon, and may an engineer who is not in that channel inspect its old discussion?",
+          "classification": "reasonable_no_accessible_evidence_or_clarification",
+          "note": "No unsupported business answer; asks for event/policy and scope."
+        },
+        {
+          "id": "holdout_04",
+          "question": "Can a contractor obtain the security-only PAY-101 comment merely because it belongs to a known incident ticket?",
+          "classification": "reasonable_no_accessible_evidence_or_clarification",
+          "note": "No unsupported business answer; asks for event/policy and scope."
+        },
+        {
+          "id": "holdout_05",
+          "question": "A support message calls the change complete. Which is complete, the code fix or the customer rollout, and what remains unfinished?",
+          "classification": "partial_scoped_answer",
+          "note": "PAY-102 Done versus pilot-only/GA not approved is correct. Original-intent PAY-103 In Progress is omitted; J-03 was absent from model input. Expanded-world scoped acceptability does not establish complete original-intent coverage."
+        },
+        {
+          "id": "holdout_06",
+          "question": "What release date can I quote for the general payment-retry launch, and which approved scope should I name instead?",
+          "classification": "correct_facts_and_scope",
+          "note": "Responds to the actual question with supported facts and scope."
+        },
+        {
+          "id": "holdout_07",
+          "question": "Which identity must be trusted before accepting the migration request, and where is that identity verified?",
+          "classification": "reasonable_no_accessible_evidence_or_clarification",
+          "note": "No unsupported business answer; asks for event/policy and scope."
+        },
+        {
+          "id": "holdout_08",
+          "question": "If the authentication cutover fails halfway, which rollback steps remain approved for the affected environment?",
+          "classification": "reasonable_no_accessible_evidence_or_clarification",
+          "note": "No unsupported business answer; asks for event/policy and scope."
+        },
+        {
+          "id": "holdout_09",
+          "question": "For the migration scheduled later this month, may I apply its new rule today to the production integration?",
+          "classification": "reasonable_no_accessible_evidence_or_clarification",
+          "note": "No unsupported business answer; asks for event/policy and scope."
+        },
+        {
+          "id": "holdout_10",
+          "question": "For the smallest supported integration tier, which region and retry limit belong to the same table row?",
+          "classification": "reasonable_no_accessible_evidence_or_clarification",
+          "note": "No unsupported business answer; asks for event/policy and scope."
+        },
+        {
+          "id": "holdout_11",
+          "question": "Which migration plan was dropped?",
+          "classification": "reasonable_clarification",
+          "note": "Does not equate dual-region proposed/not approved with dropped; cites accepted one-writer migration. Scope remains limited to the cited passage."
+        },
+        {
+          "id": "holdout_12",
+          "question": "The release approval source is temporarily unavailable, but the implementation issue is done. May I promise the wider rollout now?",
+          "classification": "expected_source_unavailable_safe_stop",
+          "note": "Injected Drive unknown stops before model dispatch with SourceUnavailable; expected safety outcome, not an unexpected runtime failure."
+        }
+      ]
+    },
+    {
+      "directory": "native-cooldown-final",
+      "cases": [
+        {
+          "id": "slack_latest",
+          "classification": "correct_facts_and_scope",
+          "note": "Approved amber supersedes correction 2 green in the named probe thread."
+        },
+        {
+          "id": "product_scope",
+          "classification": "correct_facts_and_scope",
+          "note": "Controlled pilot only; PAY-102 Done does not authorize GA; no general release date confirmed."
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "core24": {
+      "correct_facts_and_scope": 21,
+      "reasonable_clarification_or_no_evidence": 3,
+      "partial_scoped_answer": 0,
+      "expected_safe_stop": 0
+    },
+    "known12": {
+      "correct_facts_and_scope": 3,
+      "reasonable_clarification_or_no_evidence": 7,
+      "partial_scoped_answer": 1,
+      "expected_safe_stop": 1
+    },
+    "native2": {
+      "correct_facts_and_scope": 2
+    },
+    "erroneous_abstention": 0,
+    "confirmed_wrong_conclusion": 0,
+    "unexpected_runtime_failure": 0
+  },
+  "quote_and_authorization_checks": {
+    "quotes": "Every claim supporting quote was found exactly in returned evidence and independently retained world/resources source text.",
+    "quote_mismatches": 0,
+    "four_phase_allow": "For every returned evidence resource/version in every answer with claims, audit contains current allow at before_model, model_dispatch, review_dispatch, before_dispatch.",
+    "missing_required_allow": 0,
+    "empty_claim_review_boundary": "Empty-claim answers do not dispatch review; review_dispatch is not applicable. holdout_12 stops on before_model unknown and makes no model call.",
+    "local_audit_chains": {
+      "core24": {
+        "valid": true,
+        "events": 1506
+      },
+      "known12": {
+        "valid": true,
+        "events": 862
+      },
+      "native2": {
+        "valid": true,
+        "events": 233
+      }
+    },
+    "chain_boundary": "Local consistency only; no independent signature or tamper-proof claim."
+  },
+  "budget": {
+    "core24": {
+      "unique_settled_usage_receipts": 44,
+      "accounted_upper_micro_usd": 56399
+    },
+    "known12": {
+      "unique_settled_usage_receipts": 16,
+      "accounted_upper_micro_usd": 38554
+    },
+    "native2": {
+      "unique_settled_usage_receipts": 4,
+      "accounted_upper_micro_usd": 10168
+    },
+    "total_micro_usd": 105121,
+    "all_receipt_token_totals_consistent": true,
+    "boundary": "Unique captured settled usage receipts, conservative upper accounting estimate, not vendor invoice. Existing shared ledger and unknown reservation are not changed or released; shared snapshots can include other concurrent runs."
+  },
+  "matched_preview_correction": {
+    "baseline_directory": "evidence/runs/candidate-closure-20261008/native-timing-80b9ffc",
+    "final_directory": "evidence/runs/lock-contention-20261008/native-cooldown-final",
+    "verified_from": "verification.json and original single-preview JSON in all three directories",
+    "slack_latest": {
+      "same_evidence_id_all_three": "slack:C0C6R70SGG4/1791364699.192759@56399498513313818",
+      "baseline_seconds": 27.16634954197798,
+      "final_seconds": 1.6564899160293862
+    },
+    "product_scope": {
+      "same_baseline_and_final_evidence_id": "confluence:164283@1",
+      "baseline_seconds": 25.540016625018325,
+      "final_seconds": 1.0522324159974232,
+      "intermediate_514831d_evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+      "correction": "Both original 80b9ffc-to-final cdbd62b preview comparisons match object and version. Only intermediate 514831d product_scope selected Drive; do not confuse intermediate with historical baseline."
+    }
+  },
+  "native_query_to_return_seconds": {
+    "slack_latest": 40.08328058302868,
+    "product_scope": 49.0340133329737
+  },
+  "verification_boundaries": [
+    "Core24 and known12 use fixture sources plus live model, not native source authorization.",
+    "Native2 timings are CLI measurements, not browser performance.",
+    "Browser blocked remains; G1/G2 are not approved by this review.",
+    "Exact-span diagnostic failures are not semantic failures.",
+    "No prompt tuning, new questions, source writes, or live calls performed for this review."
+  ]
+}

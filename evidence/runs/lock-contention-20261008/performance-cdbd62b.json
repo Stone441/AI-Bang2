@@ -1,0 +1,976 @@
+{
+  "code_commit": "cdbd62b",
+  "baseline_commit": "80b9ffcc757c1f42a7d37798383fdd2e0e846115",
+  "mode": "native_api_live_model_synthesis",
+  "results": [
+    {
+      "case": "slack_latest",
+      "same_questions_evidence_ids_and_text": true,
+      "evidence_windows": 13,
+      "old_query_seconds": 78.2866576249944,
+      "new_query_seconds": 40.08328058302868,
+      "old_authorization_wall_seconds": 69.05188132688636,
+      "new_authorization_wall_seconds": 34.363085250079166,
+      "old_preview_seconds": 27.16634954197798,
+      "new_preview_seconds": 1.6564899160293862,
+      "old_preview_lock_wait_seconds": 25.521975666983053,
+      "new_preview_lock_wait_seconds": 5.6541990488767624e-05,
+      "generation_seconds": 4.197449625004083,
+      "review_seconds": 1.4778486249851994,
+      "native_http_cumulative_seconds": 72.17621407529805,
+      "error_type": null
+    },
+    {
+      "case": "product_scope",
+      "same_questions_evidence_ids_and_text": true,
+      "evidence_windows": 15,
+      "old_query_seconds": 97.22518299997319,
+      "new_query_seconds": 49.0340133329737,
+      "old_authorization_wall_seconds": 75.00890303403139,
+      "new_authorization_wall_seconds": 35.017433708999306,
+      "old_preview_seconds": 25.540016625018325,
+      "new_preview_seconds": 1.0522324159974232,
+      "old_preview_lock_wait_seconds": 24.95522170799086,
+      "new_preview_lock_wait_seconds": 0.001621082948986441,
+      "generation_seconds": 10.826629250019323,
+      "review_seconds": 3.1308356249937788,
+      "native_http_cumulative_seconds": 78.14645845850464,
+      "error_type": null
+    }
+  ],
+  "calls_by_source_phase_endpoint": [
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_model",
+      "endpoint": "auth.test",
+      "calls": 7,
+      "cumulative_seconds": 1.8461631250102073
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_model",
+      "endpoint": "user/current",
+      "calls": 3,
+      "cumulative_seconds": 0.9502062910469249
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_model",
+      "endpoint": "about",
+      "calls": 4,
+      "cumulative_seconds": 1.217064583033789
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "jira",
+      "phase": "before_model",
+      "endpoint": "myself",
+      "calls": 1,
+      "cumulative_seconds": 0.3604485419928096
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_model",
+      "endpoint": "conversations.info",
+      "calls": 7,
+      "cumulative_seconds": 1.8360773739987053
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_model",
+      "endpoint": "page_metadata",
+      "calls": 3,
+      "cumulative_seconds": 1.0731230410165153
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_model",
+      "endpoint": "file_metadata",
+      "calls": 8,
+      "cumulative_seconds": 3.3706235441495664
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "jira",
+      "phase": "before_model",
+      "endpoint": "issue",
+      "calls": 1,
+      "cumulative_seconds": 0.3927850410109386
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_model",
+      "endpoint": "conversations.history",
+      "calls": 4,
+      "cumulative_seconds": 1.1669801259995438
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_model",
+      "endpoint": "page_body",
+      "calls": 3,
+      "cumulative_seconds": 0.9672670409199782
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_model",
+      "endpoint": "file_body",
+      "calls": 4,
+      "cumulative_seconds": 3.7804919159971178
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_model",
+      "endpoint": "conversations.replies",
+      "calls": 3,
+      "cumulative_seconds": 0.8650697910343297
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "model_dispatch",
+      "endpoint": "auth.test",
+      "calls": 7,
+      "cumulative_seconds": 2.0941604989930056
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "model_dispatch",
+      "endpoint": "about",
+      "calls": 4,
+      "cumulative_seconds": 1.142559208034072
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "model_dispatch",
+      "endpoint": "user/current",
+      "calls": 3,
+      "cumulative_seconds": 0.8875464590382762
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "jira",
+      "phase": "model_dispatch",
+      "endpoint": "myself",
+      "calls": 1,
+      "cumulative_seconds": 0.3557779169641435
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "model_dispatch",
+      "endpoint": "conversations.info",
+      "calls": 7,
+      "cumulative_seconds": 1.8980326249729842
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "model_dispatch",
+      "endpoint": "page_metadata",
+      "calls": 3,
+      "cumulative_seconds": 0.9212264999514446
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "jira",
+      "phase": "model_dispatch",
+      "endpoint": "issue",
+      "calls": 1,
+      "cumulative_seconds": 0.3545037499861792
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "model_dispatch",
+      "endpoint": "file_metadata",
+      "calls": 8,
+      "cumulative_seconds": 3.2280694579239935
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "model_dispatch",
+      "endpoint": "conversations.history",
+      "calls": 4,
+      "cumulative_seconds": 1.205635707010515
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "model_dispatch",
+      "endpoint": "page_body",
+      "calls": 3,
+      "cumulative_seconds": 0.8258687070338055
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "model_dispatch",
+      "endpoint": "file_body",
+      "calls": 4,
+      "cumulative_seconds": 3.5530471249949187
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "model_dispatch",
+      "endpoint": "conversations.replies",
+      "calls": 3,
+      "cumulative_seconds": 0.8441535830497742
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "review_dispatch",
+      "endpoint": "auth.test",
+      "calls": 7,
+      "cumulative_seconds": 1.8996439999318682
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "review_dispatch",
+      "endpoint": "about",
+      "calls": 4,
+      "cumulative_seconds": 1.1172004580148496
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "review_dispatch",
+      "endpoint": "user/current",
+      "calls": 3,
+      "cumulative_seconds": 0.9805181239498779
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "jira",
+      "phase": "review_dispatch",
+      "endpoint": "myself",
+      "calls": 1,
+      "cumulative_seconds": 0.35582637501647696
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "review_dispatch",
+      "endpoint": "conversations.info",
+      "calls": 7,
+      "cumulative_seconds": 2.419040792970918
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "review_dispatch",
+      "endpoint": "page_metadata",
+      "calls": 3,
+      "cumulative_seconds": 1.0430990410968661
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "review_dispatch",
+      "endpoint": "file_metadata",
+      "calls": 8,
+      "cumulative_seconds": 4.1975944170262665
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "jira",
+      "phase": "review_dispatch",
+      "endpoint": "issue",
+      "calls": 1,
+      "cumulative_seconds": 0.4000719579635188
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "review_dispatch",
+      "endpoint": "conversations.history",
+      "calls": 4,
+      "cumulative_seconds": 1.1507490839576349
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "review_dispatch",
+      "endpoint": "page_body",
+      "calls": 3,
+      "cumulative_seconds": 0.9524487919406965
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "review_dispatch",
+      "endpoint": "file_body",
+      "calls": 4,
+      "cumulative_seconds": 3.5332213760120794
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "review_dispatch",
+      "endpoint": "conversations.replies",
+      "calls": 3,
+      "cumulative_seconds": 0.856963874946814
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_dispatch",
+      "endpoint": "auth.test",
+      "calls": 7,
+      "cumulative_seconds": 1.852089625026565
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_dispatch",
+      "endpoint": "about",
+      "calls": 4,
+      "cumulative_seconds": 1.1530065420665778
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_dispatch",
+      "endpoint": "user/current",
+      "calls": 3,
+      "cumulative_seconds": 0.9771464170189574
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "jira",
+      "phase": "before_dispatch",
+      "endpoint": "myself",
+      "calls": 1,
+      "cumulative_seconds": 0.35146087501198053
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_dispatch",
+      "endpoint": "conversations.info",
+      "calls": 7,
+      "cumulative_seconds": 1.9077522901352495
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_dispatch",
+      "endpoint": "page_metadata",
+      "calls": 3,
+      "cumulative_seconds": 0.7992246239446104
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_dispatch",
+      "endpoint": "file_metadata",
+      "calls": 8,
+      "cumulative_seconds": 4.279458541073836
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "jira",
+      "phase": "before_dispatch",
+      "endpoint": "issue",
+      "calls": 1,
+      "cumulative_seconds": 0.40194820798933506
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_dispatch",
+      "endpoint": "conversations.history",
+      "calls": 4,
+      "cumulative_seconds": 1.1778833330026828
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_dispatch",
+      "endpoint": "page_body",
+      "calls": 3,
+      "cumulative_seconds": 0.637343333044555
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_dispatch",
+      "endpoint": "file_body",
+      "calls": 4,
+      "cumulative_seconds": 3.723533958022017
+    },
+    {
+      "case": "slack_latest",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_dispatch",
+      "endpoint": "conversations.replies",
+      "calls": 3,
+      "cumulative_seconds": 0.8721060829702765
+    },
+    {
+      "case": "slack_latest",
+      "operation": "preview",
+      "source": "slack",
+      "phase": "preview",
+      "endpoint": "auth.test",
+      "calls": 2,
+      "cumulative_seconds": 0.5362774580717087
+    },
+    {
+      "case": "slack_latest",
+      "operation": "preview",
+      "source": "slack",
+      "phase": "preview",
+      "endpoint": "conversations.info",
+      "calls": 2,
+      "cumulative_seconds": 0.5394421250093728
+    },
+    {
+      "case": "slack_latest",
+      "operation": "preview",
+      "source": "slack",
+      "phase": "preview",
+      "endpoint": "conversations.history",
+      "calls": 1,
+      "cumulative_seconds": 0.2849558750167489
+    },
+    {
+      "case": "slack_latest",
+      "operation": "preview",
+      "source": "slack",
+      "phase": "preview",
+      "endpoint": "conversations.replies",
+      "calls": 1,
+      "cumulative_seconds": 0.29405629204120487
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_model",
+      "endpoint": "auth.test",
+      "calls": 7,
+      "cumulative_seconds": 1.9072611239389516
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "jira",
+      "phase": "before_model",
+      "endpoint": "myself",
+      "calls": 3,
+      "cumulative_seconds": 0.9715771250193939
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_model",
+      "endpoint": "about",
+      "calls": 4,
+      "cumulative_seconds": 1.2836226650397293
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_model",
+      "endpoint": "user/current",
+      "calls": 3,
+      "cumulative_seconds": 1.0150524160126224
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_model",
+      "endpoint": "conversations.info",
+      "calls": 7,
+      "cumulative_seconds": 1.9031279180198908
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_model",
+      "endpoint": "file_metadata",
+      "calls": 8,
+      "cumulative_seconds": 3.169085751113016
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_model",
+      "endpoint": "page_metadata",
+      "calls": 3,
+      "cumulative_seconds": 0.9243228740524501
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "jira",
+      "phase": "before_model",
+      "endpoint": "issue",
+      "calls": 3,
+      "cumulative_seconds": 1.1139160010498017
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_model",
+      "endpoint": "conversations.replies",
+      "calls": 3,
+      "cumulative_seconds": 0.8730534999631345
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_model",
+      "endpoint": "page_body",
+      "calls": 3,
+      "cumulative_seconds": 0.9641406249720603
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_model",
+      "endpoint": "file_body",
+      "calls": 4,
+      "cumulative_seconds": 3.402519125957042
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_model",
+      "endpoint": "conversations.history",
+      "calls": 4,
+      "cumulative_seconds": 1.1595332500291988
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "model_dispatch",
+      "endpoint": "auth.test",
+      "calls": 7,
+      "cumulative_seconds": 1.8704270420130342
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "model_dispatch",
+      "endpoint": "about",
+      "calls": 4,
+      "cumulative_seconds": 1.1436072509968653
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "model_dispatch",
+      "endpoint": "user/current",
+      "calls": 3,
+      "cumulative_seconds": 0.8955618750769645
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "jira",
+      "phase": "model_dispatch",
+      "endpoint": "myself",
+      "calls": 3,
+      "cumulative_seconds": 1.1166855830233544
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "model_dispatch",
+      "endpoint": "conversations.info",
+      "calls": 7,
+      "cumulative_seconds": 1.8401129168923944
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "model_dispatch",
+      "endpoint": "page_metadata",
+      "calls": 3,
+      "cumulative_seconds": 0.9570400409866124
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "model_dispatch",
+      "endpoint": "file_metadata",
+      "calls": 8,
+      "cumulative_seconds": 3.1205857911263593
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "jira",
+      "phase": "model_dispatch",
+      "endpoint": "issue",
+      "calls": 3,
+      "cumulative_seconds": 1.1432559170061722
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "model_dispatch",
+      "endpoint": "conversations.replies",
+      "calls": 3,
+      "cumulative_seconds": 0.8641996649676003
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "model_dispatch",
+      "endpoint": "page_body",
+      "calls": 3,
+      "cumulative_seconds": 0.9830583330476657
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "model_dispatch",
+      "endpoint": "file_body",
+      "calls": 4,
+      "cumulative_seconds": 3.540527790901251
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "model_dispatch",
+      "endpoint": "conversations.history",
+      "calls": 4,
+      "cumulative_seconds": 1.1479851660551503
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "review_dispatch",
+      "endpoint": "auth.test",
+      "calls": 7,
+      "cumulative_seconds": 1.8799404590390623
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "jira",
+      "phase": "review_dispatch",
+      "endpoint": "myself",
+      "calls": 3,
+      "cumulative_seconds": 1.0565227920305915
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "review_dispatch",
+      "endpoint": "user/current",
+      "calls": 3,
+      "cumulative_seconds": 1.0178629159927368
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "review_dispatch",
+      "endpoint": "about",
+      "calls": 4,
+      "cumulative_seconds": 1.2491750830085948
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "review_dispatch",
+      "endpoint": "conversations.info",
+      "calls": 7,
+      "cumulative_seconds": 1.8855873319553211
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "jira",
+      "phase": "review_dispatch",
+      "endpoint": "issue",
+      "calls": 3,
+      "cumulative_seconds": 1.112683291954454
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "review_dispatch",
+      "endpoint": "page_metadata",
+      "calls": 3,
+      "cumulative_seconds": 0.79301687492989
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "review_dispatch",
+      "endpoint": "file_metadata",
+      "calls": 8,
+      "cumulative_seconds": 3.3261507060960867
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "review_dispatch",
+      "endpoint": "conversations.replies",
+      "calls": 3,
+      "cumulative_seconds": 0.8883843329967931
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "review_dispatch",
+      "endpoint": "page_body",
+      "calls": 3,
+      "cumulative_seconds": 1.0251622490468435
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "review_dispatch",
+      "endpoint": "file_body",
+      "calls": 4,
+      "cumulative_seconds": 3.473106582998298
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "review_dispatch",
+      "endpoint": "conversations.history",
+      "calls": 4,
+      "cumulative_seconds": 1.174760791938752
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_dispatch",
+      "endpoint": "auth.test",
+      "calls": 7,
+      "cumulative_seconds": 1.9261156260035932
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "jira",
+      "phase": "before_dispatch",
+      "endpoint": "myself",
+      "calls": 3,
+      "cumulative_seconds": 0.977476125000976
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_dispatch",
+      "endpoint": "about",
+      "calls": 4,
+      "cumulative_seconds": 1.2101584590855055
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_dispatch",
+      "endpoint": "user/current",
+      "calls": 3,
+      "cumulative_seconds": 1.010832749074325
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "jira",
+      "phase": "before_dispatch",
+      "endpoint": "issue",
+      "calls": 3,
+      "cumulative_seconds": 0.7651418760069646
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_dispatch",
+      "endpoint": "conversations.info",
+      "calls": 7,
+      "cumulative_seconds": 2.0027122509782203
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_dispatch",
+      "endpoint": "page_metadata",
+      "calls": 3,
+      "cumulative_seconds": 0.8701120420009829
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_dispatch",
+      "endpoint": "file_metadata",
+      "calls": 8,
+      "cumulative_seconds": 6.342727500072215
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_dispatch",
+      "endpoint": "conversations.replies",
+      "calls": 3,
+      "cumulative_seconds": 0.8849294179235585
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "confluence",
+      "phase": "before_dispatch",
+      "endpoint": "page_body",
+      "calls": 3,
+      "cumulative_seconds": 1.0532697090529837
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "drive",
+      "phase": "before_dispatch",
+      "endpoint": "file_body",
+      "calls": 4,
+      "cumulative_seconds": 3.7036311679985374
+    },
+    {
+      "case": "product_scope",
+      "operation": "query",
+      "source": "slack",
+      "phase": "before_dispatch",
+      "endpoint": "conversations.history",
+      "calls": 4,
+      "cumulative_seconds": 1.206738376058638
+    },
+    {
+      "case": "product_scope",
+      "operation": "preview",
+      "source": "confluence",
+      "phase": "preview",
+      "endpoint": "user/current",
+      "calls": 1,
+      "cumulative_seconds": 0.334968916955404
+    },
+    {
+      "case": "product_scope",
+      "operation": "preview",
+      "source": "confluence",
+      "phase": "preview",
+      "endpoint": "page_metadata",
+      "calls": 1,
+      "cumulative_seconds": 0.33952283300459385
+    },
+    {
+      "case": "product_scope",
+      "operation": "preview",
+      "source": "confluence",
+      "phase": "preview",
+      "endpoint": "page_body",
+      "calls": 1,
+      "cumulative_seconds": 0.3714475000160746
+    }
+  ],
+  "limits": [
+    "Independent executions at different times; one sample each, no stable percentile/SLA.",
+    "Authorization batch wall overlaps concurrent native HTTP cumulative time; do not add them.",
+    "Background discovery remains running; CLI native and mock HTTP tests are distinct from browser blocked.",
+    "Source lanes serial within request; foreground and one worker may each have a previously admitted native read. Cooldown blocks new admissions after429."
+  ]
+}

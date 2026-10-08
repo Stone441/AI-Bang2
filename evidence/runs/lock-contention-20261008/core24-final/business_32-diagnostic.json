@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No. The proposed November hourly settlement schedule is not approved; current settlement is daily.",
+        "evidence_ids": [
+          "BV-32@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-32@1",
+            "quote": "The proposed November hourly schedule is not approved. Current settlement is daily."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "682166fe-023e-4f49-a529-6902297c6101",
+      "object": "chat.completion",
+      "created": 1791443912,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No. The proposed November hourly settlement schedule is not approved; current settlement is daily.\",\"evidence_ids\":[\"BV-32@1\"],\"supports\":[{\"evidence_id\":\"BV-32@1\",\"quote\":\"The proposed November hourly schedule is not approved. Current settlement is daily.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Can we promise the November hourly settlement schedule?\" We need determine if evidence supports. We must output JSON only with claims. Need parse.\n\nQuestion asks about November hourly settlement schedule. Evidence: BV-32 says \"The proposed November hourly schedule is not approved. Current settlement is daily.\" So can we promise? No, proposed not approved. Also maybe BV-35 says \"If bank confirmation is absent, ask Eva for status; do not promise a completed settlement.\" That's about completed settlement, maybe relevant? But question specifically November hourly settlement schedule. We need answer directly. Need claims with evidence IDs and quotes. We must not use external. We have evidence. Need at most four claims. We need maybe one claim: The proposed November hourly schedule is not approved; current settlement is daily. That answers can we promise? No. Could mention not approved. Evidence ID BV-32@1. Quote exact contiguous passage. \"The proposed November hourly schedule is not approved. Current settlement is daily.\" That's 92? within 12-1200. Good.\n\nBut maybe also need address if bank confirmation absent? However question: \"Can we promise the November hourly settlement schedule?\" This is about schedule, not completed settlement. BV-35 is about completed settlement, maybe not directly the schedule. But could be a qualification? The instructions: \"A shared topic alone is not a requested part: omit standalone background...\" The question asks if we can promise schedule. The main answer: No, because not approved. BV-32 enough. Should we include BV-35? It says do not promise a completed settlement if bank confirmation absent. That is not about schedule, different. But maybe the question is about promising a settlement schedule? It says \"November hourly settlement schedule\" likely a schedule for settlement? \"hourly settlement schedule\" might mean schedule of settlement? Could be a plan? Evidence BV-32 specifically says \"proposed November hourly schedule is not approved.\" So answer no. We don't need BV-35. But maybe BV-35 is a general rule about promising completed settlement. It doesn't mention schedule. Not needed.\n\nNeed ensure every explicit identifier? No ticket ID in claim? We could mention SET-610? Not needed. \"November hourly settlement schedule\" doesn't require ID. We can state claim: \"The proposed November hourly schedule is not approved; current settlement is daily.\" That is factual.\n\nBut the question: \"Can we promise the November hourly settlement schedule?\" We should answer directly: No, you cannot promise it because it's not approved. But our claim should be concise factual conclusion. We can include \"cannot be promised\" but is that supported? \"not approved\" implies cannot promise. But we should not add obligation? We can say \"The proposed November hourly schedule is not approved; current settlement is daily.\" That answers can we promise? It indicates not approved, so no. Could phrase: \"No, the proposed November hourly schedule is not approved; current settlement is daily.\" The quote should support. The quote text: \"The proposed November hourly schedule is not approved. Current settlement is daily.\" It does support \"not approved\". But \"No\" is conclusion. Is that okay? It asks directly. We can include \"No\" as part of claim. But claim must be fully supported by cited evidence. \"No\" is inference from not approved. Probably okay. But maybe avoid adding \"cannot be promised\" unless source says \"do not promise\"? BV-32 doesn't say cannot promise; it says not approved. The question asks can we promise? If not approved, we cannot promise as a commitment. But maybe \"not approved\" means not approved yet. Could be no. But the instruction: \"Do not turn proposal, approval, completion and withdrawal as separate states: lack of approval does not establish rejection, cancellation or abandonment. State only the transition the source explicitly records; distinguish what a cited passage establishes from what it leaves unknown.\" Here BV-32 says \"The proposed November hourly schedule is not approved.\" That is explicit: not approved. It doesn't say rejected. So we should state that, not \"cannot promise\"? But question \"Can we promise?\" The answer based on not approved: No, not yet. However maybe we should say \"The proposed November hourly schedule is not approved; therefore it cannot be promised as approved.\" But \"cannot be promised\" is a normative inference. Better to stick to source: \"The proposed November hourly schedule is not approved. Current settlement is daily.\" That directly answers: not approved, so no promise. But claim text can be \"The proposed November hourly schedule is not approved; current settlement is daily, so promising it is not supported.\" But \"promising it is not supported\" is our conclusion. Is that okay? We need answer question directly. The schema asks claims with text \"concise factual conclusion\". It can include conclusion. But must be fully supported. A conclusion that \"cannot promise\" from \"not approved\" is logical. But to be safe, state the source fact. The question asks \"Can we promise...?\" We can answer \"No\" as conclusion in claim. But then quote supports not approved. That's fine.\n\nNeed consider if there are multiple events? Evidence has multiple settlement/migration. Question asks about one unspecified? It asks \"November hourly settlement schedule\". Evidence BV-32 specifically identifies that. So we can select it. Good.\n\nPotential other evidence: BV-34 says unsigned draft says MYR settlement available; proposal not approved operating rule. Not about November hourly schedule. BV-31 says same-day settlement approved for SGD pilot, MYR outside scope. Not about November hourly schedule. BV-33 SET-610 in progress, bank confirmation missing. Not about schedule. BV-35 escalation guidance. Not about schedule. So only BV-32.\n\nThus return one claim. Must include supports array with evidence_id and quote. Evidence_ids list equal supports IDs. So {\"claims\":[{\"text\":\"No. The proposed November hourly settlement schedule is not approved; current settlement is daily.\",\"evidence_ids\":[\"BV-32@1\"],\"supports\":[{\"evidence_id\":\"BV-32@1\",\"quote\":\"The proposed November hourly schedule is not approved. Current settlement is daily.\"}]}]}\n\nCheck quote exact contiguous from evidence text. Evidence text includes \"[SYNTHETIC]\\nThe proposed November hourly schedule is not approved. Current settlement is daily.\" We can copy after [SYNTHETIC] newline? The instruction: copy support quotes only from text, never source_context. The text includes [SYNTHETIC]\\n. We can copy \"The proposed November hourly schedule is not approved. Current settlement is daily.\" That is contiguous within text after the newline. It excludes [SYNTHETIC] but still contiguous passage? It's a substring. Yes.\n\nLength: claim 98? text \"No. The proposed November hourly settlement schedule is not approved; current settlement is daily.\" That's under 600. Quote 91? Good.\n\nNeed ensure no extra claims. Stop. Return JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1414,
+        "completion_tokens": 1517,
+        "total_tokens": 2931,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1449
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 518
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "c61e8d31-abe6-405e-ad0d-f385fe621776",
+      "object": "chat.completion",
+      "created": 1791443920,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer user's meta task. Need output JSON only per schema. We need review evidence support and question coverage. We have question: \"Can we promise the November hourly settlement schedule?\" Claims: one claim: \"No. The proposed November hourly settlement schedule is not approved; current settlement is daily.\" Evidence_id BV-32@1, supports quote same. Need decide supported true? The claim has two parts: proposed November hourly settlement schedule is not approved; current settlement is daily. Evidence BV-32@1 text exactly: \"The proposed November hourly schedule is not approved. Current settlement is daily.\" So supported true? Need check scope: question asks \"Can we promise the November hourly settlement schedule?\" Claim says No. The proposed schedule is not approved; current settlement daily. Evidence matches. It is not explicitly saying cannot promise, but \"not approved\" plus current daily implies cannot promise? The claim \"No.\" as answer maybe supported by not approved. The evidence directly says proposed November hourly schedule not approved. It doesn't say \"Can we promise?\" but if not approved, cannot promise. Current settlement daily. So supported true. Responsive? The question asks can we promise November hourly settlement schedule. Claim answers No and gives reason. It addresses requested part. So responsive true. question_covered? There's only one claim and it covers explicit requested part. Need JSON exactly one verdict. Index 0 supported true responsive true. question_covered true.\n\nNeed ensure no issue: Evidence BV-32@1 source title settlement / Future settlement schedule. The claim names \"proposed November hourly settlement schedule\" whereas evidence says \"proposed November hourly schedule\". Settlement context? Source title includes settlement, so okay. Could \"hourly settlement schedule\" be same? Evidence says \"hourly schedule\" but source title settlement. The claim adds settlement; likely okay. It says \"current settlement is daily.\" Evidence exactly. So supported.\n\nNeed output: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}\n\nEnsure JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1326,
+        "completion_tokens": 447,
+        "total_tokens": 1773,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 421
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 814
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "198194d7-1b80-4757-81ef-fead569f9056",
+      "object": "chat.completion",
+      "created": 1791443881,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"If the authentication cutover fails halfway, which rollback steps remain approved for the affected environment?\" Need determine if evidence supports. We need return JSON claims. We must check if question identifies business entity or event. Authentication cutover unspecified? Evidence has many authentication-related items, migration ticket, rollback signal for ledger migration, etc. No explicit rollback steps for authentication cutover. The only rollback mention: BV-13 says roll back ledger migration if settlement differences exceed five basis points. That's migration rollback, not authentication cutover. BV-02 AUTH-204 blocked. BV-01 rotation. BV-03/18 signing design. BV-04 scope. BV-05 future policy. No rollback steps for authentication cutover. The question asks \"If the authentication cutover fails halfway, which rollback steps remain approved for the affected environment?\" Evidence lacks rollback steps for auth cutover. There is a migration rollback signal for ledger migration, but not auth cutover. Also BV-12 MIG-301 In Progress. No approval of rollback steps. So likely return {\"claims\":[]} because insufficient support. But need be careful: maybe there is a plan name? Authentication cutover is not explicitly identified as a specific event with rollback. We should not select unrelated ledger migration rollback. So empty claims.\n\nBut we should consider if any claim can say no rollback steps approved? The instructions: if question presupposes state not established, explicitly say passage does not establish requested state, then give state actually records. But if no evidence, empty claims. The question asks which rollback steps remain approved. There is no evidence about authentication cutover rollback approval. So empty claims is appropriate.\n\nHowever, maybe we can make a claim scoped to absence? But rule says empty claims means insufficient support. If question does not identify event, return empty claims. Here it identifies \"authentication cutover\" but evidence doesn't cover rollback steps. The requested property (rollback steps for auth cutover) is not present. So empty.\n\nBut let's ensure no evidence says \"approved failover procedure\" for payment-service. That's not authentication cutover. So no.\n\nThus output {\"claims\":[]}. Must be valid JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2075,
+        "completion_tokens": 471,
+        "total_tokens": 2546,
+        "prompt_tokens_details": {
+          "cached_tokens": 1920
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 465
+        },
+        "prompt_cache_hit_tokens": 1920,
+        "prompt_cache_miss_tokens": 155
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

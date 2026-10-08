@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Enterprise SSO cutover does not include contractors; it applies to internal employees only, and contractors remain on the legacy gateway.",
+        "evidence_ids": [
+          "BV-04@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-04@1",
+            "quote": "Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "ea44f449-9be4-4c1d-bb8a-b90acda64916",
+      "object": "chat.completion",
+      "created": 1791443847,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Enterprise SSO cutover does not include contractors; it applies to internal employees only, and contractors remain on the legacy gateway.\",\"evidence_ids\":[\"BV-04@1\"],\"supports\":[{\"evidence_id\":\"BV-04@1\",\"quote\":\"Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Does enterprise SSO cutover include contractors?\" Evidence BV-04 says: \"[SYNTHETIC] Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\" That directly answers: No, it does not include contractors; applies to internal employees only. Need return JSON with claims. One claim sufficient. Must include evidence_ids and supports with quote. Quote exact contiguous passage from evidence text. The evidence text is \"[SYNTHETIC]\\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\" We can quote \"Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\" That is contiguous. Need claim text concise factual conclusion. Should we mention no? \"Enterprise SSO cutover does not include contractors; it applies to internal employees only, and contractors remain on the legacy gateway.\" That's supported. Evidence id BV-04@1. Ensure supports array with evidence_id same, quote. Only one claim. JSON object with claims array. No extra. Must follow schema. Done."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1137,
+        "completion_tokens": 306,
+        "total_tokens": 1443,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 226
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 241
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "55689ba1-1cbd-493d-b5df-31f49b17f23f",
+      "object": "chat.completion",
+      "created": 1791443849,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"Does enterprise SSO cutover include contractors?\" Claim: \"Enterprise SSO cutover does not include contractors; it applies to internal employees only, and contractors remain on the legacy gateway.\" Evidence BV-04@1 exactly states: \"[SYNTHETIC]\\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.\" This directly supports. Responsive? Answers explicit requested part yes: no, contractors not included, remain legacy. Need question_covered true, verdict index 0 supported true responsive true. Ensure JSON schema."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1061,
+        "completion_tokens": 152,
+        "total_tokens": 1213,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 126
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 549
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

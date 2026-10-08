@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "e6b2c5f7-6b98-4d31-8fac-a750f296d4ba",
+      "object": "chat.completion",
+      "created": 1791444561,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question. Need determine if question identifies business entity/event? \"For the smallest supported integration tier, which region and retry limit belong to the same table row?\" Need parse. Evidence includes synthetic. Need find smallest supported integration tier? We need identify table row? There is evidence BV-06@1: Atlas account eligibility table: Account Scope: Singapore business SGD Pilot supported; Personal SGD Not supported. Smallest supported integration tier? Maybe \"Pilot supported\" is smallest supported? Region Singapore, account business SGD. Retry limit? Evidence J-02@1 mentions PAY-102 Retry configuration fix, no retry limit. BV-19 says webhook backlog do not retry every webhook. No table row with region and retry limit. Question asks \"smallest supported integration tier\" region and retry limit belong to same table row? This seems maybe from some table not present. We must first check whether question identifies business entity or event. It asks about \"smallest supported integration tier\" maybe unspecified. Evidence covers multiple events. It might be unanswerable. Need decide output: if asks about one unspecified migration, rule or incident while evidence covers multiple events, return empty claims instead of selecting event. A plan name alone does not identify its business event. Here question doesn't identify a business entity or event specifically? \"smallest supported integration tier\" maybe refers to tier in table. Evidence BV-06 table has tiers? Supported integration tier? It lists Singapore business SGD Pilot supported, Personal SGD Not supported. Smallest supported might be Pilot? Region Singapore. Retry limit not in same table. No retry limit evidence. We should return empty claims? Need be careful. The instruction: \"First check whether the question identifies a business entity or event. If it asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event. A plan name alone does not identify its business event.\" The question doesn't mention Atlas, PAY-102, etc. It asks about smallest supported integration tier, region and retry limit same table row. No entity/event. Evidence covers multiple. So likely return empty claims. But maybe we can identify from BV-06 table: smallest supported tier = Singapore business SGD Pilot supported. But retry limit missing. No same table row. So cannot answer. Need output JSON with empty claims list. Ensure schema. Final only JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2494,
+        "completion_tokens": 504,
+        "total_tokens": 2998,
+        "prompt_tokens_details": {
+          "cached_tokens": 2304
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 498
+        },
+        "prompt_cache_hit_tokens": 2304,
+        "prompt_cache_miss_tokens": 190
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

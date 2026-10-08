@@ -1,0 +1,94 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The PAY-102 code fix is complete (Done), but the customer rollout remains unfinished: only a controlled pilot is approved, general availability (GA) is not approved, and no general release date is confirmed.",
+        "evidence_ids": [
+          "J-02@1",
+          "D-02@1",
+          "C-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          },
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          },
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "ad6552d3-02f2-424d-9b97-ec13c66367a2",
+      "object": "chat.completion",
+      "created": 1791444527,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The PAY-102 code fix is complete (Done), but the customer rollout remains unfinished: only a controlled pilot is approved, general availability (GA) is not approved, and no general release date is confirmed.\",\"evidence_ids\":[\"J-02@1\",\"D-02@1\",\"C-02@1\"],\"supports\":[{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"},{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"},{\"evidence_id\":\"C-02@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\"}]}]}",
+            "reasoning_content": "We need answer question: \"A support message calls the change complete. Which is complete, the code fix or the customer rollout, and what remains unfinished?\" We need infer from evidence. We must be careful: question asks about a support message calls change complete. Which is complete: code fix or customer rollout, and what remains unfinished? Evidence includes PAY-102 code fix: Done. Code completion does not approve general customer release. D-02: Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval. Also S-02: Payment-retry remains controlled pilot. No GA date confirmed. C-02: Payment-retry available only to controlled pilot. GA not approved. No general release date confirmed.\n\nWe need answer: code fix is complete; customer rollout remains unfinished/unapproved? Specifically general availability / customer release not approved. We need cite evidence. The question mentions \"support message calls the change complete.\" But evidence doesn't explicitly mention support message? It has \"PAY-102 code fix: Done.\" That is a status. It might be the support message? Need answer directly: The code fix (PAY-102) is complete; the customer rollout (general availability/customer release) is not complete/remains unfinished. What remains unfinished? Customer release / GA not approved, no general release date. Also controlled pilot remains? The question: \"Which is complete, the code fix or the customer rollout, and what remains unfinished?\" So claim: PAY-102 code fix is complete; customer rollout remains unfinished because general customer release is not approved and GA not approved/no GA date. Need citations.\n\nWe need ensure claims fully supported by cited evidence. Let's formulate:\n\nClaim 1: The code fix (PAY-102) is complete, but its completion does not approve general customer release. Evidence J-02@1: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Also D-02@1: \"PAY-102 Done is not customer release approval.\" We can combine. That answers which is complete? Code fix. And what remains unfinished? Customer rollout not approved. But claim 1 can state.\n\nClaim 2: The customer rollout remains unfinished: only a controlled pilot is approved, general availability (GA) is not approved, and no general release date is confirmed. Evidence D-02@1 and C-02@1. D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved.\" C-02: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" That directly says what remains unfinished: GA not approved. Also S-02: \"Payment-retry remains a controlled pilot. No GA date is confirmed...\" Could cite C-02 and D-02.\n\nQuestion asks: \"A support message calls the change complete. Which is complete, the code fix or the customer rollout, and what remains unfinished?\" We can answer: The code fix is complete; the customer rollout is not complete—controlled pilot approved but GA not approved, no general release date. That's it.\n\nNeed at most 4 claims, minimum. Could be one claim covering both: \"The PAY-102 code fix is Done; that does not approve general customer release, and customer rollout remains unfinished because only a controlled pilot is approved and GA is not approved.\" But each claim must be fully supported by cited evidence. We can use supports with quotes. Need evidence_ids exactly equal supports. We can have two claims maybe.\n\nLet's see if any potential ambiguity: evidence has multiple tickets: INT-210, HOOK-410, etc. Question says \"A support message calls the change complete. Which is complete, the code fix or the customer rollout...\" The relevant is PAY-102 and Payment-retry. The evidence includes \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" That directly identifies code fix. D-02 says \"PAY-102 Done is not customer release approval.\" So yes.\n\nNeed not mention unrelated INT-210 or HOOK. Good.\n\nNeed preserve modality: \"controlled pilot approved\" and \"GA not approved\" not \"rejected/cancelled\". \"No general release date is confirmed\" not \"will happen\". We should say remains unfinished.\n\nPotential claim 1: \"The PAY-102 code fix is complete (Done), but this completion does not approve general customer release.\" Evidence: J-02@1 quote: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Supports ID J-02@1. Also maybe D-02@1 quote: \"PAY-102 Done is not customer release approval.\" But one citation may suffice. But question asks \"Which is complete\" and \"what remains unfinished?\" The first claim answers which is complete and qualification. The second claim answers what remains unfinished.\n\nClaim 2: \"The customer rollout remains unfinished: only a controlled pilot is approved, general availability (GA) is not approved, and no general release date is confirmed.\" Evidence: D-02@1 quote: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" This includes PAY-102 done not customer release approval. But for customer rollout unfinished, we can cite D-02 and C-02. C-02 quote: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" That is perfect. Use D-02 and C-02 maybe. But if we use D-02 in claim 1 and claim 2, okay. Need quotes exact contiguous. D-02 quote can be \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" That's contiguous. It includes \"PAY-102 Done...\" which might overlap claim 1. Fine.\n\nBut we want minimal claims. Could combine into one claim: \"The PAY-102 code fix is Done, but the customer rollout is not complete: only a controlled pilot is approved, general availability (GA) is not approved, and no general release date is confirmed.\" This single claim with citations J-02, D-02, C-02. That covers both parts. Is it fully supported? J-02 supports code fix done and code completion does not approve general customer release. D-02 supports controlled pilot approved, GA not approved, PAY-102 Done not customer release approval. C-02 supports available only controlled pilot, GA not approved, no general release date. Yes. That might be the cleanest. But the instruction says use minimum number of claims needed and STOP when requested parts covered. One claim covers both parts. But claim text at most 600 chars, yes. Supports up to four citations per claim. We can have one claim with three citations. Need evidence_ids list exactly equals supports evidence_id values. So claim: text = \"The PAY-102 code fix is complete (Done), but the customer rollout remains unfinished: only a controlled pilot is approved, general availability (GA) is not approved, and no general release date is confirmed.\" Supports: J-02@1 quote \"PAY-102 code fix: Done. Code completion does not approve general customer release.\"; D-02@1 quote \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"; C-02@1 quote \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" That seems good. But is \"customer rollout\" explicitly? The evidence doesn't use \"customer rollout\" but \"general customer release\" and \"general availability\". The question asks \"which is complete, the code fix or the customer rollout, and what remains unfinished?\" We can infer customer rollout = general customer release / GA. The claim says \"customer rollout remains unfinished\" — is that fully supported? The evidence says \"Code completion does not approve general customer release\" and \"GA not approved\", \"No general release date confirmed\". It doesn't explicitly say \"customer rollout remains unfinished.\" But the question asks to identify; we can say \"The customer rollout (general customer release/GA) remains unfinished...\" This is a reasonable direct answer. However, is it fully supported? The evidence says GA not approved, no general release date. So yes, the customer rollout is not complete. But \"remains unfinished\" is an inference from not approved/no date. Could be okay. But to be safe, we can phrase as \"The code fix is complete; the customer rollout is not complete: only a controlled pilot is approved, GA is not approved, and no general release date is confirmed.\" That directly states the status.\n\nBut instruction: \"When the question presupposes a state or outcome not established by the cited passage, explicitly say that this passage does not establish the requested state, then give the state it actually records.\" Does question presuppose a support message calls the change complete? Evidence J-02 is a status \"PAY-102 code fix: Done.\" That is complete. So no issue.\n\nPotential issue: \"A support message calls the change complete.\" The evidence J-02 has \"[SYNTHETIC] PAY-102 code fix: Done. Code completion does not approve general customer release.\" It doesn't say \"support message\" but likely that's the support message. We can ignore.\n\nNeed ensure quotes are exact contiguous passages from evidence. Let's verify quotes:\n\nJ-02@1 text: \"[SYNTHETIC]\\nPAY-102 code fix: Done. Code completion does not approve general customer release.\" If I copy \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" That is contiguous and exact. Good.\n\nD-02@1 text: \"[SYNTHETIC]\\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" Copy \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" Exact contiguous. Good.\n\nC-02@1 text: \"[SYNTHETIC]\\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" Copy \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" Exact. Good.\n\nMaybe also S-02@1: \"Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.\" But C-02 and D-02 suffice. S-02 could be cited for \"remains a controlled pilot\" and \"No GA date confirmed.\" But C-02 already has.\n\nOne claim with three citations. But the instruction says \"Use at most four claims, each at most 600 characters.\" One claim is fine. But maybe claims should be separate for each conclusion? The schema allows multiple claims. The question asks two parts: which is complete, what remains unfinished. Could be two claims. But \"combine overlapping conclusions rather than spending multiple claims on the same point.\" One claim covers both. Good.\n\nHowever, need be careful: The evidence_ids list must exactly equal evidence_id values in supports. So if one claim with supports J-02, D-02, C-02, evidence_ids = [\"J-02@1\",\"D-02@1\",\"C-02@1\"]. Good.\n\nNeed no external knowledge. Fine.\n\nLet's final JSON. Ensure valid JSON with type json_object? The prompt says schema: {\"type\": \"json_object\"} and then output JSON. We should output just the JSON object. No markdown. Use exact keys.\n\nLet's craft final."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1471,
+        "completion_tokens": 2664,
+        "total_tokens": 4135,
+        "prompt_tokens_details": {
+          "cached_tokens": 1280
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2479
+        },
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 191
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "cebf76ec-1ed1-42da-9667-8061118809b7",
+      "object": "chat.completion",
+      "created": 1791444538,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer evaluate claim. Need produce JSON only. Need inspect. Question: \"A support message calls the change complete. Which is complete, the code fix or the customer rollout, and what remains unfinished?\" Claims one: \"The PAY-102 code fix is complete (Done), but the customer rollout remains unfinished: only a controlled pilot is approved, general availability (GA) is not approved, and no general release date is confirmed.\" Evidence: J-02 says PAY-102 code fix: Done. Code completion does not approve general customer release. D-02 says Release decision: controlled pilot approved. GA not approved. PAY-102 Done is not customer release approval. C-02 says Payment-retry available only to controlled pilot. GA not approved. No general release date confirmed. Need judge supported and responsive. Need question_covered every requested part. Claim addresses which complete: code fix complete, customer rollout unfinished; remains unfinished? It says only controlled pilot approved, GA not approved, no general release date confirmed. Seems supported by evidence. Need consider if claim \"customer rollout remains unfinished\" maybe from evidence? D-02 says PAY-102 Done not customer release approval; pilot approved GA not approved. That supports rollout not complete/GA not approved. C-02 same. Does \"customer rollout remains unfinished\" directly? It says GA not approved and no general release date. So yes. Question asks \"what remains unfinished?\" The claim says customer rollout remains unfinished and details. Responsive yes. question_covered true? It answers which is complete and what remains unfinished. Need one verdict index 0 supported true responsive true. Ensure no issue: Claim says \"PAY-102 code fix is complete (Done)\" supported J-02. \"customer rollout remains unfinished: only a controlled pilot is approved, GA not approved, no general release date confirmed.\" Supported D-02/C-02. Need maybe \"customer rollout\" vs \"general customer release\" terminology. D-02: General availability not approved; PAY-102 Done is not customer release approval. C-02: Payment-retry available only controlled pilot. GA not approved. No general release date confirmed. Yes. Evidence all synthetic. Need JSON only. Final."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1510,
+        "completion_tokens": 476,
+        "total_tokens": 1986,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 450
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 870
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

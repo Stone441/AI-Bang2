@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "3d578163-f062-4cfd-a363-ede2382c702d",
+      "object": "chat.completion",
+      "created": 1791443891,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"Which migration plan was dropped?\" Need determine if evidence supports. We need return JSON claims only. We must first check whether question identifies a business entity or event. It asks \"Which migration plan was dropped?\" It's unspecified migration plan; evidence covers multiple events/migrations. Need maybe return empty claims? Let's analyze.\n\nEvidence:\n- BV-12: MIG-301 In Progress, blocker unmatched settlement totals.\n- BV-13: Roll back ledger migration if settlement differences exceed five basis points. (rule)\n- BV-02: AUTH-204 Blocked because mobile clients cannot refresh expired tokens. Owner Lena.\n- BV-14: September rehearsal used ten-basis-point threshold; superseded by October five-basis-point rule.\n- BV-15: Dual-region active writes were proposed but not approved; accepted migration uses one writer.\n- BV-11 chunks: archived migration rehearsal entries; current ledger migration decision chose shadow table to allow rollback without blocking existing writes.\n\nQuestion \"Which migration plan was dropped?\" There is no explicit \"dropped\" in evidence. \"proposed but not approved\" maybe dual-region active writes proposed not approved; accepted migration uses one writer. That could be interpreted as dropped? But source says proposed but not approved, not dropped. Also question asks which migration plan was dropped; no plan named as dropped. It asks about unspecified migration plan; evidence covers multiple events. According to instructions: \"First check whether the question identifies a business entity or event. If it asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event. A plan name alone does not identify its business event. Do not use retrieved details to invent the missing referent.\"\n\nQuestion \"Which migration plan was dropped?\" doesn't identify a specific plan/event. Evidence covers multiple migration-related items. We should return empty claims (no support for a dropped plan). But need consider if there is a candidate: dual-region active writes proposed but not approved. However question asks \"Which migration plan was dropped?\" That is unspecified. If we return claim \"Dual-region active writes were proposed but not approved\" maybe we are answering with a candidate, but the question asks which plan was dropped; \"proposed but not approved\" is not dropped. Also \"not approved\" does not establish dropped. The instructions: \"If it asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event.\" So empty claims. But maybe they expect a claim that no dropped plan is identified? However schema claims list. We can return {\"claims\":[]}. But maybe need include a claim: \"The evidence does not identify a dropped migration plan; it records dual-region active writes proposed but not approved...\"? But instructions say if insufficient support return empty claims list. Also empty claims means insufficient support. Could include a claim scoped? But the schema claims: claims array with text evidence. The instruction: \"If the question does not identify the event, entity or policy, give explicitly scoped candidate facts or return an empty claims list; do not choose a single unstated referent...\" Here question does not identify event. So empty claims likely correct.\n\nBut we must ensure no claims. But maybe if we can answer that \"Dual-region active writes were proposed but not approved\" as a candidate fact? The question asks \"Which migration plan was dropped?\" Could we claim \"No migration plan is stated as dropped; dual-region active writes were proposed but not approved, and the accepted migration uses one writer.\" But that's a qualification. However instructions: \"When the question presupposes a state or outcome not established by the cited passage, explicitly say that this passage does not establish the requested state, then give the state it actually records.\" But that applies perhaps if cited passage. Do we need answer directly? Hmm. The question presupposes a dropped migration plan. Evidence doesn't establish any dropped. We could answer with a claim: \"The evidence does not establish that any migration plan was dropped; it records that dual-region active writes were proposed but not approved, and the accepted migration uses one writer.\" But then evidence_ids BV-15. But the claim would include \"does not establish\" which is meta, okay? However instructions: \"A shared topic alone is not a requested part: omit standalone background... Facts about a different property...\" But this claim addresses question by saying no dropped plan. But question asks \"Which migration plan was dropped?\" If no answer, empty claims is simpler. Yet the response format likely expected claims; empty allowed. Need decide.\n\nLet's parse instructions carefully.\n\n\"First check whether the question identifies a business entity or event. If it asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event. A plan name alone does not identify its business event. Do not use retrieved details to invent the missing referent.\"\n\nQuestion: \"Which migration plan was dropped?\" It asks about one unspecified migration plan. Evidence covers multiple migration-related events: MIG-301, ledger migration, AUTH-204, rehearsal threshold, dual-region alternative, database design. So yes, return empty claims. No need to include claim. So final should be {\"claims\":[]}. Ensure JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3160,
+        "completion_tokens": 1105,
+        "total_tokens": 4265,
+        "prompt_tokens_details": {
+          "cached_tokens": 2944
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1099
+        },
+        "prompt_cache_hit_tokens": 2944,
+        "prompt_cache_miss_tokens": 216
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

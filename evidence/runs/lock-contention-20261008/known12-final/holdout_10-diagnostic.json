@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "45c5b2ac-1e9c-4a4f-b741-9264136b2995",
+      "object": "chat.completion",
+      "created": 1791443888,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"For the smallest supported integration tier, which region and retry limit belong to the same table row?\" Need parse evidence. We must return JSON claims. Need determine if question identifies business entity/event. It asks \"smallest supported integration tier\" maybe refers to table row? Evidence has table in BV-06: \"Atlas account eligibility Account Scope\\n Singapore business SGD \\t Pilot supported \\n Personal SGD \\t Not supported\". That's integration tier? \"Pilot supported\" is smallest? Region Singapore business SGD. But retry limit? Where is retry limit? There is PAY-102 retry configuration fix, but no table row with region and retry limit. Maybe \"smallest supported integration tier\" refers to \"Pilot supported\" in table. But retry limit? Evidence J-02 mentions PAY-102 code fix retry config? S-02 payment-retry pilot. D-02 release. No table row with region and retry limit. Need possibly no claims. Let's inspect all evidence: BV-06 has account eligibility table row: Singapore business SGD | Pilot supported. No retry limit. BV-15 migration. BV-31 settlement. BV-22 batch deadline. BV-09 ticket. BV-28 access. J-02 PAY-102 retry config fix status. BV-07 USD. BV-08 onboarding. BV-19 webhook. BV-10 approval scope. S-02 payment-retry. D-02 release. C-02 capability. D-03. BV-11 migration ledger. No region+retry limit table row. Question presupposes table row with region and retry limit for smallest supported integration tier. Not supported. We must return empty claims if insufficient support. But maybe \"smallest supported integration tier\" is \"Pilot supported\" and \"retry limit\" is in PAY-102? But no table row linking them. So no claims. However could there be a table row in BV-11? No retry limits. So empty claims.\n\nBut instructions: If question does not identify event, entity or policy, give candidate facts or empty. Here it asks about a table row but no evidence contains retry limit. Return empty claims. Need JSON only.\n\nLet's ensure no claim. final: {\"claims\":[]}."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2494,
+        "completion_tokens": 481,
+        "total_tokens": 2975,
+        "prompt_tokens_details": {
+          "cached_tokens": 2304
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 475
+        },
+        "prompt_cache_hit_tokens": 2304,
+        "prompt_cache_miss_tokens": 190
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

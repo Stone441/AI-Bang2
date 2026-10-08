@@ -1,0 +1,31 @@
+test_preview_does_not_wait_for_discovery_native_listing (test_discovery_contention.DiscoveryContentionTests.test_preview_does_not_wait_for_discovery_native_listing) ... FAIL
+test_revoked_preview_and_history_still_check_native_during_discovery (test_discovery_contention.DiscoveryContentionTests.test_revoked_preview_and_history_still_check_native_during_discovery) ... FAIL
+
+======================================================================
+FAIL: test_preview_does_not_wait_for_discovery_native_listing (test_discovery_contention.DiscoveryContentionTests.test_preview_does_not_wait_for_discovery_native_listing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_discovery_contention.py", line 51, in test_preview_does_not_wait_for_discovery_native_listing
+    self.assertEqual(self.blocked_cycle(lambda:results.append(self.pilot.evidence(self.actor,self.eid))),[])
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_discovery_contention.py", line 46, in blocked_cycle
+    self.assertTrue(completed,'Request blocked behind discovery native listing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Request blocked behind discovery native listing
+
+======================================================================
+FAIL: test_revoked_preview_and_history_still_check_native_during_discovery (test_discovery_contention.DiscoveryContentionTests.test_revoked_preview_and_history_still_check_native_during_discovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_discovery_contention.py", line 61, in test_revoked_preview_and_history_still_check_native_during_discovery
+    self.assertEqual(self.blocked_cycle(request),[])
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_discovery_contention.py", line 46, in blocked_cycle
+    self.assertTrue(completed,'Request blocked behind discovery native listing')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Request blocked behind discovery native listing
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.033s
+
+FAILED (failures=2)

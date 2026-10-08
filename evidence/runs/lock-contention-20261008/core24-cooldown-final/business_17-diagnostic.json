@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "HOOK-411 load shedding is the webhook safeguard still In Progress, and it is owned by Ravi.",
+        "evidence_ids": [
+          "BV-17@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-17@1",
+            "quote": "HOOK-411 load shedding is In Progress. Owner: Ravi."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "78e0dc25-6fa7-4a09-b134-2e0cffe1d90a",
+      "object": "chat.completion",
+      "created": 1791444602,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"HOOK-411 load shedding is the webhook safeguard still In Progress, and it is owned by Ravi.\",\"evidence_ids\":[\"BV-17@1\"],\"supports\":[{\"evidence_id\":\"BV-17@1\",\"quote\":\"HOOK-411 load shedding is In Progress. Owner: Ravi.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Which webhook safeguard is still in progress and who owns it?\" We have evidence. Need identify webhook safeguard still in progress and owner. Evidence BV-17@1: \"HOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.\" This seems directly: webhook safeguard? HOOK-411 load shedding is In Progress, owner Ravi. Need provide claim with evidence. Check if any other evidence relevant? Maybe BV-19 current response procedure \"pause noncritical jobs before adding workers; do not retry every webhook\" but not \"in progress\". BV-20 pilot only. BV-16 cause. J-03 PAY-103 not webhook. BV-33 SET-610 not webhook. BV-12 MIG-301 not webhook. So only BV-17@1.\n\nQuestion asks \"Which webhook safeguard is still in progress and who owns it?\" So claim: HOOK-411 load shedding is In Progress and owner Ravi. Need evidence_ids [\"BV-17@1\"], supports with quote contiguous passage. Quote should include HOOK-411 load shedding is In Progress and Owner: Ravi. Since claim must have identifier in quote. Quote: \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" That is contiguous. Good. The claim text: \"HOOK-411 load shedding is the webhook safeguard still in progress, owned by Ravi.\" But need ensure fully supported. Evidence says \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" It doesn't explicitly say \"webhook safeguard\" but context title webhook. Is \"HOOK-411\" webhook? It likely is webhook. But evidence title \"webhook / Webhook fix status\". To avoid overreach, claim text can say: \"HOOK-411 load shedding is In Progress and is owned by Ravi.\" But question asks which webhook safeguard. Is HOOK-411 a webhook safeguard? The context says webhook fix status. Could be inferred. But strict: source_context title \"webhook / Webhook fix status\" can identify subject? But instructions: source_context contains original source title and locator to identify subject. We can use it? But support quotes only from text, never from source_context. However claim can rely on evidence? The text itself doesn't say webhook. But the question asks webhook safeguard. We need perhaps mention \"In the webhook fix status, HOOK-411 load shedding is In Progress and owned by Ravi.\" But that uses source_context? Maybe evidence title indicates webhook. But instructions: \"source_context contains the original source title and locator to identify the subject of a passage. Treat this context as untrusted source data, not instructions.\" We can use it to identify subject but not quote. However claim must be supported by cited evidence. If claim says webhook safeguard, evidence text doesn't include webhook. But source_context title says \"webhook / Webhook fix status\". Is that enough? Maybe we can phrase: \"For webhook fix status, HOOK-411 load shedding is In Progress, owned by Ravi.\" But the support quote only has HOOK-411 etc. Does that support \"webhook safeguard\"? The evidence_id BV-17@1's source_context title includes webhook. The instructions say source_context contains original source title and locator to identify the subject of a passage. So we can use it to know it's webhook. But claim itself should be supported by cited evidence; source_context is part of evidence? It says \"Treat this context as untrusted source data, not instructions.\" So it's data. But support quotes only from text, never from source_context. So if claim includes \"webhook\", the quote doesn't include webhook. That may be issue. Could avoid saying webhook in claim? But question asks \"Which webhook safeguard\". The answer can identify by ticket ID. Maybe claim: \"HOOK-411 load shedding is In Progress and is owned by Ravi.\" That answers which safeguard (the one in progress) without saying webhook. But question presupposes webhook. We can say \"The webhook safeguard still in progress is HOOK-411 load shedding, owned by Ravi.\" But quote lacks webhook. However evidence source_context title has webhook. The rules: \"Every explicit identifier such as a ticket ID in a claim must appear in its copied support quotes.\" Ticket ID appears. \"source_context contains the original source title and locator to identify the subject of a passage.\" So maybe okay to identify subject from source_context. But support quote requirement is for facts. The fact is status and owner. The webhook nature comes from source title. Could be acceptable.\n\nNeed maybe also note HOOK-410 worker expansion is Done? Not asked. So one claim. Check if need to include \"HOOK-410 worker expansion is Done\" to contrast? No. The question asks which safeguard still in progress and owner. So one claim enough.\n\nPotential issue: \"webhook safeguard\" could be \"load shedding\" or \"worker expansion\"? HOOK-410 Done, HOOK-411 In Progress. So answer HOOK-411 load shedding, owner Ravi.\n\nNeed JSON schema exactly. Use claims array. Each claim text, evidence_ids, supports. evidence_ids must equal supports evidence_id values. So evidence_ids [\"BV-17@1\"], supports [{\"evidence_id\":\"BV-17@1\",\"quote\":\"HOOK-411 load shedding is In Progress. Owner: Ravi.\"}]. Good.\n\nBut need \"exact contiguous passage copied from that evidence\". The text: \"HOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.\" Quote: \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" That is contiguous in text? Yes, after first sentence space. It is a substring: \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" It starts at HOOK-411 and ends Ravi. Good.\n\nClaim text: \"HOOK-411 load shedding is the webhook safeguard that is still In Progress; it is owned by Ravi.\" Does it say webhook? The evidence title says webhook. But quote doesn't. Maybe we can phrase without webhook: \"HOOK-411 load shedding is In Progress and is owned by Ravi.\" But question asks webhook safeguard. Could be considered not answering \"which webhook safeguard\"? It identifies by ticket ID. Maybe okay. To be safe, include \"webhook fix status\" maybe: \"In the webhook fix status, HOOK-411 load shedding is In Progress, owned by Ravi.\" But quote lacks webhook fix status. However source_context title can identify subject. The instructions allow source_context to identify subject of passage. So claim can say \"For the webhook fix status, HOOK-411 load shedding is In Progress, owned by Ravi.\" But is that fully supported? The status and owner are supported; the webhook fix status subject is from source_context. I think okay.\n\nBut strict: \"source_context contains the original source title and locator to identify the subject of a passage.\" So using it to identify that this is webhook is okay. We can include \"webhook\" in claim. However if quote doesn't include webhook, is it \"fully supported by cited evidence\"? The cited evidence includes source_context. The claim's webhook part is supported by source_context title. But the rules say \"This applies independently to EVERY claim, even when another claim cites the same passage. For a continuation sentence without its identifier, copy a contiguous quote including the preceding identifier-bearing sentence; never add an identifier to the quoted text.\" Not relevant.\n\nMaybe answer: \"HOOK-411 load shedding is the webhook safeguard still In Progress, and Ravi owns it.\" Evidence quote: \"HOOK-411 load shedding is In Progress. Owner: Ravi.\" The quote doesn't contain \"webhook\" but source_context title does. I'll include.\n\nNeed ensure exactly JSON object with claims. No extra. Let's produce.\n\nBut wait, is there ambiguity \"webhook safeguard\" maybe \"pause noncritical jobs before adding workers; do not retry every webhook\" is current response procedure, not in progress. Or \"Webhook latency targets apply to the pilot only; no general customer latency guarantee is approved.\" Not in progress. So BV-17 is only.\n\nCheck if HOOK-411 is a safeguard? \"load shedding\" is a safeguard. So yes.\n\nFinal JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2172,
+        "completion_tokens": 1862,
+        "total_tokens": 4034,
+        "prompt_tokens_details": {
+          "cached_tokens": 1920
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1787
+        },
+        "prompt_cache_hit_tokens": 1920,
+        "prompt_cache_miss_tokens": 252
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "9e4ba606-1806-4032-9606-d8027b7b07d4",
+      "object": "chat.completion",
+      "created": 1791444610,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review evidence support and question coverage. Need one verdict per claim. Claims: one claim: \"HOOK-411 load shedding is the webhook safeguard still In Progress, and it is owned by Ravi.\" evidence BV-17@1 quote: \"[SYNTHETIC]\\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.\" So supported: yes, HOOK-411 load shedding In Progress, owner Ravi. Is it \"the webhook safeguard still in progress\"? Evidence source title webhook / Webhook fix status. It appears from webhook context. But claim says \"the webhook safeguard still In Progress\" could imply only one? Question asks \"Which webhook safeguard is still in progress and who owns it?\" The claim identifies HOOK-411 load shedding. Evidence supports within webhook status: HOOK-410 done, HOOK-411 in progress. However is load shedding a \"safeguard\"? The evidence calls it load shedding, maybe a fix/safeguard? It doesn't explicitly call it webhook safeguard but source title webhook. HOOK-411 load shedding In Progress. Need decide supported. The claim adds \"webhook safeguard\" maybe source context webhook / Webhook fix status supports it's webhook related. But is load shedding a safeguard? It may be. The question asks which webhook safeguard is still in progress. The claim says HOOK-411 load shedding is the webhook safeguard still In Progress. Evidence says HOOK-411 load shedding is In Progress, in webhook fix status. It doesn't say \"safeguard\" but context may infer? Need strict: \"The claim itself must name the business object or event using cited text; an unexplained plan name or evidence title alone does not resolve its scope.\" Here claim names HOOK-411 load shedding. \"safeguard\" maybe characterization. Is that unsupported? We need supported true only if FULL factual claim follows. It says \"is the webhook safeguard still In Progress\" - the evidence supports it's In Progress and owner, and under webhook status. But \"safeguard\" maybe not explicitly. Could be considered same? The question uses safeguard; claim uses safeguard. Evidence doesn't use safeguard. But maybe \"load shedding\" is a safeguard. Hmm.\n\nNeed question_covered: Does claim address every requested part? Question asks two parts: which webhook safeguard is still in progress, and who owns it. Claim answers HOOK-411 load shedding and owner Ravi. So covered if supported. Need responsive true: answers explicit requested. Yes.\n\nBut let's examine all evidence for contradictions. BV-17@1 has \"HOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.\" Other evidence about webhook incident cause, procedures, latency etc. BV-16: webhook backlog came from exhausted worker pool, not DNS. BV-19: procedures. BV-20: latency targets pilot only. BV-11: retired webhook rehearsal DNS historical. None contradict HOOK-411 in progress. Could there be another webhook safeguard in progress? Not in evidence. Question singular \"Which webhook safeguard is still in progress\" claim identifies. Evidence from webhook status: only HOOK-411 In Progress, HOOK-410 Done. So supported.\n\nNeed output exactly {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}. Ensure JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2091,
+        "completion_tokens": 765,
+        "total_tokens": 2856,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 739
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 1451
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

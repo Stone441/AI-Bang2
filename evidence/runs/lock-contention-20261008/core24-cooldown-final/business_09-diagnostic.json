@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No. INT-210 implementation is Done, but commercial launch remains Pending approval.",
+        "evidence_ids": [
+          "BV-09@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-09@1",
+            "quote": "INT-210 implementation is Done; commercial launch remains Pending approval."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "2d0880f1-8cea-40b8-9954-5364580646b6",
+      "object": "chat.completion",
+      "created": 1791444580,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No. INT-210 implementation is Done, but commercial launch remains Pending approval.\",\"evidence_ids\":[\"BV-09@1\"],\"supports\":[{\"evidence_id\":\"BV-09@1\",\"quote\":\"INT-210 implementation is Done; commercial launch remains Pending approval.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Does INT-210 Done mean commercial launch is approved?\" Need output JSON only. Need use evidence. We need determine if evidence supports. We have evidence BV-09@1: \"[SYNTHETIC]\\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.\" This directly answers: No, INT-210 Done does not mean commercial launch approved; commercial launch remains Pending approval. Need maybe one claim. Must include evidence_ids and supports with quote. Claim text concise factual conclusion. Use only necessary. The question asks yes/no. We can state: \"No. INT-210 implementation is Done, but commercial launch remains pending approval.\" Support quote exact from BV-09@1. Need ensure quote contiguous. The text: \"[SYNTHETIC]\\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.\" We can quote \"INT-210 implementation is Done; commercial launch remains Pending approval.\" That is contiguous. Evidence id BV-09@1. Claim includes \"No.\" Is that okay? Yes.\n\nNeed JSON: {\"claims\":[{\"text\":\"No. INT-210 implementation is Done, but commercial launch remains Pending approval.\",\"evidence_ids\":[\"BV-09@1\"],\"supports\":[{\"evidence_id\":\"BV-09@1\",\"quote\":\"INT-210 implementation is Done; commercial launch remains Pending approval.\"}]}]}\n\nCheck schema: claims array, each claim text, evidence_ids, supports. Evidence_ids list exactly equal supports evidence_id. Good. No extra. Ensure no markdown. Final only JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1801,
+        "completion_tokens": 406,
+        "total_tokens": 2207,
+        "prompt_tokens_details": {
+          "cached_tokens": 1664
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 338
+        },
+        "prompt_cache_hit_tokens": 1664,
+        "prompt_cache_miss_tokens": 137
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "d90a971f-b4d9-42fa-bf9c-733c2d620e26",
+      "object": "chat.completion",
+      "created": 1791444582,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer question: \"Does INT-210 Done mean commercial launch is approved?\" We have claims array with one claim: \"No. INT-210 implementation is Done, but commercial launch remains Pending approval.\" Evidence BV-09@1: \"[SYNTHETIC]\\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.\" So claim directly supported. Need verdict for index 0. Need question_covered? The question asks does INT-210 Done mean commercial launch is approved? Claim answers no, and states status. So responsive true. Supported true. Need JSON only exactly.\n\nBut check instructions: one verdict for every claim. We have one claim. question_covered true if claims address EVERY requested part supported by evidence. Here one part. Yes. Verdict supported true, responsive true.\n\nNeed ensure no issue: claim text says \"No. INT-210 implementation is Done, but commercial launch remains Pending approval.\" Evidence quote same. Source context title \"integration / Launch ticket\", locator \"Launch ticket\". This is relevant to commercial launch. Supported.\n\nReturn JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1713,
+        "completion_tokens": 254,
+        "total_tokens": 1967,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 228
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 1073
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

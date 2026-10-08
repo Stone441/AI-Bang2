@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The payment-service incident's cache invalidation hypothesis was withdrawn.",
+        "evidence_ids": [
+          "S-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "S-01@1",
+            "quote": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "f53f6340-5787-4c98-82c0-69e98a1a447a",
+      "object": "chat.completion",
+      "created": 1791443793,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The payment-service incident's cache invalidation hypothesis was withdrawn.\",\"evidence_ids\":[\"S-01@1\"],\"supports\":[{\"evidence_id\":\"S-01@1\",\"quote\":\"Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\"}]}]}",
+            "reasoning_content": "We need answer: \"Which payment-service explanation was withdrawn?\" Need use evidence. We need determine if question identifies business entity/event? It asks \"Which payment-service explanation was withdrawn?\" Evidence S-01 mentions payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 final postmortem confirmed retry configuration and timeout budget mismatch. So the withdrawn explanation is cache invalidation hypothesis. But need careful: \"payment-service explanation\" could refer to payment-service incident; evidence S-01 says cache invalidation early hypothesis withdrawn. Also maybe BV-18 about authentication signing shared-secret proposal withdrawn, but not payment-service. Question asks \"payment-service explanation\" likely the cache hypothesis. We can answer with claim: The cache invalidation hypothesis for the payment-service incident was withdrawn. Evidence S-01. Need support quote exact contiguous passage. Quote: \"09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\" That is contiguous? Let's check text: \"[SYNTHETIC]\\nPayment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.\" We can copy \"Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\" That's contiguous passage. Evidence id S-01@1. Answer direct. Need JSON only. Ensure claims array with one claim. No extra. Text concise factual conclusion. supports quote exact contiguous passage copied from evidence. Should we include source_context? No. Evidence_ids list must exactly equal supports evidence_id. So {\"claims\":[{\"text\":\"The payment-service incident's cache invalidation hypothesis was withdrawn.\",\"evidence_ids\":[\"S-01@1\"],\"supports\":[{\"evidence_id\":\"S-01@1\",\"quote\":\"Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn.\"}]}]} That should be fine. But let's verify schema: JSON object with claims array. Quotes between 12-1200 chars. Quote length about 140. Good. Need maybe mention \"final postmortem confirmed retry configuration and timeout budget mismatch\" not needed. The question asks which explanation withdrawn. So one claim. Done."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2015,
+        "completion_tokens": 604,
+        "total_tokens": 2619,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 526
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 1247
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "4eafec2f-7f09-4bea-9996-a820f99e57f0",
+      "object": "chat.completion",
+      "created": 1791443795,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer as JSON only. Need evaluate claim. Question: \"Which payment-service explanation was withdrawn?\" Claim: \"The payment-service incident's cache invalidation hypothesis was withdrawn.\" Evidence S-01@1 says Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 final postmortem confirmed retry config... So supported. Responsive? Question asks which explanation was withdrawn. Claim answers cache invalidation hypothesis. Yes responsive. Need question_covered true? Only one claim addresses requested part. It covers. Need verdict exactly one. Ensure JSON schema."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1937,
+        "completion_tokens": 160,
+        "total_tokens": 2097,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 134
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1425
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

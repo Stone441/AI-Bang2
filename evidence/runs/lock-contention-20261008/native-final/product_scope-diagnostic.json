@@ -1,0 +1,123 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No — payment-retry cannot be offered to all customers now: the release decision is controlled pilot approved only, and general availability is not approved.",
+        "evidence_ids": [
+          "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+          "confluence:164283@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved."
+          },
+          {
+            "evidence_id": "confluence:164283@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved."
+          }
+        ]
+      },
+      {
+        "text": "PAY-102 Done does not approve general availability or general customer release; it is a code fix completion, and code completion does not approve general customer release.",
+        "evidence_ids": [
+          "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+          "jira:10013@336836842918391821"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+            "quote": "PAY-102 Done is not customer release approval."
+          },
+          {
+            "evidence_id": "jira:10013@336836842918391821",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          }
+        ]
+      },
+      {
+        "text": "The approved scope to communicate is payment-retry only within the approved pilot scope; no general release date is confirmed, and general availability date and expansion beyond pilot customers are unconfirmed.",
+        "evidence_ids": [
+          "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+          "confluence:164283@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+            "quote": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers."
+          },
+          {
+            "evidence_id": "confluence:164283@1",
+            "quote": "No general release date is confirmed."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "8ae5537d-da38-4d93-93f9-b15d488ad918",
+      "object": "chat.completion",
+      "created": 1791443870,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No — payment-retry cannot be offered to all customers now: the release decision is controlled pilot approved only, and general availability is not approved.\",\"evidence_ids\":[\"drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6\",\"confluence:164283@1\"],\"supports\":[{\"evidence_id\":\"drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved.\"},{\"evidence_id\":\"confluence:164283@1\",\"quote\":\"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved.\"}]},{\"text\":\"PAY-102 Done does not approve general availability or general customer release; it is a code fix completion, and code completion does not approve general customer release.\",\"evidence_ids\":[\"drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6\",\"jira:10013@336836842918391821\"],\"supports\":[{\"evidence_id\":\"drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6\",\"quote\":\"PAY-102 Done is not customer release approval.\"},{\"evidence_id\":\"jira:10013@336836842918391821\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"}]},{\"text\":\"The approved scope to communicate is payment-retry only within the approved pilot scope; no general release date is confirmed, and general availability date and expansion beyond pilot customers are unconfirmed.\",\"evidence_ids\":[\"drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6\",\"confluence:164283@1\"],\"supports\":[{\"evidence_id\":\"drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6\",\"quote\":\"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\"},{\"evidence_id\":\"confluence:164283@1\",\"quote\":\"No general release date is confirmed.\"}]}]}",
+            "reasoning_content": "We need answer question. Need parse. Question: \"Can we offer payment-retry to all customers now, does PAY-102 Done approve general availability, and what approved scope and confirmed release date can we communicate?\" Need answer directly. Evidence synthetic. Need claims JSON. Need identify requested parts:\n1 Can we offer payment-retry to all customers now?\n2 Does PAY-102 Done approve general availability?\n3 What approved scope and confirmed release date can we communicate?\n\nEvidence:\nD-02: Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\nC-02: Payment-retry only to controlled pilot. GA not approved. No general release date confirmed.\nJ-02: PAY-102 code fix: Done. Code completion does not approve general customer release.\nD-03: Describe payment-retry only within approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\n\nNeed answer: No, cannot offer to all customers now; only controlled pilot approved; GA not approved; PAY-102 Done not approval for general availability; no confirmed release date. Approved scope: controlled pilot. Confirmed release date: none confirmed. Need maybe no general release date.\n\nNeed use minimum claims. Could combine. We need cites. At most four claims. Let's craft.\n\nClaim 1: Payment-retry is approved only for the controlled pilot, not all customers; general availability is not approved. Evidence C-02 quote: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved.\" Also D-02 quote: \"Release decision: controlled pilot approved. General availability (GA) not approved.\" Could include both. Need support quotes exact contiguous from evidence. C-02 text exact: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" We can quote part. D-02 quote: \"Release decision: controlled pilot approved. General availability (GA) not approved.\" Good.\n\nClaim 2: PAY-102 Done does not approve general availability / customer release. Evidence D-02: \"PAY-102 Done is not customer release approval.\" J-02: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Could combine. Need explicit identifiers in quote. D-02 quote includes PAY-102 Done. J-02 quote includes PAY-102? \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Yes. Supports.\n\nClaim 3: Approved scope to communicate: payment-retry only within approved pilot scope; no general release date confirmed; expansion beyond pilot customers unconfirmed. Evidence D-03: \"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\" C-02: \"No general release date is confirmed.\" Also maybe D-02. Need careful: question asks approved scope and confirmed release date. Approved scope: controlled pilot. Confirmed release date: none / no general release date is confirmed. Could be one claim.\n\nNeed maybe include D-03 \"Describe payment-retry only within approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\" This directly says approved pilot scope and unconfirmed GA date and expansion. Good.\n\nNeed answer no for first. Maybe claim 1 covers no all customers and GA not approved. Claim 2 covers PAY-102 Done. Claim 3 covers scope/date. That's 3 claims.\n\nNeed ensure every explicit identifier in claim appears in support quotes. \"PAY-102\" appears in claim 2, and support quotes both contain. Claim 3 no identifier? If mention PAY-102? not needed. If mention \"controlled pilot\" okay. \"general availability\" etc. No explicit ticket ID. Fine.\n\nNeed quote length 12-1200. Good.\n\nNeed evidence_ids exactly match supports evidence_id. For claim 1: support evidence_ids and quotes. If multiple citations, list both in evidence_ids. Need exact. Use evidence_id values:\nC-02: \"confluence:164283@1\"\nD-02: \"drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6\"\nD-03: \"drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6\"\nJ-02: \"jira:10013@336836842918391821\"\n\nNeed maybe quote exact contiguous passage. For D-02 text: \"[SYNTHETIC D-02] Payment-retry release approval\\n\\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\\n\\nThis is synthetic test data, not a real company incident or approval.\\n\" We can quote \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" That's contiguous, includes identifier. For claim 2, same quote includes PAY-102. If quote used in claim 1 and claim 2, okay. But for claim 2 need maybe quote \"PAY-102 Done is not customer release approval.\" That's 39 chars? Actually 44. Valid. But also J-02 quote.\n\nNeed claim 1 maybe: \"No—payment-retry cannot be offered to all customers now: release decision is controlled pilot approved, and general availability is not approved.\" Support D-02 quote and C-02 quote. \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved.\" C-02. Good. Evidence_ids [\"drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6\",\"confluence:164283@1\"].\n\nClaim 2: \"PAY-102 Done does not approve general availability; it is a code fix completion, and code completion does not approve general customer release.\" Support D-02 quote \"PAY-102 Done is not customer release approval.\" and J-02 quote \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Good. Evidence_ids accordingly.\n\nClaim 3: \"The approved scope is the controlled pilot only; no general release date is confirmed, and general availability date/expansion beyond pilot customers is unconfirmed.\" Support D-03 quote: \"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\" and C-02 quote: \"No general release date is confirmed.\" Good.\n\nNeed ensure claim 1 doesn't duplicate. Could also mention \"controlled pilot approved\" from D-02. Fine.\n\nNeed maybe avoid \"cannot be offered\" vs source says available only to controlled pilot. That establishes can't offer to all? The question asks \"Can we offer all now?\" Source says available only controlled pilot. That implies no. We can state \"Payment-retry is available only to controlled pilot; GA not approved.\" That's enough.\n\nNeed maybe answer \"Does PAY-102 Done approve general availability?\" directly: No.\n\nNeed final JSON object with claims array. Ensure valid JSON. No markdown. Use exact schema.\n\nNeed no extra explanation. Should we include \"synthetic\" caution? Not necessary, but source_context says untrusted. We can ignore. But maybe mention \"According to evidence\". No.\n\nLet's ensure quotes are exact contiguous. Check C-02: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.\" If quote first two sentences: \"Payment-retry is available only to the controlled pilot. General availability (GA) is not approved.\" Exact yes.\n\nD-02 quote: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" Exact yes. That quote includes all. For claim 1, if I quote \"Release decision: controlled pilot approved. General availability (GA) not approved.\" That's contiguous? Yes first two sentences of that line. It doesn't include PAY-102. Fine. For claim 2, quote \"PAY-102 Done is not customer release approval.\" contiguous from D-02. Fine.\n\nJ-02 quote: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Exact contiguous? Text: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Yes.\n\nD-03 quote: \"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\" Exact contiguous? Text: \"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\" Yes.\n\nC-02 quote \"No general release date is confirmed.\" exact.\n\nNeed ensure claim 3: \"The approved scope is the controlled pilot only; no general release date is confirmed, and general availability date and expansion beyond pilot customers are unconfirmed.\" The quote D-03 says \"Describe payment-retry only within the approved pilot scope.\" It doesn't say \"controlled pilot\" in D-03; C-02 says controlled pilot. Combine okay. Claim doesn't mention ticket ID. Fine.\n\nCould maybe include D-03 quote for approved pilot scope and unconfirmed GA date/expansion, and C-02 for no general release date. Good.\n\nPotential issue: \"general availability date and expansion beyond pilot customers are unconfirmed\" source says \"Unconfirmed items: general availability date and expansion beyond pilot customers.\" Good.\n\nNeed at most 4 claims; 3. Great.\n\nFinal JSON only. Ensure evidence_ids list exactly matches supports evidence_ids. For claim 1 supports two objects; evidence_ids two IDs. Claim 2 two. Claim 3 two. Good.\n\nLet's produce."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3786,
+        "completion_tokens": 2583,
+        "total_tokens": 6369,
+        "prompt_tokens_details": {
+          "cached_tokens": 3584
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2076
+        },
+        "prompt_cache_hit_tokens": 3584,
+        "prompt_cache_miss_tokens": 202
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "7493539d-36bc-44e8-bfeb-9e64fe374508",
+      "object": "chat.completion",
+      "created": 1791443891,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true},{\"index\":2,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claims against evidence. Need exactly one verdict per claim. Need question_covered true only if claims address EVERY requested part supported by supplied evidence.\n\nWe need parse question: \"Can we offer payment-retry to all customers now, does PAY-102 Done approve general availability, and what approved scope and confirmed release date can we communicate?\"\n\nClaims:\n1. No — payment-retry cannot be offered to all customers now: release decision controlled pilot approved only, and general availability not approved.\nEvidence: D-02: controlled pilot approved, GA not approved. Confluence C-02: available only to controlled pilot, GA not approved. Supported? Yes. Responsive? Addresses first part can offer all now (no). Yes.\n\n2. PAY-102 Done does not approve general availability or general customer release; it is a code fix completion, and code completion does not approve general customer release.\nEvidence D-02 says PAY-102 Done is not customer release approval. Jira KAN-4 says PAY-102 code fix: Done. Code completion does not approve general customer release. Does it support \"does not approve general availability\"? D-02 says not customer release approval; not specifically GA but general availability? The question asks does PAY-102 Done approve general availability. Evidence says not customer release approval; code completion does not approve general customer release. Is \"general availability\" same? Probably yes? Need be strict. Claim says \"does not approve general availability or general customer release\". D-02: \"PAY-102 Done is not customer release approval.\" Not explicitly \"general availability\". Jira: \"Code completion does not approve general customer release.\" So supports general customer release, not necessarily GA? But GA not approved in D-02. PAY-102 Done not approval. Could infer if GA not approved. But claim says PAY-102 Done does not approve GA. Evidence doesn't explicitly connect PAY-102 Done to GA approval; but D-02 in same passage says GA not approved and PAY-102 Done not customer release approval. It may be okay? Need \"FULL factual claim follows from cited evidence, including scope...\" Claim \"PAY-102 Done does not approve general availability or general customer release; it is a code fix completion, and code completion does not approve general customer release.\" Jira says PAY-102 code fix: Done. Code completion does not approve general customer release. It does not state \"it is a code fix completion\" yes. \"does not approve general availability\" maybe not directly supported by cited evidence? It says GA not approved, but not that PAY-102 Done doesn't approve it. However D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" If GA not approved, then PAY-102 Done does not approve GA? Not necessarily by that fact; something else may approve? But given claim is negative. Could be supported because D-02 says GA not approved, so no one has approved GA, including PAY-102. But the claim specifically about PAY-102 Done. The evidence includes \"PAY-102 Done is not customer release approval\" and \"Code completion does not approve general customer release.\" \"General availability\" is a type of customer release? Usually yes. Could accept. Responsive? Addresses second part. Yes.\n\n3. The approved scope to communicate is payment-retry only within the approved pilot scope; no general release date is confirmed, and general availability date and expansion beyond pilot customers are unconfirmed.\nEvidence D-03: \"Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.\" Confluence C-02: \"No general release date is confirmed.\" Supported? Yes. Responsive? Addresses third part approved scope and confirmed release date. Yes.\n\nQuestion_covered: claims address all parts: can offer all now? yes. Does PAY-102 Done approve GA? yes. approved scope and confirmed release date? claim 3 says approved scope payment-retry within pilot, no general release date confirmed, GA date and expansion unconfirmed. Yes. So true.\n\nNeed output JSON with question_covered true and verdicts each supported true responsive true. Ensure exact schema."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 4164,
+        "completion_tokens": 927,
+        "total_tokens": 5091,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 877
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 3524
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

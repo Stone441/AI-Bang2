@@ -1,5 +1,13 @@
 # Decisions / ADR
 
+2026-10-08 AUTH-025：用户明确“推送并合并到main”，批准DEV-PERF-01已验证应用cdbd62b及32cb71c证据/状态增量推送既有Stone441/AI-Bang2，经PR合并main。只含本任务代码、测试、公共合成证据和文档；未跟踪ZIP/SQLite/队员产物不上传，不部署/重启8094/8100，不扩源/费用/权限，不改变G1/G2。下方“未push/merge”为证据冻结时状态；实际Git交付以本次PR合并状态及main commit为准。
+
+2026-10-08 AUTH-024：用户明确回复“批准这一次单页创建及测量”，批准按lock-contention-20261008/NATIVE_FRESHNESS_PROPOSAL.md，在既有Confluence space131227通过owner管理UI仅创建一页[SYNTHETIC] PERF-20261008 automatic discovery probe及提案精确copper正文，并用cdbd62b独立只读CLI后台＋fake model观测。先前“按推荐”未当作写许可，澄清后才执行。不得修改/删除旧资料或该页、扩scope、改源权限、新模型费用、重启8094/8100或公开服务；不继承AUTH021，G1/G2不变。执行完成：仅页1572865/version1、继承C01限制未改；UI发布确认→自动发布35.60秒→首fake回答57.12秒，0模型费用，细分时间与限制见native-freshness/summary.json；本次一次性授权已消费。
+
+2026-10-08 ADR-061补充限流修复（固定cdbd62b）：原Reader吞SourceRateLimited为unknown时丢失Retry-After的真实缺口，新增每来源共享SourceCooldownTransport，仅native JsonTransport自动装一次、authority/base/expanded reader共用。get/media在429记录monotonic deadline，冷却内本地unknown，不持网络锁、无自动retry；Drive media保留numeric Retry-After。冷却后不接纳新请求，此前已接纳/在途最多两路可收尾；不声称平台全局或跨进程限流。5定向验证600s冷却、吞unknown共享、mediaheader、装一次、在途交错；最终cdbd62b已完成独立24＋12/native/421 clean回归及逐题只读审查；known05部分覆盖和query40.08/49.03秒目标缺口保持。514831d为中间实测，原件不改。
+
+2026-10-08 ADR-061（DEV-PERF-01）：在独立fix/lock-contention-20261008、main a3a0060基准上，固定514831d实现发现cycle单独串行锁＋锁外native读取、pilot→store短临界区失效/原子发布。请求仍持pilot锁；HTTP原store锁序不变。锁外读取保存baseline，发布/失效遇期间版本或active状态变化拒绝旧结果；numeric版本不回退、fingerprint冲突不覆盖，durable审计/report完成后才更新本地eligible快照。停止期间不发布，unknown/failure/backlog/expired仍fail closed。后台运行的eng_b bounded路径每阶段最多四source lanes，来源内串行；worker和前台同来源可各有一个native读取，不承诺全局单路。workers只读请求局部映射，所有authority更新/有序审计由请求线程完成；异常转unknown并停止本lane后续读取，不retry，不跨阶段复用allow，保留identity/channel/parent/body/version全部检查。默认none1024、v10显式low8192/模型60s、native30s及预算不变。回滚还原本提交三个brain文件即回到旧串行锁实现；无schema/源/凭据迁移。当前同13/15原窗口两native问题41.873/51.226s、单preview1.646/2.034s；query目标30–40s未达到。证据lock-contention-20261008；未推送/重启/部署，原失败/AUTH019/unknown324404保留。新native source-write测量具体提案未授权，不能继承用完的AUTH021。
+
 2026-10-08封版Git交付：沿用用户本轮明确“推到GitHub并合并到main”的既有指令，交付同一封版任务的必要修复80b9ffc及公共合成证据，目标仍Stone441/AI-Bang2/main；不是部署、服务重启、范围/预算扩张或G1/G2。保留PR #6准备提交与Git服务错误原件，本轮修复另经PR交付。ADR-060为本次诊断决策；旧ADR-047原记录不改。
 
 2026-10-08 ADR-060补充真实诊断：805c05d/v9 low8192的02不再截断，但can consult→only directs被review正确否决；09 review30秒超时无回执，保留324404microUSD reservation；11仍过泛any migration且无ledger范围。v10强化许可/义务/独占范围保真及未指定单事件的澄清空答；模型专用ModelTransport对8192有界60秒，原生JsonTransport30秒上限不改、无自动retry。native本轮两题均有最终答案和单preview计时，仍须新v10回归确认。

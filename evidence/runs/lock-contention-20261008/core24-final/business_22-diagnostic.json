@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The current Singapore weekday reconciliation deadline is 18:00 SGT.",
+        "evidence_ids": [
+          "BV-22@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-22@1",
+            "quote": "For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "9d74c6dd-fabc-4e0e-bc80-647ae8175925",
+      "object": "chat.completion",
+      "created": 1791443900,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The current Singapore weekday reconciliation deadline is 18:00 SGT.\",\"evidence_ids\":[\"BV-22@1\"],\"supports\":[{\"evidence_id\":\"BV-22@1\",\"quote\":\"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\"}]}]}",
+            "reasoning_content": "We need answer question: \"What is the current Singapore weekday reconciliation deadline?\" Need return JSON only. Need parse evidence. We have evidence BV-22: \"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\" BV-25: \"The old 17:00 deadline applies only to the retired September pilot, not current weekday batches.\" So current deadline 18:00 SGT. Need claim with evidence ID and quote. Question identifies business entity/event? Singapore weekday reconciliation deadline. It's specific. We can answer. Need use minimum claims. One claim. Include evidence_ids [\"BV-22@1\"] and supports quote exact contiguous passage. Quote: \"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\" That is 103 chars. Good. Maybe include BV-25 to show old not current? But only necessary maybe to clarify current. But the claim can state current deadline is 18:00 SGT. Could cite both? The instruction: use minimum number needed. One evidence sufficient. But maybe to avoid ambiguity about old 17:00? The question asks current; BV-22 directly says. We can answer. Should we include BV-25? It says old 17:00 applies only retired pilot, not current weekday batches. But not necessary for current deadline. However if we want to be robust, maybe claim \"The current Singapore weekday reconciliation deadline is 18:00 SGT.\" supported by BV-22. That's fine. Ensure no extra. Return JSON. Need exact schema: {\"claims\":[{\"text\":\"...\",\"evidence_ids\":[\"BV-22@1\"],\"supports\":[{\"evidence_id\":\"BV-22@1\",\"quote\":\"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\"}]}]} Must ensure quote is exact contiguous passage. It is. The text has no newline? It's \"[SYNTHETIC]\\nFor Singapore weekday...\" The passage starts after newline. We can copy \"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\" That's exact contiguous within text. Good. Character count 103. Fine.\n\nNeed only JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1563,
+        "completion_tokens": 546,
+        "total_tokens": 2109,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 473
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 667
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "04be38ef-4ba5-4014-8470-a57b4e041601",
+      "object": "chat.completion",
+      "created": 1791443903,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"What is the current Singapore weekday reconciliation deadline?\" Claim: current Singapore weekday reconciliation deadline is 18:00 SGT. Evidence BV-22@1 quote: \"For Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.\" Source title reconciliation / Batch deadline. This supports. Need responsive true: answers explicit requested part. Question coverage: only one claim addresses deadline. Need verify if current? Evidence says \"For Singapore weekday batches the deadline is 18:00 SGT\" no \"current\" but context? BV-25 says old 17:00 deadline applies only retired September pilot, not current weekday batches. That supports current not old, and BV-22. Claim says current. Does evidence explicitly say current? BV-22 not word current but likely \"the deadline is\". BV-25 implies old not current. Combined evidence supports current? The claim cites only BV-22@1. We judge supported only if FULL factual claim follows from cited evidence. Does BV-22 establish \"current\"? It states present tense \"is\". It could be current. Source title Batch deadline. The question asks current. The evidence from BV-22 uses \"is\" not \"current\". Is that enough? Need consider no unsupported inference. It follows that current deadline is 18:00 SGT? Present tense statement in source is likely current. I'd mark supported true. Responsive true. question_covered true. Need exactly one verdict. Output JSON. Ensure no extra. "
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1480,
+        "completion_tokens": 347,
+        "total_tokens": 1827,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 321
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 968
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}
