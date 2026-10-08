@@ -1,5 +1,7 @@
 # Backlog · 2026-10-05
 
+2026-10-08 Git交付补充：AUTH-025已批准本轮推送并通过PR合并main；下方未push/merge为性能证据冻结时快照，实际交付以PR状态和main commit为准。应用验证基准仍cdbd62b；文档/Git操作不重启或升级运行实例。
+
 2026-10-08 DEV-PERF-01本地交付完成，应用 **cdbd62b**（main仍a3a0060，分支fix/lock-contention-20261008）：后台发现锁外native读取/短临界区发布、四source有界阶段并发及共享Retry-After冷却已验证，原身份/正文/父线程/版本和四阶段当前权限检查保留。421 clean archive回归、两Node/五fixture/真实本地mock HTTP争用通过。相同native两题原13/15窗口字节一致：query40.083/49.034秒（旧78.287/97.225）、授权wall34.363/35.017秒（旧69.052/75.009）、同对象同版本单引用1.656/1.052秒（旧27.166/25.540）、锁等待0.000057/0.001621秒；后台正常运行，非浏览器性能/SLA，query团队30–40秒目标未全部达到。固定v10显式low8192原24题：21正确事实范围＋3合理澄清/无证据；已知12：3完整正确＋1部分覆盖（05未涵盖PAY103）＋7合理澄清/无证据＋1预期Drive unknown故障停答，零错误弃答/错误结论/非预期运行失败；不称盲测或质量全通过。AUTH024仅一次Confluence copper页1572865已创建，native自动60秒周期观测确认→发布35.60秒→首fake回答57.12秒；单源创建子集，非live model/SLA。原账本settled755706、available18919890microUSD，unknown pending1/324404保留；本轮结算202522microUSD，最终三流105121。原失败/AUTH019/四源十二行历史保留。未push/merge、未重启/部署8094/8100；产品browser saved denial、G1/G2/真人/提交不变。详见evidence/runs/lock-contention-20261008/README.md。
 
 2026-10-08封版闭环：配置/known12当前回归/真实耗时/四源历史时间线整合已完成，应用80b9ffc，见STATUS顶部和candidate-closure-20261008。native性能主要为逐阶段授权和preview锁等待，尚无SLA；没有跳过检查或再开发snapshot。05歧义题的J03意图诊断保留，不足以启动embedding比较。AUTH019原延期不变；完整native/故障/删除撤权、新鲜度自动SLA及browser/团队/G1/G2仍独立缺口，不列作已通过。仅剩具体实例许可/团队业务观察与未知usage对账等需人参与，不借此主动新开开发线。
