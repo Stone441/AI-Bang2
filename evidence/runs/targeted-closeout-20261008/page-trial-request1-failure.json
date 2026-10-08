@@ -1,0 +1,98 @@
+{
+  "recorded_at": "2026-10-08T09:19:36.583987+00:00",
+  "application": "cdbd62b",
+  "authorization": "AUTH027",
+  "trigger": "Team submitted prescribed question through operator HTTP; visual outcome awaiting team feedback",
+  "request_id": "e320cbdcc5c24d0a8b7cc48d799b4490",
+  "question": "What is the latest approved mitigation for the payment incident?",
+  "mode": "confluence_drive_jira_slack_live_api_live_model_synthesis",
+  "started_at": "2026-10-08T09:17:18.202267+00:00",
+  "failed_at": "2026-10-08T09:18:13.670734+00:00",
+  "server_request_seconds": 55.468467,
+  "outcome": "model_output_rejected_no_supported_answer",
+  "receipt": {
+    "accounted_upper_micro_usd": 11028,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice",
+    "called": true,
+    "completion_tokens": 8192,
+    "dispatch_recorded": true,
+    "model": "deepseek-flash",
+    "outcome": "pending",
+    "prompt_tokens": 3991,
+    "query_id": "e320cbdcc5c24d0a8b7cc48d799b4490",
+    "reservation_id": "f2dfea739cdc4656b18e605c69c895fc",
+    "reserved_micro_usd": 324404,
+    "state": "settled",
+    "total_tokens": 12183
+  },
+  "model_input_evidence_ids": [
+    "drive:13mTv7QSa-Hs4WAZ89ybT8oRrZ5EIMbhJ@6",
+    "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+    "slack:C0C6R70SGG4/1791142152.858189@903088382970380097",
+    "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+    "jira:10014@110363006380417182",
+    "confluence:98564@3",
+    "confluence:164283@1",
+    "slack:C0C6R70SGG4/1791142180.560339@226823937321883740",
+    "confluence:557068@3",
+    "drive:1yKgRmKT39Zqhck3NEX_TPT2y0RpU-6z1@13",
+    "jira:10016@165193037877011025",
+    "drive:1W_UZvPPeWyMQCX9tHFx1PlN_hK8HGu3I@6",
+    "slack:C0C6R70SGG4/1791364196.524909@977460312587581392",
+    "slack:C0C6R70SGG4/1791364699.192759@56399498513313818",
+    "slack:C0C6R70SGG4/1791449350.384539@1025144544323244200",
+    "jira:10017@942164892171872195"
+  ],
+  "stage": "answer generation rejected; separate review not reached",
+  "causal_boundary": "Completion tokens equal configured8192 cap. Original model response/finish_reason was not persisted; cannot distinguish truncation from format/model/quote rejection. Native selected set includes new probe objects; no causal attribution without further evidence. No paid retry or candidate change.",
+  "audit_chain": {
+    "valid": true,
+    "events": 97,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "admission_snapshot": {
+    "attempts": 2,
+    "max_attempts": 6,
+    "baseline": {
+      "ceiling_micro_usd": 20000000,
+      "accounted_micro_usd": 1085289,
+      "settled_micro_usd": 760885,
+      "available_micro_usd": 18914711,
+      "pending_requests": 1,
+      "blocked_for_review": false
+    },
+    "current": {
+      "ceiling_micro_usd": 20000000,
+      "accounted_micro_usd": 1096317,
+      "settled_micro_usd": 771913,
+      "available_micro_usd": 18903683,
+      "pending_requests": 1,
+      "blocked_for_review": false
+    },
+    "settled_stop_threshold_micro_usd": 200000,
+    "new_unknown_reservations": [],
+    "boundary": "Admission stops new questions at6 attempts, settled threshold, or new unknown usage; in-flight call completes. Not provider billing cap."
+  },
+  "next": "Observe second team question and collect actual page error/usefulness feedback; original first failure remains failed.",
+  "prior_cli_comparison": {
+    "baseline": "evidence/runs/lock-contention-20261008/native-cooldown-final",
+    "cases": [
+      {
+        "question": "For the BV-20261007 Slack probe thread, which value is approved after the final correction, and which earlier correction does it supersede?",
+        "matches_trial_question": false,
+        "model_input_evidence_id_count": 13,
+        "request_id": "9f72eb6b78bf4597983334ddf4312a83"
+      },
+      {
+        "question": "Can we offer payment-retry to all customers now, does PAY-102 Done approve general availability, and what approved scope and confirmed release date can we communicate?",
+        "matches_trial_question": false,
+        "model_input_evidence_id_count": 15,
+        "request_id": "44c923bec29a474494cadbfb332d4cd7"
+      }
+    ],
+    "current_input_evidence_id_count": 16,
+    "boundary": "Prior two successful native CLI questions differ from actual broad mitigation question. They are not a matched-query baseline for this failure;13/15 vs16 inputs cannot isolate browser, new probes, or cap as cause."
+  }
+}

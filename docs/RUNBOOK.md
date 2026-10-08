@@ -1,5 +1,18 @@
 # 安装、启动、测试与演示
 
+2026-10-08 Git交付补充：AUTH028已批准本轮定向收尾及真实试用失败/UX问题记录推送并经PR合并main；下方“未push/merge”为证据冻结快照，实际以本次PR状态和main commit为准。应用仍cdbd62b，49161已停止，不部署、不新增费用或UX改动，失败与G1/G2状态不因合并升级。
+
+2026-10-08 本轮定向收尾及真实试用/反馈已记录：用户确认两题全部失败后停止使用，引用/History后续未做；首题输出拒绝、第二题Drive版本变化停答原件保留，实际试用failed。UX观察为等待计时/可感知工作状态缺失造成焦虑、模型和四平台连接信息不显性、页面简陋。用户明确当前只记录、等ChatGPT Chat后续指导，不改代码/界面/配置。49161自建实例已正常结束(exit0/无监听)，8094/8100未动；2次尝试/1次模型调用/11028microUSD，最终账本settled771913/available18903683，原pending1/324404保留。本轮信息收集完成不等于失败修复或验收通过；UX、原质量失败、重复自动测量/p95/完整native矩阵及G1/G2仍open。证据targeted-closeout-20261008/page-trial-final.json。下方等待反馈/运行中为旧快照。
+
+2026-10-08 AUTH027实际试用实例已启动：http://127.0.0.1:49161，cdbd62b应用/eng_b/native四源只读＋DeepSeek v10 low8192，独立索引、原USD20账本，6次尝试及结算/新unknown停止限制。四源首轮complete，startup hash dc2903d72e3fec6c30156b84d351cee23d1d9be8bebfd5d756e1f5f2afe7ceb4；启动快照page-trial-startup.json，无ticket。实际入口已直接交给团队，首组两题/引用/History操作及反馈待做；启动与模型构造不等于真人或live问答通过。8094/8100/browser拒绝/G1/G2不变。下方“实例许可pending/未启动”为旧准备快照。
+
+2026-10-08 页面试用启动准备（not_run，具体49161实例许可仍待回复）：`evidence/runs/targeted-closeout-20261008/launch-page-trial.py`为独立operator启动限额脚本，候选brain/scripts/tests/web不改；启动时先核cdbd62b无差异，新建私有`.runtime/page-trial-20261008`及隔离索引，仅symlink原USD20账本，拒绝重复使用已有trial状态。只在许可明确后执行`PYTHONPATH=. python3 evidence/runs/targeted-closeout-20261008/launch-page-trial.py`（私密启动日志含一次性ticket，不能提交）；eng_b/四源AUTH017只读/正常后台/DeepSeek v10 low8192。最多6次问答尝试；结算增量达到200000microUSD或出现新unknown即拒绝下一题，已在途调用完成，非供应商硬费用上限；原未知reservation保留。6次/结算阈值/new unknown/旧reservation/状态不可复用已用临时fixture账本验证，未绑定端口/读Keychain/访问native/调用模型。
+
+批准启动且后台四源就绪后，才提供带一次性ticket的实际入口；由团队本人打开、操作。第一组操作：问`What is the latest approved mitigation for the payment incident?`，打开返回的一条引用核原文；再问`For payment-service, which code fix is complete, which preventive work remains in progress, and is general customer release approved?`；进入History重看刚才的问题、答案与Sources新鲜度，报告实际等待时间、结论是否有用及具体错误。答案须按当前native数据判断，不把fixture对照结果当live预期。Codex只记录服务审计/预算/模式和团队反馈，不自动化被拒绝的产品browser；非G1/G2审批。
+
+2026-10-08 定向收尾：main已合并为 **2eabeb8**（PR8），应用仍 **cdbd62b**；当前独立fix/targeted-closeout-20261008无runtime修改。known05明确payment-service对照实际输入J03并正确回答Done/In Progress/no GA，15.026秒、5179microUSD；旧题/oracle/partial保留，不能推断仅歧义所致。统计细化core24=21直接事实＋1前提纠正事实＋2纯空；known12=3完整＋1部分＋1前提纠正事实＋6纯空＋1预期unknown。AUTH026仅3创建＋4更新已消费，7项均新值native发现/fake证据使用；三创建及Drive更新为持续自动，CF在原后台发布但fake恢复后成功，Jira/Slack更新为重启恢复，非全7持续时延通过。并发源版本变化停答原件保留，两审计链341/795有效仅本地；原生更新时间到发布不能称精确commit或SLA，多次自动样本/p95及完整native撤权删除仍未验。账本settled760885/available18914711、原pending1/324404保留；AUTH019不变。具体页面实例许可仍待回复，未启动49161、不动8094/8100；browser/G1/G2不变，新分支未push/merge。证据evidence/runs/targeted-closeout-20261008。
+
+
 2026-10-08 Git交付补充：AUTH-025已批准本轮推送并通过PR合并main；下方未push/merge为性能证据冻结时快照，实际交付以PR状态和main commit为准。应用验证基准仍cdbd62b；文档/Git操作不重启或升级运行实例。
 
 本轮本地应用 **cdbd62b**，synthesis-v10、显式low/8192（stored sampling=0，low时实际省略temperature）、模型60秒/native30秒，默认none/1024保持。运行中的8094/8100未加载本轮修改；不启动新live HTTP实例。后台每source串行、前台阶段最多四source lanes，来源共享429 Retry-After冷却、不自动retry；每阶段重新检查，不加总并发HTTP累计时间与wall。421 clean archive/两Node/五fixture通过；CLI query40.08/49.03秒、同对象preview1.66/1.05秒，后台运行。AUTH024单页创建及native/fake自动发现已完成，原24＋已知12语义分类与性能/预算在lock-contention-20261008/README.md；known05部分覆盖、query目标未全达，browser/G1/G2不变。下方旧启动命令/状态按版本保留，任何服务启动仍需具体实例授权。

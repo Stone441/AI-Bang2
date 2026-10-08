@@ -1,0 +1,108 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The PAY-102 code fix is Done.",
+        "evidence_ids": [
+          "J-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-02@1",
+            "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+          }
+        ]
+      },
+      {
+        "text": "PAY-103 protective measures are In Progress.",
+        "evidence_ids": [
+          "J-03@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "J-03@1",
+            "quote": "PAY-103 protective measures: In Progress. Owner: Maya."
+          }
+        ]
+      },
+      {
+        "text": "General availability (GA) is not approved, so general customer release is not approved; the release decision approved a controlled pilot, and PAY-102 Done is not customer release approval.",
+        "evidence_ids": [
+          "D-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-02@1",
+            "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "89ab7490-92fb-461a-a9fc-617e0fd1d8ab",
+      "object": "chat.completion",
+      "created": 1791449054,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The PAY-102 code fix is Done.\",\"evidence_ids\":[\"J-02@1\"],\"supports\":[{\"evidence_id\":\"J-02@1\",\"quote\":\"PAY-102 code fix: Done. Code completion does not approve general customer release.\"}]},{\"text\":\"PAY-103 protective measures are In Progress.\",\"evidence_ids\":[\"J-03@1\"],\"supports\":[{\"evidence_id\":\"J-03@1\",\"quote\":\"PAY-103 protective measures: In Progress. Owner: Maya.\"}]},{\"text\":\"General availability (GA) is not approved, so general customer release is not approved; the release decision approved a controlled pilot, and PAY-102 Done is not customer release approval.\",\"evidence_ids\":[\"D-02@1\"],\"supports\":[{\"evidence_id\":\"D-02@1\",\"quote\":\"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"}]}]}",
+            "reasoning_content": "We need answer JSON only. Need parse question. \"For payment-service, which code fix is complete, which preventive work remains in progress, and is general customer release approved?\" Need determine if identifies business entity/event. Payment-service? Evidence has PAY-102, PAY-103, payment-retry. Question asks for payment-service: which code fix complete, which preventive work remains in progress, general customer release approved? Evidence includes PAY-102 code fix Done, PAY-103 protective measures In Progress, general release not approved. Need answer. Need claims with evidence_ids and supports quotes. Need check identifiers.\n\nWe need produce claims. Requested parts:\n1 which code fix is complete: PAY-102 code fix Done.\n2 which preventive work remains in progress: PAY-103 protective measures In Progress.\n3 is general customer release approved? General customer release not approved / controlled pilot approved only. Also maybe code completion does not approve general customer release. Need state not approved.\n\nNeed ensure every explicit identifier in claim appears in copied support quotes. Claim 1: \"PAY-102 code fix is Done.\" Evidence J-02@1 text: \"[SYNTHETIC]\\nPAY-102 code fix: Done. Code completion does not approve general customer release.\" Quote should include \"PAY-102 code fix: Done.\" maybe exact contiguous. It says \"PAY-102 code fix: Done.\" Yes. Claim mention PAY-102 code fix complete. Quote includes PAY-102. Good.\n\nClaim 2: \"PAY-103 protective measures are In Progress.\" Evidence J-03@1: \"PAY-103 protective measures: In Progress. Owner: Maya.\" Quote can include \"PAY-103 protective measures: In Progress.\" It includes PAY-103.\n\nClaim 3: general customer release approved? Evidence D-02@1: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" Need quote \"General availability (GA) not approved.\" Also C-02 says \"General availability (GA) is not approved.\" But maybe question asks general customer release approved, not GA? Evidence says controlled pilot approved, GA not approved. Could claim: \"General customer release is not approved; only a controlled pilot is approved.\" Need support quote from D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved.\" This says GA not approved. But \"general customer release\" maybe same. Need not mention PAY-102 done? Could include. Need perhaps \"PAY-102 Done is not customer release approval.\" But if claim \"General customer release is not approved.\" Support D-02 text includes \"General availability (GA) not approved.\" Not exact \"general customer release not approved\" but okay paraphrase. Could also quote \"PAY-102 Done is not customer release approval.\" That directly says code done not customer release approval, but not general release approved. D-02 has both.\n\nNeed be careful: Each explicit identifier in a claim must appear in its copied support quotes. Claim 3 if mention PAY-102 maybe quote includes. But no need identifier. If say \"General availability is not approved\" no identifier. That's fine. If mention controlled pilot? quote includes controlled pilot. Good.\n\nNeed maybe include only necessary claims. 3 claims.\n\nNeed ensure supports evidence_ids exactly equal supports. For each claim one support. JSON format specified: {\"claims\":[{\"text\":\"...\",\"evidence_ids\":[\"...\"],\"supports\":[{\"evidence_id\":\"...\",\"quote\":\"...\"}]}]}\n\nQuestion: \"For payment-service, which code fix is complete, which preventive work remains in progress, and is general customer release approved?\" Could \"payment-service\" maybe is entity? Evidence mentions payment-retry. PAY-102 and PAY-103 are payment? Yes. Need maybe use \"For payment-service\" as context; PAY-102/103 identifiers. Good.\n\nCould there be issue \"which code fix is complete\" singular: PAY-102 code fix Done. \"which preventive work remains in progress\": PAY-103 protective measures In Progress. \"is general customer release approved?\" D-02 says controlled pilot approved, GA not approved. Need maybe answer \"No, general customer release is not approved; controlled pilot is approved.\" Good.\n\nNeed maybe note \"Code completion does not approve general customer release.\" Could be qualification? The question asks if general customer release approved. Evidence D-02 explicitly \"PAY-102 Done is not customer release approval.\" That is important: code fix complete doesn't mean release approved. But we can include in claim 3 quote. Need maybe claim text: \"General customer release is not approved; the release decision approved only a controlled pilot, and PAY-102 Done is not customer release approval.\" This has identifier PAY-102, so quote must include PAY-102. Support quote D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" It includes PAY-102. Good. This claim covers all. But if claim 1 also mentions PAY-102, that's fine each quote includes.\n\nNeed maybe \"general availability (GA)\" not exactly \"general customer release\". But okay.\n\nNeed maybe separate claim for \"controlled pilot approved\" because question asks general customer release approved; answer no and mention controlled pilot approved. Include quote. It's one claim.\n\nNeed ensure no external. Use quoted text. The evidence text has \"[SYNTHETIC]\\n\" maybe quote from text, can include synthetic? Likely okay but maybe avoid synthetic prefix. Quote exact contiguous passage copied from evidence. It says quote exact contiguous passage copied from that evidence. We can copy without [SYNTHETIC]\\n? It's contiguous substring after that. \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" That is contiguous in text. Good. For D-02: \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\" This is contiguous. Good. For J-03: \"PAY-103 protective measures: In Progress. Owner: Maya.\" We can quote \"PAY-103 protective measures: In Progress.\" Is that contiguous? Original \"PAY-103 protective measures: In Progress. Owner: Maya.\" Substring \"PAY-103 protective measures: In Progress.\" contiguous. Good.\n\nNeed final JSON only. Ensure valid. Use no markdown. Need maybe evidence_ids exactly with supports. Good.\n\nLet's craft claims:\n1 text: \"The PAY-102 code fix is Done.\"\nevidence_ids [\"J-02@1\"] supports quote \"PAY-102 code fix: Done. Code completion does not approve general customer release.\"\nBut text says \"The PAY-102 code fix is Done.\" Quote includes \"PAY-102 code fix: Done.\" Good. However \"Code completion does not approve...\" is extra support. Okay.\n\n2 text: \"PAY-103 protective measures are In Progress.\"\nevidence_ids [\"J-03@1\"] supports quote \"PAY-103 protective measures: In Progress. Owner: Maya.\"\n\n3 text: \"General customer release is not approved; the release decision approved a controlled pilot, and PAY-102 Done is not customer release approval.\"\nevidence_ids [\"D-02@1\"] supports quote \"Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.\"\nThis matches. Need \"PAY-102\" appears in quote. Good.\n\nPotential issue \"general customer release\" vs \"General availability (GA) not approved.\" It answers. Fine.\n\nNeed maybe \"general availability\" is not \"general customer release\" but source uses. The claim says \"General customer release is not approved\" while quote says \"General availability (GA) not approved.\" Is that okay? Could be paraphrase. Maybe safer text: \"General availability (GA) is not approved; the release decision approved only a controlled pilot, and PAY-102 Done is not customer release approval.\" This directly mirrors. But question asks general customer release. The answer can use GA. Better: \"General availability (GA) is not approved; only a controlled pilot is approved, and PAY-102 Done is not customer release approval.\" Quote exactly includes controlled pilot approved, GA not approved, PAY-102 Done. This says general availability not approved. If question uses \"general customer release\" maybe okay. Could add \"General customer release / general availability\" but not in quote. Hmm.\n\nMaybe claim: \"General availability (GA) is not approved, so general customer release is not approved; the release decision approved a controlled pilot, and PAY-102 Done is not customer release approval.\" This uses logical inference \"so\" but quote supports GA not approved and PAY-102 not release approval. But the text doesn't explicitly say \"general customer release is not approved\" but GA likely same. The question asks \"is general customer release approved?\" Evidence says GA not approved and PAY-102 Done is not customer release approval. So okay.\n\nNeed maybe mention \"controlled pilot approved\" as positive. Good.\n\nNeed no more claims.\n\nFinal JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2100,
+        "completion_tokens": 2103,
+        "total_tokens": 4203,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1892
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 1204
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "7ab36793-e165-432f-9e8d-32730e3ce7ca",
+      "object": "chat.completion",
+      "created": 1791449063,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true},{\"index\":1,\"supported\":true,\"responsive\":true},{\"index\":2,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer evaluate claims. Need JSON only. Need examine. We need determine question_covered true if claims address every requested part supported by evidence. Claims: 1 PAY-102 code fix Done. Evidence J-02: \"PAY-102 code fix: Done. Code completion does not approve general customer release.\" Supported yes responsive? Question asks for payment-service which code fix is complete, which preventive work remains in progress, and is general customer release approved? Claim 1 says PAY-102 code fix Done. That answers which code fix complete. responsive true. 2 PAY-103 protective measures In Progress. Evidence J-03 says exactly. Preventive work remains in progress? \"protective measures\" likely preventive work. Supported and responsive true. 3 General availability not approved, so general customer release not approved; release decision approved controlled pilot, and PAY-102 Done is not customer release approval. Evidence D-02 says Release decision controlled pilot approved. General availability GA not approved. PAY-102 Done not customer release approval. Does this support general customer release not approved? The claim says \"General availability (GA) is not approved, so general customer release is not approved\" This inference? Evidence says GA not approved, controlled pilot approved. Question asks \"is general customer release approved?\" General customer release could be synonymous with GA. Evidence says GA not approved and PAY-102 Done is not customer release approval. It doesn't explicitly say \"general customer release not approved\" but GA not approved. \"General customer release\" likely GA. Is inference supported? Need be careful. It says \"General availability (GA) not approved.\" That directly means general customer release not approved if general customer release = GA? The claim adds \"so general customer release is not approved\" as interpretation. Likely supported. It also says release decision approved controlled pilot. Supported by D-02. PAY-102 Done is not customer release approval. Supported. Responsive true.\n\nNeed question_covered: Claims address all three requested parts: which code fix complete (PAY-102 code fix Done), which preventive work remains in progress (PAY-103 protective measures In Progress), is general customer release approved (not approved). Yes. Need ensure \"code fix\" maybe PAY-102 Retry configuration fix, done. Claim names PAY-102 code fix. Evidence title PAY-102 Retry configuration fix. It uses code fix. Does claim name business object/event using cited text? The evidence quote says \"PAY-102 code fix: Done.\" Okay.\n\nMaybe issue: \"preventive work remains in progress\" Claim says \"PAY-103 protective measures are In Progress.\" Is \"protective measures\" same as preventive work? Likely. Question asks payment-service. Evidence J-03 title PAY-103 Protective measures. Could be preventive work. Responsive yes.\n\nPotential nuance: Claim 3 says \"General availability (GA) is not approved, so general customer release is not approved; the release decision approved a controlled pilot, and PAY-102 Done is not customer release approval.\" It references D-02 only. D-02 quote supports all. But claim says \"general customer release is not approved\" not exactly \"GA\". But D-02 says GA not approved. Need judge if fact claim supported. I'd say supported. Responsive true.\n\nNeed check if any contradiction in all evidence: C-02 says Payment-retry available only controlled pilot. GA not approved. No general release date. S-02 remains controlled pilot. D-03 describe within approved pilot scope. So no contradiction. The release decision approved controlled pilot. Good.\n\nNeed output exactly JSON. Ensure one verdict per claim. No extra. question_covered true. verdicts index 0,1,2 supported true responsive true.\n\nBut let's scrutinize instructions: \"A claim scoped to what its cited passage establishes may acknowledge an unknown requested outcome; that acknowledgement is not proof of outcome...\" Doesn't apply. \"For an unspecified referent, reject unconditional single-entity answer...\" Not.\n\n\"Reject universal or exclusive inferences about all statements or their sole origin when evidence only establishes particular draft, example or source.\" Not.\n\n\"The claim itself must name the business object or event using cited text; an unexplained plan name or evidence title alone does not resolve its scope.\" Claims name PAY-102 code fix, PAY-103 protective measures, general availability. Good.\n\n\"Do not accept a retrieved rule as the unspecified rule of a question without evidence matching its event and effective date.\" Not.\n\nCould there be issue with \"General customer release\" as distinct from \"general availability\"? The claim equates GA with general customer release. Evidence D-02 says \"General availability (GA) not approved. PAY-102 Done is not customer release approval.\" Does \"general customer release\" = GA? Usually yes. It also says \"customer release approval\" not general customer release. But D-02: \"PAY-102 Done is not customer release approval.\" The claim \"PAY-102 Done is not customer release approval\" supported. \"the release decision approved a controlled pilot\" supported. \"General availability (GA) is not approved, so general customer release is not approved\" is a reasonable inference. Since question asks general customer release, yes.\n\nMaybe responsive for third: It answers \"is general customer release approved?\" yes \"not approved\". Good.\n\nNeed final JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2167,
+        "completion_tokens": 1145,
+        "total_tokens": 3312,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1095
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1655
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}
