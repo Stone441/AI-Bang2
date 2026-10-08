@@ -51,7 +51,7 @@ def validate_claim(claim, evidence):
 
 
 class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
-    name = 'deepseek-flash-grounded-synthesis-v10'
+    name = 'deepseek-flash-grounded-synthesis-v11'
     claim_format = 'grounded_synthesis_v1'
     answer_notice = ('Synthesized from current authorized evidence; exact supporting quotes and a separate '
                      'model review were checked. Model review can miss errors; verify important conclusions.')
@@ -101,7 +101,14 @@ class DeepSeekSynthesisModel(DeepSeekEvidenceModel):
              'it leaves unknown. '
              'When the question presupposes a state or outcome not established by the cited passage, '
              'explicitly say that this passage does not establish the requested state, then give '
-             'the state it actually records. Scope the uncertainty to the cited material; absence '
+             'the state it actually records only for the SAME requested entity and property. '
+             'A related table row with a different entity class or column meaning cannot stand in '
+             'for missing requested fields: acknowledge their absence rather than answering '
+             'another property. For requested actions with a latest/newest qualifier, report '
+             'the supported actions with the REQUESTED state and property for the identified event '
+             'and separately state when their relevant ordering is unestablished; do not substitute '
+             'approval for completion or any other requested state. Uncertainty about order must not replace '
+             'supported requested actions with background status. Scope the uncertainty to the cited material; absence '
              'of a record is neither an explicit negative nor proof about every possible source. '
              'If the question does not identify the event, entity or policy, '
              'give explicitly scoped candidate facts or return an empty claims list; do not choose '
@@ -204,7 +211,12 @@ class EvidenceReview(DeepSeekEvidenceModel):
              'all claims are individually correct. For an unestablished requested state, an explicit '
              'acknowledgement scoped to the cited material plus its actually recorded state can '
              'cover that requested part, provided no supplied evidence establishes the requested '
-             'state for that same entity and scope. This applies also to a which/who question with '
+             'state for that same entity and scope. The recorded state must concern the SAME requested '
+             'property; a related table row with a different entity class or column meaning does '
+             'not cover missing requested fields. If requested actions are supplied but their latest/newest order '
+             'is unestablished, require both actions with the REQUESTED state and property and a scoped '
+             'chronology limitation; approval does not substitute for completion or another state. '
+             'an uncertainty statement alone does not cover those supplied actions. This applies also to a which/who question with '
              'an unestablished premise: do not require an invented positive answer to cover it. '
              'Giving a different recorded state without that acknowledgement is incomplete. '
              'Do not demand proof of an explicit negative when the claim only scopes the requested '

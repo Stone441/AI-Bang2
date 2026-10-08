@@ -1,5 +1,7 @@
 # Backlog · 2026-10-05
 
+2026-10-08 ADR063当前本地候选v11：依据已保留真实失败，仅收紧generation/review的“未建立状态可给实际状态”例外为同对象同属性/同表格字段意义，并要求latest顺序未知仍覆盖已有支持的请求操作。不放宽quote/结构/review/权限，不改变provider/low8192。436本地与三Node首轮通过，最终通用措辞回归日志v11-local-regression-final.log；尚无live质量证据。49161仍加载v10，总额度48/48。额外45次（HTTP6/quality36/human最多3，总93）集中申请pending，原本Goal累计USD0.50/newunknown停止不变。不得把旧36题结果算v11验证；无新模型调用、推送或部署。
+
 2026-10-08 AUTH030补验完成：总额度42→48已消费，仅补原known12的07–12六题，未重复前30题。07/09/11合理空答澄清；08有引用限定资料不足；10未编造retry但Atlas账户行不充分回答最小integration tier，记partial；12注入Drive unknown按预期模型前SourceUnavailable，非业务答案成功。原24＋known12完整36现已执行，known12为3完整/范围答案＋7安全不足/澄清＋1partial＋1预期来源故障，不称质量全通过。六题结算21044microUSD；本Goal累计165795microUSD，账本settled937708/available18737888，旧unknown324404保留、无新unknown，额度48/48。原quality36的not_run历史不改，补件quality-remaining6及quality-combined-review.json另存。第一题/known10质量及真人UX仍open；此次没有产品代码或模型配置变化，无需重复已通过436/三Node。
 
 2026-10-08 DEV-PAGE-UX-01 当前增量（覆盖下方仅记录/不修改的旧快照）：基准main23ae62b，独立fix/page-failure-ux-20261008；本Goal授权本地修复，AUTH029单独授权49161/native/live复验。已实现安全输出诊断、模型调用前最多一次版本恢复、通用主题检索过滤/已授权关系扩展、会话独立进度与模式/四源状态、真实已用时间/防重复提交/分类错误/退出迟到响应保护及引用信息层级。原模型low8192、provider、权限/review/审计边界不变。436完整本地回归、三Node与五fixture通过；最后锁顺序测试改用History，因为health现在独立于查询锁，首轮失败原件保留。

@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-08 ADR-063（candidate/local，live未验证）：AUTH030复验holdout10返回账户资格行而非请求的integration tier/region/retry，第一原题已检索C01批准操作但仅给审批未知。v11只收紧“未建立请求状态时可报告实际状态”的例外为同对象同属性，并要求latest顺序未知时覆盖已有支持的批准操作且单列顺序限制；generation/review一致。原结构/quote/gate/provider/low8192/预算不变，可能增加拒答，时间与费用改善未验证。回滚还原synthesis.py为v10。当前49161仍加载v10，不继承新候选结果；集中申请45次额外验证（native6/quality36/human最多3），总93、原累计USD0.50/newunknown停止，许可pending，不执行。
+
 2026-10-08 AUTH-030：用户明确“批准解锁动作”，批准AUTH029总问题额度42→48，仅补跑原known12剩余07–12六题；原USD0.50新增结算停止阈值、新unknown停止、provider/low8192/USD20账本/旧unknown/实例与源只读边界保持，不批准额外native问答、源写入、推送或部署。
 
 2026-10-08 AUTH-029：用户明确批准本轮修改后新127.0.0.1:49161仅本机eng_b实例与复验；AUTH017四源合成容器只读、原DeepSeek provider、USD20账本及原unknown324404保留。两原题各固定3次HTTP＋一次原24/已知12质量回归，最多42道问题；新增结算达到USD0.50或新unknown停止接纳，在途收尾。可信模型配置变化需另给具体候选后批准；不写源、不动8094/8100、不push/merge/deploy、不绕过browser拒绝。此授权独立于已结束AUTH027。

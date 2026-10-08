@@ -1,3 +1,7 @@
+# Candidate v11 — pending live authorization
+
+Local synthesis.py now v11 prompt/review scope correction (ADR063). Existing49161 remains v10. v11-proposed-schedule.json freezes original2x3 and original24/known12 hashes, human max3. Request total48→93 is pending, no response is not permission. Do not run/clear48 counter or silently change provider/low8192. Latest quality36 findings remain the original v10 evidence.
+
 # Latest continuation — AUTH030 consumed
 
 2026-10-08 AUTH030补验完成：总额度42→48已消费，仅补原known12的07–12六题，未重复前30题。07/09/11合理空答澄清；08有引用限定资料不足；10未编造retry但Atlas账户行不充分回答最小integration tier，记partial；12注入Drive unknown按预期模型前SourceUnavailable，非业务答案成功。原24＋known12完整36现已执行，known12为3完整/范围答案＋7安全不足/澄清＋1partial＋1预期来源故障，不称质量全通过。六题结算21044microUSD；本Goal累计165795microUSD，账本settled937708/available18737888，旧unknown324404保留、无新unknown，额度48/48。原quality36的not_run历史不改，补件quality-remaining6及quality-combined-review.json另存。第一题/known10质量及真人UX仍open；此次没有产品代码或模型配置变化，无需重复已通过436/三Node。
