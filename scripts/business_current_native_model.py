@@ -57,10 +57,14 @@ def run(output, temperature=0, reasoning_effort='none', output_tokens=1024):
         model=CapturedSynthesis(key,ledger,synthetic_only=True,temperature=temperature,
             reasoning_effort=reasoning_effort,output_tokens=output_tokens);pilot.engine.model=model
         pilot.engine.mode=report['mode'];results=[]
-        check=pilot.authority.check_read
-        def timed_check(actor,resource_id):
-            return measured.call('authorization',resource_id.split(':',1)[0],lambda:check(actor,resource_id))
-        pilot.authority.check_read=timed_check
+        check=pilot.engine.check;checks=pilot.engine.checks
+        def timed_check(actor,resource,request_id,phase):
+            with measured.authorization_phase(phase):
+                return measured.call('authorization',resource['source'],lambda:check(actor,resource,request_id,phase))
+        def timed_checks(actor,resources,request_id,phase):
+            with measured.authorization_phase(phase):
+                return measured.call('authorization_batch_wall','all',lambda:checks(actor,resources,request_id,phase))
+        pilot.engine.check=timed_check;pilot.engine.checks=timed_checks
         delegate=model.transport
         class TimedModel:
             def _send(_,request):
