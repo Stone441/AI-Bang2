@@ -1,5 +1,9 @@
 # 安装、启动、测试与演示
 
+2026-10-08 页面试用启动准备（not_run，具体49161实例许可仍待回复）：`evidence/runs/targeted-closeout-20261008/launch-page-trial.py`为独立operator启动限额脚本，候选brain/scripts/tests/web不改；启动时先核cdbd62b无差异，新建私有`.runtime/page-trial-20261008`及隔离索引，仅symlink原USD20账本，拒绝重复使用已有trial状态。只在许可明确后执行`PYTHONPATH=. python3 evidence/runs/targeted-closeout-20261008/launch-page-trial.py`（私密启动日志含一次性ticket，不能提交）；eng_b/四源AUTH017只读/正常后台/DeepSeek v10 low8192。最多6次问答尝试；结算增量达到200000microUSD或出现新unknown即拒绝下一题，已在途调用完成，非供应商硬费用上限；原未知reservation保留。6次/结算阈值/new unknown/旧reservation/状态不可复用已用临时fixture账本验证，未绑定端口/读Keychain/访问native/调用模型。
+
+批准启动且后台四源就绪后，才提供带一次性ticket的实际入口；由团队本人打开、操作。第一组操作：问`What is the latest approved mitigation for the payment incident?`，打开返回的一条引用核原文；再问`For payment-service, which code fix is complete, which preventive work remains in progress, and is general customer release approved?`；进入History重看刚才的问题、答案与Sources新鲜度，报告实际等待时间、结论是否有用及具体错误。答案须按当前native数据判断，不把fixture对照结果当live预期。Codex只记录服务审计/预算/模式和团队反馈，不自动化被拒绝的产品browser；非G1/G2审批。
+
 2026-10-08 定向收尾：main已合并为 **2eabeb8**（PR8），应用仍 **cdbd62b**；当前独立fix/targeted-closeout-20261008无runtime修改。known05明确payment-service对照实际输入J03并正确回答Done/In Progress/no GA，15.026秒、5179microUSD；旧题/oracle/partial保留，不能推断仅歧义所致。统计细化core24=21直接事实＋1前提纠正事实＋2纯空；known12=3完整＋1部分＋1前提纠正事实＋6纯空＋1预期unknown。AUTH026仅3创建＋4更新已消费，7项均新值native发现/fake证据使用；三创建及Drive更新为持续自动，CF在原后台发布但fake恢复后成功，Jira/Slack更新为重启恢复，非全7持续时延通过。并发源版本变化停答原件保留，两审计链341/795有效仅本地；原生更新时间到发布不能称精确commit或SLA，多次自动样本/p95及完整native撤权删除仍未验。账本settled760885/available18914711、原pending1/324404保留；AUTH019不变。具体页面实例许可仍待回复，未启动49161、不动8094/8100；browser/G1/G2不变，新分支未push/merge。证据evidence/runs/targeted-closeout-20261008。
 
 

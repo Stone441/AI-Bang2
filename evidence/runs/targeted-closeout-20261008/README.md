@@ -22,3 +22,5 @@
 验证：`PYTHONPATH=. python3 evidence/runs/targeted-closeout-20261008/verify-freshness.py`，7操作/新值证据/三个fake授权阶段/两审计链/应用hash与无runtime diff通过。首次检查误要求fake具有live review阶段而断言失败，纠正为实际fake三阶段；未修改runtime gate。
 
 原账本settled760885、accounted1085289、available18914711microUSD，pending1原324404保留。AUTH019及旧失败不变。剩余：多次持续自动样本与p95/max/失败率、完整四源native撤权/删除/故障矩阵、实际团队页面试用。新实例49161尚待具体授权，没有启动；8094/8100未动，产品browser拒绝不绕过，G1/G2未批准。本轮新分支未推送合并。
+
+页面试用准备补充：`launch-page-trial.py`已完成本地限额验证（临时fixture账本，无native/model/端口/Keychain），具体命令、隔离目录、6尝试/结算停止阈值及人工首组操作见当前RUNBOOK。结算阈值为新请求admission控制，非在途硬费用上限。具体实例授权仍pending，脚本未执行、实际入口尚不存在。
