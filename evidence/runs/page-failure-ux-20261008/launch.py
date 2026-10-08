@@ -17,7 +17,7 @@ class Admission:
  def pending_ids(self):
   with self.ledger.transaction():return {r[0] for r in self.ledger.db.execute("SELECT id FROM reservations WHERE state IN ('prepared','dispatched')")}
  def save(self):
-  body={'original_pending_ids':sorted(self.pending),'attempts':self.attempts,'max_attempts':self.maximum,'baseline':self.baseline,'current':self.ledger.summary(),'settled_stop_threshold_micro_usd':500000,'new_unknown_reservations':sorted(self.pending_ids()-self.pending),'boundary':'Admission stops new questions at42 attempts, settled threshold, or new unknown usage; in-flight call completes. Not provider billing cap.'}
+  body={'original_pending_ids':sorted(self.pending),'attempts':self.attempts,'max_attempts':self.maximum,'baseline':self.baseline,'current':self.ledger.summary(),'settled_stop_threshold_micro_usd':500000,'new_unknown_reservations':sorted(self.pending_ids()-self.pending),'boundary':f'Admission stops new questions at{self.maximum} attempts, settled threshold, or new unknown usage; in-flight call completes. Not provider billing cap.'}
   tmp=self.path.with_suffix('.tmp');tmp.write_text(json.dumps(body,indent=2)+'\n');os.chmod(tmp,0o600);tmp.replace(self.path)
  def __call__(self,*args,**kwargs):
   with self.lock,open(self.path.with_suffix('.lock'),'a') as lock:

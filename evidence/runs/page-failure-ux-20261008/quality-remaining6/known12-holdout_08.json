@@ -1,0 +1,231 @@
+{
+  "group": "known12",
+  "id": "holdout_08",
+  "question": "If the authentication cutover fails halfway, which rollback steps remain approved for the affected environment?",
+  "expected_behavior": "unsupported_or_clarify",
+  "error": null,
+  "elapsed_seconds": 35.99266116699437,
+  "answer": {
+    "request_id": "ff3f0ce2878b44ef849c2621a081c514",
+    "question": "If the authentication cutover fails halfway, which rollback steps remain approved for the affected environment?",
+    "answered_at": "2026-10-08T10:45:31.984364+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v10",
+    "claims": [
+      {
+        "text": "The cited authentication evidence does not establish any approved rollback steps for the authentication cutover; the only recorded authentication cutover detail is that Enterprise SSO cutover applies to internal employees only, while contractors remain on the legacy gateway.",
+        "evidence_ids": [
+          "BV-04@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-04@1",
+            "quote": "Enterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "BV-04@1",
+        "resource_id": "BV-04",
+        "version": 1,
+        "source": "drive",
+        "title": "authentication / Cutover scope",
+        "locator": {
+          "section": "Cutover scope"
+        },
+        "text": "[SYNTHETIC]\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.087829+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-04"
+      },
+      {
+        "evidence_id": "BV-13@1",
+        "resource_id": "BV-13",
+        "version": 1,
+        "source": "confluence",
+        "title": "migration / Rollback signal",
+        "locator": {
+          "section": "Rollback signal"
+        },
+        "text": "[SYNTHETIC]\nRoll back the ledger migration if settlement differences exceed five basis points.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.088025+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-13"
+      },
+      {
+        "evidence_id": "BV-01@1",
+        "resource_id": "BV-01",
+        "version": 1,
+        "source": "confluence",
+        "title": "authentication / Token rotation decision",
+        "locator": {
+          "section": "Token rotation decision"
+        },
+        "text": "[SYNTHETIC]\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.087785+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-01"
+      },
+      {
+        "evidence_id": "BV-12@1",
+        "resource_id": "BV-12",
+        "version": 1,
+        "source": "drive",
+        "title": "migration / Cutover ticket",
+        "locator": {
+          "section": "Cutover ticket"
+        },
+        "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.088011+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-12"
+      },
+      {
+        "evidence_id": "BV-35@1",
+        "resource_id": "BV-35",
+        "version": 1,
+        "source": "slack",
+        "title": "settlement / Escalation guidance",
+        "locator": {
+          "section": "Escalation guidance"
+        },
+        "text": "[SYNTHETIC]\nIf bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.088348+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-35"
+      },
+      {
+        "evidence_id": "BV-23@1",
+        "resource_id": "BV-23",
+        "version": 1,
+        "source": "slack",
+        "title": "reconciliation / Missing input",
+        "locator": {
+          "section": "Missing input"
+        },
+        "text": "[SYNTHETIC]\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.088164+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-23"
+      },
+      {
+        "evidence_id": "BV-11@1#16000:17452",
+        "resource_id": "BV-11",
+        "version": 1,
+        "source": "slack",
+        "title": "migration / Database design rationale",
+        "locator": {
+          "section": "Database design rationale",
+          "text_window": {
+            "start": 16000,
+            "end": 17452,
+            "unit": "unicode_characters",
+            "strategy": "fixed-2400-overlap-400-v1"
+          }
+        },
+        "text": "try 166: batch 2822, checksum 5146; no current decision recorded.\nArchived migration rehearsal entry 167: batch 2839, checksum 5177; no current decision recorded.\nArchived migration rehearsal entry 168: batch 2856, checksum 5208; no current decision recorded.\nArchived migration rehearsal entry 169: batch 2873, checksum 5239; no current decision recorded.\nArchived migration rehearsal entry 170: batch 2890, checksum 5270; no current decision recorded.\nArchived migration rehearsal entry 171: batch 2907, checksum 5301; no current decision recorded.\nArchived migration rehearsal entry 172: batch 2924, checksum 5332; no current decision recorded.\nArchived migration rehearsal entry 173: batch 2941, checksum 5363; no current decision recorded.\nArchived migration rehearsal entry 174: batch 2958, checksum 5394; no current decision recorded.\nArchived migration rehearsal entry 175: batch 2975, checksum 5425; no current decision recorded.\nArchived migration rehearsal entry 176: batch 2992, checksum 5456; no current decision recorded.\nArchived migration rehearsal entry 177: batch 3009, checksum 5487; no current decision recorded.\nArchived migration rehearsal entry 178: batch 3026, checksum 5518; no current decision recorded.\nArchived migration rehearsal entry 179: batch 3043, checksum 5549; no current decision recorded.\n# Current ledger migration decision\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.087931+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-11"
+      },
+      {
+        "evidence_id": "BV-03@1",
+        "resource_id": "BV-03",
+        "version": 1,
+        "source": "slack",
+        "title": "authentication / Rejected design thread",
+        "locator": {
+          "channel": "synthetic-auth",
+          "message": "BV-03",
+          "root": "BV-03"
+        },
+        "text": "[SYNTHETIC]\n09:00 authentication signing design: shared-secret proposal under consideration.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.087814+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-03"
+      },
+      {
+        "evidence_id": "BV-02@1",
+        "resource_id": "BV-02",
+        "version": 1,
+        "source": "jira",
+        "title": "authentication / Migration blocker",
+        "locator": {
+          "section": "Migration blocker"
+        },
+        "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.087800+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-02"
+      },
+      {
+        "evidence_id": "BV-05@1",
+        "resource_id": "BV-05",
+        "version": 1,
+        "source": "confluence",
+        "title": "authentication / Future policy",
+        "locator": {
+          "section": "Future policy"
+        },
+        "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.087843+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-05"
+      },
+      {
+        "evidence_id": "BV-18@1",
+        "resource_id": "BV-18",
+        "version": 1,
+        "source": "slack",
+        "title": "Authentication signing design reply",
+        "locator": {
+          "channel": "synthetic-auth",
+          "message": "BV-18",
+          "root": "BV-03"
+        },
+        "text": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:44:54.088095+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-18"
+      }
+    ],
+    "actor": "eng_a",
+    "model_call": {
+      "query_id": "ff3f0ce2878b44ef849c2621a081c514",
+      "model": "deepseek-flash",
+      "reservation_id": "1eacd6ab31f645c7bc7ad7eaa99cbea1",
+      "prompt_tokens": 2117,
+      "completion_tokens": 2707,
+      "total_tokens": 4824,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 3884,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "ff3f0ce2878b44ef849c2621a081c514",
+      "model": "deepseek-flash",
+      "reservation_id": "fe3bcb9464704e509781179f48b28f0b",
+      "prompt_tokens": 2062,
+      "completion_tokens": 5519,
+      "total_tokens": 7581,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 7242,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

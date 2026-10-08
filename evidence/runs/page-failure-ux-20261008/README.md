@@ -36,3 +36,7 @@ AUTH029: only local49161/eng_b, AUTH017 four synthetic containers read-only, unc
 Settled increment144751microUSD (USD0.144751), global settled916664/available18758932; original unknown324404 remains, no new unknown. Admission persists across restart and shares process lock with quality runner. Live instance is loaded, but new questions pause at the cap. Old8094/8100 untouched; no push/merge/deploy, browser-denial bypass, G1/G2 approval or AUTH019 expansion.
 
 Remaining: broad mitigation question quality and/or agreed approval scope; last6 quality cases; team browser observation and actual UX perception. This goal is not complete. Read docs/STATUS.md and RUNBOOK.md current entries before continuing. Authorize no new scope by inference from old AUTH026/027/028.
+
+## AUTH030 supplement
+
+User approved total48 solely for remaining six. All six results saved in quality-remaining6/, model/source/config unchanged. Combined semantic examination: quality-combined-review.json. Cases07/09/11 clarify,08 limited insufficient evidence,10 partial table relevance,12 expected premodel Drive-unknown stop. No fabricated retry value, but not all task answers complete. New supplement costUSD0.021044; goal totalUSD0.165795. Old unknown324404 unchanged, no newunknown. Admission48/48 reached; no further question authorization. Historical not_run retained rather than overwritten. No product-code change or repeated paid suite.

@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-08 AUTH030补验完成：总额度42→48已消费，仅补原known12的07–12六题，未重复前30题。07/09/11合理空答澄清；08有引用限定资料不足；10未编造retry但Atlas账户行不充分回答最小integration tier，记partial；12注入Drive unknown按预期模型前SourceUnavailable，非业务答案成功。原24＋known12完整36现已执行，known12为3完整/范围答案＋7安全不足/澄清＋1partial＋1预期来源故障，不称质量全通过。六题结算21044microUSD；本Goal累计165795microUSD，账本settled937708/available18737888，旧unknown324404保留、无新unknown，额度48/48。原quality36的not_run历史不改，补件quality-remaining6及quality-combined-review.json另存。第一题/known10质量及真人UX仍open；此次没有产品代码或模型配置变化，无需重复已通过436/三Node。
+
 2026-10-08 DEV-PAGE-UX-01 当前增量（覆盖下方仅记录/不修改的旧快照）：基准main23ae62b，独立fix/page-failure-ux-20261008；本Goal授权本地修复，AUTH029单独授权49161/native/live复验。已实现安全输出诊断、模型调用前最多一次版本恢复、通用主题检索过滤/已授权关系扩展、会话独立进度与模式/四源状态、真实已用时间/防重复提交/分类错误/退出迟到响应保护及引用信息层级。原模型low8192、provider、权限/review/审计边界不变。436完整本地回归、三Node与五fixture通过；最后锁顺序测试改用History，因为health现在独立于查询锁，首轮失败原件保留。
 
 实际产品HTTP固定三次/题：明确payment-service题3/3有依据答案（PAY102 Done、PAY103 In Progress、pilot与GA区别）；宽泛latest-approved-mitigation题为quote失败、review失败、一次范围受限但遗漏runbook的答案，不能称任务完成。原55.47秒请求finish_reason不可恢复，新拒绝均stop，不能据8192判定截断或擅自增加cap。新鲜度probe弱主题命中经通用相关性过滤解决；版本恢复/撤权/持续变化/模型后变化由mock验证，无源写入，未称native变更全矩阵通过。607次HTTP进度采样，最长0.00524秒；三当前native引用preview与History200，非浏览器/真人观察。原24题22事实+2合理空答；known12仅前6已跑（3完整/范围答案、3安全不足或澄清），后6未跑。全部失败及429记录保留，累计42次问题额度已耗尽，已申请48次总额度但尚未批准。
