@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-08 本轮定向收尾及真实试用/反馈已记录：用户确认两题全部失败后停止使用，引用/History后续未做；首题输出拒绝、第二题Drive版本变化停答原件保留，实际试用failed。UX观察为等待计时/可感知工作状态缺失造成焦虑、模型和四平台连接信息不显性、页面简陋。用户明确当前只记录、等ChatGPT Chat后续指导，不改代码/界面/配置。49161自建实例已正常结束(exit0/无监听)，8094/8100未动；2次尝试/1次模型调用/11028microUSD，最终账本settled771913/available18903683，原pending1/324404保留。本轮信息收集完成不等于失败修复或验收通过；UX、原质量失败、重复自动测量/p95/完整native矩阵及G1/G2仍open。证据targeted-closeout-20261008/page-trial-final.json。下方等待反馈/运行中为旧快照。
+
 2026-10-08 AUTH027第二题实际HTTP停答：明确payment-service在18.411秒的model_dispatch发现Drive新探针version6不一致，未调用模型；后台随后发布version7，正文hash/modifiedTime相同，确切版本变化原因未知，不绕过gate。首两题均未完成任务，原失败保持；新增模型结算合计11028microUSD，原unknown324404保留。无自动重试/配置实验/应用变更，实际页面反馈及引用/History待核。详见targeted-closeout-20261008/page-trial-request2-failure.json。
 
 2026-10-08 AUTH027首题实际HTTP试用失败：eng_b/latest approved mitigation，55.468秒服务端request，generation usage8192 completion/11028microUSD已结算，随后model_output_rejected、无支持答案、未到review。原始响应/finish_reason未存，不能确定截断或其他拒绝；不自动重试、不改cdbd62b。原pending1/324404保留；等待第二题和真人页面反馈，第一题引用任务未完成。原件page-trial-request1-failure.json及审计prefix；不是质量或人验通过。
