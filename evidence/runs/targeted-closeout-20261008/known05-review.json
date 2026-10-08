@@ -1,0 +1,80 @@
+{
+  "baseline_main": "2eabeb8",
+  "application": "cdbd62b",
+  "runtime_unchanged": true,
+  "old_case_question": "A support message calls the change complete. Which is complete, the code fix or the customer rollout, and what remains unfinished?",
+  "old_case_result": "partial preserved; J03 absent from original model input",
+  "explicit_control_question": "For payment-service, which code fix is complete, which preventive work remains in progress, and is general customer release approved?",
+  "explicit_control_classification": "correct_facts_and_scope_complete",
+  "control_claims": [
+    {
+      "text": "The PAY-102 code fix is Done.",
+      "evidence_ids": [
+        "J-02@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "J-02@1",
+          "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+        }
+      ]
+    },
+    {
+      "text": "PAY-103 protective measures are In Progress.",
+      "evidence_ids": [
+        "J-03@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "J-03@1",
+          "quote": "PAY-103 protective measures: In Progress. Owner: Maya."
+        }
+      ]
+    },
+    {
+      "text": "General availability (GA) is not approved, so general customer release is not approved; the release decision approved a controlled pilot, and PAY-102 Done is not customer release approval.",
+      "evidence_ids": [
+        "D-02@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "D-02@1",
+          "quote": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval."
+        }
+      ]
+    }
+  ],
+  "model_input_J03": true,
+  "interpretation": "Explicit scope and preventive-work question retrieves and answers J03. Original vague change/customer-rollout wording had J03 recall/input omission; this contrast does not establish that ambiguity alone caused it or remove original partial. No targeted runtime fix indicated by explicit control.",
+  "run_cost_micro_usd": 5179,
+  "ledger": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 1085289,
+    "settled_micro_usd": 760885,
+    "available_micro_usd": 18914711,
+    "pending_requests": 1,
+    "blocked_for_review": false
+  },
+  "classification_refinement": {
+    "core24": {
+      "direct_correct_facts_and_scope": 21,
+      "premise_correction_with_fact_answer": 1,
+      "pure_empty_no_evidence": 2
+    },
+    "known12": {
+      "complete_direct_fact_answers": 3,
+      "partial_fact_answers": 1,
+      "premise_correction_with_fact_answer": 1,
+      "pure_empty_clarification_or_no_evidence": 6,
+      "expected_source_unknown_stop": 1
+    },
+    "examples": {
+      "business03": "Quoted factual answer: shared-secret withdrawn, asymmetric accepted; not empty",
+      "holdout11": "Quoted factual answer: dual-region proposed/not approved, one writer accepted; not empty"
+    }
+  },
+  "native": "not_run",
+  "browser": "not_run",
+  "G1": "not_run",
+  "G2": "not_run"
+}

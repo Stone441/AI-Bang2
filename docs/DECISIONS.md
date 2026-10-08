@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-08 AUTH-026：用户明确批准“这3次创建＋4次更新及测量”。仅AUTH017既有Jira KAN、Slack C0C6R70SGG4、Drive指定文件夹各新建1个独立[SYNTHETIC] CLOSEOUT-20261008 automatic freshness probe/copper，再各1次silver修正；Slack以该root新增reply。另仅允许AUTH024页1572865 copper→silver一次。owner管理UI执行，独立只读CLI持续自动60秒后台＋fake测量；零新模型费，不删除/改权限/旧业务资料，不重复AUTH024创建。执行完成，3创建＋4修正一次性额度已全部消费；原观测被并发版本变化问答停答中断，失败保留、独立只读恢复，持续与恢复样本分列，详见targeted-closeout-20261008。新页面服务实例启动仍待独立授权，源操作不授予服务/推送/合并/G1/G2许可。
+
 2026-10-08 AUTH-025：用户明确“推送并合并到main”，批准DEV-PERF-01已验证应用cdbd62b及32cb71c证据/状态增量推送既有Stone441/AI-Bang2，经PR合并main。只含本任务代码、测试、公共合成证据和文档；未跟踪ZIP/SQLite/队员产物不上传，不部署/重启8094/8100，不扩源/费用/权限，不改变G1/G2。下方“未push/merge”为证据冻结时状态；实际Git交付以本次PR合并状态及main commit为准。
 
 2026-10-08 AUTH-024：用户明确回复“批准这一次单页创建及测量”，批准按lock-contention-20261008/NATIVE_FRESHNESS_PROPOSAL.md，在既有Confluence space131227通过owner管理UI仅创建一页[SYNTHETIC] PERF-20261008 automatic discovery probe及提案精确copper正文，并用cdbd62b独立只读CLI后台＋fake model观测。先前“按推荐”未当作写许可，澄清后才执行。不得修改/删除旧资料或该页、扩scope、改源权限、新模型费用、重启8094/8100或公开服务；不继承AUTH021，G1/G2不变。执行完成：仅页1572865/version1、继承C01限制未改；UI发布确认→自动发布35.60秒→首fake回答57.12秒，0模型费用，细分时间与限制见native-freshness/summary.json；本次一次性授权已消费。

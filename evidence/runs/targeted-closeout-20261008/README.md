@@ -1,0 +1,24 @@
+# 定向工程收尾 · 2026-10-08
+
+基准main `2eabeb824e9d3ab8a5b17da391fc9246a4dfe426`（PR8已合并）；应用仍`cdbd62b`，分支`fix/targeted-closeout-20261008`，brain/scripts/tests/web无修改。v10显式low8192，原USD20预算不变。没有重复完整付费回归。
+
+- **known05明确范围对照**：实际输入包含J03，回答PAY102 Done、PAY103 In Progress、GA未批准，三个精确引文，15.026秒、5179microUSD；fixture业务源＋live model，非native/browser。旧题、oracle和partial/J03输入遗漏保留；本对照不证明歧义是唯一原因。见`known05-control-final/`及`known05-review.json`。
+- **统计细化**：原core24为21直接事实＋1纠正前提后有事实（business03）＋2纯空答；known12为3完整事实＋1部分＋1纠正前提后有事实（11）＋6纯空答＋1预期source unknown。原答案不改，不把无错误结论当作任务全成功。
+- **AUTH026**：仅3新建＋4修正已全部消费。Jira KAN8/10017、Slack新root1791449350.384539及其修正reply1791449714.768099、Drive新文件1W_UZvPPeWyMQCX9tHFx1PlN_hK8HGu3I；Confluence只改AUTH024页1572865为silver/version2。未删/改ACL/旧业务资料，未重复AUTH024创建，新增模型费用0。
+- **自动发现**：正常后台、最小60秒周期，无手动cycle。三创建＋Drive更新在持续worker中观察；Confluence version2也在原worker发布。原observer一次问答遇并发Jira内容变化停答并退出；只读恢复后另三问答遇Drive版本变化停答，随后四更新均有新值用于fake回答。失败保留：原审计341事件、恢复795事件，链有效仅本地，非独立防篡改。
+
+| 操作 | 原生更新时间→完成发布(s) | 原生更新时间→观测到的成功fake回答(s) | 边界 |
+|---|---:|---:|---|
+| Jira创建 | 45.861 | 65.431 | 持续自动 |
+| Slack创建 | 21.118 | 44.891 | 持续自动 |
+| Drive创建 | 38.190 | 99.287 | 持续自动，问答观测较晚 |
+| Confluence更新 | 8.910 | 446.349 | 原worker自动发布；失败/恢复后问答 |
+| Jira更新 | 199.374 | 251.863 | worker重启恢复发布，非持续时延样本 |
+| Slack修正reply | 200.206 | 244.375 | worker重启恢复发布，非持续时延样本 |
+| Drive更新 | 45.340 | 69.372 | 恢复worker就绪后持续自动 |
+
+时间起点为API报告的updated/version/message timestamp，并非精确源commit。UI观测JSON记录晚于UI确认，部分已发布，不能把其接近0的差值当成自动同步时延；以上使用原生时间与完成cycle。成功fake回答时点受记录及恢复影响，不宣称严格首成功延迟。完整数据和限制见`freshness-summary.json`，原生逐请求时间/周期/版本/审计及原失败均保留。fake仅证明新证据使用，不证明live synthesis最终silver语义优先。fake逐对象before_model/model_dispatch/before_dispatch已核；未运行live review_dispatch。
+
+验证：`PYTHONPATH=. python3 evidence/runs/targeted-closeout-20261008/verify-freshness.py`，7操作/新值证据/三个fake授权阶段/两审计链/应用hash与无runtime diff通过。首次检查误要求fake具有live review阶段而断言失败，纠正为实际fake三阶段；未修改runtime gate。
+
+原账本settled760885、accounted1085289、available18914711microUSD，pending1原324404保留。AUTH019及旧失败不变。剩余：多次持续自动样本与p95/max/失败率、完整四源native撤权/删除/故障矩阵、实际团队页面试用。新实例49161尚待具体授权，没有启动；8094/8100未动，产品browser拒绝不绕过，G1/G2未批准。本轮新分支未推送合并。

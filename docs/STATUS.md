@@ -1,5 +1,8 @@
 # Current status
 
+2026-10-08 定向收尾：main已合并为 **2eabeb8**（PR8），应用仍 **cdbd62b**；当前独立fix/targeted-closeout-20261008无runtime修改。known05明确payment-service对照实际输入J03并正确回答Done/In Progress/no GA，15.026秒、5179microUSD；旧题/oracle/partial保留，不能推断仅歧义所致。统计细化core24=21直接事实＋1前提纠正事实＋2纯空；known12=3完整＋1部分＋1前提纠正事实＋6纯空＋1预期unknown。AUTH026仅3创建＋4更新已消费，7项均新值native发现/fake证据使用；三创建及Drive更新为持续自动，CF在原后台发布但fake恢复后成功，Jira/Slack更新为重启恢复，非全7持续时延通过。并发源版本变化停答原件保留，两审计链341/795有效仅本地；原生更新时间到发布不能称精确commit或SLA，多次自动样本/p95及完整native撤权删除仍未验。账本settled760885/available18914711、原pending1/324404保留；AUTH019不变。具体页面实例许可仍待回复，未启动49161、不动8094/8100；browser/G1/G2不变，新分支未push/merge。证据evidence/runs/targeted-closeout-20261008。
+
+
 2026-10-08 Git交付补充：AUTH-025已批准本轮推送并通过PR合并main；下方未push/merge为性能证据冻结时快照，实际交付以PR状态和main commit为准。应用验证基准仍cdbd62b；文档/Git操作不重启或升级运行实例。
 
 2026-10-08 DEV-PERF-01本地交付完成，应用 **cdbd62b**（main仍a3a0060，分支fix/lock-contention-20261008）：后台发现锁外native读取/短临界区发布、四source有界阶段并发及共享Retry-After冷却已验证，原身份/正文/父线程/版本和四阶段当前权限检查保留。421 clean archive回归、两Node/五fixture/真实本地mock HTTP争用通过。相同native两题原13/15窗口字节一致：query40.083/49.034秒（旧78.287/97.225）、授权wall34.363/35.017秒（旧69.052/75.009）、同对象同版本单引用1.656/1.052秒（旧27.166/25.540）、锁等待0.000057/0.001621秒；后台正常运行，非浏览器性能/SLA，query团队30–40秒目标未全部达到。固定v10显式low8192原24题：21正确事实范围＋3合理澄清/无证据；已知12：3完整正确＋1部分覆盖（05未涵盖PAY103）＋7合理澄清/无证据＋1预期Drive unknown故障停答，零错误弃答/错误结论/非预期运行失败；不称盲测或质量全通过。AUTH024仅一次Confluence copper页1572865已创建，native自动60秒周期观测确认→发布35.60秒→首fake回答57.12秒；单源创建子集，非live model/SLA。原账本settled755706、available18919890microUSD，unknown pending1/324404保留；本轮结算202522microUSD，最终三流105121。原失败/AUTH019/四源十二行历史保留。未push/merge、未重启/部署8094/8100；产品browser saved denial、G1/G2/真人/提交不变。详见evidence/runs/lock-contention-20261008/README.md。
