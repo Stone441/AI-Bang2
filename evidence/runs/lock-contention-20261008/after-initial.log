@@ -1,0 +1,28 @@
+test_discovery_contention (unittest.loader._FailedTest.test_discovery_contention) ... ERROR
+
+======================================================================
+ERROR: test_discovery_contention (unittest.loader._FailedTest.test_discovery_contention)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_discovery_contention
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 433, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 374, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_discovery_contention.py", line 9, in <module>
+    from brain.discovery import ContainerDiscovery
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/discovery.py", line 56, in <module>
+    class ContainerDiscovery:
+    ...<348 lines>...
+            if self.thread is not None:self.thread.join()
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/discovery.py", line 357, in ContainerDiscovery
+    self.pilot.audit.append('source_changed',self.actor.user_id,rid,
+    ^^^^
+NameError: name 'self' is not defined
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

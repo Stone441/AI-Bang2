@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "SGD connector approval does not cover business USD accounts; Singapore business USD accounts require a separate connector approval.",
+        "evidence_ids": [
+          "BV-07@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-07@1",
+            "quote": "[SYNTHETIC]\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "d0a00e6d-7107-4f65-97de-0dff244b5c77",
+      "object": "chat.completion",
+      "created": 1791444572,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"SGD connector approval does not cover business USD accounts; Singapore business USD accounts require a separate connector approval.\",\"evidence_ids\":[\"BV-07@1\"],\"supports\":[{\"evidence_id\":\"BV-07@1\",\"quote\":\"[SYNTHETIC]\\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Does SGD connector approval cover business USD accounts?\" Need identify business entity/event? Evidence has BV-07@1 directly: Singapore business USD accounts require a separate connector approval; SGD approval does not include USD. That answers. Need output claims JSON. Need ensure claims concise, evidence_ids exactly supports. We can use BV-07@1. Claim: SGD connector approval does not cover business USD accounts; Singapore business USD accounts require a separate connector approval. Quote exact: \"[SYNTHETIC]\\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.\" That includes synthetic prefix? It is text. Quote exact contiguous passage copied. Should include maybe without [SYNTHETIC]? It says copy support quotes only from text, never from source_context. The text includes [SYNTHETIC]\\n... So quote should include [SYNTHETIC]? Probably exact contiguous passage. Use full text. At most one claim. Need check question identifies business entity? \"SGD connector approval\" and \"business USD accounts\" likely refers to evidence BV-07. It directly says. So answer yes/no: No. Return claim. Could also mention separate approval required. Evidence_ids [\"BV-07@1\"]. Supports [{\"evidence_id\":\"BV-07@1\",\"quote\":\"[SYNTHETIC]\\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.\"}]. Ensure claim text factual conclusion. \"SGD connector approval does not cover business USD accounts; Singapore business USD accounts require a separate connector approval.\" That is fine. No extra. Stop."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1534,
+        "completion_tokens": 422,
+        "total_tokens": 1956,
+        "prompt_tokens_details": {
+          "cached_tokens": 1280
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 339
+        },
+        "prompt_cache_hit_tokens": 1280,
+        "prompt_cache_miss_tokens": 254
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "2291c55e-c0e6-4a5a-bfa1-0c5d64259d0b",
+      "object": "chat.completion",
+      "created": 1791444574,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim against evidence. Need one verdict per supplied claim. There is one claim. Need question_covered true only if claims address every requested part supported. Question: \"Does SGD connector approval cover business USD accounts?\" Claim: \"SGD connector approval does not cover business USD accounts; Singapore business USD accounts require a separate connector approval.\" Evidence BV-07@1 says \"[SYNTHETIC] Singapore business USD accounts require a separate connector approval; SGD approval does not include USD.\" This directly supports claim? It says SGD approval does not include USD; Singapore business USD accounts require separate connector approval. Claim says \"SGD connector approval does not cover business USD accounts; Singapore business USD accounts require a separate connector approval.\" Yes supported. Responsive? It answers question yes/no: no, doesn't cover. It also adds separate approval. That's responsive. Need question_covered true? The question asks yes/no. Claim addresses. So {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}. Must exactly JSON. Ensure no markdown."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1460,
+        "completion_tokens": 256,
+        "total_tokens": 1716,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 230
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 820
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

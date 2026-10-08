@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The final root cause was that retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.",
+        "evidence_ids": [
+          "D-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "D-01@1",
+            "quote": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "6bb3a39b-7431-4b53-94c9-3b5b38579650",
+      "object": "chat.completion",
+      "created": 1791444491,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The final root cause was that retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.\",\"evidence_ids\":[\"D-01@1\"],\"supports\":[{\"evidence_id\":\"D-01@1\",\"quote\":\"Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.\"}]}]}",
+            "reasoning_content": "We need answer question: \"What caused the payment-service duplicate requests?\" Need output JSON only. Need inspect evidence. We have D-01 says final root cause: retry configuration mismatched timeout budget, causing backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103. S-01 also says 10:00 final postmortem confirmed retry configuration and timeout budget mismatch. Need claim with evidence. Question asks caused duplicate requests. We can answer: retry configuration mismatched timeout budget. Need quote from evidence. Use D-01@1 quote maybe: \"Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.\" That is exact contiguous passage. Need evidence_ids list exactly equals support evidence_id values. Could include S-01@1 quote for confirmation? But one claim enough. However need maybe include confirmed at 10:00? Not necessary but maybe qualification. Claim: \"The payment-service duplicate requests were caused by retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.\" But quote supports. Need ensure no invented. We can state: \"The final root cause was that retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.\" Support quote from D-01@1. Evidence_ids [\"D-01@1\"]. Should be fine.\n\nNeed ensure schema: {\"claims\":[{\"text\":\"...\",\"evidence_ids\":[\"D-01@1\"],\"supports\":[{\"evidence_id\":\"D-01@1\",\"quote\":\"Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.\"}]}]} That's it. Check if question identifies business entity or event? It says payment-service duplicate requests. Evidence covers payment-service incident. There is PAY-101 etc. It's specific enough? \"payment-service duplicate requests\" likely the incident. D-01 final postmortem. Fine.\n\nNeed no extra. Output JSON only. Ensure valid JSON. Use exact quote: \"Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.\" Yes. Could include \"Confirmed at 10:00 +08:00\" maybe not needed. But if claim says caused, quote supports. Keep concise. Use one claim.\n\nLet's final."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1929,
+        "completion_tokens": 560,
+        "total_tokens": 2489,
+        "prompt_tokens_details": {
+          "cached_tokens": 1792
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 481
+        },
+        "prompt_cache_hit_tokens": 1792,
+        "prompt_cache_miss_tokens": 137
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "402fa5a4-e900-47cb-ad0a-6b9ec4fb4e59",
+      "object": "chat.completion",
+      "created": 1791444494,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review evidence support and question coverage. Need verdicts for each claim. There is one claim. Need determine if claim supported by cited evidence D-01@1. Question: \"What caused the payment-service duplicate requests?\" Claim: \"The final root cause was that retry configuration mismatched the timeout budget, causing a backlog of duplicate requests.\" Evidence D-01@1 text: \"[SYNTHETIC]\\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.\" Source title: Final payment-service postmortem. This directly supports claim. Need consider \"final root cause\" yes. Scope payment-service? Source title payment-service postmortem, question payment-service duplicate requests. D-01 says final root cause retry config mismatched timeout budget causing backlog duplicate requests. Supported true. Responsive? It answers what caused duplicate requests. Yes.\n\nNeed also question_covered true if claims address every requested part supported by supplied evidence. The claim addresses cause. So true.\n\nNeed output exactly schema: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}\n\nNeed ensure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1852,
+        "completion_tokens": 297,
+        "total_tokens": 2149,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 271
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 1212
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

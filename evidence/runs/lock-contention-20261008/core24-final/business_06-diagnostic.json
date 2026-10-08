@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No, the Atlas connector does not support personal Singapore SGD accounts; personal SGD is not supported.",
+        "evidence_ids": [
+          "BV-06@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-06@1",
+            "quote": "The Atlas connector supports Singapore business SGD accounts, not personal accounts.\n\nAtlas account eligibility\nAccount\tScope\n\n Singapore business SGD \t Pilot supported \n\n Personal SGD \t Not supported"
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "8322a5f4-d38b-41fa-b711-ed1e97570350",
+      "object": "chat.completion",
+      "created": 1791443854,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No, the Atlas connector does not support personal Singapore SGD accounts; personal SGD is not supported.\",\"evidence_ids\":[\"BV-06@1\"],\"supports\":[{\"evidence_id\":\"BV-06@1\",\"quote\":\"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported\"}]}]}",
+            "reasoning_content": "We need answer question: \"Can the Atlas connector serve personal Singapore SGD accounts?\" Need return JSON claims. Evidence BV-06 says: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts. ... Personal SGD Not supported\". So answer: No, personal Singapore SGD accounts are not supported. Need claim with evidence_ids and supports quote. Must use exact contiguous passage copied from evidence. Could quote: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported \\n\" But quote must be contiguous and 12-1200 chars. That is okay. Or simpler: \"Personal SGD \\t Not supported\" but that's not a full sentence? It is contiguous. But claim should include identifier? It says every explicit identifier such as ticket ID in a claim must appear in copied support quotes. No ticket ID. We can use claim: \"The Atlas connector does not support personal Singapore SGD accounts; personal SGD is not supported.\" Support quote from BV-06: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported \\n\" That includes all. Evidence_ids: [\"BV-06@1\"]. Supports with evidence_id same, quote exact. Need ensure quote exact contiguous passage from text. The text includes \"[SYNTHETIC]\\n\" prefix. Should we include [SYNTHETIC]? The quote should be copied from text. We can copy starting after [SYNTHETIC]? The instruction says copy support quotes only from text, never source_context. The text includes [SYNTHETIC]. But we can quote a contiguous passage. We can quote \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported\" - that is contiguous in text after [SYNTHETIC]\\n. Is it exact? The text has tabs and spaces. We need exact. Could use simpler: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" That directly states not personal accounts. Then claim: \"The Atlas connector does not serve personal Singapore SGD accounts.\" Support quote: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" That is exact. It doesn't explicitly say \"personal Singapore SGD\" but says not personal accounts, and context is Singapore? The first part \"Singapore business SGD accounts, not personal accounts\" implies personal accounts (likely SGD). But to be precise, we can include the table: \"Personal SGD \\t Not supported\". That is exact. But if quote only that, claim can say \"Personal SGD is not supported\" but question asks \"Can Atlas connector serve personal Singapore SGD accounts?\" Need Atlas connector subject. Quote \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" is sufficient. Maybe include both sentences? The quote: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported\" is a contiguous passage from text. That is safe. But length okay. Need JSON only. One claim. Supports array with one object. Ensure evidence_ids exactly equal supports IDs. So {\"claims\":[{\"text\":\"No, the Atlas connector does not support personal Singapore SGD accounts; personal SGD is not supported.\",\"evidence_ids\":[\"BV-06@1\"],\"supports\":[{\"evidence_id\":\"BV-06@1\",\"quote\":\"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported\"}]}]}\n\nNeed verify quote exact: In evidence text: \"[SYNTHETIC]\\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported \\n\" So after [SYNTHETIC]\\n, the passage is exactly: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported \\n\" There is a trailing space before newline? The text ends \"Not supported \\n\". In our quote we can omit trailing \\n? It says exact contiguous passage, so maybe include trailing space? We can include \"Not supported\" without trailing space? That would not be exact if there is space. But likely acceptable? We should include the exact text. But JSON string can include \\n and \\t. We'll include: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported\" Maybe omit trailing space? The original has \"Not supported \\n\". If we omit trailing space and newline, it's still a contiguous substring? Yes substring up to \"Not supported\" is contiguous (it doesn't require including trailing whitespace). It says passage copied from that evidence. So okay. But to be safe, quote only first sentence: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" That is exact and sufficient. Claim text can say \"Personal Singapore SGD accounts are not supported by the Atlas connector.\" Evidence quote supports not personal accounts, but doesn't explicitly say \"personal Singapore SGD\" but context: Singapore business SGD accounts, not personal accounts. It implies personal (SGD?) accounts. The table explicitly says Personal SGD not supported. So maybe quote table row only: \"Personal SGD \\t Not supported\" but then subject Atlas connector missing. Could combine two quotes? Max 4 citations per claim. We could have supports with two quotes from same evidence? But supports array can have multiple objects. However instruction: use one quote per citation. We can use two citations from same evidence? It says at most four citations per claim. Evidence_ids must exactly equal evidence_id values in supports. So if we list same evidence twice? Probably not. Better one quote that includes both subject and table. So use full passage. That's fine.\n\nNow final JSON. No markdown. Ensure valid JSON. Use escaped \\n and \\t. We need output JSON object. Let's craft."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1298,
+        "completion_tokens": 1475,
+        "total_tokens": 2773,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1377
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 402
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "a5dd89af-23b5-447b-97a8-9287ffe6907e",
+      "object": "chat.completion",
+      "created": 1791443860,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need review claim. Need determine question coverage and verdicts. We have one claim: \"No, the Atlas connector does not support personal Singapore SGD accounts; personal SGD is not supported.\" Evidence BV-06@1 states \"The Atlas connector supports Singapore business SGD accounts, not personal accounts. Atlas account eligibility Account Scope Singapore business SGD Pilot supported Personal SGD Not supported\". This supports claim. Responsive: question asks \"Can the Atlas connector serve personal Singapore SGD accounts?\" Claim answers no, not supported. So supported true, responsive true. Question covered true. Need exactly one verdict. JSON format. Ensure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1240,
+        "completion_tokens": 155,
+        "total_tokens": 1395,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 129
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 728
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "9f03114b-5cdc-4b23-bca7-c688cb07ce32",
+      "object": "chat.completion",
+      "created": 1791443877,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" We need determine from evidence. Evidence includes various synthetic migration/ auth/access. We need check if question identifies business entity or event. It asks about \"the migration request\" and \"which identity must be trusted\" and \"where verified\". Evidence has migration items, authentication blockers, etc. Need see if any evidence specifies trust identity for migration request and verification location. Let's inspect evidence.\n\nEvidence:\nBV-23: batch with missing bank files pending...\nBV-05: service tokens expire after... not identity trust? \nBV-30: When current source access cannot be verified, do not treat prior allow decision as current permission.\nBV-19: webhook backlog...\nBV-29: Removal from source channel prevents future citation...\nBV-12: MIG-301 is In Progress. Owner: Chen. blocker unmatched settlement totals.\nBV-13: Roll back ledger migration if settlement differences exceed five bps.\nBV-02: AUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.\nBV-14: September rehearsal threshold superseded by October five-bps.\nBV-15: Dual-region active writes were proposed but not approved; accepted migration uses one writer.\nBV-11 slices: archived migration rehearsal entries, current ledger migration decision chose shadow table.\n\nNone explicitly mention \"which identity must be trusted before accepting the migration request\" or \"where verified\". Maybe \"identity\" as in AUTH-204? \"mobile clients cannot refresh expired tokens\" not migration request acceptance. \"service tokens expire...\" not identity. \"When current source access cannot be verified, do not treat a prior allow decision as current permission.\" This is about access verification, not accepting migration request. There is no evidence about verifying identity for migration request. The question likely presupposes a migration request and identity trust, but evidence covers multiple migration events and no explicit rule. According to instructions: If question asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event. The question asks \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" It does not identify a specific migration event. Evidence covers multiple migration events (MIG-301, ledger migration, rehearsal entries, AUTH-204 migration blocker). There is no explicit identity verification. So likely empty claims.\n\nBut need be careful: Could there be implicit? \"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens.\" That's authentication, not identity trust before accepting migration request. \"access / Unknown authority\" says when current source access cannot be verified, do not treat prior allow decision as current permission. This might be a rule about verifying access before accepting? But it doesn't mention migration request or identity. \"service tokens expire\" maybe identity? No.\n\nQuestion: \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" It presupposes a specific policy. Evidence doesn't contain such. It asks about \"the migration request\" but no specific ticket. Could be \"AUTH-204 is Blocked because mobile clients cannot refresh expired tokens\" maybe migration request? No.\n\nThus return {\"claims\":[]}.\n\nBut let's thoroughly consider schema: If empty claims, just JSON. Need provide no extra. We must follow: \"First check whether the question identifies a business entity or event. If it asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event.\" This exactly applies. So final should be {\"claims\":[]}. Ensure JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3520,
+        "completion_tokens": 762,
+        "total_tokens": 4282,
+        "prompt_tokens_details": {
+          "cached_tokens": 3328
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 756
+        },
+        "prompt_cache_hit_tokens": 3328,
+        "prompt_cache_miss_tokens": 192
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

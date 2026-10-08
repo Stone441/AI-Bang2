@@ -1,0 +1,94 @@
+{
+  "request_id": "de8875eaa6144656b3bab92fb95ae7bf",
+  "question": "For a partner who can use only the externally shared material, is general availability promised and when may they tell customers it launches?",
+  "answered_at": "2026-10-08T07:17:27.494252+00:00",
+  "mode": "fixture_source_live_model_synthesis",
+  "model": "deepseek-flash-grounded-synthesis-v10",
+  "claims": [
+    {
+      "text": "For Payment-retry, the cited material does not promise general availability: it states general availability (GA) is not approved and no general release date is confirmed. External partners can consult the shared payment-retry capability page for pilot limits, so the material does not give a date when a partner may tell customers it launches.",
+      "evidence_ids": [
+        "C-02@1",
+        "S-03@1"
+      ],
+      "supports": [
+        {
+          "evidence_id": "C-02@1",
+          "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+        },
+        {
+          "evidence_id": "S-03@1",
+          "quote": "External partners can consult the shared payment-retry capability page for pilot limits."
+        }
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+  ],
+  "evidence": [
+    {
+      "evidence_id": "C-02@1",
+      "resource_id": "C-02",
+      "version": 1,
+      "source": "confluence",
+      "title": "Payment-retry capability",
+      "locator": {
+        "paragraph": 1,
+        "section": "Supported rollout"
+      },
+      "text": "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-08T07:16:48.606802+00:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-02"
+    },
+    {
+      "evidence_id": "S-03@1",
+      "resource_id": "S-03",
+      "version": 1,
+      "source": "slack",
+      "title": "External collaboration",
+      "locator": {
+        "channel": "external",
+        "thread": "1790827200.000001"
+      },
+      "text": "[SYNTHETIC]\nExternal partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "indexed_at": "2026-10-08T07:16:48.606923+00:00",
+      "source_url": "fixture://synthetic-demo/slack/S-03"
+    }
+  ],
+  "actor": "contractor",
+  "model_call": {
+    "query_id": "de8875eaa6144656b3bab92fb95ae7bf",
+    "model": "deepseek-flash",
+    "reservation_id": "7acaa564694f47f8879197555a7dbdfe",
+    "prompt_tokens": 1109,
+    "completion_tokens": 4663,
+    "total_tokens": 5772,
+    "reserved_micro_usd": 324404,
+    "accounted_upper_micro_usd": 5929,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "claim_format": "grounded_synthesis_v1",
+  "model_review": {
+    "query_id": "de8875eaa6144656b3bab92fb95ae7bf",
+    "model": "deepseek-flash",
+    "reservation_id": "cea08dbc3d794164acb0f6bf03d7631e",
+    "prompt_tokens": 1119,
+    "completion_tokens": 1132,
+    "total_tokens": 2251,
+    "reserved_micro_usd": 324404,
+    "accounted_upper_micro_usd": 1695,
+    "state": "settled",
+    "outcome": "accepted",
+    "called": true,
+    "dispatch_recorded": true,
+    "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+  },
+  "review_status": "accepted"
+}

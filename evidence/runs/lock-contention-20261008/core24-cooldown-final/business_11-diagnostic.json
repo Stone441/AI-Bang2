@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Ledger migration selected a shadow table to allow rollback without blocking existing writes.",
+        "evidence_ids": [
+          "BV-11@1#16000:17452"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-11@1#16000:17452",
+            "quote": "Ledger migration chose a shadow table to allow rollback without blocking existing writes."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "2b19374f-de4a-4f78-b0d1-419e9d98abb8",
+      "object": "chat.completion",
+      "created": 1791444583,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Ledger migration selected a shadow table to allow rollback without blocking existing writes.\",\"evidence_ids\":[\"BV-11@1#16000:17452\"],\"supports\":[{\"evidence_id\":\"BV-11@1#16000:17452\",\"quote\":\"Ledger migration chose a shadow table to allow rollback without blocking existing writes.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Why did ledger migration select a shadow table?\" Evidence includes BV-11@1#16000:17452 with text: \"# Current ledger migration decision\\nLedger migration chose a shadow table to allow rollback without blocking existing writes.\" That directly answers. Need return claims JSON. We need include evidence_ids and supports quote exact contiguous passage copied from that evidence. Quote must be from text, not source_context. We can use that sentence. But need ensure claim concise factual conclusion. The question asks why did ledger migration select shadow table. Answer: to allow rollback without blocking existing writes. Need cite BV-11@1#16000:17452. Quote: \"Ledger migration chose a shadow table to allow rollback without blocking existing writes.\" That is contiguous. Claim text: \"Ledger migration selected a shadow table to allow rollback without blocking existing writes.\" Support quote same. Evidence_ids [\"BV-11@1#16000:17452\"]. That should be sufficient. But need check if question identifies business entity/event? It asks \"ledger migration\" specific? Evidence has current ledger migration decision. That identifies event? It's a migration, likely specific enough. But there is only one evidence with decision. No ambiguity? There are multiple migration rehearsals but only one current decision. The question asks \"Why did ledger migration select a shadow table?\" The evidence includes current ledger migration decision. So okay.\n\nNeed at most four claims. One claim. Ensure JSON only. Use exact schema. Supports array with evidence_id same and quote. Could include only that. Do we need maybe mention that the decision records rollback without blocking writes. Yes.\n\nCheck: \"Every explicit identifier such as a ticket ID in a claim must appear in its copied support quotes.\" No ticket ID. Claim doesn't include identifiers. Fine.\n\n\"Use one quote (12–1200 characters) per citation\" quote length ~87 chars. Good.\n\n\"evidence_ids list MUST exactly equal evidence_id values in supports\" yes.\n\nReturn JSON object."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3164,
+        "completion_tokens": 497,
+        "total_tokens": 3661,
+        "prompt_tokens_details": {
+          "cached_tokens": 2944
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 416
+        },
+        "prompt_cache_hit_tokens": 2944,
+        "prompt_cache_miss_tokens": 220
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "292c3187-3bdb-40d0-bdca-4af80308af4b",
+      "object": "chat.completion",
+      "created": 1791444587,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer user asks review evidence support and question coverage. Need return JSON only. Need evaluate claim(s). There is one claim index 0: \"Ledger migration selected a shadow table to allow rollback without blocking existing writes.\" Evidence id BV-11@1#16000:17452. There is quote in supports same. Need check evidence full text. It includes many archived migration rehearsal entries with \"no current decision recorded.\" Then \"# Current ledger migration decision\\nLedger migration chose a shadow table to allow rollback without blocking existing writes.\" So the cited evidence explicitly states current ledger migration decision: chose shadow table to allow rollback without blocking existing writes. Claim: \"selected a shadow table to allow rollback without blocking existing writes.\" Supported true? Yes, exact-ish \"chose\" vs \"selected\"; rationale. Responsive to question \"Why did ledger migration select a shadow table?\" The claim answers because allow rollback without blocking existing writes. Responsive true. Need question_covered: The question asks why. Claim addresses why. All requested parts? Yes. So true. Need exactly one verdict for every supplied claim. JSON schema: {\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}\n\nNeed ensure no other claims? only one. Return JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3089,
+        "completion_tokens": 296,
+        "total_tokens": 3385,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 270
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 2449
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

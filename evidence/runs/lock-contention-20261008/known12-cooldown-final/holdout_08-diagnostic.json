@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "fdce639b-a5d5-41a3-b254-b893971ccdfc",
+      "object": "chat.completion",
+      "created": 1791444553,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question. Need determine if question identifies business entity/event. \"If the authentication cutover fails halfway, which rollback steps remain approved for the affected environment?\" Evidence includes authentication cutover scope? BV-04 says Enterprise SSO cutover applies internal employees only; contractors legacy gateway. But no rollback steps for authentication cutover. There is ledger migration rollback BV-13, not authentication cutover. Question presupposes rollback steps approved for authentication cutover affected environment. Evidence does not provide rollback steps approved for that. Need maybe return empty claims? Need assess.\n\nWe need answer in JSON. The question asks about authentication cutover fails halfway, which rollback steps remain approved for affected environment. Evidence: authentication related: BV-04 scope, BV-01 rotation, BV-02 AUTH-204 blocked, BV-03/BV-18 signing design. No rollback steps. There is BV-13 ledger migration rollback if settlement differences >5bp. Not auth cutover. C-01 payment-service runbook approved failover procedure, not rollback. So insufficient. We can return claims perhaps stating no approved rollback steps for authentication cutover are described? But if question asks which steps remain approved, and evidence doesn't establish any, empty claims means insufficient support. The instruction: If question does not identify event/entity/policy, give scoped candidate facts or return empty. Here it identifies \"authentication cutover\" maybe supported by BV-04 Enterprise SSO cutover. But asks rollback steps remain approved for affected environment. No evidence. Could we claim none? That would be universal negative unsupported? Better return {\"claims\":[]} because no evidence supports approved rollback steps for authentication cutover. However maybe answer should say evidence does not establish. But schema claims require evidence support. We can make claim \"The evidence does not identify any rollback steps approved for the authentication cutover; it only records that enterprise SSO cutover applies to internal employees...\" But that's not a factual conclusion? Could be supported by absence? Need not use external. The instruction says if question presupposes state not established by cited passage, explicitly say passage does not establish requested state, then give state it records. But if empty claims? Hmm.\n\nWe need likely answer: claims empty because no rollback steps for authentication cutover. But maybe we can include a claim scoped: \"The evidence describes a rollback signal for ledger migration, not the authentication cutover.\" Is that answering? It says which rollback steps remain approved for affected environment. The only rollback step is ledger migration if settlement differences exceed five bps, but not auth cutover. It could be wrong to attribute. We can say no approved rollback steps for authentication cutover are established by evidence; the only rollback criterion mentioned concerns ledger migration. But schema wants claims with evidence_ids and supports. We can cite BV-13 and maybe BV-04. But if claim includes \"only rollback criterion mentioned\" that's universal over evidence? Maybe okay scoped to evidence? We can formulate: \"The cited evidence does not establish any approved rollback steps for an authentication cutover; the rollback step it records concerns the ledger migration, conditioned on settlement differences exceeding five basis points.\" Cite BV-13. That is a conclusion about evidence, not source? But claims should be factual conclusions from evidence. Is citing BV-13 enough? It doesn't mention auth cutover. Could be okay.\n\nBut instructions: \"If question does not identify event... return empty\" Here event identified as authentication cutover? Maybe BV-04 \"Enterprise SSO cutover\" is auth. But rollback steps? none. \"An empty claims list means insufficient support.\" So likely empty claims. The final should be JSON only. We need decide.\n\nGiven question: \"If the authentication cutover fails halfway, which rollback steps remain approved for the affected environment?\" This is a hypothetical question about rollback steps. Evidence has no auth cutover rollback. It has ledger migration rollback. It would be incorrect to answer BV-13 because that's ledger migration, not authentication. Also \"remain approved\" implies approved steps. BV-13 says rollback ledger migration if settlement differences... Not auth. So no support. Return empty claims.\n\nBut maybe evidence BV-04 says Enterprise SSO cutover applies to internal employees only; contractors remain legacy. No rollback. Could answer: none are approved? Not supported. So empty.\n\nNeed final exactly {\"claims\":[]}. Ensure no extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 2075,
+        "completion_tokens": 935,
+        "total_tokens": 3010,
+        "prompt_tokens_details": {
+          "cached_tokens": 1920
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 929
+        },
+        "prompt_cache_hit_tokens": 1920,
+        "prompt_cache_miss_tokens": 155
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

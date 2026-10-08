@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "The ledger migration should be rolled back if settlement differences exceed five basis points.",
+        "evidence_ids": [
+          "BV-13@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-13@1",
+            "quote": "Roll back the ledger migration if settlement differences exceed five basis points."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "af716289-9587-4405-a1b8-8ae4e200497c",
+      "object": "chat.completion",
+      "created": 1791443885,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"The ledger migration should be rolled back if settlement differences exceed five basis points.\",\"evidence_ids\":[\"BV-13@1\"],\"supports\":[{\"evidence_id\":\"BV-13@1\",\"quote\":\"Roll back the ledger migration if settlement differences exceed five basis points.\"}]}]}",
+            "reasoning_content": "We need answer when should ledger migration be rolled back. We must parse question. It asks about ledger migration rollback. Evidence includes BV-13@1: \"Roll back the ledger migration if settlement differences exceed five basis points.\" This directly answers. Also BV-14@1: September rehearsal used ten-basis-point threshold; superseded by October five-basis-point rule. This qualifies current threshold. We need return claims. Need check if question identifies business entity/event? It asks \"the ledger migration\" - evidence includes ledger migration. It's specific. So not empty.\n\nNeed construct claims with evidence_ids and supports quotes exact contiguous passage copied. Need at most four claims. Minimum needed. Answer: rollback if settlement differences exceed five basis points. Qualification: September rehearsal threshold superseded by October five-basis-point rule. Might combine? We can have one claim quoting BV-13. Second claim quoting BV-14 to establish current rule is five bps and supersedes ten. But question asks when rollback; answer is when settlement differences exceed five basis points. Include that. Maybe no need for September because not asked, but it's a necessary qualification to avoid outdated threshold? The question \"When should the ledger migration be rolled back?\" The source BV-13 directly states. BV-14 says September rehearsal threshold ten superseded by October five. The direct rule is sufficient. But including BV-14 could clarify current threshold. However rules say omit background not asked. The September rehearsal threshold is not asked; but could be necessary qualification of current threshold? If we cite BV-13 alone, it says five bps. That is current. BV-14 says superseded, so no ambiguity. We could include as second claim? Might be unnecessary. But to be safe, maybe one claim with BV-13 only. The claim text: \"The ledger migration should be rolled back if settlement differences exceed five basis points.\" Evidence_ids: [\"BV-13@1\"]. Supports: quote: \"Roll back the ledger migration if settlement differences exceed five basis points.\" This is exact. That answers.\n\nNeed ensure claim fully supported. We can also mention \"per the October five-basis-point rule\" from BV-14? The BV-13 doesn't say October, but BV-14 does. The direct quote \"Roll back the ledger migration if settlement differences exceed five basis points.\" is enough. If we include BV-14, second claim: \"The September rehearsal ten-basis-point threshold is superseded by the October five-basis-point rule.\" That's not directly answering when rollback but supports current threshold. Maybe unnecessary. But question \"When should...\" The direct rule sufficient. Minimal claims. So output one claim. But check the instruction: \"Before writing each claim, identify the explicit requested part it answers...\" So one claim answers requested part. Good.\n\nNeed JSON exactly. Must include supports array with evidence_id same. Quote exact contiguous passage. Use at most four citations. Good.\n\nLet's final."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3366,
+        "completion_tokens": 672,
+        "total_tokens": 4038,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 607
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 2470
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "4a31a989-eb42-4378-9c34-8bfb7d441535",
+      "object": "chat.completion",
+      "created": 1791443889,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"When should the ledger migration be rolled back?\" Claim: \"The ledger migration should be rolled back if settlement differences exceed five basis points.\" Evidence BV-13@1: \"[SYNTHETIC] Roll back the ledger migration if settlement differences exceed five basis points.\" source title migration / Rollback signal. Seems directly supports. Responsive? It answers when: if settlement differences exceed five bps. Yes. Need question_covered true? Claim addresses requested part. Need one verdict. Also maybe evidence BV-14 supports threshold superseded? Actually BV-14: September rehearsal used ten-bps threshold; superseded by October five-bps rule. This reinforces. So verdict supported true, responsive true. question_covered true. Return JSON exactly.\n\nNeed ensure no other claims. Only index 0. JSON object with question_covered and verdicts."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3275,
+        "completion_tokens": 211,
+        "total_tokens": 3486,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 185
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 2763
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "No. The Atlas connector supports Singapore business SGD accounts, not personal accounts.",
+        "evidence_ids": [
+          "BV-06@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-06@1",
+            "quote": "The Atlas connector supports Singapore business SGD accounts, not personal accounts."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "dd19b8e9-3a89-487d-b70b-0a456b391b7c",
+      "object": "chat.completion",
+      "created": 1791444567,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"No. The Atlas connector supports Singapore business SGD accounts, not personal accounts.\",\"evidence_ids\":[\"BV-06@1\"],\"supports\":[{\"evidence_id\":\"BV-06@1\",\"quote\":\"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\"}]}]}",
+            "reasoning_content": "We need answer question: Can Atlas connector serve personal Singapore SGD accounts? Evidence BV-06 says Atlas connector supports Singapore business SGD accounts, not personal accounts. Table: Singapore business SGD Pilot supported; Personal SGD Not supported. So answer no. Need formulate claim with evidence_id and quote. We must use JSON schema. At most four claims, minimum needed. Only one claim likely. Need quote exact contiguous passage from evidence. Evidence text: \"[SYNTHETIC]\\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported \\n\" We can quote: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" Or include table? The claim: \"No, the Atlas connector does not support personal Singapore SGD accounts; its Singapore SGD support is for business accounts on a pilot basis.\" Evidence supports: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" And maybe \"Personal SGD \\t Not supported\". We need exact contiguous passage. We can quote first sentence and maybe table. But one quote needed. The first sentence explicitly says not personal accounts. Also table says Personal SGD Not supported. Could include both? One quote can be contiguous with newline? They said exact contiguous passage copied from evidence. We can quote the first sentence. That suffices. But claim about business pilot? The question asks personal SGD accounts. Answer no, not supported. The source says \"not personal accounts\" and table \"Personal SGD Not supported\". So claim: \"No. The Atlas connector supports Singapore business SGD accounts, not personal accounts; personal SGD is not supported.\" Evidence: first sentence. But need every explicit identifier? Atlas connector appears. SGD appears. Good. The claim may mention \"pilot\"? Not necessary for answer. Could mention \"Singapore business SGD accounts are pilot supported\" from table? But not needed. To directly answer, claim: \"No, the Atlas connector does not support personal Singapore SGD accounts; personal SGD is listed as not supported.\" Support quote: \"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" Or include table row: \" Personal SGD \\t Not supported\" but that is not contiguous with first? We can quote the table portion: \"Personal SGD \\t Not supported\" but no Atlas? We need cite evidence. If quote only \"Personal SGD \\t Not supported\", claim says Atlas connector? The evidence context title says integration / SGD account eligibility, but title may not identify Atlas? The text includes first sentence. Better quote first sentence. It directly says not personal accounts. So claim fully supported.\n\nNeed output JSON object with claims array. Each claim: text, evidence_ids, supports: [{evidence_id, quote}]. evidence_ids must exactly equal supports evidence_id values. So one claim, evidence_ids [\"BV-06@1\"], supports [{\"evidence_id\":\"BV-06@1\",\"quote\":\"The Atlas connector supports Singapore business SGD accounts, not personal accounts.\"}].\n\nEnsure no extra. Return JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1298,
+        "completion_tokens": 696,
+        "total_tokens": 1994,
+        "prompt_tokens_details": {
+          "cached_tokens": 1152
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 631
+        },
+        "prompt_cache_hit_tokens": 1152,
+        "prompt_cache_miss_tokens": 146
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "3321b910-1b86-477b-8c6e-06c51e55b351",
+      "object": "chat.completion",
+      "created": 1791444571,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"Can the Atlas connector serve personal Singapore SGD accounts?\" Claim: \"No. The Atlas connector supports Singapore business SGD accounts, not personal accounts.\" Evidence BV-06@1 text: \"[SYNTHETIC]\\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.\\n\\nAtlas account eligibility\\nAccount\\tScope\\n\\n Singapore business SGD \\t Pilot supported \\n\\n Personal SGD \\t Not supported \\n\" Source title integration / SGD account eligibility. So evidence directly states Atlas connector supports Singapore business SGD accounts, not personal accounts, and table Personal SGD Not supported. So claim supported true. Responsive? It answers question yes/no. true. question_covered true? Claims address every requested part. Only requested part is can serve personal Singapore SGD accounts. Claim says no. Supported. So question_covered true. Verdict index 0 supported true responsive true.\n\nNeed return exactly JSON. Ensure no markdown."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1207,
+        "completion_tokens": 228,
+        "total_tokens": 1435,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 202
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 567
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

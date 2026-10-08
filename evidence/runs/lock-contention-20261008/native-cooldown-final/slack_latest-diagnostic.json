@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "For the BV-20261007 Slack probe thread, correction 3 records the approved probe value as amber and supersedes correction 2's green value.",
+        "evidence_ids": [
+          "slack:C0C6R70SGG4/1791364699.192759@56399498513313818"
+        ],
+        "supports": [
+          {
+            "evidence_id": "slack:C0C6R70SGG4/1791364699.192759@56399498513313818",
+            "quote": "[SYNTHETIC] BV-20261007 slack correction 3: approved probe value amber; supersedes correction 2 green. No customer promise."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "a0aa8dd8-1faf-4122-bc94-9020ecbab27b",
+      "object": "chat.completion",
+      "created": 1791444533,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"For the BV-20261007 Slack probe thread, correction 3 records the approved probe value as amber and supersedes correction 2's green value.\",\"evidence_ids\":[\"slack:C0C6R70SGG4/1791364699.192759@56399498513313818\"],\"supports\":[{\"evidence_id\":\"slack:C0C6R70SGG4/1791364699.192759@56399498513313818\",\"quote\":\"[SYNTHETIC] BV-20261007 slack correction 3: approved probe value amber; supersedes correction 2 green. No customer promise.\"}]}]}",
+            "reasoning_content": "We need answer question. Need parse. Question: \"For the BV-20261007 Slack probe thread, which value is approved after the final correction, and which earlier correction does it supersede?\"\n\nWe need identify BV-20261007 Slack probe thread. Evidence: first three are BV-20261007 slack thread. Thread root ts 1791363578.580389, replies correction2, correction3. Need determine final correction. The thread: root says approved probe value amber; later replies explicitly supersede this value. Correction 2: approved probe value green; supersedes root amber. Correction 3: approved probe value amber; supersedes correction 2 green. So final correction is correction 3: approved probe value amber; supersedes correction 2 green (earlier correction). Need answer which value approved after final correction, and which earlier correction superseded. Value amber. Supersedes correction 2 green. Need claims with evidence. Use evidence IDs slack:... for correction3 and maybe correction2? The question asks final correction value and earlier correction it supersedes. One claim can include both: \"BV-20261007 Slack probe correction 3 records approved probe value amber and supersedes correction 2 green.\" Support quote from evidence correction3: text exactly \" BV-20261007 slack correction 3: approved probe value amber; supersedes correction 2 green. No customer promise.\" That contains both. Need maybe also cite correction 2 for earlier correction? But correction3 quote includes \"supersedes correction 2 green\", sufficient. Could also cite correction2 to identify. But one citation maybe. Need ensure evidence_ids exactly equals supports. Use claim text concise. Need maybe mention \"final correction\" is correction3? Source says correction 3. Quote includes. Good.\n\nNeed output JSON. Ensure no extra. The question identifies BV-20261007 Slack probe thread. Evidence covers multiple? Actually multiple BV-20261007 sources but thread specified. We need answer. Claims maybe one. Text: \"In the BV-20261007 Slack probe thread, the final correction (correction 3) approves the probe value amber and supersedes correction 2's green value.\" Does source explicitly say final? It says \"slack correction 3\" and \"supersedes correction 2 green\". We can say \"correction 3 records...\" But question asks \"after final correction\". Is correction3 final? It is latest in thread by ts. Evidence root says later replies explicitly supersede. Correction 3 has no later. But is it explicitly final? It says correction3. Could say \"The BV-20261007 Slack probe correction 3 records...\" That answers. If we state final maybe from latest? We can include \"final correction\" perhaps supported by timestamp? But no explicit \"final\". Better: \"For BV-20261007 Slack probe thread, correction 3 records approved probe value amber and supersedes correction 2's green value.\" That's exactly.\n\nNeed quote exact contiguous passage. Use quote from evidence id 1791364699.192759: \"[SYNTHETIC] BV-20261007 slack correction 3: approved probe value amber; supersedes correction 2 green. No customer promise.\" It includes identifier BV-20261007, correction 3, amber, supersedes correction 2 green. Good.\n\nNow produce JSON. Ensure {\"claims\":[...]} with evidence_ids array same as supports evidence_id. Supports one. Use exact quote. No extra."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3383,
+        "completion_tokens": 860,
+        "total_tokens": 4243,
+        "prompt_tokens_details": {
+          "cached_tokens": 3200
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 717
+        },
+        "prompt_cache_hit_tokens": 3200,
+        "prompt_cache_miss_tokens": 183
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "b1621f20-3246-4029-8c9a-67b6b59f9049",
+      "object": "chat.completion",
+      "created": 1791444546,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer per instructions. Need evaluate claim. We have question: \"For the BV-20261007 Slack probe thread, which value is approved after the final correction, and which earlier correction does it supersede?\" Claims: one claim: \"For the BV-20261007 Slack probe thread, correction 3 records the approved probe value as amber and supersedes correction 2's green value.\" Evidence id slack correction 3 text says exactly \"[SYNTHETIC] BV-20261007 slack correction 3: approved probe value amber; supersedes correction 2 green. No customer promise.\" So supported true. Responsive? It answers which value approved after final correction? It says correction 3 records approved probe value amber and supersedes correction 2's green. Question asks which value is approved after final correction, and which earlier correction does it supersede? That's exactly correction 3 and supersedes correction 2. So responsive true. Need question_covered: Does claims address EVERY requested part? yes: value amber, earlier correction correction 2. Need output JSON with question_covered true, verdicts one. Ensure exactly one verdict. Include index 0 supported true responsive true. Final only JSON."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3369,
+        "completion_tokens": 274,
+        "total_tokens": 3643,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 248
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 2729
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

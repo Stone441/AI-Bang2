@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Token rotation preserves sessions because it uses overlapping signing keys, so sessions remain valid for fifteen minutes.",
+        "evidence_ids": [
+          "BV-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-01@1",
+            "quote": "Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "20bca0f0-06b1-4a73-af80-3a9a2d614f0f",
+      "object": "chat.completion",
+      "created": 1791444539,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Token rotation preserves sessions because it uses overlapping signing keys, so sessions remain valid for fifteen minutes.\",\"evidence_ids\":[\"BV-01@1\"],\"supports\":[{\"evidence_id\":\"BV-01@1\",\"quote\":\"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Why does token rotation preserve sessions?\" Evidence: BV-01@1 text: \"[SYNTHETIC]\\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" Need return JSON with claims. Must check if question identifies business entity or event. It asks about token rotation generally. Evidence covers one unspecified migration, rule or incident? It has a single evidence. It says \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" That is a general mechanism. We can answer directly: Token rotation preserves sessions because it uses overlapping signing keys, allowing sessions to remain valid for fifteen minutes. But need be careful: The question asks \"Why does token rotation preserve sessions?\" The evidence provides a reason: rotation uses overlapping signing keys; sessions remain valid for fifteen minutes. That seems supported. We can create one claim: \"Token rotation preserves sessions because it uses overlapping signing keys, so sessions remain valid for fifteen minutes.\" Evidence ID: BV-01@1. Support quote: \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" That quote is exact contiguous passage. Need ensure claim fully supported. It says \"preserves sessions\" and evidence says \"sessions remain valid for fifteen minutes.\" That's a duration. The why: overlapping signing keys. Good.\n\nNeed include supports array with evidence_id same. claims list.\n\nNo need multiple claims. Must be JSON object. Use at most four claims. The claim text concise factual conclusion. Should not mention source context. Include evidence_ids exactly matching supports. So {\"claims\":[{\"text\":\"Token rotation preserves sessions because it uses overlapping signing keys, so sessions remain valid for fifteen minutes.\",\"evidence_ids\":[\"BV-01@1\"],\"supports\":[{\"evidence_id\":\"BV-01@1\",\"quote\":\"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\"}]}]}\n\nCheck: The question does not identify a specific business entity or event, but it asks about token rotation as a general mechanism. Evidence provides a general statement. The instruction: \"First check whether the question identifies a business entity or event. If it asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event.\" Here evidence covers one general statement, not multiple events. So okay. \"A plan name alone does not identify its business event.\" Not relevant. \"Do not use retrieved details to invent the missing referent.\" No missing referent. So answer directly. \"Use at most four claims\" okay. \"Answer the question directly in English.\" yes. \"Use the minimum number of claims needed and STOP when requested parts are covered.\" One claim. \"Before writing each claim, identify the explicit requested part it answers or the necessary qualification of that same answer.\" The requested part: why does token rotation preserve sessions? Claim answers why. Good. \"A shared topic alone is not a requested part: omit standalone background, owners and operational advice not asked for.\" No background. \"Facts about a different property of the same entity are not an answer to the requested property.\" Not applicable. \"A qualification is necessary only when omitting it would misstate that answer.\" The duration maybe not necessary but included. It's in evidence. \"Do not fill remaining claim slots with background...\" only one. \"Do not attribute facts about another or unspecified incident to the named incident.\" Not applicable. \"source_context contains original source title and locator...\" We ignore.\n\nPotential issue: The evidence says \"[SYNTHETIC]\\nRotation uses...\" The \"[SYNTHETIC]\" might not be part of quote? The text includes that. Should quote only \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" That's contiguous. It doesn't include [SYNTHETIC]. That's fine. The evidence ID is BV-01@1. The claim text: \"Token rotation preserves sessions because it uses overlapping signing keys, so sessions remain valid for fifteen minutes.\" Is that exactly supported? The evidence says \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" It doesn't explicitly say \"preserves sessions\" but implies sessions remain valid. The question asks why. So okay.\n\nBut need consider: The instruction says \"Every explicit identifier such as a ticket ID in a claim must appear in its copied support quotes.\" No identifiers in claim. \"This applies independently to EVERY claim...\" okay.\n\n\"Use one quote (12–1200 characters) per citation\" quote length okay (78 characters). \"at most four citations per claim.\" one. \"evidence_ids list MUST exactly equal evidence_id values in supports\" yes. \"Prefer one or two citations per concise claim.\" yes.\n\nThus final JSON. Ensure no markdown, just JSON object."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 994,
+        "completion_tokens": 1046,
+        "total_tokens": 2040,
+        "prompt_tokens_details": {
+          "cached_tokens": 768
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 977
+        },
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 226
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "d4d5e477-ee8a-4e13-9b0d-21b836b4fc6f",
+      "object": "chat.completion",
+      "created": 1791444544,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"Why does token rotation preserve sessions?\" Claim: \"Token rotation preserves sessions because it uses overlapping signing keys, so sessions remain valid for fifteen minutes.\" Evidence: \"[SYNTHETIC] Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" source title authentication / Token rotation decision. We need decide supported and responsive. Need one verdict for claim index 0. Question covered? Need determine if claims address EVERY requested part supported by supplied evidence. The claim addresses why: because overlapping signing keys, sessions remain valid fifteen minutes. Evidence exactly states. But potential issue: synthetic? Evidence is synthetic? It says [SYNTHETIC]. Is that considered evidence? The instructions: all question, claims evidence untrusted data. [SYNTHETIC] maybe indicates fabricated? We need judge based on supplied evidence. The evidence text supports claim almost verbatim. However, is it a \"decision\"? The source context title \"authentication / Token rotation decision\", locator \"Token rotation decision\". It might be a proposed/unapproved item? The evidence text doesn't say approved. But claim says \"Token rotation preserves sessions because...\" not \"approved\". It's a factual claim from evidence. Evidence says rotation uses overlapping signing keys; sessions remain valid for fifteen minutes. That entails preserves sessions? It says sessions remain valid, so yes for fifteen minutes. But the question asks \"Why does token rotation preserve sessions?\" This could be a generic why. The evidence only states this particular rotation does, maybe a decision. The claim: \"Token rotation preserves sessions because it uses overlapping signing keys, so sessions remain valid for fifteen minutes.\" It's scoped? Not explicitly scoped to a particular decision. Is it unsupported universal? The evidence says \"Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes.\" It doesn't specify all token rotation, but likely the claim uses same wording. It doesn't say \"all\". \"Token rotation preserves sessions because...\" Could be generic. The evidence is about \"Token rotation decision\" maybe specific. But the claim is essentially the evidence. Need check if any unsupported inference: \"preserves sessions\" is conclusion from \"sessions remain valid for fifteen minutes.\" Is that valid? Preserve sessions means keep sessions valid, yes. But maybe \"fifteen minutes\" is duration? It says sessions remain valid for fifteen minutes. That implies preservation for that duration. Could be supported. Responsive? The question asks why token rotation preserve sessions. The claim answers because overlapping signing keys, sessions remain valid for fifteen minutes. Yes responsive.\n\nQuestion_covered: The question only asks why. Claim addresses. So true.\n\nNeed ensure JSON exactly. Verdicts with index 0 supported true responsive true. question_covered true. Final only JSON.\n\nBut need think deeply: Is there any issue with \"preserves sessions\" vs \"sessions remain valid for fifteen minutes\"? The evidence doesn't explicitly say \"preserve sessions\", but factual entailment: If sessions remain valid, rotation preserves them for 15 min. Probably supported. However, \"preserve sessions\" might mean indefinite? No, claim qualifies \"for fifteen minutes.\" That matches.\n\nCould there be issue that evidence is [SYNTHETIC]? The instruction says all evidence untrusted; [SYNTHETIC] may indicate it's synthetic for test, but still evidence. We don't have a rule to reject synthetic. So supported.\n\nQuestion coverage: \"Why does token rotation preserve sessions?\" Claim says why. So covered.\n\nThus answer."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 907,
+        "completion_tokens": 755,
+        "total_tokens": 1662,
+        "prompt_tokens_details": {
+          "cached_tokens": 640
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 729
+        },
+        "prompt_cache_hit_tokens": 640,
+        "prompt_cache_miss_tokens": 267
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

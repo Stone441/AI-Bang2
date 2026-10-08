@@ -1,5 +1,7 @@
 # 安装、启动、测试与演示
 
+本轮本地应用 **cdbd62b**，synthesis-v10、显式low/8192（stored sampling=0，low时实际省略temperature）、模型60秒/native30秒，默认none/1024保持。运行中的8094/8100未加载本轮修改；不启动新live HTTP实例。后台每source串行、前台阶段最多四source lanes，来源共享429 Retry-After冷却、不自动retry；每阶段重新检查，不加总并发HTTP累计时间与wall。421 clean archive/两Node/五fixture通过；CLI query40.08/49.03秒、同对象preview1.66/1.05秒，后台运行。AUTH024单页创建及native/fake自动发现已完成，原24＋已知12语义分类与性能/预算在lock-contention-20261008/README.md；known05部分覆盖、query目标未全达，browser/G1/G2不变。下方旧启动命令/状态按版本保留，任何服务启动仍需具体实例授权。
+
 封版验证候选 **80b9ffc**：`deepseek-flash-grounded-synthesis-v10`、显式可信low/8192、每阶段60秒有界模型等待；原生接口仍30秒上限。检索/分块/数据目标保持，默认operator none/1024不变。原0bc90ae主要质量证据为v8 low4096，不能代作v10结果。固定配置/hash及本轮实际证据见`evidence/runs/candidate-closure-20261008/`；本轮已知12题和native/model均为独立CLI验证，不证明任何页面实例已加载。
 
 未来已有对应实例启动/访问授权后，使用以下完整可信命令；`<approved-port>`须为另行核准的具体实例，不沿用49161旧授权、不动8094/8100：

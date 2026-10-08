@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "Mina owns reconciliation exceptions; the platform team owns ingestion failures.",
+        "evidence_ids": [
+          "BV-21@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-21@1",
+            "quote": "Mina owns reconciliation exceptions; the platform team owns ingestion failures."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "7982614f-01b5-4dba-a27d-1823edf4414f",
+      "object": "chat.completion",
+      "created": 1791443897,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\",\"evidence_ids\":[\"BV-21@1\"],\"supports\":[{\"evidence_id\":\"BV-21@1\",\"quote\":\"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\"}]}]}",
+            "reasoning_content": "We need answer question: \"Who owns reconciliation exceptions versus ingestion failures?\" Evidence BV-21@1 directly: Mina owns reconciliation exceptions; platform team owns ingestion failures. So claim: Mina owns reconciliation exceptions; platform team owns ingestion failures. Need support quote exact contiguous passage from evidence. Evidence text: \"[SYNTHETIC]\\nMina owns reconciliation exceptions; the platform team owns ingestion failures.\" We can quote \"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\" That is contiguous. Claim supports. Evidence IDs exactly equal supports IDs. So output {\"claims\":[{\"text\":\"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\",\"evidence_ids\":[\"BV-21@1\"],\"supports\":[{\"evidence_id\":\"BV-21@1\",\"quote\":\"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\"}]}]}\n\nNeed ensure no extra claims. The question is simple. Answer direct. Use minimum. Stop. Good."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1268,
+        "completion_tokens": 259,
+        "total_tokens": 1527,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 196
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 372
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "90a7e946-1611-4a9d-a2e9-f7f61eb8b869",
+      "object": "chat.completion",
+      "created": 1791443899,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim against evidence. Question: \"Who owns reconciliation exceptions versus ingestion failures?\" Claim: \"Mina owns reconciliation exceptions; the platform team owns ingestion failures.\" Evidence BV-21@1 exactly text \"[SYNTHETIC]\\nMina owns reconciliation exceptions; the platform team owns ingestion failures.\" So supported true? Yes full claim follows. Responsive? It answers who owns both. True. question_covered true? The claims address every requested part: reconciliation exceptions owner and ingestion failures owner. Yes.\n\nNeed output verdict index 0 supported true responsive true. JSON exactly. Ensure no markdown."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1175,
+        "completion_tokens": 155,
+        "total_tokens": 1330,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 129
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 663
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

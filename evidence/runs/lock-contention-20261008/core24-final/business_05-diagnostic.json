@@ -1,0 +1,84 @@
+{
+  "draft": {
+    "claims": [
+      {
+        "text": "As of 2026-10-07, before the 2026-11-01 change, service tokens expire after sixty minutes.",
+        "evidence_ids": [
+          "BV-05@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-05@1",
+            "quote": "Beginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes."
+          }
+        ]
+      }
+    ]
+  },
+  "vendor_responses": [
+    {
+      "id": "10e75a18-8eb2-4695-81af-4e289b0eb5dc",
+      "object": "chat.completion",
+      "created": 1791443850,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[{\"text\":\"As of 2026-10-07, before the 2026-11-01 change, service tokens expire after sixty minutes.\",\"evidence_ids\":[\"BV-05@1\"],\"supports\":[{\"evidence_id\":\"BV-05@1\",\"quote\":\"Beginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.\"}]}]}",
+            "reasoning_content": "We need answer question. Need parse. Question: \"As of 2026-10-07, before November, how long do service tokens last?\" We need output JSON claims. Evidence BV-05 says Beginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes. So as of 2026-10-07 (before November) service tokens last sixty minutes. Need claim with evidence id BV-05@1 and quote exact contiguous passage. Ensure quote from text not source_context. Use claim concise. Maybe one claim. Need comply schema. Claim text: \"As of 2026-10-07, before the 2026-11-01 change, service tokens expire after sixty minutes.\" Evidence_ids [\"BV-05@1\"]. Supports quote: \"Beginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.\" This quote includes. That answers. Need not include other. Return JSON only. Ensure no markdown."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1816,
+        "completion_tokens": 304,
+        "total_tokens": 2120,
+        "prompt_tokens_details": {
+          "cached_tokens": 896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 214
+        },
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 920
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    },
+    {
+      "id": "d3d87af7-5340-4a1c-a019-dc3469357637",
+      "object": "chat.completion",
+      "created": 1791443852,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"question_covered\":true,\"verdicts\":[{\"index\":0,\"supported\":true,\"responsive\":true}]}",
+            "reasoning_content": "We need answer JSON only. Need evaluate claim. Question: \"As of 2026-10-07, before November, how long do service tokens last?\" Claims: one claim says as of 2026-10-07, before 2026-11-01 change, service tokens expire after sixty minutes. Evidence BV-05@1: Beginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes. This supports claim? Need check full factual claim: As of 2026-10-07, before Nov change, service tokens expire after sixty minutes. Evidence says before 2026-11-01 they expire after sixty minutes. So yes supported. Responsive? Question asks as of 2026-10-07 before November, how long do service tokens last? Claim answers sixty minutes. Yes responsive. Need question_covered true because only requested part? Claims address every requested part. There's only one claim. Need verdict index 0. Output JSON. Ensure schema exactly."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 1750,
+        "completion_tokens": 241,
+        "total_tokens": 1991,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 215
+        },
+        "prompt_cache_hit_tokens": 512,
+        "prompt_cache_miss_tokens": 1238
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}

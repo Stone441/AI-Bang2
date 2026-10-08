@@ -1,0 +1,39 @@
+{
+  "draft": {
+    "claims": []
+  },
+  "vendor_responses": [
+    {
+      "id": "55f5a2c8-59c4-4c49-9ebc-ef6ab573cfab",
+      "object": "chat.completion",
+      "created": 1791444550,
+      "model": "deepseek-flash",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\"claims\":[]}",
+            "reasoning_content": "We need answer question: \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" Need evidence. We have listed evidence. Need determine if question identifies business entity/event? It says \"the migration request\" maybe unspecified. Evidence covers multiple migration events? Let's inspect.\n\nEvidence includes MIG-301 cutover ticket, ledger migration rollback, AUTH-204 migration blocker, database design rationale with \"Current ledger migration decision\" etc. The question: \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" This sounds authentication/access. Evidence BV-05: service tokens expire after thirty minutes etc. BV-30: When current source access cannot be verified, do not treat a prior allow decision as current permission. BV-29: Offboarding rule. BV-02: AUTH-204 blocked because mobile clients cannot refresh expired tokens. Owner Lena. Not about accepting migration request? Hmm.\n\nQuestion asks \"Which identity must be trusted before accepting the migration request, and where is that identity verified?\" There is no clear evidence specifying an identity that must be trusted before accepting a migration request. Maybe \"service tokens\" identity? \"current source access cannot be verified\" no. \"AUTH-204\" blocked. No.\n\nWe must check if question identifies business entity or event. It says \"the migration request\" unspecified. Evidence covers multiple migration events? There is MIG-301, ledger migration, database design rationale. Also \"AUTH-204\" migration blocker. The question likely about \"migration request\" perhaps refers to MIG-301? But evidence doesn't mention accepting migration request, identity verification. We should not choose an event. If question asks about one unspecified migration, rule or incident while evidence covers multiple events, return {\"claims\":[]} instead of selecting an event. So likely empty claims. But let's be thorough: Could there be an identity in evidence? \"service tokens\" are identities? \"current source access\" not identity. \"AUTH-204\" is ticket. \"Owner: Lena\" not. No explicit \"identity must be trusted before accepting the migration request\" nor \"where verified.\" So insufficient support. Return {\"claims\":[]}. Ensure JSON only."
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 3520,
+        "completion_tokens": 466,
+        "total_tokens": 3986,
+        "prompt_tokens_details": {
+          "cached_tokens": 3328
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 460
+        },
+        "prompt_cache_hit_tokens": 3328,
+        "prompt_cache_miss_tokens": 192
+      },
+      "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669"
+    }
+  ]
+}
