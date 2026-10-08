@@ -1,5 +1,7 @@
 # 安装、启动、测试与演示
 
+2026-10-08 Git交付补充：AUTH028已批准本轮定向收尾及真实试用失败/UX问题记录推送并经PR合并main；下方“未push/merge”为证据冻结快照，实际以本次PR状态和main commit为准。应用仍cdbd62b，49161已停止，不部署、不新增费用或UX改动，失败与G1/G2状态不因合并升级。
+
 2026-10-08 本轮定向收尾及真实试用/反馈已记录：用户确认两题全部失败后停止使用，引用/History后续未做；首题输出拒绝、第二题Drive版本变化停答原件保留，实际试用failed。UX观察为等待计时/可感知工作状态缺失造成焦虑、模型和四平台连接信息不显性、页面简陋。用户明确当前只记录、等ChatGPT Chat后续指导，不改代码/界面/配置。49161自建实例已正常结束(exit0/无监听)，8094/8100未动；2次尝试/1次模型调用/11028microUSD，最终账本settled771913/available18903683，原pending1/324404保留。本轮信息收集完成不等于失败修复或验收通过；UX、原质量失败、重复自动测量/p95/完整native矩阵及G1/G2仍open。证据targeted-closeout-20261008/page-trial-final.json。下方等待反馈/运行中为旧快照。
 
 2026-10-08 AUTH027实际试用实例已启动：http://127.0.0.1:49161，cdbd62b应用/eng_b/native四源只读＋DeepSeek v10 low8192，独立索引、原USD20账本，6次尝试及结算/新unknown停止限制。四源首轮complete，startup hash dc2903d72e3fec6c30156b84d351cee23d1d9be8bebfd5d756e1f5f2afe7ceb4；启动快照page-trial-startup.json，无ticket。实际入口已直接交给团队，首组两题/引用/History操作及反馈待做；启动与模型构造不等于真人或live问答通过。8094/8100/browser拒绝/G1/G2不变。下方“实例许可pending/未启动”为旧准备快照。

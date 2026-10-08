@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-08 AUTH-028：用户明确“合并并提交到main，同时给出阶段性反馈”，批准本轮fix/targeted-closeout-20261008的定向known05、AUTH026合成自动新鲜度、AUTH027实际试用失败/人工UX反馈及本地operator辅助脚本和状态文档推送既有Stone441/AI-Bang2，经PR合并main。应用brain/scripts/tests/web保持cdbd62b字节；不上传ZIP/SQLite/.runtime/凭据/一次性ticket，不新增源写入、费用、服务启动或UX实现，不改变G1/G2。未push/merge为此前证据冻结快照，实际Git交付以此次PR状态和main commit为准。
+
 2026-10-08 用户试用反馈决定：两题均失败，停止进一步使用；等待计时/工作状态、模型和四源连接信息展示及整体简陋UX仅记录问题。用户明确本轮不进行改动，由ChatGPT Chat思考后给后续指导。保留cdbd62b/main基线与失败；结束此次临时49161实例，后续新启动仍按具体实例授权，8094/8100/G1/G2不变。
 
 2026-10-08 AUTH-027：用户在49161具体实例授权待回复的上下文明确“批准授权”，批准新的http://127.0.0.1:49161仅本机试用实例，应用cdbd62b/main2eabeb8字节、eng_b、AUTH017四源合成容器只读、独立SQLite、DeepSeek synthesis-v10 low8192及原USD20账本；最多6次问答尝试，新增结算达到USD0.20或出现新unknown后停止新问题，已在途调用完成（非供应商硬费用上限）。使用已准备launch-page-trial.py，团队本人打开操作，不自动化被拒绝产品browser，不动8094/8100、不写业务源、不增加预算、不推送合并、不授予G1/G2。已启动本次实例；四源首轮complete、隔离索引与原账本及限额接线核实，页面由团队操作/实际问答和反馈仍待完成；一次性ticket不入Git。
