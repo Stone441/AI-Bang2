@@ -24,3 +24,5 @@
 原账本settled760885、accounted1085289、available18914711microUSD，pending1原324404保留。AUTH019及旧失败不变。剩余：多次持续自动样本与p95/max/失败率、完整四源native撤权/删除/故障矩阵、实际团队页面试用。新实例49161尚待具体授权，没有启动；8094/8100未动，产品browser拒绝不绕过，G1/G2未批准。本轮新分支未推送合并。
 
 页面试用准备补充：`launch-page-trial.py`已完成本地限额验证（临时fixture账本，无native/model/端口/Keychain），具体命令、隔离目录、6尝试/结算停止阈值及人工首组操作见当前RUNBOOK。结算阈值为新请求admission控制，非在途硬费用上限。具体实例授权仍pending，脚本未执行、实际入口尚不存在。
+
+AUTH027实际页面问答增量：第一题request e320cbdcc5c24d0a8b7cc48d799b4490在55.468s失败；usage prompt3991/completion8192，11028microUSD结算，generation输出拒绝，未到review。原始响应/finish_reason没有持久化，不能把达到cap直接归因为length。第二题明确payment-service request d34e5b0893164e6987701187d3a5fc95在18.411s停答，model_dispatch当前Drive新探针version6不一致，未调用模型/0新增费用；正常后台后来发布version7，正文hash和modifiedTime相同。Google[官方files契约](https://developers.google.com/workspace/drive/api/reference/rest/v3/files)说明version包含不可见服务器变化，确切变化原因未知；不以同正文绕过旧版本拒绝。两次实际任务均无支持答案，不能称页面/业务成功，fixture known05对照通过不替代native结果。失败/audit prefix保留，未自动retry/改配置/重启/放宽检查。当前结算增量11028，原pending1/324404保留；具体页面错误与团队反馈、引用/History实际操作仍待确认。
