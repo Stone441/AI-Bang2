@@ -1,3 +1,7 @@
+# Refresh continuation repair — 2026-10-09
+
+ADR064 user refresh failure is now implemented, 437 local tests/four Node checks/readonly review pass. Current human service PTY60298 (verify live before stopping), health refresh-startup.json. Original request saved, no automatic model retry; budget91/93, remaining2 human. Next team step: reopen user-invoked command, submit original explicit payment-service question once, refresh while waiting, check original question/elapsed/stages resume and result appears without another Ask; then citation/History. Failed source briefly during startup recovered on normal worker; no model attempt. Actual browser refresh test still pending. Do not count mocks as human success or rerun paid quality for this state-only fix.
+
 一键入口补充：用户明确要求便捷打开，项目根目录“打开试用页面.command”由团队本人双击执行；自动读取私有token并交给默认浏览器，不显示/保存完整链接。--check已验证，仅health/本地检查，无browser自动化、问题或模型调用。过期只提示刷新，不自行重启或复用旧授权。
 
 # Latest AUTH031 live checkpoint — 2026-10-09

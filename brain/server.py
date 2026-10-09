@@ -8,7 +8,7 @@ from .run_state import SessionRuns, runtime_status
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import urlparse, unquote
+from urllib.parse import urlparse, unquote, parse_qs
 from .audit import Audit
 from .contracts import Actor
 from .confluence import JsonTransport
@@ -166,7 +166,13 @@ def create_server(app, port=0):
                 if method=='GET' and path.startswith('/api/evidence/'):
                     return self.send(200,app.engine.evidence(actor,path[len('/api/evidence/'):]))
                 if method=='GET' and path=='/api/history':
-                    return self.send(200,{'history':app.engine.safe_history(actor)})
+                    params=parse_qs(urlparse(self.path).query,keep_blank_values=True)
+                    if params:
+                        if set(params)!={'request_id'} or len(params['request_id'])!=1:raise ValueError('Invalid history filter')
+                        rid=params['request_id'][0]
+                        if len(rid)!=32 or any(c not in '0123456789abcdef' for c in rid):raise ValueError('Invalid history filter')
+                    else:rid=None
+                    return self.send(200,{'history':app.engine.safe_history(actor,rid)})
                 if method=='GET' and path=='/api/sources/status':
                     if actor.user_id!='auditor': raise PermissionError('Unavailable')
                     return self.send(200,{'sources':[app.world.adapter(s).capabilities() for s in ('confluence','jira','slack','drive')]})

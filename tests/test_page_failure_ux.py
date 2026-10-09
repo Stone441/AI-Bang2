@@ -126,6 +126,18 @@ class ProgressHTTP(unittest.TestCase):
             finally:release.set();thread.join(4)
         self.assertEqual(results[0][0],200)
 
+    def test_one_saved_result_is_actor_scoped_and_rechecks_current_access(self):
+        self.login('eng_b');status,answer=self.request('/api/query',{'question':'payment-service'})
+        self.assertEqual(status,200);rid=answer['request_id']
+        self.assertEqual(self.request('/api/history?request_id='+rid)[1]['history'][0]['request_id'],rid)
+        with patch.object(self.app.engine,'evidence',side_effect=PermissionError('Unavailable')):
+            result=self.request('/api/history?request_id='+rid)[1]['history'][0]
+            self.assertTrue(result['unavailable']);self.assertNotIn('claims',result)
+        self.login('product_ops')
+        self.assertEqual(self.request('/api/history?request_id='+rid)[1]['history'],[])
+        for query in ('request_id=invalid','request_id='+rid+'&request_id='+rid,'secret=1'):
+            self.assertEqual(self.request('/api/history?'+query)[0],400)
+
     def test_session_status_has_no_object_metadata(self):
         self.login('eng_b');status,r=self.request('/api/runtime')
         self.assertEqual(status,200);self.assertEqual(len(r['sources']),4)

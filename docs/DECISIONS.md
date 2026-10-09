@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-09 ADR064（刷新接续本地与mock验证）：真人刷新运行中页面丢失问题/进度，重复提交409；原请求406c7185e46e44b2b14ce7fba5633978已42.403秒提交，不重复计费。前端按session.csrf在tab-local sessionStorage保存冻结的原问题/rid，刷新仅接续/runtime实际运行及真实elapsed；完成后一次带rid的History当前权限/version检查取回结果，失败恢复安全类别，不保存/显示draft或源正文、不自动生成。未知rid不绑定旧完成答案，迟到响应/导航/退出隔离；退出/过期清理问题与存储，409保留原请求。GET /api/history?request_id只接受单个32位hex，沿用safe_history(actor,rid)，进度不查四源。437完整本地及四Node/只读审查通过；重启仅已获批49161加载后端，四源正常后台complete，新真人刷新验证pending，尚余2次human，不挪作自动测试。
+
 2026-10-09 AUTH-031：用户明确“批准此前申请，继续任务”，批准v11集中复验，总额度48→93，仅原两题各3次产品HTTP＋原24/known12质量36题＋团队本人最多3题。原49161/eng_b/AUTH017四源合成只读/DeepSeek provider/low8192/USD20账本/旧unknown保留，累计新增结算USD0.50或新unknown停止接纳，不写源、不动8094/8100、不推送部署、不绕过browser拒绝。
 
 2026-10-08 ADR-063（candidate/local，live未验证）：AUTH030复验holdout10返回账户资格行而非请求的integration tier/region/retry，第一原题已检索C01批准操作但仅给审批未知。v11只收紧“未建立请求状态时可报告实际状态”的例外为同对象同属性，并要求latest顺序未知时覆盖已有支持的批准操作且单列顺序限制；generation/review一致。原结构/quote/gate/provider/low8192/预算不变，可能增加拒答，时间与费用改善未验证。回滚还原synthesis.py为v10。当前49161仍加载v10，不继承新候选结果；集中申请45次额外验证（native6/quality36/human最多3），总93、原累计USD0.50/newunknown停止，许可pending，不执行。
