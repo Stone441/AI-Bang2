@@ -134,7 +134,7 @@ def create_server(app, port=0):
                     question=data.get('question')
                     if not isinstance(question,str) or not question.strip() or len(question)>4000:
                         raise ValueError('Invalid question')
-                    rid=app.session_runs.begin(token)
+                    rid=app.session_runs.begin(token,question)
                     try:
                         result=app.engine.query(actor,data.get('question'),request_id=rid,
                             progress=lambda phase:app.session_runs.phase(token,rid,phase))

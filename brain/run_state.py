@@ -1,4 +1,4 @@
-"""Ephemeral session state. No source bodies, titles, counts or upstream IDs."""
+"""Ephemeral session state. Only own submitted question; no source bodies, titles, counts or upstream IDs."""
 import threading
 import time
 import uuid
@@ -10,12 +10,13 @@ class SessionRuns:
         self.lock=threading.RLock()
         self.runs={}
 
-    def begin(self, token):
+    def begin(self, token, question=""):
+        if not isinstance(question,str) or len(question)>4000:raise ValueError("Invalid question")
         with self.lock:
             old=self.runs.get(token)
             if old and old['status']=='running':raise PermissionError('Question already running')
             run={'request_id':uuid.uuid4().hex,'status':'running','phase':'queued','started':time.monotonic(),
-                 'sources_used':[],'error_code':None}
+                 'sources_used':[],'error_code':None,'question':question}
             self.runs[token]=run
             return run['request_id']
 

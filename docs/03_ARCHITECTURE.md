@@ -514,6 +514,6 @@ Ranking uses local lexical overlap and a small explicit English alias map, up to
 
 ### 2026-10-08增量契约（ADR-062，验证中）
 
-- `GET /api/runtime`：已验证session，返回`mode/model/sources/run`。四源只含`source/configured/mode/last_check_at/last_check_result/checking/used_in_answer`；run只含服务端request_id、真实phase/status、elapsed、安全error_code、完成答sources_used。无对象标题/数量/ID，轮询不调用源，不使用pilot/store长锁。
+- `GET /api/runtime`：已验证session，返回`mode/model/sources/run`。四源只含`source/configured/mode/last_check_at/last_check_result/checking/used_in_answer`；run含服务端request_id、真实phase/status、elapsed、安全error_code、完成答sources_used及当前session自己提交的问题（至多4000字符，非模型/来源正文）；问题仅用于恢复运行交互，退出随run清除。无对象标题/数量/ID，轮询不调用源，不使用pilot/store长锁。
 - `POST /api/query`保持只接受question；服务端生成关联ID、禁止同session在途重复。失败响应仅安全code/message/request_id，不返回草稿。用户明确重新点击才可付费重试。
 - 新append-only `version_recovery`记录attempt/result/model_called，诊断附于模型事件：allowlist元数据和计数，不记录推理正文/原始输出。旧日志不改。

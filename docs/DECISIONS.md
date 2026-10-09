@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-09 ADR065：真人刷新已恢复计时/阶段，但原问题不可见；实际浏览器存储丢失机制未确定，ADR064测试仅覆盖可用storage。本轮补充当前已验证session运行状态保留自身提交问题（<=4000字符、仅内存、退出discard），/api/runtime只返回该会话原问题，另一同身份session无run；不加入来源/草稿正文、不自动模型调用。进度区以textContent固定显示Submitted question，等待输入只读、快捷题不能改写；可用storage仍作辅助，无storage也恢复。保留当前权限History取回及所有迟到响应隔离；只读审查无新增发现。原不可见问题请求974047bc843a4144a7d785f1a4f8b32a已保存3事实，attempt92/93，真人最后1次复验待完成，不宣称G1/G2通过。
+
 2026-10-09 ADR064（刷新接续本地与mock验证）：真人刷新运行中页面丢失问题/进度，重复提交409；原请求406c7185e46e44b2b14ce7fba5633978已42.403秒提交，不重复计费。前端按session.csrf在tab-local sessionStorage保存冻结的原问题/rid，刷新仅接续/runtime实际运行及真实elapsed；完成后一次带rid的History当前权限/version检查取回结果，失败恢复安全类别，不保存/显示draft或源正文、不自动生成。未知rid不绑定旧完成答案，迟到响应/导航/退出隔离；退出/过期清理问题与存储，409保留原请求。GET /api/history?request_id只接受单个32位hex，沿用safe_history(actor,rid)，进度不查四源。437完整本地及四Node/只读审查通过；重启仅已获批49161加载后端，四源正常后台complete，新真人刷新验证pending，尚余2次human，不挪作自动测试。
 
 2026-10-09 AUTH-031：用户明确“批准此前申请，继续任务”，批准v11集中复验，总额度48→93，仅原两题各3次产品HTTP＋原24/known12质量36题＋团队本人最多3题。原49161/eng_b/AUTH017四源合成只读/DeepSeek provider/low8192/USD20账本/旧unknown保留，累计新增结算USD0.50或新unknown停止接纳，不写源、不动8094/8100、不推送部署、不绕过browser拒绝。

@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-09 当前刷新第二轮真人反馈：计时/阶段恢复已由用户确认，问题不可见仍失败。已实现ADR065当前session原问题及进度区固定可见，不依赖浏览器storage；原实际丢失机制未知。请求974047bc843a4144a7d785f1a4f8b32a已保存3条validated claims，最终答案/引用真人观察未确认。剩余1次human，未新增自动付费请求。
+
 2026-10-09 真人刷新发现产品缺口并修复：原题后端42.403秒成功保存，浏览器刷新丢失进度/问题、再点Ask409，原件human-refresh-failure.json保留。ADR064刷新接续已实际编码：冻结原题/会话隔离本地临时存储、恢复当前run/真实elapsed、一次按rid的History重新鉴权取回完成结果、不自动模型重试。437回归＋四Node及只读审查通过，49161加载修复、四源正常后台complete；真人刷新接续未验证。预算91/93，剩余2专供human，新增unknown0；此前首题/质量失败/G1/G2不变。
 
 2026-10-09 AUTH031实际复验完成（native6＋quality36，尚余3真人题）：v11/同provider低推理8192，四源合成只读、正常后台。Q2三次均事实完整；Q1两次覆盖不足答案（仍漏C01已批准操作）＋一次review拒绝，不称首题修复完成。原24=21事实＋2合理空＋business31一次review拒绝；known12=01/06完整＋8合理空/澄清＋02一次review拒绝＋12预期Drive unknown停答。三review拒绝均stop、额外claim responsive=false，已知usage结算，无自动重试/新增unknown，不能推断cap不足。610进度采样最长0.003752秒；三本轮引用preview与History HTTP200，非人验。今日官方峰值费率真实核查不变，PRICE_DATE改9；436完整本地回归通过。账本settled1075716/available18599880、原unknown324404保持；AUTH031增138008microUSD、Goal累计303803microUSD。额度90/93，剩余3专供真人。49161新human实例已加载v11，私有0600 token，不记录完整一次性链接；后台正常运行。v11候选质量未通过，不推广为稳定候选；G1/G2/browser工具拒绝/AUTH019不变。两次入口helper启动失败无凭据/模型调用，原件保留；8094/8100未动，未push/merge/deploy。证据v11-final-review.json、v11-native-six/、v11-quality36/、human-entry-ready.json。

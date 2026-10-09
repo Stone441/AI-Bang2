@@ -24,6 +24,12 @@ const watchdog=setTimeout(()=>{console.error('FAIL: refresh test did not finish'
  await vm.runInContext('refreshRuntime()',refreshed.ctx);assert.equal(checks,1);assert.equal(refreshed.get('ask').disabled,false);assert.equal(refreshed.get('progress').hidden,true);assert.equal(storage.size,0);assert.equal(paid,1);
  await vm.runInContext('refreshRuntime()',refreshed.ctx);assert.equal(checks,1);
  finish(response(answer));await query;
+ // No browser storage: authoritative session question remains visible and read-only.
+ storage.clear();const noStorage=page();noStorage.ctx.sessionStorage={getItem(){throw Error('blocked');},setItem(){throw Error('blocked');},removeItem(){throw Error('blocked');}};
+ noStorage.ctx.fetch=async()=>response({...run(),run:{...run().run,question:'SERVER ORIGINAL QUESTION'}});
+ vm.runInContext('resumeOnRuntime=true',noStorage.ctx);await vm.runInContext('refreshRuntime()',noStorage.ctx);
+ assert.equal(noStorage.get('question').value,'SERVER ORIGINAL QUESTION');assert.equal(noStorage.get('question').readOnly,true);assert.equal(noStorage.get('runningQuestion').textContent,'SERVER ORIGINAL QUESTION');assert.equal(paid,1);
+ noStorage.ctx.fetch=async()=>response({...run('failed'),run:{...run('failed').run,question:'SERVER ORIGINAL QUESTION'}});await vm.runInContext('refreshRuntime()',noStorage.ctx);assert.equal(noStorage.get('question').readOnly,false);assert.equal(noStorage.get('question').value,'SERVER ORIGINAL QUESTION');
  // Failure resumes preserve the question, stop timers, and do not retrieve or regenerate a draft.
  storage.set('brain.pending.same-session',JSON.stringify({question:'KEEP FAILED QUESTION',requestId:answer.request_id}));
  const failed=page();vm.runInContext('resumeOnRuntime=true',failed.ctx);failed.ctx.fetch=async path=>{assert.equal(path,'/api/runtime');return response(run('failed'));};await vm.runInContext('refreshRuntime()',failed.ctx);

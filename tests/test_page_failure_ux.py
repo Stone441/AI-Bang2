@@ -107,6 +107,7 @@ class ProgressHTTP(unittest.TestCase):
     request=test_http.HTTP.request
     login=test_http.HTTP.login
     def test_progress_bypasses_long_query_lock_and_is_session_private(self):
+        self.login('eng_b');other_cookie,other_csrf=self.cookie,self.csrf
         self.login('eng_b')
         original=self.app.engine.model.generate;entered=threading.Event();release=threading.Event();results=[]
         def generate(*args):entered.set();release.wait(3);return original(*args)
@@ -117,7 +118,12 @@ class ProgressHTTP(unittest.TestCase):
                 self.assertTrue(entered.wait(2));start=time.monotonic()
                 status,state=self.request('/api/runtime');self.assertEqual(status,200)
                 self.assertLess(time.monotonic()-start,1);self.assertEqual(state['run']['status'],'running')
-                self.assertNotIn('payment-service',json.dumps(state['run']))
+                self.assertEqual(state['run']['question'],'payment-service')
+                self.assertNotIn('claims',state['run']);self.assertNotIn('evidence',state['run'])
+                own_cookie,own_csrf=self.cookie,self.csrf
+                self.cookie,self.csrf=other_cookie,other_csrf
+                self.assertIsNone(self.request('/api/runtime')[1]['run'])
+                self.cookie,self.csrf=own_cookie,own_csrf
                 for path in ('/','/app.js','/style.css','/api/health'):
                     self.assertEqual(self.request(path)[0],200)
                 self.assertEqual(self.request('/api/query',{'question':'duplicate'})[0],409)
