@@ -1,5 +1,7 @@
 # Refresh continuation repair — 2026-10-09
 
+2026-10-10 entry refresh: current PTY66878, same approved49161/eng_b; attempts92/93, original unknown only. Official DeepSeek prices re-read unchanged; PRICE_DATE10Oct, 19 offline model/price tests pass; price-review-20261010.json. No model question, budget/counters/config unchanged. Private fresh one-time token, user launches command. Human question visibility/citations/History still pending.
+
 Current instance PTY41092 / question-recovery-startup.json. 437 Python, four Node and readonly review pass; first targeted command import failed and first expanded test waited for locked login, retained logs; corrected test uses pre-created second session and passes. No model call.
 
 ADR065 latest: user confirms refresh elapsed/stages restored but question invisible. Fix adds own submitted question to session-only runtime and immutable progress display, storage-blocked test and readonly review pass. Human request974047bc843a4144a7d785f1a4f8b32a completed with3claims. Attempts92/93; remaining1 human. Do not spend on automatic model tests. Actual browser storage failure mechanism unknown.
