@@ -29,6 +29,19 @@ class OperatorIdentity(unittest.TestCase):
         self.app, self.transport = setup_app()
         self.addCleanup(self.app.store.db.close)
 
+    def test_local_ticket_renewal_keeps_actor_sessions_and_running_work(self):
+        app=self.app;old=app.bootstrap_ticket();app._ticket_expires=0
+        sessions=app.sessions;rid=app.session_runs.begin('existing','original question')
+        app.session_runs.phase('existing',rid,'generation')
+        fresh=app.renew_bootstrap_ticket()
+        self.assertNotEqual(old,fresh)
+        with self.assertRaises(PermissionError):app.authenticate({'ticket':old})
+        self.assertEqual(app.authenticate({'ticket':fresh}),app.actor)
+        with self.assertRaises(PermissionError):app.authenticate({'ticket':fresh})
+        self.assertIs(app.sessions,sessions)
+        self.assertEqual(app.session_runs.snapshot('existing')['status'],'running')
+        self.assertEqual(app.session_runs.snapshot('existing')['question'],'original question')
+
     def test_ticket_is_one_use_and_server_actor_cannot_be_chosen(self):
         ticket = self.app.bootstrap_ticket()
         for payload in [{'ticket': ticket, 'user': 'security'}, {'user': 'eng_b'}, {'ticket': 'wrong'}]:

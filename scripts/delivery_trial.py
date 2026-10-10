@@ -73,14 +73,38 @@ def main(*, human=False, answer_style="synthesis"):
  repo=Path(__file__).resolve().parents[1]
  # AUTH029 approves this changed working tree; startup fingerprint records bytes.
  private=repo/'.runtime'/'delivery-trial-20261011'
- private.mkdir(mode=0o700,exist_ok=True);runtime=private/'.runtime';runtime.mkdir(mode=0o700,exist_ok=True)
+ private.mkdir(mode=0o700,exist_ok=True)
+ if private.is_symlink():raise ValueError('Private runtime must not be a symlink')
+ private.chmod(0o700)
+ runtime=private/'.runtime';runtime.mkdir(mode=0o700,exist_ok=True)
  ledger=repo/'.runtime'/'deepseek-budget.sqlite';assert ledger.is_file();
  if not (runtime/'deepseek-budget.sqlite').exists():(runtime/'deepseek-budget.sqlite').symlink_to(ledger)
  original_create=operator_web.create_server
  def create(app,port):
   server=original_create(app,port);serve=server.serve_forever
+  import signal,tempfile
+  token_dir=repo/'.runtime/page-failure-ux-logs'
+  def renew_entry(_signal,_frame):
+   current=server.application
+   if current is None or current.auth_kind!='operator':return
+   try:
+    ticket=current.renew_bootstrap_ticket()
+    fd,name=tempfile.mkstemp(prefix='.entry-',dir=token_dir)
+    try:
+     with os.fdopen(fd,'w') as output:output.write(ticket)
+     os.replace(name,token_dir/'human-bootstrap-token')
+    finally:
+     if os.path.exists(name):os.unlink(name)
+   except OSError:
+    # Failed renewal must not stop an active server/request; the helper times out.
+    import sys
+    print('Local entry renewal failed; existing sessions retained.',file=sys.stderr,flush=True)
+  signal.signal(signal.SIGUSR1,renew_entry)
   def limited_serve(*a,**kw):
    current=server.application
+   control=private/'entry-server.json'
+   control.write_text(json.dumps({'pid':os.getpid(),'port':port,
+    'runtime_version':operator_web.runtime_version()},indent=2)+'\n');control.chmod(0o600)
    current.engine.query_expansion=query_expansion
    current.engine.evidence_on_model_rejection=True
    model=current.engine.model;generate=model.generate_with_provenance
@@ -113,6 +137,8 @@ if __name__=='__main__':
  parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts'],default='synthesis');args=parser.parse_args()
  token_dir=Path(__file__).resolve().parents[1]/'.runtime/page-failure-ux-logs'
  token_dir.mkdir(mode=0o700,exist_ok=True)
+ if token_dir.is_symlink():raise ValueError('Private entry directory must not be a symlink')
+ token_dir.chmod(0o700)
  class SafeOutput:
   def write(self,value):
    if '#ticket=' in value:

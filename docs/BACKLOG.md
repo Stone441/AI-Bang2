@@ -5,7 +5,7 @@
 | 类别 / ID | 产品能力或交付物 | 当前状态 / 完成依据 |
 |---|---|---|
 | 已批准 DEL-01 | 核心两题证据答案；同DeepSeek disabled/8192，保守过滤真实冗余 | in_progress；disabled8192实测、背景过滤及安全gate本地通过；Q2两次事实完整，Q1仍未解决；已定位未知措辞误判及漏措施，新增reviewed-excerpts候选已加载、在线质量待真人，不记完成 |
-| 已批准 DEL-02 | 等待、失败、刷新、当前权限引用、Recent/History、本地入口连贯 | in_progress；454整合本地/六Node/HTTP联动通过；native Recent/History/C01preview200，真人确认首题综合失败及进度问题；新阶段结果/旋转指示已加载，原文候选和后续交互待真人 |
+| 已批准 DEL-02 | 等待、失败、刷新、当前权限引用、Recent/History、本地入口连贯 | in_progress；454整合本地/六Node/HTTP联动通过；native Recent/History/C01preview200，真人确认首题综合失败及进度问题；新阶段结果/旋转指示及按需本机入口续签已加载，真实HTTP续签保留session且无模型调用；原文候选和后续交互待真人 |
 | 官方 DEL-03 | 标题/blurb/说明、架构边界、封面、五场景、源码启动说明 | prepared；见SUBMISSION_CANDIDATE，产品/架构/五场景/启动/封面已准备，待G2 |
 | 官方 DEL-04 | 真实CodeBuddy conversation history及≥3过程截图索引 | prepared；15原件hash核验一致，私有原件留本地，待团队审阅/上传批准 |
 | 可选 DEL-05 | 5–8分钟视频脚本与真人录制 | 七分钟脚本已准备；录像not_run，团队执行 |

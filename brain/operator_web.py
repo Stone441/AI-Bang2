@@ -53,6 +53,7 @@ class OperatorApp:
         import threading
         self.session_runs=SessionRuns();self.admission_lock=threading.Lock();self.active_queries=set()
         self.store, self.sessions = store, {}
+        self._ticket_lock=threading.RLock()
         self._ticket = secrets.token_urlsafe(32)
         self._ticket_expires = time.monotonic() + 600
 
@@ -71,15 +72,23 @@ class OperatorApp:
             raise ValueError('Configured content reader required')
 
     def bootstrap_ticket(self):
-        return self._ticket
+        with self._ticket_lock:return self._ticket
+
+    def renew_bootstrap_ticket(self):
+        """Local operator control only; never exposed as an HTTP endpoint."""
+        with self._ticket_lock:
+            self._ticket=secrets.token_urlsafe(32)
+            self._ticket_expires=time.monotonic()+600
+            return self._ticket
 
     def authenticate(self, data):
-        if (set(data) != {'ticket'} or not isinstance(data['ticket'], str)
-                or not self._ticket or time.monotonic() >= self._ticket_expires
-                or not secrets.compare_digest(data['ticket'], self._ticket)):
-            raise PermissionError('Unavailable')
-        self._ticket = None
-        return self.actor
+        with self._ticket_lock:
+            if (set(data) != {'ticket'} or not isinstance(data['ticket'], str)
+                    or not self._ticket or time.monotonic() >= self._ticket_expires
+                    or not secrets.compare_digest(data['ticket'], self._ticket)):
+                raise PermissionError('Unavailable')
+            self._ticket = None
+            return self.actor
 
     def refresh(self):
         pass  # Engine uses trusted published candidates or explicit native refresh.
