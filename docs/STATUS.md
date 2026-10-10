@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 最终入口release已加载231be53：runtime b1347573（2026-10-10T17:28:21UTC）匹配当前brain/scripts，含续签IO失败保护；真实--check/--refresh-only通过，PID不变、无浏览器/问答/模型调用。复制材料说明、启动命令、五场景步骤及回看证据已对齐；剩三问真人，核心新候选质量仍pending。证据entry-release-runtime.json。下方5c7a74d2为首次续签验证快照。
+
 2026-10-11 本地入口真实修复：材料检查发现原十分钟ticket过期会要求人工回来刷新；现双击通过私有0700目录/0600控制文件、runtime指纹及lsof PID/49161 listener核验，向自己的进程发送SIGUSR1按需续签十分钟ticket。无新HTTP管理端点、不重启、不改actor/业务权限；票据更新使用锁与原子私有文件。4入口＋16 operator＋4额度本地回归/boot通过；真实49161 HTTP验证新ticket登录200、续签后既有session200、旧ticket403、PID及额度状态不变，无浏览器/模型调用。空闲更新前完整保存答案/审计/账本/额度；现startup5c7a74d2（2026-10-10T17:23:43UTC）加载原文候选、阶段结果、完整guard与续签。仍9/12、13/24calls，剩三问真人；Q1与新候选质量、人观察/G1/G2仍pending。证据local-entry-renewal.json。
 
 2026-10-11 材料一致性收敛：复制用Description现描述exact-span selection＋独立coverage review；启动命令明确reviewed-excerpts且自动额度已用完；S-02/S-04明确页面无更新/撤权控制，改为实际CLI保存结果回看，S-05给出隔离目录复演命令。材料包增补五fixture场景/audit、fixture lifecycle及mixed-audit核验记录，均保留原commit/mode。仅材料修改，读取验证JSON字段/原路径与私密数据排除，不重跑测试、不调用模型、不重启真人实例。核心首题/新候选质量仍pending，不宣布Goal完成。
