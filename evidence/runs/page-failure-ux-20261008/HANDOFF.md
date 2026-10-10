@@ -1,5 +1,8 @@
 # Refresh continuation repair — 2026-10-09
 
+2026-10-10 ADR068补充：offline_rank36.py重用原24/known12文件（hash与冻结计划一致），fixture prefilter＋主题过滤后的全部窗口排序比较36题均未变化，原因是这些原题未触发候选操作词；因此它们是未影响对照，不是新操作词业务质量覆盖。历史原Q1排序变化及独立Lumen合成正反对照另存。模型/原生调用0。候选仍默认none，真实6＋36与最多3human需一次新增授权（93→138、原Goal0.50USD阈值不重置，余0.179532USD/newunknown停止）；当前尚未批准，未扩额或启用。
+
+
 2026-10-10 ADR069：用户刷新看到operator link错误。旧实例06:01:30UTC启动，07:23UTC检查已约82分钟；session和cookie硬过期3600秒、ticket600秒，与症状相符，但未读取真人cookie或捕获其具体HTTP，不能断言唯一原因。boot以前所有异常统一归因ticket，现仅session403可尝试一次ticket，503/网络不消耗ticket；有效session优先且不会重复使用旧ticket。分别显示session到期/入口失效/服务暂不可达。用户恢复入口范围内仅重启自己49161旧PID54280，新PID66918/PTY35356/启动hash80d447c58738d9d1220c8d17d17f5cf75a9d6251aee7d5d54b2cebab91463002，查询candidate默认none，93/93、账本与原unknown保留；新后端ADR067额度状态已加载。private token0600，command --check通过；不执行浏览器工具、不提交问题、不动8094/8100。重启后原session内存终态不保留，成功答案仍需History当前权限检查；不声称恢复已过期session的失败记录。真人新入口观察pending。
 
 2026-10-10 ADR068（本地默认关闭排序候选）：Q1原生请求69af1515dcfc4d109ea3180e0e454245的generation/review均接收同9条证据含C01，accepted claims未引用C01；排除仅传递引用子集，未保留原provider review原文，不推断模型内部原因。新增query_expansion=action-terms-v1，仅mitigation词触发procedure/workaround/safeguard/protective通用排序词，不改变原问题、主题过滤、当前权限、证据窗口/预算、模型low8192、quote/review。默认none，现有live仍none。历史合成索引离线C01排序3→1、主题候选集合不变；可能挤掉有限窗口内的限制性证据，真实业务覆盖/时间/费用尚未验证。原24+known12及两原题固定各3次均须重新验证，不能用排序或fake review通过替代。回滚query_expansion=none。离线444完整测试通过，uncited action传入review且mock coverage=false停答；只读审查通过。已备可选launcher/quality参数，次数白名单仍93，未执行候选live、未扩额。
