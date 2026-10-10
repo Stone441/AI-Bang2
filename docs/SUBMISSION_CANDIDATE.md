@@ -31,7 +31,7 @@ Measured impact is reported as individual native request times, actual model usa
 | SUB-06 optional 5–8 minute video | Script below | Record actual UI and verify playable final video |
 | SUB-07 ≥3 genuine screenshots | Existing DEV09 01-task-start, 04-code-writing, 07-final-validation PNGs; manifest contains seven screenshots | Select/redact actual screenshots; never reconstruct tool use |
 | SUB-08 optional live URL | Loopback demo for team only | Public deployment is not authorized |
-| Aspire live demo / architecture / source | Five scenes below, architecture and current repository | G1/G2 review; explicit push/merge and submission approval |
+| Aspire live demo / architecture / source | Five scenes below, [standalone architecture SVG](../assets/submission/contextledger-architecture.svg) and current repository | G1/G2 review; explicit push/merge and submission approval |
 
 The 15 existing DEV09 artifacts were checked against their recorded hashes this round. Real contribution: original `4165ee6`, integration `8cd5088`; implementation and historical validation in [CodeBuddy delivery](CODEBUDDY_AUDIT_DELIVERY.md). No new CodeBuddy contribution is claimed.
 

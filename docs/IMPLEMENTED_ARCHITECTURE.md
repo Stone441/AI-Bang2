@@ -2,6 +2,8 @@
 
 ## Current delivery candidate · 2026-10-11
 
+[Standalone 16:9 architecture diagram](../assets/submission/contextledger-architecture.svg), ready for material/video use.
+
 Independent questions; native eng_b four-source synthetic pilot; SQLite version-bound windows with lexical ranking (no embeddings). AUTH017 background polling publishes source updates; worker failure/stale completeness blocks native synthesis. No business-source writes. In this delivery instance only, a known-usage output rejection can continue to unchanged authorized source excerpts after final native checks, with explicit synthesis-failed/evidence-only status; no rejected draft or fake review receipt is released. Session identity is verified on the server, not supplied by prompts. Source/context bytes remain untrusted.
 
 ```mermaid
