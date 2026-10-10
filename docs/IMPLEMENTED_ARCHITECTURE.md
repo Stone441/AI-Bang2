@@ -4,7 +4,7 @@
 
 [Standalone 16:9 architecture diagram](../assets/submission/contextledger-architecture.svg), ready for material/video use.
 
-Current trial uses reviewed verbatim-source answers: generation selects IDs and exact contiguous spans; code constructs factual text equal to those spans; a separate review checks coverage and scope. No online quality result yet. Old free-form synthesis remains an explicit rollback.
+Current trial uses `--answer-style source-review` from implementation 4928ae5 (runtime 89bdd62a): server code constructs exact contiguous quotes preserving every byte of all retrieved authorized evidence, then one DeepSeek Flash call reviews support, complete question coverage and scope. Accepted answers have `reviewed_source_v1` and one authentic `model_review` receipt; there is no model generation call. Filtering requires explicit completeness approval and keeps a retained evidence window whole so trailing qualifications remain. 475 local integration tests passed; this path has no live-model quality result yet. The old model-selector candidate failed two actual original Q1 requests by omitting C01; those failures remain. Earlier selector and free-form synthesis are explicit rollbacks, with their original results.
 
 Independent questions; native eng_b four-source synthetic pilot; SQLite version-bound windows with lexical ranking (no embeddings). AUTH017 background polling publishes source updates; worker failure/stale completeness blocks native synthesis. No business-source writes. In this delivery instance only, a known-usage output rejection can continue to unchanged authorized source excerpts after final native checks, with explicit synthesis-failed/evidence-only status; no rejected draft or fake review receipt is released. Session identity is verified on the server, not supplied by prompts. Source/context bytes remain untrusted.
 
@@ -13,14 +13,13 @@ flowchart LR
  U[Loopback UI / server session] --> R[Local version-bound retrieval]
  W[Native readonly background polling] --> R
  R --> A[Current native access and content checks]
- A --> G[DeepSeek Flash span selection / disabled 8192]
- G --> Q[Code constructs exact quoted claims]
+ A --> Q[Code quotes all retrieved authorized evidence]
  Q --> P[Current native review dispatch checks]
- P --> V[Separate same-model support and coverage review]
+ P --> V[One DeepSeek Flash support and coverage review / disabled 8192]
  V --> F[Retained claims / final native checks]
  F --> O[Answer / saved History]
  O --> C[Preview and History current checks]
- A & G & V & F --> L[Structured scoped audit]
+ A & Q & V & F --> L[Structured scoped audit]
  L --> S[CodeBuddy independent signed-checkpoint verifier]
 ```
 

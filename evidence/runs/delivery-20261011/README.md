@@ -1,6 +1,12 @@
 # Delivery candidate · 11 October 2026
 
-## Current follow-up — reviewed source candidate
+## Current source-review delivery · implementation4928ae5
+
+Owned idle49161 was updated after private SQLite/ledger/admission backups and a held trial lock proved no in-flight question. Runtime89bdd62a/health and local entry check/renewal passed. `--answer-style source-review` removes the failed selector: server code constructs quotations covering all retrieved currently authorized evidence, with one model support/coverage review and no generation receipt. Full integration475 tests passed23.320s; initial harness failures and warnings remain. `source-review-native-input-replay.json` proves all9 original-question evidence inputs, including C01, were preserved offline; it does not prove current native access or live answer quality. See `source-review-startup.json`, `source-review-idle-update.json` and `source-review-integration.log`.
+
+Current allowance remains11/12 submissions,17/24 calls, new settlementUSD0.016143, no new unknown; one human question remains. No source-review question has run. Q1/Q2 quality and human interaction judgement remain pending; neither local tests nor the old Q2 success is inherited. The following selector-path follow-up and earlier b8abf52 sections preserve their historical modes and results.
+
+## Earlier selector-path follow-up — preserved snapshot
 
 The 7f7fa03 implementation added the reviewed-source path; later entry renewal is recorded in `local-entry-renewal.json`. The trial uses `--answer-style reviewed-excerpts`: model-selected exact spans, code-constructed quoted claims and a separate support/coverage review. Two live first-question requests are now retained in `human-reviewed-first-two/`; both omitted authorized C01 and were correctly blocked by coverage review. Page judgement is pending; current-path Q2 is not_run. The prior first-question diagnostic still failed (21.54s); it identified a scoped unknown phrase rejected by the temporal guard and a genuinely omitted C01 action. No rejected draft is displayed. Details: `source-answer-technical-choice.json`, `reviewed-excerpts-startup.json`, and `native-first-question-diagnostic/`.
 

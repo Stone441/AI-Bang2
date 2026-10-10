@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 材料交付一致性修正：IMPLEMENTED_ARCHITECTURE当前文字及Mermaid移除旧selector调用，RUNBOOK/DEMO_CANDIDATE当前入口统一source-review与余一真人问答，delivery README区分新路径not_run和两次旧selector失败。仅材料修改，不重跑已通过整合、不重启服务、不调用模型；包按新文档commit重新生成并检查ZIP完整性。核心首题仍待真人最后一问。
+
 2026-10-11 整合交付更新：475本地回归23.320s通过，保留warnings/故意mock失败stdout。确认49161自有PID5968无在途请求并持有trial lock后，私有备份答案/审计/旧USD20账本/独立额度，更新为source-review；新PID11758/runtime89bdd62a，health及本机入口核验/续签通过。当天readiness通过；仅native启动及本地HTTP/入口，无新增问答或模型调用，11/12、17/24calls、新结算USD0.016143/newunknown无，剩一仅真人。当前原文审查质量与Q2未验证；旧selector两次失败不改为成功。材料与当前架构同步，G1/G2/录像仍团队完成。证据source-review-startup.json。
 
 2026-10-11 新增本地source-review候选：去掉已两次漏措施的模型selector，代码构造全部当前授权检索原文，一次model review检查完整性/范围/支持。9份实际原首题历史输入离线重放逐字保留、包含C01；仅输入构造证明，不算live答案或当前权限验证。6项专项、34旧综合兼容、17启动CLI、21进度/5审计回归及相关Node通过；新格式只有真实review回执，History仍复校精确原文及当前权限。失败原件和初始test harness失败保留。加载状态与整合检查见下述交付更新；核心首题及新路径Q2仍未验证，Goal不完成。
