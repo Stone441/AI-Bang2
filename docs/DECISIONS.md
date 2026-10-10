@@ -1,5 +1,8 @@
 # Decisions / ADR
 
+2026-10-10 阶段停止（用户明确指示）：开发Goal paused，停止继续测试/付费验证与模型候选推进；仅交付当前分支到GitHub并合并main。详见docs/reviews/2026-10-10-page-failure-stage-stop.md。135/138，Goal结算0.437330USD、旧unknown324404保留、新unknown无；idle49161/PID87323已停，临时入口token已移除，8094/8100不动。none8192与新增42次申请不获批准、不执行；Q1/最新真人UX未完成，不批准G1/G2。下一步由ChatGPT审查并决定，不能自动重启或继续付费测试。
+
+
 2026-10-10 ADR070：同一获批质量进程消费共享额度会让旧instance仅内存public_status显示过期次数，实际gate仍安全。改为仅读原子trial-admission.json，读取异常退回缓存，不取query/flock/ledger锁、不触发四源；另一进程消费及flock占用对照20targeted/445full通过，只读审查无新增问题。human新实例加载，非源状态/current权限替代。
 
 2026-10-10 ADR071（仅提议未批准）：新原题截断length/8192含reasoning7925，候选为同DeepSeek Flash thinking disabled / effort none / cap8192，使用既有可信构造支持，不增加provider/cap、quote/review/授权gate不变。官方thinking_mode/API文档本日实读支持disabled和none；预计减少reasoning输出/耗时费用但未经实测，可能降低综合与review判断质量，不保证消除两空或其他reject。non-thinking-proposed-schedule.json冻结原两题6＋原36；拟总138→180新增42，保留当前3human，原Goal累计0.50与旧unknown不重置（余0.06267USD），达到阈值停止并保留not_run。当前live low8192不变，待用户明确配置/额外次数批准。
