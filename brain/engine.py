@@ -305,6 +305,12 @@ class Engine:
             raise PermissionError('Unavailable') from None
         return {'evidence_id':eid,'source':r['source'],'title':r['title'],'text':text,'locator':locator,'version':r['version'],'source_url':r['source_url']}
 
+    def history_summaries(self, actor):
+        """Own submitted questions only; source metadata/answers require safe_history."""
+        self.validate_actor(actor)
+        return [{k:r.get(k) for k in ('request_id','question','answered_at')}
+                for r in self.store.history(actor.user_id)]
+
     def safe_history(self, actor, request_id=None):
         self.validate_actor(actor)
         records=[self.store.run(request_id,actor.user_id)] if request_id else self.store.history(actor.user_id)
@@ -314,6 +320,6 @@ class Engine:
             allowed=True
             for e in record['evidence']:
                 try: self.evidence(actor,e['evidence_id'])
-                except PermissionError: allowed=False; break
+                except (PermissionError,SourceUnavailable): allowed=False; break
             result.append(record if allowed else {'request_id':record['request_id'],'unavailable':True,'message':'This answer is no longer available. Ask again for current evidence.'})
         return result

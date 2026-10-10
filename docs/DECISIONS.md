@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-10 ADR066：真人确认运行中刷新原题/计时及答案出现，Recent answers始终Checking current access，完成后刷新答案消失。最新6626397006424963ad09ff9e23ab8add已持久保存3claims。复现完成后的前端丢失关联：接续改为当前session terminal run重新safe_history；History选中答案仅在tab/sessionStorage保存rid及自己的问题，刷新无run时重新safe_history，不缓存正文、不模型重试，退出/过期清理；输入值guard保护慢runtime不覆盖新草稿。新增GET /api/history/recent只列actor自己的question/time/rid，无来源标题/数量/正文或源请求；点击单条才做当前权限/版本检查，失败内联，SourceUnavailable不把整个列表请求异常中止。旧History全部来源串行检查机制确认，旧具体HTTP耗时/异常不可恢复；新native HTTP summary0.0013075s、单条9.134388s并取回3claims。summary仍可能等待store锁，不宣称运行中完全免长锁。SessionRuns新增实际观察phases，前端突出current/observed/not reported，不推算百分比/阶段完成、不显示草稿。439本地、5Node、只读审查通过；真人最新修复/引用仍待观察，93/93停止新模型请求，G1/G2不自动通过。
+
 2026-10-09 ADR065：真人刷新已恢复计时/阶段，但原问题不可见；实际浏览器存储丢失机制未确定，ADR064测试仅覆盖可用storage。本轮补充当前已验证session运行状态保留自身提交问题（<=4000字符、仅内存、退出discard），/api/runtime只返回该会话原问题，另一同身份session无run；不加入来源/草稿正文、不自动模型调用。进度区以textContent固定显示Submitted question，等待输入只读、快捷题不能改写；可用storage仍作辅助，无storage也恢复。保留当前权限History取回及所有迟到响应隔离；只读审查无新增发现。原不可见问题请求974047bc843a4144a7d785f1a4f8b32a已保存3事实，attempt92/93，真人最后1次复验待完成，不宣称G1/G2通过。
 
 2026-10-09 ADR064（刷新接续本地与mock验证）：真人刷新运行中页面丢失问题/进度，重复提交409；原请求406c7185e46e44b2b14ce7fba5633978已42.403秒提交，不重复计费。前端按session.csrf在tab-local sessionStorage保存冻结的原问题/rid，刷新仅接续/runtime实际运行及真实elapsed；完成后一次带rid的History当前权限/version检查取回结果，失败恢复安全类别，不保存/显示draft或源正文、不自动生成。未知rid不绑定旧完成答案，迟到响应/导航/退出隔离；退出/过期清理问题与存储，409保留原请求。GET /api/history?request_id只接受单个32位hex，沿用safe_history(actor,rid)，进度不查四源。437完整本地及四Node/只读审查通过；重启仅已获批49161加载后端，四源正常后台complete，新真人刷新验证pending，尚余2次human，不挪作自动测试。

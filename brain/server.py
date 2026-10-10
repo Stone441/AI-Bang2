@@ -94,7 +94,7 @@ def create_server(app, port=0):
             try:
                 self.gate()
                 path=unquote(urlparse(self.path).path)
-                if path not in ("/api/runtime", "/api/session", "/api/logout", "/api/health", "/", "/app.js", "/style.css"):app.refresh()
+                if path not in ("/api/runtime", "/api/history/recent", "/api/session", "/api/logout", "/api/health", "/", "/app.js", "/style.css"):app.refresh()
                 path=unquote(urlparse(self.path).path)
                 data={}
                 if method=='POST':
@@ -165,6 +165,9 @@ def create_server(app, port=0):
                     return self.send(200,result)
                 if method=='GET' and path.startswith('/api/evidence/'):
                     return self.send(200,app.engine.evidence(actor,path[len('/api/evidence/'):]))
+                if method=='GET' and path=='/api/history/recent':
+                    if urlparse(self.path).query:raise ValueError('Invalid history filter')
+                    return self.send(200,{'history':app.engine.history_summaries(actor)})
                 if method=='GET' and path=='/api/history':
                     params=parse_qs(urlparse(self.path).query,keep_blank_values=True)
                     if params:
@@ -196,7 +199,7 @@ def create_server(app, port=0):
 
         def do_GET(self):
             app=self.server.application
-            if urlparse(self.path).path in ('/api/runtime','/api/session','/api/health','/','/app.js','/style.css'):
+            if urlparse(self.path).path in ('/api/runtime','/api/history/recent','/api/session','/api/health','/','/app.js','/style.css'):
                 return self.dispatch('GET')
             with getattr(app,'request_lock',app.store.lock):
                 with app.store.lock:self.dispatch('GET')

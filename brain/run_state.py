@@ -16,14 +16,16 @@ class SessionRuns:
             old=self.runs.get(token)
             if old and old['status']=='running':raise PermissionError('Question already running')
             run={'request_id':uuid.uuid4().hex,'status':'running','phase':'queued','started':time.monotonic(),
-                 'sources_used':[],'error_code':None,'question':question}
+                 'sources_used':[],'error_code':None,'question':question,'phases':['queued']}
             self.runs[token]=run
             return run['request_id']
 
     def phase(self, token, request_id, phase):
         with self.lock:
             run=self.runs.get(token)
-            if run and run['request_id']==request_id and run['status']=='running':run['phase']=phase
+            if run and run['request_id']==request_id and run['status']=='running':
+                run['phase']=phase
+                if phase not in run['phases']:run['phases'].append(phase)
 
     def finish(self, token, request_id, *, result=None, code=None):
         with self.lock:
@@ -38,7 +40,7 @@ class SessionRuns:
         with self.lock:
             run=self.runs.get(token)
             if not run:return None
-            return {k:v for k,v in run.items() if k!='started'} | {
+            return {k:(list(v) if isinstance(v,list) else v) for k,v in run.items() if k!='started'} | {
                 'elapsed_seconds':run.get('elapsed_seconds',time.monotonic()-run['started'])}
 
     def discard(self, token):

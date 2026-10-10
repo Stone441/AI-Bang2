@@ -1,5 +1,9 @@
 # Refresh continuation repair — 2026-10-09
 
+Current instance PTY74133 / history-stages-startup.json; fresh token private, launch command --check passed. Source hash e801cd48aaf628e231003a08d4bc70ba2545c9d1b0d1df11669f031d2d83ca8a. Native HTTP check used a separate session then signed out; current fresh user entry unconsumed.
+
+Latest ADR066: user confirms running refresh question/timer and answer delivery; Recent stayed at Checking current access, terminal refresh lost answer. Fixed summaries + explicit single-answer access check + session reference restoration + actual observed stage strip. 439 Python/five Node/readonly review pass; history-stages-native-http.json confirms summary0.0013s/latest3claims9.1344s, no model call. Admission93/93 exhausted. Next HUMAN: reopen fresh entry, select newest saved question in Recent, wait current access, inspect citation, refresh saved answer; NO Ask/new query. Native/browser observation distinguished.
+
 2026-10-10 entry refresh: current PTY66878, same approved49161/eng_b; attempts92/93, original unknown only. Official DeepSeek prices re-read unchanged; PRICE_DATE10Oct, 19 offline model/price tests pass; price-review-20261010.json. No model question, budget/counters/config unchanged. Private fresh one-time token, user launches command. Human question visibility/citations/History still pending.
 
 Current instance PTY41092 / question-recovery-startup.json. 437 Python, four Node and readonly review pass; first targeted command import failed and first expanded test waited for locked login, retained logs; corrected test uses pre-created second session and passes. No model call.

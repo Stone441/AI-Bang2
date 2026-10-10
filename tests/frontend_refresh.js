@@ -18,10 +18,10 @@ const watchdog=setTimeout(()=>{console.error('FAIL: refresh test did not finish'
  // New JS realm, same authenticated session and tab-local storage; old HTTP still running.
  const refreshed=page();refreshed.ctx.fetch=async path=>{assert.equal(path,'/api/runtime');return response(run());};
  vm.runInContext('resumeOnRuntime=true',refreshed.ctx);await vm.runInContext('refreshRuntime()',refreshed.ctx);
- assert.equal(refreshed.get('question').value,'ORIGINAL QUESTION');assert.equal(refreshed.get('ask').disabled,true);assert.equal(refreshed.get('elapsed').textContent,'42.0 s elapsed');assert.equal(refreshed.get('progressPhase').textContent,'Reviewing the evidence');
+ assert.equal(refreshed.get('question').value,'ORIGINAL QUESTION');assert.equal(refreshed.get('ask').disabled,true);assert.equal(refreshed.get('elapsed').textContent,'42.0 s elapsed');assert.equal(refreshed.get('progressPhase').textContent,'Current stage: Reviewing the evidence');
  await refreshed.get('queryForm').onsubmit({preventDefault(){}});assert.equal(paid,1);
  let checks=0;refreshed.ctx.fetch=async path=>{if(path==='/api/runtime')return response(run('completed'));assert.equal(path,'/api/history?request_id='+answer.request_id);checks++;return response({history:[answer]});};
- await vm.runInContext('refreshRuntime()',refreshed.ctx);assert.equal(checks,1);assert.equal(refreshed.get('ask').disabled,false);assert.equal(refreshed.get('progress').hidden,true);assert.equal(storage.size,0);assert.equal(paid,1);
+ await vm.runInContext('refreshRuntime()',refreshed.ctx);assert.equal(checks,1);assert.equal(refreshed.get('ask').disabled,false);assert.equal(refreshed.get('progress').hidden,true);assert.equal(storage.has('brain.pending.same-session'),false);assert.equal(paid,1);
  await vm.runInContext('refreshRuntime()',refreshed.ctx);assert.equal(checks,1);
  finish(response(answer));await query;
  // No browser storage: authoritative session question remains visible and read-only.
@@ -30,10 +30,15 @@ const watchdog=setTimeout(()=>{console.error('FAIL: refresh test did not finish'
  vm.runInContext('resumeOnRuntime=true',noStorage.ctx);await vm.runInContext('refreshRuntime()',noStorage.ctx);
  assert.equal(noStorage.get('question').value,'SERVER ORIGINAL QUESTION');assert.equal(noStorage.get('question').readOnly,true);assert.equal(noStorage.get('runningQuestion').textContent,'SERVER ORIGINAL QUESTION');assert.equal(paid,1);
  noStorage.ctx.fetch=async()=>response({...run('failed'),run:{...run('failed').run,question:'SERVER ORIGINAL QUESTION'}});await vm.runInContext('refreshRuntime()',noStorage.ctx);assert.equal(noStorage.get('question').readOnly,false);assert.equal(noStorage.get('question').value,'SERVER ORIGINAL QUESTION');
+ // Refresh after completion and storage cleanup still fetches the current session answer once.
+ storage.clear();const terminal=page();let terminalReads=0;
+ terminal.ctx.fetch=async path=>{if(path==='/api/runtime')return response({...run('completed'),run:{...run('completed').run,question:'ORIGINAL QUESTION'}});terminalReads++;assert.equal(path,'/api/history?request_id='+answer.request_id);return response({history:[answer]});};
+ vm.runInContext('resumeOnRuntime=true',terminal.ctx);await vm.runInContext('refreshRuntime()',terminal.ctx);await vm.runInContext('refreshRuntime()',terminal.ctx);
+ assert.equal(terminalReads,1);assert.equal(terminal.get('question').value,'ORIGINAL QUESTION');assert.equal(terminal.get('answer').children.length,1);assert.equal(paid,1);
  // Failure resumes preserve the question, stop timers, and do not retrieve or regenerate a draft.
  storage.set('brain.pending.same-session',JSON.stringify({question:'KEEP FAILED QUESTION',requestId:answer.request_id}));
  const failed=page();vm.runInContext('resumeOnRuntime=true',failed.ctx);failed.ctx.fetch=async path=>{assert.equal(path,'/api/runtime');return response(run('failed'));};await vm.runInContext('refreshRuntime()',failed.ctx);
- assert.equal(failed.get('question').value,'KEEP FAILED QUESTION');assert.equal(failed.get('ask').disabled,false);assert.equal(storage.size,0);assert.equal(paid,1);
+ assert.equal(failed.get('question').value,'KEEP FAILED QUESTION');assert.equal(failed.get('ask').disabled,false);assert.equal(storage.has('brain.pending.same-session'),false);assert.equal(paid,1);
  // A different login cannot restore another session's question.
  storage.set('brain.pending.same-session',JSON.stringify({question:'PRIVATE OLD QUESTION',requestId:answer.request_id}));
  const other=page();vm.runInContext("session={actor:'product_ops',csrf:'different'};resumeOnRuntime=true",other.ctx);other.ctx.fetch=async()=>response({...run(),run:null});await vm.runInContext('refreshRuntime()',other.ctx);assert.equal(other.get('question').value,'');
@@ -46,13 +51,19 @@ const watchdog=setTimeout(()=>{console.error('FAIL: refresh test did not finish'
  // A result that arrives after History navigation cannot repopulate the workspace.
  storage.set('brain.pending.same-session',JSON.stringify({question:'ORIGINAL QUESTION',requestId:answer.request_id}));
  const late=page();let resolveResult;vm.runInContext('resumeOnRuntime=true',late.ctx);
- late.ctx.fetch=path=>path==='/api/runtime'?Promise.resolve(response(run('completed'))):path==='/api/history'?Promise.resolve(response({history:[]})):new Promise(resolve=>resolveResult=resolve);
+ late.ctx.fetch=path=>path==='/api/runtime'?Promise.resolve(response(run('completed'))):path==='/api/history/recent'?Promise.resolve(response({history:[]})):new Promise(resolve=>resolveResult=resolve);
  const recovery=vm.runInContext('refreshRuntime()',late.ctx);await new Promise(resolve=>setImmediate(resolve));
  await late.get('historyNav').onclick();resolveResult(response({history:[answer]}));await recovery;assert.equal(late.get('answer').children.length,0);assert.equal(paid,1);
  // 409 reconnects without overwriting the original saved question.
  storage.set('brain.pending.same-session',JSON.stringify({question:'ORIGINAL QUESTION',requestId:answer.request_id}));
  const duplicate=page();duplicate.get('question').value='SECOND QUESTION';duplicate.ctx.fetch=async path=>path==='/api/query'?{ok:false,status:409,json:async()=>({error:'A question is already running.'})}:response(run());
  await duplicate.get('queryForm').onsubmit({preventDefault(){}});await new Promise(resolve=>setImmediate(resolve));assert.equal(duplicate.get('question').value,'ORIGINAL QUESTION');assert.equal(duplicate.get('ask').disabled,true);assert.equal(JSON.parse(storage.get('brain.pending.same-session')).question,'ORIGINAL QUESTION');assert.equal(paid,1);
+ // Slow completed runtime may not overwrite a new, unsubmitted draft.
+ storage.clear();const draft=page();let delayedRuntime;draft.ctx.fetch=()=>new Promise(resolve=>delayedRuntime=resolve);
+ vm.runInContext('armResume()',draft.ctx);const loading=vm.runInContext('refreshRuntime()',draft.ctx);draft.get('question').value='NEW UNSUBMITTED DRAFT';delayedRuntime(response({...run('completed'),run:{...run('completed').run,question:'OLD COMPLETED QUESTION'}}));await loading;assert.equal(draft.get('question').value,'NEW UNSUBMITTED DRAFT');assert.equal(draft.get('answer').children.length,0);
+ // An answer selected from History can be restored without a live run or a model call.
+ storage.set('brain.answer.same-session',JSON.stringify({requestId:answer.request_id,question:answer.question}));const selection=page();let reads=0;
+ selection.ctx.fetch=async path=>path==='/api/runtime'?response({...run(),run:null}):(reads++,response({history:[answer]}));vm.runInContext('armResume()',selection.ctx);await vm.runInContext('refreshRuntime()',selection.ctx);assert.equal(reads,1);assert.equal(selection.get('question').value,answer.question);assert.equal(selection.get('answer').children.length,1);assert.equal(paid,1);
  // Same JS realm expiry/logout clears the old user's question before another login.
  vm.runInContext('expiredSession()',duplicate.ctx);assert.equal(duplicate.get('question').value,'');assert.equal(storage.has('brain.pending.same-session'),false);
  vm.runInContext("session={actor:'product_ops',csrf:'different'}",duplicate.ctx);duplicate.ctx.fetch=async()=>response({...run(),run:null});vm.runInContext('identity()',duplicate.ctx);assert.equal(duplicate.get('question').value,'');

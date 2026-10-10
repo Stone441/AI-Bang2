@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-10 ADR066：真人确认运行中刷新原题/计时及答案出现，Recent answers始终Checking current access，完成后刷新答案消失。最新6626397006424963ad09ff9e23ab8add已持久保存3claims。复现完成后的前端丢失关联：接续改为当前session terminal run重新safe_history；History选中答案仅在tab/sessionStorage保存rid及自己的问题，刷新无run时重新safe_history，不缓存正文、不模型重试，退出/过期清理；输入值guard保护慢runtime不覆盖新草稿。新增GET /api/history/recent只列actor自己的question/time/rid，无来源标题/数量/正文或源请求；点击单条才做当前权限/版本检查，失败内联，SourceUnavailable不把整个列表请求异常中止。旧History全部来源串行检查机制确认，旧具体HTTP耗时/异常不可恢复；新native HTTP summary0.0013075s、单条9.134388s并取回3claims。summary仍可能等待store锁，不宣称运行中完全免长锁。SessionRuns新增实际观察phases，前端突出current/observed/not reported，不推算百分比/阶段完成、不显示草稿。439本地、5Node、只读审查通过；真人最新修复/引用仍待观察，93/93停止新模型请求，G1/G2不自动通过。
+
 2026-10-09 当前刷新第二轮真人反馈：计时/阶段恢复已由用户确认，问题不可见仍失败。已实现ADR065当前session原问题及进度区固定可见，不依赖浏览器storage；原实际丢失机制未知。请求974047bc843a4144a7d785f1a4f8b32a已保存3条validated claims，最终答案/引用真人观察未确认。剩余1次human，未新增自动付费请求。
 
 2026-10-09 真人刷新发现产品缺口并修复：原题后端42.403秒成功保存，浏览器刷新丢失进度/问题、再点Ask409，原件human-refresh-failure.json保留。ADR064刷新接续已实际编码：冻结原题/会话隔离本地临时存储、恢复当前run/真实elapsed、一次按rid的History重新鉴权取回完成结果、不自动模型重试。437回归＋四Node及只读审查通过，49161加载修复、四源正常后台complete；真人刷新接续未验证。预算91/93，剩余2专供human，新增unknown0；此前首题/质量失败/G1/G2不变。

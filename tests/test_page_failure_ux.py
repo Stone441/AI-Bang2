@@ -144,6 +144,27 @@ class ProgressHTTP(unittest.TestCase):
         for query in ('request_id=invalid','request_id='+rid+'&request_id='+rid,'secret=1'):
             self.assertEqual(self.request('/api/history?'+query)[0],400)
 
+    def test_history_summary_is_own_input_only_and_does_not_check_sources(self):
+        self.login('eng_b');status,answer=self.request('/api/query',{'question':'payment-service'})
+        self.assertEqual(status,200)
+        self.app.request_lock=threading.RLock()
+        with patch.object(self.app.engine,'evidence',side_effect=AssertionError('No source reads for summaries')):
+            with self.app.request_lock:
+                # Bypasses the query lock; store lock can still wait for an active write.
+                status,result=self.request('/api/history/recent')
+            self.assertEqual(status,200)
+            self.assertEqual(result['history'][0],{k:answer.get(k) for k in ('request_id','question','answered_at')})
+        self.login('product_ops');self.assertEqual(self.request('/api/history/recent')[1]['history'],[])
+        self.assertEqual(self.request('/api/history/recent?secret=1')[0],400)
+
+    def test_history_source_failure_hides_body_instead_of_aborting_list(self):
+        self.login('eng_b');status,answer=self.request('/api/query',{'question':'payment-service'})
+        self.assertEqual(status,200)
+        with patch.object(self.app.engine,'evidence',side_effect=SourceUnavailable('private upstream failure')):
+            status,result=self.request('/api/history?request_id='+answer['request_id'])
+        self.assertEqual(status,200);self.assertTrue(result['history'][0]['unavailable'])
+        self.assertNotIn('claims',result['history'][0]);self.assertNotIn('private upstream',json.dumps(result))
+
     def test_session_status_has_no_object_metadata(self):
         self.login('eng_b');status,r=self.request('/api/runtime')
         self.assertEqual(status,200);self.assertEqual(len(r['sources']),4)
@@ -151,6 +172,8 @@ class ProgressHTTP(unittest.TestCase):
         self.assertNotIn('title',json.dumps(r));self.assertNotIn('resource_id',json.dumps(r))
         first=self.app.session_runs.begin('session1');self.app.session_runs.phase('session1',first,'generation')
         self.assertIsNone(self.app.session_runs.snapshot('session2'))
+        state=self.app.session_runs.snapshot('session1');self.assertEqual(state['phases'],['queued','generation'])
+        state['phases'].append('review');self.assertEqual(self.app.session_runs.snapshot('session1')['phases'],['queued','generation'])
         self.app.session_runs.discard('session1');self.app.session_runs.finish('session1',first,code='failed')
         self.assertIsNone(self.app.session_runs.snapshot('session1'))
 

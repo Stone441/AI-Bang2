@@ -3,13 +3,16 @@ const $=id=>document.getElementById(id);
 let session=null,health=null,viewRevision=0;
 const viewToken=()=>({revision:viewRevision,session});
 const currentView=token=>token.revision===viewRevision&&token.session===session;
-let pendingQuery=null,waitTimer=null,runtimeTimer=null,runtimeSequence=0,runtimeApplied=0,resumeOnRuntime=false;
+let pendingQuery=null,waitTimer=null,runtimeTimer=null,runtimeSequence=0,runtimeApplied=0,resumeOnRuntime=false,resumeInputValue='';
 const clockNow=()=>typeof performance!=='undefined'?performance.now():Date.now();
 function stopRuntime(){runtimeApplied=++runtimeSequence;if(runtimeTimer!==null&&typeof clearInterval!=='undefined')clearInterval(runtimeTimer);runtimeTimer=null;$('runtime').hidden=true;$('runtimeModel').textContent='';$('runtimeDetails').textContent='';$('runtimeSources').replaceChildren();}
 function stopWaiting(){if(waitTimer!==null&&typeof clearInterval!=='undefined')clearInterval(waitTimer);waitTimer=null;pendingQuery=null;$('question').readOnly=false;$('runningQuestion').textContent='';$('queryForm').setAttribute('aria-busy','false');$('progress').hidden=true;}
 function savedQuestion(){try{return JSON.parse(sessionStorage.getItem('brain.pending.'+session.csrf)||'null');}catch(_){return null;}}
 function saveQuestion(requestId=null,question=null){try{question=question??pendingQuery?.question??savedQuestion()?.question;if(question!==null&&question!==undefined)sessionStorage.setItem('brain.pending.'+session.csrf,JSON.stringify({question,requestId}));}catch(_){}}
-function forgetQuestion(){try{if(session)sessionStorage.removeItem('brain.pending.'+session.csrf);}catch(_){}}
+function forgetQuestion(){try{if(session){sessionStorage.removeItem('brain.pending.'+session.csrf);sessionStorage.removeItem('brain.answer.'+session.csrf);}}catch(_){}}
+function answerReference(){try{return JSON.parse(sessionStorage.getItem('brain.answer.'+session.csrf)||'null');}catch(_){return null;}}
+function rememberAnswer(answer){if(answer.unavailable)return;try{sessionStorage.setItem('brain.answer.'+session.csrf,JSON.stringify({requestId:answer.request_id,question:answer.question||''}));}catch(_){}}
+function armResume(){resumeOnRuntime=true;resumeInputValue=$('question').value;}
 function renderQueryError(err){
   $('answer').replaceChildren();const panel=el('div',undefined,'error-panel');
   panel.append(el('h2',err.code==='source_refreshing'?'Sources are changing':err.code==='model_output_unavailable'?'Answer did not pass validation':'Question could not be completed'),el('p',err.message));
@@ -20,10 +23,11 @@ function renderQueryError(err){
 async function reconnectRun(run){
   if(!run||$('workspace').hidden)return;
   const saved=savedQuestion();
-  if(!pendingQuery&&resumeOnRuntime&&(run.status==='running'||saved&&saved.requestId===run.request_id)){
+  if(!pendingQuery&&resumeOnRuntime&&run.status!=='running'&&$('question').value!==resumeInputValue){resumeOnRuntime=false;return;}
+  if(!pendingQuery&&resumeOnRuntime&&(run.status==='running'||saved&&saved.requestId===run.request_id||typeof run.question==='string'&&(!saved||saved.requestId===null&&saved.question===run.question))){
     resumeOnRuntime=false;$('question').value=typeof run.question==='string'?run.question:(saved?.question||'');
     startWaiting(viewToken(),run.elapsed_seconds||0,true);pendingQuery.requestId=run.request_id;
-    if(saved)saveQuestion(run.request_id);$('ask').disabled=true;$('progressPhase').textContent=phaseLabels[run.phase]||'Working';
+    if(saved)saveQuestion(run.request_id);$('ask').disabled=true;renderStages(run);
     $('status').textContent='Reconnected to the original request. No new model call was made.';
   }
   const pending=pendingQuery;
@@ -38,12 +42,22 @@ async function reconnectRun(run){
     if(pendingQuery!==pending||!currentView(pending.view))return;
     const answer=result.history.find(a=>a.request_id===run.request_id);
     if(!answer)throw Error('The saved answer is unavailable. No new model call was made.');
-    renderAnswer(answer);if(answer.question)$('question').value=answer.question;
+    renderAnswer(answer);rememberAnswer(answer);if(answer.question)$('question').value=answer.question;
     $('status').textContent=answer.unavailable?answer.message:answerStatus(answer);
   }catch(err){if(pendingQuery===pending&&currentView(pending.view))renderQueryError(err);}
-  finally{if(pendingQuery===pending&&currentView(pending.view)){forgetQuestion();stopWaiting();$('ask').disabled=false;}}
+  finally{if(pendingQuery===pending&&currentView(pending.view)){try{sessionStorage.removeItem('brain.pending.'+session.csrf);}catch(_){}stopWaiting();$('ask').disabled=false;}}
 }
 const phaseLabels={queued:'Waiting to start',retrieval:'Retrieving evidence',authorization:'Checking current access',refreshing:'Reading changed sources once',generation:'Generating an answer',review:'Reviewing the evidence',final_checks:'Checking current evidence before delivery'};
+function renderStages(run){
+  $('progressPhase').textContent='Current stage: '+(phaseLabels[run.phase]||'Working');
+  const stages=$('progressSteps');stages.replaceChildren();
+  const observed=new Set(run.phases||[run.phase]);
+  for(const phase of ['retrieval','authorization','generation','review','final_checks']){
+    const item=el('li',phaseLabels[phase],phase===run.phase?'stage current':observed.has(phase)?'stage observed':'stage');
+    if(phase===run.phase)item.setAttribute('aria-current','step');
+    item.append(el('span',phase===run.phase?'Current':observed.has(phase)?'Observed':'Not yet reported'));stages.append(item);
+  }
+}
 async function refreshRuntime(){
   if(!session)return;const owner=session,queryAtPoll=pendingQuery,sequence=++runtimeSequence;
   try{const r=await api('/api/runtime');if(session!==owner||sequence<runtimeApplied)return;runtimeApplied=sequence;
@@ -59,13 +73,21 @@ async function refreshRuntime(){
         el('span',source.checking?'Checking now':source.last_check_at?'Last check: '+source.last_check_result+' · '+new Date(source.last_check_at).toLocaleTimeString():'Current source check unconfirmed'),
         el('span',source.snapshot_status==='current'?'Local candidate snapshot current · access checked per question':'Current candidate snapshot unconfirmed'),
         el('span',source.used_in_answer?'Cited in the last completed answer':'Not recorded as used in the last completed answer','muted'));list.append(card);}
+    if(!r.run&&resumeOnRuntime&&$('workspace').hidden===false){
+      resumeOnRuntime=false;const reference=answerReference(),view=viewToken();
+      if(reference&&$('question').value===resumeInputValue){
+        $('answer').replaceChildren(el('p','Checking current access before restoring the saved answer…'));
+        try{const saved=await api('/api/history?request_id='+encodeURIComponent(reference.requestId));if(!currentView(view)||$('question').value!==resumeInputValue)return;const answer=saved.history.find(a=>a.request_id===reference.requestId);if(!answer)throw Error('The saved answer is unavailable.');renderAnswer(answer);if(answer.question)$('question').value=answer.question;}
+        catch(err){if(currentView(view)&&$('question').value===resumeInputValue)renderQueryError(err);}
+      }
+    }
     await reconnectRun(r.run);
     if(pendingQuery&&pendingQuery===queryAtPoll&&currentView(pendingQuery.view)&&r.run?.status==='running'&&(!pendingQuery.requestId||pendingQuery.requestId===r.run.request_id)){
-      pendingQuery.requestId=r.run.request_id;saveQuestion(r.run.request_id);$('progressPhase').textContent=phaseLabels[r.run.phase]||'Working';}
+      pendingQuery.requestId=r.run.request_id;saveQuestion(r.run.request_id);renderStages(r.run);}
   }catch(_){if(session===owner&&sequence>=runtimeApplied){runtimeApplied=sequence;$('runtimeModel').textContent='Runtime status unavailable';}}
 }
 function startWaiting(view,elapsed=0,resumed=false){
-  const started=clockNow()-elapsed*1000;pendingQuery={view,started,requestId:null,resumed,question:$('question').value};$('progress').hidden=false;$('progressPhase').textContent='Submitting question';
+  const started=clockNow()-elapsed*1000;pendingQuery={view,started,requestId:null,resumed,question:$('question').value};$('progress').hidden=false;$('progressPhase').textContent='Submitting question';$('progressSteps').replaceChildren();
   $('question').readOnly=true;$('runningQuestion').textContent=pendingQuery.question;
   $('queryForm').setAttribute('aria-busy','true');
   const tick=()=>{if(pendingQuery&&currentView(view))$('elapsed').textContent=((clockNow()-started)/1000).toFixed(1)+' s elapsed';};tick();
@@ -79,7 +101,7 @@ const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefine
 function expiredSession(){forgetQuestion();$('question').value='';stopWaiting();stopRuntime();session=null;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();$('identity').textContent='Not signed in';$('auditNav').hidden=true;$('sourcesNav').hidden=true;show('login');const error=Error(health?.auth_kind==='operator'?'This session ended. Open the latest one-time link from the running operator terminal.':'This session ended. Sign in again.');error.sessionExpired=true;$('status').textContent=error.message;return error;}
 async function api(path,data){const requestSession=session;const options={credentials:'same-origin',headers:{}};if(data!==undefined){options.method='POST';options.headers['Content-Type']='application/json';options.headers['X-CSRF-Token']=session?.csrf||'';options.body=JSON.stringify(data);}const response=await fetch(path,options);const result=await response.json();if(!response.ok){if(requestSession!==session)throw Error('Stale response discarded');if(response.status===403&&session&&path!=='/api/session'){const current=await fetch('/api/session',{credentials:'same-origin'});if(current.status===403)throw expiredSession();}const error=Error(result.error||'Request unavailable. Ask again or contact the operator if it persists.');error.status=response.status;error.code=result.code;error.requestId=result.request_id;throw error;}return result;}
 function show(name){resumeOnRuntime=false;stopWaiting();viewRevision++;$('ask').disabled=false;$('previewBody').replaceChildren();if($('preview').open)$('preview').close();for(const id of ['login','workspace','other'])$(id).hidden=id!==name;$('status').textContent='';}
-function identity(){const box=$('identity');box.replaceChildren(el('span',session.actor));const logout=el('button',health?.auth_kind==='operator'?'Sign out':'Switch demo identity');logout.onclick=async()=>{forgetQuestion();$('question').value='';stopWaiting();stopRuntime();viewRevision++;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();await api('/api/logout',{});session=null;$('answer').replaceChildren();$('other').replaceChildren();$('auditNav').hidden=true;$('sourcesNav').hidden=true;box.textContent='Not signed in';show('login');};box.append(logout);$('auditNav').hidden=session.actor!=='auditor';$('sourcesNav').hidden=session.actor!=='auditor';show('workspace');const saved=savedQuestion();$('question').value=saved?.question||'';resumeOnRuntime=true;refreshRuntime();if(runtimeTimer===null&&typeof setInterval!=='undefined')runtimeTimer=setInterval(refreshRuntime,1500);}
+function identity(){const box=$('identity');box.replaceChildren(el('span',session.actor));const logout=el('button',health?.auth_kind==='operator'?'Sign out':'Switch demo identity');logout.onclick=async()=>{forgetQuestion();$('question').value='';stopWaiting();stopRuntime();viewRevision++;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();await api('/api/logout',{});session=null;$('answer').replaceChildren();$('other').replaceChildren();$('auditNav').hidden=true;$('sourcesNav').hidden=true;box.textContent='Not signed in';show('login');};box.append(logout);$('auditNav').hidden=session.actor!=='auditor';$('sourcesNav').hidden=session.actor!=='auditor';show('workspace');const saved=savedQuestion();$('question').value=saved?.question||'';armResume();refreshRuntime();if(runtimeTimer===null&&typeof setInterval!=='undefined')runtimeTimer=setInterval(refreshRuntime,1500);}
 function diagnostics(label,...content){const box=el('details',undefined,'diagnostics');box.append(el('summary',label),...content);return box;}
 function originalLink(e){
   // Only a fresh, authorized preview supplies this URL; never claims/model text.
@@ -177,17 +199,35 @@ $('queryForm').onsubmit=async e=>{
   const priorSaved=savedQuestion(),submittedQuestion=$('question').value;
   viewRevision++;const view=viewToken();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();
   $('answer').replaceChildren();$('other').replaceChildren();$('ask').disabled=true;saveQuestion(null,submittedQuestion);startWaiting(view);$('status').textContent='Working on your question…';
-  try{const a=await api('/api/query',{question:submittedQuestion});if(!currentView(view))return;resumeOnRuntime=false;forgetQuestion();renderAnswer(a);$('status').textContent=answerStatus(a);}
+  try{const a=await api('/api/query',{question:submittedQuestion});if(!currentView(view))return;resumeOnRuntime=false;forgetQuestion();rememberAnswer(a);renderAnswer(a);$('status').textContent=answerStatus(a);}
   catch(err){if(currentView(view)){
-    if(err.status===409){if(priorSaved){saveQuestion(priorSaved.requestId,priorSaved.question);$('question').value=priorSaved.question;}else forgetQuestion();resumeOnRuntime=true;$('status').textContent='Reconnecting to the original request…';}
+    if(err.status===409){if(priorSaved){saveQuestion(priorSaved.requestId,priorSaved.question);$('question').value=priorSaved.question;}else forgetQuestion();armResume();$('status').textContent='Reconnecting to the original request…';}
     else{resumeOnRuntime=false;forgetQuestion();renderQueryError(err);}
   }}
   finally{if(currentView(view)){stopWaiting();$('ask').disabled=false;refreshRuntime();}}
 
 };
 for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{if(pendingQuery)return;$('question').value=b.dataset.question;$('question').focus();};
-$('workspaceNav').onclick=()=>{$('answer').replaceChildren();$('other').replaceChildren();show(session?'workspace':'login');if(session)resumeOnRuntime=true;};
-$('historyNav').onclick=async()=>{if(!session)return;$('answer').replaceChildren();show('other');const view=viewToken();$('other').replaceChildren(el('h1','Recent answers'),el('p','Checking current access and versions before displaying saved answers…','lede'));try{const result=await api('/api/history');if(!currentView(view))return;for(const a of result.history){const item=el('div',undefined,'history-item');renderAnswer(a,item);$('other').append(item);}if(!result.history.length)$('other').append(el('p','No answers yet.'));}catch(e){if(!currentView(view))return;$('status').textContent=e.message;}};
+$('workspaceNav').onclick=()=>{$('answer').replaceChildren();$('other').replaceChildren();show(session?'workspace':'login');if(session)armResume();};
+$('historyNav').onclick=async()=>{
+  if(!session)return;$('answer').replaceChildren();show('other');const view=viewToken();
+  const heading=el('h1','Recent answers'),message=el('p','Loading your saved questions…','lede');$('other').replaceChildren(heading,message);
+  try{
+    const result=await api('/api/history/recent');if(!currentView(view))return;
+    message.textContent=result.history.length?'Select an answer. Current source access and versions are checked before its contents are shown.':'No answers yet.';
+    for(const summary of result.history){
+      const item=el('div',undefined,'history-item'),open=el('button',summary.question||'Saved question','history-open'),body=el('div');
+      const date=new Date(summary.answered_at);item.append(open,el('p',Number.isNaN(date.getTime())?'Saved answer':date.toLocaleString(),'muted'),body);$('other').append(item);
+      open.onclick=async()=>{
+        if(open.disabled||!currentView(view))return;open.disabled=true;body.replaceChildren(el('p','Checking current access and versions for this answer…'));
+        try{const saved=await api('/api/history?request_id='+encodeURIComponent(summary.request_id));if(!currentView(view))return;
+          const answer=saved.history.find(a=>a.request_id===summary.request_id);if(!answer)throw Error('This saved answer is unavailable.');renderAnswer(answer,body);rememberAnswer(answer);
+        }catch(err){if(currentView(view))body.replaceChildren(el('p',err.message,'notice'));}
+        finally{if(currentView(view))open.disabled=false;}
+      };
+    }
+  }catch(err){if(currentView(view)){message.textContent=err.message;message.className='notice';}}
+};
 $('sourcesNav').onclick=async()=>{show('other');const view=viewToken();$('other').replaceChildren(el('h1','Source coverage'),el('p','Current source status for this running instance. Fixture and native checks are reported separately.','lede'));try{const r=await api('/api/sources/status');if(!currentView(view))return;for(const s of r.sources){const card=el('div',undefined,'panel');card.append(el('h2',s.source),el('p','Status: '+s.status),el('p','Live: '+s.live),el('p',s.authority));$('other').append(card);}}catch(e){if(!currentView(view))return;$('status').textContent=e.message;}};
 function auditEvent(row){
   const labels={request_started:'Question',candidate_evaluated:'Retrieval candidate',authorization_decided:'Authorization decision',evidence_used:'Model evidence',generation_completed:'Generation and citations',response_committed:'Stored answer',response_dispatch_attempted:'Delivery attempt',request_failed:'Request stopped',audit_inquiry:'Audit inquiry',source_changed:'Source change'};
