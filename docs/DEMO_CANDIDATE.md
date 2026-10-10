@@ -1,5 +1,7 @@
 # Demonstration candidate and remaining acceptance
 
+当前团队操作与提交字段以[本轮候选材料](SUBMISSION_CANDIDATE.md)为准：49161运行reviewed-excerpts候选，进度结果及旋转指示已加载；新路径在线质量/真人判断pending。页面无fixture内容更新/撤权控制，S-02/S-04使用标明commit与模式的CLI产物回看。原首题未解决，旧成绩不能继承；剩三问真人专用。下方旧版本、旧停止状态与旧验收范围是历史记录。
+
 Current 2026-10-11 delivery entry, five-scene steps, model configuration, scope and material checklist: [SUBMISSION_CANDIDATE](SUBMISSION_CANDIDATE.md). Historical records below retain their original dates/builds and are not inherited as current validation.
 
 2026-10-07统一业务增强候选固定为 **0bc90ae**：synthesis-v8，可信显式low/4096；默认none/1024保持，当前8094/8100未重启。398干净归档回归、同48世界五fixture、JS语法及两Node通过；完整24作者开发题真实模型为22正确事实回答＋2正确空答，零异常，经只读Agent逐题核原问题/quotes/relevance，非稳定率或盲测。eng_b当前原生＋真实模型两题均正确，Slack最终amber替代green、产品pilot/GA/date/Done边界齐全；耗时含preview133.132/146.085秒，非SLA。本流费用上界core46985/native12302microUSD；原账本settled390875/pending0，不从共享差额归费用。当前core完整签名、native分页/七签名边界及fixture四结果审计已配对，非独立custody或人阅读证明。四源AUTH021创建/修正原native/fake证据按原版本保留。

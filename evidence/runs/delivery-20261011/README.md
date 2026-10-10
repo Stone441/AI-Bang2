@@ -1,5 +1,13 @@
 # Delivery candidate · 11 October 2026
 
+## Current follow-up — reviewed source candidate
+
+Current implementation: 7f7fa03. The trial uses `--answer-style reviewed-excerpts`: model-selected exact spans, code-constructed quoted claims and a separate support/coverage review. Its live/human quality is not_run. The prior first-question diagnostic still failed (21.54s); it identified a scoped unknown phrase rejected by the temporal guard and a genuinely omitted C01 action. No rejected draft is displayed. Details: `source-answer-technical-choice.json`, `reviewed-excerpts-startup.json`, and `native-first-question-diagnostic/`.
+
+9/12 submissions, 13/24 model calls, new conservative settlement USD0.012232; three remaining submissions are human-only. No new unknown; old324404microUSD remains. Local integration:462 passed23.119s before final narrow guard/message changes, followed by targeted checks. Recorded stage outcomes and active-stage spinner are loaded. G1/G2, core Q1 quality, current candidate Q2 quality and human interaction judgement remain pending.
+
+All sections below are the earlier b8abf52 evidence snapshot; their counts, versions and results remain historical. They do not establish current candidate quality.
+
 Base main b34a055; branch delivery/2026-10-11-demo-candidate. Current source bytes are captured by the runtime fingerprints and the local candidate commit. Historical evidence and old USD20/Goal state remain intact.
 
 ## Actual product changes
