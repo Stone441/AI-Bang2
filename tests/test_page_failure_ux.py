@@ -307,3 +307,19 @@ class TrialSnapshot(unittest.TestCase):
             self.assertEqual(len(calls),1);self.assertEqual(gate.public_status()['attempts_used'],42)
             self.assertEqual(gate.public_status()['reason'],'attempt_limit');self.assertFalse(gate.public_status()['allowed'])
             self.assertEqual(ledger.summary()['settled_micro_usd'],0);ledger.db.close()
+
+    def test_other_process_allowance_is_visible_without_ledger_or_file_lock(self):
+        import importlib.util,tempfile,fcntl
+        from pathlib import Path
+        from brain.budget import BudgetLedger
+        spec=importlib.util.spec_from_file_location('trial_external',Path('evidence/runs/page-failure-ux-20261008/launch.py'))
+        launch=importlib.util.module_from_spec(spec);spec.loader.exec_module(launch)
+        with tempfile.TemporaryDirectory() as folder:
+            ledger=BudgetLedger(Path(folder)/'budget.sqlite');path=Path(folder)/'admission.json'
+            first=launch.Admission(lambda:None,ledger,path);other=launch.Admission(lambda:None,ledger,path)
+            other();self.assertEqual(first.public_status()['attempts_used'],1)
+            other.attempts=42;other.save()
+            with open(path.with_suffix('.lock'),'a') as lock,patch.object(ledger,'summary',side_effect=AssertionError('Progress must not read ledger')):
+                fcntl.flock(lock,fcntl.LOCK_EX);start=time.monotonic();status=first.public_status()
+                self.assertLess(time.monotonic()-start,0.1);self.assertEqual(status['reason'],'attempt_limit')
+            self.assertFalse(status['allowed']);self.assertEqual(status['attempts_used'],42);ledger.close()

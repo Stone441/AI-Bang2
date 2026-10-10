@@ -1,0 +1,272 @@
+{
+  "group": "known12",
+  "id": "holdout_10",
+  "question": "For the smallest supported integration tier, which region and retry limit belong to the same table row?",
+  "expected_behavior": "unsupported_or_clarify",
+  "error": null,
+  "elapsed_seconds": 2.7947665420360863,
+  "answer": {
+    "request_id": "4e97cee791884056a93aa5a1e0734b1a",
+    "question": "For the smallest supported integration tier, which region and retry limit belong to the same table row?",
+    "answered_at": "2026-10-10T15:47:21.320668+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v11",
+    "claims": [],
+    "uncertainties": [
+      "Insufficient evidence in the currently accessible material.",
+      "If you mean a particular event or policy, name it and its scope so I can check the relevant evidence."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "BV-06@1",
+        "resource_id": "BV-06",
+        "version": 1,
+        "source": "confluence",
+        "title": "integration / SGD account eligibility",
+        "locator": {
+          "section": "SGD account eligibility"
+        },
+        "text": "[SYNTHETIC]\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.\n\nAtlas account eligibility\nAccount\tScope\n\n Singapore business SGD \t Pilot supported \n\n Personal SGD \t Not supported \n",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509903+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-06"
+      },
+      {
+        "evidence_id": "BV-15@1",
+        "resource_id": "BV-15",
+        "version": 1,
+        "source": "slack",
+        "title": "migration / Unapproved alternative",
+        "locator": {
+          "section": "Unapproved alternative"
+        },
+        "text": "[SYNTHETIC]\nDual-region active writes were proposed but not approved; the accepted migration uses one writer.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510125+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-15"
+      },
+      {
+        "evidence_id": "BV-31@1",
+        "resource_id": "BV-31",
+        "version": 1,
+        "source": "slack",
+        "title": "settlement / Settlement scope",
+        "locator": {
+          "section": "Settlement scope"
+        },
+        "text": "[SYNTHETIC]\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510372+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-31"
+      },
+      {
+        "evidence_id": "BV-22@1",
+        "resource_id": "BV-22",
+        "version": 1,
+        "source": "jira",
+        "title": "reconciliation / Batch deadline",
+        "locator": {
+          "section": "Batch deadline"
+        },
+        "text": "[SYNTHETIC]\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510240+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-22"
+      },
+      {
+        "evidence_id": "BV-11@1#16000:17452",
+        "resource_id": "BV-11",
+        "version": 1,
+        "source": "slack",
+        "title": "migration / Database design rationale",
+        "locator": {
+          "section": "Database design rationale",
+          "text_window": {
+            "start": 16000,
+            "end": 17452,
+            "unit": "unicode_characters",
+            "strategy": "fixed-2400-overlap-400-v1"
+          }
+        },
+        "text": "try 166: batch 2822, checksum 5146; no current decision recorded.\nArchived migration rehearsal entry 167: batch 2839, checksum 5177; no current decision recorded.\nArchived migration rehearsal entry 168: batch 2856, checksum 5208; no current decision recorded.\nArchived migration rehearsal entry 169: batch 2873, checksum 5239; no current decision recorded.\nArchived migration rehearsal entry 170: batch 2890, checksum 5270; no current decision recorded.\nArchived migration rehearsal entry 171: batch 2907, checksum 5301; no current decision recorded.\nArchived migration rehearsal entry 172: batch 2924, checksum 5332; no current decision recorded.\nArchived migration rehearsal entry 173: batch 2941, checksum 5363; no current decision recorded.\nArchived migration rehearsal entry 174: batch 2958, checksum 5394; no current decision recorded.\nArchived migration rehearsal entry 175: batch 2975, checksum 5425; no current decision recorded.\nArchived migration rehearsal entry 176: batch 2992, checksum 5456; no current decision recorded.\nArchived migration rehearsal entry 177: batch 3009, checksum 5487; no current decision recorded.\nArchived migration rehearsal entry 178: batch 3026, checksum 5518; no current decision recorded.\nArchived migration rehearsal entry 179: batch 3043, checksum 5549; no current decision recorded.\n# Current ledger migration decision\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509987+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-11"
+      },
+      {
+        "evidence_id": "BV-09@1",
+        "resource_id": "BV-09",
+        "version": 1,
+        "source": "confluence",
+        "title": "integration / Launch ticket",
+        "locator": {
+          "section": "Launch ticket"
+        },
+        "text": "[SYNTHETIC]\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509955+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-09"
+      },
+      {
+        "evidence_id": "BV-28@1",
+        "resource_id": "BV-28",
+        "version": 1,
+        "source": "drive",
+        "title": "access / Approved public guidance",
+        "locator": {
+          "section": "Approved public guidance"
+        },
+        "text": "[SYNTHETIC]\nPartner users may read approved integration eligibility guidance; incident details are not public guidance.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510328+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-28"
+      },
+      {
+        "evidence_id": "J-02@1",
+        "resource_id": "J-02",
+        "version": 1,
+        "source": "jira",
+        "title": "PAY-102 Retry configuration fix",
+        "locator": {
+          "field": "status and description"
+        },
+        "text": "[SYNTHETIC]\nPAY-102 code fix: Done. Code completion does not approve general customer release.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509635+00:00",
+        "source_url": "fixture://synthetic-demo/jira/J-02"
+      },
+      {
+        "evidence_id": "BV-07@1",
+        "resource_id": "BV-07",
+        "version": 1,
+        "source": "slack",
+        "title": "integration / USD exception",
+        "locator": {
+          "section": "USD exception"
+        },
+        "text": "[SYNTHETIC]\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509921+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-07"
+      },
+      {
+        "evidence_id": "BV-08@1",
+        "resource_id": "BV-08",
+        "version": 1,
+        "source": "drive",
+        "title": "integration / Partner channel rule",
+        "locator": {
+          "section": "Partner channel rule"
+        },
+        "text": "[SYNTHETIC]\nPartner-led onboarding requires manual verification; direct onboarding supports automated verification.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509938+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-08"
+      },
+      {
+        "evidence_id": "BV-19@1",
+        "resource_id": "BV-19",
+        "version": 1,
+        "source": "slack",
+        "title": "webhook / Current response procedure",
+        "locator": {
+          "section": "Current response procedure"
+        },
+        "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510189+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-19"
+      },
+      {
+        "evidence_id": "BV-10@1",
+        "resource_id": "BV-10",
+        "version": 1,
+        "source": "jira",
+        "title": "integration / Scope confirmation",
+        "locator": {
+          "section": "Scope confirmation"
+        },
+        "text": "[SYNTHETIC]\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509972+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-10"
+      },
+      {
+        "evidence_id": "S-02@1",
+        "resource_id": "S-02",
+        "version": 1,
+        "source": "slack",
+        "title": "Release coordination",
+        "locator": {
+          "channel": "release",
+          "thread": "1790823600.000001"
+        },
+        "text": "[SYNTHETIC]\nPayment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509706+00:00",
+        "source_url": "fixture://synthetic-demo/slack/S-02"
+      },
+      {
+        "evidence_id": "D-02@1",
+        "resource_id": "D-02",
+        "version": 1,
+        "source": "drive",
+        "title": "Payment-retry release approval",
+        "locator": {
+          "paragraph": 1,
+          "section": "Approval decision"
+        },
+        "text": "[SYNTHETIC]\nRelease decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509764+00:00",
+        "source_url": "fixture://synthetic-demo/drive/D-02"
+      },
+      {
+        "evidence_id": "C-02@1",
+        "resource_id": "C-02",
+        "version": 1,
+        "source": "confluence",
+        "title": "Payment-retry capability",
+        "locator": {
+          "paragraph": 1,
+          "section": "Supported rollout"
+        },
+        "text": "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509564+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/C-02"
+      },
+      {
+        "evidence_id": "D-03@1",
+        "resource_id": "D-03",
+        "version": 1,
+        "source": "drive",
+        "title": "Operations readiness",
+        "locator": {
+          "paragraph": 1,
+          "section": "Customer communication"
+        },
+        "text": "[SYNTHETIC]\nDescribe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509781+00:00",
+        "source_url": "fixture://synthetic-demo/drive/D-03"
+      }
+    ],
+    "actor": "product_ops",
+    "model_call": {
+      "query_id": "4e97cee791884056a93aa5a1e0734b1a",
+      "model": "deepseek-flash",
+      "reservation_id": "b996c63ab61c4a3b983fdfc714196103",
+      "prompt_tokens": 2596,
+      "completion_tokens": 448,
+      "total_tokens": 3044,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 1317,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    }
+  }
+}

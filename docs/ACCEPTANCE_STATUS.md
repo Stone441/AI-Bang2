@@ -1,5 +1,8 @@
 # Acceptance coverage · local candidate
 
+2026-10-10 AUTH032实际42次完成：排序action-terms-v1/同DeepSeek low8192，固定native两题各3，Q2三次完整；Q1两空＋一次generation截断（length/completion8192/reasoning7925/visible894字符），不推广候选、不推断旧55.47秒finish_reason。质量core24=22事实＋2预期安全空；known12=01/06事实＋8合理空/澄清＋02review拒绝（stop、额外claim responsive=false）＋12预期注入Drive unknown模型前停答。引用preview3条、Recent列表、单条History HTTP200，非browser人验。445本地/6Node/只读复核通过；共享额度snapshot仅读原子state不等待query/flock/ledger或四源，当前待human实例加载。额度135/138、余3human；Goal累计437330microUSD，距原0.50仅62670，旧unknown324404保留、新unknown无。新的推荐可信配置none8192（同provider/cap、thinking disabled）仅提议，可能减token/时间但审查质量风险待完整验证，未启用或自动扩额；不自动通过Goal/G1/G2/AUTH019。
+
+
 2026-10-10 本轮新增验证：运行中刷新原题/计时和答案出现已获真人确认；最终History单条/终态刷新/错误收据/阶段条仍未获真人确认。新真实fixture HTTP＋app.js联动覆盖6个生命周期契约，full441本地通过；不能替代native API、真模型或真实浏览器。Native第二原题3/3及3次human已有答案，第一原题仍partial/review拒绝；93/93暂停新模型查询，新结算USD0.320468/旧unknown保留，G1/G2及AUTH019不变。
 
 2026-10-09 AUTH031实际复验完成（native6＋quality36，尚余3真人题）：v11/同provider低推理8192，四源合成只读、正常后台。Q2三次均事实完整；Q1两次覆盖不足答案（仍漏C01已批准操作）＋一次review拒绝，不称首题修复完成。原24=21事实＋2合理空＋business31一次review拒绝；known12=01/06完整＋8合理空/澄清＋02一次review拒绝＋12预期Drive unknown停答。三review拒绝均stop、额外claim responsive=false，已知usage结算，无自动重试/新增unknown，不能推断cap不足。610进度采样最长0.003752秒；三本轮引用preview与History HTTP200，非人验。今日官方峰值费率真实核查不变，PRICE_DATE改9；436完整本地回归通过。账本settled1075716/available18599880、原unknown324404保持；AUTH031增138008microUSD、Goal累计303803microUSD。额度90/93，剩余3专供真人。49161新human实例已加载v11，私有0600 token，不记录完整一次性链接；后台正常运行。v11候选质量未通过，不推广为稳定候选；G1/G2/browser工具拒绝/AUTH019不变。两次入口helper启动失败无凭据/模型调用，原件保留；8094/8100未动，未push/merge/deploy。证据v11-final-review.json、v11-native-six/、v11-quality36/、human-entry-ready.json。

@@ -21,4 +21,7 @@ class SafeOutput:
  def flush(self):return sys.__stdout__.flush()
 if __name__=='__main__':
  sys.stdout=SafeOutput()
- raise SystemExit(module.main())
+ import argparse
+ parser=argparse.ArgumentParser();parser.add_argument("--query-expansion",choices=("none","action-terms-v1"),default="none")
+ args=parser.parse_args()
+ raise SystemExit(module.main(query_expansion=args.query_expansion))

@@ -1,5 +1,11 @@
 # Refresh continuation repair — 2026-10-09
 
+2026-10-10 AUTH032真人接续：同获批49161新PID87323/PTY24510，启动15:52:28UTC，token私有0600，一键--check通过；actionterms/low8192仍实验配置，未none/增cap/扩额。共享snapshot修复加载，135/138余3专供human，Goal0.437330USD。先真人明确payment-service题一次→运行刷新原题/计时/实际phase→完成Recent/citation→结果刷新，不能声称已观察。SGT午夜PRICE_DATE10过期后先官方核查再改日并刷新，不自动使用失效价格、预改日期或花剩余human做自动测试。原问题Q1仍两空一截断，不推广；none8192新信任配置/额外42提议待批准。回归末尾status failed checks{}已test_product_acceptance2 mockdenial复现（runFalse是有效断言），不是nativefail/newunknown；445OK与ResourceWarning原件保留。
+
+
+2026-10-10 AUTH032实际42次完成：排序action-terms-v1/同DeepSeek low8192，固定native两题各3，Q2三次完整；Q1两空＋一次generation截断（length/completion8192/reasoning7925/visible894字符），不推广候选、不推断旧55.47秒finish_reason。质量core24=22事实＋2预期安全空；known12=01/06事实＋8合理空/澄清＋02review拒绝（stop、额外claim responsive=false）＋12预期注入Drive unknown模型前停答。引用preview3条、Recent列表、单条History HTTP200，非browser人验。445本地/6Node/只读复核通过；共享额度snapshot仅读原子state不等待query/flock/ledger或四源，当前待human实例加载。额度135/138、余3human；Goal累计437330microUSD，距原0.50仅62670，旧unknown324404保留、新unknown无。新的推荐可信配置none8192（同provider/cap、thinking disabled）仅提议，可能减token/时间但审查质量风险待完整验证，未启用或自动扩额；不自动通过Goal/G1/G2/AUTH019。
+
+
 2026-10-10 blocked接续审计：在d0af335后连续三轮仅复核同一真实阻塞，93/93授权耗尽，新增45题申请无批准、最新真人反馈未到。原实例49161健康且启动07:24:09UTC，默认query_expansion=none；不轮询daemon来伪称验证作业进展、不自动重启/扩额。可独立本地诊断/候选实现/444回归/只读审查已完成，继续真实6＋36及human需用户批准action-ranking-proposed-schedule.json具体范围：93→138，同provider低推理8192/四源只读/原Goal累计0.50USD（已0.320468、余0.179532）或新unknown停接纳。批准后持原flock只改max_attempts及明确白名单，不reset历史baseline/attempts/unknown；同49161空闲加载显式candidate，先核对当前资料再固定两题各3及36，不重试挑成功；human入口需重新检查ticket期限。当前token可能到期，未自动刷新。完成、G1/G2、AUTH019均不通过；本次记录是阻塞接续而非业务验证进展。
 
 

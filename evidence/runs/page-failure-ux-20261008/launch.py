@@ -30,13 +30,16 @@ class Admission:
   self.update_public(body)
   tmp=self.path.with_suffix('.tmp');tmp.write_text(json.dumps(body,indent=2)+'\n');os.chmod(tmp,0o600);tmp.replace(self.path)
  def public_status(self):
-  # Immutable assignment in save; progress never waits for query/ledger/file locks.
+  # Another authorized process may consume the shared allowance. Read its atomic
+  # snapshot without waiting for query/flock/ledger or polling any business source.
+  try:self.update_public(json.loads(self.path.read_text()))
+  except (OSError,ValueError,KeyError):pass
   return dict(self.public)
  def __call__(self,*args,**kwargs):
   with self.lock,open(self.path.with_suffix('.lock'),'a') as lock:
    os.chmod(self.path.with_suffix('.lock'),0o600);fcntl.flock(lock,fcntl.LOCK_EX)
    prior=json.loads(self.path.read_text());self.attempts=prior['attempts'];self.maximum=prior['max_attempts']
-   if self.maximum not in (42,48,93):raise ValueError('Unapproved attempt configuration')
+   if self.maximum not in (42,48,93,138):raise ValueError('Unapproved attempt configuration')
    status=self.ledger.summary()
    if self.attempts>=self.maximum or status['settled_micro_usd']-self.baseline['settled_micro_usd']>=500000 or status['blocked_for_review'] or self.pending_ids()-self.pending:
     self.save();raise TrialAdmissionPaused('Trial limit reached; ask the operator to review before continuing.')

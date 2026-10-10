@@ -1,0 +1,137 @@
+{
+  "group": "core24",
+  "id": "business_21",
+  "question": "Who owns reconciliation exceptions versus ingestion failures?",
+  "expected_behavior": "answer",
+  "error": null,
+  "elapsed_seconds": 2.813722667051479,
+  "answer": {
+    "request_id": "43e34a05d29f452aba5cd1a63f6e09d3",
+    "question": "Who owns reconciliation exceptions versus ingestion failures?",
+    "answered_at": "2026-10-10T15:45:48.885804+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v11",
+    "claims": [
+      {
+        "text": "Mina owns reconciliation exceptions, and the platform team owns ingestion failures.",
+        "evidence_ids": [
+          "BV-21@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-21@1",
+            "quote": "Mina owns reconciliation exceptions; the platform team owns ingestion failures."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "BV-21@1",
+        "resource_id": "BV-21",
+        "version": 1,
+        "source": "confluence",
+        "title": "reconciliation / Ownership decision",
+        "locator": {
+          "section": "Ownership decision"
+        },
+        "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510222+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-21"
+      },
+      {
+        "evidence_id": "BV-23@1",
+        "resource_id": "BV-23",
+        "version": 1,
+        "source": "slack",
+        "title": "reconciliation / Missing input",
+        "locator": {
+          "section": "Missing input"
+        },
+        "text": "[SYNTHETIC]\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510254+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-23"
+      },
+      {
+        "evidence_id": "BV-24@1",
+        "resource_id": "BV-24",
+        "version": 1,
+        "source": "drive",
+        "title": "reconciliation / Pilot blocker",
+        "locator": {
+          "section": "Pilot blocker"
+        },
+        "text": "[SYNTHETIC]\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510268+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-24"
+      },
+      {
+        "evidence_id": "BV-22@1",
+        "resource_id": "BV-22",
+        "version": 1,
+        "source": "jira",
+        "title": "reconciliation / Batch deadline",
+        "locator": {
+          "section": "Batch deadline"
+        },
+        "text": "[SYNTHETIC]\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510240+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-22"
+      },
+      {
+        "evidence_id": "BV-25@1",
+        "resource_id": "BV-25",
+        "version": 1,
+        "source": "confluence",
+        "title": "reconciliation / Old operating note",
+        "locator": {
+          "section": "Old operating note"
+        },
+        "text": "[SYNTHETIC]\nThe old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510284+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-25"
+      }
+    ],
+    "actor": "eng_a",
+    "model_call": {
+      "query_id": "43e34a05d29f452aba5cd1a63f6e09d3",
+      "model": "deepseek-flash",
+      "reservation_id": "088301edc84f4062b0d98757656030c6",
+      "prompt_tokens": 1369,
+      "completion_tokens": 217,
+      "total_tokens": 1586,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 672,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "43e34a05d29f452aba5cd1a63f6e09d3",
+      "model": "deepseek-flash",
+      "reservation_id": "4dd472ecc0994fb59bbe9f0e4716f6cb",
+      "prompt_tokens": 1260,
+      "completion_tokens": 199,
+      "total_tokens": 1459,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 617,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

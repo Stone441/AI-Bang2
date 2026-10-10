@@ -11,16 +11,25 @@ QUESTIONS=[
  'What is the latest approved mitigation for the payment incident?',
  'For payment-service, which code fix is complete, which preventive work remains in progress, and is general customer release approved?']
 
-def main():
+def main(*, private_ticket=None, query_expansion="none"):
  deadline=time.monotonic()+120
  while time.monotonic()<deadline:
-  if 'Open once within' in (ROOT/'.runtime/page-failure-ux-logs/v11-server.log').read_text():break
+  if private_ticket is not None:
+   import urllib.request
+   try:
+    with urllib.request.urlopen('http://127.0.0.1:49161/api/health',timeout=2) as response:
+     if json.load(response)['auth_kind']=='operator':break
+   except (OSError,ValueError):pass
+  elif 'Open once within' in (ROOT/'.runtime/page-failure-ux-logs/v11-server.log').read_text():break
   time.sleep(.5)
  else:raise RuntimeError('Operator startup not ready')
  OUTPUT.mkdir(exist_ok=False)
- (OUTPUT/'schedule.json').write_text(json.dumps({'questions':QUESTIONS,'repetitions_per_question':3,'order':'Q1,Q2 repeated3 times','model':'unchanged low8192','browser':'not_run_saved_denial','human_observation':'not_run'},indent=2)+'\n')
- log=(ROOT/'.runtime/page-failure-ux-logs/v11-server.log').read_text()
- ticket=re.search(r'#ticket=([A-Za-z0-9_-]+)',log).group(1)
+ (OUTPUT/'schedule.json').write_text(json.dumps({'questions':QUESTIONS,'repetitions_per_question':3,'order':'Q1,Q2 repeated3 times','model':'unchanged low8192','browser':'not_run_saved_denial','human_observation':'not_run','query_expansion':query_expansion},indent=2)+'\n')
+ log=''
+ if private_ticket is not None:ticket=Path(private_ticket).read_text().strip()
+ else:
+  log=(ROOT/'.runtime/page-failure-ux-logs/v11-server.log').read_text()
+  ticket=re.search(r'#ticket=([A-Za-z0-9_-]+)',log).group(1)
  cookie='';csrf=''
  def request(path,data=None):
   nonlocal cookie,csrf
@@ -51,7 +60,9 @@ def main():
  (OUTPUT/'preflight-expectations.json').write_text(json.dumps({'frozen_before_business_query':True,'q1':'C01 supports timeout-budget check and approved failover procedure; no supplied globally latest approval time/order established. Answer must scope the known procedure and chronology uncertainty, not infer approval from completed code or release status.','q2':'PAY102 Done; PAY103 In Progress; controlled pilot approved but GA not approved; current source publication and per-request checks required.','boundary':'Normal worker publication support review, not a native permission shortcut or global completeness claim'},indent=2)+'\n')
  (OUTPUT/'runtime-before.json').write_text(json.dumps(request('/api/runtime')[1],indent=2)+'\n')
  results=[]
+ stopped=False
  for repetition in range(1,4):
+  if stopped:break
   for number,question in enumerate(QUESTIONS,1):
    # Give the normal publisher an opportunity to finish and require fresh
    # complete snapshots. This readiness wait never dispatches a model/retries a query.
@@ -76,7 +87,10 @@ def main():
    diagnostics=[e for e in events if e['event_type'].startswith('model_') or e['event_type']=='version_recovery' or e['event_type']=='request_failed']
    (OUTPUT/f'q{number}-attempt{repetition}-diagnostics.json').write_text(json.dumps(diagnostics,indent=2)+'\n')
    print(json.dumps({'q':number,'attempt':repetition,'status':status,'seconds':round(result['elapsed_seconds'],2),'claims':len(answer.get('claims',[])),'diagnostics':[e['payload'].get('diagnostic') for e in diagnostics if e['event_type']=='model_output_rejected']}),flush=True)
+   if answer.get('code') in ('trial_admission_paused','model_request_unavailable','model_budget_unavailable','model_price_review_required'):
+    stopped=True;break
  (OUTPUT/'results.json').write_text(json.dumps(results,indent=2)+'\n')
+ if stopped:(OUTPUT/'not-run.json').write_text(json.dumps({'reason':'admission or unknown usage stopped; no retry','remaining':6-len(results)},indent=2)+'\n')
  # Retain private authenticated session for approved follow-up HTTP quote/history checks.
  session=ROOT/'.runtime/page-failure-ux-logs/http-session.json';session.write_text(json.dumps({'cookie':cookie,'csrf':csrf}));session.chmod(0o600)
  db.close()

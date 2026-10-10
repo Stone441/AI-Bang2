@@ -1,5 +1,11 @@
 # Current status
 
+2026-10-10 AUTH032实际42次完成：排序action-terms-v1/同DeepSeek low8192，固定native两题各3，Q2三次完整；Q1两空＋一次generation截断（length/completion8192/reasoning7925/visible894字符），不推广候选、不推断旧55.47秒finish_reason。质量core24=22事实＋2预期安全空；known12=01/06事实＋8合理空/澄清＋02review拒绝（stop、额外claim responsive=false）＋12预期注入Drive unknown模型前停答。引用preview3条、Recent列表、单条History HTTP200，非browser人验。445本地/6Node/只读复核通过；共享额度snapshot仅读原子state不等待query/flock/ledger或四源，当前待human实例加载。额度135/138、余3human；Goal累计437330microUSD，距原0.50仅62670，旧unknown324404保留、新unknown无。新的推荐可信配置none8192（同provider/cap、thinking disabled）仅提议，可能减token/时间但审查质量风险待完整验证，未启用或自动扩额；不自动通过Goal/G1/G2/AUTH019。
+
+
+2026-10-10 AUTH032：用户“批准”，明确批准此前action-ranking候选及45次集中复验：总93→138，原两题各3次产品HTTP＋原24/known12质量36＋最多3human；49161/eng_b/AUTH017合成四源只读、原DeepSeekFlash/low8192/USD20账本与旧unknown保留。原Goal累计结算USD0.50（本次前0.320468USD）或新unknown停止接纳，在途收尾，不重置阈值。不得写源、动8094/8100、push/deploy或绕过browser拒绝。审批不证明质量，不批准G1/G2。
+
+
 2026-10-10 ADR068补充：offline_rank36.py重用原24/known12文件（hash与冻结计划一致），fixture prefilter＋主题过滤后的全部窗口排序比较36题均未变化，原因是这些原题未触发候选操作词；因此它们是未影响对照，不是新操作词业务质量覆盖。历史原Q1排序变化及独立Lumen合成正反对照另存。模型/原生调用0。候选仍默认none，真实6＋36与最多3human需一次新增授权（93→138、原Goal0.50USD阈值不重置，余0.179532USD/newunknown停止）；当前尚未批准，未扩额或启用。
 
 

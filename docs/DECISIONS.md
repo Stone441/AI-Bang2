@@ -1,5 +1,16 @@
 # Decisions / ADR
 
+2026-10-10 ADR070：同一获批质量进程消费共享额度会让旧instance仅内存public_status显示过期次数，实际gate仍安全。改为仅读原子trial-admission.json，读取异常退回缓存，不取query/flock/ledger锁、不触发四源；另一进程消费及flock占用对照20targeted/445full通过，只读审查无新增问题。human新实例加载，非源状态/current权限替代。
+
+2026-10-10 ADR071（仅提议未批准）：新原题截断length/8192含reasoning7925，候选为同DeepSeek Flash thinking disabled / effort none / cap8192，使用既有可信构造支持，不增加provider/cap、quote/review/授权gate不变。官方thinking_mode/API文档本日实读支持disabled和none；预计减少reasoning输出/耗时费用但未经实测，可能降低综合与review判断质量，不保证消除两空或其他reject。non-thinking-proposed-schedule.json冻结原两题6＋原36；拟总138→180新增42，保留当前3human，原Goal累计0.50与旧unknown不重置（余0.06267USD），达到阈值停止并保留not_run。当前live low8192不变，待用户明确配置/额外次数批准。
+
+
+2026-10-10 AUTH032实际42次完成：排序action-terms-v1/同DeepSeek low8192，固定native两题各3，Q2三次完整；Q1两空＋一次generation截断（length/completion8192/reasoning7925/visible894字符），不推广候选、不推断旧55.47秒finish_reason。质量core24=22事实＋2预期安全空；known12=01/06事实＋8合理空/澄清＋02review拒绝（stop、额外claim responsive=false）＋12预期注入Drive unknown模型前停答。引用preview3条、Recent列表、单条History HTTP200，非browser人验。445本地/6Node/只读复核通过；共享额度snapshot仅读原子state不等待query/flock/ledger或四源，当前待human实例加载。额度135/138、余3human；Goal累计437330microUSD，距原0.50仅62670，旧unknown324404保留、新unknown无。新的推荐可信配置none8192（同provider/cap、thinking disabled）仅提议，可能减token/时间但审查质量风险待完整验证，未启用或自动扩额；不自动通过Goal/G1/G2/AUTH019。
+
+
+2026-10-10 AUTH032：用户“批准”，明确批准此前action-ranking候选及45次集中复验：总93→138，原两题各3次产品HTTP＋原24/known12质量36＋最多3human；49161/eng_b/AUTH017合成四源只读、原DeepSeekFlash/low8192/USD20账本与旧unknown保留。原Goal累计结算USD0.50（本次前0.320468USD）或新unknown停止接纳，在途收尾，不重置阈值。不得写源、动8094/8100、push/deploy或绕过browser拒绝。审批不证明质量，不批准G1/G2。
+
+
 2026-10-10 ADR069：用户刷新看到operator link错误。旧实例06:01:30UTC启动，07:23UTC检查已约82分钟；session和cookie硬过期3600秒、ticket600秒，与症状相符，但未读取真人cookie或捕获其具体HTTP，不能断言唯一原因。boot以前所有异常统一归因ticket，现仅session403可尝试一次ticket，503/网络不消耗ticket；有效session优先且不会重复使用旧ticket。分别显示session到期/入口失效/服务暂不可达。用户恢复入口范围内仅重启自己49161旧PID54280，新PID66918/PTY35356/启动hash80d447c58738d9d1220c8d17d17f5cf75a9d6251aee7d5d54b2cebab91463002，查询candidate默认none，93/93、账本与原unknown保留；新后端ADR067额度状态已加载。private token0600，command --check通过；不执行浏览器工具、不提交问题、不动8094/8100。重启后原session内存终态不保留，成功答案仍需History当前权限检查；不声称恢复已过期session的失败记录。真人新入口观察pending。
 
 2026-10-10 ADR068（本地默认关闭排序候选）：Q1原生请求69af1515dcfc4d109ea3180e0e454245的generation/review均接收同9条证据含C01，accepted claims未引用C01；排除仅传递引用子集，未保留原provider review原文，不推断模型内部原因。新增query_expansion=action-terms-v1，仅mitigation词触发procedure/workaround/safeguard/protective通用排序词，不改变原问题、主题过滤、当前权限、证据窗口/预算、模型low8192、quote/review。默认none，现有live仍none。历史合成索引离线C01排序3→1、主题候选集合不变；可能挤掉有限窗口内的限制性证据，真实业务覆盖/时间/费用尚未验证。原24+known12及两原题固定各3次均须重新验证，不能用排序或fake review通过替代。回滚query_expansion=none。离线444完整测试通过，uncited action传入review且mock coverage=false停答；只读审查通过。已备可选launcher/quality参数，次数白名单仍93，未执行候选live、未扩额。
