@@ -1,5 +1,7 @@
 # 安装、启动、测试与演示
 
+2026-10-10 试用当前操作：保持现有49161会话，直接刷新应恢复终态错误（原题/rid/停止阶段），已停止不继续计时。93/93暂停新Ask，不扩额、不重置账本或旧unknown；Recent answers只读选择既有问题，再等当前鉴权取回答案，可查看引用和刷新，不模型收费。静态前端已更新，current backend e801cd48；ADR067新runtime暂停快照尚未加载，为保留当前失败不重启。用户明确要求刷新入口时，先检查owned PID/in-flight ledger/当天official price再同获批49161启动，加载新snapshot并生成私有入口，清楚告知旧session结束；不执行浏览器打开、不动8094/8100。
+
 2026-10-09 AUTH031实际复验完成（native6＋quality36，尚余3真人题）：v11/同provider低推理8192，四源合成只读、正常后台。Q2三次均事实完整；Q1两次覆盖不足答案（仍漏C01已批准操作）＋一次review拒绝，不称首题修复完成。原24=21事实＋2合理空＋business31一次review拒绝；known12=01/06完整＋8合理空/澄清＋02一次review拒绝＋12预期Drive unknown停答。三review拒绝均stop、额外claim responsive=false，已知usage结算，无自动重试/新增unknown，不能推断cap不足。610进度采样最长0.003752秒；三本轮引用preview与History HTTP200，非人验。今日官方峰值费率真实核查不变，PRICE_DATE改9；436完整本地回归通过。账本settled1075716/available18599880、原unknown324404保持；AUTH031增138008microUSD、Goal累计303803microUSD。额度90/93，剩余3专供真人。49161新human实例已加载v11，私有0600 token，不记录完整一次性链接；后台正常运行。v11候选质量未通过，不推广为稳定候选；G1/G2/browser工具拒绝/AUTH019不变。两次入口helper启动失败无凭据/模型调用，原件保留；8094/8100未动，未push/merge/deploy。证据v11-final-review.json、v11-native-six/、v11-quality36/、human-entry-ready.json。
 
 2026-10-08 ADR063当前本地候选v11：依据已保留真实失败，仅收紧generation/review的“未建立状态可给实际状态”例外为同对象同属性/同表格字段意义，并要求latest顺序未知仍覆盖已有支持的请求操作。不放宽quote/结构/review/权限，不改变provider/low8192。436本地与三Node首轮通过，最终通用措辞回归日志v11-local-regression-final.log；尚无live质量证据。49161仍加载v10，总额度48/48。额外45次（HTTP6/quality36/human最多3，总93）集中申请pending，原本Goal累计USD0.50/newunknown停止不变。不得把旧36题结果算v11验证；无新模型调用、推送或部署。
