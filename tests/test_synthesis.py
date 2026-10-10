@@ -350,7 +350,17 @@ class GroundedSynthesis(unittest.TestCase):
             evidence_on_model_rejection=True)
         self.transport.outputs[0]={'claims':[{'text':'UNSUPPORTED DRAFT','evidence_ids':['missing'],'supports':[]}]}
         try:
-            answer=engine.query(Actor('eng_b'),'payment-service incident runbook')
+            from brain.run_state import SessionRuns
+            runs=SessionRuns();rid=runs.begin('own')
+            answer=engine.query(Actor('eng_b'),'payment-service incident runbook',request_id=rid,
+                progress=lambda phase:runs.phase('own',rid,phase))
+            runs.finish('own',rid,result=answer)
+            stages=runs.snapshot('own')['stage_states']
+            self.assertEqual(stages['retrieval'],'completed')
+            self.assertEqual(stages['authorization'],'completed')
+            self.assertEqual(stages['generation'],'failed')
+            self.assertEqual(stages['review'],'not_run')
+            self.assertEqual(stages['final_checks'],'completed')
             self.assertEqual(answer['answer_status'],'evidence_only')
             self.assertNotIn('review_status',answer)
             self.assertNotIn('UNSUPPORTED DRAFT',str(answer))

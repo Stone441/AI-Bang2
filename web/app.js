@@ -58,13 +58,15 @@ async function reconnectRun(run){
 }
 const phaseLabels={queued:'Waiting to start',retrieval:'Retrieving evidence',authorization:'Checking current access',refreshing:'Reading changed sources once',generation:'Generating an answer',review:'Reviewing the evidence',final_checks:'Checking current evidence before delivery'};
 function renderStages(run){
-  $('progressPhase').textContent='Current stage: '+(phaseLabels[run.phase]||'Working');
+  $('progressPhase').textContent=(run.status==='completed'?'Completed: ':run.status==='failed'?'Stopped: ':run.status==='evidence_only'?'Synthesis blocked; source checks finished: ':'Current stage: ')+(phaseLabels[run.phase]||'Working');
   const stages=$('progressSteps');stages.replaceChildren();
   const observed=new Set(run.phases||[run.phase]);
   for(const phase of ['retrieval','authorization','generation','review','final_checks']){
-    const item=el('li',phaseLabels[phase],phase===run.phase?'stage current':observed.has(phase)?'stage observed':'stage');
-    if(phase===run.phase)item.setAttribute('aria-current','step');
-    item.append(el('span',phase===run.phase?'Current':observed.has(phase)?'Observed':'Not yet reported'));stages.append(item);
+    const state=run.stage_states?.[phase]||(phase===run.phase&&(!run.status||run.status==='running')?'running':observed.has(phase)?'observed':'pending');
+    const labels={completed:'✓ Completed',running:'● In progress',failed:'! Failed',pending:'Not yet reported',not_run:'Not run',observed:'Observed · result not reported'};
+    const item=el('li',phaseLabels[phase],'stage '+state);
+    if(state==='running')item.setAttribute('aria-current','step');
+    item.append(el('span',labels[state]||'Result not reported'));stages.append(item);
   }
 }
 async function refreshRuntime(){

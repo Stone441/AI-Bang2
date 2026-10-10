@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 真人首次试用明确报告首题“Synthesis was blocked”，确认综合失败；原文接续不是成功。按真人反馈修复阶段结果：后端保留completed/running/failed/pending/not_run，完成绿色、进行黄色、等待灰色、失败红色，配文字；综合失败后原文final_checks完成仍保留生成/审查失败。55项相关Python、2项Node及1项HTTP联动通过，无新增付费问答。当前8/12（剩4）、新unknown无。为保留正在试用的session，本次未重启49161；旧后端不推断阶段成功，完整新状态待下一次安全更新加载，新UI真人观察not_run。证据：evidence/runs/delivery-20261011/progress-outcomes-local.json。
+
 ## 本轮候选交付事实 · 2026-10-11
 
 当前独立delivery分支，基准main b34a055。已落地disabled8192/ranking none、紧凑generation/review、保守latest引用断言、受支持背景过滤、History当前claim复校、明确失败的原文证据接续和界面视觉统一。材料见SUBMISSION_CANDIDATE；复用1600×900封面、15份真实CodeBuddy原件hash吻合；未上传私有证据。

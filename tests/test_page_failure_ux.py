@@ -106,6 +106,21 @@ class ProgressHTTP(unittest.TestCase):
     tearDown=test_http.HTTP.tearDown
     request=test_http.HTTP.request
     login=test_http.HTTP.login
+    def test_stage_results_survive_polling_and_failure_continuation(self):
+        runs=SessionRuns();rid=runs.begin('own')
+        for phase in ('retrieval','authorization','generation','review'):runs.phase('own',rid,phase)
+        snapshot=runs.snapshot('own')
+        self.assertEqual(snapshot['stage_states']['generation'],'completed')
+        self.assertEqual(snapshot['stage_states']['review'],'running')
+        snapshot['stage_states']['review']='completed'
+        self.assertEqual(runs.snapshot('own')['stage_states']['review'],'running')
+        runs.phase('own',rid,'synthesis_failed');runs.phase('own',rid,'final_checks')
+        runs.finish('own',rid,result={'answer_status':'evidence_only','synthesis_failure':'model_output_unavailable'})
+        self.assertEqual(runs.snapshot('own')['stage_states']['review'],'failed')
+        self.assertEqual(runs.snapshot('own')['stage_states']['final_checks'],'completed')
+        rid=runs.begin('own');runs.phase('own',rid,'retrieval');runs.finish('own',rid,code='source_unavailable')
+        self.assertEqual(runs.snapshot('own')['stage_states']['retrieval'],'failed')
+        self.assertEqual(runs.snapshot('own')['stage_states']['authorization'],'not_run')
     def test_progress_bypasses_long_query_lock_and_is_session_private(self):
         self.login('eng_b');other_cookie,other_csrf=self.cookie,self.csrf
         self.login('eng_b')

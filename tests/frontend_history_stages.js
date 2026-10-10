@@ -22,5 +22,11 @@ const watchdog=setTimeout(()=>{console.error('FAIL: history test did not finish'
  vm.runInContext("renderStages({phase:'review',phases:['queued','retrieval','authorization','generation','review']})",ctx);
  assert.equal(get('progressSteps').children[3].attributes['aria-current'],'step');assert.ok(text(get('progressSteps').children[4]).includes('Not yet reported'));
  vm.runInContext("renderStages({phase:'generation',phases:['queued','retrieval','generation']})",ctx);assert.ok(text(get('progressSteps').children[1]).includes('Not yet reported'));assert.equal(get('progressSteps').children[2].attributes['aria-current'],'step');
+ vm.runInContext("renderStages({status:'running',phase:'review',stage_states:{retrieval:'completed',authorization:'completed',generation:'completed',review:'running',final_checks:'pending'}})",ctx);
+ assert.ok(text(get('progressSteps').children[0]).includes('✓ Completed'));assert.equal(get('progressSteps').children[0].className,'stage completed');
+ assert.ok(text(get('progressSteps').children[3]).includes('In progress'));assert.equal(get('progressSteps').children[3].attributes['aria-current'],'step');
+ vm.runInContext("renderStages({status:'evidence_only',phase:'final_checks',stage_states:{retrieval:'completed',authorization:'completed',generation:'failed',review:'not_run',final_checks:'completed'}})",ctx);
+ assert.ok(text(get('progressSteps').children[2]).includes('Failed'));assert.ok(text(get('progressSteps').children[3]).includes('Not run'));
+ assert.ok(text(get('progressSteps').children[4]).includes('Completed'));assert.equal(get('progressSteps').children[4].attributes['aria-current'],undefined);
  console.log('PASS: own question summaries load without source reads; explicit current-access answer opening, errors/empty states, no duplicate click; only actual observed stages');
 })().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>clearTimeout(watchdog));

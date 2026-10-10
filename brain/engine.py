@@ -240,6 +240,7 @@ class Engine:
                 else:
                     draft=self.model.generate(question,selected)
             except ModelOutputRejected:
+                emit('synthesis_failed')
                 if not self.evidence_on_model_rejection:raise
                 # No model draft survives. These are immutable authorized original
                 # passages, not repaired claims or a fabricated successful review.
