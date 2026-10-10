@@ -322,8 +322,8 @@ async function boot(){
     }else if(health.auth_kind==='demo'){$('loginForm').querySelector('button').disabled=false;}
     else{throw Error('Unsupported authentication mode.');}
     try{session=await api('/api/session');}
-    catch(err){if(bootstrapTicket&&health.auth_kind==='operator')session=await api(health.login_path,{ticket:bootstrapTicket});else throw err;}
+    catch(err){if(err.status===403&&bootstrapTicket&&health.auth_kind==='operator')session=await api(health.login_path,{ticket:bootstrapTicket});else throw err;}
     identity();
-  }catch(err){show('login');if(health?.auth_kind==='operator')$('status').textContent='Operator link is missing, expired or already used. Restart the server for a new link.';}
+  }catch(err){show('login');$('status').textContent=health?.auth_kind==='operator'&&err.status===403?(bootstrapTicket?'This one-time operator link has expired or was already used. Ask the operator to refresh the entry, then reopen the launch command.':'No active operator session. Sessions expire after 1 hour. Ask the operator to refresh the entry, then reopen the launch command. Saved answers remain stored.'): 'Could not connect to the local service. Refresh to reconnect; no new question was submitted.';}
 }
 boot();

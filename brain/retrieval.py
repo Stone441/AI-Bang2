@@ -28,6 +28,15 @@ def tokens(text):
     return {ALIASES.get(t, t) for t in words if t not in STOP}
 
 
+
+def ranking_terms(query_tokens, strategy='none'):
+    """Optional lexical action vocabulary for ranking, never topic or access filtering."""
+    if strategy not in ('none','action-terms-v1'):raise ValueError('Unsupported query expansion')
+    result=set(query_tokens)
+    if strategy=='action-terms-v1' and result & {'mitigation','mitigations'}:
+        result.update({'procedure','workaround','safeguard','protective'})
+    return result
+
 def spans(text):
     if len(text) <= WHOLE_LIMIT:
         return [(0, len(text))]

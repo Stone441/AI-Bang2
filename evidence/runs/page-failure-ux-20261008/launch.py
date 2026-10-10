@@ -44,7 +44,9 @@ class Admission:
    try:return self.query(*args,**kwargs)
    finally:self.save()
 
-def main():
+def main(*, query_expansion="none"):
+ from brain.retrieval import ranking_terms
+ ranking_terms(set(),query_expansion)
  import subprocess
  from brain import operator_web
  repo=Path(__file__).resolve().parents[3]
@@ -58,6 +60,7 @@ def main():
   server=original_create(app,port);serve=server.serve_forever
   def limited_serve(*a,**kw):
    current=server.application
+   current.engine.query_expansion=query_expansion
    model=current.engine.model;generate=model.generate_with_provenance
    def capture(question,evidence,request_id,provenance,authorize,observe=None):
     # Approved synthetic generation only. Store validated draft privately for a

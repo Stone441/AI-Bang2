@@ -66,6 +66,23 @@ class GroundedSynthesis(unittest.TestCase):
         self.assertEqual(review['evidence'][0]['text'],self.evidence.text)
         self.assertEqual(review['claims'],[self.claim])
 
+    def test_review_sees_uncited_actions_and_failed_coverage_never_returns_draft(self):
+        extra=Evidence('confluence:uncited@1','confluence:uncited',1,'confluence','Synthetic action',{},
+            '[SYNTHETIC] Approved safeguard: inspect the timeout budget before failover.',
+            '2026-10-05','2026-10-05','https://example.com')
+        self.transport.outputs[1]['question_covered']=False
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization('Is GA approved and what safeguard is required?',
+                [self.evidence,extra],self.rid,lambda _:None)
+        self.assertEqual(len(self.transport.calls),2)
+        generation=json.loads(self.transport.calls[0]['messages'][1]['content'])
+        review=json.loads(self.transport.calls[1]['messages'][1]['content'])
+        self.assertEqual(generation['evidence'],review['evidence'])
+        self.assertIn(extra.evidence_id,{e['evidence_id'] for e in review['evidence']})
+        self.assertNotIn(extra.evidence_id,self.claim['evidence_ids'])
+        self.assertEqual(self.ledger.summary()['pending_requests'],0)
+        self.assertEqual(self.ledger.summary()['settled_micro_usd'],2*cost_upper(100,20))
+
     def test_unknown_citation_or_invented_quote_rejected_before_review(self):
         for mutation in ('id','quote','missing','extra'):
             with self.subTest(mutation=mutation):

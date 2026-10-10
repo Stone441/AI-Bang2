@@ -17,13 +17,16 @@ from scripts.business_validation import build_world
 ROOT=Path(__file__).resolve().parents[3]
 OUT=ROOT/'evidence/runs/page-failure-ux-20261008/v11-quality36'
 
-def main():
- check_price_review();OUT.mkdir(exist_ok=False)
+def main(*, query_expansion="none", output=None):
+ from brain.retrieval import ranking_terms
+ ranking_terms(set(),query_expansion)
+ out=Path(output) if output is not None else OUT
+ check_price_review();out.mkdir(exist_ok=False)
  baseline=ROOT/'evidence/runs/lock-contention-20261008'
  groups=[('core24',baseline/'core24-cooldown-final/development-cases.json'),('known12',baseline/'known12-cooldown-final/cases.json')]
  cases=[]
  for group,path in groups:
-  raw=path.read_bytes();(OUT/(group+'-cases.json')).write_bytes(raw)
+  raw=path.read_bytes();(out/(group+'-cases.json')).write_bytes(raw)
   cases.extend((group,c) for c in json.loads(raw))
  world,_=build_world()
  for r in world.resources.values():
@@ -34,10 +37,10 @@ def main():
  config=json.loads((ROOT/'.runtime'/bundle['sources']['jira']).read_text())
  key=MacKeychain().get('deepseek',config['tenant'],'eng_b','deepseek-flash');assert key
  model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True,reasoning_effort='low',output_tokens=8192);del key
- engine=Engine(store,world,audit,model,mode='fixture_source_live_model_synthesis',retrieval_strategy='bm25')
+ engine=Engine(store,world,audit,model,mode='fixture_source_live_model_synthesis',retrieval_strategy='bm25',query_expansion=query_expansion)
  spec=importlib.util.spec_from_file_location('bounded_trial',Path(__file__).with_name('launch.py'));module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
  query=module.Admission(engine.query,ledger,ROOT/'.runtime/page-failure-ux-20261008/.runtime/trial-admission.json')
- report={'started_at':now(),'mode':engine.mode,'questions':36,'browser':'not_run_saved_denial','native_source':'not_run_fixture_sources','model':'low8192_unchanged','source_hashes':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT/'brain').glob('*.py'))},'results':[]}
+ report={'query_expansion':query_expansion,'started_at':now(),'mode':engine.mode,'questions':36,'browser':'not_run_saved_denial','native_source':'not_run_fixture_sources','model':'low8192_unchanged','source_hashes':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT/'brain').glob('*.py'))},'results':[]}
  try:
   for group,case in cases:
    # Respect the persisted shared trial admission before executing a case.
@@ -51,14 +54,14 @@ def main():
     error=type(exc).__name__;events=audit.export();answer={'request_id':events[-1]['request_id'] if events else None,'claims':[],'evidence':[]}
    result={'group':group,'id':case['id'],'question':case['question'],'expected_behavior':case['expected_behavior'],'error':error,'elapsed_seconds':time.monotonic()-start,'answer':answer}
    report['results'].append(result)
-   (OUT/(group+'-'+case['id']+'.json')).write_text(json.dumps(result,indent=2)+'\n')
-   (OUT/'progress.json').write_text(json.dumps(report,indent=2)+'\n')
+   (out/(group+'-'+case['id']+'.json')).write_text(json.dumps(result,indent=2)+'\n')
+   (out/'progress.json').write_text(json.dumps(report,indent=2)+'\n')
    print(json.dumps({'group':group,'id':case['id'],'error':error,'claims':len(answer['claims']),'seconds':round(result['elapsed_seconds'],2)}),flush=True)
    if error in ('TrialAdmissionPaused','BudgetExceeded','ModelRequestUnavailable'):
     report['not_run']=[{'group':g,'id':c['id'],'reason':'admission paused; preserve budget/unknown and ask operator'} for g,c in cases[len(report['results']):]]
     break
  finally:
   report.update(finished_at=now(),chain=verify_chain(audit.export()),budget_after=ledger.summary())
-  (OUT/'verification.json').write_text(json.dumps(report,indent=2)+'\n');(OUT/'audit.json').write_text(json.dumps(audit.export(),indent=2)+'\n')
+  (out/'verification.json').write_text(json.dumps(report,indent=2)+'\n');(out/'audit.json').write_text(json.dumps(audit.export(),indent=2)+'\n')
   ledger.close();store.db.close()
 if __name__=='__main__':main()

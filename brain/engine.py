@@ -25,12 +25,14 @@ class FakeExtractiveModel:
 
 class Engine:
     def __init__(self, store, world, audit, model=None, *, tenant=TENANT, mode=MODE,
-                 retrieval_strategy='bm25'):
+                 retrieval_strategy='bm25', query_expansion='none'):
         if retrieval_strategy not in ('lexical','bm25'):raise ValueError('Unsupported retrieval strategy')
         self.store,self.world,self.audit=store,world,audit
         self.model=model or FakeExtractiveModel()
         self.tenant,self.mode=tenant,mode
-        self.retrieval_strategy=retrieval_strategy
+        from .retrieval import ranking_terms
+        ranking_terms(set(),query_expansion)
+        self.retrieval_strategy=retrieval_strategy;self.query_expansion=query_expansion
         self.before_dispatch=None
 
     def prefilter(self, actor, resource):
@@ -125,7 +127,7 @@ class Engine:
         self.validate_actor(actor)
         if not isinstance(question,str) or not question.strip() or len(question)>4000:
             raise ValueError('Question must contain 1–4000 characters')
-        if not attempt:self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + '+self.retrieval_strategy+' + lexical aliases + exact windows + authorized one-hop links','history_id':None,'query_kind':'independent'})
+        if not attempt:self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + '+self.retrieval_strategy+' + query ranking '+self.query_expansion+' + lexical aliases + exact windows + authorized one-hop links','history_id':None,'query_kind':'independent'})
         try:
             emit('retrieval')
             if hasattr(self.world, 'prepare'):
@@ -139,9 +141,11 @@ class Engine:
                      if r['tenant']==actor.tenant and self.prefilter(actor,r)]
             prefiltered=visible
             visible=subject_related(visible,query_tokens)
-            bm25=bm25_windows(visible,query_tokens) if self.retrieval_strategy=='bm25' else None
+            from .retrieval import ranking_terms
+            rank_tokens=ranking_terms(query_tokens,self.query_expansion)
+            bm25=bm25_windows(visible,rank_tokens) if self.retrieval_strategy=='bm25' else None
             def rank(resource, *, supplementary=False):
-                if bm25 is None:return ranked_windows(resource,query_tokens,supplementary=supplementary)
+                if bm25 is None:return ranked_windows(resource,rank_tokens,supplementary=supplementary)
                 return bm25.get(resource['id']) or ([(0,*spans(resource['text'])[0])] if supplementary else [])
             # Legacy in-process history_id is accepted for old harness compatibility only.
             # Independent queries never read or supplement previous answer dependencies.
