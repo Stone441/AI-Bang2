@@ -95,7 +95,7 @@ def main(argv=None):
     parser.add_argument('--discovery-auth017',action='store_true',help='Opt-in eng_b discovery in AUTH-017 fixed four containers; default off')
     parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive or multi; browser consent instead of hidden Drive token')
     parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
-    parser.add_argument('--answer-style', choices=['excerpts','synthesis'], default='excerpts',
+    parser.add_argument('--answer-style', choices=['excerpts','synthesis','reviewed-excerpts'], default='excerpts',
                         help='Synthesis uses two budgeted calls and exact grounding plus model review')
     parser.add_argument('--reasoning-effort', choices=['none','low'], default='none',
                         help='Trusted synthesis launch configuration; never supplied by browser questions')
@@ -106,13 +106,13 @@ def main(argv=None):
                         help='Re-enter only one credential for this launch; keep all others')
     args = parser.parse_args(argv)
     if (args.reasoning_effort!='none' or args.output_tokens!=1024) and (
-            args.model!='deepseek' or args.answer_style!='synthesis'):
+            args.model!='deepseek' or args.answer_style not in ('synthesis','reviewed-excerpts')):
         print('not_run: reasoning/output overrides require DeepSeek synthesis; no credentials or platform calls performed.')
         return 2
     if args.discovery_auth017 and (args.source!='multi' or args.actor!='eng_b'):
         print('not_run: AUTH-017 discovery requires multi-source eng_b; no credentials or platform calls performed.')
         return 2
-    if args.answer_style=='synthesis' and args.model!='deepseek':
+    if args.answer_style in ('synthesis','reviewed-excerpts') and args.model!='deepseek':
         print('not_run: synthesis requires DeepSeek; no credentials or platform calls performed.')
         return 2
     if not args.live:
@@ -201,9 +201,10 @@ def main(argv=None):
                 with warnings.catch_warnings():
                     warnings.simplefilter('error', getpass.GetPassWarning)
                     key = getpass.getpass('DeepSeek API key (hidden): ').strip()
-            if args.answer_style=='synthesis':
-                from .synthesis import DeepSeekSynthesisModel
-                model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True,
+            if args.answer_style in ('synthesis','reviewed-excerpts'):
+                from .synthesis import DeepSeekSynthesisModel,DeepSeekReviewedExcerptsModel
+                cls=DeepSeekReviewedExcerptsModel if args.answer_style=='reviewed-excerpts' else DeepSeekSynthesisModel
+                model=cls(key,ledger,synthetic_only=True,
                     reasoning_effort=args.reasoning_effort,output_tokens=args.output_tokens)
             else:
                 model = DeepSeekEvidenceModel(key, ledger, synthetic_only=True)
@@ -214,6 +215,8 @@ def main(argv=None):
             app.engine.mode = app.engine.mode.removesuffix('_fake_model') + '_live_model_selection'
             if args.answer_style=='synthesis':
                 app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_synthesis'
+            elif args.answer_style=='reviewed-excerpts':
+                app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_reviewed_excerpts'
         if args.discovery_auth017:
             from .discovery import ContainerDiscovery
             stage='discovery_configuration'
@@ -223,6 +226,7 @@ def main(argv=None):
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
         label = 'LIVE MODEL EVIDENCE SELECTION' if args.model == 'deepseek' else 'FAKE MODEL'
         if args.answer_style=='synthesis': label='LIVE MODEL GROUNDED SYNTHESIS / SEPARATE MODEL REVIEW'
+        elif args.answer_style=='reviewed-excerpts':label='LIVE MODEL VERBATIM SOURCES / SEPARATE MODEL REVIEW'
         print(f'{args.source.title()} LIVE API / {label} / LOCAL OPERATOR (not SSO)', flush=True)
         version = runtime_version()
         print(f"Startup source: {version['startup_source_sha256']} / loaded {version['process_loaded_at']}", flush=True)

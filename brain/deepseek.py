@@ -246,6 +246,7 @@ class DeepSeekEvidenceModel:
             categories={'Grounding quote does not match current evidence':'quote',
                 'Citation lacks grounding quote':'quote','Claim identifier lacks quoted support':'claim',
                 'Invalid grounded claim':'claim','Invalid grounded citation':'claim',
+                'Temporal assertion lacks quoted support':'temporal',
                 'Incomplete model review':'review','Claim not fully supported and responsive':'review'}
             diagnostic['validation_failure']=categories.get(str(error),category)
             self.ledger.model_outcome(reservation_id, 'output_rejected')

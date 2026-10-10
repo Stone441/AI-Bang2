@@ -3,7 +3,19 @@ import tempfile
 import unittest
 from pathlib import Path
 from brain.budget import BudgetLedger, TrialAdmissionPaused
-from scripts.delivery_trial import Admission
+from scripts.delivery_trial import Admission, rejected_generation_diagnostic
+
+class PrivateGenerationDiagnostic(unittest.TestCase):
+    def test_bounds_visible_claim_fields_and_excludes_reasoning(self):
+        output={'reasoning_content':'PRIVATE REASONING','claims':[{'text':'x'*800,
+            'evidence_ids':['E1'],'supports':[{'evidence_id':'E1','quote':'q'*2000,
+            'reasoning':'PRIVATE REASONING'}],'extra':'PRIVATE EXTRA'}]*6}
+        diagnostic=rejected_generation_diagnostic(output)
+        self.assertEqual(diagnostic['claim_count'],6)
+        self.assertEqual(len(diagnostic['claims']),4)
+        self.assertEqual(len(diagnostic['claims'][0]['text']),600)
+        self.assertEqual(len(diagnostic['claims'][0]['supports'][0]['quote']),1200)
+        self.assertNotIn('PRIVATE',json.dumps(diagnostic))
 
 class DeliveryAllowance(unittest.TestCase):
     def setUp(self):

@@ -4,6 +4,8 @@
 
 [Standalone 16:9 architecture diagram](../assets/submission/contextledger-architecture.svg), ready for material/video use.
 
+Current trial uses reviewed verbatim-source answers: generation selects IDs and exact contiguous spans; code constructs factual text equal to those spans; a separate review checks coverage and scope. No online quality result yet. Old free-form synthesis remains an explicit rollback.
+
 Independent questions; native eng_b four-source synthetic pilot; SQLite version-bound windows with lexical ranking (no embeddings). AUTH017 background polling publishes source updates; worker failure/stale completeness blocks native synthesis. No business-source writes. In this delivery instance only, a known-usage output rejection can continue to unchanged authorized source excerpts after final native checks, with explicit synthesis-failed/evidence-only status; no rejected draft or fake review receipt is released. Session identity is verified on the server, not supplied by prompts. Source/context bytes remain untrusted.
 
 ```mermaid
@@ -11,8 +13,8 @@ flowchart LR
  U[Loopback UI / server session] --> R[Local version-bound retrieval]
  W[Native readonly background polling] --> R
  R --> A[Current native access and content checks]
- A --> G[DeepSeek Flash generation / disabled 8192]
- G --> Q[Exact IDs and quotes]
+ A --> G[DeepSeek Flash span selection / disabled 8192]
+ G --> Q[Code constructs exact quoted claims]
  Q --> P[Current native review dispatch checks]
  P --> V[Separate same-model support and coverage review]
  V --> F[Retained claims / final native checks]

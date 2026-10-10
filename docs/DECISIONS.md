@@ -1,5 +1,9 @@
 # Decisions / ADR
 
+2026-10-11 ADR077：仅用一项剩余后台额度诊断实际首题，未改问题/提示词/配置。已确认v13拒绝未知措辞“The latest … is not established in the accessible evidence”，原草稿也遗漏授权C01 runbook。未知措辞豁免仅限明确、分开的否定句；肯定latest及夹带肯定句仍阻断。旧失败不改成成功。私有诊断只保留有界可见claim字段、不保留reasoning、不显示草稿；调用价按当日官方pricing复核及readiness，旧unknown不变。
+
+2026-10-11 ADR078：自由生成同路径两次无实质进展后，停止追加同类提示词。新增可回退的reviewed-excerpts技术路径：第一次模型只选择原文ID/连续quote（≤4、12–600字符），服务端构造text=quote的有支持claim；第二次模型独立审查支持、关键范围和问题覆盖，遗漏措施仍阻断，真实冗余仍须明确可过滤且完整。固定服务器说明不推断最新顺序，不替代缺失事实。两次当前授权、最终版本检查、History复查、审计/账本不变，同DeepSeek/disabled8192。与未验证失败接续区别显示Reviewed source answer；旧synthesis/excerpts配置保留。候选本地6专项通过，首次启动旧guard拒绝已修并回归；当前真人实例加载，但候选在线质量not_run，不继承旧Q2成绩，不宣布Q1或Goal完成。剩三次真人，后台问答停止。
+
 2026-10-11 ADR076：阶段颜色反映服务端实际结果，而非仅到达过某阶段。正常推进保留前阶段完成；生成/审查拒绝标失败，证据接续只完成自己的最终鉴权检查；未执行审查标not_run。旧实例仅提供observed时明确结果未报告，不从phase列表推断成功，不伪造进度百分比。真人报告原首题综合失败；保留历史失败及当前试用session，不追加付费复验。新后端待安全实例更新，不能声称真人已验证修复。
 
 ADR-075 · 2026-10-11 技术取舍：v13首题15.48秒在generation阻断，第二题26.00秒成功；不再追加相同提示词/全套实验。获批delivery operator显式启用证据接续：仅known-usage输出拒绝时，丢弃整份草稿，保留失败/调用审计，经正常final native权限/版本检查提供selected原文。显式answer_status=evidence_only及“synthesis blocked”UI；不声称综合答案成功或首题已完整解决。原文含C01措施且不推断最新顺序，不硬编码题目/内容。unknown/撤权/版本改变/预算/transport异常仍阻断，无付费重试。History与刷新以evidence_only终态取回，并再次当前鉴权；默认Engine不启用该选择。

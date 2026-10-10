@@ -315,3 +315,7 @@ Use a new output directory on each run. This executes successful, partly authori
 ### Approved independent Confluence product reader
 
 AUTH-016 approves only the specified product_ops Confluence token and app-owned Keychain reuse. Follow `PRODUCT_READER_PILOT.md`. Single-source Confluence supports `--credential-store macos-keychain`; new input is verified against the native account before saving, and subsequent startup reuses the item. Its database is isolated by actor/tenant/native-account digest. Other single-source Keychain modes remain rejected. Native product permission acceptance is still pending login/token creation; use the prepared fake-model command, not an unapproved product model credential.
+
+### Current delivery trial · 2026-10-11
+
+Current own loopback candidate: `python3 -m scripts.delivery_trial --human --answer-style reviewed-excerpts`. Use the repository’s `打开试用页面.command` for the one-time local entry; no token is printed. New sessions are created on restart; saved answers, audit and admission persist. Only update an owned idle instance after saving state; do not restart a human request. The new candidate has local checks, not live quality acceptance. Old `--answer-style synthesis` remains a rollback; neither a rollback nor a restart resets admission, charges or unknown reservations. All three remaining submissions are human-only.

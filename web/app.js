@@ -75,7 +75,7 @@ async function refreshRuntime(){
     $('runtime').hidden=false;renderAdmission(r.query_admission);
     const sourceMode=r.mode.includes('fixture')?'Synthetic fixture sources':r.mode.includes('mock_http')?'Mock source APIs':r.mode.includes('live_api')?'Native source APIs':'Source mode unconfirmed';
     const modelName=r.model.startsWith('deepseek-flash')?'DeepSeek Flash':r.model==='fake-extractive-v1'?'Fake extractive model':r.model;
-    const answerMode=r.model.includes('grounded-synthesis')?'Reviewed synthesis':r.model==='fake-extractive-v1'?'Synthetic excerpts':'Source excerpts';
+    const answerMode=r.model.includes('reviewed-excerpts')?'Reviewed verbatim sources':r.model.includes('grounded-synthesis')?'Reviewed synthesis':r.model==='fake-extractive-v1'?'Synthetic excerpts':'Source excerpts';
     $('runtimeModel').textContent=modelName+' · '+sourceMode+' · '+answerMode;
     $('runtimeDetails').textContent=r.model+' · '+r.mode;
     const list=$('runtimeSources');list.replaceChildren();
@@ -146,9 +146,10 @@ async function preview(id){
 }
 
 function modelLabel(answer){
-  if(answer.answer_status==='evidence_only')return 'SYNTHESIS BLOCKED · SOURCE EVIDENCE';
+  if(answer.answer_status==='evidence_only')return answer.answer_kind==='reviewed_excerpts'?'ANSWER BLOCKED · SOURCE EVIDENCE':'SYNTHESIS BLOCKED · SOURCE EVIDENCE';
   if(answer.model==='fake-extractive-v1')return 'FAKE MODEL';
   if(answer.model_call?.called===false)return 'NO MODEL CALL';
+  if(answer.model_call?.called===true&&answer.answer_kind==='reviewed_excerpts')return 'LIVE MODEL · REVIEWED SOURCES';
   if(answer.model_call?.called===true)return answer.claim_format==='grounded_synthesis_v1'?'LIVE MODEL · REVIEWED SYNTHESIS':'LIVE MODEL · SOURCE EXCERPTS';
   return 'MODEL CALL NOT RECORDED';
 }
@@ -171,17 +172,18 @@ function renderModelUsage(answer,target){
 
 }
 function answerStatus(answer){
-  if(answer.answer_status==='evidence_only')return 'Synthesis failed validation. Current source evidence is available; no validated summary was produced.';
+  if(answer.answer_status==='evidence_only')return 'Answer failed validation. Current source evidence is available; no validated answer was produced.';
   if(answer.model_call?.called===false)return 'No supporting evidence found. No external model request was sent.';
   if(!answer.claims.length)return answer.model_call?.called===true?'The model checked authorized sources but found insufficient support.':'Insufficient supporting evidence.';
+  if(answer.answer_kind==='reviewed_excerpts'&&answer.model_review?.called===true)return 'Answer recorded. Verbatim source passages and answer coverage were reviewed; latest ordering is not inferred.';
   if(answer.model==='fake-extractive-v1')return 'Answer recorded. Authorized synthetic source excerpts; fake model.';
   return answer.model_call?.called===true?(answer.claim_format==='grounded_synthesis_v1'?'Answer recorded. Grounded synthesis and model review completed.':'Answer recorded. Live model selected authorized source excerpts.'):'Answer recorded. Model usage was not recorded.';
 }
 function renderAnswer(answer,target=$('answer')){
   target.replaceChildren();if(answer.unavailable){target.append(el('p',answer.message,'notice'));return;}
-  if(answer.answer_status==='evidence_only'){const failure=el('div',undefined,'error-panel');failure.append(el('h2','Synthesis was blocked'),el('p','The model output did not pass validation. The original source passages below were checked for current access and version. They are not a validated summary; latest ordering is not inferred.'));target.append(failure);}
+  if(answer.answer_status==='evidence_only'){const failure=el('div',undefined,'error-panel');failure.append(el('h2',answer.answer_kind==='reviewed_excerpts'?'Source answer was blocked':'Synthesis was blocked'),el('p','The model output did not pass validation. The original source passages below were checked for current access and version. They are not a validated summary; latest ordering is not inferred.'));target.append(failure);}
   const grid=el('div',undefined,'receipt'),main=el('div',undefined,'panel'),side=el('aside',undefined,'panel');
-  const head=el('div',undefined,'receipt-head');head.append(el('h2',answer.claim_format==='grounded_synthesis_v1'?'Evidence-backed answer':'Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);
+  const head=el('div',undefined,'receipt-head');head.append(el('h2',answer.answer_kind==='reviewed_excerpts'?'Reviewed source answer':answer.claim_format==='grounded_synthesis_v1'?'Evidence-backed answer':'Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);
   main.append(el('h3',answer.question||'Question not recorded for this older answer.'));
   const date=typeof answer.answered_at==='string'?new Date(answer.answered_at):null;
   main.append(el('p',date&&!Number.isNaN(date.getTime())?'Answered '+date.toLocaleString():'Generation time not recorded for this older answer.','muted'));
@@ -320,7 +322,7 @@ async function boot(){
     health=await api('/api/health');
     if(health.auth_kind==='operator'){
       $('modeBadge').textContent=health.mode.includes('mock_http')?'MOCK API PILOT':'LIVE API PILOT';
-      $('modeDescription').textContent=health.mode.endsWith('_live_model_synthesis')?'Synthetic allowlisted resources · Grounded synthesis with model review · Local operator':health.mode.endsWith('_live_model_selection')?'Synthetic allowlisted resources · Live model selects excerpts · Local operator':'Synthetic allowlisted resources · Fake model · Local operator';
+      $('modeDescription').textContent=health.mode.endsWith('_live_model_reviewed_excerpts')?'Synthetic allowlisted resources · Verbatim sources with model review · Local operator':health.mode.endsWith('_live_model_synthesis')?'Synthetic allowlisted resources · Grounded synthesis with model review · Local operator':health.mode.endsWith('_live_model_selection')?'Synthetic allowlisted resources · Live model selects excerpts · Local operator':'Synthetic allowlisted resources · Fake model · Local operator';
       $('modeFooter').textContent='Operator pilot · not employee SSO';
       $('user').hidden=true;$('loginForm').querySelector('label').hidden=true;
       $('loginForm').querySelector('button').hidden=true;

@@ -1,6 +1,8 @@
 # ContextLedger · submission candidate
 
-Prepared 11 October 2026 from main b34a055 plus the current delivery branch. This is a reviewable candidate, not G1/G2 approval or a completed submission. Current runtime results are in [delivery evidence](../evidence/runs/delivery-20261011/); older evidence retains its original build and mode.
+Prepared 11 October 2026 from main b34a055 plus the current delivery branch. The current loopback trial uses a new reviewed verbatim-source candidate; its online answer quality is not yet verified. Historical synthesis results do not establish this candidate’s quality. This is a reviewable candidate, not G1/G2 approval or a completed submission. Current runtime results are in [delivery evidence](../evidence/runs/delivery-20261011/); older evidence retains its original build and mode.
+
+Current candidate adds model-selected exact source spans, code-constructed quotes and a separate coverage/scope review. Unsupported selections and incomplete reviewed answers are blocked; failed source continuation remains labelled as failure. The server explicitly declines to infer latest ordering. This is a technical alternative to free-form synthesis, not a successful first-question result.
 
 ## Copy-ready project fields
 
@@ -58,7 +60,7 @@ For a no-provider-cost deterministic walkthrough: `make setup`, `make verify`, `
 | Time | Narration and shot | Recording requirement |
 |---|---|---|
 | 0:00–0:40 | “At three in the morning, an engineer needs the incident context. A product colleague needs to know what can be offered today. Both need evidence they are allowed to read.” Cover → workspace. | Show synthetic-data and runtime labels. |
-| 0:40–2:25 | “This question stands on its own. The workspace reports actual elapsed time and observed phases, then releases only validated claims.” Ask original Q1; explain approved actions and chronology limitation. Ask original Q2; open citations. | Record actual current outcomes. Keep failures visible; label any waiting-time edit. No fake answer overlay. |
+| 0:40–2:25 | “This question stands on its own. The workspace reports actual elapsed time and recorded stage outcomes, then releases only validated claims.” Ask original Q1; explain approved actions and chronology limitation. Ask original Q2; open citations. | Record actual current outcomes. Keep failures visible; label any waiting-time edit. No fake answer overlay. |
 | 2:25–3:10 | “Refreshing reconnects to the same run; it does not buy another answer. Recent lists our questions; History checks current access before retrieving a saved answer.” Demonstrate wait/refresh, saved answer and preview. | Reserve current human submissions; after completed question use read-only History/preview. |
 | 3:10–4:25 | “Source content and access change separately. This labelled replay shows update and revocation protection.” Show S-02/S-04 existing native records; switch to clearly labelled fixture for deterministic lifecycle walkthrough. | No external source writes this round; disclose history and fixture/fake mode on screen. |
 | 4:25–5:00 | “A denied question does not reveal whether a restricted report exists.” S-03 fixture role contrast. | Do not reveal private report titles as application output. |

@@ -287,6 +287,7 @@ class Engine:
             response={'request_id':rid,'question':question,'answered_at':now(),'mode':self.mode,'model':self.model.name,'claims':claims,
                       'uncertainties':[getattr(self.model,'answer_notice','Source excerpts only; live AI synthesis is not enabled.')] if claims else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
+            if getattr(self.model,'answer_kind',None):response['answer_kind']=self.model.answer_kind
             if self.audit.request_has_unknown(actor.user_id,rid):
                 response['uncertainties']=['Some source checks could not be completed. These results may omit relevant information; retry before relying on a complete conclusion.']
             elif not claims and getattr(self.model,'claim_format',None)=='grounded_synthesis_v1':

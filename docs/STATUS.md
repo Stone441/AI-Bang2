@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 当前交付增量：首题一次受限诊断仍失败（21.54s/evidence_only），确认未知措辞误判且草稿遗漏C01措施，失败原件保留。新增opt-in reviewed-excerpts路径：模型选连续原文，代码构造精确支持，单独review完整性/范围；不是未经校验接续，也不自由改写事实。49161已加载此候选及持久阶段结果/旋转指示，入口检查通过；候选在线质量/新UI真人观察pending，Q1仍未完成。当前9/12、13/24calls、新增保守结算USD0.012232、新unknown无，旧324404保留；剩三问全部真人，不再后台问答。整合462本地通过23.119s；其后仅未知措辞guard收紧/失败文字，6定向与对应Node通过；六Node全部通过，保留初次CLI guard拒绝和文案断言失败。实例startup hash193aeb58（2026-10-10T17:09:37UTC），后续旧综合未知措辞guard收紧为本地代码，当前原文路径的exact-quote支持不受影响；不冒称新候选live成功。见source-answer-technical-choice.json及reviewed-excerpts-startup.json。
+
 2026-10-11 进度视觉跟进：用户指出黄色容易被误解为异常，进行中改为中性浅底＋小型旋转符号＋In progress；完成绿色、失败红色保持。遵循减少动画偏好时停用旋转、保留文字。仅前端本地修改，无模型调用；当前试用实例未重启，完整后端阶段结果仍待安全更新。
 
 2026-10-11 真人首次试用明确报告首题“Synthesis was blocked”，确认综合失败；原文接续不是成功。按真人反馈修复阶段结果：后端保留completed/running/failed/pending/not_run，完成绿色、进行黄色、等待灰色、失败红色，配文字；综合失败后原文final_checks完成仍保留生成/审查失败。55项相关Python、2项Node及1项HTTP联动通过，无新增付费问答。当前8/12（剩4）、新unknown无。为保留正在试用的session，本次未重启49161；旧后端不推断阶段成功，完整新状态待下一次安全更新加载，新UI真人观察not_run。证据：evidence/runs/delivery-20261011/progress-outcomes-local.json。

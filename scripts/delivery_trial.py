@@ -7,6 +7,22 @@ import json,os,threading,fcntl
 from brain.budget import TrialAdmissionPaused
 from pathlib import Path
 
+def rejected_generation_diagnostic(output):
+ # Private diagnostic only: never capture arbitrary keys or reasoning fields.
+ # Bounds match the answer contract; this object is never sent to the UI.
+ claims=output.get('claims') if isinstance(output,dict) else None
+ if not isinstance(claims,list):return {'claims_shape':'invalid'}
+ safe=[]
+ for claim in claims[:4]:
+  if not isinstance(claim,dict):continue
+  text=claim.get('text');ids=claim.get('evidence_ids');supports=claim.get('supports')
+  safe.append({'text':text[:600] if isinstance(text,str) else None,
+   'evidence_ids':[i[:200] for i in ids[:4] if isinstance(i,str)] if isinstance(ids,list) else None,
+   'supports':[{'evidence_id':s.get('evidence_id','')[:200] if isinstance(s.get('evidence_id'),str) else None,
+                'quote':s.get('quote','')[:1200] if isinstance(s.get('quote'),str) else None}
+               for s in supports[:4] if isinstance(s,dict)] if isinstance(supports,list) else None})
+ return {'claim_count':len(claims),'claims':safe}
+
 class Admission:
  def __init__(self,query,ledger,state_path,*,human=False):
   self.human=human
@@ -48,7 +64,7 @@ class Admission:
    try:return self.query(*args,**kwargs)
    finally:self.save()
 
-def main(*, human=False):
+def main(*, human=False, answer_style="synthesis"):
  query_expansion="none"
  from brain.retrieval import ranking_terms
  ranking_terms(set(),query_expansion)
@@ -71,15 +87,19 @@ def main(*, human=False):
    def capture(question,evidence,request_id,provenance,authorize,observe=None):
     # Approved synthetic generation only. Store validated draft privately for a
     # failed review, never internal reasoning, upstream body, credentials or URL.
-    parsed=model.parse_output;draft=[]
+    parsed=model.parse_output;draft=[];rejected=[]
     def parse(output,evidence):
-     claims=parsed(output,evidence);draft[:]=claims;return claims
+     try:claims=parsed(output,evidence)
+     except Exception:
+      rejected[:]=[rejected_generation_diagnostic(output)];raise
+     draft[:]=claims;return claims
     model.parse_output=parse
     try:return generate(question,evidence,request_id,provenance,authorize,observe)
     except Exception:
-     if draft:
+     if draft or rejected:
       diagnostic=runtime/('rejected-draft-'+request_id+'.json')
-      diagnostic.write_text(json.dumps({'request_id':request_id,'validated_generation_claims':draft},indent=2)+'\n');diagnostic.chmod(0o600)
+      diagnostic.write_text(json.dumps({'request_id':request_id,'validated_generation_claims':draft,
+       'unvalidated_generation_output':rejected[0] if rejected else None},indent=2)+'\n');diagnostic.chmod(0o600)
      raise
     finally:model.parse_output=parsed
    model.generate_with_provenance=capture
@@ -87,10 +107,10 @@ def main(*, human=False):
    return serve(*a,**kw)
   server.serve_forever=limited_serve;return server
  operator_web.create_server=create;os.chdir(private)
- return operator_web.main(['--source','multi','--config',str(repo/'.runtime'/'operator-bundle.json'),'--actor','eng_b','--oauth-client',str(repo/'.runtime'/'drive-oauth-client.json'),'--port','49161','--live','--model','deepseek','--credential-store','macos-keychain','--answer-style','synthesis','--reasoning-effort','none','--output-tokens','8192','--discovery-auth017'])
+ return operator_web.main(['--source','multi','--config',str(repo/'.runtime'/'operator-bundle.json'),'--actor','eng_b','--oauth-client',str(repo/'.runtime'/'drive-oauth-client.json'),'--port','49161','--live','--model','deepseek','--credential-store','macos-keychain','--answer-style',answer_style,'--reasoning-effort','none','--output-tokens','8192','--discovery-auth017'])
 if __name__=='__main__':
  import argparse,sys,re
- parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');args=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts'],default='synthesis');args=parser.parse_args()
  token_dir=Path(__file__).resolve().parents[1]/'.runtime/page-failure-ux-logs'
  token_dir.mkdir(mode=0o700,exist_ok=True)
  class SafeOutput:
@@ -102,4 +122,4 @@ if __name__=='__main__':
    return sys.__stdout__.write(value)
   def flush(self):return sys.__stdout__.flush()
  sys.stdout=SafeOutput()
- raise SystemExit(main(human=args.human))
+ raise SystemExit(main(human=args.human,answer_style=args.answer_style))
