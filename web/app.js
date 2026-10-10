@@ -63,7 +63,7 @@ function renderStages(run){
   const observed=new Set(run.phases||[run.phase]);
   for(const phase of ['retrieval','authorization','generation','review','final_checks']){
     const state=run.stage_states?.[phase]||(phase===run.phase&&(!run.status||run.status==='running')?'running':observed.has(phase)?'observed':'pending');
-    const labels={completed:'✓ Completed',running:'● In progress',failed:'! Failed',pending:'Not yet reported',not_run:'Not run',observed:'Observed · result not reported'};
+    const labels={completed:'✓ Completed',running:'In progress',failed:'! Failed',pending:'Not yet reported',not_run:'Not run',observed:'Observed · result not reported'};
     const item=el('li',phaseLabels[phase],'stage '+state);
     if(state==='running')item.setAttribute('aria-current','step');
     item.append(el('span',labels[state]||'Result not reported'));stages.append(item);

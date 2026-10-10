@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 进度视觉跟进：用户指出黄色容易被误解为异常，进行中改为中性浅底＋小型旋转符号＋In progress；完成绿色、失败红色保持。遵循减少动画偏好时停用旋转、保留文字。仅前端本地修改，无模型调用；当前试用实例未重启，完整后端阶段结果仍待安全更新。
+
 2026-10-11 真人首次试用明确报告首题“Synthesis was blocked”，确认综合失败；原文接续不是成功。按真人反馈修复阶段结果：后端保留completed/running/failed/pending/not_run，完成绿色、进行黄色、等待灰色、失败红色，配文字；综合失败后原文final_checks完成仍保留生成/审查失败。55项相关Python、2项Node及1项HTTP联动通过，无新增付费问答。当前8/12（剩4）、新unknown无。为保留正在试用的session，本次未重启49161；旧后端不推断阶段成功，完整新状态待下一次安全更新加载，新UI真人观察not_run。证据：evidence/runs/delivery-20261011/progress-outcomes-local.json。
 
 ## 本轮候选交付事实 · 2026-10-11
