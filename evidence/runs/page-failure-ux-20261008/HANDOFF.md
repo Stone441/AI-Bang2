@@ -1,5 +1,8 @@
 # Refresh continuation repair — 2026-10-09
 
+2026-10-10 blocked接续审计：在d0af335后连续三轮仅复核同一真实阻塞，93/93授权耗尽，新增45题申请无批准、最新真人反馈未到。原实例49161健康且启动07:24:09UTC，默认query_expansion=none；不轮询daemon来伪称验证作业进展、不自动重启/扩额。可独立本地诊断/候选实现/444回归/只读审查已完成，继续真实6＋36及human需用户批准action-ranking-proposed-schedule.json具体范围：93→138，同provider低推理8192/四源只读/原Goal累计0.50USD（已0.320468、余0.179532）或新unknown停接纳。批准后持原flock只改max_attempts及明确白名单，不reset历史baseline/attempts/unknown；同49161空闲加载显式candidate，先核对当前资料再固定两题各3及36，不重试挑成功；human入口需重新检查ticket期限。当前token可能到期，未自动刷新。完成、G1/G2、AUTH019均不通过；本次记录是阻塞接续而非业务验证进展。
+
+
 2026-10-10 ADR068补充：offline_rank36.py重用原24/known12文件（hash与冻结计划一致），fixture prefilter＋主题过滤后的全部窗口排序比较36题均未变化，原因是这些原题未触发候选操作词；因此它们是未影响对照，不是新操作词业务质量覆盖。历史原Q1排序变化及独立Lumen合成正反对照另存。模型/原生调用0。候选仍默认none，真实6＋36与最多3human需一次新增授权（93→138、原Goal0.50USD阈值不重置，余0.179532USD/newunknown停止）；当前尚未批准，未扩额或启用。
 
 
