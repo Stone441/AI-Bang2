@@ -134,7 +134,7 @@ def main(*, human=False, answer_style="synthesis"):
  return operator_web.main(['--source','multi','--config',str(repo/'.runtime'/'operator-bundle.json'),'--actor','eng_b','--oauth-client',str(repo/'.runtime'/'drive-oauth-client.json'),'--port','49161','--live','--model','deepseek','--credential-store','macos-keychain','--answer-style',answer_style,'--reasoning-effort','none','--output-tokens','8192','--discovery-auth017'])
 if __name__=='__main__':
  import argparse,sys,re
- parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts'],default='synthesis');args=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts','source-review'],default='synthesis');args=parser.parse_args()
  token_dir=Path(__file__).resolve().parents[1]/'.runtime/page-failure-ux-logs'
  token_dir.mkdir(mode=0o700,exist_ok=True)
  if token_dir.is_symlink():raise ValueError('Private entry directory must not be a symlink')

@@ -1,5 +1,9 @@
 # Current status
 
+2026-10-11 整合交付更新：475本地回归23.320s通过，保留warnings/故意mock失败stdout。确认49161自有PID5968无在途请求并持有trial lock后，私有备份答案/审计/旧USD20账本/独立额度，更新为source-review；新PID11758/runtime89bdd62a，health及本机入口核验/续签通过。当天readiness通过；仅native启动及本地HTTP/入口，无新增问答或模型调用，11/12、17/24calls、新结算USD0.016143/newunknown无，剩一仅真人。当前原文审查质量与Q2未验证；旧selector两次失败不改为成功。材料与当前架构同步，G1/G2/录像仍团队完成。证据source-review-startup.json。
+
+2026-10-11 新增本地source-review候选：去掉已两次漏措施的模型selector，代码构造全部当前授权检索原文，一次model review检查完整性/范围/支持。9份实际原首题历史输入离线重放逐字保留、包含C01；仅输入构造证明，不算live答案或当前权限验证。6项专项、34旧综合兼容、17启动CLI、21进度/5审计回归及相关Node通过；新格式只有真实review回执，History仍复校精确原文及当前权限。失败原件和初始test harness失败保留。加载状态与整合检查见下述交付更新；核心首题及新路径Q2仍未验证，Goal不完成。
+
 2026-10-11 真人入口出现两次新原首题提交55af2f3/adf63662：reviewed-excerpts均已选原文并结算两次模型调用，但两次都遗漏当前授权C01措施，review supported/responsive全true而question_covered=false，正确阻断；最终evidence_only不算答案成功。两问都是原首题，当前新路径Q2未执行，不把旧Q2成绩继承。当前11/12、17/24calls、新增保守结算USD0.016143/newunknown无，余一次仅真人；服务保持，不重启、不后台调用。保留完整response/audit和私有草稿hash于human-reviewed-first-two，页面观察反馈pending。旧“not_run/剩三”是读取前快照，此段覆盖当前状态；Goal核心仍未解决。
 
 2026-10-11 最终入口release已加载231be53：runtime b1347573（2026-10-10T17:28:21UTC）匹配当前brain/scripts，含续签IO失败保护；真实--check/--refresh-only通过，PID不变、无浏览器/问答/模型调用。复制材料说明、启动命令、五场景步骤及回看证据已对齐；当时尚未检查真人结果；最新两次失败及余一问以本页首段为准。证据entry-release-runtime.json。下方5c7a74d2为首次续签验证快照。

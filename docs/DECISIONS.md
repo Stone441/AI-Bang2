@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-11 ADR081：根据ADR080两次同路径遗漏措施，停止模型选段提示词调整。新增opt-in `source-review`：代码将全部当前授权检索片段完整构造成连续原文claims，再用同DeepSeek一次review检查全部支持、范围、问题覆盖及安全过滤。不硬编码首题/C01，不改检索或权限；同一证据窗口保留所有已受支持片段，防止过滤掉末尾限定。使用新 `reviewed_source_v1` 契约，只允许精确原文及真实review回执，绝不伪造generation调用；旧综合/选段双调用契约与配置保留。当前原首题历史输入离线重放证明9份输入完整进入review、含C01；不证明当前native权限或live答案通过。剩一问仅真人，无自动提交、额度不扩大；核心答案仍未验证。
+
 2026-10-11 ADR080：两次真人原首题实际进入reviewed-excerpts路径，均把pilot/release材料选成答案，却遗漏输入中已有授权C01操作；review明确question_covered=false，最终返回evidence_only。阻断有效，不能忽略coverage、把真实但不完整的选文算成功或推断是review误拒。不追加同类选择提示词，不后台占用最后一问；两次完整native结果及私有草稿hash保留，旧配置/失败不改。新路径Q2尚未执行，旧Q2成功不可继承。当前11/12、17/24calls，USD0.016143、旧unknown324404/newunknown无；余一仅真人，G1/G2/核心答案仍未完成。
 
 2026-10-11 ADR079：保留十分钟一次性登录码及一小时会话，不靠拉长凭据期限解决本地入口过期。显式双击入口通过本机OS owner、私有文件权限、同runtime指纹和同loopback listener PID核验，向本任务进程SIGUSR1续签；服务端固定actor，既有session/run不变。无新HTTP管理接口/外部写入/模型调用。expired旧ticket仍拒绝；新ticket一次使用后拒绝；错实例/错listener/软链/宽权限文件不发送signal。空闲首次加载前保存原taskstate；真实续签HTTP及24项定向证明入口和会话连续性，不代表真人页面或业务质量通过。源ACL/version鉴权、预算和未知账本不改变。

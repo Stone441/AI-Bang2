@@ -1,0 +1,17 @@
+....E.
+======================================================================
+ERROR: test_saved_reviewed_quote_cannot_become_a_paraphrase (test_source_review.SourceReview.test_saved_reviewed_quote_cannot_become_a_paraphrase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_source_review.py", line 106, in test_saved_reviewed_quote_cannot_become_a_paraphrase
+    engine.store.save_run(answer['request_id'],'eng_b',answer)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/store.py", line 73, in save_run
+    db.execute('INSERT INTO runs VALUES(?,?,?)',(rid,actor,canonical(response)))
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: runs.id
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.029s
+
+FAILED (errors=1)

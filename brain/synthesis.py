@@ -195,3 +195,56 @@ class DeepSeekReviewedExcerptsModel(DeepSeekSynthesisModel):
             claim={'text':quote,'evidence_ids':[eid],'supports':[{'evidence_id':eid,'quote':quote}]}
             claims.append(validate_claim(claim,evidence))
         return claims
+
+
+class DeepSeekReviewAllSourcesModel(DeepSeekSynthesisModel):
+    """Construct all authorized source quotes in code, then review once.
+
+    Removes the fallible pre-review selector. Model output contains verdicts,
+    never newly written factual text. Input/body/usage limits stay unchanged.
+    """
+    name='deepseek-flash-reviewed-excerpts-all-sources-v1'
+    claim_format='reviewed_source_v1'
+    answer_kind='reviewed_excerpts'
+    answer_notice=EXCERPT_NOTICE
+
+    @staticmethod
+    def source_claims(evidence):
+        from .deepseek import ModelInputRejected
+        if len(evidence)>24:raise ModelInputRejected('Model input exceeds pilot limit')
+        claims=[]
+        for e in evidence:
+            if not isinstance(e.text,str) or len(e.text)<12:
+                raise ModelInputRejected('Source passage too short for exact grounding')
+            # Balanced contiguous pieces preserve every byte, including trailing
+            # limitations; never drop a passage or truncate to the answer cap.
+            pieces=(len(e.text)+599)//600
+            width,extra=divmod(len(e.text),pieces);start=0
+            for index in range(pieces):
+                end=start+width+(index<extra);quote=e.text[start:end];start=end
+                claim={'text':quote,'evidence_ids':[e.evidence_id],
+                    'supports':[{'evidence_id':e.evidence_id,'quote':quote}]}
+                claims.append(validate_claim(claim,evidence))
+        # Bounded by the existing 16k retrieval text budget and 24 evidence IDs.
+        if len(claims)>52:raise ModelInputRejected('Source review exceeds pilot limit')
+        return claims
+
+    def generate_with_authorization(self, question, evidence, request_id, authorize, *, provenance=None, observe=None):
+        if not callable(authorize):raise ModelUnavailable('Server authorization callback required')
+        if not evidence:
+            return DeepSeekEvidenceModel.generate(self,question,evidence,request_id=request_id,
+                provenance=provenance,observe=observe)
+        claims=self.source_claims(evidence)
+        authorize('review_dispatch')
+        reviewer=ExcerptReview(self._key,self.ledger,synthetic_only=True,
+            transport=self.transport,today=self._today(),claims=claims,
+            temperature=self.temperature,reasoning_effort=self.reasoning_effort,
+            output_tokens=self.output_tokens)
+        review=reviewer.generate(question,evidence,request_id=request_id,
+            provenance=provenance,observe=observe,stage='review')
+        # Keep a selected evidence window whole. Every piece already passed
+        # support review; never filter away a trailing qualifier in that window.
+        retained_ids={eid for claim in review['claims'] for eid in claim['evidence_ids']}
+        retained=[claim for claim in claims if claim['evidence_ids'][0] in retained_ids]
+        return {'claims':retained,'claim_format':self.claim_format,
+            'model_review':review['model_call'],'review_status':'accepted'}

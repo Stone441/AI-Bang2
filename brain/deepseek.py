@@ -238,7 +238,7 @@ class DeepSeekEvidenceModel:
             if stage=='review' and isinstance(output,dict):
                 diagnostic['review_question_covered']=output.get('question_covered') if type(output.get('question_covered')) is bool else None
                 verdicts=output.get('verdicts')
-                if isinstance(verdicts,list) and len(verdicts)<=4:
+                if isinstance(verdicts,list) and len(verdicts)<=52:
                     diagnostic['review_verdicts']=[{k:v.get(k) if type(v.get(k)) is bool else None for k in ('supported','responsive')} for v in verdicts if isinstance(v,dict)]
             claims = self.parse_output(output, evidence)
         except Exception as error:

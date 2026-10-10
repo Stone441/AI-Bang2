@@ -222,6 +222,7 @@ class Engine:
             from .deepseek import ModelOutputRejected
             evidence_only=False
             try:
+                if getattr(self.model,'claim_format',None)=='reviewed_source_v1':emit('generation')
                 if hasattr(self.model,'generate_with_provenance'):
                     from .synthetic_provenance import SyntheticProvenance
                     provenance = SyntheticProvenance(
@@ -252,8 +253,10 @@ class Engine:
             # Exact extractive support is intentionally strict for this provider.
             claims=[]
             synthesis=draft.get('claim_format')=='grounded_synthesis_v1'
-            if synthesis:
-                if (getattr(self.model,'claim_format',None)!='grounded_synthesis_v1'
+            source_review=draft.get('claim_format')=='reviewed_source_v1'
+            reviewed=synthesis or source_review
+            if reviewed:
+                if (getattr(self.model,'claim_format',None)!=draft['claim_format']
                         or draft.get('review_status')!='accepted'):
                     raise ValueError('Unreviewed synthesis')
                 review_receipt=public_receipt(draft.get('model_review'),rid)
@@ -261,7 +264,7 @@ class Engine:
             for claim in draft.get('claims',[]):
                 ids=claim.get('evidence_ids',[])
                 if not ids or any(i not in by_id for i in ids): raise ValueError('Unsupported model citation')
-                if synthesis:
+                if reviewed:
                     from .synthesis import validate_claim
                     validate_claim(claim,selected)
                     claims.append(claim)
@@ -280,6 +283,12 @@ class Engine:
                     raise ValueError('Model review must be a separate request')
                 generation.update(claim_format='grounded_synthesis_v1',model_review=review_receipt,
                                   review_status='accepted')
+            elif source_review:
+                if 'model_call' in draft:raise ValueError('Source review has no generation call')
+                if any(c['text']!=c['supports'][0]['quote'] or len(c['supports'])!=1 for c in claims):
+                    raise ValueError('Source review must remain verbatim')
+                generation.update(claim_format='reviewed_source_v1',model_review=review_receipt,
+                    review_status='accepted',construction='all_authorized_source_quotes',model_generation=False)
             self.audit.append('generation_completed',actor.user_id,rid,generation)
             emit('final_checks')
             if self.before_dispatch: self.before_dispatch()
@@ -293,7 +302,7 @@ class Engine:
             elif not claims and getattr(self.model,'claim_format',None)=='grounded_synthesis_v1':
                 response['uncertainties'].append('If you mean a particular event or policy, name it and its scope so I can check the relevant evidence.')
             if 'model_call' in generation: response['model_call']=generation['model_call']
-            if synthesis:
+            if reviewed:
                 response.update(claim_format=generation['claim_format'],model_review=review_receipt,
                                 review_status='accepted')
             if evidence_only:
@@ -346,12 +355,16 @@ class Engine:
             for e in record['evidence']:
                 try: current.append(self.evidence(actor,e['evidence_id']))
                 except (PermissionError,SourceUnavailable): allowed=False; break
-            if allowed and record.get('claim_format')=='grounded_synthesis_v1':
+            if allowed and record.get('claim_format') in ('grounded_synthesis_v1','reviewed_source_v1'):
                 from .synthesis import validate_claim
                 from types import SimpleNamespace
                 try:
                     evidence=[SimpleNamespace(**e) for e in current]
-                    for claim in record['claims']:validate_claim(claim,evidence)
+                    for claim in record['claims']:
+                        validate_claim(claim,evidence)
+                        if record.get('claim_format')=='reviewed_source_v1' and (
+                                len(claim['supports'])!=1 or claim['text']!=claim['supports'][0]['quote']):
+                            raise ValueError('Source review must remain verbatim')
                 except (ValueError,KeyError,TypeError):allowed=False
             result.append(record if allowed else {'request_id':record['request_id'],'unavailable':True,'message':'This answer is no longer available. Ask again for current evidence.'})
         return result

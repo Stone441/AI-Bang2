@@ -88,6 +88,9 @@ class OperatorIdentity(unittest.TestCase):
     def test_reviewed_excerpts_launch_accepts_approved_disabled_8192(self):
         self.trusted_launch('reviewed-excerpts','DeepSeekReviewedExcerptsModel','none',8192)
 
+    def test_source_review_launch_accepts_approved_disabled_8192(self):
+        self.trusted_launch('source-review','DeepSeekReviewAllSourcesModel','none',8192)
+
     def trusted_launch(self,style,class_name,reasoning,tokens):
         from unittest.mock import Mock
         app=Mock();app.engine.mode='confluence_mock_fake_model'
