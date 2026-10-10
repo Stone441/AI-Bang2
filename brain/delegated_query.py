@@ -114,6 +114,42 @@ class DelegatedAuthority:
                 self.resources[resource_id] = resource
                 self.snapshots[actor.user_id][resource_id] = resource['version']
 
+    def recover_versions(self, actor, resources, store, audit, request_id):
+        """Synchronous exact reads; never wait for a publisher while holding its lock.
+
+        Caller serializes authority/store mutations. New reads use the same actor,
+        mappings and all native reader checks; no reused allow or text shortcut.
+        """
+        staged=[]
+        for old in resources:
+            decision,content=self.read_current(actor,old['source'],old['native_id'])
+            audit.append('authorization_decided',actor.user_id,request_id,
+                         {'resource_id':old['id'],'source':old['source'],'version':content['version'] if content else None,
+                          'phase':'version_recovery','resource_scope':'payment-service',**asdict(decision)})
+            if decision.result!='allow' or content is None or not marked_synthetic_text(content['text'],old['source']):
+                raise PermissionError('Current source cannot be confirmed')
+            if content['source']!=old['source'] or content['native_id']!=old['native_id']:
+                raise ValueError('Reader content mapping mismatch')
+            if content['version']==old['version'] or (old['source'] in ('drive','confluence') and content['version']<old['version']):
+                raise ValueError('Version recovery did not advance')
+            staged.append(self.resource(content,actor.tenant))
+        with store.transaction() as db:
+            for resource in staged:
+                existing=db.execute('SELECT body FROM versions WHERE id=? AND version=?',(resource['id'],resource['version'])).fetchone()
+                if existing and not self.same_content(json.loads(existing[0]),resource):raise ValueError('Content version collision')
+                db.execute('INSERT INTO resources VALUES(?,?,?,?) ON CONFLICT(id) DO UPDATE SET version=excluded.version,active=excluded.active,body=excluded.body',
+                           (resource['id'],resource['version'],1,canonical(resource)))
+                db.execute('INSERT OR IGNORE INTO versions VALUES(?,?,?)',(resource['id'],resource['version'],canonical(resource)))
+        discovery=getattr(self,'discovery',None)
+        for resource in staged:
+            self.resources[resource['id']]=resource
+            self.snapshots.setdefault(actor.user_id,{})[resource['id']]=resource['version']
+            if discovery and actor==discovery.actor:
+                versions=discovery.published_versions.get(resource['source'],{})
+                if resource['id'] in versions:versions[resource['id']]=resource['version']
+        audit.append('source_changed',actor.user_id,request_id,{'phase':'version_recovery_published','resource_scope':'payment-service',
+                     'versions':[{ 'resource_id':r['id'],'version':r['version']} for r in staged]})
+
     def prefilter(self, actor, resource):
         return (actor.tenant == self.tenant
                 and self.snapshots.get(actor.user_id, {}).get(resource['id']) == resource['version'])

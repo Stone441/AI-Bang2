@@ -1,0 +1,81 @@
+{
+  "group": "core24",
+  "id": "business_01",
+  "question": "Why does token rotation preserve sessions?",
+  "expected_behavior": "answer",
+  "error": null,
+  "elapsed_seconds": 3.850505833979696,
+  "answer": {
+    "request_id": "f5940e344ee84d3a9b3100b866b1b762",
+    "question": "Why does token rotation preserve sessions?",
+    "answered_at": "2026-10-10T15:44:42.906267+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v11",
+    "claims": [
+      {
+        "text": "Token rotation preserves sessions because it uses overlapping signing keys, keeping sessions valid for fifteen minutes.",
+        "evidence_ids": [
+          "BV-01@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-01@1",
+            "quote": "Rotation uses overlapping signing keys; sessions remain valid for fifteen minutes."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "BV-01@1",
+        "resource_id": "BV-01",
+        "version": 1,
+        "source": "confluence",
+        "title": "authentication / Token rotation decision",
+        "locator": {
+          "section": "Token rotation decision"
+        },
+        "text": "[SYNTHETIC]\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509818+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-01"
+      }
+    ],
+    "actor": "eng_a",
+    "model_call": {
+      "query_id": "f5940e344ee84d3a9b3100b866b1b762",
+      "model": "deepseek-flash",
+      "reservation_id": "c603b45b270d4ca79b14e23c661a6ada",
+      "prompt_tokens": 1095,
+      "completion_tokens": 243,
+      "total_tokens": 1338,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 621,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "f5940e344ee84d3a9b3100b866b1b762",
+      "model": "deepseek-flash",
+      "reservation_id": "2af2c57a6a774d618c9c90aaf0520b8b",
+      "prompt_tokens": 990,
+      "completion_tokens": 436,
+      "total_tokens": 1426,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 821,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

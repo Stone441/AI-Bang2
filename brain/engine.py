@@ -2,9 +2,15 @@ import uuid
 from dataclasses import asdict
 from .contracts import Actor, Evidence, MODE, TENANT, now
 from .sources import policy_allows
+from .confluence import SourceUnavailable
 from .model_receipt import public_receipt
 
-from .retrieval import tokens, ranked_windows, bm25_windows, spans, window_evidence, resolve_window
+from .retrieval import tokens, ranked_windows, bm25_windows, subject_related, source_identifiers, spans, window_evidence, resolve_window
+
+
+class VersionChanged(SourceUnavailable):
+    def __init__(self, resources):
+        self.resources=resources
 
 
 class FakeExtractiveModel:
@@ -19,12 +25,14 @@ class FakeExtractiveModel:
 
 class Engine:
     def __init__(self, store, world, audit, model=None, *, tenant=TENANT, mode=MODE,
-                 retrieval_strategy='bm25'):
+                 retrieval_strategy='bm25', query_expansion='none'):
         if retrieval_strategy not in ('lexical','bm25'):raise ValueError('Unsupported retrieval strategy')
         self.store,self.world,self.audit=store,world,audit
         self.model=model or FakeExtractiveModel()
         self.tenant,self.mode=tenant,mode
-        self.retrieval_strategy=retrieval_strategy
+        from .retrieval import ranking_terms
+        ranking_terms(set(),query_expansion)
+        self.retrieval_strategy=retrieval_strategy;self.query_expansion=query_expansion
         self.before_dispatch=None
 
     def prefilter(self, actor, resource):
@@ -39,6 +47,8 @@ class Engine:
     def check(self, actor, resource, request_id, phase):
         decision=self.world.adapter(resource['source']).check_read(actor,resource['id'])
         self.record_check(actor,resource,request_id,phase,decision)
+        if phase in ('before_model','model_dispatch','review_dispatch','before_dispatch') and decision.result=='deny' and decision.method==resource['source']+'-version-changed':
+            raise VersionChanged([resource])
         return self.check_result(actor,phase,decision)
 
     def record_check(self, actor, resource, request_id, phase, decision):
@@ -64,20 +74,62 @@ class Engine:
     def checks(self, actor, resources, request_id, phase):
         batch=getattr(self.world,'check_many',None)
         discovery=getattr(self.world,'discovery',None)
-        if not (batch and discovery and discovery.bounded_queries and discovery.background_started
-                and actor==discovery.actor):
-            return [self.check(actor,r,request_id,phase) for r in resources]
-        decisions=batch(actor,resources,phase=phase)
-        for r,decision in zip(resources,decisions):self.record_check(actor,r,request_id,phase,decision)
-        return [self.check_result(actor,phase,decision) for decision in decisions]
+        if not (batch and discovery and discovery.bounded_queries and discovery.background_started and actor==discovery.actor):
+            allowed=[];changed=[]
+            for resource in resources:
+                try:allowed.append(self.check(actor,resource,request_id,phase))
+                except VersionChanged:
+                    changed.append(resource);allowed.append(None)
+            if changed:
+                if False in allowed:raise SourceUnavailable('Current source cannot be confirmed')
+                raise VersionChanged(changed)
+            return allowed
+        if batch:
+            decisions=batch(actor,resources,phase=phase)
+        else:
+            decisions=[self.world.adapter(r['source']).check_read(actor,r['id']) for r in resources]
+        for r,d in zip(resources,decisions):self.record_check(actor,r,request_id,phase,d)
+        changed=[r for r,d in zip(resources,decisions)
+                 if d.result=='deny' and d.method==r['source']+'-version-changed']
+        # A version discrepancy cannot mask a concurrent denial/unknown.
+        if changed and all(d.result=='allow' or (d.result=='deny' and d.method==r['source']+'-version-changed')
+                           for r,d in zip(resources,decisions)):
+            raise VersionChanged(changed)
+        return [self.check_result(actor,phase,d) for d in decisions]
 
-    def query(self, actor:Actor, question, history_id=None):
+    def query(self, actor, question, history_id=None, *, request_id=None, progress=None):
+        rid=request_id or uuid.uuid4().hex
+        emit=progress or (lambda phase:None)
+        called=False
+        def observe(event,payload):
+            nonlocal called
+            if event in ('model_dispatch_attempted','model_invoked'):called=True
+            if event=='model_dispatch_intent':emit('review' if payload.get('stage')=='review' else 'generation')
+        for attempt in range(2):
+            try:
+                return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+            except VersionChanged as error:
+                recover=getattr(self.world,'recover_versions',None)
+                if called or attempt or not recover:
+                    self.audit.append('version_recovery',actor.user_id,rid,{'attempt':attempt,'result':'stopped','model_called':called})
+                    self.audit.append('request_failed',actor.user_id,rid,{'reason':'source_version_changed'})
+                    raise
+                emit('refreshing')
+                self.audit.append('version_recovery',actor.user_id,rid,{'attempt':1,'result':'started','model_called':False})
+                try:recover(actor,error.resources,self.store,self.audit,rid)
+                except Exception:
+                    self.audit.append('version_recovery',actor.user_id,rid,{'attempt':1,'result':'failed','model_called':False})
+                    self.audit.append('request_failed',actor.user_id,rid,{'reason':'version_recovery_unavailable'})
+                    raise
+                self.audit.append('version_recovery',actor.user_id,rid,{'attempt':1,'result':'published','model_called':False})
+
+    def _query(self, actor:Actor, question, history_id=None, *, rid, emit, observe, attempt):
         self.validate_actor(actor)
         if not isinstance(question,str) or not question.strip() or len(question)>4000:
             raise ValueError('Question must contain 1–4000 characters')
-        rid=uuid.uuid4().hex
-        self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + '+self.retrieval_strategy+' + lexical aliases + exact windows + authorized one-hop links','history_id':None,'query_kind':'independent'})
+        if not attempt:self.audit.append('request_started',actor.user_id,rid,{'query':question,'mode':self.mode,'candidate_strategy':'authority prefilter + '+self.retrieval_strategy+' + query ranking '+self.query_expansion+' + lexical aliases + exact windows + authorized one-hop links','history_id':None,'query_kind':'independent'})
         try:
+            emit('retrieval')
             if hasattr(self.world, 'prepare'):
                 self.world.prepare(actor,self.store,self.audit,rid)
             if (getattr(self.model,'claim_format',None)=='grounded_synthesis_v1'
@@ -87,9 +139,13 @@ class Engine:
             query_tokens=tokens(question)
             visible=[r for r in self.store.resources()
                      if r['tenant']==actor.tenant and self.prefilter(actor,r)]
-            bm25=bm25_windows(visible,query_tokens) if self.retrieval_strategy=='bm25' else None
+            prefiltered=visible
+            visible=subject_related(visible,query_tokens)
+            from .retrieval import ranking_terms
+            rank_tokens=ranking_terms(query_tokens,self.query_expansion)
+            bm25=bm25_windows(visible,rank_tokens) if self.retrieval_strategy=='bm25' else None
             def rank(resource, *, supplementary=False):
-                if bm25 is None:return ranked_windows(resource,query_tokens,supplementary=supplementary)
+                if bm25 is None:return ranked_windows(resource,rank_tokens,supplementary=supplementary)
                 return bm25.get(resource['id']) or ([(0,*spans(resource['text'])[0])] if supplementary else [])
             # Legacy in-process history_id is accepted for old harness compatibility only.
             # Independent queries never read or supplement previous answer dependencies.
@@ -109,10 +165,12 @@ class Engine:
                 # This check only authorizes link expansion. Linkless candidates
                 # still receive before_model, model_dispatch and before_dispatch
                 # native checks; avoid a full source read for an empty operation.
-                if not seed.get('links'): continue
+                identifiers=source_identifiers(seed)-tokens(seed['title'])
+                related=[r['id'] for r in prefiltered if r['id'] not in seed_ids and identifiers & source_identifiers(r)]
+                if not seed.get('links') and not related: continue
                 if not self.check(actor,seed,rid,'link_seed'): continue
                 if self.world.resources[seed['id']]['version']!=seed['version']: continue
-                for target_id in seed.get('links',[]):
+                for target_id in dict.fromkeys([*seed.get('links',[]),*related]):
                     if target_id in seed_ids: continue
                     target=self.store.get(target_id)
                     if (target and target['tenant']==actor.tenant
@@ -122,6 +180,7 @@ class Engine:
             selected=[]; budget=16000
             for score,r in candidates[:24]:
                 self.audit.append('candidate_evaluated',actor.user_id,rid,{'resource_id':r['id'],'source':r['source'],'score':score,'resource_scope':'payment-service'})
+            emit('authorization')
             allowed=self.checks(actor,[r for _,r in candidates[:24]],rid,'before_model')
             for (score,r),can_read in zip(candidates[:24],allowed):
                 if not can_read: continue
@@ -157,14 +216,16 @@ class Engine:
                                       {'evidence_id':e.evidence_id,'resource_id':e.resource_id,
                                        'source':e.source,'version':e.version,'stage':'prepared_for_review',
                                        'resource_scope':'payment-service'})
+            observe('model_invoked',{})
             if hasattr(self.model,'generate_with_provenance'):
                 from .synthetic_provenance import SyntheticProvenance
                 provenance = SyntheticProvenance(
                     getattr(self.world, 'approved_synthetic_resource_ids', ()), self.world.resources.get)
                 def observe_model(event, payload):
                     if event not in ('model_dispatch_intent','model_dispatch_attempted','model_usage_received',
-                                     'model_output_accepted','model_output_rejected'):
+                                     'model_output_accepted','model_output_rejected','model_request_unavailable'):
                         raise ValueError('Invalid model event')
+                    observe(event,payload)
                     self.audit.append(event,actor.user_id,rid,{**payload,'resource_scope':'payment-service'})
                 draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage,observe_model)
             elif hasattr(self.model,'generate_with_authorization'):
@@ -206,6 +267,7 @@ class Engine:
                 generation.update(claim_format='grounded_synthesis_v1',model_review=review_receipt,
                                   review_status='accepted')
             self.audit.append('generation_completed',actor.user_id,rid,generation)
+            emit('final_checks')
             if self.before_dispatch: self.before_dispatch()
             authorize_selected('before_dispatch')
             response={'request_id':rid,'question':question,'answered_at':now(),'mode':self.mode,'model':self.model.name,'claims':claims,
@@ -230,7 +292,7 @@ class Engine:
                       else 'model_input_rejected' if isinstance(error,ModelInputRejected)
                       else 'model_input_or_output_unavailable' if isinstance(error,ModelUnavailable)
                       else 'request_stopped')
-            self.audit.append('request_failed',actor.user_id,rid,{'reason':reason})
+            if not isinstance(error,VersionChanged):self.audit.append('request_failed',actor.user_id,rid,{'reason':reason})
             raise
 
     def evidence(self, actor, eid):
@@ -247,6 +309,12 @@ class Engine:
             raise PermissionError('Unavailable') from None
         return {'evidence_id':eid,'source':r['source'],'title':r['title'],'text':text,'locator':locator,'version':r['version'],'source_url':r['source_url']}
 
+    def history_summaries(self, actor):
+        """Own submitted questions only; source metadata/answers require safe_history."""
+        self.validate_actor(actor)
+        return [{k:r.get(k) for k in ('request_id','question','answered_at')}
+                for r in self.store.history(actor.user_id)]
+
     def safe_history(self, actor, request_id=None):
         self.validate_actor(actor)
         records=[self.store.run(request_id,actor.user_id)] if request_id else self.store.history(actor.user_id)
@@ -256,6 +324,6 @@ class Engine:
             allowed=True
             for e in record['evidence']:
                 try: self.evidence(actor,e['evidence_id'])
-                except PermissionError: allowed=False; break
+                except (PermissionError,SourceUnavailable): allowed=False; break
             result.append(record if allowed else {'request_id':record['request_id'],'unavailable':True,'message':'This answer is no longer available. Ask again for current evidence.'})
         return result

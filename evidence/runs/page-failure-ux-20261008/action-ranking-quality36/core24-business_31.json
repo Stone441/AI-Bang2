@@ -1,0 +1,212 @@
+{
+  "group": "core24",
+  "id": "business_31",
+  "question": "Is same-day settlement approved for MYR accounts?",
+  "expected_behavior": "answer",
+  "error": null,
+  "elapsed_seconds": 4.248885500011966,
+  "answer": {
+    "request_id": "94a5e6e7e82e43c7bafd025d2ad34df2",
+    "question": "Is same-day settlement approved for MYR accounts?",
+    "answered_at": "2026-10-10T15:46:00.458653+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v11",
+    "claims": [
+      {
+        "text": "Same-day settlement is not approved for MYR accounts; approval is limited to Singapore SGD pilot accounts, with MYR accounts outside that scope. An unsigned draft saying MYR settlement is available is a proposal, not the approved operating rule.",
+        "evidence_ids": [
+          "BV-31@1",
+          "BV-34@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-31@1",
+            "quote": "Same-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope."
+          },
+          {
+            "evidence_id": "BV-34@1",
+            "quote": "An unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "BV-31@1",
+        "resource_id": "BV-31",
+        "version": 1,
+        "source": "slack",
+        "title": "settlement / Settlement scope",
+        "locator": {
+          "section": "Settlement scope"
+        },
+        "text": "[SYNTHETIC]\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510372+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-31"
+      },
+      {
+        "evidence_id": "BV-22@1",
+        "resource_id": "BV-22",
+        "version": 1,
+        "source": "jira",
+        "title": "reconciliation / Batch deadline",
+        "locator": {
+          "section": "Batch deadline"
+        },
+        "text": "[SYNTHETIC]\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510240+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-22"
+      },
+      {
+        "evidence_id": "BV-34@1",
+        "resource_id": "BV-34",
+        "version": 1,
+        "source": "jira",
+        "title": "settlement / Contradictory proposal",
+        "locator": {
+          "section": "Contradictory proposal"
+        },
+        "text": "[SYNTHETIC]\nAn unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510419+00:00",
+        "source_url": "fixture://synthetic-demo/jira/BV-34"
+      },
+      {
+        "evidence_id": "BV-32@1",
+        "resource_id": "BV-32",
+        "version": 1,
+        "source": "drive",
+        "title": "settlement / Future settlement schedule",
+        "locator": {
+          "section": "Future settlement schedule"
+        },
+        "text": "[SYNTHETIC]\nThe proposed November hourly schedule is not approved. Current settlement is daily.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510386+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-32"
+      },
+      {
+        "evidence_id": "BV-07@1",
+        "resource_id": "BV-07",
+        "version": 1,
+        "source": "slack",
+        "title": "integration / USD exception",
+        "locator": {
+          "section": "USD exception"
+        },
+        "text": "[SYNTHETIC]\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509921+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-07"
+      },
+      {
+        "evidence_id": "BV-06@1",
+        "resource_id": "BV-06",
+        "version": 1,
+        "source": "confluence",
+        "title": "integration / SGD account eligibility",
+        "locator": {
+          "section": "SGD account eligibility"
+        },
+        "text": "[SYNTHETIC]\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.\n\nAtlas account eligibility\nAccount\tScope\n\n Singapore business SGD \t Pilot supported \n\n Personal SGD \t Not supported \n",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.509903+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-06"
+      },
+      {
+        "evidence_id": "BV-33@1",
+        "resource_id": "BV-33",
+        "version": 1,
+        "source": "confluence",
+        "title": "settlement / Settlement dependency",
+        "locator": {
+          "section": "Settlement dependency"
+        },
+        "text": "[SYNTHETIC]\nSET-610 is In Progress because bank confirmation is missing. Owner: Eva.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510405+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-33"
+      },
+      {
+        "evidence_id": "BV-12@1",
+        "resource_id": "BV-12",
+        "version": 1,
+        "source": "drive",
+        "title": "migration / Cutover ticket",
+        "locator": {
+          "section": "Cutover ticket"
+        },
+        "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510076+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-12"
+      },
+      {
+        "evidence_id": "BV-13@1",
+        "resource_id": "BV-13",
+        "version": 1,
+        "source": "confluence",
+        "title": "migration / Rollback signal",
+        "locator": {
+          "section": "Rollback signal"
+        },
+        "text": "[SYNTHETIC]\nRoll back the ledger migration if settlement differences exceed five basis points.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510091+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-13"
+      },
+      {
+        "evidence_id": "BV-35@1",
+        "resource_id": "BV-35",
+        "version": 1,
+        "source": "slack",
+        "title": "settlement / Escalation guidance",
+        "locator": {
+          "section": "Escalation guidance"
+        },
+        "text": "[SYNTHETIC]\nIf bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-10T15:44:12.510433+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-35"
+      }
+    ],
+    "actor": "product_ops",
+    "model_call": {
+      "query_id": "94a5e6e7e82e43c7bafd025d2ad34df2",
+      "model": "deepseek-flash",
+      "reservation_id": "fe061a2b6b424f8b94876881331ab479",
+      "prompt_tokens": 1747,
+      "completion_tokens": 654,
+      "total_tokens": 2401,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 1309,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "94a5e6e7e82e43c7bafd025d2ad34df2",
+      "model": "deepseek-flash",
+      "reservation_id": "0931f5383574401b90da48f0bae5f9eb",
+      "prompt_tokens": 1721,
+      "completion_tokens": 289,
+      "total_tokens": 2010,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 864,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

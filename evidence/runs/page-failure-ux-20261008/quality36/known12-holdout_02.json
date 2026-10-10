@@ -1,0 +1,102 @@
+{
+  "group": "known12",
+  "id": "holdout_02",
+  "question": "For a partner who can use only the externally shared material, is general availability promised and when may they tell customers it launches?",
+  "expected_behavior": "scope_limited_answer",
+  "error": null,
+  "elapsed_seconds": 19.472131374990568,
+  "answer": {
+    "request_id": "7838513f3ae84f21b1c3752081a053a8",
+    "question": "For a partner who can use only the externally shared material, is general availability promised and when may they tell customers it launches?",
+    "answered_at": "2026-10-08T10:21:11.014776+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v10",
+    "claims": [
+      {
+        "text": "For a partner using the externally shared material, payment-retry is available only to the controlled pilot; external partners can consult the shared payment-retry capability page for pilot limits; GA is not approved and no general release date is confirmed, so no launch date is provided for telling customers.",
+        "evidence_ids": [
+          "C-02@1",
+          "S-03@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          },
+          {
+            "evidence_id": "S-03@1",
+            "quote": "External partners can consult the shared payment-retry capability page for pilot limits."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "C-02@1",
+        "resource_id": "C-02",
+        "version": 1,
+        "source": "confluence",
+        "title": "Payment-retry capability",
+        "locator": {
+          "paragraph": 1,
+          "section": "Supported rollout"
+        },
+        "text": "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.162854+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/C-02"
+      },
+      {
+        "evidence_id": "S-03@1",
+        "resource_id": "S-03",
+        "version": 1,
+        "source": "slack",
+        "title": "External collaboration",
+        "locator": {
+          "channel": "external",
+          "thread": "1790827200.000001"
+        },
+        "text": "[SYNTHETIC]\nExternal partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.162975+00:00",
+        "source_url": "fixture://synthetic-demo/slack/S-03"
+      }
+    ],
+    "actor": "contractor",
+    "model_call": {
+      "query_id": "7838513f3ae84f21b1c3752081a053a8",
+      "model": "deepseek-flash",
+      "reservation_id": "a6da5607f3bb44948d713af1c9caca64",
+      "prompt_tokens": 1109,
+      "completion_tokens": 3867,
+      "total_tokens": 4976,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 4974,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "7838513f3ae84f21b1c3752081a053a8",
+      "model": "deepseek-flash",
+      "reservation_id": "376de1d81d7643ae9cad06fe339b7944",
+      "prompt_tokens": 1112,
+      "completion_tokens": 496,
+      "total_tokens": 1608,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 929,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

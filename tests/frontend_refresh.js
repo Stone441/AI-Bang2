@@ -1,0 +1,79 @@
+'use strict';
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+class Element{constructor(){this.children=[];this.hidden=false;this.open=false;this.value='';this.textContent='';this.attributes={};}replaceChildren(...c){this.children=c;this.textContent='';}append(...c){this.children.push(...c);}querySelector(){return new Element();}setAttribute(k,v){this.attributes[k]=v;}focus(){}close(){this.open=false;}}
+const storage=new Map(),response=body=>({ok:true,status:200,json:async()=>body});
+let paid=0;
+function page(){const elements=new Map(),get=id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);};let now=1000;
+ const ctx=vm.createContext({document:{getElementById:get,createElement:()=>new Element(),querySelectorAll:()=>[]},location:{hash:'',pathname:'/',search:''},history:{replaceState(){}},URLSearchParams,URL,Date,performance:{now:()=>now},setInterval:()=>1,clearInterval(){},sessionStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},fetch:()=>new Promise(()=>{})});
+ vm.runInContext(fs.readFileSync('web/app.js','utf8'),ctx);vm.runInContext("session={actor:'eng_b',csrf:'same-session'};health={auth_kind:'operator'};show('workspace')",ctx);
+ return {ctx,get,tick:()=>{now+=2000;}};}
+const run=(status='running',id='a'.repeat(32))=>({mode:'mock_http',model:'fake-extractive-v1',sources:[],run:{request_id:id,status,phase:'review',elapsed_seconds:42,error_code:status==='failed'?'model_output_unavailable':null}});
+const answer={request_id:'a'.repeat(32),question:'ORIGINAL QUESTION',claims:[],evidence:[],uncertainties:[],model:'fake-extractive-v1'};
+const watchdog=setTimeout(()=>{console.error('FAIL: refresh test did not finish');process.exitCode=1;},3000);
+(async()=>{
+ const original=page();original.get('question').value='ORIGINAL QUESTION';let finish;
+ original.ctx.fetch=path=>{assert.equal(path,'/api/query');paid++;return new Promise(resolve=>finish=resolve);};
+ const query=original.get('queryForm').onsubmit({preventDefault(){}});assert.equal(paid,1);
+ original.get('question').value='EDITED WHILE WAITING';original.ctx.fetch=async path=>{assert.equal(path,'/api/runtime');return response(run());};await vm.runInContext('refreshRuntime()',original.ctx);assert.equal(JSON.parse(storage.get('brain.pending.same-session')).question,'ORIGINAL QUESTION');
+ // New JS realm, same authenticated session and tab-local storage; old HTTP still running.
+ const refreshed=page();refreshed.ctx.fetch=async path=>{assert.equal(path,'/api/runtime');return response(run());};
+ vm.runInContext('resumeOnRuntime=true',refreshed.ctx);await vm.runInContext('refreshRuntime()',refreshed.ctx);
+ assert.equal(refreshed.get('question').value,'ORIGINAL QUESTION');assert.equal(refreshed.get('ask').disabled,true);assert.equal(refreshed.get('elapsed').textContent,'42.0 s elapsed');assert.equal(refreshed.get('progressPhase').textContent,'Current stage: Reviewing the evidence');
+ await refreshed.get('queryForm').onsubmit({preventDefault(){}});assert.equal(paid,1);
+ let checks=0;refreshed.ctx.fetch=async path=>{if(path==='/api/runtime')return response(run('completed'));assert.equal(path,'/api/history?request_id='+answer.request_id);checks++;return response({history:[answer]});};
+ await vm.runInContext('refreshRuntime()',refreshed.ctx);assert.equal(checks,1);assert.equal(refreshed.get('ask').disabled,false);assert.equal(refreshed.get('progress').hidden,true);assert.equal(storage.has('brain.pending.same-session'),false);assert.equal(paid,1);
+ await vm.runInContext('refreshRuntime()',refreshed.ctx);assert.equal(checks,1);
+ finish(response(answer));await query;
+ // No browser storage: authoritative session question remains visible and read-only.
+ storage.clear();const noStorage=page();noStorage.ctx.sessionStorage={getItem(){throw Error('blocked');},setItem(){throw Error('blocked');},removeItem(){throw Error('blocked');}};
+ noStorage.ctx.fetch=async()=>response({...run(),run:{...run().run,question:'SERVER ORIGINAL QUESTION'}});
+ vm.runInContext('resumeOnRuntime=true',noStorage.ctx);await vm.runInContext('refreshRuntime()',noStorage.ctx);
+ assert.equal(noStorage.get('question').value,'SERVER ORIGINAL QUESTION');assert.equal(noStorage.get('question').readOnly,true);assert.equal(noStorage.get('runningQuestion').textContent,'SERVER ORIGINAL QUESTION');assert.equal(paid,1);
+ noStorage.ctx.fetch=async()=>response({...run('failed'),run:{...run('failed').run,question:'SERVER ORIGINAL QUESTION'}});await vm.runInContext('refreshRuntime()',noStorage.ctx);assert.equal(noStorage.get('question').readOnly,false);assert.equal(noStorage.get('question').value,'SERVER ORIGINAL QUESTION');
+ // Refresh after completion and storage cleanup still fetches the current session answer once.
+ storage.clear();const terminal=page();let terminalReads=0;
+ terminal.ctx.fetch=async path=>{if(path==='/api/runtime')return response({...run('completed'),run:{...run('completed').run,question:'ORIGINAL QUESTION'}});terminalReads++;assert.equal(path,'/api/history?request_id='+answer.request_id);return response({history:[answer]});};
+ vm.runInContext('resumeOnRuntime=true',terminal.ctx);await vm.runInContext('refreshRuntime()',terminal.ctx);await vm.runInContext('refreshRuntime()',terminal.ctx);
+ assert.equal(terminalReads,1);assert.equal(terminal.get('question').value,'ORIGINAL QUESTION');assert.equal(terminal.get('answer').children.length,1);assert.equal(paid,1);
+ // Failure resumes preserve the question, stop timers, and do not retrieve or regenerate a draft.
+ storage.set('brain.pending.same-session',JSON.stringify({question:'KEEP FAILED QUESTION',requestId:answer.request_id}));
+ const failed=page();vm.runInContext('resumeOnRuntime=true',failed.ctx);failed.ctx.fetch=async path=>{assert.equal(path,'/api/runtime');return response(run('failed'));};await vm.runInContext('refreshRuntime()',failed.ctx);
+ assert.equal(failed.get('question').value,'KEEP FAILED QUESTION');assert.equal(failed.get('ask').disabled,false);assert.equal(storage.has('brain.pending.same-session'),false);assert.equal(paid,1);
+ // A different login cannot restore another session's question.
+ storage.set('brain.pending.same-session',JSON.stringify({question:'PRIVATE OLD QUESTION',requestId:answer.request_id}));
+ const other=page();vm.runInContext("session={actor:'product_ops',csrf:'different'};resumeOnRuntime=true",other.ctx);other.ctx.fetch=async()=>response({...run(),run:null});await vm.runInContext('refreshRuntime()',other.ctx);assert.equal(other.get('question').value,'');
+ // An unknown pre-dispatch ID cannot mistake an older completed answer for the new submission.
+ storage.set('brain.pending.same-session',JSON.stringify({question:'UNBOUND NEW QUESTION',requestId:null}));
+ const unbound=page();vm.runInContext('resumeOnRuntime=true',unbound.ctx);unbound.ctx.fetch=async path=>{assert.equal(path,'/api/runtime');return response(run('completed'));};await vm.runInContext('refreshRuntime()',unbound.ctx);assert.equal(vm.runInContext('pendingQuery',unbound.ctx),null);
+ // Fresh retrieval can revoke a completed answer, and must not expose cached claims.
+ storage.set('brain.pending.same-session',JSON.stringify({question:'ORIGINAL QUESTION',requestId:answer.request_id}));
+ const revoked=page();vm.runInContext('resumeOnRuntime=true',revoked.ctx);revoked.ctx.fetch=async path=>response(path==='/api/runtime'?run('completed'):{history:[{request_id:answer.request_id,unavailable:true,message:'Current evidence unavailable'}]});await vm.runInContext('refreshRuntime()',revoked.ctx);assert.equal(revoked.get('answer').children[0].textContent,'Current evidence unavailable');
+ // A result that arrives after History navigation cannot repopulate the workspace.
+ storage.set('brain.pending.same-session',JSON.stringify({question:'ORIGINAL QUESTION',requestId:answer.request_id}));
+ const late=page();let resolveResult;vm.runInContext('resumeOnRuntime=true',late.ctx);
+ late.ctx.fetch=path=>path==='/api/runtime'?Promise.resolve(response(run('completed'))):path==='/api/history/recent'?Promise.resolve(response({history:[]})):new Promise(resolve=>resolveResult=resolve);
+ const recovery=vm.runInContext('refreshRuntime()',late.ctx);await new Promise(resolve=>setImmediate(resolve));
+ await late.get('historyNav').onclick();resolveResult(response({history:[answer]}));await recovery;assert.equal(late.get('answer').children.length,0);assert.equal(paid,1);
+ // 409 reconnects without overwriting the original saved question.
+ storage.set('brain.pending.same-session',JSON.stringify({question:'ORIGINAL QUESTION',requestId:answer.request_id}));
+ const duplicate=page();duplicate.get('question').value='SECOND QUESTION';duplicate.ctx.fetch=async path=>path==='/api/query'?{ok:false,status:409,json:async()=>({error:'A question is already running.'})}:response(run());
+ await duplicate.get('queryForm').onsubmit({preventDefault(){}});await new Promise(resolve=>setImmediate(resolve));assert.equal(duplicate.get('question').value,'ORIGINAL QUESTION');assert.equal(duplicate.get('ask').disabled,true);assert.equal(JSON.parse(storage.get('brain.pending.same-session')).question,'ORIGINAL QUESTION');assert.equal(paid,1);
+ // Slow completed runtime may not overwrite a new, unsubmitted draft.
+ storage.clear();const draft=page();let delayedRuntime;draft.ctx.fetch=()=>new Promise(resolve=>delayedRuntime=resolve);
+ vm.runInContext('armResume()',draft.ctx);const loading=vm.runInContext('refreshRuntime()',draft.ctx);draft.get('question').value='NEW UNSUBMITTED DRAFT';delayedRuntime(response({...run('completed'),run:{...run('completed').run,question:'OLD COMPLETED QUESTION'}}));await loading;assert.equal(draft.get('question').value,'NEW UNSUBMITTED DRAFT');assert.equal(draft.get('answer').children.length,0);
+ // An answer selected from History can be restored without a live run or a model call.
+ storage.set('brain.answer.same-session',JSON.stringify({requestId:answer.request_id,question:answer.question}));const selection=page();let reads=0;
+ selection.ctx.fetch=async path=>path==='/api/runtime'?response({...run(),run:null}):(reads++,response({history:[answer]}));vm.runInContext('armResume()',selection.ctx);await vm.runInContext('refreshRuntime()',selection.ctx);assert.equal(reads,1);assert.equal(selection.get('question').value,answer.question);assert.equal(selection.get('answer').children.length,1);assert.equal(paid,1);
+ // A rejected exhausted trial restores failure, original question, stopped stage and disabled Ask.
+ storage.clear();const paused=page();let posts=0;
+ const stopped={...run('failed').run,error_code:'trial_admission_paused',question:'REJECTED ORIGINAL QUESTION',phase:'queued',phases:['queued'],elapsed_seconds:0.02};
+ paused.ctx.fetch=async path=>{if(path!=='/api/runtime')posts++;return response({...run('failed'),run:stopped,query_admission:{allowed:false,reason:'attempt_limit',attempts_used:93,attempts_limit:93,attempts_remaining:0}});};
+ vm.runInContext('armResume()',paused.ctx);await vm.runInContext('refreshRuntime()',paused.ctx);assert.equal(paused.get('question').value,stopped.question);assert.equal(paused.get('ask').disabled,true);assert.equal(paused.get('progress').hidden,true);assert.ok(paused.get('trialStatus').textContent.includes('93/93'));
+ const text=e=>[e.textContent,...e.children.map(text)].join(' ');assert.ok(text(paused.get('answer')).includes('Stopped before retrieval'));assert.ok(text(paused.get('answer')).includes(stopped.request_id));await paused.get('queryForm').onsubmit({preventDefault(){}});assert.equal(posts,0);
+ paused.ctx.fetch=async()=>response({...run('failed'),run:stopped});await vm.runInContext('refreshRuntime()',paused.ctx);assert.equal(paused.get('ask').disabled,true);
+ // Same JS realm expiry/logout clears the old user's question before another login.
+ vm.runInContext('expiredSession()',duplicate.ctx);assert.equal(duplicate.get('question').value,'');assert.equal(storage.has('brain.pending.same-session'),false);
+ vm.runInContext("session={actor:'product_ops',csrf:'different'}",duplicate.ctx);duplicate.ctx.fetch=async()=>response({...run(),run:null});vm.runInContext('identity()',duplicate.ctx);assert.equal(duplicate.get('question').value,'');
+ duplicate.get('question').value='PRIVATE CURRENT QUESTION';vm.runInContext('saveQuestion(null,"PRIVATE CURRENT QUESTION")',duplicate.ctx);duplicate.ctx.fetch=async path=>response(path==='/api/logout'?{}:{...run(),run:null});await duplicate.get('identity').children[1].onclick();assert.equal(duplicate.get('question').value,'');assert.equal(storage.has('brain.pending.different'),false);
+ console.log('PASS: refresh reconnects original work, elapsed and question; one fresh authorized result fetch, no model retry; failure and cross-session isolation');
+})().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>clearTimeout(watchdog));

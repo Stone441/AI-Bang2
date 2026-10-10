@@ -53,18 +53,19 @@ class BusinessCachedQueryTests(unittest.TestCase):
         for phase in ('before_model','model_dispatch','before_dispatch'):
             self.assertEqual(sum(e['payload']['phase']==phase for e in events),1)
 
-    def test_native_new_counterevidence_stops_answer_until_publication(self):
+    def test_native_new_counterevidence_recovers_once_and_invalidates_old_history(self):
         first=self.pilot.query(self.actor,'novelty')
         old=next(e for e in first['evidence'] if e['source']=='confluence')
         self.pilot.engine.model.calls.clear()
         page=self.http['confluence'].content['98565']
         page['version']['number']=2
         page['body']['storage']['value']='<p>[SYNTHETIC] novelty discovery was cancelled</p>'
-        with self.assertRaises(SourceUnavailable):self.pilot.query(self.actor,'novelty')
-        self.assertEqual(self.pilot.engine.model.calls,[])
+        recovered=self.pilot.query(self.actor,'novelty')
+        self.assertEqual(len(self.pilot.engine.model.calls),1)
+        self.assertTrue(any('discovery was cancelled' in e['text'] and e['version']==2 for e in recovered['evidence']))
         events=self.pilot.audit.export()
         request=next(e['request_id'] for e in reversed(events) if e['event_type']=='request_started')
-        self.assertFalse(any(e['event_type']=='response_committed' and e['request_id']==request for e in events))
+        self.assertTrue(any(e['event_type']=='version_recovery' and e['request_id']==request and e['payload']['result']=='published' for e in events))
         self.assertTrue(any(e['request_id']==request and e['payload'].get('method')=='confluence-version-changed' for e in events))
         with self.assertRaises(PermissionError):self.pilot.evidence(self.actor,old['evidence_id'])
         self.assertTrue(self.pilot.history(self.actor,first['request_id'])[0]['unavailable'])
@@ -117,7 +118,10 @@ class BusinessCachedQueryTests(unittest.TestCase):
         self.assertTrue(worker_holding.wait(2))
         connection=http.client.HTTPConnection('127.0.0.1',server.server_port,timeout=3)
         self.addCleanup(connection.close)
-        connection.request('GET','/api/health');response=connection.getresponse();response.read()
+        # Health intentionally bypasses query locks; History retains the lock order.
+        import time
+        app.sessions['lock-test']={'actor':app.actor,'csrf':'test','expires':time.monotonic()+60,'last_query':0}
+        connection.request('GET','/api/history',headers={'Cookie':server.session_cookie_name+'=lock-test'});response=connection.getresponse();response.read()
         writer.join(2)
         self.assertFalse(writer.is_alive());self.assertTrue(committed.is_set());self.assertEqual(response.status,200)
 

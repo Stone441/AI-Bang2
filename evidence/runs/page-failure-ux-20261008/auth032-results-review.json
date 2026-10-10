@@ -1,0 +1,76 @@
+{
+  "authorization": "AUTH032",
+  "native": {
+    "q1": [
+      "empty answer, requested approved actions not provided",
+      "empty answer, requested approved actions not provided",
+      "generation truncated; no draft exposed"
+    ],
+    "q2": "3/3 complete PAY102 Done, PAY103 InProgress, controlled pilot not GA",
+    "browser": "not_run_saved_denial",
+    "progress_samples": 456,
+    "maximum_progress_HTTP_seconds": 0.00733024999499321
+  },
+  "quality": {
+    "core24": "22 supported factual answers and2 expected safe empty answers",
+    "known12": "2 supported factual answers,8 expected limited/clarifying empty answers,1 review rejection,1 expected injected Drive unknown before model",
+    "rejections": [
+      {
+        "request_id": "191fa08092564804a392df2607c94d4c",
+        "diagnostic": {
+          "finish_reason": "stop",
+          "reasoning_tokens": 2660,
+          "response_id_sha256": "3075e318579f69d0d4e95b6af617f7b0718a7d8d1834c5c55db84e07a73adb07",
+          "returned_model": "deepseek-flash",
+          "review_question_covered": true,
+          "review_verdicts": [
+            {
+              "responsive": true,
+              "supported": true
+            },
+            {
+              "responsive": false,
+              "supported": true
+            }
+          ],
+          "usage": {
+            "completion_tokens": 2698,
+            "prompt_tokens": 1192,
+            "total_tokens": 3890
+          },
+          "validation_failure": "review",
+          "visible_output_characters": 133
+        }
+      }
+    ],
+    "boundary": "Fixture sources/live model; human-reviewed against frozen questions and supported passages, not native or independent semantic certification"
+  },
+  "candidate_promotion": "not approved; Q1 remains unresolved",
+  "admission": {
+    "attempts": 135,
+    "limit": 138,
+    "remaining_human": 3,
+    "goal_settled_micro_usd": 437330,
+    "goal_remaining_to_stop_micro_usd": 62670,
+    "new_unknown": [],
+    "legacy_unknown_micro_usd": 324404
+  },
+  "local": {
+    "count": 445,
+    "result": "OK",
+    "log": "auth032-shared-snapshot-full.log"
+  },
+  "HTTP_followup": "3 previews + recent + single authorized History200; not browser acceptance",
+  "original_request_limit": "Old55.47s finish_reason unrecoverable; new Q1 length diagnostic does not retrospectively prove it",
+  "next_model_candidate": {
+    "reasoning_effort": "none",
+    "output_tokens": 8192,
+    "provider": "unchanged DeepSeek Flash",
+    "thinking": "disabled",
+    "status": "proposed only, not authorized or enabled",
+    "rationale": "Avoid consuming shared completion allowance on reasoning; no output cap increase",
+    "quality_risk": "Reduced reasoning may harm synthesis/review judgments; no draft gate is relaxed",
+    "time_and_cost": "Expected fewer reasoning tokens and shorter model time, not yet measured; same conservative token rates/cap/reservation, original goal stop remains",
+    "official_docs": "https://api-docs.deepseek.com/guides/thinking_mode/"
+  }
+}

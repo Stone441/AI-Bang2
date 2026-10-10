@@ -8,7 +8,7 @@ from .contracts import now
 DOMAIN=b'ContextLedger.audit.v1\0'
 ZERO='0'*64
 AUDIT_ACTORS=('eng_a','eng_b','product_ops')
-EVENT_TYPES={'request_started','candidate_evaluated','authorization_decided','evidence_used','generation_completed','response_committed','response_dispatch_attempted','request_failed','audit_inquiry','source_changed',
+EVENT_TYPES={'model_request_unavailable','version_recovery','request_started','candidate_evaluated','authorization_decided','evidence_used','generation_completed','response_committed','response_dispatch_attempted','request_failed','audit_inquiry','source_changed',
              'model_dispatch_intent','model_dispatch_attempted','model_usage_received','model_output_accepted','model_output_rejected'}
 
 

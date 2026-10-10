@@ -1,5 +1,23 @@
 # 安装、启动、测试与演示
 
+2026-10-10 试用当前操作：保持现有49161会话，直接刷新应恢复终态错误（原题/rid/停止阶段），已停止不继续计时。93/93暂停新Ask，不扩额、不重置账本或旧unknown；Recent answers只读选择既有问题，再等当前鉴权取回答案，可查看引用和刷新，不模型收费。静态前端已更新，current backend e801cd48；ADR067新runtime暂停快照尚未加载，为保留当前失败不重启。用户明确要求刷新入口时，先检查owned PID/in-flight ledger/当天official price再同获批49161启动，加载新snapshot并生成私有入口，清楚告知旧session结束；不执行浏览器打开、不动8094/8100。
+
+2026-10-09 AUTH031实际复验完成（native6＋quality36，尚余3真人题）：v11/同provider低推理8192，四源合成只读、正常后台。Q2三次均事实完整；Q1两次覆盖不足答案（仍漏C01已批准操作）＋一次review拒绝，不称首题修复完成。原24=21事实＋2合理空＋business31一次review拒绝；known12=01/06完整＋8合理空/澄清＋02一次review拒绝＋12预期Drive unknown停答。三review拒绝均stop、额外claim responsive=false，已知usage结算，无自动重试/新增unknown，不能推断cap不足。610进度采样最长0.003752秒；三本轮引用preview与History HTTP200，非人验。今日官方峰值费率真实核查不变，PRICE_DATE改9；436完整本地回归通过。账本settled1075716/available18599880、原unknown324404保持；AUTH031增138008microUSD、Goal累计303803microUSD。额度90/93，剩余3专供真人。49161新human实例已加载v11，私有0600 token，不记录完整一次性链接；后台正常运行。v11候选质量未通过，不推广为稳定候选；G1/G2/browser工具拒绝/AUTH019不变。两次入口helper启动失败无凭据/模型调用，原件保留；8094/8100未动，未push/merge/deploy。证据v11-final-review.json、v11-native-six/、v11-quality36/、human-entry-ready.json。
+
+2026-10-08 ADR063当前本地候选v11：依据已保留真实失败，仅收紧generation/review的“未建立状态可给实际状态”例外为同对象同属性/同表格字段意义，并要求latest顺序未知仍覆盖已有支持的请求操作。不放宽quote/结构/review/权限，不改变provider/low8192。436本地与三Node首轮通过，最终通用措辞回归日志v11-local-regression-final.log；尚无live质量证据。49161仍加载v10，总额度48/48。额外45次（HTTP6/quality36/human最多3，总93）集中申请pending，原本Goal累计USD0.50/newunknown停止不变。不得把旧36题结果算v11验证；无新模型调用、推送或部署。
+
+2026-10-08 AUTH030补验完成：总额度42→48已消费，仅补原known12的07–12六题，未重复前30题。07/09/11合理空答澄清；08有引用限定资料不足；10未编造retry但Atlas账户行不充分回答最小integration tier，记partial；12注入Drive unknown按预期模型前SourceUnavailable，非业务答案成功。原24＋known12完整36现已执行，known12为3完整/范围答案＋7安全不足/澄清＋1partial＋1预期来源故障，不称质量全通过。六题结算21044microUSD；本Goal累计165795microUSD，账本settled937708/available18737888，旧unknown324404保留、无新unknown，额度48/48。原quality36的not_run历史不改，补件quality-remaining6及quality-combined-review.json另存。第一题/known10质量及真人UX仍open；此次没有产品代码或模型配置变化，无需重复已通过436/三Node。
+
+2026-10-08 DEV-PAGE-UX-01 当前增量（覆盖下方仅记录/不修改的旧快照）：基准main23ae62b，独立fix/page-failure-ux-20261008；本Goal授权本地修复，AUTH029单独授权49161/native/live复验。已实现安全输出诊断、模型调用前最多一次版本恢复、通用主题检索过滤/已授权关系扩展、会话独立进度与模式/四源状态、真实已用时间/防重复提交/分类错误/退出迟到响应保护及引用信息层级。原模型low8192、provider、权限/review/审计边界不变。436完整本地回归、三Node与五fixture通过；最后锁顺序测试改用History，因为health现在独立于查询锁，首轮失败原件保留。
+
+实际产品HTTP固定三次/题：明确payment-service题3/3有依据答案（PAY102 Done、PAY103 In Progress、pilot与GA区别）；宽泛latest-approved-mitigation题为quote失败、review失败、一次范围受限但遗漏runbook的答案，不能称任务完成。原55.47秒请求finish_reason不可恢复，新拒绝均stop，不能据8192判定截断或擅自增加cap。新鲜度probe弱主题命中经通用相关性过滤解决；版本恢复/撤权/持续变化/模型后变化由mock验证，无源写入，未称native变更全矩阵通过。607次HTTP进度采样，最长0.00524秒；三当前native引用preview与History200，非浏览器/真人观察。原24题22事实+2合理空答；known12仅前6已跑（3完整/范围答案、3安全不足或澄清），后6未跑。全部失败及429记录保留，累计42次问题额度已耗尽，已申请48次总额度但尚未批准。
+
+新增结算144751microUSD（USD0.144751）；账本settled916664/available18758932，原unknown1/324404保持，无新unknown。49161已重启加载最终工程guard，health/静态资源200；native六题是在此前加载版本执行，后续保守guard及UX改动由本地验证，不冒称最终全部native重测。新问答已暂停；8094/8100、AUTH019延期、旧证据、G1/G2、browser saved denial不变。无推送/合并/部署。证据：evidence/runs/page-failure-ux-20261008/README.md。Goal未完整完成：第一题质量与剩余6题、人类页面观察仍open。
+
+本轮现场入口为 http://127.0.0.1:49161 ，仅本机operator/native四源合成容器＋DeepSeek Flash reviewed synthesis。当前问答额度耗尽，不把已启动当可继续收费授权。额度确认后，operator在本机终端获取新一次性入口（不提交ticket），团队本人打开：明确payment-service题→打开关键引用核PAY102/PAY103/GA→History重看→记录等待/错误和来源状态；宽泛mitigation题另确认“latest”的审批范围及资料是否充分。浏览器自动化拒绝仍遵守。最少操作不代表G1/G2。
+
+本地复核：`python3 -m unittest discover -s tests`，`node tests/frontend_runtime.js`、`node tests/frontend_operator_security.js`、`node tests/frontend_audit_review.js`。真实质量补验仅剩known12的07–12，须获批总额度后恢复，不重复已跑30题；不要清账/旧reservation、重用历史许可、改价审日期或新增provider。重启脚本launch.py会加载持久额度，不重置计数。私有拒绝草稿仅已通过生成结构/quote的合成claims，0600保存于.runtime；没有推理正文，不入公共证据。
+
 2026-10-08 Git交付补充：AUTH028已批准本轮定向收尾及真实试用失败/UX问题记录推送并经PR合并main；下方“未push/merge”为证据冻结快照，实际以本次PR状态和main commit为准。应用仍cdbd62b，49161已停止，不部署、不新增费用或UX改动，失败与G1/G2状态不因合并升级。
 
 2026-10-08 本轮定向收尾及真实试用/反馈已记录：用户确认两题全部失败后停止使用，引用/History后续未做；首题输出拒绝、第二题Drive版本变化停答原件保留，实际试用failed。UX观察为等待计时/可感知工作状态缺失造成焦虑、模型和四平台连接信息不显性、页面简陋。用户明确当前只记录、等ChatGPT Chat后续指导，不改代码/界面/配置。49161自建实例已正常结束(exit0/无监听)，8094/8100未动；2次尝试/1次模型调用/11028microUSD，最终账本settled771913/available18903683，原pending1/324404保留。本轮信息收集完成不等于失败修复或验收通过；UX、原质量失败、重复自动测量/p95/完整native矩阵及G1/G2仍open。证据targeted-closeout-20261008/page-trial-final.json。下方等待反馈/运行中为旧快照。

@@ -1,0 +1,129 @@
+{
+  "group": "core24",
+  "id": "business_12",
+  "question": "Who owns MIG-301 and what is still blocking cutover?",
+  "expected_behavior": "answer",
+  "error": null,
+  "elapsed_seconds": 5.920510291995015,
+  "answer": {
+    "request_id": "c070589468c74ff28614db9d8260e76b",
+    "question": "Who owns MIG-301 and what is still blocking cutover?",
+    "answered_at": "2026-10-08T10:19:51.623806+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v10",
+    "claims": [
+      {
+        "text": "MIG-301 is owned by Chen; its remaining blocker is unmatched settlement totals.",
+        "evidence_ids": [
+          "BV-12@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-12@1",
+            "quote": "MIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "BV-12@1",
+        "resource_id": "BV-12",
+        "version": 1,
+        "source": "drive",
+        "title": "migration / Cutover ticket",
+        "locator": {
+          "section": "Cutover ticket"
+        },
+        "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163285+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-12"
+      },
+      {
+        "evidence_id": "BV-21@1",
+        "resource_id": "BV-21",
+        "version": 1,
+        "source": "confluence",
+        "title": "reconciliation / Ownership decision",
+        "locator": {
+          "section": "Ownership decision"
+        },
+        "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163412+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-21"
+      },
+      {
+        "evidence_id": "BV-04@1",
+        "resource_id": "BV-04",
+        "version": 1,
+        "source": "drive",
+        "title": "authentication / Cutover scope",
+        "locator": {
+          "section": "Cutover scope"
+        },
+        "text": "[SYNTHETIC]\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163098+00:00",
+        "source_url": "fixture://synthetic-demo/drive/BV-04"
+      },
+      {
+        "evidence_id": "BV-11@1#16000:17452",
+        "resource_id": "BV-11",
+        "version": 1,
+        "source": "slack",
+        "title": "migration / Database design rationale",
+        "locator": {
+          "section": "Database design rationale",
+          "text_window": {
+            "start": 16000,
+            "end": 17452,
+            "unit": "unicode_characters",
+            "strategy": "fixed-2400-overlap-400-v1"
+          }
+        },
+        "text": "try 166: batch 2822, checksum 5146; no current decision recorded.\nArchived migration rehearsal entry 167: batch 2839, checksum 5177; no current decision recorded.\nArchived migration rehearsal entry 168: batch 2856, checksum 5208; no current decision recorded.\nArchived migration rehearsal entry 169: batch 2873, checksum 5239; no current decision recorded.\nArchived migration rehearsal entry 170: batch 2890, checksum 5270; no current decision recorded.\nArchived migration rehearsal entry 171: batch 2907, checksum 5301; no current decision recorded.\nArchived migration rehearsal entry 172: batch 2924, checksum 5332; no current decision recorded.\nArchived migration rehearsal entry 173: batch 2941, checksum 5363; no current decision recorded.\nArchived migration rehearsal entry 174: batch 2958, checksum 5394; no current decision recorded.\nArchived migration rehearsal entry 175: batch 2975, checksum 5425; no current decision recorded.\nArchived migration rehearsal entry 176: batch 2992, checksum 5456; no current decision recorded.\nArchived migration rehearsal entry 177: batch 3009, checksum 5487; no current decision recorded.\nArchived migration rehearsal entry 178: batch 3026, checksum 5518; no current decision recorded.\nArchived migration rehearsal entry 179: batch 3043, checksum 5549; no current decision recorded.\n# Current ledger migration decision\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163199+00:00",
+        "source_url": "fixture://synthetic-demo/slack/BV-11"
+      }
+    ],
+    "actor": "eng_a",
+    "model_call": {
+      "query_id": "c070589468c74ff28614db9d8260e76b",
+      "model": "deepseek-flash",
+      "reservation_id": "08800246bce7440b813a825222068dea",
+      "prompt_tokens": 1599,
+      "completion_tokens": 876,
+      "total_tokens": 2475,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 1531,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "c070589468c74ff28614db9d8260e76b",
+      "model": "deepseek-flash",
+      "reservation_id": "22009a4640fe44f6a5e72caca5090e03",
+      "prompt_tokens": 1517,
+      "completion_tokens": 343,
+      "total_tokens": 1860,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 867,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

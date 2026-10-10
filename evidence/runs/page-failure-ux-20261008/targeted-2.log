@@ -1,0 +1,78 @@
+======================================================================
+ERROR: test_classified_rejections_never_store_raw_reasoning (tests.test_page_failure_ux.OutputDiagnostics.test_classified_rejections_never_store_raw_reasoning) (category='truncated')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_page_failure_ux.py", line 34, in test_classified_rejections_never_store_raw_reasoning
+    with self.assertRaises(ModelUnavailable):self.model.generate('Question',[self.evidence],request_id='test',observe=lambda event,data:events.append((event,data)))
+                                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 150, in generate
+    reservation_id = self.ledger.reserve(self.reservation, query_id=request_id if request_id is not None else uuid.uuid4().hex, model=MODEL)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/budget.py", line 57, in reserve
+    raise ValueError('Server request ID and model required together')
+ValueError: Server request ID and model required together
+
+======================================================================
+ERROR: test_classified_rejections_never_store_raw_reasoning (tests.test_page_failure_ux.OutputDiagnostics.test_classified_rejections_never_store_raw_reasoning) (category='empty_content')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_page_failure_ux.py", line 34, in test_classified_rejections_never_store_raw_reasoning
+    with self.assertRaises(ModelUnavailable):self.model.generate('Question',[self.evidence],request_id='test',observe=lambda event,data:events.append((event,data)))
+                                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 150, in generate
+    reservation_id = self.ledger.reserve(self.reservation, query_id=request_id if request_id is not None else uuid.uuid4().hex, model=MODEL)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/budget.py", line 57, in reserve
+    raise ValueError('Server request ID and model required together')
+ValueError: Server request ID and model required together
+
+======================================================================
+ERROR: test_classified_rejections_never_store_raw_reasoning (tests.test_page_failure_ux.OutputDiagnostics.test_classified_rejections_never_store_raw_reasoning) (category='json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_page_failure_ux.py", line 34, in test_classified_rejections_never_store_raw_reasoning
+    with self.assertRaises(ModelUnavailable):self.model.generate('Question',[self.evidence],request_id='test',observe=lambda event,data:events.append((event,data)))
+                                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 150, in generate
+    reservation_id = self.ledger.reserve(self.reservation, query_id=request_id if request_id is not None else uuid.uuid4().hex, model=MODEL)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/budget.py", line 57, in reserve
+    raise ValueError('Server request ID and model required together')
+ValueError: Server request ID and model required together
+
+======================================================================
+ERROR: test_classified_rejections_never_store_raw_reasoning (tests.test_page_failure_ux.OutputDiagnostics.test_classified_rejections_never_store_raw_reasoning) (category='structure')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_page_failure_ux.py", line 34, in test_classified_rejections_never_store_raw_reasoning
+    with self.assertRaises(ModelUnavailable):self.model.generate('Question',[self.evidence],request_id='test',observe=lambda event,data:events.append((event,data)))
+                                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 150, in generate
+    reservation_id = self.ledger.reserve(self.reservation, query_id=request_id if request_id is not None else uuid.uuid4().hex, model=MODEL)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/budget.py", line 57, in reserve
+    raise ValueError('Server request ID and model required together')
+ValueError: Server request ID and model required together
+
+======================================================================
+ERROR: test_classified_rejections_never_store_raw_reasoning (tests.test_page_failure_ux.OutputDiagnostics.test_classified_rejections_never_store_raw_reasoning) (category='model_identifier')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_page_failure_ux.py", line 34, in test_classified_rejections_never_store_raw_reasoning
+    with self.assertRaises(ModelUnavailable):self.model.generate('Question',[self.evidence],request_id='test',observe=lambda event,data:events.append((event,data)))
+                                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 150, in generate
+    reservation_id = self.ledger.reserve(self.reservation, query_id=request_id if request_id is not None else uuid.uuid4().hex, model=MODEL)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/budget.py", line 57, in reserve
+    raise ValueError('Server request ID and model required together')
+ValueError: Server request ID and model required together
+
+======================================================================
+FAIL: test_progress_bypasses_long_query_lock_and_is_session_private (tests.test_page_failure_ux.ProgressHTTP.test_progress_bypasses_long_query_lock_and_is_session_private)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_page_failure_ux.py", line 113, in test_progress_bypasses_long_query_lock_and_is_session_private
+    self.assertTrue(entered.wait(2));start=time.monotonic()
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 51 tests in 12.903s
+
+FAILED (failures=1, errors=5)

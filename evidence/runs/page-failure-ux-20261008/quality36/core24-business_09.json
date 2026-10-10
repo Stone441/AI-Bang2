@@ -1,0 +1,81 @@
+{
+  "group": "core24",
+  "id": "business_09",
+  "question": "Does INT-210 Done mean commercial launch is approved?",
+  "expected_behavior": "answer",
+  "error": null,
+  "elapsed_seconds": 2.937719457957428,
+  "answer": {
+    "request_id": "f6f051934a3043d892da9ddeabe5e198",
+    "question": "Does INT-210 Done mean commercial launch is approved?",
+    "answered_at": "2026-10-08T10:19:41.902038+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v10",
+    "claims": [
+      {
+        "text": "No. INT-210 implementation being Done does not mean commercial launch is approved; commercial launch remains Pending approval.",
+        "evidence_ids": [
+          "BV-09@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "BV-09@1",
+            "quote": "INT-210 implementation is Done; commercial launch remains Pending approval."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "BV-09@1",
+        "resource_id": "BV-09",
+        "version": 1,
+        "source": "confluence",
+        "title": "integration / Launch ticket",
+        "locator": {
+          "section": "Launch ticket"
+        },
+        "text": "[SYNTHETIC]\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+        "source_updated_at": "2026-10-07T12:00:00+08:00",
+        "indexed_at": "2026-10-08T10:18:17.163170+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/BV-09"
+      }
+    ],
+    "actor": "product_ops",
+    "model_call": {
+      "query_id": "f6f051934a3043d892da9ddeabe5e198",
+      "model": "deepseek-flash",
+      "reservation_id": "e159d1f455704c4ab3c746f029d3995f",
+      "prompt_tokens": 1001,
+      "completion_tokens": 228,
+      "total_tokens": 1229,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 574,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "f6f051934a3043d892da9ddeabe5e198",
+      "model": "deepseek-flash",
+      "reservation_id": "980fbb06529448a8b904e92e518cdede",
+      "prompt_tokens": 919,
+      "completion_tokens": 198,
+      "total_tokens": 1117,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 514,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}

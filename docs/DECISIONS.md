@@ -1,5 +1,43 @@
 # Decisions / ADR
 
+2026-10-10 阶段停止（用户明确指示）：开发Goal paused，停止继续测试/付费验证与模型候选推进；仅交付当前分支到GitHub并合并main。详见docs/reviews/2026-10-10-page-failure-stage-stop.md。135/138，Goal结算0.437330USD、旧unknown324404保留、新unknown无；idle49161/PID87323已停，临时入口token已移除，8094/8100不动。none8192与新增42次申请不获批准、不执行；Q1/最新真人UX未完成，不批准G1/G2。下一步由ChatGPT审查并决定，不能自动重启或继续付费测试。
+
+
+2026-10-10 ADR070：同一获批质量进程消费共享额度会让旧instance仅内存public_status显示过期次数，实际gate仍安全。改为仅读原子trial-admission.json，读取异常退回缓存，不取query/flock/ledger锁、不触发四源；另一进程消费及flock占用对照20targeted/445full通过，只读审查无新增问题。human新实例加载，非源状态/current权限替代。
+
+2026-10-10 ADR071（仅提议未批准）：新原题截断length/8192含reasoning7925，候选为同DeepSeek Flash thinking disabled / effort none / cap8192，使用既有可信构造支持，不增加provider/cap、quote/review/授权gate不变。官方thinking_mode/API文档本日实读支持disabled和none；预计减少reasoning输出/耗时费用但未经实测，可能降低综合与review判断质量，不保证消除两空或其他reject。non-thinking-proposed-schedule.json冻结原两题6＋原36；拟总138→180新增42，保留当前3human，原Goal累计0.50与旧unknown不重置（余0.06267USD），达到阈值停止并保留not_run。当前live low8192不变，待用户明确配置/额外次数批准。
+
+
+2026-10-10 AUTH032实际42次完成：排序action-terms-v1/同DeepSeek low8192，固定native两题各3，Q2三次完整；Q1两空＋一次generation截断（length/completion8192/reasoning7925/visible894字符），不推广候选、不推断旧55.47秒finish_reason。质量core24=22事实＋2预期安全空；known12=01/06事实＋8合理空/澄清＋02review拒绝（stop、额外claim responsive=false）＋12预期注入Drive unknown模型前停答。引用preview3条、Recent列表、单条History HTTP200，非browser人验。445本地/6Node/只读复核通过；共享额度snapshot仅读原子state不等待query/flock/ledger或四源，当前待human实例加载。额度135/138、余3human；Goal累计437330microUSD，距原0.50仅62670，旧unknown324404保留、新unknown无。新的推荐可信配置none8192（同provider/cap、thinking disabled）仅提议，可能减token/时间但审查质量风险待完整验证，未启用或自动扩额；不自动通过Goal/G1/G2/AUTH019。
+
+
+2026-10-10 AUTH032：用户“批准”，明确批准此前action-ranking候选及45次集中复验：总93→138，原两题各3次产品HTTP＋原24/known12质量36＋最多3human；49161/eng_b/AUTH017合成四源只读、原DeepSeekFlash/low8192/USD20账本与旧unknown保留。原Goal累计结算USD0.50（本次前0.320468USD）或新unknown停止接纳，在途收尾，不重置阈值。不得写源、动8094/8100、push/deploy或绕过browser拒绝。审批不证明质量，不批准G1/G2。
+
+
+2026-10-10 ADR069：用户刷新看到operator link错误。旧实例06:01:30UTC启动，07:23UTC检查已约82分钟；session和cookie硬过期3600秒、ticket600秒，与症状相符，但未读取真人cookie或捕获其具体HTTP，不能断言唯一原因。boot以前所有异常统一归因ticket，现仅session403可尝试一次ticket，503/网络不消耗ticket；有效session优先且不会重复使用旧ticket。分别显示session到期/入口失效/服务暂不可达。用户恢复入口范围内仅重启自己49161旧PID54280，新PID66918/PTY35356/启动hash80d447c58738d9d1220c8d17d17f5cf75a9d6251aee7d5d54b2cebab91463002，查询candidate默认none，93/93、账本与原unknown保留；新后端ADR067额度状态已加载。private token0600，command --check通过；不执行浏览器工具、不提交问题、不动8094/8100。重启后原session内存终态不保留，成功答案仍需History当前权限检查；不声称恢复已过期session的失败记录。真人新入口观察pending。
+
+2026-10-10 ADR068（本地默认关闭排序候选）：Q1原生请求69af1515dcfc4d109ea3180e0e454245的generation/review均接收同9条证据含C01，accepted claims未引用C01；排除仅传递引用子集，未保留原provider review原文，不推断模型内部原因。新增query_expansion=action-terms-v1，仅mitigation词触发procedure/workaround/safeguard/protective通用排序词，不改变原问题、主题过滤、当前权限、证据窗口/预算、模型low8192、quote/review。默认none，现有live仍none。历史合成索引离线C01排序3→1、主题候选集合不变；可能挤掉有限窗口内的限制性证据，真实业务覆盖/时间/费用尚未验证。原24+known12及两原题固定各3次均须重新验证，不能用排序或fake review通过替代。回滚query_expansion=none。离线444完整测试通过，uncited action传入review且mock coverage=false停答；只读审查通过。已备可选launcher/quality参数，次数白名单仍93，未执行候选live、未扩额。
+
+
+2026-10-10 ADR067：93次是90后台验证＋3human，非USD20余额耗尽；goal settled0.320468USD/available18.583215USD/legacyunknown0.324404USD，新unknown无。新增查询在gate before engine/reservation/model停止，不增加attempts或费用；用户具体失败HTTP/rid尚未捕获，保留证据限制。前端显示trial暂停、禁用Ask、失败保留自己原题/rid/实际停止phase/固定elapsed，刷新恢复终态失败而非假装继续计时。runtime新增query_admission只读内存快照，actual gate仍每次持久计数/费用/unknown检查；503附当前session安全run，不草稿。已修复只读审查发现的候选constructor无锁save竞态：existing仅内存load，首次creation同flock重查，未加载问题候选到live。440本地/5Node/只读复核通过。当前不重启以保留用户session失败state，static UI已更新；新后端snapshot/503 metadata在下一次同获批49161启动加载，旧runtime仍可供前端恢复失败并暂停。不得自动扩额、模型重试或恢复旧unknown。
+
+2026-10-10 ADR066：真人确认运行中刷新原题/计时及答案出现，Recent answers始终Checking current access，完成后刷新答案消失。最新6626397006424963ad09ff9e23ab8add已持久保存3claims。复现完成后的前端丢失关联：接续改为当前session terminal run重新safe_history；History选中答案仅在tab/sessionStorage保存rid及自己的问题，刷新无run时重新safe_history，不缓存正文、不模型重试，退出/过期清理；输入值guard保护慢runtime不覆盖新草稿。新增GET /api/history/recent只列actor自己的question/time/rid，无来源标题/数量/正文或源请求；点击单条才做当前权限/版本检查，失败内联，SourceUnavailable不把整个列表请求异常中止。旧History全部来源串行检查机制确认，旧具体HTTP耗时/异常不可恢复；新native HTTP summary0.0013075s、单条9.134388s并取回3claims。summary仍可能等待store锁，不宣称运行中完全免长锁。SessionRuns新增实际观察phases，前端突出current/observed/not reported，不推算百分比/阶段完成、不显示草稿。439本地、5Node、只读审查通过；真人最新修复/引用仍待观察，93/93停止新模型请求，G1/G2不自动通过。
+
+2026-10-09 ADR065：真人刷新已恢复计时/阶段，但原问题不可见；实际浏览器存储丢失机制未确定，ADR064测试仅覆盖可用storage。本轮补充当前已验证session运行状态保留自身提交问题（<=4000字符、仅内存、退出discard），/api/runtime只返回该会话原问题，另一同身份session无run；不加入来源/草稿正文、不自动模型调用。进度区以textContent固定显示Submitted question，等待输入只读、快捷题不能改写；可用storage仍作辅助，无storage也恢复。保留当前权限History取回及所有迟到响应隔离；只读审查无新增发现。原不可见问题请求974047bc843a4144a7d785f1a4f8b32a已保存3事实，attempt92/93，真人最后1次复验待完成，不宣称G1/G2通过。
+
+2026-10-09 ADR064（刷新接续本地与mock验证）：真人刷新运行中页面丢失问题/进度，重复提交409；原请求406c7185e46e44b2b14ce7fba5633978已42.403秒提交，不重复计费。前端按session.csrf在tab-local sessionStorage保存冻结的原问题/rid，刷新仅接续/runtime实际运行及真实elapsed；完成后一次带rid的History当前权限/version检查取回结果，失败恢复安全类别，不保存/显示draft或源正文、不自动生成。未知rid不绑定旧完成答案，迟到响应/导航/退出隔离；退出/过期清理问题与存储，409保留原请求。GET /api/history?request_id只接受单个32位hex，沿用safe_history(actor,rid)，进度不查四源。437完整本地及四Node/只读审查通过；重启仅已获批49161加载后端，四源正常后台complete，新真人刷新验证pending，尚余2次human，不挪作自动测试。
+
+2026-10-09 AUTH-031：用户明确“批准此前申请，继续任务”，批准v11集中复验，总额度48→93，仅原两题各3次产品HTTP＋原24/known12质量36题＋团队本人最多3题。原49161/eng_b/AUTH017四源合成只读/DeepSeek provider/low8192/USD20账本/旧unknown保留，累计新增结算USD0.50或新unknown停止接纳，不写源、不动8094/8100、不推送部署、不绕过browser拒绝。
+
+2026-10-08 ADR-063（candidate/local，live未验证）：AUTH030复验holdout10返回账户资格行而非请求的integration tier/region/retry，第一原题已检索C01批准操作但仅给审批未知。v11只收紧“未建立请求状态时可报告实际状态”的例外为同对象同属性，并要求latest顺序未知时覆盖已有支持的批准操作且单列顺序限制；generation/review一致。原结构/quote/gate/provider/low8192/预算不变，可能增加拒答，时间与费用改善未验证。回滚还原synthesis.py为v10。当前49161仍加载v10，不继承新候选结果；集中申请45次额外验证（native6/quality36/human最多3），总93、原累计USD0.50/newunknown停止，许可pending，不执行。
+
+2026-10-08 AUTH-030：用户明确“批准解锁动作”，批准AUTH029总问题额度42→48，仅补跑原known12剩余07–12六题；原USD0.50新增结算停止阈值、新unknown停止、provider/low8192/USD20账本/旧unknown/实例与源只读边界保持，不批准额外native问答、源写入、推送或部署。
+
+2026-10-08 AUTH-029：用户明确批准本轮修改后新127.0.0.1:49161仅本机eng_b实例与复验；AUTH017四源合成容器只读、原DeepSeek provider、USD20账本及原unknown324404保留。两原题各固定3次HTTP＋一次原24/已知12质量回归，最多42道问题；新增结算达到USD0.50或新unknown停止接纳，在途收尾。可信模型配置变化需另给具体候选后批准；不写源、不动8094/8100、不push/merge/deploy、不绕过browser拒绝。此授权独立于已结束AUTH027。
+
+2026-10-08 ADR-062（implemented；native业务质量仍partial）：本Goal替代此前仅记录UX的临时决定。仅模型调用前明确source-version-changed可一次同步重新读取当前资料、重新验证同身份/容器/完整正文并原子发布，再从检索重做；不等待后台publisher，不复用旧allow/旧证据，不覆盖旧versions/audit。unknown、权限拒绝、429/网络及模型调用后变化不恢复；持续变化停答。恢复尝试/结果append-only记入新version_recovery事件。模型诊断仅保存allowlist finish_reason/returned_model、usage/reasoning token计数、可见输出长度与本地校验类别，不保存内部推理/原始response/上游任意标识。会话runtime接口只给模式、模型、四源配置/最近核查/核查中与已完成答使用状态，独立内存锁，无源调用/对象信息/审计权扩展。默认及可信low8192不变；436本地/三Node/五fixture通过，HTTP第二题3/3完成、第一题两拒绝一次partial，质量30/36已执行，剩余6受额度限制；回滚本分支实现，无数据或凭据迁移。
+
+
 2026-10-08 AUTH-028：用户明确“合并并提交到main，同时给出阶段性反馈”，批准本轮fix/targeted-closeout-20261008的定向known05、AUTH026合成自动新鲜度、AUTH027实际试用失败/人工UX反馈及本地operator辅助脚本和状态文档推送既有Stone441/AI-Bang2，经PR合并main。应用brain/scripts/tests/web保持cdbd62b字节；不上传ZIP/SQLite/.runtime/凭据/一次性ticket，不新增源写入、费用、服务启动或UX实现，不改变G1/G2。未push/merge为此前证据冻结快照，实际Git交付以此次PR状态和main commit为准。
 
 2026-10-08 用户试用反馈决定：两题均失败，停止进一步使用；等待计时/工作状态、模型和四源连接信息展示及整体简陋UX仅记录问题。用户明确本轮不进行改动，由ChatGPT Chat思考后给后续指导。保留cdbd62b/main基线与失败；结束此次临时49161实例，后续新启动仍按具体实例授权，8094/8100/G1/G2不变。

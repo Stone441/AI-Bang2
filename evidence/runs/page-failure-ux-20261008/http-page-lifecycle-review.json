@@ -1,0 +1,24 @@
+{
+  "mode": "fixture product HTTP plus actual app.js in DOM stub; not browser/native/live model",
+  "covered": [
+    "same session running refresh restores question and elapsed",
+    "completed refresh restores saved answer through current-safe History",
+    "Recent own question summary and explicit answer open use real HTTP shape",
+    "exhausted fixture gate503 restores failed original question/request ID/stopped phase",
+    "paused frontend cannot POST again",
+    "different same-actor login session has no previous run"
+  ],
+  "calls": {
+    "fixture_query_accepted": 1,
+    "fixture_query_rejected_before_engine": 1,
+    "native_queries": 0,
+    "live_model_queries": 0
+  },
+  "review": "read-only security reviewer found no new boundary issue; production gate concurrency covered separately",
+  "current_native_instance": "unchanged PID54280 / e801cd48 startup, current user failure session preserved; frontend static updated",
+  "limitations": [
+    "Real browser observation of final History/failed receipt remains pending",
+    "Original Q1 accepted incomplete mitigation answers and review failure remain open",
+    "Current live backend has not loaded ADR067 admission snapshot; next approved restart required"
+  ]
+}

@@ -1,0 +1,97 @@
+/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py:21: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10b2c2200>
+  def __init__(self, readers):
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+{"status": "failed"}
+Drive: reused read-only authorization and verified native account.
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10bcaec50>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10bcafe20>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10bcafc40>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:361: ResourceWarning: unclosed database in <sqlite3.Connection object at 0x10bcaff10>
+  obj, end = self.scan_once(s, idx)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+======================================================================
+ERROR: test_native_new_counterevidence_stops_answer_until_publication (test_business_cached_query.BusinessCachedQueryTests.test_native_new_counterevidence_stops_answer_until_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 94, in query
+    return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 160, in _query
+    allowed=self.checks(actor,[r for _,r in candidates[:24]],rid,'before_model')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 81, in checks
+    raise VersionChanged(changed)
+brain.engine.VersionChanged: [{'active': True, 'id': 'confluence:98565', 'indexed_at': '2026-10-08T09:55:45.338289+00:00', 'links': [], 'locator': {'page_id': '98565', 'version': 1}, 'native_id': '98565', 'observed_at': '2026-10-08T09:55:45.338060+00:00', 'source': 'confluence', 'source_confirmed_at': '2026-10-06T00:00:00Z', 'source_updated_at': '2026-10-06T00:00:00Z', 'source_url': 'https://test.atlassian.net/wiki/pages/viewpage.action?pageId=98565', 'tenant': 'pilot', 'text': '[SYNTHETIC] novelty payment-service discovery', 'title': '[SYNTHETIC] novelty', 'version': 1}]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_business_cached_query.py", line 63, in test_native_new_counterevidence_stops_answer_until_publication
+    with self.assertRaises(SourceUnavailable):self.pilot.query(self.actor,'novelty')
+                                              ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/delegated_query.py", line 250, in query
+    return self.engine.query(actor, question, history_id)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 101, in query
+    self.audit.append('version_recovery',actor.user_id,rid,{'attempt':1,'result':'started','model_called':False})
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/audit.py", line 46, in append
+    raise ValueError('event type')
+ValueError: event type
+
+======================================================================
+FAIL: test_revoke_at_final_model_check_stops_model (test_confluence_query.QueryBoundary.test_revoke_at_final_model_check_stops_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_confluence_query.py", line 115, in test_revoke_at_final_model_check_stops_model
+    with self.assertRaises(PermissionError):self.pilot.query(self.actor,'runbook')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: PermissionError not raised
+
+======================================================================
+FAIL: test_linkless_candidate_revoked_before_model_does_not_enter_model (test_delegated_query.CombinedQuery.test_linkless_candidate_revoked_before_model_does_not_enter_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_delegated_query.py", line 112, in test_linkless_candidate_revoked_before_model_does_not_enter_model
+    self.assertEqual({e['source'] for e in result['evidence']},{'confluence'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'jira'
+
+======================================================================
+FAIL: test_revoke_at_model_dispatch_stops_entire_model_call (test_delegated_query.CombinedQuery.test_revoke_at_model_dispatch_stops_entire_model_call)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_delegated_query.py", line 87, in test_revoke_at_model_dispatch_stops_entire_model_call
+    with self.assertRaises(PermissionError): self.pilot.query(self.actor, 'runbook safeguards')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: PermissionError not raised
+
+======================================================================
+FAIL: test_price_expiry_is_operator_action_and_not_invalid_user_input (test_http.HTTP.test_price_expiry_is_operator_action_and_not_invalid_user_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_http.py", line 36, in test_price_expiry_is_operator_action_and_not_invalid_user_input
+    self.assertIn('Contact the operator', result['error'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Contact the operator' not found in 'The model needs an operator price review before another question.'
+
+======================================================================
+FAIL: test_final_model_dispatch_permission_check_blocks_late_revocation (test_slack.SlackEngine.test_final_model_dispatch_permission_check_blocks_late_revocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_slack.py", line 186, in test_final_model_dispatch_permission_check_blocks_late_revocation
+    with self.assertRaises(PermissionError):self.pilot.query(self.actor,'retry safeguards')
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: PermissionError not raised
+
+----------------------------------------------------------------------
+Ran 421 tests in 18.406s
+
+FAILED (failures=5, errors=1)
+{"status": "failed", "checks": {}}

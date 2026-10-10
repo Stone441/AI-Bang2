@@ -1,0 +1,33 @@
+{
+  "python_suite": {
+    "tests": 445,
+    "seconds": 22.883,
+    "result": "OK",
+    "log": "auth032-shared-snapshot-full.log"
+  },
+  "gate_targeted": {
+    "tests": 19,
+    "result": "OK"
+  },
+  "node_pass": [
+    "frontend_boot.js",
+    "frontend_refresh.js",
+    "frontend_history_stages.js",
+    "frontend_operator_security.js",
+    "frontend_runtime.js",
+    "frontend_audit_review.js"
+  ],
+  "initial_node_command_error": "frontend_waiting.js does not exist; no such test claimed run. Actual runtime.js/audit_review.js discovered and run.",
+  "readonly_review": "pass; verify actual audit candidate_strategy",
+  "browser": "not_run_saved_denial",
+  "human": "pending",
+  "suite_stdout_note": {
+    "line": "status failed checks empty",
+    "source": "scripts/native_product_acceptance.py:146; test_product_acceptance mocked read denial intentionally asserts runFalse",
+    "reproduction_log": "auth032-fixture-stdout-check.log",
+    "test_count": 2,
+    "result": "OK",
+    "native_or_model_calls": 0
+  },
+  "warnings": "Existing unclosed SQLite ResourceWarning retained; no claim that warnings absent"
+}
