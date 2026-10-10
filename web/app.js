@@ -144,12 +144,14 @@ async function preview(id){
 }
 
 function modelLabel(answer){
+  if(answer.answer_status==='evidence_only')return 'SYNTHESIS BLOCKED · SOURCE EVIDENCE';
   if(answer.model==='fake-extractive-v1')return 'FAKE MODEL';
   if(answer.model_call?.called===false)return 'NO MODEL CALL';
   if(answer.model_call?.called===true)return answer.claim_format==='grounded_synthesis_v1'?'LIVE MODEL · REVIEWED SYNTHESIS':'LIVE MODEL · SOURCE EXCERPTS';
   return 'MODEL CALL NOT RECORDED';
 }
 function renderModelUsage(answer,target){
+  if(answer.answer_status==='evidence_only'){target.append(el('p','The model output was rejected. Original call usage and failure remain in the audit; no additional model call produced these source excerpts.','notice'));return;}
   const receipt=answer.model_call;
   if(answer.model==='fake-extractive-v1')return;
   if(receipt?.called===false){target.append(el('p','No external model request was sent.','muted'));return;}
@@ -167,6 +169,7 @@ function renderModelUsage(answer,target){
 
 }
 function answerStatus(answer){
+  if(answer.answer_status==='evidence_only')return 'Synthesis failed validation. Current source evidence is available; no validated summary was produced.';
   if(answer.model_call?.called===false)return 'No supporting evidence found. No external model request was sent.';
   if(!answer.claims.length)return answer.model_call?.called===true?'The model checked authorized sources but found insufficient support.':'Insufficient supporting evidence.';
   if(answer.model==='fake-extractive-v1')return 'Answer recorded. Authorized synthetic source excerpts; fake model.';
@@ -174,6 +177,7 @@ function answerStatus(answer){
 }
 function renderAnswer(answer,target=$('answer')){
   target.replaceChildren();if(answer.unavailable){target.append(el('p',answer.message,'notice'));return;}
+  if(answer.answer_status==='evidence_only'){const failure=el('div',undefined,'error-panel');failure.append(el('h2','Synthesis was blocked'),el('p','The model output did not pass validation. The original source passages below were checked for current access and version. They are not a validated summary; latest ordering is not inferred.'));target.append(failure);}
   const grid=el('div',undefined,'receipt'),main=el('div',undefined,'panel'),side=el('aside',undefined,'panel');
   const head=el('div',undefined,'receipt-head');head.append(el('h2',answer.claim_format==='grounded_synthesis_v1'?'Evidence-backed answer':'Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);
   main.append(el('h3',answer.question||'Question not recorded for this older answer.'));

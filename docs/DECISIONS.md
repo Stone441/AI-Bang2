@@ -1,5 +1,16 @@
 # Decisions / ADR
 
+ADR-075 · 2026-10-11 技术取舍：v13首题15.48秒在generation阻断，第二题26.00秒成功；不再追加相同提示词/全套实验。获批delivery operator显式启用证据接续：仅known-usage输出拒绝时，丢弃整份草稿，保留失败/调用审计，经正常final native权限/版本检查提供selected原文。显式answer_status=evidence_only及“synthesis blocked”UI；不声称综合答案成功或首题已完整解决。原文含C01措施且不推断最新顺序，不硬编码题目/内容。unknown/撤权/版本改变/预算/transport异常仍阻断，无付费重试。History与刷新以evidence_only终态取回，并再次当前鉴权；默认Engine不启用该选择。
+
+ADR-074 · 2026-10-11：v12首题原生28.52秒HTTP200，但语义失败：将pilot approval称latest mitigation，遗漏C01；同模型review误放行，完整答案/审计保留。v13增加保守latest/newest断言的quote词项检查，明确顺序未知不代替支持的操作措施。历史综合答案读取也按当前确定性claim校验；旧失败原记录不删除，不把不可提供的旧答案当成功。此检查只是词项来源保护，不能证明语义排序；模型复核/人工仍必要。一次定向修正后仅原两题各一次；若首题仍无实质进展停止同类提示词叠加，其他交付继续。
+
+
+2026-10-11 本轮独立交付任务已明确授权，覆盖旧阶段stop对继续开发的限制，但不恢复旧Goal额度或大规模测试流程。基准main b34a055；当前独立delivery/2026-10-11-demo-candidate。保留所有旧文件/失败；不动8094/8100，不写业务源，不push/merge/deploy。
+
+ADR-072：采纳同DeepSeek Flash thinking disabled、cap8192；排名默认none，旧low8192及v11通过Git基准可回退。今日官方readiness已真实复核，价格未变；本地接线不等于live通过。新独立额度12问/24调用、自动≤9/真人≥3、新增结算USD1或新unknown停新提交，在途按原规则收尾；新state保留原ledger全部未知与reservation，旧Goal state只读。
+
+ADR-073：简化generation/review为语义核心与服务器确定性验证。所有草稿结论仍须supported=true、当前权限/版本、真实ID/连续quote有效；unknown/unsupported整答阻断。supported但responsive=false可过滤，仅当复核明确filtered_answer_complete=true、非空其余结论独立且question_covered=true。过滤后的claims才交Engine再次校验；关键限定不可删除，未验证草稿不展示。此决定覆盖本轮整答拒绝冗余策略而不改写旧失败/ADR；同模型复核仍可能误判，G1不替代。首题保留原问题，需报告当前证据支持的批准措施及顺序未知；未通过前不宣布产品完成。
+
 2026-10-10 阶段停止（用户明确指示）：开发Goal paused，停止继续测试/付费验证与模型候选推进；仅交付当前分支到GitHub并合并main。详见docs/reviews/2026-10-10-page-failure-stage-stop.md。135/138，Goal结算0.437330USD、旧unknown324404保留、新unknown无；idle49161/PID87323已停，临时入口token已移除，8094/8100不动。none8192与新增42次申请不获批准、不执行；Q1/最新真人UX未完成，不批准G1/G2。下一步由ChatGPT审查并决定，不能自动重启或继续付费测试。
 
 

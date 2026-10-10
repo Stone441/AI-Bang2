@@ -31,7 +31,7 @@ class SessionRuns:
         with self.lock:
             run=self.runs.get(token)
             if run and run['request_id']==request_id:
-                run.update(status='failed' if code else 'completed',error_code=code,
+                run.update(status='failed' if code else 'evidence_only' if (result or {}).get('answer_status')=='evidence_only' else 'completed',error_code=code or (result or {}).get('synthesis_failure'),
                            elapsed_seconds=time.monotonic()-run['started'],
                            sources_used=sorted({e['source'] for e in (result or {}).get('evidence',[])
                                if e['evidence_id'] in {eid for c in (result or {}).get('claims',[]) for eid in c['evidence_ids']}}))

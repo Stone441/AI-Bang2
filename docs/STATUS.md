@@ -1,5 +1,16 @@
 # Current status
 
+## 本轮候选交付事实 · 2026-10-11
+
+当前独立delivery分支，基准main b34a055。已落地disabled8192/ranking none、紧凑generation/review、保守latest引用断言、受支持背景过滤、History当前claim复校、明确失败的原文证据接续和界面视觉统一。材料见SUBMISSION_CANDIDATE；复用1600×900封面、15份真实CodeBuddy原件hash吻合；未上传私有证据。
+
+454项整合本地回归OK（22.687s），六Node和专用HTTP/app.js联动、五fixture场景通过；保留ResourceWarnings及失败初稿。v12首题HTTP200但业务失败，v13首题generation阻断；不再堆相同提示词。证据接续实测21.38秒提供C01原文措施并明确不推断最新顺序，状态evidence_only，不算综合成功。第二题v12/v13分别26.45/26.00秒事实完整；两范围题fixture/live分别pilot限定事实和缺字段安全空答。Recent/History/C01preview当前native HTTP200，非browser/真人通过。
+
+本轮7/12提交、11/24模型调用，新增保守结算USD0.009824；原unknown324404、旧Goal state及USD20账本保留，新unknown无。剩5提交留真人。自己的49161切换真人模式前保存终态及额度，旧答案复制保留；不动8094/8100/业务源，未push/merge/deploy/submit。首题综合仍未解决，G1/G2/真人录像not_run，Goal未完成。全部证据见evidence/runs/delivery-20261011。
+
+
+2026-10-11 本轮独立交付任务已明确授权，覆盖旧阶段stop对继续开发的限制，但不恢复旧Goal额度或大规模测试流程。基准main b34a055；当前独立delivery/2026-10-11-demo-candidate。保留所有旧文件/失败；不动8094/8100，不写业务源，不push/merge/deploy。
+
 2026-10-10 阶段停止（用户明确指示）：开发Goal paused，停止继续测试/付费验证与模型候选推进；仅交付当前分支到GitHub并合并main。详见docs/reviews/2026-10-10-page-failure-stage-stop.md。135/138，Goal结算0.437330USD、旧unknown324404保留、新unknown无；idle49161/PID87323已停，临时入口token已移除，8094/8100不动。none8192与新增42次申请不获批准、不执行；Q1/最新真人UX未完成，不批准G1/G2。下一步由ChatGPT审查并决定，不能自动重启或继续付费测试。
 
 

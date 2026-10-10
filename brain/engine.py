@@ -25,8 +25,10 @@ class FakeExtractiveModel:
 
 class Engine:
     def __init__(self, store, world, audit, model=None, *, tenant=TENANT, mode=MODE,
-                 retrieval_strategy='bm25', query_expansion='none'):
+                 retrieval_strategy='bm25', query_expansion='none', evidence_on_model_rejection=False):
         if retrieval_strategy not in ('lexical','bm25'):raise ValueError('Unsupported retrieval strategy')
+        if type(evidence_on_model_rejection) is not bool:raise ValueError('Trusted evidence fallback flag required')
+        self.evidence_on_model_rejection=evidence_on_model_rejection
         self.store,self.world,self.audit=store,world,audit
         self.model=model or FakeExtractiveModel()
         self.tenant,self.mode=tenant,mode
@@ -217,23 +219,34 @@ class Engine:
                                        'source':e.source,'version':e.version,'stage':'prepared_for_review',
                                        'resource_scope':'payment-service'})
             observe('model_invoked',{})
-            if hasattr(self.model,'generate_with_provenance'):
-                from .synthetic_provenance import SyntheticProvenance
-                provenance = SyntheticProvenance(
-                    getattr(self.world, 'approved_synthetic_resource_ids', ()), self.world.resources.get)
-                def observe_model(event, payload):
-                    if event not in ('model_dispatch_intent','model_dispatch_attempted','model_usage_received',
-                                     'model_output_accepted','model_output_rejected','model_request_unavailable'):
-                        raise ValueError('Invalid model event')
-                    observe(event,payload)
-                    self.audit.append(event,actor.user_id,rid,{**payload,'resource_scope':'payment-service'})
-                draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage,observe_model)
-            elif hasattr(self.model,'generate_with_authorization'):
-                draft=self.model.generate_with_authorization(question,selected,rid,authorize_model_stage)
-            elif hasattr(self.model,'generate_for_request'):
-                draft=self.model.generate_for_request(question,selected,rid)
-            else:
-                draft=self.model.generate(question,selected)
+            from .deepseek import ModelOutputRejected
+            evidence_only=False
+            try:
+                if hasattr(self.model,'generate_with_provenance'):
+                    from .synthetic_provenance import SyntheticProvenance
+                    provenance = SyntheticProvenance(
+                        getattr(self.world, 'approved_synthetic_resource_ids', ()), self.world.resources.get)
+                    def observe_model(event, payload):
+                        if event not in ('model_dispatch_intent','model_dispatch_attempted','model_usage_received',
+                                         'model_output_accepted','model_output_rejected','model_request_unavailable'):
+                            raise ValueError('Invalid model event')
+                        observe(event,payload)
+                        self.audit.append(event,actor.user_id,rid,{**payload,'resource_scope':'payment-service'})
+                    draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage,observe_model)
+                elif hasattr(self.model,'generate_with_authorization'):
+                    draft=self.model.generate_with_authorization(question,selected,rid,authorize_model_stage)
+                elif hasattr(self.model,'generate_for_request'):
+                    draft=self.model.generate_for_request(question,selected,rid)
+                else:
+                    draft=self.model.generate(question,selected)
+            except ModelOutputRejected:
+                if not self.evidence_on_model_rejection:raise
+                # No model draft survives. These are immutable authorized original
+                # passages, not repaired claims or a fabricated successful review.
+                evidence_only=True
+                self.audit.append('request_failed',actor.user_id,rid,
+                    {'reason':'model_output_rejected','continuation':'current_source_excerpts_only'})
+                draft={'claims':[{'text':e.text,'evidence_ids':[e.evidence_id]} for e in selected]}
             by_id={e.evidence_id:e for e in selected}
             # Exact extractive support is intentionally strict for this provider.
             claims=[]
@@ -281,6 +294,11 @@ class Engine:
             if synthesis:
                 response.update(claim_format=generation['claim_format'],model_review=review_receipt,
                                 review_status='accepted')
+            if evidence_only:
+                response.update(answer_status='evidence_only',synthesis_failure='model_output_unavailable')
+                response['uncertainties']=['Synthesis failed validation. No model draft is shown. These are current authorized source excerpts, not a validated synthesized answer. Latest ordering is not inferred; compare the recorded actions and source scope.']
+                self.audit.append('source_excerpts_prepared',actor.user_id,rid,
+                    {'synthesis_completed':False,'evidence_ids':[e.evidence_id for e in selected]})
             self.audit.append('response_committed',actor.user_id,rid,{'response':response})
             self.store.save_run(rid,actor.user_id,response)
             return response
@@ -322,8 +340,16 @@ class Engine:
         for record in records:
             if not record: continue
             allowed=True
+            current=[]
             for e in record['evidence']:
-                try: self.evidence(actor,e['evidence_id'])
+                try: current.append(self.evidence(actor,e['evidence_id']))
                 except (PermissionError,SourceUnavailable): allowed=False; break
+            if allowed and record.get('claim_format')=='grounded_synthesis_v1':
+                from .synthesis import validate_claim
+                from types import SimpleNamespace
+                try:
+                    evidence=[SimpleNamespace(**e) for e in current]
+                    for claim in record['claims']:validate_claim(claim,evidence)
+                except (ValueError,KeyError,TypeError):allowed=False
             result.append(record if allowed else {'request_id':record['request_id'],'unavailable':True,'message':'This answer is no longer available. Ask again for current evidence.'})
         return result
