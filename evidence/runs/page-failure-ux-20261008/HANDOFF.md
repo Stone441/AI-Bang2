@@ -1,5 +1,7 @@
 # Refresh continuation repair — 2026-10-09
 
+2026-10-10 ADR067：93次是90后台验证＋3human，非USD20余额耗尽；goal settled0.320468USD/available18.583215USD/legacyunknown0.324404USD，新unknown无。新增查询在gate before engine/reservation/model停止，不增加attempts或费用；用户具体失败HTTP/rid尚未捕获，保留证据限制。前端显示trial暂停、禁用Ask、失败保留自己原题/rid/实际停止phase/固定elapsed，刷新恢复终态失败而非假装继续计时。runtime新增query_admission只读内存快照，actual gate仍每次持久计数/费用/unknown检查；503附当前session安全run，不草稿。已修复只读审查发现的候选constructor无锁save竞态：existing仅内存load，首次creation同flock重查，未加载问题候选到live。440本地/5Node/只读复核通过。当前不重启以保留用户session失败state，static UI已更新；新后端snapshot/503 metadata在下一次同获批49161启动加载，旧runtime仍可供前端恢复失败并暂停。不得自动扩额、模型重试或恢复旧unknown。
+
 Current instance PTY74133 / history-stages-startup.json; fresh token private, launch command --check passed. Source hash e801cd48aaf628e231003a08d4bc70ba2545c9d1b0d1df11669f031d2d83ca8a. Native HTTP check used a separate session then signed out; current fresh user entry unconsumed.
 
 Latest ADR066: user confirms running refresh question/timer and answer delivery; Recent stayed at Checking current access, terminal refresh lost answer. Fixed summaries + explicit single-answer access check + session reference restoration + actual observed stage strip. 439 Python/five Node/readonly review pass; history-stages-native-http.json confirms summary0.0013s/latest3claims9.1344s, no model call. Admission93/93 exhausted. Next HUMAN: reopen fresh entry, select newest saved question in Recent, wait current access, inspect citation, refresh saved answer; NO Ask/new query. Native/browser observation distinguished.

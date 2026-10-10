@@ -63,4 +63,6 @@ def runtime_status(app, actor, run):
                                and not discovery.stop_event.is_set() else 'unconfirmed'),
             'checking':source in getattr(discovery,'checking',frozenset()) if discovery and actor==discovery.actor else False,
             'used_in_answer':bool(run and run['status']=='completed' and source in run['sources_used'])})
-    return {'mode':app.engine.mode,'model':app.engine.model.name,'sources':sources,'run':run}
+    admission=getattr(app.engine.query,'public_status',None)
+    return {'mode':app.engine.mode,'model':app.engine.model.name,'sources':sources,'run':run,
+            'query_admission':admission() if callable(admission) else None}

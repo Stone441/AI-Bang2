@@ -519,3 +519,5 @@ Ranking uses local lexical overlap and a small explicit English alias map, up to
 - 新append-only `version_recovery`记录attempt/result/model_called，诊断附于模型事件：allowlist元数据和计数，不记录推理正文/原始输出。旧日志不改。
 
 2026-10-10 ADR066：`GET /api/history/recent`只返回已验证actor自己的最多20个question/answered_at/request_id摘要；无来源核查或来源元数据，仍受store锁约束。打开正文只用`GET /api/history?request_id=<32hex>`与safe_history当前权限/version检查，SourceUnavailable返回安全unavailable条目。`run.phases`为后端实际曾报告的阶段列表，不能推断未报告步骤完成。浏览器只存当前session的已看答案引用，不缓存答案正文，刷新重新核查。
+
+ADR067：runtime `query_admission`为最近gate保存时的内存快照，只含allowed/reason/attempts_used/attempts_limit/attempts_remaining，不取费用账本/源/查询锁，不能替代实际接纳授权。查询503的run仅当前session原题/rid/status/phase/phases/elapsed及安全error_code，错误刷新恢复终态，已停止不继续计时。

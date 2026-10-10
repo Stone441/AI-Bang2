@@ -276,4 +276,34 @@ class ModelErrorHTTP(unittest.TestCase):
                 self.app.sessions[next(iter(self.app.sessions))]['last_query']=0
                 status,body=self.request('/api/query',{'question':'payment-service'})
                 self.assertEqual(status,503);self.assertEqual(body['code'],code)
+                self.assertEqual(body['run']['question'],'payment-service');self.assertEqual(body['run']['status'],'failed')
+                self.assertEqual(body['run']['phase'],'queued');self.assertEqual(body['run']['request_id'],body['request_id'])
                 self.assertRegex(body['request_id'],r'^[0-9a-f]{32}$');self.assertNotIn('PRIVATE_VENDOR_DETAIL',json.dumps(body))
+
+
+class TrialSnapshot(unittest.TestCase):
+    def test_gate_status_never_waits_for_query_lock_and_denied_attempt_does_not_count(self):
+        import importlib.util,tempfile
+        from pathlib import Path
+        from brain.budget import BudgetLedger,TrialAdmissionPaused
+        spec=importlib.util.spec_from_file_location('trial_launch',Path('evidence/runs/page-failure-ux-20261008/launch.py'))
+        launch=importlib.util.module_from_spec(spec);spec.loader.exec_module(launch)
+        with tempfile.TemporaryDirectory() as folder:
+            ledger=BudgetLedger(Path(folder)/'budget.sqlite');entered=threading.Event();release=threading.Event();calls=[]
+            def query():calls.append(1);entered.set();release.wait(2)
+            gate=launch.Admission(query,ledger,Path(folder)/'admission.json');thread=threading.Thread(target=gate)
+            thread.start()
+            try:
+                self.assertTrue(entered.wait(1));start=time.monotonic();status=gate.public_status()
+                self.assertLess(time.monotonic()-start,0.1);self.assertEqual(status['attempts_used'],1)
+                state_path=Path(folder)/'admission.json';before=state_path.read_bytes()
+                other=launch.Admission(query,ledger,state_path)
+                self.assertEqual(other.public_status()['attempts_used'],1);self.assertEqual(state_path.read_bytes(),before)
+                self.assertFalse(state_path.with_suffix('.tmp').exists())
+                status['attempts_used']=999;self.assertEqual(gate.public_status()['attempts_used'],1)
+            finally:release.set();thread.join(3)
+            gate.attempts=gate.maximum;gate.save()
+            with self.assertRaises(TrialAdmissionPaused):gate()
+            self.assertEqual(len(calls),1);self.assertEqual(gate.public_status()['attempts_used'],42)
+            self.assertEqual(gate.public_status()['reason'],'attempt_limit');self.assertFalse(gate.public_status()['allowed'])
+            self.assertEqual(ledger.summary()['settled_micro_usd'],0);ledger.db.close()

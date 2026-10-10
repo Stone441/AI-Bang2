@@ -159,7 +159,7 @@ def create_server(app, port=0):
                                   'source_unconfirmed':'Current access or source integrity could not be confirmed. Try later or contact the operator.',
                                   'model_price_review_required':'The model needs a price review. Contact the operator; retrying will not resolve this.'}
                         app.session_runs.finish(token,rid,code=code)
-                        return self.send(503,{'error':messages[code],'code':code,'request_id':rid})
+                        return self.send(503,{'error':messages[code],'code':code,'request_id':rid,'run':app.session_runs.snapshot(token)})
                     app.session_runs.finish(token,rid,result=result)
                     app.audit.append('response_dispatch_attempted',actor.user_id,result['request_id'],{'transport':'http','meaning':'server attempted dispatch, not user read'})
                     return self.send(200,result)
