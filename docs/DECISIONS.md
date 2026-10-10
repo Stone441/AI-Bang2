@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-11 ADR080：两次真人原首题实际进入reviewed-excerpts路径，均把pilot/release材料选成答案，却遗漏输入中已有授权C01操作；review明确question_covered=false，最终返回evidence_only。阻断有效，不能忽略coverage、把真实但不完整的选文算成功或推断是review误拒。不追加同类选择提示词，不后台占用最后一问；两次完整native结果及私有草稿hash保留，旧配置/失败不改。新路径Q2尚未执行，旧Q2成功不可继承。当前11/12、17/24calls，USD0.016143、旧unknown324404/newunknown无；余一仅真人，G1/G2/核心答案仍未完成。
+
 2026-10-11 ADR079：保留十分钟一次性登录码及一小时会话，不靠拉长凭据期限解决本地入口过期。显式双击入口通过本机OS owner、私有文件权限、同runtime指纹和同loopback listener PID核验，向本任务进程SIGUSR1续签；服务端固定actor，既有session/run不变。无新HTTP管理接口/外部写入/模型调用。expired旧ticket仍拒绝；新ticket一次使用后拒绝；错实例/错listener/软链/宽权限文件不发送signal。空闲首次加载前保存原taskstate；真实续签HTTP及24项定向证明入口和会话连续性，不代表真人页面或业务质量通过。源ACL/version鉴权、预算和未知账本不改变。
 
 2026-10-11 ADR077：仅用一项剩余后台额度诊断实际首题，未改问题/提示词/配置。已确认v13拒绝未知措辞“The latest … is not established in the accessible evidence”，原草稿也遗漏授权C01 runbook。未知措辞豁免仅限明确、分开的否定句；肯定latest及夹带肯定句仍阻断。旧失败不改成成功。私有诊断只保留有界可见claim字段、不保留reasoning、不显示草稿；调用价按当日官方pricing复核及readiness，旧unknown不变。
