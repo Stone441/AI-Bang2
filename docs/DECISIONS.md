@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-11 ADR082 / AUTH033：用户明确批准新增2次真人问答（原首题、原第二题）、最多2次同DeepSeek调用、新增结算USD0.10或新unknown停接纳。同provider/disabled8192/原合成资料/USD20账本，不恢复自动测试。新human-retest-admission.json独立基线及0/2计数；旧trial-admission保持12/12原字节，旧失败/unknown/reservation保留。仅--human --human-retest --answer-style source-review可启动，双调用style和automatic拒绝；source-review每问一次且无付费重试，额外ledger调用达2同样停接纳。旧最后一次请求c6e284b9在prepare阶段request_stopped且无模型；当前Drive失败/unconfirmed快照与停止一致，底层原因未证实。空闲保存状态后更新自己的49161，刷新原生身份及来源；真实答案/G1/G2仍未完成。
+
 2026-10-11 ADR081：根据ADR080两次同路径遗漏措施，停止模型选段提示词调整。新增opt-in `source-review`：代码将全部当前授权检索片段完整构造成连续原文claims，再用同DeepSeek一次review检查全部支持、范围、问题覆盖及安全过滤。不硬编码首题/C01，不改检索或权限；同一证据窗口保留所有已受支持片段，防止过滤掉末尾限定。使用新 `reviewed_source_v1` 契约，只允许精确原文及真实review回执，绝不伪造generation调用；旧综合/选段双调用契约与配置保留。当前原首题历史输入离线重放证明9份输入完整进入review、含C01；不证明当前native权限或live答案通过。剩一问仅真人，无自动提交、额度不扩大；核心答案仍未验证。
 
 2026-10-11 ADR080：两次真人原首题实际进入reviewed-excerpts路径，均把pilot/release材料选成答案，却遗漏输入中已有授权C01操作；review明确question_covered=false，最终返回evidence_only。阻断有效，不能忽略coverage、把真实但不完整的选文算成功或推断是review误拒。不追加同类选择提示词，不后台占用最后一问；两次完整native结果及私有草稿hash保留，旧配置/失败不改。新路径Q2尚未执行，旧Q2成功不可继承。当前11/12、17/24calls，USD0.016143、旧unknown324404/newunknown无；余一仅真人，G1/G2/核心答案仍未完成。

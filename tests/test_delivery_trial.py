@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from brain.budget import BudgetLedger, TrialAdmissionPaused
-from scripts.delivery_trial import Admission, rejected_generation_diagnostic
+from scripts.delivery_trial import Admission, HumanRetestAdmission, rejected_generation_diagnostic, main
 
 class PrivateGenerationDiagnostic(unittest.TestCase):
     def test_bounds_visible_claim_fields_and_excludes_reasoning(self):
@@ -55,3 +55,42 @@ class DeliveryAllowance(unittest.TestCase):
         with self.assertRaises(TrialAdmissionPaused):gate()
         self.assertEqual(calls,['finished'])
         self.assertEqual(json.loads(self.path.read_text())['attempts'],1)
+
+
+class HumanRetestAllowance(unittest.TestCase):
+    setUp=DeliveryAllowance.setUp
+    tearDown=DeliveryAllowance.tearDown
+    # Reuse ledger setup, but define only this authorization's tests.
+    def gate(self,query=lambda:'answer'):
+        return HumanRetestAdmission(query,self.ledger,self.path,human=True)
+    def test_two_human_questions_restart_keeps_limit_and_old_unknown(self):
+        with self.assertRaises(ValueError):HumanRetestAdmission(lambda:None,self.ledger,self.path)
+        self.assertEqual(self.gate()(),'answer')
+        restarted=self.gate();self.assertEqual(restarted(),'answer')
+        with self.assertRaises(TrialAdmissionPaused):self.gate()()
+        state=json.loads(self.path.read_text())
+        self.assertEqual(state['attempts'],2);self.assertEqual(state['max_attempts'],2)
+        self.assertEqual(state['original_pending_ids'],[self.legacy])
+        self.assertEqual(self.ledger.summary()['pending_requests'],1)
+    def test_cost_threshold_100k_inflight_finishes_then_stops(self):
+        def query():
+            r=self.ledger.reserve(100000);self.ledger.dispatch(r);self.ledger.settle(r,100000)
+            return 'finished'
+        gate=self.gate(query);self.assertEqual(gate(),'finished')
+        with self.assertRaises(TrialAdmissionPaused):gate()
+        self.assertEqual(json.loads(self.path.read_text())['attempts'],1)
+    def test_new_unknown_stops_and_stays_reserved(self):
+        gate=self.gate();r=self.ledger.reserve(1000);self.ledger.dispatch(r)
+        with self.assertRaises(TrialAdmissionPaused):gate()
+        self.assertEqual(json.loads(self.path.read_text())['attempts'],0)
+        self.assertEqual(self.ledger.summary()['pending_requests'],2)
+    def test_model_call_limit_stops_even_before_two_questions(self):
+        gate=self.gate()
+        for _ in range(2):
+            r=self.ledger.reserve(1000);self.ledger.dispatch(r);self.ledger.settle(r,1000)
+        with self.assertRaises(TrialAdmissionPaused):gate()
+        self.assertEqual(json.loads(self.path.read_text())['model_calls_used'],2)
+        self.assertEqual(gate.public_status()['reason'],'model_call_limit')
+    def test_retest_cannot_launch_automatic_or_two_call_styles(self):
+        for human,style in [(False,'source-review'),(True,'synthesis'),(True,'reviewed-excerpts')]:
+            with self.assertRaises(ValueError):main(human=human,answer_style=style,human_retest=True)

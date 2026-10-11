@@ -24,6 +24,9 @@ def rejected_generation_diagnostic(output):
  return {'claim_count':len(claims),'claims':safe}
 
 class Admission:
+ MAXIMUM=12
+ AUTOMATIC_LIMIT=9
+ COST_LIMIT=1000000
  def __init__(self,query,ledger,state_path,*,human=False):
   self.human=human
   self.query=query;self.ledger=ledger;self.path=Path(state_path);self.lock=threading.RLock()
@@ -33,19 +36,24 @@ class Admission:
     os.chmod(self.path.with_suffix('.lock'),0o600);fcntl.flock(lock,fcntl.LOCK_EX)
     if self.path.exists():self.load(json.loads(self.path.read_text()))
     else:
-     self.baseline=ledger.summary();self.pending=self.pending_ids();self.attempts=0;self.maximum=12;self.save()
+     self.baseline=ledger.summary();self.pending=self.pending_ids();self.attempts=0;self.maximum=self.MAXIMUM;self.save()
  def load(self,prior):
-  self.baseline=prior['baseline'];self.pending=set(prior['original_pending_ids']);self.attempts=prior['attempts'];self.maximum=prior['max_attempts'];self.update_public(prior)
+  self.baseline=prior['baseline'];self.pending=set(prior['original_pending_ids']);self.attempts=prior['attempts'];self.maximum=prior['max_attempts']
+  if self.maximum!=self.MAXIMUM:raise ValueError('Unapproved attempt configuration')
+  self.update_public(prior)
  def update_public(self,body):
   used,maximum=body['attempts'],body['max_attempts']
-  reason=('attempt_limit' if used>=(maximum if self.human else 9) else 'cost_limit' if body['current']['settled_micro_usd']-body['baseline']['settled_micro_usd']>=1000000 else 'usage_unconfirmed' if body['new_unknown_reservations'] or body['current']['blocked_for_review'] else None)
+  reason=('attempt_limit' if used>=(maximum if self.human else self.AUTOMATIC_LIMIT) else 'cost_limit' if body['current']['settled_micro_usd']-body['baseline']['settled_micro_usd']>=self.COST_LIMIT else 'usage_unconfirmed' if body['new_unknown_reservations'] or body['current']['blocked_for_review'] else None)
   self.public={'allowed':reason is None,'reason':reason,'attempts_used':used,'attempts_limit':maximum,'attempts_remaining':max(0,maximum-used)}
  def pending_ids(self):
   with self.ledger.transaction():return {r[0] for r in self.ledger.db.execute("SELECT id FROM reservations WHERE state IN ('prepared','dispatched')")}
  def save(self):
-  body={'original_pending_ids':sorted(self.pending),'attempts':self.attempts,'max_attempts':self.maximum,'baseline':self.baseline,'current':self.ledger.summary(),'settled_stop_threshold_micro_usd':1000000,'new_unknown_reservations':sorted(self.pending_ids()-self.pending),'boundary':f'Admission stops new questions at{self.maximum} attempts, settled threshold, or new unknown usage; in-flight call completes. Not provider billing cap.'}
+  body={'original_pending_ids':sorted(self.pending),'attempts':self.attempts,'max_attempts':self.maximum,'baseline':self.baseline,'current':self.ledger.summary(),'settled_stop_threshold_micro_usd':self.COST_LIMIT,'new_unknown_reservations':sorted(self.pending_ids()-self.pending),'boundary':f'Admission stops new questions at{self.maximum} attempts, settled threshold, or new unknown usage; in-flight call completes. Not provider billing cap.'}
+  body.update(self.state_extra())
   self.update_public(body)
   tmp=self.path.with_suffix('.tmp');tmp.write_text(json.dumps(body,indent=2)+'\n');os.chmod(tmp,0o600);tmp.replace(self.path)
+ def state_extra(self):return {}
+ def additional_stop(self):return False
  def public_status(self):
   # Another authorized process may consume the shared allowance. Read its atomic
   # snapshot without waiting for query/flock/ledger or polling any business source.
@@ -55,16 +63,50 @@ class Admission:
  def __call__(self,*args,**kwargs):
   with self.lock,open(self.path.with_suffix('.lock'),'a') as lock:
    os.chmod(self.path.with_suffix('.lock'),0o600);fcntl.flock(lock,fcntl.LOCK_EX)
-   prior=json.loads(self.path.read_text());self.attempts=prior['attempts'];self.maximum=prior['max_attempts']
-   if self.maximum != 12:raise ValueError('Unapproved attempt configuration')
+   prior=json.loads(self.path.read_text());self.load(prior)
    status=self.ledger.summary()
-   if self.attempts>=(self.maximum if self.human else 9) or status['settled_micro_usd']-self.baseline['settled_micro_usd']>=1000000 or status['blocked_for_review'] or self.pending_ids()-self.pending:
+   if self.attempts>=(self.maximum if self.human else self.AUTOMATIC_LIMIT) or status['settled_micro_usd']-self.baseline['settled_micro_usd']>=self.COST_LIMIT or status['blocked_for_review'] or self.pending_ids()-self.pending or self.additional_stop():
     self.save();raise TrialAdmissionPaused('Trial limit reached; ask the operator to review before continuing.')
    self.attempts+=1;self.save()
    try:return self.query(*args,**kwargs)
    finally:self.save()
 
-def main(*, human=False, answer_style="synthesis"):
+class HumanRetestAdmission(Admission):
+ """Explicit 11 October authorization: two human questions, two calls, USD0.10.
+
+ Separate durable state; original twelve-attempt allowance is never rewritten.
+ Only the single-call source-review launcher can construct this admission gate.
+ """
+ MAXIMUM=2
+ AUTOMATIC_LIMIT=0
+ COST_LIMIT=100000
+ POLICY='2026-10-11-human-retest-two'
+ def __init__(self,query,ledger,state_path,*,human=False):
+  if not human:raise ValueError('Retest requires human mode')
+  self.ledger=ledger;self.baseline_model_calls=self.call_count()
+  super().__init__(query,ledger,state_path,human=human)
+ def call_count(self):
+  with self.ledger.transaction():
+   return self.ledger.db.execute("SELECT count(*) FROM reservations WHERE state IN ('dispatched','settled')").fetchone()[0]
+ def load(self,prior):
+  if (prior.get('authorization')!=self.POLICY or prior.get('max_model_calls')!=2
+      or type(prior.get('baseline_model_calls')) is not int):
+   raise ValueError('Unapproved retest configuration')
+  self.baseline_model_calls=prior['baseline_model_calls']
+  super().load(prior)
+ def state_extra(self):
+  return {'authorization':self.POLICY,'baseline_model_calls':self.baseline_model_calls,
+          'max_model_calls':2,'model_calls_used':self.call_count()-self.baseline_model_calls,
+          'boundary':'Two human submissions only; new settlement USD0.10 or new unknown stops admission. Original allowance/ledger retained; in-flight call finishes.'}
+ def additional_stop(self):return self.call_count()-self.baseline_model_calls>=2
+ def update_public(self,body):
+  super().update_public(body)
+  if body.get('model_calls_used',0)>=2 and self.public['allowed']:
+   self.public.update(allowed=False,reason='model_call_limit')
+
+def main(*, human=False, answer_style="synthesis", human_retest=False):
+ if human_retest and (not human or answer_style!="source-review"):
+  raise ValueError("Approved human retest requires single-call source-review")
  query_expansion="none"
  from brain.retrieval import ranking_terms
  ranking_terms(set(),query_expansion)
@@ -127,14 +169,22 @@ def main(*, human=False, answer_style="synthesis"):
      raise
     finally:model.parse_output=parsed
    model.generate_with_provenance=capture
-   current.engine.query=Admission(current.engine.query,current.engine.model.ledger,runtime/'trial-admission.json',human=human)
+   if human_retest:
+    original=json.loads((runtime/'trial-admission.json').read_text())
+    if original['attempts']!=12 or original['max_attempts']!=12 or original['new_unknown_reservations']:
+     raise ValueError('Original allowance must remain exhausted without new unknown')
+    if getattr(current.engine.model,'claim_format',None)!='reviewed_source_v1':
+     raise ValueError('Retest requires single-review model')
+   gate=HumanRetestAdmission if human_retest else Admission
+   state=runtime/('human-retest-admission.json' if human_retest else 'trial-admission.json')
+   current.engine.query=gate(current.engine.query,current.engine.model.ledger,state,human=human)
    return serve(*a,**kw)
   server.serve_forever=limited_serve;return server
  operator_web.create_server=create;os.chdir(private)
  return operator_web.main(['--source','multi','--config',str(repo/'.runtime'/'operator-bundle.json'),'--actor','eng_b','--oauth-client',str(repo/'.runtime'/'drive-oauth-client.json'),'--port','49161','--live','--model','deepseek','--credential-store','macos-keychain','--answer-style',answer_style,'--reasoning-effort','none','--output-tokens','8192','--discovery-auth017'])
 if __name__=='__main__':
  import argparse,sys,re
- parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts','source-review'],default='synthesis');args=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--human-retest',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts','source-review'],default='synthesis');args=parser.parse_args()
  token_dir=Path(__file__).resolve().parents[1]/'.runtime/page-failure-ux-logs'
  token_dir.mkdir(mode=0o700,exist_ok=True)
  if token_dir.is_symlink():raise ValueError('Private entry directory must not be a symlink')
@@ -148,4 +198,4 @@ if __name__=='__main__':
    return sys.__stdout__.write(value)
   def flush(self):return sys.__stdout__.flush()
  sys.stdout=SafeOutput()
- raise SystemExit(main(human=args.human,answer_style=args.answer_style))
+ raise SystemExit(main(human=args.human,answer_style=args.answer_style,human_retest=args.human_retest))

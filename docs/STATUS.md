@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 真人重提授权已接线：旧额度实际12/12，最后c6e284b9 request_stopped、无模型；旧12次state原字节及原ledger/unknown保留。用户AUTH033新增独立2真人提交/2模型调用、USD0.10新结算或新unknown停止，不恢复后台问答。9项额度/旧兼容/启动限制本地通过。自有49161无在途后私有备份并更新，runtime5c053034（2026-10-11T07:27:28UTC）加载--human-retest/source-review；新额度0/2，Drive重启后原生核查complete，其他来源启动检查见human-retest-20261011/startup-runtime.json。当天readiness通过；无付费提交，核心首题仍未验证，G1/G2/真人录像未完成。
+
 2026-10-11 材料交付一致性修正：IMPLEMENTED_ARCHITECTURE当前文字及Mermaid移除旧selector调用，RUNBOOK/DEMO_CANDIDATE当前入口统一source-review与余一真人问答，delivery README区分新路径not_run和两次旧selector失败。仅材料修改，不重跑已通过整合、不重启服务、不调用模型；包按新文档commit重新生成并检查ZIP完整性。核心首题仍待真人最后一问。
 
 2026-10-11 整合交付更新：475本地回归23.320s通过，保留warnings/故意mock失败stdout。确认49161自有PID5968无在途请求并持有trial lock后，私有备份答案/审计/旧USD20账本/独立额度，更新为source-review；新PID11758/runtime89bdd62a，health及本机入口核验/续签通过。当天readiness通过；仅native启动及本地HTTP/入口，无新增问答或模型调用，11/12、17/24calls、新结算USD0.016143/newunknown无，剩一仅真人。当前原文审查质量与Q2未验证；旧selector两次失败不改为成功。材料与当前架构同步，G1/G2/录像仍团队完成。证据source-review-startup.json。
