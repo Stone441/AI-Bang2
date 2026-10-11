@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 AUTH035实际原首题诊断已完成：6cc1cb6b、29.630s、evidence_only失败，单review1374microUSD已结算，当前4提交/4调用/新结算5216microUSD、新unknown无。C01原文准确对应index2：supported=true、responsive=false，coverage/filtered_complete=false；不凭空补造理由。已实现专用精简source-review v2，旧审查回退保留、49相关本地0.855s通过，当前服务仍旧v1/a9a3e548，本地v2未加载/未在线验证。全部response/audit/授权/映射结果first-question-diagnostic-20261011保留。首题仍失败；浏览器拒绝不绕过，无业务源写入、push/merge/deploy/submit。
+
 2026-10-11 更新后浏览器引用/History检查blocked：实际Chrome原tab显示旧session结束；使用同本机续签入口后，fragment导航未触发重新boot，reload显示ERR_BLOCKED_BY_CLIENT，立即停止，不换浏览器/策略绕过。截图browser-history-reload-blocked.png保留；私有ticket随后再次续签，之前入口失效，不保存完整链接。已有Recent→Workspace浏览器通过仍是先前版本事实，本次引用/History浏览器检查not_run。实时exec session57023存活、healtha9a3e548正常，3提交/3调用及3842microUSD不变、新unknown无，无付费问答。核心Q1缺少新的已授权真人诊断；G1/G2/录像仍未完成。
 
 2026-10-11 诊断增量已加载自有49161：确认旧PID1651为本任务listener、无ESTABLISHED连接且human-open锁非阻塞获取后，私有备份三份admission/答案审计库/原USD20账本，再更新为PID5973/runtimea9a3e548（08:03:16UTC）。同日readiness current，实际「python3 打开试用页面.command --check / --refresh-only」均通过；三个额度state逐字节不变，仍3提交/3调用、新结算3842microUSD、新unknown无。未提交问题、未调用模型、未动8094/8100。重启使旧内存session失效，双击入口重新登录，已保存答案仍由History重新鉴权；新诊断live答案not_run，Q1仍失败。证据workspace-return-20261011/diagnostic-update-state.json。注意scripts.local_entry模块无CLI main，不把其python -m空运行当入口验证。
