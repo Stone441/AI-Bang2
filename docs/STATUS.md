@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 新版入口实际Q2提交b7234556已接受：同原第二题、reviewed_source_v1/accepted、5原文claims包含PAY102 Done、PAY103 In Progress及pilot approved/GA not approved；一调用1234microUSD结算。human-open累计3提交/3调用、继承基线累计USD0.003842、新unknown无，未由Agent自动提交。记录post-fix-second-question-result及完整audit/response；仅证明新版Q2返回，不替代Recent返回Workspace真人修复观察或G1/G2。首题措施及ordering notice已在审查输入，暂无确定的新漏传原因，不追加prompt/付费实验；首题仍失败，Goal未完成。
+
 2026-10-11 Q2真人成功及Workspace返回修复：965cedea当前source-review accepted、5原文claims覆盖PAY102 Done/PAY103 In Progress/pilot approved而GA未批准，单调用1234microUSD结算；Q1仍未解决。用户报告Recent返回Workspace后从30s重新计时，Node先复现失败后修复：terminal恢复不启动timer、不POST query；History选中答案不被另一已完成run覆盖，仍GET重新鉴权；三个相关Node及12项额度本地通过。AUTH034明确取消真人次数及相应总调用数上限；继承AUTH033已用2次/2调用及USD0.002608费用，不重置原USD0.10成本基线或旧unknown/ledger；新unknown仍停接纳。无在途后保存task state并更新自有49161，加载状态见workspace-return-20261011/startup-runtime.json。UI真人修复观察仍pending，不自动问答、不宣布首题/Goal完成。
 
 2026-10-11 AUTH033真人原首题08a7862a实际失败：source-review已将9份授权原文（含C01）全部送review，9项supported=true、3项responsive=false，但question_covered=false，因此正确按现契约阻断，evidence_only不算成功。finish_reason=stop/completion129，非cap截断；diagnostic未保留index/理由，不推断具体哪份被过滤或缺哪个问题部分。1次调用已结算1374microUSD，新独立额度1/2提交、1/2calls、newunknown无；余一留原Q2真人，不改prompt、不自动重试。完整response/audit/真人失败报告保留human-retest-20261011/first-question-result.json。核心首题仍未解决，新路径Q2未跑；当前页面的失败不是验收通过。
