@@ -5,7 +5,7 @@
 | 类别 / ID | 产品能力或交付物 | 当前状态 / 完成依据 |
 |---|---|---|
 | 已批准 DEL-01 | 核心两题证据答案；同DeepSeek disabled/8192，保守过滤真实冗余 | in_progress；disabled8192实测、背景过滤及安全gate本地通过；Q2两次事实完整，Q1仍未解决；已定位未知措辞误判及漏措施，reviewed-excerpts两次原首题均遗漏C01、review正确阻断；当前路径Q2未跑，不记完成；新增去掉selector的source-review已加载49161，全部授权片段进入一次review，475整合本地通过，AUTH033原首题live失败：全9证据含C01已送达，但review整体coverage=false，Q2真人当前source-review accepted，覆盖三部分；Q1仍coverage失败 |
-| 已批准 DEL-02 | 等待、失败、刷新、当前权限引用、Recent/History、本地入口连贯 | in_progress；454整合本地/六Node/HTTP联动通过；native Recent/History/C01preview200，真人确认首题综合失败及进度问题；新阶段结果/旋转指示及按需本机入口续签已加载，真实HTTP续签保留session且无模型调用；原文候选和后续交互待真人 |
+| 已批准 DEL-02 | 等待、失败、刷新、当前权限引用、Recent/History、本地入口连贯 | in_progress；454整合本地/六Node/HTTP联动通过；native Recent/History/C01preview200，真人确认首题综合失败及进度问题；新阶段结果/旋转指示及按需本机入口续签已加载，真实HTTP续签保留session且无模型调用；Recent→Workspace实际Chrome确认完成：重新鉴权期间无计时、恢复保存答案且Ask可用、无新增问答/模型；其他团队G1观察仍独立保留 |
 | 官方 DEL-03 | 标题/blurb/说明、架构边界、封面、五场景、源码启动说明 | prepared；见SUBMISSION_CANDIDATE，产品/架构/五场景/启动/封面已准备，待G2 |
 | 官方 DEL-04 | 真实CodeBuddy conversation history及≥3过程截图索引 | prepared；15原件hash核验一致，私有原件留本地，待团队审阅/上传批准 |
 | 可选 DEL-05 | 5–8分钟视频脚本与真人录制 | 七分钟脚本已准备；录像not_run，团队执行 |

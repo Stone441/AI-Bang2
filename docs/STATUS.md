@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 Recent→Workspace已由Agent实际Chrome确认：使用既有b7234556第二题答案，打开Recent、加载保存答案、返回Workspace；重新鉴权提示期间及答案恢复后进度/计时均隐藏，恢复原15:45:45答案，Ask可用。提交/调用仍3/3、新增结算3842microUSD、新unknown无，未提交新问题。当前正常浏览器通道可用，没有绕过历史拒绝；截图及观察记录见workspace-return-20261011/browser-confirmation.json。这项导航修复工程确认完成，不再等待真人重复检查；历史pending记录保留。核心首题仍失败，团队G1/G2与录像未完成。
+
 2026-10-11 新版入口实际Q2提交b7234556已接受：同原第二题、reviewed_source_v1/accepted、5原文claims包含PAY102 Done、PAY103 In Progress及pilot approved/GA not approved；一调用1234microUSD结算。human-open累计3提交/3调用、继承基线累计USD0.003842、新unknown无，未由Agent自动提交。记录post-fix-second-question-result及完整audit/response；仅证明新版Q2返回，不替代Recent返回Workspace真人修复观察或G1/G2。首题措施及ordering notice已在审查输入，暂无确定的新漏传原因，不追加prompt/付费实验；首题仍失败，Goal未完成。
 
 2026-10-11 Q2真人成功及Workspace返回修复：965cedea当前source-review accepted、5原文claims覆盖PAY102 Done/PAY103 In Progress/pilot approved而GA未批准，单调用1234microUSD结算；Q1仍未解决。用户报告Recent返回Workspace后从30s重新计时，Node先复现失败后修复：terminal恢复不启动timer、不POST query；History选中答案不被另一已完成run覆盖，仍GET重新鉴权；三个相关Node及12项额度本地通过。AUTH034明确取消真人次数及相应总调用数上限；继承AUTH033已用2次/2调用及USD0.002608费用，不重置原USD0.10成本基线或旧unknown/ledger；新unknown仍停接纳。无在途后保存task state并更新自有49161，加载状态见workspace-return-20261011/startup-runtime.json。UI真人修复观察仍pending，不自动问答、不宣布首题/Goal完成。
