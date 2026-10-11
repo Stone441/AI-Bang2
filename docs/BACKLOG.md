@@ -7,7 +7,7 @@
 | 已批准 DEL-01 | 核心两题证据答案；同DeepSeek/cap8192，保守过滤真实冗余 | verified engineering subset；disabled先试且失败/误放行保留；low单review回退当前原Q1含措施与顺序未知，Q2与pilot/GA范围各一次完整。无稳定率/真人验收推断 |
 | 已批准 DEL-02 | 等待、失败、刷新、当前权限引用、Recent/History、本地入口连贯 | verified local/native subset；485整合及相关Node/HTTP通过，新失败不被旧成功遮盖；真实Q1 History/C01preview HTTP通过。此前Recent→Workspace Chrome通过，当前reload工具拒绝不绕过；G1仍团队 |
 | 官方 DEL-03 | 标题/blurb/说明、架构边界、封面、五场景、源码启动说明 | prepared；见SUBMISSION_CANDIDATE，产品/架构/五场景/启动/封面已准备，待G2 |
-| 官方 DEL-04 | 真实CodeBuddy conversation history及≥3过程截图索引 | prepared；15原件hash核验一致，私有原件留本地，待团队审阅/上传批准 |
+| 官方 DEL-04 | 真实CodeBuddy conversation history及≥3过程截图索引 | prepared；15原件hash重新核验一致；3原截图/原conversation ZIP/patch/manifest已打成0600私有审阅包；原件不变、未上传，待团队披露审阅/上传批准 |
 | 可选 DEL-05 | 5–8分钟视频脚本与真人录制 | 七分钟脚本已准备；录像not_run，团队执行 |
 | 可选研究 | action-terms-v1及全配置/24+12重测 | 本轮不推进、不推广；旧成果与失败保留 |
 
