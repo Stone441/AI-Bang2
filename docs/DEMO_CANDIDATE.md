@@ -1,6 +1,6 @@
 # Demonstration candidate and remaining acceptance
 
-当前团队操作与提交字段以[本轮候选材料](SUBMISSION_CANDIDATE.md)为准：49161运行source-review候选（代码保留全部检索原文＋一次模型审查），进度结果及旋转指示已加载；新路径在线质量/真人判断pending。页面无fixture内容更新/撤权控制，S-02/S-04使用标明commit与模式的CLI产物回看。原首题未解决，旧成绩不能继承；旧额度12/12已耗尽；AUTH033新增独立2问真人专用（原首题/第二题，最多2调用、USD0.10新增结算或新unknown停止）。下方旧版本、旧停止状态与旧验收范围是历史记录。
+当前团队操作与提交字段以[本轮候选材料](SUBMISSION_CANDIDATE.md)为准：49161运行source-review候选（代码保留全部检索原文＋一次模型审查），进度结果及旋转指示已加载；新路径在线质量/真人判断pending。页面无fixture内容更新/撤权控制，S-02/S-04使用标明commit与模式的CLI产物回看。原首题未解决，旧成绩不能继承；旧额度12/12已耗尽；AUTH034已取消真人次数/总调用数上限，继承AUTH033原USD0.10结算基线及已用2次/2调用，不恢复自动问答；原Q2真人成功、Q1仍失败。下方旧版本、旧停止状态与旧验收范围是历史记录。
 
 Current 2026-10-11 delivery entry, five-scene steps, model configuration, scope and material checklist: [SUBMISSION_CANDIDATE](SUBMISSION_CANDIDATE.md). Historical records below retain their original dates/builds and are not inherited as current validation.
 

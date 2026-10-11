@@ -16,11 +16,12 @@ function armResume(){resumeOnRuntime=true;resumeInputValue=$('question').value;}
 function updateAsk(){ $('ask').disabled=Boolean(pendingQuery)||admissionPaused; }
 function renderAdmission(admission){
   if(admission!==undefined){admissionInfo=admission;admissionPaused=Boolean(admission&&!admission.allowed);}const notice=$('trialStatus');notice.hidden=!admission&&!admissionPaused;
-  if(admission)notice.textContent=(admissionPaused?'Trial queries paused. ':'Trial query attempts: ')+admission.attempts_used+'/'+admission.attempts_limit+' used. '+(admissionPaused?'No new model call will be made. Saved answers remain available.':admission.attempts_remaining+' remaining.');
+  if(admission?.human_unlimited){notice.textContent=(admissionPaused?'Human queries paused. ':'Human queries have no count limit. ')+admission.attempts_used+' submissions recorded. '+(admissionPaused?'No new model call will be made. Saved answers remain available.':'Cost and unconfirmed-usage protections remain active.');}
+  else if(admission)notice.textContent=(admissionPaused?'Trial queries paused. ':'Trial query attempts: ')+admission.attempts_used+'/'+admission.attempts_limit+' used. '+(admissionPaused?'No new model call will be made. Saved answers remain available.':admission.attempts_remaining+' remaining.');
   updateAsk();
 }
 function renderQueryError(err){
-  if(err.code==='trial_admission_paused'){admissionPaused=true;$('trialStatus').hidden=false;$('trialStatus').textContent='Trial queries paused at the approved attempt, cost or unconfirmed-usage limit. No new model call was made. Saved answers remain available.';if(admissionInfo)renderAdmission({...admissionInfo,allowed:false});}
+  if(err.code==='trial_admission_paused'){admissionPaused=true;$('trialStatus').hidden=false;$('trialStatus').textContent='Trial queries paused at an approved cost, unconfirmed-usage or trial limit. No new model call was made. Saved answers remain available.';if(admissionInfo)renderAdmission({...admissionInfo,allowed:false});}
   $('answer').replaceChildren();const panel=el('div',undefined,'error-panel');
   panel.append(el('h2',err.code==='source_refreshing'?'Sources are changing':err.code==='model_output_unavailable'?'Answer did not pass validation':'Question could not be completed'),el('p',err.message));
   panel.append(el('h3',err.run?.question||$('question').value));
@@ -35,9 +36,17 @@ async function reconnectRun(run){
   if(!pendingQuery&&resumeOnRuntime&&run.status!=='running'&&$('question').value!==resumeInputValue){resumeOnRuntime=false;return;}
   if(!pendingQuery&&resumeOnRuntime&&(run.status==='running'||saved&&saved.requestId===run.request_id||typeof run.question==='string'&&(!saved||saved.requestId===null&&saved.question===run.question))){
     resumeOnRuntime=false;$('question').value=typeof run.question==='string'?run.question:(saved?.question||'');
-    startWaiting(viewToken(),run.elapsed_seconds||0,true);pendingQuery.requestId=run.request_id;
-    if(saved)saveQuestion(run.request_id);$('ask').disabled=true;renderStages(run);
-    $('status').textContent='Reconnected to the original request. No new model call was made.';
+    if(run.status==='running'){
+      startWaiting(viewToken(),run.elapsed_seconds||0,true);pendingQuery.requestId=run.request_id;
+      if(saved)saveQuestion(run.request_id);renderStages(run);
+      $('status').textContent='Reconnected to the original request. No new model call was made.';
+    }else{
+      // Restoring a terminal answer performs access checks, never a running timer.
+      pendingQuery={view:viewToken(),requestId:run.request_id,resumed:true,question:$('question').value};
+      $('progress').hidden=true;$('question').readOnly=true;$('queryForm').setAttribute('aria-busy','true');
+      $('status').textContent='Checking current access before restoring the saved result…';
+    }
+    $('ask').disabled=true;
   }
   const pending=pendingQuery;
   if(pending&&pending.requestId===run.request_id&&currentView(pending.view)&&typeof run.question==='string'){pending.question=run.question;$('runningQuestion').textContent=run.question;$('question').value=run.question;}
@@ -85,7 +94,7 @@ async function refreshRuntime(){
         el('span',source.checking?'Checking now':source.last_check_at?'Last check: '+source.last_check_result+' · '+new Date(source.last_check_at).toLocaleTimeString():'Current source check unconfirmed'),
         el('span',source.snapshot_status==='current'?'Local candidate snapshot current · access checked per question':'Current candidate snapshot unconfirmed'),
         el('span',source.used_in_answer?'Cited in the last completed answer':'Not recorded as used in the last completed answer','muted'));list.append(card);}
-    if(!r.run&&resumeOnRuntime&&$('workspace').hidden===false){
+    if((!r.run||r.run.status!=='running'&&!savedQuestion()&&answerReference())&&resumeOnRuntime&&$('workspace').hidden===false){
       resumeOnRuntime=false;const reference=answerReference(),view=viewToken();
       if(reference&&$('question').value===resumeInputValue){
         $('answer').replaceChildren(el('p','Checking current access before restoring the saved answer…'));

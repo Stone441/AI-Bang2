@@ -64,5 +64,8 @@ const text=e=>[e.textContent,...e.children.map(text)].join(' ');
  assert.equal((text(get('answer')).match(/Conservative cost estimate/g)||[]).length,1);
  assert.match(vm.runInContext('modelLabel(sourceReview)',ctx),/LIVE MODEL · REVIEWED SOURCES/);
  assert.ok(!text(get('answer')).includes('Model usage was not recorded'));
+ ctx.openHuman={allowed:true,human_unlimited:true,attempts_used:8,attempts_limit:null,attempts_remaining:null};vm.runInContext('renderAdmission(openHuman)',ctx);
+ assert.match(get('trialStatus').textContent,/no count limit/);assert.ok(!get('trialStatus').textContent.includes('null'));assert.equal(get('ask').disabled,false);
+ vm.runInContext("renderAdmission({...openHuman,allowed:false,reason:'cost_limit'})",ctx);assert.equal(get('ask').disabled,true);assert.match(get('trialStatus').textContent,/paused/);
  console.log('PASS: real elapsed timer, duplicate submit, stale query/runtime response, classified retry, preserved question, History/navigation/expiry cleanup');
 })().catch(e=>{console.error(e);process.exitCode=1;});

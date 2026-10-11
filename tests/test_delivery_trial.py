@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from brain.budget import BudgetLedger, TrialAdmissionPaused
-from scripts.delivery_trial import Admission, HumanRetestAdmission, rejected_generation_diagnostic, main
+from scripts.delivery_trial import Admission, HumanRetestAdmission, HumanOpenAdmission, rejected_generation_diagnostic, main
 
 class PrivateGenerationDiagnostic(unittest.TestCase):
     def test_bounds_visible_claim_fields_and_excludes_reasoning(self):
@@ -94,3 +94,44 @@ class HumanRetestAllowance(unittest.TestCase):
     def test_retest_cannot_launch_automatic_or_two_call_styles(self):
         for human,style in [(False,'source-review'),(True,'synthesis'),(True,'reviewed-excerpts')]:
             with self.assertRaises(ValueError):main(human=human,answer_style=style,human_retest=True)
+
+
+class OpenHumanAllowance(unittest.TestCase):
+    setUp=DeliveryAllowance.setUp
+    tearDown=DeliveryAllowance.tearDown
+    def setup_prior(self):
+        prior=HumanRetestAdmission(lambda:'answer',self.ledger,self.path,human=True)
+        prior();prior();self.original_bytes=self.path.read_bytes()
+        self.open_path=Path(self.tmp.name)/'open-human.json'
+        return HumanOpenAdmission(lambda:'answer',self.ledger,self.open_path,human=True,previous_state_path=self.path)
+    def test_no_count_or_call_limit_keeps_prior_counter_and_baseline(self):
+        gate=self.setup_prior();original=json.loads(self.original_bytes)
+        for _ in range(5):self.assertEqual(gate(),'answer')
+        for _ in range(3):
+            r=self.ledger.reserve(1000);self.ledger.dispatch(r);self.ledger.settle(r,1000)
+        self.assertEqual(gate(),'answer')
+        restarted=HumanOpenAdmission(lambda:'answer',self.ledger,self.open_path,human=True)
+        self.assertEqual(restarted(),'answer')
+        state=json.loads(self.open_path.read_text());self.assertEqual(state['attempts'],9)
+        self.assertIsNone(state['max_attempts']);self.assertIsNone(state['max_model_calls'])
+        self.assertEqual(state['baseline'],original['baseline'])
+        self.assertEqual(state['baseline_model_calls'],original['baseline_model_calls'])
+        self.assertEqual(state['original_pending_ids'],[self.legacy])
+        self.assertEqual(self.path.read_bytes(),self.original_bytes)
+        self.assertTrue(restarted.public_status()['allowed'])
+    def test_original_cost_stop_and_new_unknown_still_block(self):
+        gate=self.setup_prior();r=self.ledger.reserve(100000);self.ledger.dispatch(r);self.ledger.settle(r,100000)
+        with self.assertRaises(TrialAdmissionPaused):gate()
+        self.assertEqual(gate.public_status()['reason'],'cost_limit')
+        # Separate new-unknown control without refunding any dispatched request.
+        with tempfile.TemporaryDirectory() as folder:
+            ledger=BudgetLedger(str(Path(folder)/'ledger.sqlite'))
+            prior_path=Path(folder)/'prior.json';HumanRetestAdmission(lambda:None,ledger,prior_path,human=True)
+            opened=HumanOpenAdmission(lambda:None,ledger,Path(folder)/'open.json',human=True,previous_state_path=prior_path)
+            r=ledger.reserve(1000);ledger.dispatch(r)
+            with self.assertRaises(TrialAdmissionPaused):opened()
+            self.assertEqual(opened.public_status()['reason'],'usage_unconfirmed');self.assertEqual(ledger.summary()['pending_requests'],1);ledger.close()
+    def test_open_requires_human_and_single_review(self):
+        for human,style in [(False,'source-review'),(True,'synthesis'),(True,'reviewed-excerpts')]:
+            with self.assertRaises(ValueError):main(human=human,answer_style=style,human_open=True)
+        with self.assertRaises(ValueError):HumanOpenAdmission(lambda:None,self.ledger,Path(self.tmp.name)/'not-created.json')

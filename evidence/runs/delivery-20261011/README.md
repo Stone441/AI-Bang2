@@ -1,5 +1,7 @@
 # Delivery candidate · 11 October 2026
 
+Current follow-up: AUTH034 removes human count limits while preserving AUTH033 counters, cost baseline and unknowns. Runtime2f73c579 on own49161 includes the Workspace timer fix. Q2 request965cedea was accepted and human-reported successful; Q1 request08a7862a failed coverage despite all9 input passages including C01. See ../human-retest-20261011/first-question-result.json and ../workspace-return-20261011/ for full Q2 response/audit, before-fix Node reproduction, passing related regression and actual startup proof. Previous sections retain historical modes/results and do not establish present UI human acceptance. No automatic questions.
+
 ## Current source-review delivery · implementation4928ae5
 
 Owned idle49161 was updated after private SQLite/ledger/admission backups and a held trial lock proved no in-flight question. Runtime89bdd62a/health and local entry check/renewal passed. `--answer-style source-review` removes the failed selector: server code constructs quotations covering all retrieved currently authorized evidence, with one model support/coverage review and no generation receipt. Full integration475 tests passed23.320s; initial harness failures and warnings remain. `source-review-native-input-replay.json` proves all9 original-question evidence inputs, including C01, were preserved offline; it does not prove current native access or live answer quality. See `source-review-startup.json`, `source-review-idle-update.json` and `source-review-integration.log`.

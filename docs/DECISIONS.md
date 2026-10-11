@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-11 ADR083 / AUTH034：用户明确要求不限制真人查询次数，取消真人提交次数及相应总模型调用次数上限；仍仅当前单review/同provider/disabled8192/原合成资料，无自动付费问答。human-open-admission从AUTH033复制其既有2次计数/2次调用、原费用基线和原pending IDs；旧12次state及2次state原字节保留，不重新获得USD0.10预算，已结算2608microUSD计入该阈值，新unknown继续停接纳。旧有限模式保留为回退。真人Q2成功且审查accepted，Q1仍failed。返回Workspace计时bug已Node复现：terminal run被当作running启动elapsed；改为仅running启动计时，terminal只重新鉴权读取saved result，History选中引用优先于另一terminal run。保留真正刷新接续、view/session迟到保护及当前权限检查，不增加模型重试。
+
 ADR082执行补充（2026-10-11）：真人原Q1 source-review失败，全9授权原文含C01送审且各supported=true，但整体question_covered=false。保留失败/真实回执/原文接续，不把失败当完成；不声称具体review理由，因为只记录布尔值无index/解释。stop/129输出tokens非截断，新增1374microUSD结算、新unknown无。原12次账本不动；新增2次已用1，余一仅原Q2真人，不追加同类提示词或自动重试。
 
 2026-10-11 ADR082 / AUTH033：用户明确批准新增2次真人问答（原首题、原第二题）、最多2次同DeepSeek调用、新增结算USD0.10或新unknown停接纳。同provider/disabled8192/原合成资料/USD20账本，不恢复自动测试。新human-retest-admission.json独立基线及0/2计数；旧trial-admission保持12/12原字节，旧失败/unknown/reservation保留。仅--human --human-retest --answer-style source-review可启动，双调用style和automatic拒绝；source-review每问一次且无付费重试，额外ledger调用达2同样停接纳。旧最后一次请求c6e284b9在prepare阶段request_stopped且无模型；当前Drive失败/unconfirmed快照与停止一致，底层原因未证实。空闲保存状态后更新自己的49161，刷新原生身份及来源；真实答案/G1/G2仍未完成。

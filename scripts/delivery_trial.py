@@ -43,8 +43,9 @@ class Admission:
   self.update_public(prior)
  def update_public(self,body):
   used,maximum=body['attempts'],body['max_attempts']
-  reason=('attempt_limit' if used>=(maximum if self.human else self.AUTOMATIC_LIMIT) else 'cost_limit' if body['current']['settled_micro_usd']-body['baseline']['settled_micro_usd']>=self.COST_LIMIT else 'usage_unconfirmed' if body['new_unknown_reservations'] or body['current']['blocked_for_review'] else None)
-  self.public={'allowed':reason is None,'reason':reason,'attempts_used':used,'attempts_limit':maximum,'attempts_remaining':max(0,maximum-used)}
+  limit=maximum if self.human else self.AUTOMATIC_LIMIT
+  reason=('attempt_limit' if limit is not None and used>=limit else 'cost_limit' if body['current']['settled_micro_usd']-body['baseline']['settled_micro_usd']>=self.COST_LIMIT else 'usage_unconfirmed' if body['new_unknown_reservations'] or body['current']['blocked_for_review'] else None)
+  self.public={'allowed':reason is None,'reason':reason,'attempts_used':used,'attempts_limit':maximum,'attempts_remaining':None if maximum is None else max(0,maximum-used)}
  def pending_ids(self):
   with self.ledger.transaction():return {r[0] for r in self.ledger.db.execute("SELECT id FROM reservations WHERE state IN ('prepared','dispatched')")}
  def save(self):
@@ -65,7 +66,8 @@ class Admission:
    os.chmod(self.path.with_suffix('.lock'),0o600);fcntl.flock(lock,fcntl.LOCK_EX)
    prior=json.loads(self.path.read_text());self.load(prior)
    status=self.ledger.summary()
-   if self.attempts>=(self.maximum if self.human else self.AUTOMATIC_LIMIT) or status['settled_micro_usd']-self.baseline['settled_micro_usd']>=self.COST_LIMIT or status['blocked_for_review'] or self.pending_ids()-self.pending or self.additional_stop():
+   limit=self.maximum if self.human else self.AUTOMATIC_LIMIT
+   if (limit is not None and self.attempts>=limit) or status['settled_micro_usd']-self.baseline['settled_micro_usd']>=self.COST_LIMIT or status['blocked_for_review'] or self.pending_ids()-self.pending or self.additional_stop():
     self.save();raise TrialAdmissionPaused('Trial limit reached; ask the operator to review before continuing.')
    self.attempts+=1;self.save()
    try:return self.query(*args,**kwargs)
@@ -104,9 +106,41 @@ class HumanRetestAdmission(Admission):
   if body.get('model_calls_used',0)>=2 and self.public['allowed']:
    self.public.update(allowed=False,reason='model_call_limit')
 
-def main(*, human=False, answer_style="synthesis", human_retest=False):
- if human_retest and (not human or answer_style!="source-review"):
+class HumanOpenAdmission(HumanRetestAdmission):
+ """Explicit human count-limit removal; retain existing cost baseline/unknowns."""
+ MAXIMUM=None
+ POLICY='2026-10-11-human-no-count-limit'
+ def __init__(self,query,ledger,state_path,*,human=False,previous_state_path=None):
+  if not human:raise ValueError('Open human trial requires human mode')
+  path=Path(state_path)
+  if not path.exists():
+   with open(path.with_suffix('.lock'),'a') as lock:
+    os.chmod(path.with_suffix('.lock'),0o600);fcntl.flock(lock,fcntl.LOCK_EX)
+    if not path.exists():
+     prior=json.loads(Path(previous_state_path).read_text())
+     if (prior.get('authorization')!=HumanRetestAdmission.POLICY
+         or prior.get('max_attempts')!=2 or prior.get('max_model_calls')!=2
+         or type(prior.get('baseline_model_calls')) is not int):
+      raise ValueError('Original approved human retest state required')
+     prior.update(authorization=self.POLICY,max_attempts=None,max_model_calls=None)
+     tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(prior,indent=2)+'\n');tmp.chmod(0o600);tmp.replace(path)
+  super().__init__(query,ledger,path,human=True)
+ def load(self,prior):
+  if (prior.get('authorization')!=self.POLICY or prior.get('max_model_calls') is not None
+      or type(prior.get('baseline_model_calls')) is not int):
+   raise ValueError('Unapproved open human configuration')
+  self.baseline_model_calls=prior['baseline_model_calls'];Admission.load(self,prior)
+ def state_extra(self):
+  return {**super().state_extra(),'max_model_calls':None,
+          'boundary':'Human count limits explicitly removed; original counters/cost baseline retained. USD0.10 new settlement or new unknown still stops admission; no automatic questions.'}
+ def additional_stop(self):return False
+ def update_public(self,body):
+  Admission.update_public(self,body);self.public['human_unlimited']=True
+
+def main(*, human=False, answer_style="synthesis", human_retest=False, human_open=False):
+ if (human_retest or human_open) and (not human or answer_style!="source-review"):
   raise ValueError("Approved human retest requires single-call source-review")
+ if human_retest and human_open:raise ValueError("Select one approved allowance")
  query_expansion="none"
  from brain.retrieval import ranking_terms
  ranking_terms(set(),query_expansion)
@@ -169,22 +203,23 @@ def main(*, human=False, answer_style="synthesis", human_retest=False):
      raise
     finally:model.parse_output=parsed
    model.generate_with_provenance=capture
-   if human_retest:
+   if human_retest or human_open:
     original=json.loads((runtime/'trial-admission.json').read_text())
     if original['attempts']!=12 or original['max_attempts']!=12 or original['new_unknown_reservations']:
      raise ValueError('Original allowance must remain exhausted without new unknown')
     if getattr(current.engine.model,'claim_format',None)!='reviewed_source_v1':
      raise ValueError('Retest requires single-review model')
-   gate=HumanRetestAdmission if human_retest else Admission
-   state=runtime/('human-retest-admission.json' if human_retest else 'trial-admission.json')
-   current.engine.query=gate(current.engine.query,current.engine.model.ledger,state,human=human)
+   gate=HumanOpenAdmission if human_open else HumanRetestAdmission if human_retest else Admission
+   state=runtime/('human-open-admission.json' if human_open else 'human-retest-admission.json' if human_retest else 'trial-admission.json')
+   extra={'previous_state_path':runtime/'human-retest-admission.json'} if human_open else {}
+   current.engine.query=gate(current.engine.query,current.engine.model.ledger,state,human=human,**extra)
    return serve(*a,**kw)
   server.serve_forever=limited_serve;return server
  operator_web.create_server=create;os.chdir(private)
  return operator_web.main(['--source','multi','--config',str(repo/'.runtime'/'operator-bundle.json'),'--actor','eng_b','--oauth-client',str(repo/'.runtime'/'drive-oauth-client.json'),'--port','49161','--live','--model','deepseek','--credential-store','macos-keychain','--answer-style',answer_style,'--reasoning-effort','none','--output-tokens','8192','--discovery-auth017'])
 if __name__=='__main__':
  import argparse,sys,re
- parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--human-retest',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts','source-review'],default='synthesis');args=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--human-retest',action='store_true');parser.add_argument('--human-open',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts','source-review'],default='synthesis');args=parser.parse_args()
  token_dir=Path(__file__).resolve().parents[1]/'.runtime/page-failure-ux-logs'
  token_dir.mkdir(mode=0o700,exist_ok=True)
  if token_dir.is_symlink():raise ValueError('Private entry directory must not be a symlink')
@@ -198,4 +233,4 @@ if __name__=='__main__':
    return sys.__stdout__.write(value)
   def flush(self):return sys.__stdout__.flush()
  sys.stdout=SafeOutput()
- raise SystemExit(main(human=args.human,answer_style=args.answer_style,human_retest=args.human_retest))
+ raise SystemExit(main(human=args.human,answer_style=args.answer_style,human_retest=args.human_retest,human_open=args.human_open))

@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 Q2真人成功及Workspace返回修复：965cedea当前source-review accepted、5原文claims覆盖PAY102 Done/PAY103 In Progress/pilot approved而GA未批准，单调用1234microUSD结算；Q1仍未解决。用户报告Recent返回Workspace后从30s重新计时，Node先复现失败后修复：terminal恢复不启动timer、不POST query；History选中答案不被另一已完成run覆盖，仍GET重新鉴权；三个相关Node及12项额度本地通过。AUTH034明确取消真人次数及相应总调用数上限；继承AUTH033已用2次/2调用及USD0.002608费用，不重置原USD0.10成本基线或旧unknown/ledger；新unknown仍停接纳。无在途后保存task state并更新自有49161，加载状态见workspace-return-20261011/startup-runtime.json。UI真人修复观察仍pending，不自动问答、不宣布首题/Goal完成。
+
 2026-10-11 AUTH033真人原首题08a7862a实际失败：source-review已将9份授权原文（含C01）全部送review，9项supported=true、3项responsive=false，但question_covered=false，因此正确按现契约阻断，evidence_only不算成功。finish_reason=stop/completion129，非cap截断；diagnostic未保留index/理由，不推断具体哪份被过滤或缺哪个问题部分。1次调用已结算1374microUSD，新独立额度1/2提交、1/2calls、newunknown无；余一留原Q2真人，不改prompt、不自动重试。完整response/audit/真人失败报告保留human-retest-20261011/first-question-result.json。核心首题仍未解决，新路径Q2未跑；当前页面的失败不是验收通过。
 
 2026-10-11 真人重提授权已接线：旧额度实际12/12，最后c6e284b9 request_stopped、无模型；旧12次state原字节及原ledger/unknown保留。用户AUTH033新增独立2真人提交/2模型调用、USD0.10新结算或新unknown停止，不恢复后台问答。9项额度/旧兼容/启动限制本地通过。自有49161无在途后私有备份并更新，runtime5c053034（2026-10-11T07:27:28UTC）加载--human-retest/source-review；新额度0/2，Drive重启后原生核查complete，其他来源启动检查见human-retest-20261011/startup-runtime.json。当天readiness通过；无付费提交，核心首题仍未验证，G1/G2/真人录像未完成。

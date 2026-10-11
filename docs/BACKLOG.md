@@ -4,14 +4,14 @@
 
 | 类别 / ID | 产品能力或交付物 | 当前状态 / 完成依据 |
 |---|---|---|
-| 已批准 DEL-01 | 核心两题证据答案；同DeepSeek disabled/8192，保守过滤真实冗余 | in_progress；disabled8192实测、背景过滤及安全gate本地通过；Q2两次事实完整，Q1仍未解决；已定位未知措辞误判及漏措施，reviewed-excerpts两次原首题均遗漏C01、review正确阻断；当前路径Q2未跑，不记完成；新增去掉selector的source-review已加载49161，全部授权片段进入一次review，475整合本地通过，AUTH033原首题live失败：全9证据含C01已送达，但review整体coverage=false，Q2仍未跑 |
+| 已批准 DEL-01 | 核心两题证据答案；同DeepSeek disabled/8192，保守过滤真实冗余 | in_progress；disabled8192实测、背景过滤及安全gate本地通过；Q2两次事实完整，Q1仍未解决；已定位未知措辞误判及漏措施，reviewed-excerpts两次原首题均遗漏C01、review正确阻断；当前路径Q2未跑，不记完成；新增去掉selector的source-review已加载49161，全部授权片段进入一次review，475整合本地通过，AUTH033原首题live失败：全9证据含C01已送达，但review整体coverage=false，Q2真人当前source-review accepted，覆盖三部分；Q1仍coverage失败 |
 | 已批准 DEL-02 | 等待、失败、刷新、当前权限引用、Recent/History、本地入口连贯 | in_progress；454整合本地/六Node/HTTP联动通过；native Recent/History/C01preview200，真人确认首题综合失败及进度问题；新阶段结果/旋转指示及按需本机入口续签已加载，真实HTTP续签保留session且无模型调用；原文候选和后续交互待真人 |
 | 官方 DEL-03 | 标题/blurb/说明、架构边界、封面、五场景、源码启动说明 | prepared；见SUBMISSION_CANDIDATE，产品/架构/五场景/启动/封面已准备，待G2 |
 | 官方 DEL-04 | 真实CodeBuddy conversation history及≥3过程截图索引 | prepared；15原件hash核验一致，私有原件留本地，待团队审阅/上传批准 |
 | 可选 DEL-05 | 5–8分钟视频脚本与真人录制 | 七分钟脚本已准备；录像not_run，团队执行 |
 | 可选研究 | action-terms-v1及全配置/24+12重测 | 本轮不推进、不推广；旧成果与失败保留 |
 
-本轮独立额度：12提交、最多24模型调用；自动最多9提交，至少3留真人；旧额度实际12/12已耗尽、旧调用17；AUTH033新增独立1/2真人提交、1/2调用，新增结算USD0.001374，余一留原第二题、最多2模型调用，USD0.10新增结算或新unknown停止；不再自动提交；新增结算USD1或新unknown停止接纳。原USD20账本、旧Goal账本及unknown/reservation均不重置。G1/G2、推送合并/正式提交仍须人明确批准。
+本轮独立额度：12提交、最多24模型调用；自动最多9提交，至少3留真人；旧额度实际12/12已耗尽、旧调用17；AUTH034取消真人次数及总调用数上限；继承AUTH033已用2次/2调用、新增结算USD0.002608，原USD0.10新增结算/新unknown停止规则不变、最多2模型调用，USD0.10新增结算或新unknown停止；不再自动提交；新增结算USD1或新unknown停止接纳。原USD20账本、旧Goal账本及unknown/reservation均不重置。G1/G2、推送合并/正式提交仍须人明确批准。
 
 2026-10-10 AUTH032实际42次完成：排序action-terms-v1/同DeepSeek low8192，固定native两题各3，Q2三次完整；Q1两空＋一次generation截断（length/completion8192/reasoning7925/visible894字符），不推广候选、不推断旧55.47秒finish_reason。质量core24=22事实＋2预期安全空；known12=01/06事实＋8合理空/澄清＋02review拒绝（stop、额外claim responsive=false）＋12预期注入Drive unknown模型前停答。引用preview3条、Recent列表、单条History HTTP200，非browser人验。445本地/6Node/只读复核通过；共享额度snapshot仅读原子state不等待query/flock/ledger或四源，当前待human实例加载。额度135/138、余3human；Goal累计437330microUSD，距原0.50仅62670，旧unknown324404保留、新unknown无。新的推荐可信配置none8192（同provider/cap、thinking disabled）仅提议，可能减token/时间但审查质量风险待完整验证，未启用或自动扩额；不自动通过Goal/G1/G2/AUTH019。
 
