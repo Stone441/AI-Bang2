@@ -11,7 +11,7 @@
 | 可选 DEL-05 | 5–8分钟视频脚本与真人录制 | 七分钟脚本已准备；录像not_run，团队执行 |
 | 可选研究 | action-terms-v1及全配置/24+12重测 | 本轮不推进、不推广；旧成果与失败保留 |
 
-本轮独立额度：12提交、最多24模型调用；自动最多9提交，至少3留真人；旧额度实际12/12已耗尽、旧调用17；AUTH034取消真人次数及总调用数上限；继承AUTH033已用2次/2调用、新增结算USD0.002608，原USD0.10新增结算/新unknown停止规则不变、最多2模型调用，USD0.10新增结算或新unknown停止；不再自动提交；新增结算USD1或新unknown停止接纳。原USD20账本、旧Goal账本及unknown/reservation均不重置。G1/G2、推送合并/正式提交仍须人明确批准。
+本轮原独立额度12提交/24调用已停止使用：实际12/12提交、17调用，旧state保留。AUTH033新增2次真人问答后，AUTH034明确取消真人次数及总调用数上限；继承AUTH033原成本基线，不重置旧计数、unknown或reservation。最新记录3提交/3调用、新增结算USD0.003842，沿用USD0.10新增结算或新unknown停止接纳；不自动提交。原USD20账本不变。G1/G2、推送合并/正式提交仍须人明确批准。
 
 2026-10-10 AUTH032实际42次完成：排序action-terms-v1/同DeepSeek low8192，固定native两题各3，Q2三次完整；Q1两空＋一次generation截断（length/completion8192/reasoning7925/visible894字符），不推广候选、不推断旧55.47秒finish_reason。质量core24=22事实＋2预期安全空；known12=01/06事实＋8合理空/澄清＋02review拒绝（stop、额外claim responsive=false）＋12预期注入Drive unknown模型前停答。引用preview3条、Recent列表、单条History HTTP200，非browser人验。445本地/6Node/只读复核通过；共享额度snapshot仅读原子state不等待query/flock/ledger或四源，当前待human实例加载。额度135/138、余3human；Goal累计437330microUSD，距原0.50仅62670，旧unknown324404保留、新unknown无。新的推荐可信配置none8192（同provider/cap、thinking disabled）仅提议，可能减token/时间但审查质量风险待完整验证，未启用或自动扩额；不自动通过Goal/G1/G2/AUTH019。
 

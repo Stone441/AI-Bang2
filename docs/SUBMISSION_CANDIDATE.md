@@ -18,7 +18,7 @@ The current DeepSeek Flash path reviews source quotations constructed by the ser
 
 The previous free-form synthesis path remains available as a rollback. If a known-usage output is rejected, the trial may show an explicit answer-validation failure alongside unchanged source passages after final current-access/version checks. This evidence-only continuation is partial utility, not an accepted answer. Source or usage unknowns never use this continuation.
 
-The interface shows elapsed time and recorded stage outcomes, classified failures, runtime and recent source checks, current-access citation previews, Recent summaries and explicit History retrieval. Refresh can reconnect to the current session's run without another model call. Expired sessions and server restarts have distinct limitations. The product has independent questions, with no chat context inheritance or answer download.
+The interface shows elapsed time and recorded stage outcomes, classified failures, runtime and recent source checks, current-access citation previews, Recent summaries and explicit History retrieval. Refresh can reconnect to the current session's run without another model call. Expired sessions and server restarts have distinct limitations. Recent → Workspace restoration was confirmed in the actual Chrome trial: current-access checks restored the saved second answer without restarting elapsed time or submitting another question. This is browser engineering evidence, not team G1 approval. The product has independent questions, with no chat context inheritance or answer download.
 
 Audit records preserve actor, question, per-resource decisions, model attempts and usage, citations and final answer. The real CodeBuddy contribution independently verifies audit hash chains and Ed25519 signed checkpoints. An unanchored chain and an unsigned tail remain explicitly untrusted; local key custody does not prove production resistance to a compromised host.
 
@@ -68,7 +68,10 @@ The material package includes the five fixture scene snapshots, the fixture life
 | Reviewed-source candidate Q1 | Two original-question submissions omitted C01; coverage review blocked both | Failed; source continuation is not a successful answer |
 | Current local integration | 475 tests in 23.320s for source-review integration; related Node checks passed | Local/mock engineering evidence; no human or live quality inference |
 | Original delivery allowance | 12 submissions, 17 model calls, USD0.016143 conservative new settlement | Exhausted and retained; accounting upper estimate, not a provider invoice |
-| AUTH034 human trial | No human submission or total call count limit; USD0.10 settlement baseline/new-unknown stop retained | Prior2 submissions/2 calls and USD0.002608 retained; Q2 accepted and human-reported successful, Q1 failed |
+| AUTH034 human trial | No human submission or total call count limit; USD0.10 settlement baseline/new-unknown stop retained | Latest recorded snapshot: 3 submissions/3 calls, USD0.003842 since preserved AUTH033 baseline; Q2 accepted, Q1 failed; no new unknown |
+| Current source-review Q1 | All nine authorized evidence passages including C01 reached review; overall coverage rejected | Actual AUTH033 failure; no missing-input explanation established |
+| Current source-review Q2 | Original second question accepted; five source claims, single settled review call | Actual saved response/audit in workspace-return-20261011; not broad quality acceptance |
+| Recent → Workspace | Actual Chrome restored saved Q2 with timer hidden and Ask enabled | [Browser observations and screenshots](../evidence/runs/workspace-return-20261011/browser-confirmation.json); no new query/model call, not G1 |
 | Human benefit | Not measured | No time-saved or business ROI claim |
 
 ## Seven-minute video script (English UI/narration)
