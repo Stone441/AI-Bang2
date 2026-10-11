@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-11 ADR086 / AUTH035延续：用户明确“继续不要停”，同provider/原资料/成本基线下定向推进。v2 disabled原Q1 6338c118 review accepted但漏C01，记业务失败，不据accepted宣称修复；停止同类prompt叠加，采用原可用low推理作为单review回退，cap8192不变，不配置题集对比。新增--review-reasoning-effort仅none/low，low仅human source-review，旧none仍默认回退；19定向通过。实际启动后四源complete/current再调用：Q1 18a99f38 66.140s含timeout budget与批准failover procedure及顺序未知；Q2 cf6fd9c6 40.371s三部分完整；范围ba11fb5b 44.174s未扩pilot为GA，一题一次。原失败全部保留，非稳定率/真人验收。Q1 History/C01preview当前HTTP相同正文通过、0模型；新失败刷新被旧成功答案盖住的问题由整合回归发现并修复，相关HTTP/三Node通过，首轮full失败保留，修复后485完整本地25.091s通过。当前9提交/8调用、24688microUSD、新unknown无，旧账本/unknown不重置；G1/G2与录像仍团队执行。
+
 ADR085执行补充：按用户充分授权加载v2并进行一次原Q1验证，aac7a2fa真实retrieval/source_unconfirmed停止、0模型调用，未评价review质量；49本地只证明契约未放松。入口health与price readiness不等于startup来源全部就绪，后续付费验证须检查实际source状态；旧失败保留、不即时自动重提。当前5提交/4调用、新结算5216microUSD、newunknown无。
 
 2026-10-11 ADR085 / AUTH035：用户在定向调用授权提示后明确充分授权，执行一次原首题6cc1cb6b、同provider/disabled8192/原合成资料/保留USD0.10基线与新unknown停止；不恢复42题/全配置。29.630s evidence_only失败，一review调用1374microUSD结算，新累计4提交/4调用/5216microUSD、新unknown无。新增索引诊断与实际派发证据离线重建逐字吻合：C01为index2、supported=true但responsive=false，整体coverage=false；不推断未记录的模型理由。新增专用于source-review的精简SourcePassageReview/v2，替代继承的综合system要求，明确含请求操作的原文不能仅因标签/背景而整体不相关；仍要求支持、审批/完成差异、具体措施、范围、未知顺序和过滤独立完整性，parser/权限/版本/回执不变。旧ExcerptReview及综合/selector作为回退保留；49定向本地回归通过，新候选未加载、live未验证，不称首题已修复。

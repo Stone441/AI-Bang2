@@ -1,5 +1,8 @@
 # 安装、启动、测试与演示
 
+2026-10-11 current trial: source-review v2 / same DeepSeek Flash low review / cap8192 / ranking none. Original Q1 now contains runbook measures and unknown ordering; Q2 and pilot/GA scope each passed once by authorized agent HTTP. Current History/preview HTTP passed; browser reload blocked, G1/G2 and video remain team work. Start/update only owned idle49161 with preserved state: `python3 -m scripts.delivery_trial --human --human-open --answer-style source-review --review-reasoning-effort low`. Double-click「打开试用页面.command」for an actual private entry. Cost baseline is preserved:9 submissions/8 calls, USD0.024688, stop atUSD0.10/newunknown. Earlier paragraphs below are historical snapshots.
+
+
 Current 2026-10-11 delivery entry, five-scene steps, model configuration, scope and material checklist: [SUBMISSION_CANDIDATE](SUBMISSION_CANDIDATE.md). Historical records below retain their original dates/builds and are not inherited as current validation.
 
 2026-10-10 试用当前操作：保持现有49161会话，直接刷新应恢复终态错误（原题/rid/停止阶段），已停止不继续计时。93/93暂停新Ask，不扩额、不重置账本或旧unknown；Recent answers只读选择既有问题，再等当前鉴权取回答案，可查看引用和刷新，不模型收费。静态前端已更新，current backend e801cd48；ADR067新runtime暂停快照尚未加载，为保留当前失败不重启。用户明确要求刷新入口时，先检查owned PID/in-flight ledger/当天official price再同获批49161启动，加载新snapshot并生成私有入口，清楚告知旧session结束；不执行浏览器打开、不动8094/8100。

@@ -4,7 +4,7 @@
 
 [Standalone 16:9 architecture diagram](../assets/submission/contextledger-architecture.svg), ready for material/video use.
 
-Current trial uses `--answer-style source-review` from implementation 4928ae5 (runtime 89bdd62a): server code constructs exact contiguous quotes preserving every byte of all retrieved authorized evidence, then one DeepSeek Flash call reviews support, complete question coverage and scope. Accepted answers have `reviewed_source_v1` and one authentic `model_review` receipt; there is no model generation call. Filtering requires explicit completeness approval and keeps a retained evidence window whole so trailing qualifications remain. 475 local integration tests passed; this path failed actual original Q1 in AUTH033: all nine evidence inputs, including C01, reached review, but complete-question coverage was false. Q2 subsequently passed current source review and was reported successful by the human tester (request965cedea). Q1 remains unresolved. The old model-selector candidate failed two actual original Q1 requests by omitting C01; those failures remain. Earlier selector and free-form synthesis are explicit rollbacks, with their original results.
+Current trial uses source-review v2 and same DeepSeek Flash low reasoning/cap8192 for its single support/coverage/scope review. Server code constructs exact contiguous quotes preserving every byte of retrieved authorized evidence; one authentic model_review receipt and final native checks protect reviewed_source_v1. There is no generation call. Filtering still requires complete independent remaining coverage and retains whole evidence windows. Current original Q1, original Q2 and pilot/GA scope each returned supported source answers once; Q1 includes the runbook measures and explicit unknown ordering. 485 local tests passed after failed-run restoration fix. Disabled-thinking v2 accepted an incomplete Q1, and prior v1/selector failures remain genuine failures; low review is a bounded quality fallback, not a stability claim. Older review, selector and free-form synthesis remain rollbacks. Browser/human G1 and G2 are incomplete.
 
 Independent questions; native eng_b four-source synthetic pilot; SQLite version-bound windows with lexical ranking (no embeddings). AUTH017 background polling publishes source updates; worker failure/stale completeness blocks native synthesis. No business-source writes. In this delivery instance only, a known-usage output rejection can continue to unchanged authorized source excerpts after final native checks, with explicit synthesis-failed/evidence-only status; no rejected draft or fake review receipt is released. Session identity is verified on the server, not supplied by prompts. Source/context bytes remain untrusted.
 
@@ -15,7 +15,7 @@ flowchart LR
  R --> A[Current native access and content checks]
  A --> Q[Code quotes all retrieved authorized evidence]
  Q --> P[Current native review dispatch checks]
- P --> V[One DeepSeek Flash support and coverage review / disabled 8192]
+ P --> V[One DeepSeek Flash support and coverage review / low fallback 8192]
  V --> F[Retained claims / final native checks]
  F --> O[Answer / saved History]
  O --> C[Preview and History current checks]

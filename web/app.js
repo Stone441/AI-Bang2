@@ -94,7 +94,7 @@ async function refreshRuntime(){
         el('span',source.checking?'Checking now':source.last_check_at?'Last check: '+source.last_check_result+' · '+new Date(source.last_check_at).toLocaleTimeString():'Current source check unconfirmed'),
         el('span',source.snapshot_status==='current'?'Local candidate snapshot current · access checked per question':'Current candidate snapshot unconfirmed'),
         el('span',source.used_in_answer?'Cited in the last completed answer':'Not recorded as used in the last completed answer','muted'));list.append(card);}
-    if((!r.run||r.run.status!=='running'&&!savedQuestion()&&answerReference())&&resumeOnRuntime&&$('workspace').hidden===false){
+    if((!r.run||['completed','evidence_only'].includes(r.run.status)&&!savedQuestion()&&answerReference())&&resumeOnRuntime&&$('workspace').hidden===false){
       resumeOnRuntime=false;const reference=answerReference(),view=viewToken();
       if(reference&&$('question').value===resumeInputValue){
         $('answer').replaceChildren(el('p','Checking current access before restoring the saved answer…'));

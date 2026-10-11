@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 核心答案取得新实际进展：同DeepSeek/cap8192的low单review回退已加载runtime665f262c（08:59:56UTC），原首题18a99f38包含C01批准措施及最新顺序未知，原第二题cf6fd9c6与范围ba11fb5b完整各一次，耗时66.140/40.371/44.174s。v2 disabled 6338c118 accepted但漏措施仍记失败；不继承旧成绩或称稳定验证。当前9提交/8调用、新结算USD0.024688/newunknown无；三份admission原状态不重置。Q1 History/C01preview当前native HTTP通过；浏览器reload拒绝保留，真人/G1/G2/录像未完成。整合首轮485发现旧成功覆盖新失败，修复优先显示failed run、保留History选中答案/终态无计时，相关HTTP/三Node通过；修复后485完整25.091s通过，首轮失败/预期mock输出保留。实际材料与当前low回退已同步，旧none默认仍为回退。
+
 2026-10-11 AUTH035候选v2已空闲保存状态后加载：runtimefd6057ef、08:16:45UTC，原三份admission逐字节保留；同日readiness及实际入口检查通过。一次原Q1 aac7a2fa在retrieval源确认阶段失败（HTTP503/source_unconfirmed/0.025s），0模型调用；不能据此评价新review。提交前未等待startup来源核查完成是本次验证限制，底层具体来源原因未记录；不自动重试、不把失败当通过。当前5提交/4调用，新结算5216microUSD、新unknown无；v2-startup/response/audit/result全保留。原v1首题实测索引诊断与v2模型前失败分列，核心Q1仍未解决，G1/G2未完成。
 
 2026-10-11 AUTH035实际原首题诊断已完成：6cc1cb6b、29.630s、evidence_only失败，单review1374microUSD已结算，当前4提交/4调用/新结算5216microUSD、新unknown无。C01原文准确对应index2：supported=true、responsive=false，coverage/filtered_complete=false；不凭空补造理由。已实现专用精简source-review v2，旧审查回退保留、49相关本地0.855s通过，当前服务仍旧v1/a9a3e548，本地v2未加载/未在线验证。全部response/audit/授权/映射结果first-question-diagnostic-20261011保留。首题仍失败；浏览器拒绝不绕过，无业务源写入、push/merge/deploy/submit。

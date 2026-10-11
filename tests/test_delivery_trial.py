@@ -6,6 +6,11 @@ from brain.budget import BudgetLedger, TrialAdmissionPaused
 from scripts.delivery_trial import Admission, HumanRetestAdmission, HumanOpenAdmission, rejected_generation_diagnostic, main
 
 class PrivateGenerationDiagnostic(unittest.TestCase):
+    def test_review_fallback_cannot_expand_into_other_paths_or_efforts(self):
+        for kwargs in ({'review_reasoning_effort':'high'},
+                       {'review_reasoning_effort':'low','human':False,'answer_style':'source-review'},
+                       {'review_reasoning_effort':'low','human':True,'answer_style':'synthesis'}):
+            with self.subTest(kwargs=kwargs),self.assertRaises(ValueError):main(**kwargs)
     def test_bounds_visible_claim_fields_and_excludes_reasoning(self):
         output={'reasoning_content':'PRIVATE REASONING','claims':[{'text':'x'*800,
             'evidence_ids':['E1'],'supports':[{'evidence_id':'E1','quote':'q'*2000,
