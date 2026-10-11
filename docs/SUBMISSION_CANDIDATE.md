@@ -1,6 +1,6 @@
 # ContextLedger · submission candidate
 
-Prepared 11 October 2026 from main b34a055 plus the current delivery branch. The current loopback trial uses server-constructed verbatim passages with a single model coverage review. This path has local integration evidence but no live-model quality result. The earlier selector path failed two actual first-question submissions by omitting authorized runbook actions; those failures remain. Current-path second-question quality is not verified. This is a reviewable candidate, not G1/G2 approval or a completed submission. Current and historical evidence retain their actual modes.
+Prepared 11 October 2026 from main b34a055 plus the current delivery branch. The current loopback trial uses server-constructed verbatim passages with a single model coverage review. This path has local integration evidence and an actual AUTH033 original-Q1 failure: all nine evidence passages, including C01, reached review, but overall question coverage was rejected. The earlier selector path failed two actual first-question submissions by omitting authorized runbook actions; those failures remain. Current-path second-question quality is not verified. This is a reviewable candidate, not G1/G2 approval or a completed submission. Current and historical evidence retain their actual modes.
 
 Current candidate constructs quotations covering every retrieved authorized passage in server code, then sends them to a single coverage/scope review. Unsupported claims and incomplete reviewed answers are blocked; failed source continuation remains labelled as failure. The server explicitly declines to infer latest ordering. This is a technical alternative to free-form synthesis, not a successful first-question result.
 
@@ -68,7 +68,7 @@ The material package includes the five fixture scene snapshots, the fixture life
 | Reviewed-source candidate Q1 | Two original-question submissions omitted C01; coverage review blocked both | Failed; source continuation is not a successful answer |
 | Current local integration | 475 tests in 23.320s for source-review integration; related Node checks passed | Local/mock engineering evidence; no human or live quality inference |
 | Original delivery allowance | 12 submissions, 17 model calls, USD0.016143 conservative new settlement | Exhausted and retained; accounting upper estimate, not a provider invoice |
-| AUTH033 human re-test | Two new human Q1/Q2 submissions, at most two model calls; USD0.10 new-settlement or new-unknown stop | Independent durable state; no new question submitted at preparation |
+| AUTH033 human re-test | Two new human Q1/Q2 submissions, at most two model calls; USD0.10 new-settlement or new-unknown stop | Independent durable state; Q1 failed coverage, one human Q2 submission remains |
 | Human benefit | Not measured | No time-saved or business ROI claim |
 
 ## Seven-minute video script (English UI/narration)

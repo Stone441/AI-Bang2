@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 AUTH033真人原首题08a7862a实际失败：source-review已将9份授权原文（含C01）全部送review，9项supported=true、3项responsive=false，但question_covered=false，因此正确按现契约阻断，evidence_only不算成功。finish_reason=stop/completion129，非cap截断；diagnostic未保留index/理由，不推断具体哪份被过滤或缺哪个问题部分。1次调用已结算1374microUSD，新独立额度1/2提交、1/2calls、newunknown无；余一留原Q2真人，不改prompt、不自动重试。完整response/audit/真人失败报告保留human-retest-20261011/first-question-result.json。核心首题仍未解决，新路径Q2未跑；当前页面的失败不是验收通过。
+
 2026-10-11 真人重提授权已接线：旧额度实际12/12，最后c6e284b9 request_stopped、无模型；旧12次state原字节及原ledger/unknown保留。用户AUTH033新增独立2真人提交/2模型调用、USD0.10新结算或新unknown停止，不恢复后台问答。9项额度/旧兼容/启动限制本地通过。自有49161无在途后私有备份并更新，runtime5c053034（2026-10-11T07:27:28UTC）加载--human-retest/source-review；新额度0/2，Drive重启后原生核查complete，其他来源启动检查见human-retest-20261011/startup-runtime.json。当天readiness通过；无付费提交，核心首题仍未验证，G1/G2/真人录像未完成。
 
 2026-10-11 材料交付一致性修正：IMPLEMENTED_ARCHITECTURE当前文字及Mermaid移除旧selector调用，RUNBOOK/DEMO_CANDIDATE当前入口统一source-review与余一真人问答，delivery README区分新路径not_run和两次旧selector失败。仅材料修改，不重跑已通过整合、不重启服务、不调用模型；包按新文档commit重新生成并检查ZIP完整性。核心首题仍待真人最后一问。
