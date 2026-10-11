@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 诊断增量已加载自有49161：确认旧PID1651为本任务listener、无ESTABLISHED连接且human-open锁非阻塞获取后，私有备份三份admission/答案审计库/原USD20账本，再更新为PID5973/runtimea9a3e548（08:03:16UTC）。同日readiness current，实际「python3 打开试用页面.command --check / --refresh-only」均通过；三个额度state逐字节不变，仍3提交/3调用、新结算3842microUSD、新unknown无。未提交问题、未调用模型、未动8094/8100。重启使旧内存session失效，双击入口重新登录，已保存答案仍由History重新鉴权；新诊断live答案not_run，Q1仍失败。证据workspace-return-20261011/diagnostic-update-state.json。注意scripts.local_entry模块无CLI main，不把其python -m空运行当入口验证。
+
 2026-10-11 首题诊断缺口已修复于本地：后续review拒绝可保留有界claim index及过滤完整性布尔值，以区分具体不相关片段与整体coverage失败；不变更支持/范围/权限/完整性gate，旧08a7862a仍无index/原因，不能恢复其具体判断。37相关本地测试0.794s通过；无付费问答、无重启，49161仍加载2f73c579旧版本。当前6cd7326材料/源码包仍对应其标明commit，不冒称包含本地诊断增量。核心首题仍failed。
 
 2026-10-11 材料包刷新到6cd7326：submission-materials及source ZIP已生成并通过CRC完整性检查，SHA256见delivery-20261011/package-6cd7326.json。包含当前source-review原首题失败、原第二题完整结果/审计和Recent→Workspace真实浏览器截图；保留五场景fixture/历史模式。没有.runtime、私有CodeBuddy原件或SQLite运行库；私有工具原件仍由团队审阅授权上传。仅材料/打包，无模型调用或服务重启；首题仍失败，G1/G2未批准。初次中文路径转义检查失败已保留在执行记录，修正为Git NUL分隔读取后通过。
