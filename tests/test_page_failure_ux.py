@@ -224,6 +224,28 @@ class MixedRecovery(unittest.TestCase):
 class DetailedModelDiagnostics(unittest.TestCase):
     setUp=test_deepseek.DeepSeekBoundary.setUp
     tearDown=test_deepseek.DeepSeekBoundary.tearDown
+    def test_rejected_review_keeps_safe_indices_without_accepting_or_logging_reasons(self):
+        from brain.synthesis import EvidenceReview
+        from brain.deepseek import ModelOutputRejected,PRICE_DATE
+        claim={'text':self.evidence.text,'evidence_ids':[self.evidence.evidence_id]}
+        for indices in ([1,0],[True,'sensitive-index'],[-1,52]):
+            output={'question_covered':False,'filtered_answer_complete':False,
+                    'verdicts':[{'index':index,'supported':True,'responsive':False,
+                                 'reason':'sensitive-free-text'} for index in indices]}
+            self.transport.response['choices'][0]['message']['content']=json.dumps(output)
+            provider=EvidenceReview('synthetic-not-a-key',self.ledger,synthetic_only=True,
+                transport=self.transport,today=PRICE_DATE,claims=[claim,claim])
+            events=[]
+            with self.assertRaises(ModelOutputRejected):
+                provider.generate('Question',[self.evidence],stage='review',
+                    observe=lambda e,d:events.append((e,d)))
+            diagnostic=events[-1][1]['diagnostic']
+            self.assertEqual([v['index'] for v in diagnostic['review_verdicts']],
+                             [1,0] if indices==[1,0] else [None,None])
+            self.assertIs(diagnostic['review_filtered_answer_complete'],False)
+            self.assertEqual(events[-1][1]['receipt']['state'],'settled')
+            self.assertNotIn('sensitive-',json.dumps(events))
+
     def test_quote_claim_review_failures_are_distinct_and_settled(self):
         from brain.synthesis import DeepSeekSynthesisModel,EvidenceReview
         from brain.deepseek import ModelOutputRejected,PRICE_DATE

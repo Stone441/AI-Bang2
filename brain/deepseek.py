@@ -237,9 +237,15 @@ class DeepSeekEvidenceModel:
             category='structure'
             if stage=='review' and isinstance(output,dict):
                 diagnostic['review_question_covered']=output.get('question_covered') if type(output.get('question_covered')) is bool else None
+                diagnostic['review_filtered_answer_complete']=output.get('filtered_answer_complete') if type(output.get('filtered_answer_complete')) is bool else None
                 verdicts=output.get('verdicts')
                 if isinstance(verdicts,list) and len(verdicts)<=52:
-                    diagnostic['review_verdicts']=[{k:v.get(k) if type(v.get(k)) is bool else None for k in ('supported','responsive')} for v in verdicts if isinstance(v,dict)]
+                    # Untrusted diagnostic metadata only; parse_output still checks
+                    # index identity/uniqueness and every support/coverage gate.
+                    diagnostic['review_verdicts']=[{
+                        'index':v.get('index') if type(v.get('index')) is int and 0<=v['index']<52 else None,
+                        **{k:v.get(k) if type(v.get(k)) is bool else None for k in ('supported','responsive')}
+                    } for v in verdicts if isinstance(v,dict)]
             claims = self.parse_output(output, evidence)
         except Exception as error:
             # Parser messages are mapped locally; never persist arbitrary exception text.

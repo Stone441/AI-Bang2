@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-11 首题诊断缺口已修复于本地：后续review拒绝可保留有界claim index及过滤完整性布尔值，以区分具体不相关片段与整体coverage失败；不变更支持/范围/权限/完整性gate，旧08a7862a仍无index/原因，不能恢复其具体判断。37相关本地测试0.794s通过；无付费问答、无重启，49161仍加载2f73c579旧版本。当前6cd7326材料/源码包仍对应其标明commit，不冒称包含本地诊断增量。核心首题仍failed。
+
 2026-10-11 材料包刷新到6cd7326：submission-materials及source ZIP已生成并通过CRC完整性检查，SHA256见delivery-20261011/package-6cd7326.json。包含当前source-review原首题失败、原第二题完整结果/审计和Recent→Workspace真实浏览器截图；保留五场景fixture/历史模式。没有.runtime、私有CodeBuddy原件或SQLite运行库；私有工具原件仍由团队审阅授权上传。仅材料/打包，无模型调用或服务重启；首题仍失败，G1/G2未批准。初次中文路径转义检查失败已保留在执行记录，修正为Git NUL分隔读取后通过。
 
 2026-10-11 Recent→Workspace已由Agent实际Chrome确认：使用既有b7234556第二题答案，打开Recent、加载保存答案、返回Workspace；重新鉴权提示期间及答案恢复后进度/计时均隐藏，恢复原15:45:45答案，Ask可用。提交/调用仍3/3、新增结算3842microUSD、新unknown无，未提交新问题。当前正常浏览器通道可用，没有绕过历史拒绝；截图及观察记录见workspace-return-20261011/browser-confirmation.json。这项导航修复工程确认完成，不再等待真人重复检查；历史pending记录保留。核心首题仍失败，团队G1/G2与录像未完成。
