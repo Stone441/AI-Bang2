@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+ADR085执行补充：按用户充分授权加载v2并进行一次原Q1验证，aac7a2fa真实retrieval/source_unconfirmed停止、0模型调用，未评价review质量；49本地只证明契约未放松。入口health与price readiness不等于startup来源全部就绪，后续付费验证须检查实际source状态；旧失败保留、不即时自动重提。当前5提交/4调用、新结算5216microUSD、newunknown无。
+
 2026-10-11 ADR085 / AUTH035：用户在定向调用授权提示后明确充分授权，执行一次原首题6cc1cb6b、同provider/disabled8192/原合成资料/保留USD0.10基线与新unknown停止；不恢复42题/全配置。29.630s evidence_only失败，一review调用1374microUSD结算，新累计4提交/4调用/5216microUSD、新unknown无。新增索引诊断与实际派发证据离线重建逐字吻合：C01为index2、supported=true但responsive=false，整体coverage=false；不推断未记录的模型理由。新增专用于source-review的精简SourcePassageReview/v2，替代继承的综合system要求，明确含请求操作的原文不能仅因标签/背景而整体不相关；仍要求支持、审批/完成差异、具体措施、范围、未知顺序和过滤独立完整性，parser/权限/版本/回执不变。旧ExcerptReview及综合/selector作为回退保留；49定向本地回归通过，新候选未加载、live未验证，不称首题已修复。
 
 2026-10-11 ADR084：原首题review失败只保存布尔数组、未保留claim index，不能据数组位置定位被过滤片段。新增有界整数index（0–51、排除bool/字符串/越界）及filtered_answer_complete严格布尔诊断；它们是未可信的模型返回元数据，不是授权或验收结论。parse_output的唯一索引、支持、问题覆盖及过滤完整性条件全部不变，不保存自由文本理由/原始输出，不改prompt、不补造旧失败解释。37相关离线回归通过；当前49161仍运行旧加载版本，本增量待下一次授权空闲更新，未新增在线调用。
