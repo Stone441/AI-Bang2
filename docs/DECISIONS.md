@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-14 用户明确授权合并 GitHub main：候选 d64084e 已在独立检出验证666项40.356秒、7前端DOM及无凭据本地启动；509个待发布blob敏感模式/当前密码扫描无命中。仅提交代码、文档与非秘密证据，原本机运行状态保持；验证记录 reviews/2026-10-14-main-merge/VALIDATION.md。
+
 2026-10-13 已上线 contextledger.hellokyleshi.com：用户远程不便明确委托代理确认，采用代理HTTP/API验收例外，不称真人G1/G2。三账号公网登录、安全cookie/Origin/跨账号拒绝通过；公网Blair问答8.855s四源accepted，Jordan仅授权能力页evidence_only。修复Drive仅启动刷新token导致约一小时失效，37专项/666完整通过；长期一小时自然续期尚未观察。用户级LaunchAgent app+tunnel与caffeinate运行；新增启动/停止命令。人工额度余额USD0.997920，本轮3次问答，无新unknown。浏览器公网被工具拦截未绕过；详见 reviews/2026-10-13-hosted-demo/README.md。
 
 2026-10-13 本机域名部署准备：用户批准电脑托管和组员真实四源试用；专用 Cloudflare Tunnel 与 contextledger.hellokyleshi.com DNS 已创建，ingress 校验通过；未启动隧道、未开放公网。项目级 cloudflared 2026.10.0 哈希核验通过；新增入口公共域名兼容，6入口/9账号HTTP测试通过。G1真人安全查看尚待确认，不能以自动测试代替；现有本地服务保留，无新增模型调用。具体切换及人工查看步骤见 REVIEWER_DEPLOYMENT。
