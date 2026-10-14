@@ -1,0 +1,119 @@
+{
+  "task_id": "DEV-SR-TIMING-02",
+  "recorded_at_utc": "2026-10-13T03:43:49Z",
+  "baseline_commit": "1649e301959b7eea7303fdda9ba0ee58a578d19e",
+  "branch": "feat/restricted-timing-20261013",
+  "revision_state": "uncommitted local implementation with file fingerprints; prior review artifacts retained",
+  "mode": "fixture_mock_local_HTTP_offline",
+  "checks": [
+    {
+      "command": "PYTHONPATH=tests:. python3 -m unittest test_restricted_timing -v",
+      "tests": 12,
+      "seconds": 0.596,
+      "exit_code": 0,
+      "log": "docs/reviews/2026-10-13-restricted-timing/final-timing-tests.log"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests",
+      "tests": 502,
+      "seconds": 23.71,
+      "exit_code": 0,
+      "log": "docs/reviews/2026-10-13-restricted-timing/full-local-regression-final.log",
+      "includes_timing_and_previous_contract_tests": true
+    },
+    {
+      "command": "PYTHONPATH=tests:. python3 -m unittest test_restricted_timing test_business_cached_query -v",
+      "tests": 18,
+      "seconds": 1.167,
+      "exit_code": 0,
+      "log": "docs/reviews/2026-10-13-restricted-timing/targeted-after-lock-fix.log"
+    },
+    {
+      "check": "operator_web and delivery_trial --help",
+      "result": "timing-dir exposed; no service startup"
+    },
+    {
+      "check": "historical counterexample SHA256",
+      "files": 9,
+      "result": "all_match"
+    }
+  ],
+  "initial_full_regression": {
+    "tests": 500,
+    "seconds": 23.863,
+    "errors": 1,
+    "log": "docs/reviews/2026-10-13-restricted-timing/full-local-regression.log",
+    "reason": "ObservedLock has context protocol only; original protocol preserved with ExitStack"
+  },
+  "not_run": [
+    "native source calls",
+    "live model calls",
+    "trial restart/load",
+    "real latency improvement",
+    "dispatch consolidation",
+    "browser/human G1/G2",
+    "push/merge/deploy/submit"
+  ],
+  "artifacts": [
+    {
+      "path": "brain/timing.py",
+      "sha256": "a8cba19e53b9c3b664fdc7d507a84cb9acbbf3d76326790457c8b339d78af651"
+    },
+    {
+      "path": "brain/server.py",
+      "sha256": "ce1a72ff31c7f8a3b6ffdad4c2a1408a5b552a9c872fda27a51e2b3de8ad71ed"
+    },
+    {
+      "path": "brain/deepseek.py",
+      "sha256": "fb27f78ced76b88d920659de97ea5bed6231c4206ca9410e974075051edf6e4c"
+    },
+    {
+      "path": "brain/delegated_query.py",
+      "sha256": "532c2c5b3dff8d04a6dcd400cf98d37345f39ffbb8c380a3f47c16fcd8d1d0b4"
+    },
+    {
+      "path": "brain/engine.py",
+      "sha256": "c1e862170b361552541dc8cdc7e2209cae8aa27c7ac824515c965e7d5da3d55c"
+    },
+    {
+      "path": "brain/operator_web.py",
+      "sha256": "295b98c87b319832208151c49ab0b149f2e715690a132e0fa007d5cd3bebc04b"
+    },
+    {
+      "path": "scripts/delivery_trial.py",
+      "sha256": "cb4071a2afe7b6043655a1e5eda2412f9a3cc386568ec62636f2a6b506fe96c4"
+    },
+    {
+      "path": "tests/test_restricted_timing.py",
+      "sha256": "2edc2c25bf4d43d7befa0843228c498a1465bc7f4fec25bff52df12fd0765e60"
+    },
+    {
+      "path": "tests/test_source_review_dispatch_contract.py",
+      "sha256": "3e4a981fd26963622a01bc6646a522c62146c622c9d75b580d94abe78b2313f4"
+    },
+    {
+      "path": "docs/reviews/2026-10-13-restricted-timing/README.md",
+      "sha256": "f52f63f1093d93e30c0dc7deb923755426f45b242d62962df137ad435e7d9bb2"
+    },
+    {
+      "path": "docs/reviews/2026-10-13-restricted-timing/INITIAL_FAILURES.md",
+      "sha256": "deb243416bb024da8fbfe8977020a3fdeadeb882708b7c67b46c0fa381c6a777"
+    },
+    {
+      "path": "docs/reviews/2026-10-13-restricted-timing/full-local-regression.log",
+      "sha256": "2c40c40c81e18c6eeab26d91be97af99e626a0c8371e256118884628da6b4ae5"
+    },
+    {
+      "path": "docs/reviews/2026-10-13-restricted-timing/full-local-regression-final.log",
+      "sha256": "ea64765faffff6b690fc16d9b534ae0c33ef06abf91d32381e695246ad4b39fd"
+    },
+    {
+      "path": "docs/reviews/2026-10-13-restricted-timing/final-timing-tests.log",
+      "sha256": "369e9f3d6a36998c3abedffb632543735f378b30249e702dcf6dc8bd2824ffd9"
+    },
+    {
+      "path": "docs/reviews/2026-10-13-restricted-timing/targeted-after-lock-fix.log",
+      "sha256": "19cae213a9f14622e57d4d0c7a82b3a3fb20dd617312d38877add961e0f323a6"
+    }
+  ]
+}

@@ -53,6 +53,7 @@ class OperatorApp:
         import threading
         self.session_runs=SessionRuns();self.admission_lock=threading.Lock();self.active_queries=set()
         self.store, self.sessions = store, {}
+        self._ticket_lock=threading.RLock()
         self._ticket = secrets.token_urlsafe(32)
         self._ticket_expires = time.monotonic() + 600
 
@@ -71,15 +72,23 @@ class OperatorApp:
             raise ValueError('Configured content reader required')
 
     def bootstrap_ticket(self):
-        return self._ticket
+        with self._ticket_lock:return self._ticket
+
+    def renew_bootstrap_ticket(self):
+        """Local operator control only; never exposed as an HTTP endpoint."""
+        with self._ticket_lock:
+            self._ticket=secrets.token_urlsafe(32)
+            self._ticket_expires=time.monotonic()+600
+            return self._ticket
 
     def authenticate(self, data):
-        if (set(data) != {'ticket'} or not isinstance(data['ticket'], str)
-                or not self._ticket or time.monotonic() >= self._ticket_expires
-                or not secrets.compare_digest(data['ticket'], self._ticket)):
-            raise PermissionError('Unavailable')
-        self._ticket = None
-        return self.actor
+        with self._ticket_lock:
+            if (set(data) != {'ticket'} or not isinstance(data['ticket'], str)
+                    or not self._ticket or time.monotonic() >= self._ticket_expires
+                    or not secrets.compare_digest(data['ticket'], self._ticket)):
+                raise PermissionError('Unavailable')
+            self._ticket = None
+            return self.actor
 
     def refresh(self):
         pass  # Engine uses trusted published candidates or explicit native refresh.
@@ -92,11 +101,19 @@ def main(argv=None):
     parser.add_argument('--source', choices=['confluence', 'jira', 'slack', 'drive', 'multi'], default='confluence')
     parser.add_argument('--port', type=int, default=8081)
     parser.add_argument('--live', action='store_true')
+    parser.add_argument('--timing-dir',help='Opt-in private local timing directory (0700); no product endpoint')
     parser.add_argument('--discovery-auth017',action='store_true',help='Opt-in eng_b discovery in AUTH-017 fixed four containers; default off')
     parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive or multi; browser consent instead of hidden Drive token')
     parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
-    parser.add_argument('--answer-style', choices=['excerpts','synthesis'], default='excerpts',
+    parser.add_argument('--answer-style', choices=['excerpts','synthesis','reviewed-excerpts','source-review'], default='excerpts',
                         help='Synthesis uses two budgeted calls and exact grounding plus model review')
+    parser.add_argument('--source-review-input', choices=['legacy','compact','covered','whole','structured','explained'], default='legacy',
+                        help='Opt-in lossless source grouping for source-review only')
+    parser.add_argument('--source-review-dispatch', choices=['legacy','single'], default='legacy',
+                        help='Opt-in one pre-egress check after local source quote construction')
+    parser.add_argument('--window-strategy', choices=['fixed','structured'], default='fixed')
+    parser.add_argument('--history-read-mode', choices=['serial','batch'], default='serial',
+                        help='Opt-in bounded fresh authorization of a saved answer as one set')
     parser.add_argument('--reasoning-effort', choices=['none','low'], default='none',
                         help='Trusted synthesis launch configuration; never supplied by browser questions')
     parser.add_argument('--output-tokens', type=int, choices=[1024,2048,4096,8192], default=1024)
@@ -105,14 +122,20 @@ def main(argv=None):
     parser.add_argument('--replace-credential',choices=['confluence','jira','slack','drive','deepseek'],
                         help='Re-enter only one credential for this launch; keep all others')
     args = parser.parse_args(argv)
+    if args.source_review_dispatch != 'legacy' and (args.answer_style != 'source-review' or args.model != 'deepseek'):
+        print('not_run: single dispatch requires DeepSeek source-review; no credentials or platform calls performed.')
+        return 2
+    if args.source_review_input != 'legacy' and (args.answer_style != 'source-review' or args.model != 'deepseek'):
+        print('not_run: compact source input requires DeepSeek source-review; no credentials or platform calls performed.')
+        return 2
     if (args.reasoning_effort!='none' or args.output_tokens!=1024) and (
-            args.model!='deepseek' or args.answer_style!='synthesis'):
+            args.model!='deepseek' or args.answer_style not in ('synthesis','reviewed-excerpts','source-review')):
         print('not_run: reasoning/output overrides require DeepSeek synthesis; no credentials or platform calls performed.')
         return 2
     if args.discovery_auth017 and (args.source!='multi' or args.actor!='eng_b'):
         print('not_run: AUTH-017 discovery requires multi-source eng_b; no credentials or platform calls performed.')
         return 2
-    if args.answer_style=='synthesis' and args.model!='deepseek':
+    if args.answer_style in ('synthesis','reviewed-excerpts','source-review') and args.model!='deepseek':
         print('not_run: synthesis requires DeepSeek; no credentials or platform calls performed.')
         return 2
     if not args.live:
@@ -136,7 +159,7 @@ def main(argv=None):
                   + ', record the Singapore review date and verified rates, then restart the reviewed build. '
                   'Preserve the existing USD20 ledger. No credentials or platform calls performed.')
             return 2
-    store = server = ledger = discovery = None
+    store = server = ledger = discovery = timing = None
     stage = 'bind'
     try:
         # Reserve the listener before asking for a credential. Do not serve until
@@ -185,6 +208,8 @@ def main(argv=None):
         store = Store(str(db)); os.chmod(db, 0o600)
         stage = 'native_identity'
         app = OperatorApp(reader, store, args.actor, live=True)
+        app.engine.history_read_mode = args.history_read_mode
+        app.engine.window_strategy = args.window_strategy
         if args.model == 'deepseek':
             from .budget import BudgetLedger
             from .deepseek import DeepSeekEvidenceModel
@@ -201,9 +226,25 @@ def main(argv=None):
                 with warnings.catch_warnings():
                     warnings.simplefilter('error', getpass.GetPassWarning)
                     key = getpass.getpass('DeepSeek API key (hidden): ').strip()
-            if args.answer_style=='synthesis':
-                from .synthesis import DeepSeekSynthesisModel
-                model=DeepSeekSynthesisModel(key,ledger,synthetic_only=True,
+            if args.answer_style in ('synthesis','reviewed-excerpts','source-review'):
+                from .synthesis import DeepSeekSynthesisModel,DeepSeekReviewedExcerptsModel,DeepSeekReviewAllSourcesModel
+                cls={'synthesis':DeepSeekSynthesisModel,'reviewed-excerpts':DeepSeekReviewedExcerptsModel,'source-review':DeepSeekReviewAllSourcesModel}[args.answer_style]
+                if args.source_review_input == 'compact':
+                    from .synthesis import DeepSeekCompactSourceReviewModel
+                    cls = DeepSeekCompactSourceReviewModel
+                elif args.source_review_input == 'covered':
+                    from .synthesis import DeepSeekCoveredSourceReviewModel
+                    cls = DeepSeekCoveredSourceReviewModel
+                elif args.source_review_input == 'whole':
+                    from .synthesis import DeepSeekWholeSourceReviewModel
+                    cls = DeepSeekWholeSourceReviewModel
+                elif args.source_review_input == 'structured':
+                    from .synthesis import DeepSeekStructuredSourceReviewModel
+                    cls = DeepSeekStructuredSourceReviewModel
+                elif args.source_review_input == 'explained':
+                    from .synthesis import DeepSeekExplainedSourceReviewModel
+                    cls = DeepSeekExplainedSourceReviewModel
+                model=cls(key,ledger,synthetic_only=True,
                     reasoning_effort=args.reasoning_effort,output_tokens=args.output_tokens)
             else:
                 model = DeepSeekEvidenceModel(key, ledger, synthetic_only=True)
@@ -211,18 +252,31 @@ def main(argv=None):
                 credential_store.put('deepseek',app.actor.tenant,args.actor,'deepseek-flash',key)
             del key
             app.engine.model = model
+            app.engine.source_review_dispatch = args.source_review_dispatch
             app.engine.mode = app.engine.mode.removesuffix('_fake_model') + '_live_model_selection'
             if args.answer_style=='synthesis':
                 app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_synthesis'
+            elif args.answer_style=='source-review':
+                app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_source_review'
+            elif args.answer_style=='reviewed-excerpts':
+                app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_reviewed_excerpts'
+        if args.timing_dir:
+            from .timing import install
+            stage='timing_configuration'
+            timing=install(app,args.timing_dir)
         if args.discovery_auth017:
             from .discovery import ContainerDiscovery
             stage='discovery_configuration'
             discovery=ContainerDiscovery(app.pilot,app.actor,bounded_queries=True)
+            from .timing import attach_discovery
+            attach_discovery(app,discovery)
             discovery.start()
         server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
         label = 'LIVE MODEL EVIDENCE SELECTION' if args.model == 'deepseek' else 'FAKE MODEL'
         if args.answer_style=='synthesis': label='LIVE MODEL GROUNDED SYNTHESIS / SEPARATE MODEL REVIEW'
+        elif args.answer_style=='source-review':label='CODE SOURCE QUOTES / LIVE MODEL COVERAGE REVIEW'
+        elif args.answer_style=='reviewed-excerpts':label='LIVE MODEL VERBATIM SOURCES / SEPARATE MODEL REVIEW'
         print(f'{args.source.title()} LIVE API / {label} / LOCAL OPERATOR (not SSO)', flush=True)
         version = runtime_version()
         print(f"Startup source: {version['startup_source_sha256']} / loaded {version['process_loaded_at']}", flush=True)
@@ -247,6 +301,7 @@ def main(argv=None):
                 'configuration_or_hidden_input': 'Check the approved configuration, mapped actor and secure TTY input.',
                 'local_store': 'Could not open the local database. Check .runtime access and database locks.',
                 'discovery_configuration': 'Check AUTH-017 exact eng_b container mappings; discovery stays within approved scope.',
+                'timing_configuration': 'Use an owned private 0700 directory without symlinks. No timing is exposed by HTTP.',
                 'native_identity': 'Could not verify the mapped native account. Check token, account mapping and network access.',
                 'model_configuration': 'Check the reviewed model price date, secure TTY and durable budget. No model request was sent.',
                 'runtime': 'The running service stopped unexpectedly.',
@@ -256,6 +311,7 @@ def main(argv=None):
         return 2
     finally:
         if discovery is not None: discovery.close()
+        if timing is not None: timing.close()
         if ledger is not None: ledger.close()
         if server is not None: server.server_close()
         if store is not None: store.db.close()

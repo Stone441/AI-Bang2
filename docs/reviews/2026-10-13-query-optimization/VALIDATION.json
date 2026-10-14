@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-13 Asia/Singapore",
+  "mode": "offline_diagnosis_fixture_fake_model_and_recorded_counterexample_replay",
+  "baseline_head": "1649e301959b7eea7303fdda9ba0ee58a578d19e",
+  "branch": "review/query-optimization-20261013",
+  "commands": [
+    {
+      "command": "python3 docs/reviews/2026-10-13-query-optimization/analyze.py --output docs/reviews/2026-10-13-query-optimization/offline-analysis.json",
+      "exit_code": 0,
+      "fixture_query_calls": 20,
+      "local_retrieval_measurements": 20,
+      "original_evidence_hashes_matched": 9,
+      "audit_chains": "two valid local chains; no independent signatures"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p test_source_review_dispatch_contract.py -v",
+      "exit_code": 0,
+      "tests": 5,
+      "seconds": 0.039,
+      "result": "OK; construction/post-review change boundaries and three historical counterexamples retained"
+    }
+  ],
+  "native_api_called": false,
+  "live_model_called": false,
+  "runtime_changed": false,
+  "three_second_goal_verified": false,
+  "limitations": [
+    "Historical network totals are not current service measurements.",
+    "Repeated local fixture timings are neither semantic quality nor p95/SLA evidence.",
+    "No runtime restart, installation, source write, publication or G1/G2 approval."
+  ]
+}

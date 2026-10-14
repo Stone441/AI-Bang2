@@ -1,4 +1,5 @@
 """Shared trusted-operator query boundary; this is not a browser login endpoint."""
+import copy
 import json
 import threading
 from concurrent.futures import ThreadPoolExecutor
@@ -19,6 +20,8 @@ from .source_cooldown import SourceCooldownTransport
 
 class DelegatedAuthority:
     def __init__(self, readers):
+        self.state_lock = threading.RLock()
+        self.read_concurrency = 1
         self.readers = dict(readers)
         if not self.readers or set(self.readers) - {'confluence', 'jira', 'slack', 'drive'}:
             raise ValueError('Supported readers required')
@@ -38,7 +41,18 @@ class DelegatedAuthority:
             source + ':' + native_id for source, ids in self.native_ids.items() for native_id in ids)
         self.users = {uid: {} for r in self.readers.values() for uid in r.delegations}
         self.resources, self.snapshots = {}, {}
+        self.publication_epochs = {}
         self.discovered_ids = {}
+
+    def publish_resource(self, resource):
+        """Record semantic publications, including disable/restore ABA changes."""
+        with self.state_lock:
+            rid=resource['id'];previous=self.resources.get(rid)
+            if (previous is None or not self.same_content(previous,resource)
+                    or previous.get('active')!=resource.get('active')
+                    or previous.get('tenant')!=resource.get('tenant')):
+                self.publication_epochs[rid]=self.publication_epochs.get(rid,0)+1
+            self.resources[rid]=resource
 
     @staticmethod
     def resource(content, tenant, previous=None):
@@ -111,7 +125,7 @@ class DelegatedAuthority:
                                (resource_id, resource['version'], 1, canonical(resource)))
                     db.execute('INSERT OR IGNORE INTO versions VALUES(?,?,?)',
                                (resource_id, resource['version'], canonical(resource)))
-                self.resources[resource_id] = resource
+                self.publish_resource(resource)
                 self.snapshots[actor.user_id][resource_id] = resource['version']
 
     def recover_versions(self, actor, resources, store, audit, request_id):
@@ -142,7 +156,7 @@ class DelegatedAuthority:
                 db.execute('INSERT OR IGNORE INTO versions VALUES(?,?,?)',(resource['id'],resource['version'],canonical(resource)))
         discovery=getattr(self,'discovery',None)
         for resource in staged:
-            self.resources[resource['id']]=resource
+            self.publish_resource(resource)
             self.snapshots.setdefault(actor.user_id,{})[resource['id']]=resource['version']
             if discovery and actor==discovery.actor:
                 versions=discovery.published_versions.get(resource['source'],{})
@@ -187,46 +201,82 @@ class DelegatedAuthority:
         return decision
 
     def check_many(self, actor, resources, *, phase):
-        """One serial lane per source, at most four; caller holds pilot.lock.
+        """At most four source lanes; caller holds pilot.lock.
 
         Workers only read request-local mappings/content. All mutable authority
         updates and ordered audit writes remain on the requesting thread.
-        No cached allow, retry, smaller evidence set or within-source fanout.
+        Default is serial within each source. Opt-in bounded batches join before
+        the next batch, and an unknown stops that source's remaining objects. No cached
+        allow, retry or smaller evidence set. Updates wait for all lanes.
         """
         discovery=getattr(self,'discovery',None)
         if not (discovery and discovery.bounded_queries and discovery.background_started
                 and actor==discovery.actor):
             return [self.check_read(actor,r['id']) for r in resources]
         groups={}
-        for index,r in enumerate(resources):
-            resource=dict(self.resources[r['id']])
-            source=resource['source']
-            groups.setdefault(source,[]).append((index,resource))
-        readers=dict(self.readers)
-        dynamic=dict(self.discovered_ids.get(actor.user_id,{}))
+        with self.state_lock:
+            for index,r in enumerate(resources):
+                resource=copy.deepcopy(self.resources[r['id']])
+                source=resource['source']
+                groups.setdefault(source,[]).append((index,resource))
+            readers=dict(self.readers)
+            dynamic=copy.deepcopy(self.discovered_ids.get(actor.user_id,{}))
+        concurrency = self.read_concurrency
+        if type(concurrency) is not int or concurrency not in (1, 2, 4):
+            raise ValueError('Native source concurrency must be one, two or four')
         def lane(source,items):
+            from .timing import span
+            with span('source_lane',source) as sample:
+                result=read_lane(source,items)
+                if sample is not None:
+                    outcomes={entry[2].result for entry in result}
+                    sample['outcome']='unknown' if 'unknown' in outcomes else 'deny' if 'deny' in outcomes else 'ok'
+                return result
+        def read_lane(source,items):
             results=[];unavailable=False
-            for i,r in items:
+            def read_one(item):
+                i,r=item
+                try:decision,content=self._checked_read(actor,r,readers[source],dynamic.get(source,frozenset()))
+                except Exception:
+                    decision,content=Decision('unknown',now(),'source-lane-unavailable',0),None
+                return i,r,decision,content
+            def batch(items):
+                if concurrency == 1 or len(items) == 1:
+                    return [read_one(item) for item in items]
+                with ThreadPoolExecutor(max_workers=concurrency) as workers:
+                    futures=[workers.submit(copy_context().run,read_one,item) for item in items]
+                    return [future.result() for future in futures]
+            for start in range(0,len(items),concurrency):
+                pending=items[start:start+concurrency]
                 if unavailable:
-                    decision,content=Decision('unknown',now(),'source-lane-not-attempted',0),None
+                    completed=[(i,r,Decision('unknown',now(),'source-lane-not-attempted',0),None)
+                               for i,r in pending]
                 else:
-                    try:decision,content=self._checked_read(actor,r,readers[source],dynamic.get(source,frozenset()))
-                    except Exception:
-                        decision,content=Decision('unknown',now(),'source-lane-unavailable',0),None
-                # Unknown (including rate limiting) ends this lane, never retries
-                # or proceeds to more objects after the source becomes unavailable.
-                unavailable=decision.result=='unknown'
-                results.append((i,r,decision,content))
+                    completed=batch(pending)
+                # A peer already in flight may finish. No next batch is admitted
+                # after unknown, including 429; the shared HTTP cooldown remains.
+                unavailable=any(entry[2].result=='unknown' for entry in completed)
+                results.extend(completed)
             return results
         results=[]
         with ThreadPoolExecutor(max_workers=min(4,len(groups)) or 1) as pool:
             futures=[pool.submit(copy_context().run,lane,source,items) for source,items in groups.items()]
             for future in futures:results.extend(future.result())
         ordered=sorted(results,key=lambda item:item[0]);decisions=[]
-        for _,resource,decision,content in ordered:
-            if decision.result=='allow':
-                self.resources[resource['id']]=self.resource(content,actor.tenant,resource)
-            decisions.append(decision)
+        with self.state_lock:
+            for _,resource,decision,content in ordered:
+                current=self.resources.get(resource['id'])
+                # A late native response cannot roll back a newer publication or
+                # reactivate a tombstone. Equal body/version alone is insufficient:
+                # tenant and active state are part of the local publication too.
+                unchanged=(current is not None and self.same_content(current,resource)
+                    and current.get('active')==resource.get('active')
+                    and current.get('tenant')==resource.get('tenant'))
+                if not unchanged:
+                    decision=Decision('unknown',now(),'concurrent-authority-change',0)
+                elif decision.result=='allow':
+                    self.resources[resource['id']]=self.resource(content,actor.tenant,current)
+                decisions.append(decision)
         return decisions
 
 
@@ -234,8 +284,10 @@ class DelegatedQueryPilot:
     def __init__(self, readers, store, *, live=False):
         if not live and any(isinstance(r.transport, JsonTransport) for r in readers.values()):
             raise ValueError('Live transport requires explicit live mode')
-        self.lock = threading.RLock()
         self.authority = DelegatedAuthority(readers)
+        # One publication lock shared by query, recovery and discovery callers.
+        # HTTP still holds it across the query; this is not a concurrency switch.
+        self.lock = self.authority.state_lock
         self.authority.resources = {r['id']: r for r in store.resources()
                                     if r.get('tenant') == self.authority.tenant
                                     and r.get('source') in self.authority.native_ids

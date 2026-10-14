@@ -521,3 +521,31 @@ Ranking uses local lexical overlap and a small explicit English alias map, up to
 2026-10-10 ADR066：`GET /api/history/recent`只返回已验证actor自己的最多20个question/answered_at/request_id摘要；无来源核查或来源元数据，仍受store锁约束。打开正文只用`GET /api/history?request_id=<32hex>`与safe_history当前权限/version检查，SourceUnavailable返回安全unavailable条目。`run.phases`为后端实际曾报告的阶段列表，不能推断未报告步骤完成。浏览器只存当前session的已看答案引用，不缓存答案正文，刷新重新核查。
 
 ADR067：runtime `query_admission`为最近gate保存时的内存快照，只含allowed/reason/attempts_used/attempts_limit/attempts_remaining，不取费用账本/源/查询锁，不能替代实际接纳授权。查询503的run仅当前session原题/rid/status/phase/phases/elapsed及安全error_code，错误刷新恢复终态，已停止不继续计时。
+
+### Review-only source answer contract · 2026-10-11 candidate
+
+Opt-in `reviewed_source_v1` removes the model selector: server code constructs
+contiguous ≤600-character quotations covering every byte of the retrieved,
+currently authorized evidence. At most 24 evidence IDs/52 quote claims are accepted;
+the existing retrieval text budget, 100k serialized input ceiling and 8192 output
+cap stay unchanged. No question-specific resource ID or expected answer is used.
+
+A single model review receives all original evidence and the code-constructed
+claims after current `review_dispatch` authorization. It must affirm complete
+question coverage, support every claim and preserve scope. Supported irrelevant
+claims can be removed only with `filtered_answer_complete=true`; unsupported,
+unknown or incomplete reviews still reject the answer. If any piece of a source
+window is retained, all of that window's supported pieces are retained together;
+filtering cannot drop its trailing scope limitation. The server's ordering
+notice cannot provide a missing factual action or approval.
+
+Accepted responses carry `claim_format=reviewed_source_v1`,
+`answer_kind=reviewed_excerpts`, `review_status=accepted` and one genuine
+`model_review` receipt. They have no `model_call` generation receipt: no factual
+text generation request occurred. The engine requires the trusted model to declare
+this format, validates each quote, requires text equal to its one supporting quote,
+checks the settled/accepted review receipt against the server request ID and
+rechecks current evidence before delivery and on History reads. The older
+`grounded_synthesis_v1` contract still requires distinct generation/review receipts.
+UI usage and audit must not duplicate or infer a generation call. Live quality
+of this opt-in candidate is not established by local or old-path results.

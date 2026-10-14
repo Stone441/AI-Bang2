@@ -106,6 +106,21 @@ class ProgressHTTP(unittest.TestCase):
     tearDown=test_http.HTTP.tearDown
     request=test_http.HTTP.request
     login=test_http.HTTP.login
+    def test_stage_results_survive_polling_and_failure_continuation(self):
+        runs=SessionRuns();rid=runs.begin('own')
+        for phase in ('retrieval','authorization','generation','review'):runs.phase('own',rid,phase)
+        snapshot=runs.snapshot('own')
+        self.assertEqual(snapshot['stage_states']['generation'],'completed')
+        self.assertEqual(snapshot['stage_states']['review'],'running')
+        snapshot['stage_states']['review']='completed'
+        self.assertEqual(runs.snapshot('own')['stage_states']['review'],'running')
+        runs.phase('own',rid,'synthesis_failed');runs.phase('own',rid,'final_checks')
+        runs.finish('own',rid,result={'answer_status':'evidence_only','synthesis_failure':'model_output_unavailable'})
+        self.assertEqual(runs.snapshot('own')['stage_states']['review'],'failed')
+        self.assertEqual(runs.snapshot('own')['stage_states']['final_checks'],'completed')
+        rid=runs.begin('own');runs.phase('own',rid,'retrieval');runs.finish('own',rid,code='source_unavailable')
+        self.assertEqual(runs.snapshot('own')['stage_states']['retrieval'],'failed')
+        self.assertEqual(runs.snapshot('own')['stage_states']['authorization'],'not_run')
     def test_progress_bypasses_long_query_lock_and_is_session_private(self):
         self.login('eng_b');other_cookie,other_csrf=self.cookie,self.csrf
         self.login('eng_b')
@@ -209,6 +224,28 @@ class MixedRecovery(unittest.TestCase):
 class DetailedModelDiagnostics(unittest.TestCase):
     setUp=test_deepseek.DeepSeekBoundary.setUp
     tearDown=test_deepseek.DeepSeekBoundary.tearDown
+    def test_rejected_review_keeps_safe_indices_without_accepting_or_logging_reasons(self):
+        from brain.synthesis import EvidenceReview
+        from brain.deepseek import ModelOutputRejected,PRICE_DATE
+        claim={'text':self.evidence.text,'evidence_ids':[self.evidence.evidence_id]}
+        for indices in ([1,0],[True,'sensitive-index'],[-1,52]):
+            output={'question_covered':False,'filtered_answer_complete':False,
+                    'verdicts':[{'index':index,'supported':True,'responsive':False,
+                                 'reason':'sensitive-free-text'} for index in indices]}
+            self.transport.response['choices'][0]['message']['content']=json.dumps(output)
+            provider=EvidenceReview('synthetic-not-a-key',self.ledger,synthetic_only=True,
+                transport=self.transport,today=PRICE_DATE,claims=[claim,claim])
+            events=[]
+            with self.assertRaises(ModelOutputRejected):
+                provider.generate('Question',[self.evidence],stage='review',
+                    observe=lambda e,d:events.append((e,d)))
+            diagnostic=events[-1][1]['diagnostic']
+            self.assertEqual([v['index'] for v in diagnostic['review_verdicts']],
+                             [1,0] if indices==[1,0] else [None,None])
+            self.assertIs(diagnostic['review_filtered_answer_complete'],False)
+            self.assertEqual(events[-1][1]['receipt']['state'],'settled')
+            self.assertNotIn('sensitive-',json.dumps(events))
+
     def test_quote_claim_review_failures_are_distinct_and_settled(self):
         from brain.synthesis import DeepSeekSynthesisModel,EvidenceReview
         from brain.deepseek import ModelOutputRejected,PRICE_DATE

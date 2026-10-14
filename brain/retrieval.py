@@ -37,7 +37,11 @@ def ranking_terms(query_tokens, strategy='none'):
         result.update({'procedure','workaround','safeguard','protective'})
     return result
 
-def spans(text):
+def spans(text, strategy='fixed'):
+    if strategy=='structured':
+        from .structure import structural_spans
+        return structural_spans(text,WHOLE_LIMIT)
+    if strategy!='fixed':raise ValueError('Unsupported window strategy')
     if len(text) <= WHOLE_LIMIT:
         return [(0, len(text))]
     result = []
@@ -50,40 +54,45 @@ def spans(text):
     return result
 
 
-def ranked_windows(resource, query_tokens, *, supplementary=False):
+def ranked_windows(resource, query_tokens, *, supplementary=False, strategy='fixed'):
     """Return at most three matching windows; exact text, deterministic tie order."""
     text = resource['text']
     title_score = len(query_tokens & tokens(resource['title']))
     matches = []
-    for start, end in spans(text):
+    for start, end in spans(text,strategy):
         body_score = len(query_tokens & tokens(text[start:end]))
         if body_score or title_score:
             matches.append((body_score * 2 + title_score, start, end))
     if not matches and supplementary:
-        matches = [(0, *spans(text)[0])]
+        matches = [(0, *spans(text,strategy)[0])]
     return sorted(matches, key=lambda item: (-item[0], item[1]))[:3]
 
 
-def window_evidence(resource, start, end):
+def window_evidence(resource, start, end, strategy='fixed'):
+    if strategy not in ('fixed','structured'):raise ValueError('Unsupported window strategy')
     text = resource['text']
     eid = resource['id'] + '@' + str(resource['version'])
     locator = dict(resource['locator'])
     if len(text) > WHOLE_LIMIT:
-        eid += '#' + str(start) + ':' + str(end)
+        eid += ('#s1:' if strategy=='structured' else '#') + str(start) + ':' + str(end)
         locator['text_window'] = {'start': start, 'end': end, 'unit': 'unicode_characters',
-                                  'strategy': 'fixed-2400-overlap-400-v1'}
+                                  'strategy': 'structure-lines-v1' if strategy=='structured' else 'fixed-2400-overlap-400-v1'}
+        if strategy=='structured':
+            from .structure import section_context
+            locator['section_context']=section_context(text,start)
     return eid, locator, text[start:end]
 
 
 def resolve_window(resource, eid):
     """Reject forged/noncanonical slices and legacy aliases of long documents."""
-    for start, end in spans(resource['text']):
-        candidate, locator, text = window_evidence(resource, start, end)
+    strategy='structured' if '#s1:' in eid else 'fixed'
+    for start, end in spans(resource['text'],strategy):
+        candidate, locator, text = window_evidence(resource, start, end,strategy)
         if candidate == eid: return locator, text
     raise ValueError('Invalid evidence window')
 
 
-def bm25_windows(resources, query_tokens):
+def bm25_windows(resources, query_tokens, *, window_strategy='fixed'):
     """Local experimental BM25 over exact windows of prefiltered resources.
 
     No extra source/model calls and no edited citation text. Aliases/compound
@@ -91,7 +100,7 @@ def bm25_windows(resources, query_tokens):
     """
     documents=[]
     for resource in resources:
-        for start,end in spans(resource['text']):
+        for start,end in spans(resource['text'],window_strategy):
             terms=tokens(resource['title']) | tokens(resource['text'][start:end])
             documents.append((resource['id'],start,end,terms))
     count=len(documents)

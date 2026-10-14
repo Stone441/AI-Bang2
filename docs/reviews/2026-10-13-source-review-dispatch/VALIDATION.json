@@ -1,0 +1,60 @@
+{
+  "task_id": "DEV-SR-CONTRACT-01",
+  "recorded_at_utc": "2026-10-13T03:27:02Z",
+  "baseline_commit": "1649e301959b7eea7303fdda9ba0ee58a578d19e",
+  "branch": "review/source-review-contract-20261013",
+  "mode": "fixture_mock_and_recorded_offline_replay",
+  "revision_state": "uncommitted local review artifacts; baseline plus SHA256 fingerprints",
+  "checks": [
+    {
+      "command": "python3 -m unittest discover -s tests -p test_source_review_dispatch_contract.py -v",
+      "tests": 5,
+      "seconds": 0.039,
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONPATH=tests:. python3 -m unittest test_source_review_dispatch_contract test_source_review test_model_stages test_parallel_authorization test_validation_timing test_synthesis -v",
+      "tests": 56,
+      "seconds": 1.358,
+      "exit_code": 0,
+      "includes_first_check": true
+    },
+    {
+      "command": "git diff --exit-code 1649e30 -- brain scripts web",
+      "exit_code": 0
+    },
+    {
+      "check": "historical manifest SHA256 verification",
+      "files": 9,
+      "result": "all_match"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/reviews/2026-10-13-source-review-dispatch/README.md",
+      "sha256": "3593b5ae4a7e97809253f26ee2e68e9e6c8d8619c624964a768de70e73efc53a"
+    },
+    {
+      "path": "docs/reviews/2026-10-13-source-review-dispatch/TIMING_DESIGN.md",
+      "sha256": "c31e810c533384c230a91ab1470b27cd1c4d091c5d5b11a2d6685ccfcc1c8024"
+    },
+    {
+      "path": "docs/reviews/2026-10-13-source-review-dispatch/COUNTEREXAMPLES.json",
+      "sha256": "d94492c78b7f068b6e1049793c917c47d85e38c81c1a82330c6d54db2736cde7"
+    },
+    {
+      "path": "tests/test_source_review_dispatch_contract.py",
+      "sha256": "6bd3ff99585f100c52ba898a7ac01187ea1b361a3dd2085656705dbefd7f95ca"
+    }
+  ],
+  "not_run": [
+    "native source API",
+    "live model",
+    "service restart",
+    "runtime timing integration",
+    "dispatch check consolidation",
+    "live latency improvement",
+    "browser/human G1/G2",
+    "push/merge/deploy/submit"
+  ]
+}

@@ -4,6 +4,7 @@ import time
 import uuid
 from .contracts import now
 
+STAGES=('queued','retrieval','authorization','generation','review','final_checks')
 
 class SessionRuns:
     def __init__(self):
@@ -16,7 +17,8 @@ class SessionRuns:
             old=self.runs.get(token)
             if old and old['status']=='running':raise PermissionError('Question already running')
             run={'request_id':uuid.uuid4().hex,'status':'running','phase':'queued','started':time.monotonic(),
-                 'sources_used':[],'error_code':None,'question':question,'phases':['queued']}
+                 'sources_used':[],'error_code':None,'question':question,'phases':['queued'],
+                 'stage_states':{stage:'running' if stage=='queued' else 'pending' for stage in STAGES}}
             self.runs[token]=run
             return run['request_id']
 
@@ -24,6 +26,14 @@ class SessionRuns:
         with self.lock:
             run=self.runs.get(token)
             if run and run['request_id']==request_id and run['status']=='running':
+                states=run['stage_states']
+                if phase=='synthesis_failed':
+                    if run['phase'] in ('generation','review'):states[run['phase']]='failed'
+                    return
+                previous=run['phase']
+                if previous!=phase and states.get(previous)=='running':
+                    states[previous]='pending' if phase=='refreshing' else 'completed'
+                if phase in states:states[phase]='running'
                 run['phase']=phase
                 if phase not in run['phases']:run['phases'].append(phase)
 
@@ -31,7 +41,11 @@ class SessionRuns:
         with self.lock:
             run=self.runs.get(token)
             if run and run['request_id']==request_id:
-                run.update(status='failed' if code else 'completed',error_code=code,
+                states=run['stage_states']
+                if states.get(run['phase'])=='running':states[run['phase']]='failed' if code else 'completed'
+                for stage,state in states.items():
+                    if state=='pending':states[stage]='not_run'
+                run.update(status='failed' if code else 'evidence_only' if (result or {}).get('answer_status')=='evidence_only' else 'completed',error_code=code or (result or {}).get('synthesis_failure'),
                            elapsed_seconds=time.monotonic()-run['started'],
                            sources_used=sorted({e['source'] for e in (result or {}).get('evidence',[])
                                if e['evidence_id'] in {eid for c in (result or {}).get('claims',[]) for eid in c['evidence_ids']}}))
@@ -40,7 +54,7 @@ class SessionRuns:
         with self.lock:
             run=self.runs.get(token)
             if not run:return None
-            return {k:(list(v) if isinstance(v,list) else v) for k,v in run.items() if k!='started'} | {
+            return {k:(list(v) if isinstance(v,list) else dict(v) if isinstance(v,dict) else v) for k,v in run.items() if k!='started'} | {
                 'elapsed_seconds':run.get('elapsed_seconds',time.monotonic()-run['started'])}
 
     def discard(self, token):

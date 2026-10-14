@@ -316,6 +316,109 @@ class GroundedSynthesis(unittest.TestCase):
         outcomes=[r[0] for r in self.ledger.db.execute('select outcome from model_calls')]
         self.assertEqual(outcomes.count('output_rejected'),5)
 
+    def test_unsupported_latest_assertion_is_rejected_even_with_unrelated_negative(self):
+        for text in ('The latest approved mitigation is a pilot.',
+                'The latest approved mitigation is a pilot; GA is not approved.',
+                'The latest approved mitigation is a pilot; latest ordering is unknown.'):
+            claim=copy.deepcopy(self.claim);claim['text']=text
+            with self.subTest(text=text),self.assertRaises(ValueError):
+                validate_claim(claim,[self.evidence])
+        claim=copy.deepcopy(self.claim)
+        claim['text']='The pilot is approved; latest ordering is not established in this evidence.'
+        self.assertEqual(validate_claim(claim,[self.evidence]),claim)
+
+    def test_saved_invalid_temporal_claim_is_unavailable_without_erasing_record(self):
+        world=FixtureWorld();store=Store();store.initialize(world)
+        engine=Engine(store,world,Audit(store),self.model,mode='fixture_mock_model_synthesis')
+        try:
+            source=engine.evidence(Actor('eng_b'),'C-02@1')
+            claim={'text':'The latest approved mitigation is a pilot.',
+                'evidence_ids':['C-02@1'],'supports':[{'evidence_id':'C-02@1','quote':source['text']}]}
+            record={'request_id':self.rid,'claim_format':'grounded_synthesis_v1',
+                'claims':[claim],'evidence':[source]}
+            store.save_run(self.rid,'eng_b',record)
+            self.assertTrue(engine.safe_history(Actor('eng_b'),self.rid)[0]['unavailable'])
+            self.assertEqual(store.run(self.rid,'eng_b')['claims'],[claim])
+            self.assertEqual(self.transport.calls,[])
+        finally:store.db.close()
+
+    def test_opt_in_failed_synthesis_shows_only_current_sources_and_preserves_failure(self):
+        world=FixtureWorld()
+        for r in world.resources.values():r['text']='[SYNTHETIC] '+r['text']
+        store=Store();store.initialize(world);audit=Audit(store)
+        engine=Engine(store,world,audit,self.model,mode='fixture_mock_model_synthesis',
+            evidence_on_model_rejection=True)
+        self.transport.outputs[0]={'claims':[{'text':'UNSUPPORTED DRAFT','evidence_ids':['missing'],'supports':[]}]}
+        try:
+            from brain.run_state import SessionRuns
+            runs=SessionRuns();rid=runs.begin('own')
+            answer=engine.query(Actor('eng_b'),'payment-service incident runbook',request_id=rid,
+                progress=lambda phase:runs.phase('own',rid,phase))
+            runs.finish('own',rid,result=answer)
+            stages=runs.snapshot('own')['stage_states']
+            self.assertEqual(stages['retrieval'],'completed')
+            self.assertEqual(stages['authorization'],'completed')
+            self.assertEqual(stages['generation'],'failed')
+            self.assertEqual(stages['review'],'not_run')
+            self.assertEqual(stages['final_checks'],'completed')
+            self.assertEqual(answer['answer_status'],'evidence_only')
+            self.assertNotIn('review_status',answer)
+            self.assertNotIn('UNSUPPORTED DRAFT',str(answer))
+            self.assertTrue(answer['claims'])
+            originals={e['evidence_id']:e['text'] for e in answer['evidence']}
+            for claim in answer['claims']:self.assertEqual(claim['text'],originals[claim['evidence_ids'][0]])
+            self.assertEqual(len(self.transport.calls),1)
+            self.assertTrue(any(e['event_type']=='request_failed' for e in audit.export()))
+            self.assertEqual(engine.safe_history(Actor('eng_b'),answer['request_id'])[0]['answer_status'],'evidence_only')
+            world.revoked.add(('eng_b',answer['evidence'][0]['resource_id']))
+            self.assertTrue(engine.safe_history(Actor('eng_b'),answer['request_id'])[0]['unavailable'])
+        finally:store.db.close()
+
+    def test_evidence_fallback_never_bypasses_final_revocation(self):
+        world=FixtureWorld()
+        for r in world.resources.values():r['text']='[SYNTHETIC] '+r['text']
+        store=Store();store.initialize(world);audit=Audit(store)
+        engine=Engine(store,world,audit,self.model,mode='fixture_mock_model_synthesis',
+            evidence_on_model_rejection=True)
+        self.transport.outputs[0]={'claims':[{'text':'BAD','evidence_ids':['missing'],'supports':[]}]}
+        def revoke():
+            e=next(e for e in audit.export() if e['event_type']=='evidence_used')
+            world.revoked.add(('eng_b',e['payload']['resource_id']))
+        engine.before_dispatch=revoke
+        try:
+            with self.assertRaises(PermissionError):engine.query(Actor('eng_b'),'payment-service runbook')
+            self.assertFalse(any(e['event_type']=='response_committed' for e in audit.export()))
+            self.assertEqual(len(self.transport.calls),1)
+        finally:store.db.close()
+
+    def test_filter_supported_background_only_with_independent_complete_remainder(self):
+        background=copy.deepcopy(self.claim)
+        background['text']='Ten customers are in the pilot.'
+        self.transport.outputs[0]={'claims':[self.claim,background]}
+        self.transport.outputs[1]={'question_covered':True,'filtered_answer_complete':True,
+            'verdicts':[{'index':1,'supported':True,'responsive':False},
+                        {'index':0,'supported':True,'responsive':True}]}
+        result=self.model.generate_with_authorization('Is GA approved?',
+            [self.evidence],self.rid,lambda _:None)
+        self.assertEqual(result['claims'],[self.claim])
+        self.assertEqual(result['review_status'],'accepted')
+        self.assertEqual(len(self.transport.calls),2)
+
+    def test_filter_never_removes_unsupported_claim_or_critical_qualification(self):
+        background=copy.deepcopy(self.claim)
+        self.transport.outputs[0]={'claims':[self.claim,background]}
+        for support,complete,coverage in ((False,True,True),(None,True,True),
+                (True,False,True),(True,None,True),(True,'true',True),(True,True,False)):
+            with self.subTest(support=support,complete=complete,coverage=coverage):
+                self.transport.calls=[]
+                self.transport.outputs[1]={'question_covered':coverage,
+                    'filtered_answer_complete':complete,'verdicts':[
+                    {'index':0,'supported':True,'responsive':True},
+                    {'index':1,'supported':support,'responsive':False}]}
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate_with_authorization('Is GA approved?',
+                        [self.evidence],self.rid,lambda _:None)
+
     def test_supported_but_incomplete_answer_or_unknown_coverage_is_rejected(self):
         # A factual pilot answer omits the requested operational safeguards.
         for coverage in (False, None, 'true', 1, 'missing'):

@@ -14,12 +14,13 @@ from urllib.request import Request
 
 from .budget import BudgetLedger
 from .confluence import JsonTransport
+from .timing import span, authorization_scope
 
 ENDPOINT = 'https://api.deepseek.com/chat/completions'
 MODEL = 'deepseek-flash'
 # Official pricing re-read on this Singapore date; evidence is kept separately.
 # Never advance this date without reviewing the official model/rates.
-PRICE_DATE = date(2026, 10, 10)
+PRICE_DATE = date(2026, 10, 13)
 PRICE_SOURCE = 'https://api-docs.deepseek.com/quick_start/pricing/'
 CONTEXT_TOKENS = 1_048_576
 OUTPUT_TOKENS = 1024
@@ -144,14 +145,17 @@ class DeepSeekEvidenceModel:
                 or len(evidence) > 24 or len({e.evidence_id for e in evidence}) != len(evidence)
                 or any(not self.synthetic_input_allowed(e, provenance) for e in evidence)):
             raise ModelInputRejected('Model input is outside the synthetic pilot boundary')
+        with span('model_input','deepseek'):
+            messages = self.messages(question, evidence)
         payload = {'model': MODEL, 'thinking': {'type': 'disabled' if self.reasoning_effort == 'none' else 'enabled'}, 'stream': False,
                    'max_tokens': self.output_tokens, 'response_format': {'type': 'json_object'},
-                   'messages': self.messages(question, evidence)}
+                   'messages': messages}
         if self.reasoning_effort != 'none':
             payload['reasoning_effort'] = self.reasoning_effort
         elif self.temperature is not None:
             payload['temperature'] = self.temperature
-        body = json.dumps(payload, ensure_ascii=False).encode()
+        with span('model_input','deepseek'):
+            body = json.dumps(payload, ensure_ascii=False).encode()
         if len(body) > 100_000:
             raise ModelInputRejected('Model input exceeds pilot limit')
         request = Request(ENDPOINT, data=body, headers={'Authorization': 'Bearer ' + self._key,
@@ -181,7 +185,9 @@ class DeepSeekEvidenceModel:
         record('model_dispatch_intent')
         try:
             record('model_dispatch_attempted')
-            status, response = self.transport._send(request)
+            with authorization_scope('review_dispatch' if stage=='review' else 'model_dispatch'):
+                with span('model_transport','deepseek'):
+                    status, response = self.transport._send(request)
             capture_metadata(response)
             if status != 200 or not isinstance(response, dict):
                 raise ValueError()
@@ -237,16 +243,31 @@ class DeepSeekEvidenceModel:
             category='structure'
             if stage=='review' and isinstance(output,dict):
                 diagnostic['review_question_covered']=output.get('question_covered') if type(output.get('question_covered')) is bool else None
+                diagnostic['review_filtered_answer_complete']=output.get('filtered_answer_complete') if type(output.get('filtered_answer_complete')) is bool else None
+                if 'selection_safe' in output or 'selected' in output:
+                    diagnostic['review_selection_safe']=output.get('selection_safe') if type(output.get('selection_safe')) is bool else None
+                    aliases=output.get('selected')
+                    diagnostic['review_selected_aliases']=(aliases if isinstance(aliases,list) and len(aliases)<=24
+                        and all(isinstance(a,str) and re.fullmatch(r'P(?:[0-9]|1[0-9]|2[0-3])',a) for a in aliases) else None)
                 verdicts=output.get('verdicts')
-                if isinstance(verdicts,list) and len(verdicts)<=4:
-                    diagnostic['review_verdicts']=[{k:v.get(k) if type(v.get(k)) is bool else None for k in ('supported','responsive')} for v in verdicts if isinstance(v,dict)]
-            claims = self.parse_output(output, evidence)
+                if isinstance(verdicts,list) and len(verdicts)<=52:
+                    # Untrusted diagnostic metadata only; parse_output still checks
+                    # index identity/uniqueness and every support/coverage gate.
+                    diagnostic['review_verdicts']=[{
+                        'index':v.get('index') if type(v.get('index')) is int and 0<=v['index']<52 else None,
+                        **{k:v.get(k) if type(v.get(k)) is bool else None for k in ('supported','responsive')}
+                    } for v in verdicts if isinstance(v,dict)]
+            with span('model_output','deepseek'):
+                claims = self.parse_output(output, evidence)
         except Exception as error:
             # Parser messages are mapped locally; never persist arbitrary exception text.
             categories={'Grounding quote does not match current evidence':'quote',
                 'Citation lacks grounding quote':'quote','Claim identifier lacks quoted support':'claim',
                 'Invalid grounded claim':'claim','Invalid grounded citation':'claim',
-                'Incomplete model review':'review','Claim not fully supported and responsive':'review'}
+                'Temporal assertion lacks quoted support':'temporal',
+                'Incomplete model review':'review','Claim not fully supported and responsive':'review',
+                'Requested operational evidence omitted':'coverage_omission',
+                'Invalid whole-source selection':'structure','Incomplete source construction':'quote'}
             diagnostic['validation_failure']=categories.get(str(error),category)
             self.ledger.model_outcome(reservation_id, 'output_rejected')
             record('model_output_rejected')

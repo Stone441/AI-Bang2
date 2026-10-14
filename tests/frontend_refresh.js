@@ -35,6 +35,16 @@ const watchdog=setTimeout(()=>{console.error('FAIL: refresh test did not finish'
  terminal.ctx.fetch=async path=>{if(path==='/api/runtime')return response({...run('completed'),run:{...run('completed').run,question:'ORIGINAL QUESTION'}});terminalReads++;assert.equal(path,'/api/history?request_id='+answer.request_id);return response({history:[answer]});};
  vm.runInContext('resumeOnRuntime=true',terminal.ctx);await vm.runInContext('refreshRuntime()',terminal.ctx);await vm.runInContext('refreshRuntime()',terminal.ctx);
  assert.equal(terminalReads,1);assert.equal(terminal.get('question').value,'ORIGINAL QUESTION');assert.equal(terminal.get('answer').children.length,1);assert.equal(paid,1);
+ // Navigating back to a completed request must never restart its elapsed timer.
+ storage.clear();const back=page();let restoreSaved;let backPosts=0;
+ back.ctx.fetch=path=>{if(path==='/api/runtime')return Promise.resolve(response({...run('completed'),run:{...run('completed').run,question:'ORIGINAL QUESTION',elapsed_seconds:30}}));if(path==='/api/query')backPosts++;return new Promise(resolve=>restoreSaved=resolve);};
+ back.get('workspaceNav').onclick();const backLoading=vm.runInContext('refreshRuntime()',back.ctx);await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(back.get('progress').hidden,true);assert.equal(vm.runInContext('waitTimer',back.ctx),null);assert.equal(backPosts,0);
+ restoreSaved(response({history:[answer]}));await backLoading;assert.equal(back.get('ask').disabled,false);
+ // A selected History answer wins over another completed runtime answer.
+ storage.set('brain.answer.same-session',JSON.stringify({requestId:answer.request_id,question:answer.question}));
+ const selected=page();let selectedRead;selected.ctx.fetch=async path=>{if(path==='/api/runtime')return response({...run('completed','b'.repeat(32)),run:{...run('completed','b'.repeat(32)).run,question:'OTHER ANSWER'}});selectedRead=path;return response({history:[answer]});};
+ selected.get('workspaceNav').onclick();await vm.runInContext('refreshRuntime()',selected.ctx);assert.equal(selectedRead,'/api/history?request_id='+answer.request_id);assert.equal(selected.get('question').value,answer.question);assert.equal(selected.get('progress').hidden,true);
  // Failure resumes preserve the question, stop timers, and do not retrieve or regenerate a draft.
  storage.set('brain.pending.same-session',JSON.stringify({question:'KEEP FAILED QUESTION',requestId:answer.request_id}));
  const failed=page();vm.runInContext('resumeOnRuntime=true',failed.ctx);failed.ctx.fetch=async path=>{assert.equal(path,'/api/runtime');return response(run('failed'));};await vm.runInContext('refreshRuntime()',failed.ctx);

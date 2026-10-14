@@ -4,6 +4,7 @@ import json
 import secrets
 import time
 import threading
+from contextlib import contextmanager
 from .run_state import SessionRuns, runtime_status
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -17,6 +18,7 @@ from .sources import FixtureWorld
 from .store import Store
 from .runtime_version import runtime_version
 from .deepseek import PriceReviewRequired
+from .timing import acquire, request_scope, bind_request, http_status
 
 WEB=Path(__file__).resolve().parents[1]/'web'
 
@@ -55,12 +57,19 @@ class App:
         return value
 
 
-def create_server(app, port=0):
+def create_server(app, port=0, *, public_origin=None):
+    if public_origin is not None:
+        parsed=urlparse(public_origin)
+        if (parsed.scheme!="https" or not parsed.hostname or parsed.username or parsed.password
+                or parsed.path or parsed.query or parsed.fragment or parsed.netloc!=parsed.netloc.lower()):
+            raise ValueError("An exact HTTPS public origin is required")
+    secure_cookie="; Secure" if public_origin else ""
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, format, *args):
             pass  # Avoid questions, cookies and raw payloads in generic logs.
 
         def send(self, code, body, content_type='application/json', cookie=None):
+            http_status(code)
             raw=json.dumps(body).encode() if content_type=='application/json' else body
             self.send_response(code)
             self.send_header('Content-Type',content_type)
@@ -73,11 +82,11 @@ def create_server(app, port=0):
             self.end_headers(); self.wfile.write(raw)
 
         def gate(self):
-            expected={f'127.0.0.1:{self.server.server_port}',f'localhost:{self.server.server_port}'}
+            expected=({urlparse(public_origin).netloc} if public_origin else {f'127.0.0.1:{self.server.server_port}',f'localhost:{self.server.server_port}'})
             if self.headers.get('Host') not in expected:
                 raise PermissionError('Unavailable')
             origin=self.headers.get('Origin')
-            if origin and origin not in {'http://'+host for host in expected}:
+            if origin and origin not in ({public_origin} if public_origin else {'http://'+host for host in expected}):
                 raise PermissionError('Unavailable')
             if self.headers.get('Sec-Fetch-Site')=='cross-site':
                 raise PermissionError('Unavailable')
@@ -89,12 +98,60 @@ def create_server(app, port=0):
             token=cookie[name].value if name in cookie else ''
             return app.session(token),token
 
+        @contextmanager
+        def query_scope(self, app):
+            isolated=getattr(app,'isolated_queries',None)
+            if isolated is not None:
+                from .isolated_query import IsolatedQueries
+                if not isinstance(isolated,IsolatedQueries) or app.auth_kind!='operator':
+                    raise ValueError('Trusted isolated query configuration required')
+                with isolated.request():yield
+            else:
+                with acquire(getattr(app,'request_lock',app.store.lock)):
+                    with acquire(app.store.lock):yield
+
+        def execute_query(self, app, actor, token, data, rid):
+            try:
+                current,current_token=self.auth()
+                if current_token!=token or current['actor']!=actor:raise PermissionError('Unavailable')
+                app.refresh()
+                result=app.engine.query(actor,data.get('question'),request_id=rid,
+                    progress=lambda phase:app.session_runs.phase(token,rid,phase))
+            except Exception as error:
+                from .deepseek import ModelUnavailable,ModelOutputRejected,ModelInputRejected
+                from .budget import BudgetExceeded,TrialAdmissionPaused
+                from .engine import VersionChanged
+                from .confluence import SourceUnavailable,SourceRefreshing
+                code=('model_price_review_required' if isinstance(error,PriceReviewRequired) else
+                      'trial_admission_paused' if isinstance(error,TrialAdmissionPaused) else
+                      'model_budget_unavailable' if isinstance(error,BudgetExceeded) else
+                      'model_input_rejected' if isinstance(error,ModelInputRejected) else
+                      'model_output_unavailable' if isinstance(error,ModelOutputRejected) else
+                      'model_request_unavailable' if isinstance(error,ModelUnavailable) else
+                      'source_refreshing' if isinstance(error,(VersionChanged,SourceRefreshing)) else
+                      'source_unconfirmed' if isinstance(error,(SourceUnavailable,PermissionError)) else
+                      'internal_service_unavailable')
+                messages={'trial_admission_paused':'This trial is paused at its authorized attempt, cost or unknown-usage limit. Contact the operator; no new model call was made.',
+                          'model_budget_unavailable':'The model budget is paused. Contact the operator before another attempt.',
+                          'model_input_rejected':'This question cannot be sent within the approved model boundary. Contact the operator.',
+                          'model_request_unavailable':'Model delivery or usage could not be confirmed. The budget reservation is retained. Contact the operator before another attempt.',
+                          'model_output_unavailable':'The model output did not pass validation. No draft is shown. You may explicitly try again; this can incur another model charge.',
+                          'source_refreshing':'Sources changed while this question was checked. Please wait briefly and explicitly try again.',
+                          'source_unconfirmed':'Current access or source integrity could not be confirmed. Try later or contact the operator.',
+                          'internal_service_unavailable':'The application could not complete this request. Contact the operator before trying again.',
+                          'model_price_review_required':'The model needs a price review. Contact the operator; retrying will not resolve this.'}
+                app.session_runs.finish(token,rid,code=code)
+                return self.send(503,{'error':messages[code],'code':code,'request_id':rid,'run':app.session_runs.snapshot(token)})
+            app.session_runs.finish(token,rid,result=result)
+            app.audit.append('response_dispatch_attempted',actor.user_id,result['request_id'],{'transport':'http','meaning':'server attempted dispatch, not user read'})
+            return self.send(200,result)
+
         def dispatch(self, method):
             app=self.server.application
             try:
                 self.gate()
                 path=unquote(urlparse(self.path).path)
-                if path not in ("/api/runtime", "/api/history/recent", "/api/session", "/api/logout", "/api/health", "/", "/app.js", "/style.css"):app.refresh()
+                if path not in ("/api/query", "/api/runtime", "/api/history/recent", "/api/session", "/api/logout", "/api/health", "/", "/app.js", "/style.css"):app.refresh()
                 path=unquote(urlparse(self.path).path)
                 data={}
                 if method=='POST':
@@ -110,23 +167,24 @@ def create_server(app, port=0):
                 if method=='GET' and path=='/api/health':
                     return self.send(200,{'mode':app.engine.mode,'live_enabled':any(isinstance(r.transport, JsonTransport) for r in getattr(app.world,'readers',{}).values()),
                                           'auth_kind':app.auth_kind,'login_path':app.login_path,
+                                          'identity_boundary': 'application_demo_roles_intersect_native_connection' if app.auth_kind=='reviewer' and 'application_roles' in app.registry.read() else None,
                                           'runtime_version':runtime_version()})
                 if method=='POST' and path==app.login_path:
                     actor=app.authenticate(data)
                     token=secrets.token_urlsafe(32); csrf=secrets.token_urlsafe(32)
                     app.sessions[token]={'actor':actor,'csrf':csrf,'expires':time.monotonic()+3600,'last_query':0}
-                    return self.send(200,{'actor':actor.user_id,'csrf':csrf,'mode':app.engine.mode},cookie=f'{self.server.session_cookie_name}={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=3600')
+                    return self.send(200,{'actor':actor.user_id,'csrf':csrf,'mode':app.engine.mode,'demo_role':app.registry.demo_role(actor) if app.auth_kind=='reviewer' else None,'display_name':app.registry.display_name(actor) if app.auth_kind=='reviewer' else None},cookie=f'{self.server.session_cookie_name}={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=3600{secure_cookie}')
                 session,token=self.auth(); actor=session['actor']
                 if method=='POST' and not secrets.compare_digest(self.headers.get('X-CSRF-Token',''),session['csrf']):
                     raise PermissionError('Unavailable')
                 if method=='GET' and path=='/api/runtime':
-                    return self.send(200,runtime_status(app,actor,app.session_runs.snapshot(token)))
+                    return self.send(200,runtime_status(app,app.registry.source_actor(actor) if app.auth_kind=='reviewer' else actor,app.session_runs.snapshot(token)))
                 if method=='GET' and path=='/api/session':
-                    return self.send(200,{'actor':actor.user_id,'csrf':session['csrf'],'mode':app.engine.mode})
+                    return self.send(200,{'actor':actor.user_id,'csrf':session['csrf'],'mode':app.engine.mode,'demo_role':app.registry.demo_role(actor) if app.auth_kind=='reviewer' else None,'display_name':app.registry.display_name(actor) if app.auth_kind=='reviewer' else None})
                 if method=='POST' and path=='/api/logout':
                     app.session_runs.discard(token)
                     del app.sessions[token]
-                    return self.send(200,{'ok':True},cookie=f'{self.server.session_cookie_name}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0')
+                    return self.send(200,{'ok':True},cookie=f'{self.server.session_cookie_name}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0{secure_cookie}')
                 if method=='POST' and path=='/api/query':
                     if set(data)-{'question'}: raise ValueError('Unsupported query fields')
                     if time.monotonic()-session['last_query']<0.1: return self.send(429,{'error':'Please wait briefly before asking again.'})
@@ -135,34 +193,9 @@ def create_server(app, port=0):
                     if not isinstance(question,str) or not question.strip() or len(question)>4000:
                         raise ValueError('Invalid question')
                     rid=app.session_runs.begin(token,question)
-                    try:
-                        result=app.engine.query(actor,data.get('question'),request_id=rid,
-                            progress=lambda phase:app.session_runs.phase(token,rid,phase))
-                    except Exception as error:
-                        from .deepseek import ModelUnavailable,ModelOutputRejected,ModelInputRejected
-                        from .budget import BudgetExceeded,TrialAdmissionPaused
-                        from .engine import VersionChanged
-                        from .confluence import SourceUnavailable,SourceRefreshing
-                        code=('model_price_review_required' if isinstance(error,PriceReviewRequired) else
-                              'trial_admission_paused' if isinstance(error,TrialAdmissionPaused) else
-                              'model_budget_unavailable' if isinstance(error,BudgetExceeded) else
-                              'model_input_rejected' if isinstance(error,ModelInputRejected) else
-                              'model_output_unavailable' if isinstance(error,ModelOutputRejected) else
-                              'model_request_unavailable' if isinstance(error,ModelUnavailable) else
-                              'source_refreshing' if isinstance(error,(VersionChanged,SourceRefreshing)) else 'source_unconfirmed')
-                        messages={'trial_admission_paused':'This trial is paused at its authorized attempt, cost or unknown-usage limit. Contact the operator; no new model call was made.',
-                                  'model_budget_unavailable':'The model budget is paused. Contact the operator before another attempt.',
-                                  'model_input_rejected':'This question cannot be sent within the approved model boundary. Contact the operator.',
-                                  'model_request_unavailable':'Model delivery or usage could not be confirmed. The budget reservation is retained. Contact the operator before another attempt.',
-                                  'model_output_unavailable':'The model output did not pass validation. No draft is shown. You may explicitly try again; this can incur another model charge.',
-                                  'source_refreshing':'Sources changed while this question was checked. Please wait briefly and explicitly try again.',
-                                  'source_unconfirmed':'Current access or source integrity could not be confirmed. Try later or contact the operator.',
-                                  'model_price_review_required':'The model needs a price review. Contact the operator; retrying will not resolve this.'}
-                        app.session_runs.finish(token,rid,code=code)
-                        return self.send(503,{'error':messages[code],'code':code,'request_id':rid,'run':app.session_runs.snapshot(token)})
-                    app.session_runs.finish(token,rid,result=result)
-                    app.audit.append('response_dispatch_attempted',actor.user_id,result['request_id'],{'transport':'http','meaning':'server attempted dispatch, not user read'})
-                    return self.send(200,result)
+                    bind_request(rid)
+                    with self.query_scope(app):
+                        return self.execute_query(app,actor,token,data,rid)
                 if method=='GET' and path.startswith('/api/evidence/'):
                     return self.send(200,app.engine.evidence(actor,path[len('/api/evidence/'):]))
                 if method=='GET' and path=='/api/history/recent':
@@ -199,10 +232,21 @@ def create_server(app, port=0):
 
         def do_GET(self):
             app=self.server.application
+            path=urlparse(self.path).path
+            operation=('preview' if path.startswith('/api/evidence/') else
+                       'history' if path=='/api/history' else None)
+            if operation:
+                try:self.gate();self.auth()
+                except PermissionError:return self.send(403,{'error':'Unavailable'})
+                with request_scope(app,operation):return self._get()
+            return self._get()
+
+        def _get(self):
+            app=self.server.application
             if urlparse(self.path).path in ('/api/runtime','/api/history/recent','/api/session','/api/health','/','/app.js','/style.css'):
                 return self.dispatch('GET')
-            with getattr(app,'request_lock',app.store.lock):
-                with app.store.lock:self.dispatch('GET')
+            with acquire(getattr(app,'request_lock',app.store.lock)):
+                with acquire(app.store.lock):self.dispatch('GET')
         def do_POST(self):
             app=self.server.application
             if urlparse(self.path).path=='/api/logout':return self.dispatch('POST')
@@ -211,17 +255,17 @@ def create_server(app, port=0):
                 try:
                     self.gate();session,token=self.auth()
                 except PermissionError:return self.send(403,{'error':'Unavailable'})
-                with app.admission_lock:
-                    if token in app.active_queries:return self.send(409,{'error':'A question is already running.','code':'query_busy'})
-                    app.active_queries.add(token)
-                try:
-                    with getattr(app,'request_lock',app.store.lock):
-                        with app.store.lock:self.dispatch('POST')
-                finally:
-                    with app.admission_lock:app.active_queries.discard(token)
+                with request_scope(app,'query'):
+                    with app.admission_lock:
+                        if token in app.active_queries:return self.send(409,{'error':'A question is already running.','code':'query_busy'})
+                        app.active_queries.add(token)
+                    try:
+                        self.dispatch('POST')
+                    finally:
+                        with app.admission_lock:app.active_queries.discard(token)
                 return
-            with getattr(app,'request_lock',app.store.lock):
-                with app.store.lock:self.dispatch('POST')
+            with acquire(getattr(app,'request_lock',app.store.lock)):
+                with acquire(app.store.lock):self.dispatch('POST')
     server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
     server.application=app
     if app is not None:

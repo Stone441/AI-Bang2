@@ -29,6 +29,19 @@ class OperatorIdentity(unittest.TestCase):
         self.app, self.transport = setup_app()
         self.addCleanup(self.app.store.db.close)
 
+    def test_local_ticket_renewal_keeps_actor_sessions_and_running_work(self):
+        app=self.app;old=app.bootstrap_ticket();app._ticket_expires=0
+        sessions=app.sessions;rid=app.session_runs.begin('existing','original question')
+        app.session_runs.phase('existing',rid,'generation')
+        fresh=app.renew_bootstrap_ticket()
+        self.assertNotEqual(old,fresh)
+        with self.assertRaises(PermissionError):app.authenticate({'ticket':old})
+        self.assertEqual(app.authenticate({'ticket':fresh}),app.actor)
+        with self.assertRaises(PermissionError):app.authenticate({'ticket':fresh})
+        self.assertIs(app.sessions,sessions)
+        self.assertEqual(app.session_runs.snapshot('existing')['status'],'running')
+        self.assertEqual(app.session_runs.snapshot('existing')['question'],'original question')
+
     def test_ticket_is_one_use_and_server_actor_cannot_be_chosen(self):
         ticket = self.app.bootstrap_ticket()
         for payload in [{'ticket': ticket, 'user': 'security'}, {'user': 'eng_b'}, {'ticket': 'wrong'}]:
@@ -70,6 +83,15 @@ class OperatorIdentity(unittest.TestCase):
                     server.assert_not_called();load.assert_not_called()
 
     def test_trusted_synthesis_launch_passes_config_without_starting_real_service(self):
+        self.trusted_launch('synthesis','DeepSeekSynthesisModel','low',2048)
+
+    def test_reviewed_excerpts_launch_accepts_approved_disabled_8192(self):
+        self.trusted_launch('reviewed-excerpts','DeepSeekReviewedExcerptsModel','none',8192)
+
+    def test_source_review_launch_accepts_approved_disabled_8192(self):
+        self.trusted_launch('source-review','DeepSeekReviewAllSourcesModel','none',8192)
+
+    def trusted_launch(self,style,class_name,reasoning,tokens):
         from unittest.mock import Mock
         app=Mock();app.engine.mode='confluence_mock_fake_model'
         app.actor.tenant='pilot';app.bootstrap_ticket.return_value='mock-test-ticket'
@@ -85,11 +107,11 @@ class OperatorIdentity(unittest.TestCase):
              patch('sys.stdin.isatty',return_value=True), \
              patch('getpass.getpass',return_value='test-key-no-network'), \
              patch('brain.deepseek.DeepSeekEvidenceModel') as selection, \
-             patch('brain.synthesis.DeepSeekSynthesisModel') as synthesis:
+             patch('brain.synthesis.'+class_name) as synthesis:
             self.assertEqual(main(['--config','mock','--live','--model','deepseek',
-                '--answer-style','synthesis','--reasoning-effort','low','--output-tokens','2048']),0)
+                '--answer-style',style,'--reasoning-effort',reasoning,'--output-tokens',str(tokens)]),0)
             self.assertEqual(synthesis.call_args.kwargs,
-                {'synthetic_only':True,'reasoning_effort':'low','output_tokens':2048})
+                {'synthetic_only':True,'reasoning_effort':reasoning,'output_tokens':tokens})
             self.assertIs(app.engine.model,synthesis.return_value)
             selection.assert_not_called();server.server_close.assert_called_once()
 

@@ -110,10 +110,11 @@ class ContainerDiscovery:
         elif source=='jira': result={i:k for i,k in r.issues.items()}
         elif source=='slack': result=dict(r.messages)
         else: result=dict(r.files)
-        for row in self.pilot.engine.store.db.execute(
+        with self.pilot.engine.store.lock:
+            rows=self.pilot.engine.store.db.execute(
                 'SELECT native_id,mapping FROM discovery_catalog WHERE actor=? AND source=?',
-                (self.actor.user_id,source)):
-            result[row[0]]=json.loads(row[1])
+                (self.actor.user_id,source)).fetchall()
+        for row in rows:result[row[0]]=json.loads(row[1])
         return result
 
     def _reader(self, source, mappings, transport=None):
@@ -251,14 +252,14 @@ class ContainerDiscovery:
 
     def _disable(self, source, native, baseline):
         # Deny/unknown stops local eligibility immediately, before further I/O.
-        with self.pilot.lock:
+        with self.pilot.lock,self.pilot.engine.store.lock:
             a=self.pilot.authority;rid=source+':'+native
             row=self.pilot.engine.store.db.execute('SELECT version,active FROM resources WHERE id=?',(rid,)).fetchone()
             state=(row['version'],row['active']) if row else None
             if state!=baseline.get(rid):raise DiscoveryFailure('publication_superseded')
             with self.pilot.engine.store.transaction() as db:
                 db.execute('UPDATE resources SET active=0 WHERE id=?',(rid,))
-            if rid in a.resources:a.resources[rid]=dict(a.resources[rid],active=False)
+            if rid in a.resources:a.publish_resource(dict(a.resources[rid],active=False))
             for snapshot in a.snapshots.values():snapshot.pop(rid,None)
 
     def run_once(self):
@@ -278,7 +279,7 @@ class ContainerDiscovery:
         try:
             reader=copy.copy(self.base_readers[source]);reader.transport=counter
             credential=self._credential(source,reader)
-            with self.pilot.lock:
+            with self.pilot.lock,store.lock:
                 mappings=self._known(source)
                 baseline={row['id']:(row['version'],row['active']) for row in store.db.execute(
                     'SELECT id,version,active FROM resources')}
@@ -322,7 +323,7 @@ class ContainerDiscovery:
                 resource['observed_at']=observed;resource['source_confirmed_at']=content['source_updated_at']
                 staged[native]=resource;resolved[native]=mappings[native]
             fetched=self.clock()
-            with self.pilot.lock:
+            with self.pilot.lock,store.lock:
                 self._publish(source,staged,resolved,observed,rid,baseline)
                 self.failures[source]=0
                 timing={'listing_seconds':listed-started,'read_seconds':fetched-listed,'publish_seconds':self.clock()-fetched}
@@ -344,7 +345,8 @@ class ContainerDiscovery:
         # leave an older complete snapshot looking healthy after partial work.
         self.last[source]={'status':'failed'}
         self.published_at.pop(source,None);self.published_versions.pop(source,None)
-        prior=store.db.execute('SELECT body FROM discovery_state WHERE actor=? AND source=?',(self.actor.user_id,source)).fetchone()
+        with store.lock:
+            prior=store.db.execute('SELECT body FROM discovery_state WHERE actor=? AND source=?',(self.actor.user_id,source)).fetchone()
         checkpoint=json.loads(prior[0]).get('last_successful_checkpoint_at') if prior else None
         report={'source':source,'actor':self.actor.user_id,'scope':self.scope[source],'status':status,'reason':reason,
                 'observed_at':observed,'indexed_at':now() if status!='failed' else None,'answerable_at':None,
@@ -361,7 +363,7 @@ class ContainerDiscovery:
             self.published_versions[source]={r['id']:r['version'] for r in staged.values()}
 
     def _publish(self, source, staged, resolved, observed, rid,baseline):
-        """Caller holds pilot.lock; no native I/O in this atomic publication."""
+        """Caller holds pilot.lock and store.lock; no native I/O in publication."""
         if self.stop_event.is_set():raise DiscoveryFailure('stopped')
         a=self.pilot.authority;store=self.pilot.engine.store
         for resource in staged.values():
@@ -396,7 +398,7 @@ class ContainerDiscovery:
         dynamic=frozenset(committed)-a.native_ids[source]
         a.discovered_ids.setdefault(self.actor.user_id,{})[source]=dynamic
         a.approved_synthetic_resource_ids=frozenset(a.approved_synthetic_resource_ids)|frozenset(source+':'+i for i in staged)
-        for native,resource in staged.items():a.resources[resource['id']]=resource
+        for native,resource in staged.items():a.publish_resource(resource)
 
     def start(self):
         if self.thread is not None:raise ValueError('Discovery already started')

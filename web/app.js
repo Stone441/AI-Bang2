@@ -16,11 +16,12 @@ function armResume(){resumeOnRuntime=true;resumeInputValue=$('question').value;}
 function updateAsk(){ $('ask').disabled=Boolean(pendingQuery)||admissionPaused; }
 function renderAdmission(admission){
   if(admission!==undefined){admissionInfo=admission;admissionPaused=Boolean(admission&&!admission.allowed);}const notice=$('trialStatus');notice.hidden=!admission&&!admissionPaused;
-  if(admission)notice.textContent=(admissionPaused?'Trial queries paused. ':'Trial query attempts: ')+admission.attempts_used+'/'+admission.attempts_limit+' used. '+(admissionPaused?'No new model call will be made. Saved answers remain available.':admission.attempts_remaining+' remaining.');
+  if(admission?.human_unlimited){notice.textContent=(admissionPaused?'Human queries paused. ':'Human queries have no count limit. ')+admission.attempts_used+' submissions recorded. '+(typeof admission.settlement_remaining_usd==='number'?'Trial budget: $'+admission.settlement_remaining_usd.toFixed(4)+' remaining of $'+admission.settlement_limit_usd.toFixed(2)+' (before pending reservations). ':'')+(admissionPaused?'No new model call will be made. Saved answers remain available.':'Cost and unconfirmed-usage protections remain active.');}
+  else if(admission)notice.textContent=(admissionPaused?'Trial queries paused. ':'Trial query attempts: ')+admission.attempts_used+'/'+admission.attempts_limit+' used. '+(admissionPaused?'No new model call will be made. Saved answers remain available.':admission.attempts_remaining+' remaining.');
   updateAsk();
 }
 function renderQueryError(err){
-  if(err.code==='trial_admission_paused'){admissionPaused=true;$('trialStatus').hidden=false;$('trialStatus').textContent='Trial queries paused at the approved attempt, cost or unconfirmed-usage limit. No new model call was made. Saved answers remain available.';if(admissionInfo)renderAdmission({...admissionInfo,allowed:false});}
+  if(err.code==='trial_admission_paused'){admissionPaused=true;$('trialStatus').hidden=false;$('trialStatus').textContent='Trial queries paused at an approved cost, unconfirmed-usage or trial limit. No new model call was made. Saved answers remain available.';if(admissionInfo)renderAdmission({...admissionInfo,allowed:false});}
   $('answer').replaceChildren();const panel=el('div',undefined,'error-panel');
   panel.append(el('h2',err.code==='source_refreshing'?'Sources are changing':err.code==='model_output_unavailable'?'Answer did not pass validation':'Question could not be completed'),el('p',err.message));
   panel.append(el('h3',err.run?.question||$('question').value));
@@ -35,9 +36,17 @@ async function reconnectRun(run){
   if(!pendingQuery&&resumeOnRuntime&&run.status!=='running'&&$('question').value!==resumeInputValue){resumeOnRuntime=false;return;}
   if(!pendingQuery&&resumeOnRuntime&&(run.status==='running'||saved&&saved.requestId===run.request_id||typeof run.question==='string'&&(!saved||saved.requestId===null&&saved.question===run.question))){
     resumeOnRuntime=false;$('question').value=typeof run.question==='string'?run.question:(saved?.question||'');
-    startWaiting(viewToken(),run.elapsed_seconds||0,true);pendingQuery.requestId=run.request_id;
-    if(saved)saveQuestion(run.request_id);$('ask').disabled=true;renderStages(run);
-    $('status').textContent='Reconnected to the original request. No new model call was made.';
+    if(run.status==='running'){
+      startWaiting(viewToken(),run.elapsed_seconds||0,true);pendingQuery.requestId=run.request_id;
+      if(saved)saveQuestion(run.request_id);renderStages(run);
+      $('status').textContent='Reconnected to the original request. No new model call was made.';
+    }else{
+      // Restoring a terminal answer performs access checks, never a running timer.
+      pendingQuery={view:viewToken(),requestId:run.request_id,resumed:true,question:$('question').value};
+      $('progress').hidden=true;$('question').readOnly=true;$('queryForm').setAttribute('aria-busy','true');
+      $('status').textContent='Checking current access before restoring the saved result…';
+    }
+    $('ask').disabled=true;
   }
   const pending=pendingQuery;
   if(pending&&pending.requestId===run.request_id&&currentView(pending.view)&&typeof run.question==='string'){pending.question=run.question;$('runningQuestion').textContent=run.question;$('question').value=run.question;}
@@ -58,13 +67,16 @@ async function reconnectRun(run){
 }
 const phaseLabels={queued:'Waiting to start',retrieval:'Retrieving evidence',authorization:'Checking current access',refreshing:'Reading changed sources once',generation:'Generating an answer',review:'Reviewing the evidence',final_checks:'Checking current evidence before delivery'};
 function renderStages(run){
-  $('progressPhase').textContent='Current stage: '+(phaseLabels[run.phase]||'Working');
+  const labelsForRun={...phaseLabels,generation:health?.mode?.endsWith('_live_model_source_review')?'Preparing source passages':phaseLabels.generation};
+  $('progressPhase').textContent=(run.status==='completed'?'Completed: ':run.status==='failed'?'Stopped: ':run.status==='evidence_only'?'Synthesis blocked; source checks finished: ':'Current stage: ')+(labelsForRun[run.phase]||'Working');
   const stages=$('progressSteps');stages.replaceChildren();
   const observed=new Set(run.phases||[run.phase]);
   for(const phase of ['retrieval','authorization','generation','review','final_checks']){
-    const item=el('li',phaseLabels[phase],phase===run.phase?'stage current':observed.has(phase)?'stage observed':'stage');
-    if(phase===run.phase)item.setAttribute('aria-current','step');
-    item.append(el('span',phase===run.phase?'Current':observed.has(phase)?'Observed':'Not yet reported'));stages.append(item);
+    const state=run.stage_states?.[phase]||(phase===run.phase&&(!run.status||run.status==='running')?'running':observed.has(phase)?'observed':'pending');
+    const labels={completed:'✓ Completed',running:'In progress',failed:'! Failed',pending:'Not yet reported',not_run:'Not run',observed:'Observed · result not reported'};
+    const item=el('li',labelsForRun[phase],'stage '+state);
+    if(state==='running')item.setAttribute('aria-current','step');
+    item.append(el('span',labels[state]||'Result not reported'));stages.append(item);
   }
 }
 async function refreshRuntime(){
@@ -73,7 +85,7 @@ async function refreshRuntime(){
     $('runtime').hidden=false;renderAdmission(r.query_admission);
     const sourceMode=r.mode.includes('fixture')?'Synthetic fixture sources':r.mode.includes('mock_http')?'Mock source APIs':r.mode.includes('live_api')?'Native source APIs':'Source mode unconfirmed';
     const modelName=r.model.startsWith('deepseek-flash')?'DeepSeek Flash':r.model==='fake-extractive-v1'?'Fake extractive model':r.model;
-    const answerMode=r.model.includes('grounded-synthesis')?'Reviewed synthesis':r.model==='fake-extractive-v1'?'Synthetic excerpts':'Source excerpts';
+    const answerMode=r.model.includes('reviewed-excerpts')?'Reviewed verbatim sources':r.model.includes('grounded-synthesis')?'Reviewed synthesis':r.model==='fake-extractive-v1'?'Synthetic excerpts':'Source excerpts';
     $('runtimeModel').textContent=modelName+' · '+sourceMode+' · '+answerMode;
     $('runtimeDetails').textContent=r.model+' · '+r.mode;
     const list=$('runtimeSources');list.replaceChildren();
@@ -82,7 +94,7 @@ async function refreshRuntime(){
         el('span',source.checking?'Checking now':source.last_check_at?'Last check: '+source.last_check_result+' · '+new Date(source.last_check_at).toLocaleTimeString():'Current source check unconfirmed'),
         el('span',source.snapshot_status==='current'?'Local candidate snapshot current · access checked per question':'Current candidate snapshot unconfirmed'),
         el('span',source.used_in_answer?'Cited in the last completed answer':'Not recorded as used in the last completed answer','muted'));list.append(card);}
-    if(!r.run&&resumeOnRuntime&&$('workspace').hidden===false){
+    if((!r.run||['completed','evidence_only'].includes(r.run.status)&&!savedQuestion()&&answerReference())&&resumeOnRuntime&&$('workspace').hidden===false){
       resumeOnRuntime=false;const reference=answerReference(),view=viewToken();
       if(reference&&$('question').value===resumeInputValue){
         $('answer').replaceChildren(el('p','Checking current access before restoring the saved answer…'));
@@ -107,10 +119,10 @@ if(location.hash)history.replaceState(null,'',location.pathname+location.search)
 $('loginForm').querySelector('button').disabled=true;
 const versionLabel=e=>e.locator?.content_sha256?'Content snapshot '+e.locator.content_sha256.slice(0,12):'Version '+e.version;
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
-function expiredSession(){forgetQuestion();$('question').value='';stopWaiting();stopRuntime();session=null;admissionPaused=false;admissionInfo=null;$('trialStatus').hidden=true;admissionPaused=false;$('trialStatus').hidden=true;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();$('identity').textContent='Not signed in';$('auditNav').hidden=true;$('sourcesNav').hidden=true;show('login');const error=Error(health?.auth_kind==='operator'?'This session ended. Open the latest one-time link from the running operator terminal.':'This session ended. Sign in again.');error.sessionExpired=true;$('status').textContent=error.message;return error;}
+function expiredSession(){forgetQuestion();$('question').value='';stopWaiting();stopRuntime();session=null;admissionPaused=false;admissionInfo=null;$('trialStatus').hidden=true;admissionPaused=false;$('trialStatus').hidden=true;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();$('identity').textContent='Not signed in';$('auditNav').hidden=true;$('sourcesNav').hidden=true;show('login');const error=Error(health?.auth_kind==='reviewer'?'This session ended. Sign in with your demo account.':health?.auth_kind==='operator'?'This session ended. Open the latest one-time link from the running operator terminal.':'This session ended. Sign in again.');error.sessionExpired=true;$('status').textContent=error.message;return error;}
 async function api(path,data){const requestSession=session;const options={credentials:'same-origin',headers:{}};if(data!==undefined){options.method='POST';options.headers['Content-Type']='application/json';options.headers['X-CSRF-Token']=session?.csrf||'';options.body=JSON.stringify(data);}const response=await fetch(path,options);const result=await response.json();if(!response.ok){if(requestSession!==session)throw Error('Stale response discarded');if(response.status===403&&session&&path!=='/api/session'){const current=await fetch('/api/session',{credentials:'same-origin'});if(current.status===403)throw expiredSession();}const error=Error(result.error||'Request unavailable. Ask again or contact the operator if it persists.');error.status=response.status;error.code=result.code;error.requestId=result.request_id;error.run=result.run;throw error;}return result;}
 function show(name){resumeOnRuntime=false;stopWaiting();viewRevision++;updateAsk();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();for(const id of ['login','workspace','other'])$(id).hidden=id!==name;$('status').textContent='';}
-function identity(){const box=$('identity');box.replaceChildren(el('span',session.actor));const logout=el('button',health?.auth_kind==='operator'?'Sign out':'Switch demo identity');logout.onclick=async()=>{forgetQuestion();$('question').value='';stopWaiting();stopRuntime();viewRevision++;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();await api('/api/logout',{});session=null;admissionPaused=false;admissionInfo=null;$('trialStatus').hidden=true;$('answer').replaceChildren();$('other').replaceChildren();$('auditNav').hidden=true;$('sourcesNav').hidden=true;box.textContent='Not signed in';show('login');};box.append(logout);$('auditNav').hidden=session.actor!=='auditor';$('sourcesNav').hidden=session.actor!=='auditor';show('workspace');const saved=savedQuestion();$('question').value=saved?.question||'';armResume();refreshRuntime();if(runtimeTimer===null&&typeof setInterval!=='undefined')runtimeTimer=setInterval(refreshRuntime,1500);}
+function identity(){const box=$('identity');box.replaceChildren(el('span',health?.auth_kind==='reviewer'?(session.display_name||session.actor.split(':')[1])+' · '+({engineer:'Engineer',eng_b:'Engineer',product:'Product & Operations',product_ops:'Product & Operations',partner:'External Partner',contractor:'External Partner'}[session.demo_role]||'Demo account'):session.actor));const logout=el('button',['operator','reviewer'].includes(health?.auth_kind)?'Sign out':'Switch demo identity');logout.onclick=async()=>{forgetQuestion();$('question').value='';stopWaiting();stopRuntime();viewRevision++;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();await api('/api/logout',{});session=null;admissionPaused=false;admissionInfo=null;$('trialStatus').hidden=true;$('answer').replaceChildren();$('other').replaceChildren();$('auditNav').hidden=true;$('sourcesNav').hidden=true;box.textContent='Not signed in';show('login');};box.append(logout);$('auditNav').hidden=session.actor!=='auditor';$('sourcesNav').hidden=session.actor!=='auditor';show('workspace');const saved=savedQuestion();$('question').value=saved?.question||'';armResume();refreshRuntime();if(runtimeTimer===null&&typeof setInterval!=='undefined')runtimeTimer=setInterval(refreshRuntime,1500);}
 function diagnostics(label,...content){const box=el('details',undefined,'diagnostics');box.append(el('summary',label),...content);return box;}
 function originalLink(e){
   // Only a fresh, authorized preview supplies this URL; never claims/model text.
@@ -144,21 +156,24 @@ async function preview(id){
 }
 
 function modelLabel(answer){
+  if(answer.answer_status==='evidence_only')return answer.answer_kind==='reviewed_excerpts'?'ANSWER BLOCKED · SOURCE EVIDENCE':'SYNTHESIS BLOCKED · SOURCE EVIDENCE';
   if(answer.model==='fake-extractive-v1')return 'FAKE MODEL';
   if(answer.model_call?.called===false)return 'NO MODEL CALL';
+  if((answer.model_call?.called===true||answer.model_review?.called===true)&&answer.answer_kind==='reviewed_excerpts'&&answer.review_status==='accepted')return 'LIVE MODEL · REVIEWED SOURCES';
   if(answer.model_call?.called===true)return answer.claim_format==='grounded_synthesis_v1'?'LIVE MODEL · REVIEWED SYNTHESIS':'LIVE MODEL · SOURCE EXCERPTS';
   return 'MODEL CALL NOT RECORDED';
 }
 function renderModelUsage(answer,target){
-  const receipt=answer.model_call;
+  if(answer.answer_status==='evidence_only'){target.append(el('p','The model output was rejected. Original call usage and failure remain in the audit; no additional model call produced these source excerpts.','notice'));return;}
+  const receipt=answer.model_call||answer.model_review;
   if(answer.model==='fake-extractive-v1')return;
   if(receipt?.called===false){target.append(el('p','No external model request was sent.','muted'));return;}
   if(receipt?.called!==true){target.append(el('p','Model usage was not recorded for this answer.','muted'));return;}
   const receipts=[receipt];
-  if(answer.model_review?.called===true)receipts.push(answer.model_review);
+  if(answer.model_review?.called===true&&answer.model_review!==receipt)receipts.push(answer.model_review);
   for(const [index,item] of receipts.entries()){
     const details=el('details',undefined,'model-usage');
-    details.append(el('summary',index?'Evidence review usage receipt':'Model usage receipt'),
+    details.append(el('summary',index||!answer.model_call?'Evidence review usage receipt':'Model usage receipt'),
       el('p',item.prompt_tokens+' input + '+item.completion_tokens+' output = '+item.total_tokens+' tokens'),
       el('p','Conservative cost estimate: US$'+(item.accounted_upper_micro_usd/1000000).toFixed(6)),
       el('p','This is an accounting upper estimate, not the provider invoice.','muted'));
@@ -167,22 +182,25 @@ function renderModelUsage(answer,target){
 
 }
 function answerStatus(answer){
+  if(answer.answer_status==='evidence_only')return 'Answer failed validation. Current source evidence is available; no validated answer was produced.';
   if(answer.model_call?.called===false)return 'No supporting evidence found. No external model request was sent.';
   if(!answer.claims.length)return answer.model_call?.called===true?'The model checked authorized sources but found insufficient support.':'Insufficient supporting evidence.';
+  if(answer.answer_kind==='reviewed_excerpts'&&answer.review_status==='accepted'&&answer.model_review?.called===true)return 'Answer recorded. Verbatim source passages and answer coverage were reviewed; latest ordering is not inferred.';
   if(answer.model==='fake-extractive-v1')return 'Answer recorded. Authorized synthetic source excerpts; fake model.';
   return answer.model_call?.called===true?(answer.claim_format==='grounded_synthesis_v1'?'Answer recorded. Grounded synthesis and model review completed.':'Answer recorded. Live model selected authorized source excerpts.'):'Answer recorded. Model usage was not recorded.';
 }
 function renderAnswer(answer,target=$('answer')){
   target.replaceChildren();if(answer.unavailable){target.append(el('p',answer.message,'notice'));return;}
+  if(answer.answer_status==='evidence_only'){const failure=el('div',undefined,'error-panel');failure.append(el('h2',answer.answer_kind==='reviewed_excerpts'?'Source answer was blocked':'Synthesis was blocked'),el('p','The model output did not pass validation. The original source passages below were checked for current access and version. They are not a validated summary; latest ordering is not inferred.'));target.append(failure);}
   const grid=el('div',undefined,'receipt'),main=el('div',undefined,'panel'),side=el('aside',undefined,'panel');
-  const head=el('div',undefined,'receipt-head');head.append(el('h2',answer.claim_format==='grounded_synthesis_v1'?'Evidence-backed answer':'Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);
+  const head=el('div',undefined,'receipt-head');head.append(el('h2',answer.answer_kind==='reviewed_excerpts'?(answer.review_status==='accepted'&&answer.model_review?.called===true?'Reviewed source answer':'Source evidence'):answer.claim_format==='grounded_synthesis_v1'?'Evidence-backed answer':'Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);
   main.append(el('h3',answer.question||'Question not recorded for this older answer.'));
   const date=typeof answer.answered_at==='string'?new Date(answer.answered_at):null;
   main.append(el('p',date&&!Number.isNaN(date.getTime())?'Answered '+date.toLocaleString():'Generation time not recorded for this older answer.','muted'));
   const byId=new Map(answer.evidence.map(e=>[e.evidence_id,e]));
   for(const c of answer.claims){
     const block=el('div',undefined,'claim');block.append(el('p',c.text));
-    if(c.supports?.length){const quotes=el('details');quotes.append(el('summary','Exact supporting quotes'));for(const support of c.supports)quotes.append(el('p',support.quote),el('p',byId.get(support.evidence_id)?.title||'Source reference','muted'));block.append(quotes);}
+    if(c.supports?.length&&answer.answer_kind!=='reviewed_excerpts'){const quotes=el('details');quotes.append(el('summary','Exact supporting quotes'));for(const support of c.supports)quotes.append(el('p',support.quote),el('p',byId.get(support.evidence_id)?.title||'Source reference','muted'));block.append(quotes);}
     for(const id of c.evidence_ids){const b=el('button',byId.get(id)?.title||'View source passage','citation');b.onclick=()=>preview(id);block.append(b);}main.append(block);
   }
   for(const u of answer.uncertainties)main.append(el('p',u,'notice'));
@@ -202,7 +220,7 @@ function renderAnswer(answer,target=$('answer')){
   grid.append(main,side);target.append(grid);
 }
 
-$('loginForm').onsubmit=async e=>{e.preventDefault();try{if(health?.auth_kind!=='demo')throw Error('Open the one-time link from the operator terminal.');session=await api(health.login_path,{user:$('user').value});identity();}catch(err){$('status').textContent=err.message;}};
+$('loginForm').onsubmit=async e=>{e.preventDefault();try{let credentials;if(health?.auth_kind==='reviewer')credentials={username:$('reviewerUsername').value,password:$('reviewerPassword').value};else if(health?.auth_kind==='demo')credentials={user:$('user').value};else throw Error('Open the one-time link from the operator terminal.');session=await api(health.login_path,credentials);$('reviewerPassword').value='';identity();}catch(err){$('reviewerPassword').value='';$('status').textContent=health?.auth_kind==='reviewer'?'Sign-in unavailable. Check your credentials or contact the team.':err.message;}};
 $('queryForm').onsubmit=async e=>{
   e.preventDefault();if(pendingQuery||admissionPaused)return;
   const priorSaved=savedQuestion(),submittedQuestion=$('question').value;
@@ -312,18 +330,19 @@ $('closePreview').onclick=()=>{viewRevision++;$('previewBody').replaceChildren()
 async function boot(){
   try{
     health=await api('/api/health');
-    if(health.auth_kind==='operator'){
+    if(['operator','reviewer'].includes(health.auth_kind)){
       $('modeBadge').textContent=health.mode.includes('mock_http')?'MOCK API PILOT':'LIVE API PILOT';
-      $('modeDescription').textContent=health.mode.endsWith('_live_model_synthesis')?'Synthetic allowlisted resources · Grounded synthesis with model review · Local operator':health.mode.endsWith('_live_model_selection')?'Synthetic allowlisted resources · Live model selects excerpts · Local operator':'Synthetic allowlisted resources · Fake model · Local operator';
+      $('modeDescription').textContent=health.mode.endsWith('_live_model_source_review')?'Synthetic allowlisted resources · Code source quotes with model review · Local operator':health.mode.endsWith('_live_model_reviewed_excerpts')?'Synthetic allowlisted resources · Verbatim sources with model review · Local operator':health.mode.endsWith('_live_model_synthesis')?'Synthetic allowlisted resources · Grounded synthesis with model review · Local operator':health.mode.endsWith('_live_model_selection')?'Synthetic allowlisted resources · Live model selects excerpts · Local operator':'Synthetic allowlisted resources · Fake model · Local operator';
       $('modeFooter').textContent='Operator pilot · not employee SSO';
       $('user').hidden=true;$('loginForm').querySelector('label').hidden=true;
       $('loginForm').querySelector('button').hidden=true;
       $('loginNote').textContent='Open the one-time link from the server terminal. Token stays in the server process. This is a local operator pilot, not employee SSO.';
+    if(health.auth_kind==='reviewer'){$('modeBadge').textContent=health.mode.startsWith('fixture')?'SYNTHETIC / FAKE MODEL':'LIVE API DEMO';$('reviewerCredentials').hidden=false;$('loginForm').querySelector('button').hidden=false;$('loginForm').querySelector('button').disabled=false;$('modeDescription').textContent=health.identity_boundary==='application_demo_roles_intersect_native_connection'?'Real source connections · Synthetic resources · Application role permissions within the team connection’s native access':'Synthetic demo resources · Access checked under the signed-in demo role';$('modeFooter').textContent='Fictional demo people · individually configured access · not employee SSO';$('loginNote').textContent='Use the demo username and password provided by the team. Each account represents a fictional person with individually configured access; job titles do not define access for all employees.';}
     }else if(health.auth_kind==='demo'){$('loginForm').querySelector('button').disabled=false;}
     else{throw Error('Unsupported authentication mode.');}
     try{session=await api('/api/session');}
     catch(err){if(err.status===403&&bootstrapTicket&&health.auth_kind==='operator')session=await api(health.login_path,{ticket:bootstrapTicket});else throw err;}
     identity();
-  }catch(err){show('login');$('status').textContent=health?.auth_kind==='operator'&&err.status===403?(bootstrapTicket?'This one-time operator link has expired or was already used. Ask the operator to refresh the entry, then reopen the launch command.':'No active operator session. Sessions expire after 1 hour. Ask the operator to refresh the entry, then reopen the launch command. Saved answers remain stored.'): 'Could not connect to the local service. Refresh to reconnect; no new question was submitted.';}
+  }catch(err){show('login');if(health?.auth_kind==='reviewer'&&err.status===403){$('status').textContent='Sign in with your demo account. Sessions expire after 1 hour.';return;}$('status').textContent=['operator','reviewer'].includes(health?.auth_kind)&&err.status===403?(bootstrapTicket?'This one-time operator link has expired or was already used. Ask the operator to refresh the entry, then reopen the launch command.':'No active operator session. Sessions expire after 1 hour. Ask the operator to refresh the entry, then reopen the launch command. Saved answers remain stored.'): 'Could not connect to the local service. Refresh to reconnect; no new question was submitted.';}
 }
 boot();

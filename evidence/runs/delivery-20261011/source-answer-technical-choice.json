@@ -1,0 +1,44 @@
+{
+  "date_sgt": "2026-10-11",
+  "original_question": "What is the latest approved mitigation for the payment incident?",
+  "actual_native_result": {
+    "request_id": "e91be19956414aa989a498d3fa255403",
+    "seconds": 21.543050250038505,
+    "answer_status": "evidence_only",
+    "success": false,
+    "failure": "temporal assertion validator rejected a scoped unknown phrase; draft also omitted authorized C01 actions"
+  },
+  "private_rejected_draft_sha256": "9d7a82c2da7c32ec9dd725e013c7bd0c22e1f46f0ec71b54868417d671f013df",
+  "private_rejected_draft_displayed": false,
+  "decision": "Stop free-form prompt additions; opt-in select exact spans, construct supported claims in code, independent coverage/scope review; preserve synthesis rollback",
+  "local_checks": {
+    "integrated_python": "462 passed in 23.119s; before final negative-clause tightening",
+    "final_guard_and_selection": "6 passed",
+    "operator_cli": "15 passed",
+    "admission_private_diagnostic": "4 passed",
+    "frontend": "six existing Node checks passed"
+  },
+  "preserved_local_failures": [
+    {
+      "startup": "first reviewed-excerpts launch rejected by old synthesis-only config guard; no credentials or source/model call",
+      "correction": "allow reviewed-excerpts in same trusted config guard; add CLI regression"
+    },
+    {
+      "frontend_runtime": "failed validation assertion did not match new wording Answer validation failed",
+      "correction": "use Answer failed validation; assertion retained and passed"
+    }
+  ],
+  "live_candidate_quality": "not_run",
+  "candidate_human_judgement": "pending",
+  "core_first_question": "unresolved",
+  "admission": {
+    "attempts": 9,
+    "max_attempts": 12,
+    "model_calls": 13,
+    "remaining_questions_reserved_for_humans": 3,
+    "new_settled_micro_usd": 12232,
+    "legacy_unknown_micro_usd": 324404,
+    "new_unknown": []
+  },
+  "instance": "own loopback49161; state saved before each idle update; 8094/8100 untouched"
+}

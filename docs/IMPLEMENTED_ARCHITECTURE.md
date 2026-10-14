@@ -1,5 +1,44 @@
 # 实际实现与信任边界 · 2026-10-04
 
+13 October demo account update: engineer, product and partner are server-authenticated application personas. Their explicit resource policies are intersected with the team connection's current native permissions. All three can use the live-source demo; this does not demonstrate three independent native employee identities. The live model and original permission/version checks remain unchanged. See [reviewer access](REVIEWER_ACCESS.md).
+
+13 October selected final build: structured whole-passage selection, one DeepSeek Flash review, none reasoning/8192, pooled native reads up to four, batch History, serial queries with pre-lock session queue state. Experimental isolated3 and explained premise reviewer are disabled. Current configuration and measured limits: [FINAL_RUNBOOK](FINAL_RUNBOOK.md) and [FINAL_VALIDATION](reviews/2026-10-13-final-delivery/FINAL_VALIDATION.json). Dated configurations below remain historical.
+
+2026-10-13 whole-v1 opt-in已实现：模型选择完整段落别名＋语义安全/覆盖，服务器精确全文/引文及遗漏校验，单审查权限阶段不变。原生三题6.39–8.84秒，完整3秒未达；冻结12开发案例暴露归档窗口冗长断句，质量未完成。详见query-goal/WHOLE_SOURCE_CONTRACT.md。
+
+2026-10-13 opt-in AUTH036：每源read支持1/2/4并发，连接池匹配上限；History batch按资源/版本作本次原生检查并保留窗口/引文验证，默认serial可回退。真实同Q2历史9.392→1.968秒、25HTTP不变，非新问答3秒。见query-goal/FOUR_READS_HISTORY.md。
+
+2026-10-13 opt-in候选补充：compact/covered源审查输入与single派发（代码白名单，构造后完整review_dispatch）已实现；旧双调用及默认legacy不变。真实候选Q1/Q2为54.732/40.595秒，完整3秒未达；详见docs/reviews/2026-10-13-query-goal/SINGLE_REVIEW_CONTRACT.md与README.md。
+
+## Current delivery candidate · 2026-10-11
+
+2026-10-13 local diagnostic increment (trial not updated): optional operator `--timing-dir` records bounded private request/lock/native-lane/model/ledger spans, default off, no product endpoint or source/model payload logging. Permissions, versions, audit and budgets are unchanged. 12 dedicated and 502 final local tests passed; real latency improvement/native trial loading not_run. Current implementation and failure records: [restricted timing](reviews/2026-10-13-restricted-timing/README.md).
+
+[Standalone 16:9 architecture diagram](../assets/submission/contextledger-architecture.svg), ready for material/video use.
+
+Current trial uses source-review v2 and same DeepSeek Flash low reasoning/cap8192 for its single support/coverage/scope review. Server code constructs exact contiguous quotes preserving every byte of retrieved authorized evidence; one authentic model_review receipt and final native checks protect reviewed_source_v1. There is no generation call. Filtering still requires complete independent remaining coverage and retains whole evidence windows. Current original Q1, original Q2 and pilot/GA scope each returned supported source answers once; Q1 includes the runbook measures and explicit unknown ordering. 485 local tests passed after failed-run restoration fix. Disabled-thinking v2 accepted an incomplete Q1, and prior v1/selector failures remain genuine failures; low review is a bounded quality fallback, not a stability claim. Older review, selector and free-form synthesis remain rollbacks. Browser/human G1 and G2 are incomplete.
+
+Independent questions; native eng_b four-source synthetic pilot; SQLite version-bound windows with lexical ranking (no embeddings). AUTH017 background polling publishes source updates; worker failure/stale completeness blocks native synthesis. No business-source writes. In this delivery instance only, a known-usage output rejection can continue to unchanged authorized source excerpts after final native checks, with explicit synthesis-failed/evidence-only status; no rejected draft or fake review receipt is released. Session identity is verified on the server, not supplied by prompts. Source/context bytes remain untrusted.
+
+```mermaid
+flowchart LR
+ U[Loopback UI / server session] --> R[Local version-bound retrieval]
+ W[Native readonly background polling] --> R
+ R --> A[Current native access and content checks]
+ A --> Q[Code quotes all retrieved authorized evidence]
+ Q --> P[Current native review dispatch checks]
+ P --> V[One DeepSeek Flash support and coverage review / low fallback 8192]
+ V --> F[Retained claims / final native checks]
+ F --> O[Answer / saved History]
+ O --> C[Preview and History current checks]
+ A & Q & V & F --> L[Structured scoped audit]
+ L --> S[CodeBuddy independent signed-checkpoint verifier]
+```
+
+Trust boundaries: browser cannot grant identity or source access; collection access is not employee access; review cannot bypass server authorization or exact evidence validation. Review may filter supported irrelevant background only with explicit independent/completeness approval; unsupported/unknown or missing scope blocks. Model review can err. Audit/checkpoint/key custody remains local, not independent production protection. Sources and provider are separate external endpoints; only approved synthetic bytes leave the host. UI reports configuration and observed checks, never a fabricated connection percentage. History/preview reauthorize; past lawful screenshots and already-dispatched model bytes cannot be retracted.
+
+Earlier dated sections below retain historical implementation/evidence, including superseded export and query-triggered-refresh descriptions; current code and STATUS govern present operation.
+
 2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
 
 2026-10-07当前实现2a73bd0：actor预过滤后在CPU计算binary-TF BM25，最多16基础候选、12授权link种子与8扩展、24精确窗口；本地SQLite保存资源/版本、证据、回答及审计，不是向量数据库，无embedding/语义检索/专门重排。关联cutoff只修复fixture已有source-authored links；native四源正文关系尚未解析。synthesis-v4独立draft/review使用既有DeepSeek flash，整答gate不变，通用区分审批/撤回和问题范围。AUTH-017 bounded worker异步发布、选中资料各阶段native复查；unknown/version changed停止完整结论。48同世界五fixture与380回归通过；完整native/质量与人审并未通过。

@@ -1,0 +1,128 @@
+{
+  "case": {
+    "id": "holdout_02",
+    "actor": "contractor",
+    "question": "For a partner who can use only the externally shared material, is general availability promised and when may they tell customers it launches?",
+    "expected_behavior": "scope_limited_answer",
+    "required_evidence": [
+      "C-02"
+    ],
+    "required_claim_spans": [
+      "controlled pilot",
+      "No general release date is confirmed"
+    ],
+    "forbidden_evidence": [
+      "D-02",
+      "D-03",
+      "S-01",
+      "C-03",
+      "J-01-comment-sec",
+      "BV-27"
+    ],
+    "semantic_judgment": "Pilot only, no general date, explicitly scope to supported payment-retry; no inaccessible existence disclosure.",
+    "question_time": "2026-10-07T12:00:00+08:00"
+  },
+  "error": null,
+  "elapsed_seconds": 2.0096854170551524,
+  "answer": {
+    "request_id": "e5ab7dec6e414c55804fa44389b05de3",
+    "question": "For a partner who can use only the externally shared material, is general availability promised and when may they tell customers it launches?",
+    "answered_at": "2026-10-10T16:41:22.499459+00:00",
+    "mode": "fixture_source_live_model_synthesis",
+    "model": "deepseek-flash-grounded-synthesis-v13",
+    "claims": [
+      {
+        "text": "General availability of payment-retry is not approved, and no general release date is confirmed; the capability is available only to the controlled pilot.",
+        "evidence_ids": [
+          "C-02@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "C-02@1",
+            "quote": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed."
+          }
+        ]
+      },
+      {
+        "text": "External partners can consult the shared payment-retry capability page for pilot limits, but the evidence does not establish a date on which they may tell customers it launches.",
+        "evidence_ids": [
+          "S-03@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "S-03@1",
+            "quote": "External partners can consult the shared payment-retry capability page for pilot limits."
+          }
+        ]
+      }
+    ],
+    "uncertainties": [
+      "Synthesized from current authorized evidence; exact supporting quotes and a separate model review were checked. Model review can miss errors; verify important conclusions."
+    ],
+    "evidence": [
+      {
+        "evidence_id": "C-02@1",
+        "resource_id": "C-02",
+        "version": 1,
+        "source": "confluence",
+        "title": "Payment-retry capability",
+        "locator": {
+          "paragraph": 1,
+          "section": "Supported rollout"
+        },
+        "text": "[SYNTHETIC]\nPayment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-10T16:41:20.472822+00:00",
+        "source_url": "fixture://synthetic-demo/confluence/C-02"
+      },
+      {
+        "evidence_id": "S-03@1",
+        "resource_id": "S-03",
+        "version": 1,
+        "source": "slack",
+        "title": "External collaboration",
+        "locator": {
+          "channel": "external",
+          "thread": "1790827200.000001"
+        },
+        "text": "[SYNTHETIC]\nExternal partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+        "source_updated_at": "2026-10-01T09:00:00+08:00",
+        "indexed_at": "2026-10-10T16:41:20.472945+00:00",
+        "source_url": "fixture://synthetic-demo/slack/S-03"
+      }
+    ],
+    "actor": "contractor",
+    "model_call": {
+      "query_id": "e5ab7dec6e414c55804fa44389b05de3",
+      "model": "deepseek-flash",
+      "reservation_id": "180a53ad6fc54ea7934e4545eff3a97f",
+      "prompt_tokens": 635,
+      "completion_tokens": 169,
+      "total_tokens": 804,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 394,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "claim_format": "grounded_synthesis_v1",
+    "model_review": {
+      "query_id": "e5ab7dec6e414c55804fa44389b05de3",
+      "model": "deepseek-flash",
+      "reservation_id": "e111397fa9784dd1950e06ef2d9e4da5",
+      "prompt_tokens": 789,
+      "completion_tokens": 45,
+      "total_tokens": 834,
+      "reserved_micro_usd": 324404,
+      "accounted_upper_micro_usd": 291,
+      "state": "settled",
+      "outcome": "accepted",
+      "called": true,
+      "dispatch_recorded": true,
+      "accounting_basis": "conservative peak/cache-miss upper estimate; not vendor invoice"
+    },
+    "review_status": "accepted"
+  }
+}
