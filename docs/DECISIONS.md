@@ -1,5 +1,61 @@
 # Decisions / ADR
 
+2026-10-13 已上线 contextledger.hellokyleshi.com：用户远程不便明确委托代理确认，采用代理HTTP/API验收例外，不称真人G1/G2。三账号公网登录、安全cookie/Origin/跨账号拒绝通过；公网Blair问答8.855s四源accepted，Jordan仅授权能力页evidence_only。修复Drive仅启动刷新token导致约一小时失效，37专项/666完整通过；长期一小时自然续期尚未观察。用户级LaunchAgent app+tunnel与caffeinate运行；新增启动/停止命令。人工额度余额USD0.997920，本轮3次问答，无新unknown。浏览器公网被工具拦截未绕过；详见 reviews/2026-10-13-hosted-demo/README.md。
+
+2026-10-13 本机域名部署准备：用户批准电脑托管和组员真实四源试用；专用 Cloudflare Tunnel 与 contextledger.hellokyleshi.com DNS 已创建，ingress 校验通过；未启动隧道、未开放公网。项目级 cloudflared 2026.10.0 哈希核验通过；新增入口公共域名兼容，6入口/9账号HTTP测试通过。G1真人安全查看尚待确认，不能以自动测试代替；现有本地服务保留，无新增模型调用。具体切换及人工查看步骤见 REVIEWER_DEPLOYMENT。
+
+2026-10-13 命名最终确认：用户要求恢复最初的 ContextLedger。页面品牌、标题与最终交接标题已恢复；拟部署子域名统一 contextledger.hellokyleshi.com。Aveniq 与 TeamLens 系列不采用；历史讨论记录保留。域名尚未上线。
+
+2026-10-13 品牌命名更新：用户否定 ContextLedger 并要求更高级的名字；采用自造名称 Aveniq，拟用 aveniq.hellokyleshi.com。当前页面标题、品牌及交接标题已更新，历史证据/归档仍保留原名。未进行商标或同名排查。域名授权页面已打开，尚未创建隧道或 DNS 路由，未上线；项目私有目录已准备并校验 cloudflared 2026.10.0。
+
+2026-10-13 连接展示名称：按用户要求，将私密账号卡片中的 Native connection: eng_b 改为 Knowledge connection: Team Knowledge Connection (team_knowledge)，交接与接入说明同步。此为展示别名；底层授权、凭据映射和历史审计的 eng_b 兼容标识保留，不冒充已新建平台服务账号。仅文案更新，无服务重启、源请求或模型调用。
+
+2026-10-13 演示人物命名：按用户要求将登录名改为 engineer_blair / product_morgan / partner_jordan，显示 Blair / Morgan / Jordan 及岗位；明确权限按具体账号配置，岗位不代表所有员工权限。内部账号键、revision、密码与权限不变，历史连续；9项账号HTTP测试、6项应用权限测试和前端登录DOM通过。自有49161已重启加载新源码，3个新登录名实测通过；未提交模型问答。历史冻结源码包保留，尚未包含本次命名增量。证据：reviews/2026-10-13-application-roles/personal-login-check.json。
+
+2026-10-13 三角色真实四源版已切换：engineer/product/partner应用账号均可登录，共用获批eng_b原生连接并分别施加工程/产品5资源/外协1资源白名单。源码b6f2ffbadef0；四源当前可用，4项原生读取通过，三个账号登录与运行状态通过。新包378文件独立解压661项39.447s通过，7个前端DOM通过；本轮未自动提交live模型问答，人工USD1余额未使用，旧55调用/两笔unknown保留。实际角色真人问答/浏览器G1G2、公网部署和提交仍待完成；这是已批准的应用角色演示，不是三个原生员工权限矩阵。当前入口FINAL_HANDOFF/REVIEWER_ACCESS。
+
+2026-10-13 应用角色范围获批：用户明确回复“接受，用应用演示角色＋真实四源，清楚标注边界”。工程/产品/外部协作方使用独立应用账号，共用已批准eng_b源连接，在原生权限内施加精确资源白名单；不冒充三个原生员工身份。已加入请求级权限上下文，覆盖检索、授权/模型发送、最终返回、历史与预览，并记录双身份/策略摘要。人工USD1不供自动模型测试；不新增scope、provider、外部写或公开服务。原多原生身份缺口不再作为本轮应用角色交付的前置条件。
+
+2026-10-13 团队/评委账号增量：用户批准本机人工试用取消次数上限、新增USD1，自动验收不使用；并选定固定账号密码按身份演示。新增服务端账号映射、scrypt密码、到期/撤销/会话revision、账号历史/引用隔离、关联有效源身份审计、HTTPS Origin/Secure Cookie配置；均不提权。654完整本地35.911s通过，另5项入口检查及7个前端DOM套件通过；三fixture角色真实HTTP问答通过。自有49161核闲/备份后更新，工程账号登录、人工余额USD1和四源complete/current已验，无新增live模型调用。原Goal55调用/USD0.062807及原2unknown保留，旧冻结包不改。真实四源仅eng_b完整；product/partner暂仅fixture，新增原生角色需要团队授权。当前准备的是新增账号版本，不等于公网部署或G1/G2。入口REVIEWER_ACCESS，部署缺口REVIEWER_DEPLOYMENT。
+
+2026-10-13 最终交付准备完成，最终待签核：用户在听取“原文正确但可能不主动解释错误前提”的具体示例后回复“可以”，明确接受该项比赛原型交付例外；不代表功能已修复、G1/G2通过或外部提交授权。其余可自主完成的开发、集成、验证与材料准备已收口。当前服务归属/健康、355文件源码包hash/CRC及原账本再次核验通过：52调用/USD0.060992/new unknown0，原2笔保留，剩余8次。无新增模型调用、重启、push/merge/上传。源码包保留冻结内容；最新质量接受记录见FINAL_HANDOFF及COMPLETION_AUDIT，包内较早pending记录为历史。
+
+2026-10-13 最终完整性审计：原打包主文档缺DEV09非秘密manifest链接，已补入最终包（355文件、sha b466d6ca971b），旧已测包私下保留。所有旧包内容逐字节沿用，未改代码/测试/数据；ZIP CRC、内部hash与四份主文档相对链接通过，不为仅添manifest重复642测试。逐条Goal审计见COMPLETION_AUDIT：技术包就绪，但前提解释要求仍未满足，等待已发用户例外决定；无答复不算同意。本轮无模型调用，服务归属健康检查通过，未重启/外部写/标完成。
+
+2026-10-13 ADR099 / 最终封版：已备份并确认原39081空闲退出，仅重启自有49161；最终source09f67454ef93，structured/none8192/single/pooled4/batch/serial，实验不启用。642本地31.131s通过；最终原生Q1/Q2=13.263/9.597s，三请求9.136/22.107/28.638s，5次核心事实通过、queued状态实见。History1.893s/preview0.749s原文一致且0模型；28602事件本地链有效、非独立签名。累计52调用/USD0.060992/new unknown0/原2保留。最终源码包354文件已独立解压642项30.084s通过，首次漏历史测试资料导致6errors的失败日志保留并修正；配置/演示/提交材料已对齐。前提解释仍未满足原要求，已集中询问是否接受交付例外；browser/G1/G2及外部动作未完成，Goal保持active而非完成。入口：[FINAL_HANDOFF](FINAL_HANDOFF.md)。
+
+2026-10-13 ADR098 / 前提解释有界诊断：新增可选explained单review严格enum＋已选证据别名契约，642完整本地30.947s通过。四次fixture源＋live模型诊断已耗尽专项4调用：v1正确区分撤回/拒绝但误把中性GA问句当断言；v2修正中性问句却遗漏03前提解释，均不采用，保留失败和冻结manifest。最终配置仍structured/serial，事实原文保留但前提纠正措辞仍为待签核限制，不宣称已修复。预算真实核47调用/USD0.057982/new unknown0，原2unknown保留；无native/浏览器调用/重启。架构SVG已更新none及实测范围并渲染检查，封面1600×900已目视检查。
+
+2026-10-13 ADR097 / 最终收口：HTTP合法query在等待原查询锁前创建session run，使queued阶段及elapsed可被刷新读取；原request/store锁仍覆盖refresh、模型、最终审计及响应发送，排队后重验session防退出后调用。非法字段/CSRF不创建run，同session409保持。新增3真实loopback测试通过，隔离路径14项通过，完整635项31.837s及6前端DOM通过；均本地fixture/mock，不是browser/native。未重启49161/新增费用，原structured-v2运行不变。
+
+2026-10-13 最终交付Goal接续：用户取消3秒硬门槛，目标改为可演示/可交接/可提交的最终待签核版本。选定structured/none8192/single/pooled4/history batch/window structured及serial查询，isolated3仅保留实验不启用。真实账本核43调用/USD0.056704/new unknown0/原2保留，剩余17在独立CLOSEOUT_PLAN重分配，旧PLAN不改。15份CodeBuddy证据哈希全匹配；SUBMISSION_CANDIDATE与DEMO_CANDIDATE已更新旧配置及过期耗时，原文归档保留。产品排队可见性、前提解释、最终封版/浏览器与材料核验仍in_progress，未宣称完成；本轮无API/模型调用、重启或外部写。入口：[最终交付清单](reviews/2026-10-13-final-delivery/README.md)。
+
+2026-10-13 AUTH036 / ADR096：isolated3可选请求隔离接入HTTP/试用启动器，默认serial；每请求独立Engine/证据快照，发布代次防ABA，模型发送与最终响应保留发布屏障，SQLite读取补锁。630完整回归29.109s通过；追加版本恢复/失效源专项10项0.132s通过。初始三并发503真实失败保留：完整上下文每调用预留>USD0.30，USD0.50上限不能容纳多路模型在途；拆分HTTP隔离证明与额度拒绝证明，未缩减预留或扩授权。下一项安全模型阶段排队/可证明预留上界，未启用live。49161未重启，仍43实际调用/USD0.056704/new unknown0；3秒目标未达，详见[REQUEST_ISOLATION](reviews/2026-10-13-query-goal/REQUEST_ISOLATION.md)。
+
+2026-10-13 AUTH036 / ADR095：新增未接线的ConcurrentPerformanceAdmission/ConcurrentGoalLedger，原账本事务内原子检查调用名额与结算＋in-flight上界，短文件锁不包住网络；进程owner lease＋请求所有权区分在途/unknown，query退出或进程崩溃保留预留并停新调用，已派发仍记录真实回执。7专项含三线程、额度竞争、prepared停派发、真实子进程强退及原模型类集成通过；完整618项26.223s通过。仅本地，HTTP/store串行锁仍在，当前49161冻结v2未改；Goal仍43调用/USD0.056704/new unknown0。下一项请求状态隔离＋最终发布代次检查后统一接线，不能据此宣称并发或3秒达标。见query-goal/CONCURRENT_ADMISSION.md。
+
+2026-10-13 AUTH036 / ADR094：继续并发前置安全修复，authority.state_lock与pilot.lock统一；完整native read前复制资源/映射，回写前对比当前版本/正文/定位/tenant/active，变化返回unknown且保留新发布，避免未来缩小外锁后旧响应回滚状态。未移除HTTP/store/Goal整查询锁，非已支持并发。离线两线程负对照7个预期失败；保护后2项、完整611项26.878s通过。运行实例仍冻结structured-v2（365b5decf187），本次代码未加载；43调用/USD0.056704、新unknown0，无新费用/源写/重启。下一步请求隔离和原子预算预留；3秒/浏览器/G1/G2仍未完成。证据query-goal/CONCURRENCY_SAFETY.md。
+
+2026-10-13 ADR093 / AUTH036：结构窗口以新s1 ID保留原文及标题偏移、表格/列表/相邻限定，旧窗口解析与History兼容；逐字引文按自然边界分段，不改模型提示词/权限/审计/预算。依据whole-v1 business_16实测缺陷，v2已见开发对照修复，非盲测。固定原生12题事实通过但完整3秒0/12，全局request/store与admission跨查询串行是三并发排队证据；不可直接删除锁或缓存allow。保持v2冻结与旧失败，停止相同候选收费重复，下一项先做隔离/阶段等价性本地审查。43模型/USD0.056704、新unknown0，最终native额度已用；详情STRUCTURED_WINDOWS_CONTRACT与VALIDATION_STRUCTURED_V2。
+
+2026-10-13 ADR092 / AUTH036：whole源审查契约将逐claim布尔列表改为完整段落别名选择＋selection_safe/question_covered，严格未知/重复别名、字段集合、两个true及必要操作段落；服务器逐字重构和parse复核，不生成或修复事实，保留原审查语义义务及旧模型解析器。精确类加入single出口白名单，其本地构造不外发，review/final仍重新鉴权。原生三题8.842/7.553/6.388s事实通过；冻结v1后12开发案例机械通过但business_16冗长断句是质量缺陷，不据此称完成。新candidate改结构须另记已见对照，不改冻结PLAN/失败原件。21调用/USD0.046237、新unknown0；浏览器工具ERR_BLOCKED_BY_CLIENT不绕过，仍无3秒/稳定性/G1/G2证明。回退对应covered/legacy已记录启动配置，账本历史不变。
+
+2026-10-13 ADR091 / AUTH036：新增opt-in四路完整原生读取与History批量本次鉴权。保留原生身份/正文/版本/子资源检查，无跨请求或跨阶段缓存allow；每批最多4、join后接纳下一批，unknown停止，HTTPS同上限。History按不可变资源去重本次读，窗口和当前存储版本先验证，全部权限/版本通过后保留原引文校验再返回原record，失败仍generic unavailable。默认serial，回退并发2/history serial不重置账本和历史。Drive热读取3.644→1.994s、同Q2History9.392→1.968s；分别仍12/25HTTP，0模型/费用；不冒称新问答3秒。578完整本地通过，证据query-goal/FOUR_READS_HISTORY.md。当前Goal8模型/USD0.040951、新unknown0；无新依赖、source写、scope、push/merge。
+
+2026-10-13 ADR090 / AUTH036：引入默认关闭的compact/covered模型输入及single源审查派发。compact只去除重复发送，不丢原文；covered为通用主题与操作结构的狭窄遗漏拒绝，保留必要段落完整文本，强制支持/覆盖/过滤完整性，不修复被拒绝输出，不能当通用业务oracle。single仅三个明确代码类；source_claims无外发，完整selected的review_dispatch在其之后，故省去构造前model_dispatch，保留before_model/最终/历史/引用检查；旧双调用禁用，默认legacy。50相关/564完整本地通过，首轮失败保留，审计valid断言加强后22通过；契约SINGLE_REVIEW_CONTRACT.md。当前真实Q1 54.732s/Q2 40.595s事实核对通过但慢，none两次Q1仍失败；不据局部原生请求116→88/102→77称整体优化完成。配置回退legacy输入/legacy派发/low，网络另可legacy/1，不回退账本历史。当前8模型/USD0.040951、新unknown0；最终验收未运行，继续已授权本地等价协议与覆盖设计，不盲目重复prompt测试。
+
+2026-10-13 ADR089 执行补充：真实Q2同正文由42.049→26.025s，四轮鉴权23.360→14.617s；模型自身17.860→10.666s波动单列。当前pooled/2/low8192仅一题native/model通过，非最终稳定候选。基线Q1 76.186s以8192reasoning耗尽失败，不增加cap、不隐去失败、不将evidence_only算答案。GoalLedger类型不兼容导致首次无模型停答，已真实类路径复现并委托同一BudgetLedger修复，保留原类型要求及计时；未知内部异常分类internal_service_unavailable，不暴露内部文本。最终528本地通过；5提交/4模型/USD0.023922、新unknown0。Drive原授权已由本人恢复。其余三秒/覆盖/稳定性要求继续，不据局部提速宣布Goal完成。
+
+2026-10-13 ADR089 / AUTH036 网络候选：仅连接生命周期复用，不缓存正文/ACL、不合并检查。每源HTTPS池上限2、idle15秒、origin/凭据隔离、完整成功读取才归还；TLS/no redirect/no retry保持，代理沿用原urllib，不直接绕过。独立opt-in每源完整read并发2、成对join、unknown后剩余记not-attempted，已在途可完成；只在正常bounded discovery上下文生效，全部join后按输入顺序更新，默认1回退。启动器要求并发2配有界池。代码/失败/测试/单源真实比较见query-goal；收益当前只证明四次同正文Confluence样本，未证明完整问答提速。成本无新依赖/模型调用；回退legacy/1且保留账本历史。Drive刷新400阻断后用户明确选择“现在方便，请打开原授权登录入口”，仅恢复原账号与原drive.readonly，验证身份后替换同一Keychain项；入口已打开，真实恢复状态待回调。不是新scope/新账号/业务源写入授权。
+
+2026-10-13 AUTH036 / 查询优化Goal：用户已将完整优化目标设置为active Goal，授权本地可逆开发及既有合成四源只读验证；核自有49161归属/空闲、备份后可加载/重启，不动8094/8100。新Goal最多60次实际模型调用、累计新增结算≤USD0.50、原USD20共享账本剩余额度约束，新unknown停接纳；独立Goal基线/计数，不重置任何旧admission/unknown。计划docs/reviews/2026-10-13-query-goal/PLAN.json冻结6基线/12诊断/36最终/6保留，按actual calls计；基线source-review low8192/none排名/旧urllib及后台正常。当前49161无listener，旧三admission/答案库/账本/entry控制共六产物已私有备份；账本原有2dispatched未知保留，不冒称本Goal造成。新增接纳类在每次reserve前复查实际calls/newunknown/成本及保守reservation余量，旧双调用不能越过上限；5专项/40相关通过，完整本地回归运行中。今日官方price实读仍Flash peak input0.30/output1.20 USD/M，PRICE_DATE更新10-13；运行基线/live/browser仍待实际结果。本授权不扩provider/embedding出口/依赖安装、源写、scope/账号、公开部署、push/merge/披露/提交，不自动代替G1/G2。
+
+2026-10-13 ADR088 / DEV-PERF-REVIEW-03：用户要求逐环节重新分析并争取完整答案≤3秒，后续确认不是首字/仅检索时间；同学权限条件未知。本轮进行无费用研究/离线分析，不扩模型/provider/费用、实例更新或外部操作。历史192/208次native HTTP与33/37秒授权wall，加本轮1048对象CPU23ms及完整fake190ms，支持先处理重复网络/连接复用和模型覆盖，再做结构切块/混合召回。AOCI-CODE已读官方README/对比并固定上游7586820，定位开发Agent代码认知而非四源员工RAG。报告docs/reviews/2026-10-13-query-optimization；连接池、阶段内去重、single response、来源内并发、紧凑模型输入和阶段重排均为候选，尚未实现/验证/上线。保留ADR087、八类变化阻断、旧双调用、权限/审计/预算；下一项优先本地连接复用，无新依赖。3秒设计预算不是SLA，不以快速空答/evidence_only/timeout代替成功，阶段合并须等价证明。未改runtime/重启/新native/model/发布，G1/G2不变。
+
+2026-10-13 ADR087 / DEV-SR-TIMING-02：用户明确同意上一轮“实现受限计时”，仅在独立本地分支实现默认off、操作员启动--timing-dir启用的私有诊断。复用Measurements/TimedNativeTransport，ContextVar按请求及阶段传播，span有界且只存白名单；真实请求出口、来源串行lane与ledger/锁不改语义。初始ObservedLock失败证明必须保留__enter__/__exit__而非假定acquire/release；已用ExitStack保留原协议、抑制异常和锁顺序。诊断完整写入后发布，clock/sink故障不改变业务返回、不重试模型。12专项/502最终整合通过，保留所有初始失败/历史误接受；原证据9文件不动。成本无新依赖/付费调用，回退为省略--timing-dir；没有计时HTTP接口、公开上传、trial重启或native性能验证。此决定不合并任何鉴权阶段，不改变provider/cap/价格日期/原unknown、也不扩大G1/G2或发布授权。
+
+2026-10-13 DEV-SR-CONTRACT-01 审查决定：用户在架构诊断后明确“可以”，落实本地契约审查、计时设计及三份首题固定反例，独立review/source-review-contract-20261013、基准1649e30；不扩大付费/来源/实例/发布授权。检查名称相邻不代表安全等价：原文构造期四类变化由review_dispatch阻断，模拟模型后四类变化由before_dispatch阻断。保持所有现有检查；专用单review出口合并只为未实现候选，须证明输入/版本/权限/审计/账本及旧双调用兼容。既有Measurements实际已存在，本轮设计复用而非声称缺失；完整计时接入尚未开始。新增测试离线重放v2 accepted但漏C01，明确parser通过不等于业务覆盖；原始9份response/result/audit hash固定，不改失败或推断未记录模型理由。5专项/56相关本地通过，无runtime改动或真实调用；审查证据docs/reviews/2026-10-13-source-review-dispatch。
+
 2026-10-11 ADR086 / AUTH035延续：用户明确“继续不要停”，同provider/原资料/成本基线下定向推进。v2 disabled原Q1 6338c118 review accepted但漏C01，记业务失败，不据accepted宣称修复；停止同类prompt叠加，采用原可用low推理作为单review回退，cap8192不变，不配置题集对比。新增--review-reasoning-effort仅none/low，low仅human source-review，旧none仍默认回退；19定向通过。实际启动后四源complete/current再调用：Q1 18a99f38 66.140s含timeout budget与批准failover procedure及顺序未知；Q2 cf6fd9c6 40.371s三部分完整；范围ba11fb5b 44.174s未扩pilot为GA，一题一次。原失败全部保留，非稳定率/真人验收。Q1 History/C01preview当前HTTP相同正文通过、0模型；新失败刷新被旧成功答案盖住的问题由整合回归发现并修复，相关HTTP/三Node通过，首轮full失败保留，修复后485完整本地25.091s通过。当前9提交/8调用、24688microUSD、新unknown无，旧账本/unknown不重置；G1/G2与录像仍团队执行。
 
 ADR085执行补充：按用户充分授权加载v2并进行一次原Q1验证，aac7a2fa真实retrieval/source_unconfirmed停止、0模型调用，未评价review质量；49本地只证明契约未放松。入口health与price readiness不等于startup来源全部就绪，后续付费验证须检查实际source状态；旧失败保留、不即时自动重提。当前5提交/4调用、新结算5216microUSD、newunknown无。

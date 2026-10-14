@@ -137,7 +137,7 @@ class HumanOpenAdmission(HumanRetestAdmission):
  def update_public(self,body):
   Admission.update_public(self,body);self.public['human_unlimited']=True
 
-def main(*, human=False, answer_style="synthesis", human_retest=False, human_open=False, review_reasoning_effort="none"):
+def main(*, human=False, answer_style="synthesis", human_retest=False, human_open=False, review_reasoning_effort="none", timing_dir=None):
  if review_reasoning_effort not in ('none','low') or (review_reasoning_effort!='none' and (not human or answer_style!='source-review')):
   raise ValueError('Review fallback requires human source-review with unchanged cap')
  if (human_retest or human_open) and (not human or answer_style!="source-review"):
@@ -217,11 +217,12 @@ def main(*, human=False, answer_style="synthesis", human_retest=False, human_ope
    current.engine.query=gate(current.engine.query,current.engine.model.ledger,state,human=human,**extra)
    return serve(*a,**kw)
   server.serve_forever=limited_serve;return server
+ timing_args=['--timing-dir',str(Path(timing_dir).absolute())] if timing_dir else []
  operator_web.create_server=create;os.chdir(private)
- return operator_web.main(['--source','multi','--config',str(repo/'.runtime'/'operator-bundle.json'),'--actor','eng_b','--oauth-client',str(repo/'.runtime'/'drive-oauth-client.json'),'--port','49161','--live','--model','deepseek','--credential-store','macos-keychain','--answer-style',answer_style,'--reasoning-effort',review_reasoning_effort,'--output-tokens','8192','--discovery-auth017'])
+ return operator_web.main(['--source','multi','--config',str(repo/'.runtime'/'operator-bundle.json'),'--actor','eng_b','--oauth-client',str(repo/'.runtime'/'drive-oauth-client.json'),'--port','49161','--live','--model','deepseek','--credential-store','macos-keychain','--answer-style',answer_style,'--reasoning-effort',review_reasoning_effort,'--output-tokens','8192','--discovery-auth017',*timing_args])
 if __name__=='__main__':
  import argparse,sys,re
- parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--human-retest',action='store_true');parser.add_argument('--human-open',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts','source-review'],default='synthesis');parser.add_argument('--review-reasoning-effort',choices=['none','low'],default='none');args=parser.parse_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--human',action='store_true');parser.add_argument('--human-retest',action='store_true');parser.add_argument('--human-open',action='store_true');parser.add_argument('--answer-style',choices=['synthesis','reviewed-excerpts','source-review'],default='synthesis');parser.add_argument('--review-reasoning-effort',choices=['none','low'],default='none');parser.add_argument('--timing-dir',help='Opt-in private local timing directory; default off');args=parser.parse_args()
  token_dir=Path(__file__).resolve().parents[1]/'.runtime/page-failure-ux-logs'
  token_dir.mkdir(mode=0o700,exist_ok=True)
  if token_dir.is_symlink():raise ValueError('Private entry directory must not be a symlink')
@@ -235,4 +236,4 @@ if __name__=='__main__':
    return sys.__stdout__.write(value)
   def flush(self):return sys.__stdout__.flush()
  sys.stdout=SafeOutput()
- raise SystemExit(main(human=args.human,answer_style=args.answer_style,human_retest=args.human_retest,human_open=args.human_open,review_reasoning_effort=args.review_reasoning_effort))
+ raise SystemExit(main(human=args.human,answer_style=args.answer_style,human_retest=args.human_retest,human_open=args.human_open,review_reasoning_effort=args.review_reasoning_effort,timing_dir=args.timing_dir))

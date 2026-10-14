@@ -36,6 +36,17 @@ class HTTP(unittest.TestCase):
         self.assertIn('Contact the operator', result['error'])
         self.assertNotIn('private details', json.dumps(result))
 
+    def test_internal_failure_is_not_mislabeled_as_source_authorization(self):
+        from unittest.mock import patch
+        self.login()
+        with patch.object(self.app.engine, 'query', side_effect=ValueError('private internal details')):
+            status, result = self.request('/api/query', {'question':'payment-service'})
+        self.assertEqual(status, 503)
+        self.assertEqual(result['code'], 'internal_service_unavailable')
+        self.assertEqual(result['run']['status'], 'failed')
+        self.assertNotIn('private internal details', json.dumps(result))
+        self.assertEqual(self.app.engine.model.calls, [])
+
     def test_health_startup_fingerprint_stays_fixed_after_disk_changes(self):
         from unittest.mock import patch
         from brain.runtime_version import runtime_version

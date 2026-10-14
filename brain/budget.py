@@ -51,7 +51,7 @@ class BudgetLedger:
     def _used(self):
         return self.db.execute("SELECT COALESCE(SUM(CASE WHEN state='settled' THEN actual WHEN state='cancelled' THEN 0 ELSE reserved END),0) FROM reservations").fetchone()[0]
 
-    def reserve(self, upper_bound, *, query_id=None, model=None):
+    def reserve(self, upper_bound, *, query_id=None, model=None, admission_check=None):
         if type(upper_bound) is not int or upper_bound <= 0:
             raise ValueError('Positive integer upper bound required')
         if ((query_id is None) != (model is None) or
@@ -60,6 +60,8 @@ class BudgetLedger:
                  or not isinstance(model, str) or not re.fullmatch(r'[a-z0-9-]{1,80}', model)))):
             raise ValueError('Server request ID and model required together')
         with self.transaction():
+            if admission_check is not None:
+                admission_check(self.db)
             if self.db.execute('SELECT blocked FROM budget WHERE id=1').fetchone()[0] or self._used() + upper_bound > self.limit:
                 raise BudgetExceeded('Pilot budget unavailable')
             request_id = uuid.uuid4().hex
@@ -69,8 +71,10 @@ class BudgetLedger:
                                 (request_id, query_id, model, 'pending'))
         return request_id
 
-    def dispatch(self, request_id):
+    def dispatch(self, request_id, *, admission_check=None):
         with self.transaction():
+            if admission_check is not None:
+                admission_check(self.db)
             row = self.db.execute('SELECT state FROM reservations WHERE id=?', (request_id,)).fetchone()
             if not row or row[0] != 'prepared':
                 raise ValueError('Request cannot be dispatched')

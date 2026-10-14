@@ -1,0 +1,55 @@
+{
+  "mode": "fixture_sources_live_model",
+  "runs": [
+    {
+      "revision": 1,
+      "results": [
+        {
+          "case": "business_03",
+          "expected": "not_established",
+          "actual": "not_established",
+          "semantic_pass": true,
+          "source_facts_retained": true
+        },
+        {
+          "case": "release",
+          "expected": "not_applicable",
+          "actual": "contradicted",
+          "semantic_pass": false,
+          "source_facts_retained": true
+        }
+      ],
+      "new_settlement_micro_usd": 622,
+      "model_calls": 2,
+      "candidate_accepted": false
+    },
+    {
+      "revision": 2,
+      "results": [
+        {
+          "case": "business_03",
+          "expected": "not_established",
+          "actual": "not_applicable",
+          "semantic_pass": false,
+          "source_facts_retained": true
+        },
+        {
+          "case": "release",
+          "expected": "not_applicable",
+          "actual": "not_applicable",
+          "semantic_pass": true,
+          "source_facts_retained": true
+        }
+      ],
+      "new_settlement_micro_usd": 656,
+      "model_calls": 2,
+      "candidate_accepted": false
+    }
+  ],
+  "budget": {
+    "calls": 47,
+    "new_settled_micro_usd": 57982,
+    "new_unknown": 0
+  },
+  "decision": "Do not adopt explained candidate; retain structured-v2 selector. Four targeted-quality calls exhausted. No further prompt repetitions planned. Original wording limitation remains visible."
+}

@@ -35,6 +35,13 @@ class LocalEntry(unittest.TestCase):
             self.assertIsNone(renew(self.root,check_only=True));kill.assert_not_called()
             self.assertEqual(self.token.read_text(),'old')
 
+    def test_reviewer_password_entry_does_not_issue_operator_ticket(self):
+        self.health['auth_kind']='reviewer'
+        with patch('scripts.local_entry.urlopen',side_effect=lambda *a,**k:self.response()), \
+             patch('scripts.local_entry.subprocess.run',return_value=Mock(stdout='p1234\nn127.0.0.1:49161\n')), \
+             patch('scripts.local_entry.os.kill') as kill:
+            self.assertIsNone(renew(self.root));kill.assert_not_called()
+
     def test_wrong_startup_or_listener_never_receives_signal(self):
         for wrong in ('startup','listener'):
             with self.subTest(wrong=wrong):
@@ -59,3 +66,17 @@ class LocalEntry(unittest.TestCase):
         with patch('scripts.local_entry.os.kill') as kill:
             with self.assertRaises(ValueError):renew(self.root)
             kill.assert_not_called()
+
+    def test_public_entry_checks_owned_local_process_with_exact_host(self):
+        from scripts.local_entry import entry_url
+        body=json.loads(self.control.read_text());body['public_origin']='https://contextledger.hellokyleshi.com'
+        self.control.write_text(json.dumps(body));self.health['auth_kind']='reviewer'
+        with patch('scripts.local_entry.urlopen',side_effect=lambda *a,**k:self.response()) as read, \
+             patch('scripts.local_entry.subprocess.run',return_value=Mock(stdout='p1234\nn127.0.0.1:49161\n')):
+            renew(self.root,check_only=True)
+            request=read.call_args.args[0]
+            self.assertEqual(request.full_url,'http://127.0.0.1:49161/api/health')
+            self.assertEqual(request.get_header('Host'),'contextledger.hellokyleshi.com')
+        self.assertEqual(entry_url(self.root),'https://contextledger.hellokyleshi.com/')
+        body['public_origin']='https://unapproved.example';self.control.write_text(json.dumps(body))
+        with self.assertRaises(ValueError):entry_url(self.root)

@@ -1,6 +1,18 @@
 # 实际实现与信任边界 · 2026-10-04
 
+13 October demo account update: engineer, product and partner are server-authenticated application personas. Their explicit resource policies are intersected with the team connection's current native permissions. All three can use the live-source demo; this does not demonstrate three independent native employee identities. The live model and original permission/version checks remain unchanged. See [reviewer access](REVIEWER_ACCESS.md).
+
+13 October selected final build: structured whole-passage selection, one DeepSeek Flash review, none reasoning/8192, pooled native reads up to four, batch History, serial queries with pre-lock session queue state. Experimental isolated3 and explained premise reviewer are disabled. Current configuration and measured limits: [FINAL_RUNBOOK](FINAL_RUNBOOK.md) and [FINAL_VALIDATION](reviews/2026-10-13-final-delivery/FINAL_VALIDATION.json). Dated configurations below remain historical.
+
+2026-10-13 whole-v1 opt-in已实现：模型选择完整段落别名＋语义安全/覆盖，服务器精确全文/引文及遗漏校验，单审查权限阶段不变。原生三题6.39–8.84秒，完整3秒未达；冻结12开发案例暴露归档窗口冗长断句，质量未完成。详见query-goal/WHOLE_SOURCE_CONTRACT.md。
+
+2026-10-13 opt-in AUTH036：每源read支持1/2/4并发，连接池匹配上限；History batch按资源/版本作本次原生检查并保留窗口/引文验证，默认serial可回退。真实同Q2历史9.392→1.968秒、25HTTP不变，非新问答3秒。见query-goal/FOUR_READS_HISTORY.md。
+
+2026-10-13 opt-in候选补充：compact/covered源审查输入与single派发（代码白名单，构造后完整review_dispatch）已实现；旧双调用及默认legacy不变。真实候选Q1/Q2为54.732/40.595秒，完整3秒未达；详见docs/reviews/2026-10-13-query-goal/SINGLE_REVIEW_CONTRACT.md与README.md。
+
 ## Current delivery candidate · 2026-10-11
+
+2026-10-13 local diagnostic increment (trial not updated): optional operator `--timing-dir` records bounded private request/lock/native-lane/model/ledger spans, default off, no product endpoint or source/model payload logging. Permissions, versions, audit and budgets are unchanged. 12 dedicated and 502 final local tests passed; real latency improvement/native trial loading not_run. Current implementation and failure records: [restricted timing](reviews/2026-10-13-restricted-timing/README.md).
 
 [Standalone 16:9 architecture diagram](../assets/submission/contextledger-architecture.svg), ready for material/video use.
 

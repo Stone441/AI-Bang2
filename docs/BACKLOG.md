@@ -1,5 +1,60 @@
 # Backlog · 2026-10-05
 
+2026-10-13 三角色真实四源版已切换：engineer/product/partner应用账号均可登录，共用获批eng_b原生连接并分别施加工程/产品5资源/外协1资源白名单。源码b6f2ffbadef0；四源当前可用，4项原生读取通过，三个账号登录与运行状态通过。新包378文件独立解压661项39.447s通过，7个前端DOM通过；本轮未自动提交live模型问答，人工USD1余额未使用，旧55调用/两笔unknown保留。实际角色真人问答/浏览器G1G2、公网部署和提交仍待完成；这是已批准的应用角色演示，不是三个原生员工权限矩阵。当前入口FINAL_HANDOFF/REVIEWER_ACCESS。
+
+2026-10-13 应用角色范围获批：用户明确回复“接受，用应用演示角色＋真实四源，清楚标注边界”。工程/产品/外部协作方使用独立应用账号，共用已批准eng_b源连接，在原生权限内施加精确资源白名单；不冒充三个原生员工身份。已加入请求级权限上下文，覆盖检索、授权/模型发送、最终返回、历史与预览，并记录双身份/策略摘要。人工USD1不供自动模型测试；不新增scope、provider、外部写或公开服务。原多原生身份缺口不再作为本轮应用角色交付的前置条件。
+
+2026-10-13 最新打包验证：团队评审账号版源码包（369文件）独立解压后 **655 项测试通过，35.746 秒**；原包与新包均保留，新增包SHA256 `dd6585f6919c05f2e7cb0a9de50ad8b62f80bb759db2755811368968e88d5fb9`。无新增真实模型调用。
+
+2026-10-13 团队/评委账号增量：用户批准本机人工试用取消次数上限、新增USD1，自动验收不使用；并选定固定账号密码按身份演示。新增服务端账号映射、scrypt密码、到期/撤销/会话revision、账号历史/引用隔离、关联有效源身份审计、HTTPS Origin/Secure Cookie配置；均不提权。654完整本地35.911s通过，另5项入口检查及7个前端DOM套件通过；三fixture角色真实HTTP问答通过。自有49161核闲/备份后更新，工程账号登录、人工余额USD1和四源complete/current已验，无新增live模型调用。原Goal55调用/USD0.062807及原2unknown保留，旧冻结包不改。真实四源仅eng_b完整；product/partner暂仅fixture，新增原生角色需要团队授权。当前准备的是新增账号版本，不等于公网部署或G1/G2。入口REVIEWER_ACCESS，部署缺口REVIEWER_DEPLOYMENT。
+
+2026-10-13 最终交付准备完成，最终待签核：用户在听取“原文正确但可能不主动解释错误前提”的具体示例后回复“可以”，明确接受该项比赛原型交付例外；不代表功能已修复、G1/G2通过或外部提交授权。其余可自主完成的开发、集成、验证与材料准备已收口。当前服务归属/健康、355文件源码包hash/CRC及原账本再次核验通过：52调用/USD0.060992/new unknown0，原2笔保留，剩余8次。无新增模型调用、重启、push/merge/上传。源码包保留冻结内容；最新质量接受记录见FINAL_HANDOFF及COMPLETION_AUDIT，包内较早pending记录为历史。
+
+2026-10-13 最终完整性审计：原打包主文档缺DEV09非秘密manifest链接，已补入最终包（355文件、sha b466d6ca971b），旧已测包私下保留。所有旧包内容逐字节沿用，未改代码/测试/数据；ZIP CRC、内部hash与四份主文档相对链接通过，不为仅添manifest重复642测试。逐条Goal审计见COMPLETION_AUDIT：技术包就绪，但前提解释要求仍未满足，等待已发用户例外决定；无答复不算同意。本轮无模型调用，服务归属健康检查通过，未重启/外部写/标完成。
+
+2026-10-13 ADR099 / 最终封版：已备份并确认原39081空闲退出，仅重启自有49161；最终source09f67454ef93，structured/none8192/single/pooled4/batch/serial，实验不启用。642本地31.131s通过；最终原生Q1/Q2=13.263/9.597s，三请求9.136/22.107/28.638s，5次核心事实通过、queued状态实见。History1.893s/preview0.749s原文一致且0模型；28602事件本地链有效、非独立签名。累计52调用/USD0.060992/new unknown0/原2保留。最终源码包354文件已独立解压642项30.084s通过，首次漏历史测试资料导致6errors的失败日志保留并修正；配置/演示/提交材料已对齐。前提解释仍未满足原要求，已集中询问是否接受交付例外；browser/G1/G2及外部动作未完成，Goal保持active而非完成。入口：[FINAL_HANDOFF](FINAL_HANDOFF.md)。
+
+2026-10-13 ADR098 / 前提解释有界诊断：新增可选explained单review严格enum＋已选证据别名契约，642完整本地30.947s通过。四次fixture源＋live模型诊断已耗尽专项4调用：v1正确区分撤回/拒绝但误把中性GA问句当断言；v2修正中性问句却遗漏03前提解释，均不采用，保留失败和冻结manifest。最终配置仍structured/serial，事实原文保留但前提纠正措辞仍为待签核限制，不宣称已修复。预算真实核47调用/USD0.057982/new unknown0，原2unknown保留；无native/浏览器调用/重启。架构SVG已更新none及实测范围并渲染检查，封面1600×900已目视检查。
+
+2026-10-13 ADR097 / 最终收口：HTTP合法query在等待原查询锁前创建session run，使queued阶段及elapsed可被刷新读取；原request/store锁仍覆盖refresh、模型、最终审计及响应发送，排队后重验session防退出后调用。非法字段/CSRF不创建run，同session409保持。新增3真实loopback测试通过，隔离路径14项通过，完整635项31.837s及6前端DOM通过；均本地fixture/mock，不是browser/native。未重启49161/新增费用，原structured-v2运行不变。
+
+2026-10-13 最终交付Goal接续：用户取消3秒硬门槛，目标改为可演示/可交接/可提交的最终待签核版本。选定structured/none8192/single/pooled4/history batch/window structured及serial查询，isolated3仅保留实验不启用。真实账本核43调用/USD0.056704/new unknown0/原2保留，剩余17在独立CLOSEOUT_PLAN重分配，旧PLAN不改。15份CodeBuddy证据哈希全匹配；SUBMISSION_CANDIDATE与DEMO_CANDIDATE已更新旧配置及过期耗时，原文归档保留。产品排队可见性、前提解释、最终封版/浏览器与材料核验仍in_progress，未宣称完成；本轮无API/模型调用、重启或外部写。入口：[最终交付清单](reviews/2026-10-13-final-delivery/README.md)。
+
+2026-10-13 AUTH036 / ADR096：isolated3可选请求隔离接入HTTP/试用启动器，默认serial；每请求独立Engine/证据快照，发布代次防ABA，模型发送与最终响应保留发布屏障，SQLite读取补锁。630完整回归29.109s通过；追加版本恢复/失效源专项10项0.132s通过。初始三并发503真实失败保留：完整上下文每调用预留>USD0.30，USD0.50上限不能容纳多路模型在途；拆分HTTP隔离证明与额度拒绝证明，未缩减预留或扩授权。下一项安全模型阶段排队/可证明预留上界，未启用live。49161未重启，仍43实际调用/USD0.056704/new unknown0；3秒目标未达，详见[REQUEST_ISOLATION](reviews/2026-10-13-query-goal/REQUEST_ISOLATION.md)。
+
+2026-10-13 AUTH036 / ADR095：新增未接线的ConcurrentPerformanceAdmission/ConcurrentGoalLedger，原账本事务内原子检查调用名额与结算＋in-flight上界，短文件锁不包住网络；进程owner lease＋请求所有权区分在途/unknown，query退出或进程崩溃保留预留并停新调用，已派发仍记录真实回执。7专项含三线程、额度竞争、prepared停派发、真实子进程强退及原模型类集成通过；完整618项26.223s通过。仅本地，HTTP/store串行锁仍在，当前49161冻结v2未改；Goal仍43调用/USD0.056704/new unknown0。下一项请求状态隔离＋最终发布代次检查后统一接线，不能据此宣称并发或3秒达标。见query-goal/CONCURRENT_ADMISSION.md。
+
+2026-10-13 AUTH036 / ADR094：继续并发前置安全修复，authority.state_lock与pilot.lock统一；完整native read前复制资源/映射，回写前对比当前版本/正文/定位/tenant/active，变化返回unknown且保留新发布，避免未来缩小外锁后旧响应回滚状态。未移除HTTP/store/Goal整查询锁，非已支持并发。离线两线程负对照7个预期失败；保护后2项、完整611项26.878s通过。运行实例仍冻结structured-v2（365b5decf187），本次代码未加载；43调用/USD0.056704、新unknown0，无新费用/源写/重启。下一步请求隔离和原子预算预留；3秒/浏览器/G1/G2仍未完成。证据query-goal/CONCURRENCY_SAFETY.md。
+
+2026-10-13 AUTH036 structured-v2：默认fixed回退，新增结构窗口/旧ID兼容和自然边界逐字引文。607完整本地26.238s通过，更新运行器4专项、6前端DOM及真实fixture HTTP wrapper通过（独立JS误缺URL失败日志保留）。冻结v2固定12开发案例机械事实通过/10live model；business_16无关archive/断词修复，business_03前提解释措辞仍有限。原生最终12题全返回关键事实，单题冷9.900/8.094/6.477s、热8.499/6.841/8.873s；三并发两组最慢26.922/24.905s，锁等待最高18.024s，完整3秒0/12、非browser/p95。原生History1.863s/preview0.839s当前复查且0模型，27823事件本地链有效但未独立签名。Goal累计43模型/USD0.056704新增结算，新unknown0、旧2保留；最终fixture余4实际调用、native12已用完，不继续无目的付费重复。当前49161源码365b5decf187、pooled/4/structured/none8192/single/history batch/window structured，原8094/8100未操作。浏览器ERR_BLOCKED_BY_CLIENT、G1/G2仍open；下一项只读审查全局锁/请求状态隔离与授权阶段等价性，先本地证明再提出最小进一步验证方案。详见query-goal/STRUCTURED_WINDOWS_CONTRACT.md及VALIDATION_STRUCTURED_V2.json。
+
+2026-10-13 AUTH036 whole-v1：模型选择完整段落别名，程序证明原文/引文映射并检查必要措施，保留语义安全及覆盖拒绝；原解析器/权限路径不改。原生Q1/Q2/SCOPE为8.842/7.553/6.388s、模型1.083/0.957/0.719s，固定事实核对通过（Q1与旧low六段相同），3秒未达、非browser/p95。583完整本地通过；冻结运行器13相关含unknown保留/停止通过。CANDIDATE_WHOLE_V1.json冻结，12作者开发案例机械事实通过（10live model+2无调用）；逐条读答案发现business_16无关长archive/断句、business_03未明确纠正前提，整体质量仍incomplete，保留v1后改结构切块。Goal累计21模型/USD0.046237、新unknown0，最终fixture余14实际调用、native12未用。当前49161 runtime9d26fabd2fa7，pooled/4/whole/none8192/single/history batch。浏览器工具本轮ERR_BLOCKED_BY_CLIENT，未绕过；冷热/三并发/前端/G1/G2未完成。详见query-goal/WHOLE_SOURCE_CONTRACT.md与VALIDATION_WHOLE_V1.json。
+
+2026-10-13 AUTH036 原生并发/History增量：每源完整read新增opt-in4、HTTPS最多4，保留每个原生检查/批次join/unknown停止/源cooldown，不缓存allow。原配置3个Drive文件热读并发2为3.643545s、4为1.994013s，均12HTTP且内容一致；冷读5.788908/1.969055s，小样本非SLA。新增默认serial可回退的History batch，本次资源/版本/窗口检查＋全套原生权限后才返回，失败generic unavailable；同一Q2历史HTTP9.392120→1.968095s，均25HTTP、完整record相同，0模型/费用。578完整本地25.844s通过。备份并核空闲后自有49161加载4b63a5a7f7c5（pooled/4/covered/low8192/single/history batch），四源current后只验证History，无新问答。累计仍9提交/8模型/USD0.040951、新unknown0，原2保留。新问题完整3秒未达，非browser/稳定性验收；下一项模型职责和覆盖契约、最终端到端/并发。详见query-goal/FOUR_READS_HISTORY.md及VALIDATION_FOUR_HISTORY.json。
+
+最新：compact/none Q1 20.054s accepted但漏实际措施，covered/none Q1 17.626s覆盖拒绝/evidence_only，均失败保留。新增lossless分组、狭窄措施遗漏检查、严格false-completeness拒绝；单review出口在代码白名单及构造后完整检查证明下省去构造前一轮，旧双调用不变。最终564本地26.021s通过，审计字段断言加强后22专项通过。真实single/covered/low Q1 54.732s含实际措施和未知最新顺序、Q2 40.595s五段文本与paired-v1一致；本次事实核对通过但不达3秒，且Q2慢于26.025s旧网络候选。Q1/Q2三轮授权11.648/12.249s、模型41.133/27.830s，仍不能宣称整体提速。当前49161 runtime307a19fe91e4，正常后台、pooled/2/covered/low8192/single，9提交/8模型/新增USD0.040951，新unknown0、旧2保留，最终36调用额度未使用。停止此候选的重复范围收费诊断，继续逐源协议及结构覆盖。浏览器/三并发/最终矩阵/G1/G2均open。详情query-goal README与VALIDATION_COMPACT_SINGLE.json。
+
+## 本地架构诊断后续 · 2026-10-13
+
+最新：Drive已恢复；DEV-PERF-TRANSPORT-04/NATIVE-05组合以同模型Q2实测26.025s，基线42.049s，五段文本一致，鉴权wall23.360→14.617s；仅一次，非完整3秒/稳定性。原Q1基线76.186s推理截断失败保留。最终528本地通过；5提交/4实际模型/新增USD0.023922、新unknown0，继续CONTEXT-06/CONTRACT-07及逐源等价读。浏览器/三并发/最终36调用预留验收尚未执行。
+
+AUTH036 Goal 已授权既有合成四源只读、49161备份后重启及最多60实际模型调用/新增USD0.50；旧表授权待定是历史快照。DEV-PERF-TRANSPORT-04已实现opt-in连接池，105相关/521完整本地通过及Confluence4次真实只读比较；DEV-PERF-NATIVE-05每源两路read候选23相关通过，native未加载；DEV-PERF-LIVE-08四源基线被Drive refresh400阻断，用户已同意原账号/原scope恢复登录。详见[Goal执行记录](reviews/2026-10-13-query-goal/README.md)。完整答案≤3秒仍未达到；结构证据及模型覆盖契约待推进。
+
+新增性能目标：完整正确答案生成并显示≤3秒，尚未实现/验证；同学2–3秒完整答案的源权限条件未知。逐环节分析、时间预算、验收和顺序见[查询优化报告](reviews/2026-10-13-query-optimization/README.md)。
+
+| ID | 范围 | 状态 / 依据 |
+|---|---|---|
+| DEV-PERF-REVIEW-03 | 全链路/AOCI研究、历史HTTP复算、48/1048本地测量及固定反例 | verified offline subset；192/208历史调用、33/37秒历史授权wall，1048明确题BM25等23ms/完整fake190ms；20次fake、9hash、5契约重放；无runtime改动/新native/model |
+| DEV-PERF-TRANSPORT-04 | opt-in有界持久连接池，本地连接复用与no redirect/credential/超时/429/无模型重试验收 | not_started；下一项本地候选，不预填native收益；默认旧transport回退 |
+| DEV-PERF-NATIVE-05 | 逐源等价read/阶段内去重/并发oracle | not_started；本地mock可推进，native具体授权待定；不合并现有鉴权阶段 |
+| DEV-PERF-CONTEXT-06 / CONTRACT-07 | 结构块/词项/上下文及紧凑模型契约/覆盖 | not_started；保持旧有效断言及双调用，embedding/provider/依赖另核授权 |
+| DEV-PERF-LIVE-08 | 最新私有spans＋固定少量native/model完整答案对比 | not_run；实例更新/自动付费测试需具体范围，AUTH034真人许可不自动扩大 |
+
+| ID | 范围 | 状态 / 依据 |
+|---|---|---|
+| DEV-SR-CONTRACT-01 | 单review派发契约审查、计时设计、固定三份首题反例 | verified local subset；5项新增/56项相关回归通过，历史9文件hash吻合；brain/scripts/web不改。审查与设计见docs/reviews/2026-10-13-source-review-dispatch/README.md，合并检查及真实提速not_run |
+| DEV-SR-TIMING-02 | 复用Measurements的请求/锁/授权lane/HTTP/model spans | verified local implementation（用户后续明确同意本地实现）；默认off/--timing-dir，12专项与502整合通过，失败日志保留；实现见docs/reviews/2026-10-13-restricted-timing。trial更新/native/live性能/browser均not_run，不删除检查或重启付费测试 |
+
 ## 本轮交付 · 2026-10-11（以此范围推进，历史快照保留）
 
 | 类别 / ID | 产品能力或交付物 | 当前状态 / 完成依据 |

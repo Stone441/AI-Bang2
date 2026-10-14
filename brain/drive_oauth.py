@@ -180,7 +180,7 @@ class ReauthorizationRequired(SourceUnavailable):
     pass
 
 
-def refresh_access(client, refresh_token, *, transport=None):
+def refresh_access(client, refresh_token, *, transport=None, with_expiry=False):
     if not valid_token(refresh_token):raise SourceUnavailable()
     status,data=(transport or TokenTransport()).exchange({'client_id':client.client_id,
         'client_secret':client.client_secret,'refresh_token':refresh_token,'grant_type':'refresh_token'})
@@ -190,7 +190,7 @@ def refresh_access(client, refresh_token, *, transport=None):
             or data.get('scope','').split()!=[SCOPE] or not valid_token(data.get('access_token'))
             or type(data.get('expires_in')) is not int or not 0<data['expires_in']<=86400):
         raise SourceUnavailable()
-    return data['access_token']
+    return (data['access_token'], data['expires_in']) if with_expiry else data['access_token']
 
 
 def verify_account(token, email, transport):
@@ -205,3 +205,25 @@ def verify_account(token, email, transport):
             or not re.fullmatch(r'[A-Za-z0-9_-]{1,200}',user['permissionId'])):
         raise SourceUnavailable()
     return Delegation(user['permissionId'], 'Bearer ' + token)
+
+
+class RenewableDriveCredential:
+    """Refresh the same approved grant before expiry; never opens consent or falls back."""
+    def __init__(self, client, refresh_token, email, transport, account_id, *, clock=time.monotonic):
+        import threading
+        self.client,self.refresh_token,self.email,self.transport=client,refresh_token,email,transport
+        self.account_id=account_id;self.clock=clock;self.deadline=0;self.current=None
+        self.lock=threading.Lock()
+
+    def __call__(self):
+        with self.lock:
+            if self.current is not None and self.clock()<self.deadline:return self.current
+            self.current=None
+            started=self.clock()
+            token,lifetime=refresh_access(self.client,self.refresh_token,with_expiry=True)
+            credential=verify_account(token,self.email,self.transport)
+            if credential.account_id!=self.account_id:raise SourceUnavailable()
+            deadline=started+lifetime-min(60,lifetime/10)
+            if self.clock()>=deadline:raise SourceUnavailable()
+            self.current=credential;self.deadline=deadline
+            return credential

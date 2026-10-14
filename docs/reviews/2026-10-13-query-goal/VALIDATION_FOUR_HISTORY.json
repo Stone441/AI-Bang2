@@ -1,0 +1,162 @@
+{
+  "date_sgt": "2026-10-13",
+  "base_commit": "1649e301959b7eea7303fdda9ba0ee58a578d19e",
+  "dirty_worktree": true,
+  "full_correct_query_within_3s": false,
+  "validation": {
+    "full_tests": 578,
+    "seconds": 25.844,
+    "log": "history-four-full-local.log",
+    "exit_code": 0,
+    "related_tests": 53,
+    "related_log": "history-four-local-first.log",
+    "mode": "fixture mock local TLS not live model"
+  },
+  "drive_probe": {
+    "mode": "native_api_read_only_no_model",
+    "model_calls": 0,
+    "complete_answer_benchmark": false,
+    "samples": [
+      {
+        "configuration": "two_cold",
+        "seconds": 5.788908417103812,
+        "native_reads": 3,
+        "native_http_requests": 12,
+        "peak_full_reads": 2,
+        "all_allowed": true,
+        "same_content_as_first": true
+      },
+      {
+        "configuration": "four_cold",
+        "seconds": 1.9690546670462936,
+        "native_reads": 3,
+        "native_http_requests": 12,
+        "peak_full_reads": 3,
+        "all_allowed": true,
+        "same_content_as_first": true
+      },
+      {
+        "configuration": "four_warm",
+        "seconds": 1.9940128329908475,
+        "native_reads": 3,
+        "native_http_requests": 12,
+        "peak_full_reads": 3,
+        "all_allowed": true,
+        "same_content_as_first": true
+      },
+      {
+        "configuration": "two_warm",
+        "seconds": 3.643544999998994,
+        "native_reads": 3,
+        "native_http_requests": 12,
+        "peak_full_reads": 2,
+        "all_allowed": true,
+        "same_content_as_first": true
+      }
+    ],
+    "status": "completed"
+  },
+  "history_samples": [
+    {
+      "mode": "native_current_history_http_not_query_or_browser",
+      "seconds": 9.392119791009463,
+      "original_request_id": "01c5bed8aeec454bb08898f5072a96a3",
+      "same_record": true,
+      "model_call_delta": 0,
+      "goal_settlement_delta_micro_usd": 0
+    },
+    {
+      "mode": "native_current_history_http_not_query_or_browser",
+      "seconds": 1.968095124932006,
+      "original_request_id": "01c5bed8aeec454bb08898f5072a96a3",
+      "same_record": true,
+      "model_call_delta": 0,
+      "goal_settlement_delta_micro_usd": 0
+    }
+  ],
+  "history_timings": [
+    {
+      "file": ".runtime/query-goal-20261013/timings/3fa5d02bb02a421ca027a82b0947fed8.json",
+      "request_wall_seconds": 1.9669892499223351,
+      "incomplete": false,
+      "native_http_count": 25,
+      "authorization": [
+        {
+          "phase": "history",
+          "seconds": 1.9645440420135856
+        }
+      ]
+    },
+    {
+      "file": ".runtime/query-goal-20261013/timings/6b9adb7fdc104c3d8081f9237c12de6a.json",
+      "request_wall_seconds": 9.390886666020378,
+      "incomplete": false,
+      "native_http_count": 25,
+      "authorization": [
+        {
+          "phase": "preview",
+          "seconds": 0.7022711250465363
+        },
+        {
+          "phase": "preview",
+          "seconds": 1.8815947499824688
+        },
+        {
+          "phase": "preview",
+          "seconds": 0.7806174999568611
+        },
+        {
+          "phase": "preview",
+          "seconds": 0.9828990410314873
+        },
+        {
+          "phase": "preview",
+          "seconds": 1.853192999958992
+        },
+        {
+          "phase": "preview",
+          "seconds": 0.7639011249411851
+        },
+        {
+          "phase": "preview",
+          "seconds": 1.7962320829974487
+        },
+        {
+          "phase": "preview",
+          "seconds": 0.6277796669164672
+        }
+      ]
+    }
+  ],
+  "runtime": {
+    "startup_source_sha256": "4b63a5a7f7c55a5246dfaf0608cb630bc66081af1b1b00d16f9df1251aeb9d2f",
+    "process_loaded_at": "2026-10-13T05:22:26.458036+00:00",
+    "meaning": "Startup source snapshot; static UI can change independently. No hot reload."
+  },
+  "configuration": {
+    "source_transport": "pooled",
+    "source_concurrency": 4,
+    "reasoning_effort": "low",
+    "source_review_input": "covered",
+    "source_review_dispatch": "single",
+    "history_read_mode": "batch",
+    "plan_sha256": "abec12691f5ceda27d64e0fb8a2c160a00d49d4b67e1580bbd0347bcf2e37b65",
+    "proxy_behavior": "original urllib route; no direct proxy bypass"
+  },
+  "goal_calls": 8,
+  "goal_new_settlement_micro_usd": 40951,
+  "new_model_calls_this_increment": 0,
+  "new_unknown": 0,
+  "files": {
+    "brain/engine.py": "fa3109ba2112233b7b22b8d1247e757c44175ff5187dd01012c48922b211f6b0",
+    "brain/delegated_query.py": "50f9f6214e46a4d6048c121cc4eb4b046d161126e30c30f8b3b69b2906ff7e76",
+    "brain/http_pool.py": "f3ef711ba50a5a97fa1a1640288d45d16c94fb427692803e863a70ac7e40b0c0",
+    "brain/operator_web.py": "2b08095395752e75f75e34b17cd52db6521c3d1d645b69b80bf838ca3979d439",
+    "scripts/performance_trial.py": "37b1761d42b73f3eb6922f28396ad12f6ddf1ce5d389a28d55d40c5aae3d91ac",
+    "scripts/performance_history_probe.py": "80e4076e9a80d8239b41cb2492440a99986fadac6009ec3a3d6f544b520877ad",
+    "scripts/performance_drive_concurrency_probe.py": "0621004d344a0708c00cdae871744f5e8fff9c85d959a318e8b2233feb37c9ac",
+    "tests/test_batch_history.py": "e2ca30be958bc985dc7a0e66a94f258a0c3aebb9fe10d50bf963e51012e71ee7",
+    "tests/test_paired_authorization.py": "9275b50ed3449429d03ba7b3621bcaac5373156a24b28424f4f063ffafd937be",
+    "tests/test_http_pool.py": "7a001f1b5127f7a1b8574cc9e5ad0c437289e372e98f6887c719e834b58dbeee"
+  }
+}

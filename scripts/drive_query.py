@@ -72,6 +72,8 @@ def complete_oauth_reader(reader, config, client_path, actor, *, client=None, cr
                 print('Drive: saved authorization expired or revoked; only Google consent is needed again.',flush=True)
             else:
                 reader.delegations[actor]=verify_account(token,email,reader.transport)
+                from brain.drive_oauth import RenewableDriveCredential
+                reader.credential_providers={actor:RenewableDriveCredential(client,refresh,email,reader.transport,reader.delegations[actor].account_id)}
                 print('Drive: reused read-only authorization and verified native account.',flush=True)
                 return reader
     def notify(url):
@@ -81,6 +83,8 @@ def complete_oauth_reader(reader, config, client_path, actor, *, client=None, cr
         grant=authorize(client,email,notify,offline=True)
         reader.delegations[actor]=verify_account(grant['access_token'],email,reader.transport)
         credential_store.put('drive',reader.tenant,actor,account,grant['refresh_token'])
+        from brain.drive_oauth import RenewableDriveCredential
+        reader.credential_providers={actor:RenewableDriveCredential(client,grant['refresh_token'],email,reader.transport,reader.delegations[actor].account_id)}
     else:
         token = authorize(client,email,notify)
         reader.delegations[actor] = verify_account(token,email,reader.transport)

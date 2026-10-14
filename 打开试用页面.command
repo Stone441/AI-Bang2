@@ -6,16 +6,16 @@ from pathlib import Path
 root=Path(__file__).resolve().parent
 
 def main():
-    from scripts.local_entry import renew
+    from scripts.local_entry import renew,entry_url
     if '--check' in sys.argv:
         renew(root,check_only=True)
-        print('入口实例检查通过；双击可刷新一次性入口。未打开浏览器，未提交问题。')
+        print('入口实例检查通过；双击可打开当前登录入口。未打开浏览器，未提交问题。')
         return
     token=renew(root)
     if '--refresh-only' in sys.argv:
-        print('一次性入口已在本机刷新；未打开浏览器，未提交问题。')
+        print('本机登录入口已准备；未打开浏览器，未提交问题。')
         return
-    subprocess.run(['/usr/bin/open','http://127.0.0.1:49161/#ticket='+token],
+    subprocess.run(['/usr/bin/open',entry_url(root)+('#ticket='+token if token else '')],
                    check=True,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     print('页面已交给默认浏览器打开。登录码不会显示在终端。')
 

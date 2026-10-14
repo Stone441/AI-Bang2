@@ -1,0 +1,97 @@
+EE.......EE.........................................
+======================================================================
+ERROR: test_change_immediately_after_selection_is_still_rejected_before_egress (test_single_review_dispatch.SingleCompact.test_change_immediately_after_selection_is_still_rejected_before_egress) (outcome='version')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_single_review_dispatch.py", line 72, in test_change_immediately_after_selection_is_still_rejected_before_egress
+    answer = engine.query(Actor('eng_b'), 'payment-service incident runbook')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 117, in query
+    return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 254, in _query
+    draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage,observe_model)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 86, in generate_with_provenance
+    return self.generate_with_authorization(question, evidence, request_id, authorize,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                            provenance=provenance, observe=observe)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 357, in generate_with_authorization
+    review=reviewer.generate(question,evidence,request_id=request_id,
+        provenance=provenance,observe=observe,stage='review')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 268, in generate
+    raise ModelOutputRejected('Model output could not be supported by current evidence') from None
+brain.deepseek.ModelOutputRejected: Model output could not be supported by current evidence
+
+======================================================================
+ERROR: test_change_immediately_after_selection_is_still_rejected_before_egress (test_single_review_dispatch.SingleCompact.test_change_immediately_after_selection_is_still_rejected_before_egress) (outcome='deleted')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_single_review_dispatch.py", line 72, in test_change_immediately_after_selection_is_still_rejected_before_egress
+    answer = engine.query(Actor('eng_b'), 'payment-service incident runbook')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 117, in query
+    return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 254, in _query
+    draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage,observe_model)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 86, in generate_with_provenance
+    return self.generate_with_authorization(question, evidence, request_id, authorize,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                            provenance=provenance, observe=observe)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 357, in generate_with_authorization
+    review=reviewer.generate(question,evidence,request_id=request_id,
+        provenance=provenance,observe=observe,stage='review')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 268, in generate
+    raise ModelOutputRejected('Model output could not be supported by current evidence') from None
+brain.deepseek.ModelOutputRejected: Model output could not be supported by current evidence
+
+======================================================================
+ERROR: test_change_immediately_after_selection_is_still_rejected_before_egress (test_single_review_dispatch.SingleCovered.test_change_immediately_after_selection_is_still_rejected_before_egress) (outcome='version')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_single_review_dispatch.py", line 72, in test_change_immediately_after_selection_is_still_rejected_before_egress
+    answer = engine.query(Actor('eng_b'), 'payment-service incident runbook')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 117, in query
+    return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 254, in _query
+    draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage,observe_model)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 86, in generate_with_provenance
+    return self.generate_with_authorization(question, evidence, request_id, authorize,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                            provenance=provenance, observe=observe)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 357, in generate_with_authorization
+    review=reviewer.generate(question,evidence,request_id=request_id,
+        provenance=provenance,observe=observe,stage='review')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 268, in generate
+    raise ModelOutputRejected('Model output could not be supported by current evidence') from None
+brain.deepseek.ModelOutputRejected: Model output could not be supported by current evidence
+
+======================================================================
+ERROR: test_change_immediately_after_selection_is_still_rejected_before_egress (test_single_review_dispatch.SingleCovered.test_change_immediately_after_selection_is_still_rejected_before_egress) (outcome='deleted')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/tests/test_single_review_dispatch.py", line 72, in test_change_immediately_after_selection_is_still_rejected_before_egress
+    answer = engine.query(Actor('eng_b'), 'payment-service incident runbook')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 117, in query
+    return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/engine.py", line 254, in _query
+    draft=self.model.generate_with_provenance(question,selected,rid,provenance,authorize_model_stage,observe_model)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 86, in generate_with_provenance
+    return self.generate_with_authorization(question, evidence, request_id, authorize,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                            provenance=provenance, observe=observe)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/synthesis.py", line 357, in generate_with_authorization
+    review=reviewer.generate(question,evidence,request_id=request_id,
+        provenance=provenance,observe=observe,stage='review')
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2/brain/deepseek.py", line 268, in generate
+    raise ModelOutputRejected('Model output could not be supported by current evidence') from None
+brain.deepseek.ModelOutputRejected: Model output could not be supported by current evidence
+
+----------------------------------------------------------------------
+Ran 50 tests in 1.529s
+
+FAILED (errors=4)

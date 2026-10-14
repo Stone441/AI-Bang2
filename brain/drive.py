@@ -54,7 +54,8 @@ class DriveReader:
         self.transport = transport or DriveTransport()
 
     def _credential(self, actor):
-        credential = self.delegations.get(actor.user_id)
+        provider = getattr(self, 'credential_providers', {}).get(actor.user_id)
+        credential = provider() if provider and actor.tenant == self.tenant else self.delegations.get(actor.user_id)
         if (actor.tenant != self.tenant or not isinstance(credential, Delegation)
                 or not credential.authorization.startswith('Bearer ')):
             raise SourceUnavailable()

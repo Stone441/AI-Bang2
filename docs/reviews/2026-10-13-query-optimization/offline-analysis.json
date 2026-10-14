@@ -1,0 +1,498 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-13 Asia/Singapore",
+  "head": "1649e301959b7eea7303fdda9ba0ee58a578d19e",
+  "source_hashes": {
+    "docs/reviews/2026-10-13-query-optimization/analyze.py": "baa8b130eacabeaccd07b8e264abb914d98a670b2680ba5f5e8f9bfb244b53a0",
+    "brain/__init__.py": "19670fa26966f5870aa5629b357ef7ef0b8538789667543343c42ed98aad5b16",
+    "brain/audit.py": "1215c1088c25f6305e3c6fb789c28491ea289a9aa0a054f85f39c39c1d00322b",
+    "brain/audit_query.py": "6cdc70aa02d460b4805e08bc2eb873c87366415a133f05e2eede6591dac5306b",
+    "brain/budget.py": "d829d2ba6c7715ebb2484a0311ebe63735a2bb20f4ab5e26085732566a581f79",
+    "brain/confluence.py": "4a17e125b055ed1c079cdd2d2e8b761afb11de064a4675647bc5560171fcab87",
+    "brain/confluence_query.py": "9a6fdad2b2b72123a9f31fda69ba8e84d399769f8dd56e9ec7d96a29e06d5417",
+    "brain/contracts.py": "a7ebdb91c1757dc101cbf9e0f0e8f19c830dbfdd812d662056a6b02ebf38bc38",
+    "brain/credential_input.py": "7736f24b27ad95d8751479144c3c9e52a80a836100e6551b14296fdab62620f4",
+    "brain/deepseek.py": "fb27f78ced76b88d920659de97ea5bed6231c4206ca9410e974075051edf6e4c",
+    "brain/delegated_query.py": "532c2c5b3dff8d04a6dcd400cf98d37345f39ffbb8c380a3f47c16fcd8d1d0b4",
+    "brain/discovery.py": "6d4d5ade03b1f828a62b0a2847c8176a5815399e3d836855ffe062309ad27f45",
+    "brain/drive.py": "24b121134cf04f41e9ae1a2bfe7f0fd9e9aaeed0b89b621320ea8c17abdd1f17",
+    "brain/drive_oauth.py": "4e72272cc0daaa1f290a12738e195594b0fd384e59227a8f0f038835c68cd86e",
+    "brain/engine.py": "c1e862170b361552541dc8cdc7e2209cae8aa27c7ac824515c965e7d5da3d55c",
+    "brain/ingestion.py": "727b72f0e7c23c86d145e45f6d37de73d9f3a6a9fa9fcc3a3a2bdc6cc0c1240a",
+    "brain/jira.py": "94dde8162ad799cdf0f48e5b49f0eadc4b2331713abe473ef21f6157fc463409",
+    "brain/keychain.py": "329010f678201d0e1592c658c6f5e0f220b71a4d602e2d395fc103dd216514a9",
+    "brain/model_receipt.py": "4055abbc3f8bd9804dcfedc49c2a440ad5fe08771ffd914b1b5f563f8238c431",
+    "brain/operator_web.py": "295b98c87b319832208151c49ab0b149f2e715690a132e0fa007d5cd3bebc04b",
+    "brain/retrieval.py": "816ffec4e8f29cf08396ed7580eedc9eaee54f741a85fada6fb9a765508c5a0d",
+    "brain/run_state.py": "711867a368fc2d270709b615811918f16103e754dd91ad5b46356b7205982bd7",
+    "brain/runtime_version.py": "f3cddf0e6da0a33e5e8c85512d2bfab3373b26627baa79a11ef117650ef51d91",
+    "brain/server.py": "ce1a72ff31c7f8a3b6ffdad4c2a1408a5b552a9c872fda27a51e2b3de8ad71ed",
+    "brain/slack.py": "da3c3973f41955f27e97d36b2b8d4bd40933b32695f2b6b38e8410627fbab059",
+    "brain/source_cooldown.py": "8760874f0e1898d298ed4d37fb7a7ee6d926056207fa10fd501b1b0d376059f7",
+    "brain/sources.py": "02b8f29842422938f87dcad4a9f75b25bf5ee24ce4c04067afe51915ec6a61fe",
+    "brain/store.py": "3a8b20e4dcdb49c362ad1f2dce8e66ae30c65d3fa12dd513cf025215ff888530",
+    "brain/synthesis.py": "54369d2c1ad57a6a73f3fa05e7521aee7aa4c11032ee52bf5829e9c083d5f45e",
+    "brain/synthetic_provenance.py": "1cd96724152507e90c5aa873c27520407d458e6d6a96c21d9f39897d77bfc396",
+    "brain/timing.py": "a8cba19e53b9c3b664fdc7d507a84cb9acbbf3d76326790457c8b339d78af651",
+    "scripts/business_validation.py": "8b6d341ce4c26476b0f8daed4bf560c32aa295ad25e3d28df04b469d70549ef7",
+    "fixtures/baseline.json": "1b04d5ee448771dbb8475d4cd5f8cd10b3b073f98058149070291b2b5f83c730"
+  },
+  "native_api_called": false,
+  "live_model_called": false,
+  "historical": {
+    "source_file": "evidence/runs/lock-contention-20261008/performance-comparison.json",
+    "sha256": "c5bc8bbbf18d7bea17334d153f62de00ede85e4af531b96e8968088e79862545",
+    "mode": "offline_reanalysis_of_historical_native_live_model_run",
+    "cases": [
+      {
+        "recorded_measurement": {
+          "case": "slack_latest",
+          "old_commit": "80b9ffcc757c1f42a7d37798383fdd2e0e846115",
+          "new_commit": "514831d538d82b7696126fca9587763402aabc19",
+          "mode": "native_api_live_model_synthesis",
+          "old_query_seconds": 78.2866576249944,
+          "new_query_seconds": 41.87323295796523,
+          "old_authorization_wall_seconds": 69.05188132688636,
+          "new_authorization_wall_seconds": 33.329167667077854,
+          "old_preview_seconds": 27.16634954197798,
+          "new_preview_seconds": 1.6457724579959176,
+          "old_preview_lock_wait_seconds": 25.521975666983053,
+          "new_preview_lock_wait_seconds": 3.7375022657215595e-05,
+          "generation_seconds": 6.4065010829945095,
+          "review_seconds": 2.099967999965884,
+          "native_http_cumulative_seconds": 70.78621120692696
+        },
+        "query_native_http_calls": 192,
+        "breakdown": {
+          "source": {
+            "slack": {
+              "calls": 84,
+              "worker_seconds": 23.720513583219144
+            },
+            "drive": {
+              "calls": 64,
+              "worker_seconds": 33.28861033305293
+            },
+            "confluence": {
+              "calls": 36,
+              "worker_seconds": 10.770119581837207
+            },
+            "jira": {
+              "calls": 8,
+              "worker_seconds": 3.006967708817683
+            }
+          },
+          "phase": {
+            "before_model": {
+              "calls": 48,
+              "worker_seconds": 17.783152876829263
+            },
+            "model_dispatch": {
+              "calls": 48,
+              "worker_seconds": 17.555319419014268
+            },
+            "review_dispatch": {
+              "calls": 48,
+              "worker_seconds": 17.805404204002116
+            },
+            "before_dispatch": {
+              "calls": 48,
+              "worker_seconds": 17.642334707081318
+            }
+          },
+          "endpoint": {
+            "auth.test": {
+              "calls": 28,
+              "worker_seconds": 7.36900653806515
+            },
+            "about": {
+              "calls": 16,
+              "worker_seconds": 4.66472212394001
+            },
+            "user/current": {
+              "calls": 12,
+              "worker_seconds": 3.2861622919444926
+            },
+            "myself": {
+              "calls": 4,
+              "worker_seconds": 1.417395249940455
+            },
+            "conversations.info": {
+              "calls": 28,
+              "worker_seconds": 7.912564672064036
+            },
+            "file_metadata": {
+              "calls": 32,
+              "worker_seconds": 13.147562251135241
+            },
+            "page_metadata": {
+              "calls": 12,
+              "worker_seconds": 3.6802756649558432
+            },
+            "issue": {
+              "calls": 4,
+              "worker_seconds": 1.5895724588772282
+            },
+            "conversations.history": {
+              "calls": 16,
+              "worker_seconds": 4.617803207074758
+            },
+            "page_body": {
+              "calls": 12,
+              "worker_seconds": 3.8036816249368712
+            },
+            "file_body": {
+              "calls": 16,
+              "worker_seconds": 15.476325957977679
+            },
+            "conversations.replies": {
+              "calls": 12,
+              "worker_seconds": 3.8211391660152003
+            }
+          }
+        }
+      },
+      {
+        "recorded_measurement": {
+          "case": "product_scope",
+          "old_commit": "80b9ffcc757c1f42a7d37798383fdd2e0e846115",
+          "new_commit": "514831d538d82b7696126fca9587763402aabc19",
+          "mode": "native_api_live_model_synthesis",
+          "old_query_seconds": 97.22518299997319,
+          "new_query_seconds": 51.22614904202055,
+          "old_authorization_wall_seconds": 75.00890303403139,
+          "new_authorization_wall_seconds": 37.1072380010155,
+          "old_preview_seconds": 25.540016625018325,
+          "new_preview_seconds": 2.034467915946152,
+          "old_preview_lock_wait_seconds": 24.95522170799086,
+          "new_preview_lock_wait_seconds": 0.0019724590238183737,
+          "generation_seconds": 9.879031334014144,
+          "review_seconds": 4.190700625011232,
+          "native_http_cumulative_seconds": 80.47917675430654
+        },
+        "query_native_http_calls": 208,
+        "breakdown": {
+          "source": {
+            "slack": {
+              "calls": 84,
+              "worker_seconds": 23.258397501253057
+            },
+            "confluence": {
+              "calls": 36,
+              "worker_seconds": 11.386929711152334
+            },
+            "drive": {
+              "calls": 64,
+              "worker_seconds": 37.04552920896094
+            },
+            "jira": {
+              "calls": 24,
+              "worker_seconds": 8.788320332940202
+            }
+          },
+          "phase": {
+            "before_model": {
+              "calls": 52,
+              "worker_seconds": 18.966961297031958
+            },
+            "model_dispatch": {
+              "calls": 52,
+              "worker_seconds": 20.69847803999437
+            },
+            "review_dispatch": {
+              "calls": 52,
+              "worker_seconds": 22.167201709002256
+            },
+            "before_dispatch": {
+              "calls": 52,
+              "worker_seconds": 18.646535708277952
+            }
+          },
+          "endpoint": {
+            "auth.test": {
+              "calls": 28,
+              "worker_seconds": 7.518914833955932
+            },
+            "user/current": {
+              "calls": 12,
+              "worker_seconds": 3.747187420085538
+            },
+            "about": {
+              "calls": 16,
+              "worker_seconds": 4.7552816269453615
+            },
+            "myself": {
+              "calls": 12,
+              "worker_seconds": 4.1509435418993235
+            },
+            "conversations.info": {
+              "calls": 28,
+              "worker_seconds": 7.537307834252715
+            },
+            "page_metadata": {
+              "calls": 12,
+              "worker_seconds": 3.7197973330621608
+            },
+            "issue": {
+              "calls": 12,
+              "worker_seconds": 4.637376791040879
+            },
+            "file_metadata": {
+              "calls": 32,
+              "worker_seconds": 12.990613499947358
+            },
+            "conversations.replies": {
+              "calls": 12,
+              "worker_seconds": 3.5770282920566387
+            },
+            "page_body": {
+              "calls": 12,
+              "worker_seconds": 3.919944958004635
+            },
+            "file_body": {
+              "calls": 16,
+              "worker_seconds": 19.299634082068224
+            },
+            "conversations.history": {
+              "calls": 16,
+              "worker_seconds": 4.625146540987771
+            }
+          }
+        }
+      }
+    ],
+    "limit": "Worker totals overlap concurrent authorization wall. Not a current run or SLA."
+  },
+  "counterexamples": [
+    {
+      "case": "v1_rejected",
+      "meaning": "coverage rejected; source continuation is not an answer success",
+      "elapsed_seconds": 29.630117084016092,
+      "required_source_supplied": true,
+      "required_source_cited": true,
+      "answer_status": "evidence_only",
+      "review_status": null,
+      "original_hashes_verified": true
+    },
+    {
+      "case": "v2_false_acceptance",
+      "meaning": "accepted but required C01 action absent; business failure",
+      "elapsed_seconds": 41.40351370803546,
+      "required_source_supplied": true,
+      "required_source_cited": false,
+      "answer_status": null,
+      "review_status": "accepted",
+      "original_hashes_verified": true
+    },
+    {
+      "case": "low_single_success",
+      "meaning": "required C01 action retained once; no stability estimate",
+      "elapsed_seconds": 66.13970708404668,
+      "required_source_supplied": true,
+      "required_source_cited": true,
+      "answer_status": null,
+      "review_status": "accepted",
+      "original_hashes_verified": true
+    }
+  ],
+  "local_cpu": [
+    {
+      "objects": 48,
+      "noise_objects": 0,
+      "mode": "fixture_fake_model_in_memory_sqlite",
+      "cases": [
+        {
+          "question": "What is the latest approved mitigation?",
+          "local_snapshot_topic_bm25": {
+            "samples": 5,
+            "min_seconds": 0.0003726669820025563,
+            "median_seconds": 0.0007270830683410168,
+            "max_seconds": 0.002174332970753312
+          },
+          "full_fixture_fake_query": {
+            "samples": 5,
+            "min_seconds": 0.00045191601384431124,
+            "median_seconds": 0.0012183340732008219,
+            "max_seconds": 0.0026246251072734594
+          },
+          "footprints": [
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            },
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            },
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            },
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            },
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            }
+          ]
+        },
+        {
+          "question": "What is payment-service code fix status and release scope?",
+          "local_snapshot_topic_bm25": {
+            "samples": 5,
+            "min_seconds": 0.0003903749166056514,
+            "median_seconds": 0.00042387505527585745,
+            "max_seconds": 0.0005304170772433281
+          },
+          "full_fixture_fake_query": {
+            "samples": 5,
+            "min_seconds": 0.0032440830254927278,
+            "median_seconds": 0.0034157090121880174,
+            "max_seconds": 0.004361041006632149
+          },
+          "footprints": [
+            {
+              "evidence_count": 10,
+              "evidence_characters": 1147,
+              "ranked_resource_count": 8
+            },
+            {
+              "evidence_count": 10,
+              "evidence_characters": 1147,
+              "ranked_resource_count": 8
+            },
+            {
+              "evidence_count": 10,
+              "evidence_characters": 1147,
+              "ranked_resource_count": 8
+            },
+            {
+              "evidence_count": 10,
+              "evidence_characters": 1147,
+              "ranked_resource_count": 8
+            },
+            {
+              "evidence_count": 10,
+              "evidence_characters": 1147,
+              "ranked_resource_count": 8
+            }
+          ]
+        }
+      ],
+      "audit_chain": {
+        "valid": true,
+        "events": 305,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "limit": "Authored repeated questions, small local sample. No native latency or model quality evidence; no p95 claim."
+    },
+    {
+      "objects": 1048,
+      "noise_objects": 1000,
+      "mode": "fixture_fake_model_in_memory_sqlite",
+      "cases": [
+        {
+          "question": "What is the latest approved mitigation?",
+          "local_snapshot_topic_bm25": {
+            "samples": 5,
+            "min_seconds": 0.011880250065587461,
+            "median_seconds": 0.012014959007501602,
+            "max_seconds": 0.01397370791528374
+          },
+          "full_fixture_fake_query": {
+            "samples": 5,
+            "min_seconds": 0.012030832935124636,
+            "median_seconds": 0.012196750030852854,
+            "max_seconds": 0.012243208009749651
+          },
+          "footprints": [
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            },
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            },
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            },
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            },
+            {
+              "evidence_count": 0,
+              "evidence_characters": 0,
+              "ranked_resource_count": 0
+            }
+          ]
+        },
+        {
+          "question": "What is payment-service code fix status and release scope?",
+          "local_snapshot_topic_bm25": {
+            "samples": 5,
+            "min_seconds": 0.022735374979674816,
+            "median_seconds": 0.023083000094629824,
+            "max_seconds": 0.02315233403351158
+          },
+          "full_fixture_fake_query": {
+            "samples": 5,
+            "min_seconds": 0.18811725010164082,
+            "median_seconds": 0.18959791702218354,
+            "max_seconds": 0.19885783409699798
+          },
+          "footprints": [
+            {
+              "evidence_count": 18,
+              "evidence_characters": 3092,
+              "ranked_resource_count": 1008
+            },
+            {
+              "evidence_count": 18,
+              "evidence_characters": 3092,
+              "ranked_resource_count": 1008
+            },
+            {
+              "evidence_count": 18,
+              "evidence_characters": 3092,
+              "ranked_resource_count": 1008
+            },
+            {
+              "evidence_count": 18,
+              "evidence_characters": 3092,
+              "ranked_resource_count": 1008
+            },
+            {
+              "evidence_count": 18,
+              "evidence_characters": 3092,
+              "ranked_resource_count": 1008
+            }
+          ]
+        }
+      ],
+      "audit_chain": {
+        "valid": true,
+        "events": 505,
+        "anchored_through": 0,
+        "signature_verified": false,
+        "boundary": "local chain only; independent signed checkpoint pending"
+      },
+      "limit": "Authored repeated questions, small local sample. No native latency or model quality evidence; no p95 claim."
+    }
+  ]
+}

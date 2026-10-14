@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "authorization": "AUTH036-query-goal-20261013",
+  "goal": "Complete correct answer rendered within 3 seconds, with unchanged security boundaries",
+  "model": "deepseek-flash",
+  "baseline_configuration": {"answer_style": "source-review", "reasoning_effort": "low", "output_tokens": 8192, "query_expansion": "none", "source_transport": "legacy_urllib", "background_discovery": true},
+  "max_model_calls": 60,
+  "max_new_settlement_micro_usd": 500000,
+  "allocation_actual_model_calls": {"baseline": 6, "targeted_candidate_diagnosis": 12, "final_candidate": 36, "human_or_exceptional_diagnosis_reserve": 6},
+  "native_questions": [
+    {"id": "Q1", "question": "What is the latest approved mitigation for the payment incident?", "oracle": "Supported runbook timeout-budget inspection and approved failover procedure retained; latest global ordering left unknown; no approval or scope expansion"},
+    {"id": "Q2", "question": "For payment-service, which code fix is complete, which preventive work remains in progress, and is general customer release approved?", "oracle": "PAY-102 Done, PAY-103 In Progress; pilot approved and GA not approved; code completion is not release approval"},
+    {"id": "SCOPE", "question": "Is payment-retry approved for general availability, or only a controlled pilot?", "oracle": "Controlled pilot only; GA not approved; no general release date invented"}
+  ],
+  "final_fixture_live_model_development_case_ids": ["cause", "withdrawn", "followup", "release", "no_information", "restricted", "business_03", "business_05", "business_06", "business_12", "business_16", "business_31"],
+  "final_allocation": {"fixture_live_model": "12 authored development cases, up to two repetitions = 24 single-review calls", "native": "3 questions cold, 3 warm, and two batches of 3 concurrent = 12 single-review calls"},
+  "rules": [
+    "Allocation is in actual calls, not questions; double-call paths consume two.",
+    "Baseline first pass Q1/Q2/SCOPE before deciding whether second baseline pass changes a decision.",
+    "Freeze candidate/configuration before final repetitions; do not tune against final-run outcomes and call them untouched validation.",
+    "New unknown stops admission and preserves all reservations; no automatic paid retries.",
+    "No new provider, egress, source writes, scopes, global installation, publish, push or merge.",
+    "If budget headroom cannot cover a conservative reservation, stop before dispatch rather than overshoot USD0.50.",
+    "Authored development cases are not blind holdout or native identity validation.",
+    "Full answer frontend render time is measured separately from server/CLI time; tool browser refusal is not bypassed."
+  ],
+  "price_review": {"date_sgt": "2026-10-13", "source": "https://api-docs.deepseek.com/quick_start/pricing/", "input_cache_miss_peak_usd_per_million": 0.3, "output_peak_usd_per_million": 1.2, "price_changed": false}
+}

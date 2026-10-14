@@ -1,0 +1,17 @@
+frontend_boot: exit 0
+PASS: valid refresh session wins over used ticket; expired session, invalid link and transient service failure distinguished; no query
+
+frontend_runtime: exit 0
+PASS: real elapsed timer, duplicate submit, stale query/runtime response, classified retry, preserved question, History/navigation/expiry cleanup
+
+frontend_refresh: exit 0
+PASS: refresh reconnects original work, elapsed and question; one fresh authorized result fetch, no model retry; failure and cross-session isolation
+
+frontend_operator_security: exit 0
+PASS: workspace navigation, denied preview, pending query and history navigation discard stale views
+
+frontend_history_stages: exit 0
+PASS: own question summaries load without source reads; explicit current-access answer opening, errors/empty states, no duplicate click; only actual observed stages
+
+frontend_audit_review: exit 0
+PASS: audit query races, stale pagination, repeated clicks, escaped payloads, version precision notice and navigation guards
