@@ -1,38 +1,30 @@
-# ContextLedger · final demonstration script
+# ContextLedger · seven-minute demonstration script
 
-13 October demo account update: engineer, product and partner are server-authenticated application personas. Their explicit resource policies are intersected with the team connection's current native permissions. All three can use the live-source demo; this does not demonstrate three independent native employee identities. The live model and original permission/version checks remain unchanged. See [reviewer access](REVIEWER_ACCESS.md).
+Updated 14 October 2026 for pd. [Previous script](reviews/2026-10-14-pd/prior-round8-demo.md) is historical. The local branch is not the older hosted build; choose the mode shown on screen and state it clearly. This script is prepared, not a recorded video or completed team viewing.
 
-Prepared 13 October 2026; actual final team viewing not yet run. This script uses the selected structured source-review configuration. [Older demo records](reviews/2026-10-13-final-delivery/prior-DEMO_CANDIDATE.md) are historical evidence, not current acceptance.
+## Setup
 
-## Operator setup
+1. Use Python 3.11+ and the [local lab guide](SCENARIO_LAB.md). Start a fresh isolated lab with `python3 -m scripts.scenario_lab`; open the printed loopback URL. No credentials, real sources or model charges are involved.
+2. For the regular question/audit workspace use the existing credential-free reviewer demo in identity-selector mode: `python3 -m scripts.reviewer_demo`. Select eng_a for questions and the scoped auditor for audit. Its source and model are synthetic/fake; do not present excerpts as generated AI conclusions.
+3. The optional sectioned-synthesis mode requires separate approved source/model configuration and budget. Until that is available, show its documented contract and explicitly labelled mock examples rather than claim a new live-model run.
+4. Use a fresh lab, retain any failed results, save the lab transcript before stopping. Do not touch a teammate’s source environment or reuse an active runtime database for rehearsal mutations.
 
-1. Use only the owned local 49161 instance. Before any update, verify listener ownership and idle status, back up persistent SQLite state/admission/configuration, and retain the original budget ledger and pending reservations. Do not touch 8094/8100.
-2. The selected startup command is below. It requires existing approved saved credentials and current model readiness; do not run a second instance against a live listener. The selected instance was backed up, restarted and verified on 13 October; original private usage and audit state were retained. Disaster recovery from restored databases was not exercised.
+## Presentation
 
-```bash
-python3 -m scripts.performance_trial --source-transport pooled --source-concurrency 4 --reasoning-effort none --source-review-input structured --source-review-dispatch single --window-strategy structured --history-read-mode batch --query-concurrency serial
-```
-
-3. Wait for all four sources to be complete/current, then use `打开试用页面.command` to obtain the existing private local entry. Do not paste tickets, credentials or private runtime files into submission materials.
-4. Use final viewing allocation from [CLOSEOUT_PLAN](reviews/2026-10-13-final-delivery/CLOSEOUT_PLAN.json). Questions below each consume a model call when dispatched; preview/History do not. No automatic retries.
-5. If browser automation remains blocked, a team member performs the same normal user steps. Do not use another automation route to bypass a tool denial. Record that browser validation remains pending until it actually happens.
-
-## Seven-minute presentation
-
-| Time | Exact narration and action | Evidence boundary |
+| Time | Action and narration | Evidence boundary |
 |---|---|---|
-| 0:00–0:40 | “An engineer needs the incident mitigation. A product colleague needs to know what can be offered today. Their evidence is spread across four systems. ContextLedger answers independent questions with current access checks and traceable sources.” Show cover and workspace. | State that all demonstration business data is synthetic. |
-| 0:40–1:50 | Ask: “What is the latest approved mitigation for the payment incident?” Say: “The answer must retain the supported timeout-budget inspection and approved failover procedure. It must also acknowledge when the sources cannot establish the globally latest ordering.” Open a supporting citation. | Show the actual answer and elapsed time; never replace a failed answer with an overlay. |
-| 1:50–2:50 | Ask: “For payment-service, which code fix is complete, which preventive work remains in progress, and is general customer release approved?” Say: “PAY-102 being Done and PAY-103 being In Progress answer different questions. A controlled pilot does not authorize general availability.” | Check the actual source scope and status; do not imply any general release date. |
-| 2:50–3:30 | Open Recent/History and a citation, then refresh/reopen the workspace. Say: “Saved answers are checked against current access and versions. Refresh does not silently purchase another answer.” | Record actual behavior. A new login may not recover in-memory run progress; stored answers remain in authorized History. |
-| 3:30–4:20 | Show clearly dated S-02 update and S-04 revocation evidence, then the labelled deterministic fixture walkthrough if useful. Say: “This replay shows why content updates and permission changes are separate. We retain the original mode and version of each result.” | No current source writes are authorized. Historical native replay and fixture/fake model are not a new live revocation test. |
-| 4:20–4:50 | Show S-03 fixture identity contrast. Say: “A denied question must not expose the existence or title of a restricted document. Model instructions cannot create access.” | Label fixture identities; do not claim the full native persona matrix passed. |
-| 4:50–5:40 | Show S-05 scoped audit and the genuine CodeBuddy contribution. Say: “The audit can reconstruct the request. CodeBuddy implemented an independent verifier for hash chains and signed checkpoints. Unsigned records and local key custody are disclosed limitations.” | Genuine screenshots/history only. A valid local chain is not independently tamper-proof. |
-| 5:40–6:30 | Show architecture. Say: “We preserved source structure, reduced model work to one evidence review, reused connections and bounded native concurrency. Our six baseline single queries completed in about six and a half to ten seconds over HTTP. The final Q1/Q2 checks took 13.26 and 9.60 seconds; the queued three-request group completed in up to 28.64 seconds.” | Do not call HTTP timing browser timing, or claim 3 seconds/production SLA. |
-| 6:30–7:00 | “The result is a synthetic enterprise prototype with inspectable evidence and explicit failure boundaries. The next production steps are broader source support, enterprise identity and independently managed audit custody.” End with limitations and questions. | No fabricated customer adoption or ROI. |
+| 0:00–0:35 | “An engineer needs an incident explanation; a product colleague needs release readiness. The evidence is spread across four systems. ContextLedger keeps the evidence, permission checks and audit connected.” Show cover. | Fictional business data; not Aspire internal documents. |
+| 0:35–1:35 | In the regular fixture workspace ask the engineering question and open a citation. Explain root cause versus withdrawn hypothesis and exact source versions. | Fake extractive mode is not live AI reasoning. Real-model demonstrations must use their actual mode and outcome. |
+| 1:35–2:25 | Ask the product question: code complete, pilot scope, GA date. Show the opt-in per-part example/contract and explain draft plus review. | The new mode is implemented and mocked; its real quality, cost and latency are not measured. |
+| 2:25–3:20 | In the lab run “Read the current runbook” then “Publish a changed runbook”. Expand the observed passages: version 2 includes the standby queue. Point to old preview/History blocking. | Direct synthetic event publication, not a native worker latency measurement. |
+| 3:20–4:05 | Run “Revoke access and check again”. Show new-query exclusion, old-preview blocking, old employee-History hiding, and continued access to other allowed evidence. | The operator transcript intentionally retains earlier fixture observations; employee endpoints deny later access. Previously displayed bytes cannot be recalled. |
+| 4:05–4:45 | Show the security challenge report: restricted versus absent probes, role spoofing, malicious retrieved instruction/link, forged citation, mid-generation revocation, unknown source, cross-user access and audit role. | Eight known fixture cases. This is not proof that a live model resists every prompt-injection attack. |
+| 4:45–5:45 | Run the lab audit stage; in the regular scoped explorer load all matching pages and expand the request timeline. Distinguish preparation, send attempt, usage, stored answer and delivery. Show the existing signed-checkpoint verifier result. | No fabricated missing stages or proof of recipient reading; local keys are not independent custody. |
+| 5:45–6:30 | Show the updated architecture and validation summary: 714 tests, 13 frontend suites, 19 offline groups; known-set necessary-evidence recall 11/18→18/18. | Recall is not answer correctness. No new native latency or ROI claim. |
+| 6:30–7:00 | “The prototype makes knowledge access inspectable. Next validation is the new model mode and real-platform update and revocation behavior.” Explain how the old single-review path and new two-call option differ. | Say which mode actually ran. Final tool-proof originals and team sign-off are pending. |
 
-## Final team viewing record
+## Team viewing checklist
 
-Record viewer, date, exact candidate fingerprint and mode. For Q1/Q2 note missing or incorrect facts, understandable wording, citation usefulness and complete-render elapsed time. Check first login, queue visibility, History/preview, refresh/reopen and one controlled local failure/recovery. Observe security scenes with their actual evidence modes. G1/G2 require explicit human decisions and remain open.
+Record viewer, date, exact source fingerprint, mode, question, actual result, citation usefulness and observed render time. Verify keyboard controls, login/identity contrast, history/preview, update/revocation, mixed/partial audit events and controlled failure. Retain failed samples. G1/G2 require actual team decisions; this script and browser automation do not replace them.
 
-Do not repeatedly ask all questions merely to obtain a cleaner recording. A failed run is evidence to diagnose, not footage to relabel as success. The optional video must use real screen content, remain 5–8 minutes and be checked for playback before it is called complete.
+For submission, obtain genuine CodeBuddy/WorkBuddy history and at least three genuine development screenshots from the declared originals. The manifest is present, but all 15 declared private files are absent locally. Lab screenshots cannot substitute. The optional finished video, if made, must be 5–8 minutes with real screen content and verified playback.

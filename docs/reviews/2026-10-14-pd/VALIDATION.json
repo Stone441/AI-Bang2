@@ -1,0 +1,103 @@
+{
+  "base_commit": "f333c299df38333da88d775ef00acd286f18dfe9",
+  "branch": "pd",
+  "worktree_dirty": true,
+  "mode": "fixture_and_mock_http_fake_model",
+  "full_tests": {
+    "count": 675,
+    "seconds": 43.19,
+    "status": "passed"
+  },
+  "frontend_suites": 8,
+  "competition_checks": [
+    {
+      "name": "five-scenarios",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 0.129,
+      "log": "five-scenarios.log"
+    },
+    {
+      "name": "four-source-lifecycle",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 0.128,
+      "log": "four-source-lifecycle.log"
+    },
+    {
+      "name": "continuous-sources",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 4.126,
+      "log": "continuous-sources.log"
+    },
+    {
+      "name": "version-recovery",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 3.736,
+      "log": "version-recovery.log"
+    },
+    {
+      "name": "application-permissions",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 3.837,
+      "log": "application-permissions.log"
+    },
+    {
+      "name": "account-isolation",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 6.181,
+      "log": "account-isolation.log"
+    },
+    {
+      "name": "answer-presentation",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 0.074,
+      "log": "answer-presentation.log"
+    },
+    {
+      "name": "signed-audit",
+      "status": "passed",
+      "exit_code": 0,
+      "elapsed_seconds": 0.293,
+      "log": "signed-audit.log"
+    }
+  ],
+  "source_hashes": {
+    "brain/engine.py": "b40216e198cddb40a0b49328696497aa9a07f5241035fdf4e7b53af106f1a3ec",
+    "web/app.js": "a31b8d5401471ad84354a82122801f3ea9db50ea0038a15a7395fc6c578f5b30",
+    "web/style.css": "79ba7e97f97bc55fe49b5cc7eb4999bfc0caf507001a1b0c359a16e10c0becfd",
+    "scripts/competition_check.py": "6de8da784e7e22a47510f79688b183532dcdc13d25b4df00403f3fdf9d83bf0c",
+    "tests/test_continuous_sources.py": "951a554907c4af86ed59b4fdbd8408eec14f60c1b7782c998f14893dd249c17d",
+    "tests/test_page_failure_ux.py": "2357ad332e3f2b0c0d28bba815c3f6f97f7451082118f552d8efe7d2c0f6439c",
+    "tests/test_competition_check.py": "88bdc09f0b8a5b25a8605274203294294ebc95fa534876239b54edd3de55df3f",
+    "tests/frontend_answer_sections.js": "fdba88815fb46e01aa2a98751003b14f4c8c08f6a651ad72e09eaa172250abbd",
+    "Makefile": "f120708316af7999f15878cd38ca36c638deee9154a385ff0d9b66a2e663624b"
+  },
+  "browser": {
+    "mode": "local_fixture_fake_model",
+    "actions": [
+      "login",
+      "release-readiness question",
+      "source-grouped answer",
+      "citation preview"
+    ],
+    "screenshot": ".runtime/pd-validation/answer-browser.png",
+    "test_server_stopped": true
+  },
+  "live_api": "not_run",
+  "live_model": "not_run",
+  "native_identity_mapping": "pending_team_handoff",
+  "deployment": "not_run",
+  "limitations": [
+    "Mock API timing does not establish native freshness or a latency SLA.",
+    "Application roles do not prove independent employee identities on four platforms.",
+    "Local signed audit rehearsal does not establish independent key/checkpoint custody.",
+    "DOM tests are not a browser or human usability review."
+  ],
+  "original_competition_report": ".runtime/pd-validation/competition/report.json"
+}

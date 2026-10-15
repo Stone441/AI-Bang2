@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-14",
+  "branch": "pd",
+  "scenario": "S-01",
+  "status": "verified_local",
+  "mode": "synthetic fixtures; scripted model outputs; no live calls",
+  "full_tests": {
+    "count": 698,
+    "seconds": 43.647,
+    "passed": true,
+    "log": "reasoning-full-tests.log"
+  },
+  "targeted_tests": {
+    "sectioned": 12,
+    "challenges": 6,
+    "passed": true
+  },
+  "competition": {
+    "groups": 14,
+    "successful": true,
+    "report": ".runtime/pd-reasoning-validation/competition-final/report.json"
+  },
+  "worksheet": ".runtime/pd-reasoning-validation/worksheet-final/report.json",
+  "challenge_count": 12,
+  "challenge_kind": "known development set, author references; not blind or model results",
+  "semantic_quality": "not_evaluated",
+  "live_model_calls": 0,
+  "native_api": "not_run",
+  "default_changed": false,
+  "deployed": false,
+  "committed": false,
+  "pushed": false,
+  "limitations": [
+    "Mandatory review fields are model judgments, not deterministic semantic checks.",
+    "Exact quotes and structure can be valid while conclusions are false; semantic review stays not_run.",
+    "Per-question supplied evidence does not measure retrieval or native permissions.",
+    "Reference wording changed after full run; six challenge tests and all fourteen gates rerun against final fixture.",
+    "No frontend changes this round; prior browser proof is not a new live-model evaluation."
+  ],
+  "sha256": {
+    "brain/sectioned_answer.py": "b2defeaa147ba03edbd005203dc07eced573653e308ae532136082e19ef8b86d",
+    "fixtures/answer_challenges.json": "29be1813e047bf0cc631020a8b47b6c4e8150feaee37259744efbd330ca4b6e2",
+    "scripts/answer_challenges.py": "f4ed05afece8dd14e0e96e18b866ff2eaf5de8d9b5b172d4e5e2fe761fa1224f",
+    "tests/test_sectioned_answer.py": "e17d7b9fd129686828c93beb3c6955c1d8c893b830ec014be1e79d5d08c48e6a",
+    "tests/test_answer_challenges.py": "df7cb4ac701cf9e8abcbc3c154f0c7f54a37ffee67a7970adf551bdeffd60e96",
+    "scripts/competition_check.py": "149f7defa18d6f163aeb2733038e9ec37270f5cbbb52d39960490ddd717eadad",
+    "tests/test_competition_check.py": "a34911b06a5e08af3cd5d4667e413b2eefbcab9fb878f311f7673929b11e2e09"
+  }
+}

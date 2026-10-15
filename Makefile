@@ -1,4 +1,9 @@
 .PHONY: test demo verify verify-lifecycle verify-retrieval verify-audit-mixed setup live live-synthesis
+.PHONY: verify-competition
+PYTHON ?= python3
+COMPETITION_OUTPUT ?= .runtime/competition-check
+verify-competition:
+	$(PYTHON) -m scripts.competition_check --output $(COMPETITION_OUTPUT)
 LIVE_PORT ?= 8088
 AUDIT_OUTPUT ?= .runtime/audit-mixed-review
 setup:

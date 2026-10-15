@@ -1,5 +1,35 @@
 # 实际实现与信任边界 · 2026-10-04
 
+
+## pd implementation update · 14 October 2026
+
+The local pd branch includes bounded bilingual lexical matching, exact evidence grouping and an opt-in sectioned-synthesis model path. The old hosted/native build has not been switched or revalidated. [Current SVG](../assets/submission/contextledger-architecture.svg) and [prior SVG](reviews/2026-10-14-pd/prior-round8-architecture.svg) distinguish current code from historical measurements.
+
+```mermaid
+flowchart LR
+  Sources[Four read-only source adapters] --> Sync[Incremental version publication]
+  Sync --> Index[(SQLite text / versions / local policy)]
+  UI[Browser / verified server session] --> Retrieval[Prefilter / BM25 / bounded bilingual glossary]
+  Index --> Retrieval
+  Retrieval --> Gate[Current source access and version checks]
+  Gate --> Choice{Explicit model mode}
+  Choice --> Existing[Existing reviewed source passages]
+  Choice --> Draft[Optional per-part synthesis draft]
+  Draft --> Recheck[Current access check before review]
+  Recheck --> Review[Support / coverage / premise / conflict review]
+  Existing --> Final[Exact support and final current access checks]
+  Review --> Final
+  Final --> Answer[Answer / safe History / preview]
+  Gate & Final & Review --> Audit[(Structured audit events)]
+  Audit --> Explorer[Scoped request timeline / original events]
+  Audit --> Verify[Offline signed-checkpoint verifier]
+  Lab[Separate loopback operator lab] --> Own[Own memory fixtures / fake model / Engine]
+```
+
+The lab has no route in the employee server and no live source/configuration input. Fixed local fixture actions simulate publication and revocation; they do not establish native background freshness. Its retained operator transcript is explicitly different from employee History. The scoped audit timeline displays only loaded events and retains mixed decisions; preparation, delivery attempts and reading remain distinct. All labels are rendered as text, not HTML. Source credentials, identity authority and current access stay outside model control.
+
+Local tests cover these behaviors; fake/scripted outputs do not establish semantic prompt-injection resistance or actual answer quality. Real platform update/revocation propagation, the optional model mode and independent identity/key custody remain unverified. Dated sections below describe earlier implementations and are retained for traceability.
+
 13 October demo account update: engineer, product and partner are server-authenticated application personas. Their explicit resource policies are intersected with the team connection's current native permissions. All three can use the live-source demo; this does not demonstrate three independent native employee identities. The live model and original permission/version checks remain unchanged. See [reviewer access](REVIEWER_ACCESS.md).
 
 13 October selected final build: structured whole-passage selection, one DeepSeek Flash review, none reasoning/8192, pooled native reads up to four, batch History, serial queries with pre-lock session queue state. Experimental isolated3 and explained premise reviewer are disabled. Current configuration and measured limits: [FINAL_RUNBOOK](FINAL_RUNBOOK.md) and [FINAL_VALIDATION](reviews/2026-10-13-final-delivery/FINAL_VALIDATION.json). Dated configurations below remain historical.

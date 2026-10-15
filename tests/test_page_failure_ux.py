@@ -61,6 +61,52 @@ class VersionRecovery(unittest.TestCase):
             events=[e for e in self.pilot.audit.export() if e['request_id']==answer['request_id']]
             self.assertEqual(sum(e['event_type']=='version_recovery' and e['payload']['result']=='started' for e in events),1)
 
+    def change_fingerprint_sources(self):
+        self.http['jira'].content['10015']['fields']['status']['name']='Done'
+        self.http['slack'].content[self.http['slack'].newts]['text']='[SYNTHETIC] novelty limited pilot; general availability not approved'
+
+    def test_jira_and_slack_changes_recover_without_restart(self):
+        prior=self.pilot.query(self.actor,'novelty')
+        self.pilot.engine.model.calls.clear()
+        thread=self.worker.thread
+        self.change_fingerprint_sources()
+        answer=self.pilot.query(self.actor,'novelty')
+        texts={e['source']:e['text'] for e in answer['evidence']}
+        self.assertIn('Done',texts['jira'])
+        self.assertIn('general availability not approved',texts['slack'])
+        self.assertEqual(len(self.pilot.engine.model.calls),1)
+        self.assertIs(self.worker.thread,thread)
+        self.assertTrue(thread.is_alive())
+        self.assertTrue(self.pilot.history(self.actor,prior['request_id'])[0]['unavailable'])
+        for e in prior['evidence']:
+            if e['source'] in ('jira','slack'):
+                with self.assertRaises(PermissionError):self.pilot.evidence(self.actor,e['evidence_id'])
+        events=[e for e in self.pilot.audit.export() if e['request_id']==answer['request_id']]
+        self.assertEqual(sum(e['event_type']=='version_recovery' and e['payload']['result']=='started' for e in events),1)
+
+    def test_fingerprint_change_cannot_mask_revocation_or_unknown(self):
+        self.change_fingerprint_sources()
+        for kind in ('revoked','unknown'):
+            with self.subTest(kind=kind):
+                if kind=='revoked':self.http['drive'].fail_native.add('FILE2')
+                else:self.http['drive'].identity_ok=False
+                with patch.object(self.pilot.authority,'recover_versions') as recover,self.assertRaises(SourceUnavailable):
+                    self.pilot.query(self.actor,'novelty')
+                recover.assert_not_called()
+                self.assertEqual(self.pilot.engine.model.calls,[])
+                self.http['drive'].fail_native.clear();self.http['drive'].identity_ok=True
+
+    def test_post_model_fingerprint_change_never_retries_model(self):
+        base=self.pilot.engine.model
+        original=base.generate
+        def generate(*args):
+            result=original(*args);self.change_fingerprint_sources();return result
+        with patch.object(base,'generate',side_effect=generate),patch.object(self.pilot.authority,'recover_versions') as recover:
+            with self.assertRaises(VersionChanged):self.pilot.query(self.actor,'novelty')
+        recover.assert_not_called()
+        self.assertEqual(len(base.calls),1)
+        self.assertEqual(self.store.history(self.actor.user_id),[])
+
     def test_continuous_change_stops_after_one_recovery(self):
         self.change();original=self.pilot.authority.recover_versions
         def recover(*args):original(*args);self.change()

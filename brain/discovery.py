@@ -18,6 +18,7 @@ AUTH017 = {'confluence':'131227', 'jira':'10001', 'slack':'C0C6R70SGG4',
            'drive':'1EMYjaNhzBFQ3TXHC6ukEwN6otVIIeOEv'}
 SLACK_TEAM = 'T0C6FQ246TF'
 SLACK_OLDEST = '1791142152.858189'
+SNAPSHOT_MAX_AGE_SECONDS = 120
 
 
 class DiscoveryFailure(SourceUnavailable):
@@ -422,7 +423,7 @@ class ContainerDiscovery:
                        or s not in self.published_at
                        for s in self.scope)):
             raise SourceUnavailable('Current source coverage unavailable; retry later')
-        if any(self.clock()-self.published_at[s]>120 for s in self.scope):
+        if any(self.clock()-self.published_at[s]>SNAPSHOT_MAX_AGE_SECONDS for s in self.scope):
             raise SourceRefreshing('Current source snapshot is refreshing; try later')
         return {rid:version for source in self.scope
                 for rid,version in self.published_versions[source].items()}

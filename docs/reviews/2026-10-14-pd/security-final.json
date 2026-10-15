@@ -1,0 +1,60 @@
+{
+  "created_at": "2026-10-14T12:01:24.285612+00:00",
+  "mode": "fixture_sources_fake_model",
+  "live_api": "not_run",
+  "live_model": "not_run",
+  "semantic_injection_resistance": "not_evaluated",
+  "total": 8,
+  "successful": true,
+  "checks": [
+    {
+      "id": "existence-probes",
+      "status": "passed",
+      "artifact": "existence-probes.json"
+    },
+    {
+      "id": "question-role-spoof",
+      "status": "passed",
+      "artifact": "question-role-spoof.json"
+    },
+    {
+      "id": "retrieved-instruction-and-link",
+      "status": "passed",
+      "artifact": "retrieved-instruction-and-link.json"
+    },
+    {
+      "id": "forged-citation",
+      "status": "passed",
+      "artifact": "forged-citation.json"
+    },
+    {
+      "id": "revoke-before-final-response",
+      "status": "passed",
+      "artifact": "revoke-before-final-response.json"
+    },
+    {
+      "id": "unknown-source",
+      "status": "passed",
+      "artifact": "unknown-source.json"
+    },
+    {
+      "id": "cross-actor-history-preview",
+      "status": "passed",
+      "artifact": "cross-actor-history-preview.json"
+    },
+    {
+      "id": "audit-role-boundary",
+      "status": "passed",
+      "artifact": "audit-role-boundary.json"
+    }
+  ],
+  "source_hashes": {
+    "security_challenges.py": "eb85d6145966d7d38830b0852a912bbebe41596679256e10bf2c549d26d3aa30",
+    "engine.py": "9d40437a670b6cc9cee47370960870ec0acee2639d1a553e0fbb6859141ae032"
+  },
+  "limitations": [
+    "Known fixture probes, not a proof against all attacks or timing leaks.",
+    "An extractive fake model cannot establish live-model prompt-injection resistance.",
+    "Previously lawfully displayed or sent content cannot be recalled."
+  ]
+}

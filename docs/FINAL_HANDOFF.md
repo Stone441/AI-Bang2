@@ -1,5 +1,7 @@
 # ContextLedger · 最终交接说明
 
+14 October pd local update: the remaining authorized local improvements are complete: isolated fixture lab, eight security probes, scoped audit timeline, bilingual retrieval and optional per-part model mode. See [local guide](SCENARIO_LAB.md) and [current submission candidate](SUBMISSION_CANDIDATE.md). This branch has not replaced the earlier hosted build. The new model mode/native behavior remain unverified; all 15 declared private tool-proof originals are missing locally. Dated deployment/account statements below describe earlier builds, not a fresh availability check.
+
 演示账号代表具体虚构人物：Blair（工程）、Morgan（产品与运营）、Jordan（外部协作方）。权限按账号配置，岗位标签不表示所有同岗位人员拥有相同权限。此次只改登录名和显示名，原密码、内部身份、历史与权限保持不变。
 
 2026 年 10 月 13 日。**本机已提供三个应用角色账号，接入真实四源和原有真实模型。** 在线入口已部署；用户授权代理代验已完成，未宣称 G1 真人观看或 G2 最终提交通过。

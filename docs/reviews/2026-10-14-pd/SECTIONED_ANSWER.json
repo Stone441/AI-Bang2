@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-14",
+  "branch": "pd",
+  "base_commit": "f333c29",
+  "status": "verified_local",
+  "scenario": "S-01",
+  "mode": "synthetic fixtures and scripted model outputs; NO LIVE MODEL",
+  "python": {
+    "tests": 690,
+    "seconds": 43.558,
+    "passed": true,
+    "log": "sectioned-full-tests.log"
+  },
+  "frontend": {
+    "suites": 11,
+    "passed": true,
+    "log": "sectioned-frontend.log"
+  },
+  "contract": {
+    "tests": 10,
+    "passed": true,
+    "log": "sectioned-unit.log"
+  },
+  "competition": {
+    "groups": 13,
+    "successful": true,
+    "raw_report": ".runtime/pd-sectioned-validation/competition/report.json"
+  },
+  "browser": [
+    "IAB local in-memory fixture",
+    "MOCK MODEL OUTPUTS label",
+    "three question parts and scoped insufficient notice",
+    "full supporting quote with pilot/GA limitations",
+    "history reopened with three parts"
+  ],
+  "screenshot": ".runtime/pd-sectioned-validation/sectioned-answer.png",
+  "live_model_calls": 0,
+  "deployed": false,
+  "pushed": false,
+  "limitations": [
+    "Mock output validation does not establish model semantic quality.",
+    "Opt-in mode; default and existing instance unchanged.",
+    "Two budgeted calls with evidence; live cost and latency not measured.",
+    "Real four-source environment and native revocation remain pending team handoff."
+  ],
+  "sha256": {
+    "brain/sectioned_answer.py": "88c15f2e777283e934d63017aa8bd5f292fb325b5992e5085259f899b0978ffa",
+    "brain/deepseek.py": "c82b4f3215ddb130607e0564b0a828b27bc14e1272dd57e923990a9750b1c67b",
+    "brain/engine.py": "9d40437a670b6cc9cee47370960870ec0acee2639d1a553e0fbb6859141ae032",
+    "brain/operator_web.py": "03c6ea57a5badccb8dfbd01f6eaee05e78b4ed35f0e74ee69d49af0a4a03b606",
+    "web/app.js": "96cf13678b66444924c84fe7567a23a751fa86fdcb7f32596156d18a9bbbf6b2",
+    "tests/test_sectioned_answer.py": "cee3e6ea552bc015a117a90bb57783bff9722a72bdc033f36b3d52fce3d1d6c5",
+    "tests/frontend_sectioned_answer.js": "c48efb92e3b32ef555ba2e7b7a4db56ee773def7da3cb7b22c19170176a92b2f",
+    "scripts/competition_check.py": "f959ff7ed759ca33d21830f54c6758f93f6770080cc346a800de6adde7a816c1",
+    "tests/test_competition_check.py": "3367ad0023ea8d0d6f889191212b39358e2ee60837462c65b240e8361234fd67"
+  }
+}

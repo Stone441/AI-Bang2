@@ -259,6 +259,7 @@ class DeepSeekEvidenceModel:
                     } for v in verdicts if isinstance(v,dict)]
             with span('model_output','deepseek'):
                 claims = self.parse_output(output, evidence)
+                metadata = self.validated_metadata(question,output,claims) if hasattr(self,'validated_metadata') else {}
         except Exception as error:
             # Parser messages are mapped locally; never persist arbitrary exception text.
             categories={'Grounding quote does not match current evidence':'quote',
@@ -276,7 +277,7 @@ class DeepSeekEvidenceModel:
         self.ledger.model_outcome(reservation_id, 'accepted')
         record('model_output_accepted')
         return {'claims': claims, 'uncertainties': [self.answer_notice],
-                'model_call': self.ledger.model_receipt(reservation_id)}
+                'model_call': self.ledger.model_receipt(reservation_id), **metadata}
 
     @staticmethod
     def synthetic_input_allowed(evidence, provenance):

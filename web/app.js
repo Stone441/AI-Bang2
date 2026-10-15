@@ -1,5 +1,6 @@
 'use strict';
 const $=id=>document.getElementById(id);
+const insufficientPartText='The provided evidence is insufficient to answer this part. This does not establish that the event or information does not exist.';
 let session=null,health=null,viewRevision=0;
 const viewToken=()=>({revision:viewRevision,session});
 const currentView=token=>token.revision===viewRevision&&token.session===session;
@@ -79,21 +80,40 @@ function renderStages(run){
     item.append(el('span',labels[state]||'Result not reported'));stages.append(item);
   }
 }
+function sourceTime(value){
+  if(typeof value!=='string'||!value.trim())return 'Not recorded';
+  const date=new Date(value);return Number.isNaN(date.getTime())?'Not recorded':date.toLocaleString();
+}
+function sourceCheckText(source){
+  if(source.mode==='fixture')return 'Synthetic data · native update timing not measured';
+  if(source.checking)return 'Checking source now';
+  const result={complete:'Latest check completed',failed:'Latest check failed',backlog:'Latest sync incomplete'}[source.last_check_result];
+  if(source.last_check_result==='complete')return result+' · '+sourceTime(source.last_successful_check_at);
+  return result?result+' · Started '+sourceTime(source.last_check_at):'Source check not confirmed';
+}
+function sourceSnapshotText(source){
+  if(source.mode==='fixture')return 'This demo does not check live platform changes';
+  if(source.snapshot_status==='current')return 'Recent source snapshot · access rechecked for every question';
+  if(source.last_check_result==='failed')return 'Latest content cannot be confirmed until the source recovers';
+  if(source.last_check_result==='backlog')return 'Sync incomplete · latest content cannot be confirmed';
+  return 'Snapshot needs a new check · latest content cannot be confirmed';
+}
 async function refreshRuntime(){
   if(!session)return;const owner=session,queryAtPoll=pendingQuery,sequence=++runtimeSequence;
   try{const r=await api('/api/runtime');if(session!==owner||sequence<runtimeApplied)return;runtimeApplied=sequence;
     $('runtime').hidden=false;renderAdmission(r.query_admission);
     const sourceMode=r.mode.includes('fixture')?'Synthetic fixture sources':r.mode.includes('mock_http')?'Mock source APIs':r.mode.includes('live_api')?'Native source APIs':'Source mode unconfirmed';
-    const modelName=r.model.startsWith('deepseek-flash')?'DeepSeek Flash':r.model==='fake-extractive-v1'?'Fake extractive model':r.model;
+    const modelName=r.mode.includes('mock_model')?'Mock model outputs':r.model.startsWith('deepseek-flash')?'DeepSeek Flash':r.model==='fake-extractive-v1'?'Fake extractive model':r.model;
     const answerMode=r.model.includes('reviewed-excerpts')?'Reviewed verbatim sources':r.model.includes('grounded-synthesis')?'Reviewed synthesis':r.model==='fake-extractive-v1'?'Synthetic excerpts':'Source excerpts';
     $('runtimeModel').textContent=modelName+' · '+sourceMode+' · '+answerMode;
     $('runtimeDetails').textContent=r.model+' · '+r.mode;
     const list=$('runtimeSources');list.replaceChildren();
     for(const source of r.sources){const card=el('div',undefined,'runtime-source');
       card.append(el('strong',source.source),el('span',source.configured?'Configured · '+source.mode:'Not configured'),
-        el('span',source.checking?'Checking now':source.last_check_at?'Last check: '+source.last_check_result+' · '+new Date(source.last_check_at).toLocaleTimeString():'Current source check unconfirmed'),
-        el('span',source.snapshot_status==='current'?'Local candidate snapshot current · access checked per question':'Current candidate snapshot unconfirmed'),
-        el('span',source.used_in_answer?'Cited in the last completed answer':'Not recorded as used in the last completed answer','muted'));list.append(card);}
+        el('span',sourceCheckText(source)),el('span',sourceSnapshotText(source)));
+      if(source.mode!=='fixture'&&source.last_check_result!=='complete'&&source.last_successful_check_at)card.append(el('span','Last complete sync: '+sourceTime(source.last_successful_check_at)));
+      if(source.mode!=='fixture'&&Number.isFinite(source.next_check_in_seconds))card.append(el('span','Next check due in '+Math.ceil(source.next_check_in_seconds)+' s','muted'));
+      card.append(el('span',source.used_in_answer?'Cited in the last completed answer':'Not recorded as used in the last completed answer','muted'));list.append(card);}
     if((!r.run||['completed','evidence_only'].includes(r.run.status)&&!savedQuestion()&&answerReference())&&resumeOnRuntime&&$('workspace').hidden===false){
       resumeOnRuntime=false;const reference=answerReference(),view=viewToken();
       if(reference&&$('question').value===resumeInputValue){
@@ -144,6 +164,9 @@ async function preview(id){
   try{
     const e=await api('/api/evidence/'+encodeURIComponent(id));if(!currentView(view))return;
     const body=$('previewBody');body.replaceChildren(el('h2',e.title),el('p',e.text),el('p',versionLabel(e),'muted'));
+    body.append(el('p','Source last edited: '+sourceTime(e.source_updated_at),'muted'),
+      el('p','Indexed locally: '+sourceTime(e.indexed_at),'muted'),
+      el('p','Access and version checked: '+sourceTime(e.checked_at),'muted'));
     const link=originalLink(e);body.append(link||el('p','Original platform link unavailable for this source.','muted'));
     body.append(diagnostics('Source diagnostics',el('p',e.evidence_id,'muted'),el('pre',JSON.stringify(e.locator,null,2))));
     $('preview').showModal();$('status').textContent='Current access checked. Exact source passage ready.';
@@ -157,6 +180,7 @@ async function preview(id){
 
 function modelLabel(answer){
   if(answer.answer_status==='evidence_only')return answer.answer_kind==='reviewed_excerpts'?'ANSWER BLOCKED · SOURCE EVIDENCE':'SYNTHESIS BLOCKED · SOURCE EVIDENCE';
+  if(answer.mode?.includes('mock_model'))return 'MOCK MODEL OUTPUTS';
   if(answer.model==='fake-extractive-v1')return 'FAKE MODEL';
   if(answer.model_call?.called===false)return 'NO MODEL CALL';
   if((answer.model_call?.called===true||answer.model_review?.called===true)&&answer.answer_kind==='reviewed_excerpts'&&answer.review_status==='accepted')return 'LIVE MODEL · REVIEWED SOURCES';
@@ -189,6 +213,17 @@ function answerStatus(answer){
   if(answer.model==='fake-extractive-v1')return 'Answer recorded. Authorized synthetic source excerpts; fake model.';
   return answer.model_call?.called===true?(answer.claim_format==='grounded_synthesis_v1'?'Answer recorded. Grounded synthesis and model review completed.':'Answer recorded. Live model selected authorized source excerpts.'):'Answer recorded. Model usage was not recorded.';
 }
+function answerTopics(question,groups){
+  // Navigation hints only; matches never assert facts, approval or semantic completeness.
+  const topics=[
+    ['Incident cause',/\b(?:cause|caused|root cause|why.*(?:incident|outage))\b|事故原因|根因|故障原因/i,/\b(?:root cause|caused|postmortem|hypothesis|incident report)\b|根因|事故原因|故障原因/i],
+    ['Response steps',/\b(?:runbook|mitigations?|remediation|procedures?|workarounds?|steps|actions)\b|处理步骤|缓解措施|操作手册|应急措施/i,/\b(?:runbook|playbook|mitigation|remediation|procedure|workaround|response steps)\b|操作手册|处理步骤|缓解措施|应急措施/i],
+    ['Work status',/\b(?:status|tickets?|follow[- ]?ups?|fix(?:es)?|completed?|done|blockers?)\b|任务状态|工单|修复|完成|后续任务/i,/\b(?:status|tickets?|follow[- ]?ups?|fix(?:es)?|done|in progress|blockers?)\b|任务状态|工单|修复|完成|后续任务/i],
+    ['Release scope',/\b(?:release|launch|rollout|pilot|availability|offer|customers?)\b|发布|上线|试点|所有客户|客户开放/i,/\b(?:release|launch|rollout|pilot|general availability|GA|eligibility)\b|发布|上线|试点|全面开放/i]
+  ];
+  return topics.filter(([,requested])=>requested.test(question||'')).map(([label,,matches])=>({label,
+    groups:groups.filter(group=>matches.test(group.searchText))}));
+}
 function renderAnswer(answer,target=$('answer')){
   target.replaceChildren();if(answer.unavailable){target.append(el('p',answer.message,'notice'));return;}
   if(answer.answer_status==='evidence_only'){const failure=el('div',undefined,'error-panel');failure.append(el('h2',answer.answer_kind==='reviewed_excerpts'?'Source answer was blocked':'Synthesis was blocked'),el('p','The model output did not pass validation. The original source passages below were checked for current access and version. They are not a validated summary; latest ordering is not inferred.'));target.append(failure);}
@@ -197,22 +232,79 @@ function renderAnswer(answer,target=$('answer')){
   main.append(el('h3',answer.question||'Question not recorded for this older answer.'));
   const date=typeof answer.answered_at==='string'?new Date(answer.answered_at):null;
   main.append(el('p',date&&!Number.isNaN(date.getTime())?'Answered '+date.toLocaleString():'Generation time not recorded for this older answer.','muted'));
+  const guide=el('nav',undefined,'answer-guide');guide.setAttribute('aria-label','Find evidence by question');
+  if(answer.answer_status!=='evidence_only'&&answer.claim_format!=='grounded_synthesis_v1')main.append(guide);
   const byId=new Map(answer.evidence.map(e=>[e.evidence_id,e]));
-  for(const c of answer.claims){
+  const parts=answer.answer_kind==='sectioned_synthesis'&&answer.claim_format==='grounded_synthesis_v1'
+    &&answer.review_status==='accepted'&&answer.answer_status!=='evidence_only'?answer.answer_parts:null;
+  if(parts){
+    main.append(el('p','Each part is answered separately. Expand its supporting quotes to check the conclusion.','muted'));
+    for(const part of parts){
+      const block=el('section',undefined,'answer-section');block.append(el('h3',part.question));
+      if(part.status==='insufficient')block.append(el('p',insufficientPartText,'notice'));
+      for(const index of part.claim_indices){
+        const c=answer.claims[index];block.append(el('p',c.text));
+        const quotes=el('details');quotes.append(el('summary','Exact supporting quotes'));
+        for(const support of c.supports)quotes.append(el('p',support.quote));block.append(quotes);
+        for(const id of c.evidence_ids){const link=el('button',byId.get(id)?.title||'Check source passage','citation');link.onclick=()=>preview(id);block.append(link);}
+      }
+      main.append(block);
+    }
+  }
+  const excerpts=answer.claim_format!=='grounded_synthesis_v1';
+  const groups=[];
+  let section=null,previousIds=null;
+  for(const [index,c] of (parts?[]:answer.claims).entries()){
+    // Keep source order and every qualification; group only adjacent identical citations.
+    const ids=JSON.stringify(c.evidence_ids);
+    if(!excerpts||ids!==previousIds){
+      section=el('section',undefined,'answer-section');
+      if(excerpts){
+        const sources=c.evidence_ids.map(id=>byId.get(id)).filter(Boolean);
+        section.append(el('h3',[...new Set(sources.map(e=>e.title))].join(' · ')||'Source passage'));
+        section.append(el('p',[...new Set(sources.map(e=>e.source))].join(' · '),'source-name'));
+        groups.push({section,title:sources.map(e=>e.title).join(' · ')||'Source passage',searchText:sources.map(e=>e.title).join('\n')});
+        section.setAttribute('tabindex','-1');
+      }
+      main.append(section);previousIds=ids;
+    }
     const block=el('div',undefined,'claim');block.append(el('p',c.text));
     if(c.supports?.length&&answer.answer_kind!=='reviewed_excerpts'){const quotes=el('details');quotes.append(el('summary','Exact supporting quotes'));for(const support of c.supports)quotes.append(el('p',support.quote),el('p',byId.get(support.evidence_id)?.title||'Source reference','muted'));block.append(quotes);}
-    for(const id of c.evidence_ids){const b=el('button',byId.get(id)?.title||'View source passage','citation');b.onclick=()=>preview(id);block.append(b);}main.append(block);
+    section.append(block);
+    if(excerpts)groups[groups.length-1].searchText+='\n'+c.text;
+    const next=answer.claims[index+1];
+    if(!excerpts||!next||JSON.stringify(next.evidence_ids)!==ids){
+      for(const id of c.evidence_ids){const label=excerpts&&c.evidence_ids.length===1?'Check source passage':byId.get(id)?.title||'View source passage';const b=el('button',label,'citation');b.onclick=()=>preview(id);section.append(b);}
+    }
   }
+  const topics=answerTopics(answer.question,groups);
+  if(topics.length&&groups.length){
+    guide.append(el('h3','Find in this answer'),el('p','Jump to matching source passages. Read the full passage and its limits before drawing a conclusion.','muted'));
+    for(const topic of topics){
+      if(topic.groups.length){
+        const item=el('details',undefined,'answer-topic');
+        item.append(el('summary',topic.label+' · '+topic.groups.length+' source section'+(topic.groups.length===1?'':'s')));
+        for(const group of topic.groups){
+          const link=el('button',group.title,'citation');
+          link.onclick=()=>{group.section.scrollIntoView({block:'start'});group.section.focus({preventScroll:true});};
+          item.append(link);
+        }
+        guide.append(item);
+      }else guide.append(el('p',topic.label+': no matching passage identified here. This does not establish the answer.','notice'));
+    }
+  }else guide.hidden=true;
   for(const u of answer.uncertainties)main.append(el('p',u,'notice'));
   const debug=diagnostics('Answer diagnostics',el('p','Receipt '+answer.request_id,'muted'));renderModelUsage(answer,debug);main.append(debug);
   side.append(el('h3','Key references'));
+  if(answer.evidence.length)side.append(el('p','Source edit time is when the content changed. Index time is when this local version was stored.','muted'));
   const citedIds=new Set(answer.claims.flatMap(c=>c.evidence_ids));
   const otherEvidence=diagnostics('Other checked evidence');let hasOtherEvidence=false;
   for(const e of answer.evidence){
     const card=el('div',undefined,'source-card');card.append(el('span',e.source,'source-name'));
     const b=el('button',e.title);b.onclick=()=>preview(e.evidence_id);
-    card.append(b,el('p',versionLabel(e)),el('p','Source updated '+new Date(e.source_updated_at).toLocaleString()),
-      diagnostics('Source diagnostics',el('p',e.evidence_id,'muted'),el('pre',JSON.stringify(e.locator,null,2)),el('p','Indexed '+new Date(e.indexed_at).toLocaleString())));
+    card.append(b,el('p',versionLabel(e)),el('p','Source last edited: '+sourceTime(e.source_updated_at)),
+      el('p','Indexed locally: '+sourceTime(e.indexed_at)),
+      diagnostics('Source diagnostics',el('p',e.evidence_id,'muted'),el('pre',JSON.stringify(e.locator,null,2))));
     if(citedIds.has(e.evidence_id))side.append(card);else{otherEvidence.append(card);hasOtherEvidence=true;}
   }
   if(hasOtherEvidence)side.append(otherEvidence);
@@ -287,6 +379,97 @@ function auditEvent(row){
   raw.append(el('summary','Event payload (browser view)'),el('pre',payload));item.append(raw);
   return item;
 }
+function auditTimeline(rows){
+  const labels={request_started:'Question received',candidate_evaluated:'Retrieval candidate recorded',
+    evidence_used:'Evidence prepared (not proof of sending)',model_dispatch_intent:'Model send intent recorded',
+    model_dispatch_attempted:'Model send attempted (delivery unknown)',model_usage_received:'Validated model usage received',
+    model_output_accepted:'Model output accepted',model_output_rejected:'Model output rejected',
+    generation_completed:'Generation completed',response_committed:'Answer stored',
+    response_dispatch_attempted:'Response delivery attempted (reading unknown)',request_failed:'Request stopped',
+    version_recovery:'Source version recovery recorded'};
+  const groups=[];
+  for(const event of [...rows].sort((a,b)=>a.seq-b.seq)){
+    const p=event.payload||{};
+    const label=event.event_type==='authorization_decided'?'Access check: '+(p.phase||'phase not recorded'):
+      labels[event.event_type]||'Recorded event: '+event.event_type;
+    const key=JSON.stringify([event.event_type,p.phase||'',p.stage||'']);
+    let group=groups.at(-1);
+    if(!group||group.key!==key){group={key,label,first:event,last:event,count:0,decisions:[]};groups.push(group);}
+    group.last=event;group.count++;
+    if(event.event_type==='authorization_decided')group.decisions.push((p.result||'unknown').toUpperCase());
+  }
+  const view=el('details',undefined,'audit-timeline');view.append(el('summary','Request timeline · '+groups.length+' recorded stages'));
+  view.append(el('p','Only loaded events are shown in sequence. Missing stages are not assumed complete. Times describe records, not user reading or verified delivery.','muted'));
+  const list=el('ol');
+  for(const group of groups){
+    const item=el('li');item.append(el('strong',group.label));
+    const decisions=[...new Set(group.decisions)].map(result=>result+': '+group.decisions.filter(d=>d===result).length).join(' / ');
+    if(decisions)item.append(el('p',decisions));
+    item.append(el('p','Events '+group.first.seq+(group.last.seq!==group.first.seq?'–'+group.last.seq:'')+
+      ' · '+sourceTime(group.first.timestamp)+(group.last!==group.first?' — '+sourceTime(group.last.timestamp):'')+
+      (group.count>1?' · '+group.count+' records':''),'muted'));
+    list.append(item);
+  }
+  view.append(list);return view;
+}
+function auditRequest(rows){
+  const first=rows[0],last=rows[rows.length-1];
+  const started=rows.find(e=>e.event_type==='request_started');
+  const committed=rows.filter(e=>e.event_type==='response_committed').at(-1);
+  const failed=rows.filter(e=>e.event_type==='request_failed').at(-1);
+  const answer=committed?.payload?.response;
+  const question=started?.payload?.query||answer?.question||'Question not present in loaded events';
+  const stopped=failed&&(!committed||failed.seq>committed.seq);
+  const outcome=stopped?'Request stopped':answer?.answer_status==='evidence_only'?'Source evidence only':committed?'Answer stored':'Outcome not present in loaded events';
+  const card=el('details',undefined,'audit-request');
+  card.append(el('summary',question+' · '+first.actor+' · '+outcome));
+  card.append(el('h3','Question'),el('p',question),el('p','Source identity: '+first.actor),
+    el('p','Request: '+first.request_id,'muted'),
+    el('p','Loaded event range: '+sourceTime(first.timestamp)+' — '+sourceTime(last.timestamp),'muted'));
+  const viewer=rows.find(e=>e.payload?.application_viewer)?.payload;
+  if(viewer)card.append(el('p','Application viewer: '+viewer.application_viewer+' · Role: '+(viewer.application_role||'Not recorded')));
+  card.append(auditTimeline(rows));
+  card.append(el('h3','Source authorization checks'));
+  const decisions=rows.filter(e=>e.event_type==='authorization_decided');
+  if(!decisions.length)card.append(el('p','No authorization decisions in loaded events.','muted'));
+  else{
+    const resources=new Map();
+    for(const event of decisions){const p=event.payload||{},key=JSON.stringify([p.source,p.resource_id]);if(!resources.has(key))resources.set(key,[]);resources.get(key).push(p);}
+    for(const checks of resources.values()){
+      const source=checks[0].source||'Source not recorded',resource=checks[0].resource_id||'Resource not recorded';
+      const results=[...new Set(checks.map(p=>(p.result||'unknown').toUpperCase()))];
+      const item=el('details');item.append(el('summary',source+' · '+resource+' · '+results.join(' / ')+' · '+checks.length+' checks'));
+      const phases=el('ul');
+      for(const p of checks)phases.append(el('li',(p.result||'unknown').toUpperCase()+' · '+source+' · '+resource+' · '+(p.phase||'Phase not recorded')));
+      item.append(phases);card.append(item);
+    }
+  }
+  card.append(el('h3','Evidence and model activity'));
+  const prepared=[...new Set(rows.filter(e=>e.event_type==='evidence_used').map(e=>e.payload?.evidence_id).filter(Boolean))];
+  card.append(el('p',prepared.length?'Evidence prepared: '+prepared.join(', '):'No prepared evidence IDs in loaded events.'));
+  const attempts=rows.filter(e=>e.event_type==='model_dispatch_attempted').length;
+  card.append(el('p','Model send attempts recorded: '+attempts+'. Preparation alone does not prove a send.','muted'));
+  const cited=[...new Set((answer?.claims||[]).flatMap(c=>c.evidence_ids||[]))];
+  card.append(el('p',cited.length?'Citations in stored answer: '+cited.join(', '):'No stored-answer citations in loaded events.'));
+  card.append(el('h3','Recorded outcome'),el('p',outcome));
+  if(failed)card.append(el('p',(stopped?'Stop reason: ':'Earlier stop event: ')+(failed.payload?.reason||'Not recorded')));
+  if(answer){
+    card.append(el('p','Recorded model: '+(answer.model||'Not recorded'),'muted'));
+    if(answer.answer_parts){
+      for(const part of answer.answer_parts){
+        card.append(el('h4',part.question));
+        if(part.status==='insufficient')card.append(el('p',insufficientPartText,'notice'));
+        for(const index of part.claim_indices)if(answer.claims?.[index])card.append(el('p',answer.claims[index].text));
+      }
+    }else for(const claim of answer.claims||[])card.append(el('p',claim.text));
+    if(!answer.claims?.length)card.append(el('p','Stored answer contains no supported claims.'));
+    for(const notice of answer.uncertainties||[])card.append(el('p',notice,'notice'));
+  }
+  if(rows.some(e=>e.event_type==='response_dispatch_attempted'))card.append(el('p','Delivery attempted; recipient reading is not established.','muted'));
+  const raw=el('details');raw.append(el('summary','Original events · '+rows.length));
+  for(const row of rows)raw.append(auditEvent(row));card.append(raw);
+  return card;
+}
 $('auditNav').onclick=()=>{
   show('other');const view=viewToken(),root=$('other');
   root.replaceChildren(el('h1','Audit explorer'),el('p','Scoped to eng_a, eng_b and product_ops. Events describe application activity, not proof that a person read the answer.','lede'));
@@ -294,14 +477,21 @@ $('auditNav').onclick=()=>{
   input.value='Show everything jdoe accessed related to payment-service in the last 30 days.';
   const button=el('button','Find events','primary');form.append(input,button);const output=el('div');root.append(form,output);
   let inquiryRevision=0;
+  let loaded=[],snapshot=null;
   const active=revision=>currentView(view)&&revision===inquiryRevision;
   function display(result,revision,append=false){
     if(!active(revision))return;
-    if(!append){
-      output.replaceChildren(el('h2','Query scope'),el('pre',JSON.stringify(result.filters,null,2)),el('p',result.total+' matching events · stable snapshot '+result.as_of));
-      output.append(el('p','Candidates, authorization, model input, citations and delivery are separate stages. A readable timeline does not verify a signature or independent checkpoint.','notice'));
-    }
-    for(const row of result.events)output.append(auditEvent(row));
+    if(!append){loaded=[];snapshot=result.as_of;}
+    else if(result.as_of!==snapshot)throw Error('Audit snapshot changed. Run the inquiry again.');
+    const seen=new Set(loaded.map(e=>e.seq));
+    loaded.push(...result.events.filter(e=>!seen.has(e.seq)));loaded.sort((a,b)=>a.seq-b.seq);
+    output.replaceChildren(el('h2','Query scope'),el('pre',JSON.stringify(result.filters,null,2)),
+      el('p',loaded.length+' of '+result.total+' matching events loaded · stable snapshot '+snapshot));
+    output.append(el('p','Request summaries describe loaded events under these filters. Missing questions or outcomes may be on another page or excluded by the filters.','notice'),
+      el('p','Preparation, model sends, stored citations and delivery are separate stages. These summaries do not verify a signature or independent checkpoint.','muted'));
+    const requests=new Map();
+    for(const row of loaded){const key=JSON.stringify([row.actor,row.request_id]);if(!requests.has(key))requests.set(key,[]);requests.get(key).push(row);}
+    for(const rows of requests.values())output.append(auditRequest(rows));
     if(result.next_after){
       const next=el('button','Load next page');
       next.onclick=async()=>{
@@ -310,7 +500,7 @@ $('auditNav').onclick=()=>{
         try{
           const page=await api('/api/audit/events',{...result.filters,after:result.next_after});
           if(!active(revision))return;
-          next.remove();display(page,revision,true);
+          display(page,revision,true);
         }catch(err){if(active(revision)){next.disabled=false;$('status').textContent=err.message;}}
       };
       output.append(next);

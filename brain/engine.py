@@ -59,6 +59,12 @@ class Engine:
         if actor.tenant!=self.tenant or actor.user_id not in self.world.users:
             raise PermissionError('Unavailable')
 
+    @staticmethod
+    def version_changed(resource, decision):
+        # Jira/Slack versions are content fingerprints, not numeric revisions.
+        return decision.result=='deny' and decision.method in (
+            resource['source']+'-version-changed', resource['source']+'-content-changed')
+
     def check(self, actor, resource, request_id, phase):
         from .application_access import allows
         from .contracts import Decision, now
@@ -66,7 +72,7 @@ class Engine:
                   if allows(resource) else Decision('deny',now(),'application-demo-role',0))
         if not allows(resource):decision=Decision('deny',now(),'application-demo-role',0)
         self.record_check(actor,resource,request_id,phase,decision)
-        if phase in ('before_model','model_dispatch','review_dispatch','before_dispatch') and decision.result=='deny' and decision.method==resource['source']+'-version-changed':
+        if phase in ('before_model','model_dispatch','review_dispatch','before_dispatch') and self.version_changed(resource,decision):
             raise VersionChanged([resource])
         return self.check_result(actor,phase,decision)
 
@@ -116,10 +122,9 @@ class Engine:
         from .contracts import Decision, now
         decisions=[d if allows(r) else Decision('deny',now(),'application-demo-role',0) for r,d in zip(resources,decisions)]
         for r,d in zip(resources,decisions):self.record_check(actor,r,request_id,phase,d)
-        changed=[r for r,d in zip(resources,decisions)
-                 if d.result=='deny' and d.method==r['source']+'-version-changed']
+        changed=[r for r,d in zip(resources,decisions) if self.version_changed(r,d)]
         # A version discrepancy cannot mask a concurrent denial/unknown.
-        if changed and all(d.result=='allow' or (d.result=='deny' and d.method==r['source']+'-version-changed')
+        if changed and all(d.result=='allow' or self.version_changed(r,d)
                            for r,d in zip(resources,decisions)):
             raise VersionChanged(changed)
         return [self.check_result(actor,phase,d) for d in decisions]
@@ -329,6 +334,13 @@ class Engine:
                     raise ValueError('Source review must remain verbatim')
                 generation.update(claim_format='reviewed_source_v1',model_review=review_receipt,
                     review_status='accepted',construction='all_authorized_source_quotes',model_generation=False)
+            answer_parts=None
+            if 'answer_parts' in draft:
+                from .sectioned_answer import DeepSeekSectionedSynthesisModel, validate_answer_parts
+                if type(self.model) is not DeepSeekSectionedSynthesisModel or not synthesis:
+                    raise ValueError('Unexpected answer parts')
+                answer_parts=validate_answer_parts(draft['answer_parts'],claims,question)
+                generation['answer_parts']=answer_parts
             premise=None
             if 'premise_review' in draft:
                 from .synthesis import DeepSeekExplainedSourceReviewModel, validate_premise_review
@@ -343,6 +355,7 @@ class Engine:
             response={'request_id':rid,'question':question,'answered_at':now(),'mode':self.mode,'model':self.model.name,'claims':claims,
                       'uncertainties':[getattr(self.model,'answer_notice','Source excerpts only; live AI synthesis is not enabled.')] if claims else ['Insufficient evidence in the currently accessible material.'],
                       'evidence':[e.to_dict() for e in selected], 'actor':actor.user_id}
+            if answer_parts is not None:response['answer_parts']=answer_parts
             if premise is not None:
                 from .synthesis import PREMISE_NOTICES
                 response['premise_review']=premise
@@ -388,7 +401,8 @@ class Engine:
             locator,text=resolve_window(r,eid)
         except (KeyError,ValueError):
             raise PermissionError('Unavailable') from None
-        return {'evidence_id':eid,'source':r['source'],'title':r['title'],'text':text,'locator':locator,'version':r['version'],'source_url':r['source_url']}
+        return {'evidence_id':eid,'source':r['source'],'title':r['title'],'text':text,'locator':locator,'version':r['version'],'source_url':r['source_url'],
+                'source_updated_at':r['source_updated_at'],'indexed_at':r['indexed_at'],'checked_at':now()}
 
     def history_summaries(self, actor):
         """Own submitted questions only; source metadata/answers require safe_history."""
@@ -451,6 +465,10 @@ class Engine:
                         if record.get('claim_format')=='reviewed_source_v1' and (
                                 len(claim['supports'])!=1 or claim['text']!=claim['supports'][0]['quote']):
                             raise ValueError('Source review must remain verbatim')
+                except (ValueError,KeyError,TypeError):allowed=False
+            if allowed and 'answer_parts' in record:
+                from .sectioned_answer import validate_answer_parts
+                try:validate_answer_parts(record['answer_parts'],record['claims'],record.get('question',''))
                 except (ValueError,KeyError,TypeError):allowed=False
             result.append(record if allowed else {'request_id':record['request_id'],'unavailable':True,'message':'This answer is no longer available. Ask again for current evidence.'})
         return result

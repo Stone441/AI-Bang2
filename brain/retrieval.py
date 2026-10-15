@@ -10,15 +10,31 @@ from collections import Counter
 STOP = set('what which the a an of is are was were to in on and or from with can we i me you your my do does it for all today latest current including caused use show details just'.split())
 # Small, explicit lexical aliases, not a claim of general semantic retrieval.
 ALIASES = {'outage': 'incident', 'outages': 'incident', 'incidents': 'incident',
-           'retracted': 'withdrawn', 'retract': 'withdrawn',
+           'retracted': 'withdrawn', 'retract': 'withdrawn', 'postmortem': 'incident',
            'remediation': 'fix', 'fixes': 'fix', 'runbooks': 'runbook'}
+# Bounded bilingual glossary for the demo domain, not general translation.
+# Apply to source and query text alike; the original text/offsets stay untouched.
+ZH_TERMS = {
+    '支付重试': 'payment-retry', '支付服务': 'payment-service',
+    '全面开放': 'general availability', '全面发布': 'general release',
+    '正式发布': 'general release', '正式上线': 'general release',
+    '所有客户': 'general customers', '发布日期': 'release date',
+    '试点': 'pilot', '批准': 'approved approval', '完成': 'done complete',
+    '做完': 'done', '修复': 'fix', '工单': 'ticket', '故障': 'incident',
+    '事故': 'incident', '复盘': 'postmortem', '根因': 'root cause',
+    '原因': 'cause', '撤回': 'withdrawn', '早期解释': 'early hypothesis',
+    '后续': 'follow-ups', '新加坡': 'singapore', '澳洲': 'australia',
+    '澳大利亚': 'australia',
+}
 WHOLE_LIMIT = 4000
 WINDOW = 2400
 OVERLAP = 400
 
 
 def tokens(text):
-    words = set(re.findall(r'[a-z0-9]+(?:-[a-z0-9]+)*', text.lower()))
+    normalized = text.lower()
+    normalized += ' ' + ' '.join(value for phrase,value in ZH_TERMS.items() if phrase in text)
+    words = set(re.findall(r'[a-z0-9]+(?:-[a-z0-9]+)*', normalized))
     # Preserve exact compounds, and match ordinary words inside alphabetic
     # compounds. Numeric entity identifiers (PAY-103) remain intact.
     for word in list(words):

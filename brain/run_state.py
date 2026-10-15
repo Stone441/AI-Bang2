@@ -62,19 +62,29 @@ class SessionRuns:
 
 
 def runtime_status(app, actor, run):
+    from .discovery import SNAPSHOT_MAX_AGE_SECONDS
     readers=getattr(app.world,'readers',{})
     discovery=getattr(app.world,'discovery',None)
     sources=[]
     for source in ('confluence','jira','slack','drive'):
         configured=app.auth_kind=='demo' or actor.user_id in getattr(readers.get(source),'delegations',{})
         report=(discovery.last.get(source,{}) if discovery and actor==discovery.actor else {})
+        owns_discovery=discovery is not None and actor==discovery.actor
+        published=discovery.published_at.get(source) if owns_discovery else None
+        age=max(0,discovery.clock()-published) if published is not None else None
+        due=getattr(discovery,'due',{}).get(source) if owns_discovery else None
+        worker_running=(owns_discovery and not discovery.stop_event.is_set()
+                        and discovery.thread is not None and discovery.thread.is_alive())
         sources.append({'source':source,'configured':configured,
             'mode':'fixture' if app.auth_kind=='demo' else 'delegated',
             'last_check_at':report.get('observed_at'),
             'last_check_result':report.get('status','unconfirmed'),
-            'snapshot_status':('current' if discovery and actor==discovery.actor and source in discovery.published_at
-                               and discovery.clock()-discovery.published_at[source]<=120 and report.get('status')=='complete'
-                               and not discovery.stop_event.is_set() else 'unconfirmed'),
+            'last_successful_check_at':report.get('last_successful_checkpoint_at'),
+            'snapshot_age_seconds':round(age,3) if age is not None else None,
+            'snapshot_max_age_seconds':SNAPSHOT_MAX_AGE_SECONDS,
+            'next_check_in_seconds':round(max(0,due-discovery.clock()),3) if due is not None and worker_running else None,
+            'snapshot_status':('current' if worker_running and age is not None
+                               and age<=SNAPSHOT_MAX_AGE_SECONDS and report.get('status')=='complete' else 'unconfirmed'),
             'checking':source in getattr(discovery,'checking',frozenset()) if discovery and actor==discovery.actor else False,
             'used_in_answer':bool(run and run['status']=='completed' and source in run['sources_used'])})
     admission=getattr(app.engine.query,'public_status',None)
