@@ -276,7 +276,7 @@ function renderAnswer(answer,target=$('answer')){
     for(const part of parts){
       const block=el('section',undefined,'answer-section');block.append(el('h3',part.question));
       if(part.status==='insufficient')block.append(el('p',insufficientPartText,'notice'));
-      for(const index of part.claim_indices){
+      for(const index of [...part.claim_indices,...(part.gap_claim_indices||[])]){
         const c=answer.claims[index];block.append(el('p',c.text));
         const quotes=el('details');quotes.append(el('summary','Exact supporting quotes'));
         for(const support of c.supports)quotes.append(el('p',support.quote));block.append(quotes);
@@ -495,7 +495,7 @@ function auditRequest(rows){
       for(const part of answer.answer_parts){
         card.append(el('h4',part.question));
         if(part.status==='insufficient')card.append(el('p',insufficientPartText,'notice'));
-        for(const index of part.claim_indices)if(answer.claims?.[index])card.append(el('p',answer.claims[index].text));
+        for(const index of [...part.claim_indices,...(part.gap_claim_indices||[])])if(answer.claims?.[index])card.append(el('p',answer.claims[index].text));
       }
     }else for(const claim of answer.claims||[])card.append(el('p',claim.text));
     if(!answer.claims?.length)card.append(el('p','Stored answer contains no supported claims.'));

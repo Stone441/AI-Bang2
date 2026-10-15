@@ -4,6 +4,10 @@
 
 最新实测候选运行代码 `b21f953ef060d0a8d37f49aa2244a3085eb6c95c`，分支 `feat/semantic-workspace-20261015`，基准 `0d5be3096cfcbf09b267fe6b54853b1fac2e67af`。本报告为该候选的后续证据。没有 push、merge、生产重启或切换。生产仍是独立旧版本；部署与回退见 DEPLOYMENT_AND_DEMO.md。
 
+## Latest local follow-up · requested-information contract v3
+
+Local implementation separates cited gap explanations from supplied answers and requires explicit independent per-part completeness review for every generation shape, including legacy inputs. The UI and reauthorized history retain Partial answer even with a cited explanation of the missing date. See [VALUE_COMPLETENESS.md](VALUE_COMPLETENESS.md) for protocol, test evidence, browser scope, limitations and rollback. **This is not a new live pass**; the fourth run below remains the latest real result. No paid loop or production switch.
+
 ## Latest outcome · fourth authorized run (compact wire)
 
 Frozen candidate `b21f953ef060d0a8d37f49aa2244a3085eb6c95c`: **business acceptance failed**. The default partial question returned correct facts but classified the requested, unavailable general-release date as `supported`. Independent model review accepted it; that is not a business pass. The compact representation derives status from nonempty claims, which cannot distinguish a grounded explanation of missing information from actually supplying the requested value. This remains an unresolved product contract issue; no question-string mapping or relaxed oracle was introduced.

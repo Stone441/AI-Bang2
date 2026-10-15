@@ -24,6 +24,21 @@ assert.match(text(sections[1]),/provided evidence is insufficient/);assert.match
 assert.match(text(get('answer')),/MOCK MODEL OUTPUTS/);assert.doesNotMatch(text(get('answer')),/LIVE MODEL/);
 vm.runInContext('preview=id=>{globalThis.opened=id}',ctx);
 nodes(sections[0]).find(e=>e.tagName==='button').onclick();assert.equal(ctx.opened,'J@1');
+// A grounded explanation of an unavailable value is visible and cited, but never counts as answered.
+ctx.answer.claims.push({text:'No general release date is confirmed.',evidence_ids:['J@1'],supports:[{evidence_id:'J@1',quote:'No general release date is confirmed.'}]});
+ctx.answer.answer_parts[1].gap_claim_indices=[1];
+vm.runInContext('renderAnswer(answer)',ctx);
+sections=nodes(get('answer')).filter(e=>e.tagName==='section');
+assert.match(text(get('answer')),/Partial answer/);
+assert.match(text(sections[1]),/provided evidence is insufficient/);
+assert.match(text(sections[1]),/No general release date is confirmed/);
+assert.equal(nodes(sections[1]).filter(e=>e.tagName==='button').length,1);
+nodes(sections[1]).find(e=>e.tagName==='button').onclick();assert.equal(ctx.opened,'J@1');
+ctx.answer.answer_parts=[ctx.answer.answer_parts[1]];
+ctx.answer.claims=[ctx.answer.claims[1]];ctx.answer.answer_parts[0].gap_claim_indices=[0];
+vm.runInContext('renderAnswer(answer)',ctx);
+assert.match(text(get('answer')),/Insufficient evidence/);
+assert.doesNotMatch(text(get('answer')),/Partial answer/);
 ctx.answer.answer_status='evidence_only';vm.runInContext('renderAnswer(answer)',ctx);
 assert.doesNotMatch(text(get('answer')),/Each part is answered separately/);
 assert.ok(!nodes(get('answer')).some(e=>e.tagName==='h3'&&e.textContent==='when is GA'),'Failed output does not retain per-part conclusions');

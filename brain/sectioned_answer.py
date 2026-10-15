@@ -19,7 +19,7 @@ ANSWERABILITY_CONTRACT = (
     'insufficient. A documented same-scope conflict can be answered with supported claims '
     'explaining BOTH sides and why no decision can be confirmed; this does not establish '
     'either disputed side as true. Correct a false premise using supported claims, keeping '
-    'any separately requested unavailable value in its own empty-claims part when the '
+    'any separately requested unavailable value in its own unavailable part when the '
     'original wording permits that partition. Apply equally across languages and paraphrases. ')
 
 
@@ -28,7 +28,8 @@ def validate_answer_parts(parts, claims, question):
         raise ValueError('Invalid answer parts')
     assigned=[];questions=set()
     for part in parts:
-        if (not isinstance(part,dict) or set(part)!={'question','status','claim_indices'}
+        if (not isinstance(part,dict) or set(part) not in ({'question','status','claim_indices'},
+                    {'question','status','claim_indices','gap_claim_indices'})
                 or not isinstance(part['question'],str) or not part['question'].strip()
                 or len(part['question'])>4000 or part['question'] not in question
                 or part['question'] in questions or part['status'] not in ('supported','insufficient')
@@ -38,7 +39,12 @@ def validate_answer_parts(parts, claims, question):
         if (any(type(i) is not int or not 0<=i<len(claims) for i in indices)
                 or (part['status']=='supported')!=bool(indices)):
             raise ValueError('Invalid answer part citations')
-        assigned.extend(indices);questions.add(part['question'])
+        gaps=part.get('gap_claim_indices',[])
+        if (not isinstance(gaps,list)
+                or any(type(i) is not int or not 0<=i<len(claims) for i in gaps)
+                or (gaps and part['status']!='insufficient')):
+            raise ValueError('Invalid answer part citations')
+        assigned.extend(indices+gaps);questions.add(part['question'])
     if sorted(assigned)!=list(range(len(claims))):
         raise ValueError('Unassigned or repeated answer claim')
     return parts
@@ -55,8 +61,9 @@ class SectionedAnswerReview(EvidenceReview):
             ' Also return three extra boolean fields: "parts_supported", "premise_handled", '
             'and "conflicts_handled". All must be true for acceptance. The answer_parts are part of the draft: verify that they faithfully divide the ENTIRE '
             'question without omitting a requested part, changing its subject, or turning its premise '
-            'into a fact. Every claim must answer the part that owns it. A part marked insufficient '
-            'must genuinely lack adequate support in the PROVIDED evidence; missing approval does '
+            'into a fact. Every claim must directly answer its owning part or explain its specific '
+            'information gap with evidence. A part marked insufficient must genuinely lack the '
+            'requested information in the PROVIDED evidence, even if the gap itself is documented; missing approval does '
             'not mean rejection, nor does lack of evidence prove nonexistence. A scoped insufficient '
             'notice counts as acknowledging an unsupported part, never as answering it factually. '
             'Set parts_supported false for a misleading partition, an omitted part, or a false '
@@ -80,6 +87,25 @@ class SectionedAnswerReview(EvidenceReview):
             'after examining all evidence. A genuinely unsupported part needs no factual claim. '
             'An all-insufficient answer can pass only if every insufficiency is justified; '
             'false insufficiency, missing parts or uncertainty about coverage still requires false.')
+        messages[0]['content'] += (
+            ' Additionally return part_verdicts, one object per part in order, with exactly '
+            'index (integer), requested_information_provided (boolean), and gap_explanation_supported '
+            '(boolean). Independently determine requested_information_provided from the actual '
+            'question and ALL evidence, not from draft status or whether a claim is true. '
+            'For a requested date/amount/value, an explanation that it is unknown does NOT '
+            'provide that value: use false. For a yes/no question an evidenced negative can '
+            'provide the answer: use true. An explicit request to reconcile a documented '
+            'unresolved conflict can be answered by citing both sides without selecting one. '
+            'gap_claim_indices identify cited explanations of why a value remains unavailable, '
+            'not supplied answers. Such claims are responsive necessary limitations, but must '
+            'not be treated as providing the missing value. gap_explanation_supported is true '
+            'only when every gap claim is supported, responsive and preserves uncertainty; '
+            'with no gap claims it is true. Any unknown assessment is false. '
+            'Example: "What is the date?" with evidence "date unconfirmed" and an exact cited '
+            'gap explanation has requested_information_provided:false and '
+            'gap_explanation_supported:true. "Is the date confirmed?" can have '
+            'requested_information_provided:true for a supported negative answer. '
+            'Do not copy these examples as verdicts; inspect the actual question and evidence.')
         body=json.loads(messages[1]['content']);body['answer_parts']=self.parts;body['insufficient_notice']=INSUFFICIENT_PART
         messages[1]['content']=json.dumps(body,ensure_ascii=False)
         return messages
@@ -87,32 +113,47 @@ class SectionedAnswerReview(EvidenceReview):
     def parse_output(self,output,evidence):
         if not isinstance(output,dict) or any(output.get(k) is not True for k in REASONING_CHECKS):
             raise ValueError('Incomplete model review')
-        claims=super().parse_output({k:v for k,v in output.items() if k not in REASONING_CHECKS},evidence)
+        excluded=set(REASONING_CHECKS)
+        verdicts=output.get('part_verdicts')
+        if not isinstance(verdicts,list) or len(verdicts)!=len(self.parts):
+            raise ValueError('Incomplete model review')
+        for index,(part,verdict) in enumerate(zip(self.parts,verdicts)):
+            if (not isinstance(verdict,dict) or set(verdict)!={'index','requested_information_provided','gap_explanation_supported'}
+                    or type(verdict['index']) is not int or verdict['index']!=index
+                    or type(verdict['requested_information_provided']) is not bool
+                    or verdict['requested_information_provided']!=(part['status']=='supported')
+                    or verdict['gap_explanation_supported'] is not True):
+                raise ValueError('Incomplete model review')
+        excluded.add('part_verdicts')
+        claims=super().parse_output({k:v for k,v in output.items() if k not in excluded},evidence)
         if claims!=self.claims:
             raise ValueError('Incomplete model review')
         return claims
 
 
 class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
-    name='deepseek-flash-grounded-synthesis-by-part-v2'
+    name='deepseek-flash-grounded-synthesis-by-part-v3'
     answer_kind='sectioned_synthesis'
     output_instructions = (
-        'Return JSON only. Use exactly question and claims in each answer part; use exactly '
+        'Return JSON only. Use exactly question, resolution and claims in each answer part; use exactly '
         'text and supports in each claim. supports is an object mapping each unique supplied '
         'evidence ID to ONE exact contiguous quote. Do not repeat an ID key. If two passages '
         'from one source are necessary, choose one encompassing contiguous quote within the '
         'limit or separate the conclusions; never concatenate or rewrite quotations. '
         'Do not output status, claim_indices, evidence_ids or top-level claims. The server '
-        'derives status from whether a part has claims, and derives indices/IDs from membership. '
-        'A part with no adequate evidence must have claims:[]. '
+        'derives indices/IDs from membership. resolution must be answered or unavailable. '
+        'Use answered only when the requested information is provided, with at least one claim. '
+        'Use unavailable when the requested value is absent; claims may contain exact-cited '
+        'explanations of that gap, or [] if no such explanation is evidenced. A grounded '
+        'explanation of absence does not change unavailable to answered. '
         'Single-part JSON example: ' + json.dumps({'answer_parts':[
-            {'question':'exact original question', 'claims':[
+            {'question':'exact original question', 'resolution':'answered', 'claims':[
                 {'text':'concise conclusion', 'supports':{'supplied ID':'exact contiguous passage'}}]}]},
             separators=(',', ':')) + '. '
         'Mixed-answer JSON example: ' + json.dumps({'answer_parts':[
-            {'question':'exact answerable substring', 'claims':[
+            {'question':'exact answerable substring', 'resolution':'answered', 'claims':[
                 {'text':'concise conclusion', 'supports':{'supplied ID':'exact contiguous passage'}}]},
-            {'question':'exact unsupported substring','claims':[]}]},separators=(',', ':')) + '. '
+            {'question':'exact unsupported substring','resolution':'unavailable','claims':[]}]},separators=(',', ':')) + '. '
         'Retain the root object and answer_parts array even for one part. Finish the entire '
         'root object; do not stop after the last support, claim or part. Examples illustrate '
         'syntax only; actual conclusions and quotations must come from supplied evidence.')
@@ -139,9 +180,11 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
             'must occur in its own exact support quotes, not just source_context or the question. '
             'Choose a longer contiguous quote including the identifier and fact if necessary, '
             'within the 1200-character limit; do not add an unsupported identifier. '
-            'For unsupported parts, use claims:[] inside that part; the server marks it insufficient and displays a '
-            'fixed scoped notice. Do not invent a date, approval, rejection or universal conclusion. '
-            'If nothing is supported, return only insufficient parts, each with claims:[]. '
+            'For unavailable parts, set resolution:unavailable. Include a concise claim only when '
+            'exact quotes establish the specific gap; otherwise use claims:[]. The server '
+            'marks the part insufficient and displays a scoped notice even with cited gap claims. '
+            'Do not invent a date, approval, rejection or universal conclusion. '
+            'An answered part requires resolution:answered and at least one supported claim. '
             'Before drafting, examine the question for a material assumed assertion and compare ALL '
             'evidence for entity, property, scope and effective time. Correct an unsupported or '
             'contradicted premise explicitly in a supported claim; distinguish unestablished '
@@ -162,7 +205,7 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
 
     @staticmethod
     def unpack_output(output):
-        # Legacy wire responses remain strict; public/history contracts are unchanged.
+        # Legacy wire responses remain strict; v3 adds explicit gap-claim ownership.
         if isinstance(output,dict) and set(output)=={'claims','answer_parts'}:
             return output
         if not isinstance(output,dict) or set(output)!={'answer_parts'}:
@@ -172,8 +215,11 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
             raise ValueError('Invalid answer parts')
         claims=[];flattened=[]
         for part in parts:
-            if (not isinstance(part,dict) or set(part) not in ({'question','status','claims'},{'question','claims'})
+            if (not isinstance(part,dict) or set(part) not in ({'question','status','claims'},{'question','claims'},{'question','resolution','claims'})
                     or not isinstance(part['claims'],list)):
+                raise ValueError('Invalid answer part')
+            typed='resolution' in part
+            if typed and part['resolution'] not in ('answered','unavailable'):
                 raise ValueError('Invalid answer part')
             start=len(claims)
             if start+len(part['claims'])>4:
@@ -196,8 +242,16 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
                     raise error
                 claims.append({'text':claim['text'],
                     'evidence_ids':[s['evidence_id'] for s in supports], 'supports':supports})
-            flattened.append({'question':part['question'],'status':part['status'] if 'status' in part else ('supported' if part['claims'] else 'insufficient'),
-                'claim_indices':list(range(start,len(claims)))})
+            indices=list(range(start,len(claims)))
+            if typed:
+                answered=part['resolution']=='answered'
+                flattened.append({'question':part['question'],
+                    'status':'supported' if answered else 'insufficient',
+                    'claim_indices':indices if answered else [],
+                    'gap_claim_indices':[] if answered else indices})
+            else:
+                flattened.append({'question':part['question'],'status':part['status'] if 'status' in part else ('supported' if part['claims'] else 'insufficient'),
+                    'claim_indices':indices})
         return {'claims':claims,'answer_parts':flattened}
 
     def parse_output(self,output,evidence):

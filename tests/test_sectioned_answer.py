@@ -36,6 +36,7 @@ class SectionedAnswer(unittest.TestCase):
             'claims':[{'text':self.claims[i]['text'],'supports':self.claims[i]['supports']}
                       for i in p['claim_indices']]} for p in self.parts]}
         self.transport=SequentialTransport(draft,[{'index':i,'supported':True,'responsive':True} for i in range(2)])
+        self.transport.outputs[1]['part_verdicts']=[{'index':i,'requested_information_provided':p['status']=='supported','gap_explanation_supported':True} for i,p in enumerate(self.parts)]
         self.transport.outputs[1].update(parts_supported=True,premise_handled=True,conflicts_handled=True,filtered_answer_complete=True)
         self.model=DeepSeekSectionedSynthesisModel('synthetic-not-a-key',self.ledger,synthetic_only=True,transport=self.transport,today=PRICE_DATE)
 
@@ -117,7 +118,7 @@ class SectionedAnswer(unittest.TestCase):
 
     def test_all_insufficient_parts_still_require_independent_review(self):
         self.transport.outputs=[{'claims':[],'answer_parts':[dict(p,status='insufficient',claim_indices=[]) for p in self.parts]},
-            {'verdicts':[],'question_covered':True,'parts_supported':True,'premise_handled':True,'conflicts_handled':True}]
+            {'verdicts':[],'question_covered':True,'parts_supported':True,'premise_handled':True,'conflicts_handled':True,'part_verdicts':[{'index':i,'requested_information_provided':False,'gap_explanation_supported':True} for i in range(len(self.parts))]}]
         result=self.model.generate_with_authorization(self.question,self.evidence,'c'*32,lambda _:None)
         self.assertEqual(result['claims'],[]);self.assertEqual(result['review_status'],'accepted')
         self.assertEqual(len(self.transport.calls),2)
@@ -148,7 +149,7 @@ class SectionedAnswer(unittest.TestCase):
         self.transport.outputs=[{'claims':[], 'answer_parts':[
             {'question':question,'status':'insufficient','claim_indices':[]}]},
             {'verdicts':[],'question_covered':False,'parts_supported':True,
-             'premise_handled':True,'conflicts_handled':True}]
+             'premise_handled':True,'conflicts_handled':True,'part_verdicts':[{'index':i,'requested_information_provided':False,'gap_explanation_supported':True} for i in range(len(self.parts))]}]
         engine=self.engine(evidence_on_model_rejection=True)
         answer=engine.query(Actor('eng_b'),question)
         self.assertEqual(answer['answer_status'],'evidence_only')
@@ -321,3 +322,90 @@ class SectionedAnswer(unittest.TestCase):
                 with self.assertRaises(ModelUnavailable):
                     self.model.generate_with_authorization(self.question,self.evidence,'6'*32,lambda _:None)
                 self.assertEqual(len(self.transport.calls),1)
+
+    def typed_gap_output(self):
+        draft=self.compact_output()
+        for part in draft['answer_parts']:
+            part['resolution']='answered' if part['claims'] else 'unavailable'
+        draft['answer_parts'][2]['claims']=[{
+            'text':'No general release date is confirmed.',
+            'supports':{'C-02@1':'No general release date is confirmed.'}}]
+        self.transport.outputs[0]=draft
+        self.transport.outputs[1]['verdicts'].append({'index':2,'supported':True,'responsive':True})
+        return draft
+
+    def test_gap_explanation_retains_citation_without_claiming_value_is_answered(self):
+        self.typed_gap_output()
+        engine=self.engine();actor=Actor('eng_b')
+        answer=engine.query(actor,self.question)
+        gap=answer['answer_parts'][2]
+        self.assertEqual(gap,{'question':'when is GA','status':'insufficient','claim_indices':[], 'gap_claim_indices':[2]})
+        self.assertEqual(answer['claims'][2]['text'],'No general release date is confirmed.')
+        self.assertEqual(engine.safe_history(actor,answer['request_id']),[answer])
+        generation=next(e for e in engine.audit.export() if e['event_type']=='generation_completed')
+        self.assertEqual(generation['payload']['answer_parts'][2],gap)
+        self.world.revoked.add(('eng_b','C-02'))
+        self.assertTrue(engine.safe_history(actor,answer['request_id'])[0]['unavailable'])
+
+    def test_unknown_value_mislabelled_answered_is_rejected_without_reclassification(self):
+        draft=self.typed_gap_output()
+        draft['answer_parts'][2]['resolution']='answered'
+        answer=self.engine(evidence_on_model_rejection=True).query(Actor('eng_b'),self.question)
+        self.assertEqual(answer['answer_status'],'evidence_only')
+        self.assertNotIn('answer_parts',answer)
+        self.assertEqual(len(self.transport.calls),2)
+        self.assertEqual(draft['answer_parts'][2]['resolution'],'answered')
+
+    def test_legacy_wire_cannot_bypass_independent_completeness_verdict(self):
+        # Correct facts alone used to pass; a separate per-part disagreement must now reject.
+        self.transport.outputs[1]['part_verdicts'][0]['requested_information_provided']=False
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization(self.question,self.evidence,'7'*32,lambda _:None)
+        self.assertEqual(len(self.transport.calls),2)
+
+    def test_invalid_or_missing_part_verdict_rejects_even_with_all_global_checks_true(self):
+        original=copy.deepcopy(self.transport.outputs[1])
+        for kind in ('missing','short','duplicate_index','bool_index','unknown_value','string_true','gap_false','extra'):
+            with self.subTest(kind=kind):
+                review=copy.deepcopy(original)
+                if kind=='missing':del review['part_verdicts']
+                elif kind=='short':review['part_verdicts'].pop()
+                elif kind=='duplicate_index':review['part_verdicts'][1]['index']=0
+                elif kind=='bool_index':review['part_verdicts'][0]['index']=False
+                elif kind=='unknown_value':review['part_verdicts'][0]['requested_information_provided']=None
+                elif kind=='string_true':review['part_verdicts'][0]['requested_information_provided']='true'
+                elif kind=='gap_false':review['part_verdicts'][2]['gap_explanation_supported']=False
+                else:review['part_verdicts'][0]['extra']=True
+                self.transport.outputs[1]=review;self.transport.calls.clear()
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate_with_authorization(self.question,self.evidence,'8'*32,lambda _:None)
+
+    def test_gap_indices_never_bypass_partition_or_quote_validation(self):
+        self.typed_gap_output()
+        output=self.transport.outputs[0]
+        claims=self.model.parse_output(output,self.evidence)
+        parts=self.model.validated_metadata(self.question,output,claims)['answer_parts']
+        for kind in ('overlap','duplicate','bool','out_of_range','supported_gap','unassigned','nonlist'):
+            with self.subTest(kind=kind):
+                bad=copy.deepcopy(parts)
+                if kind=='overlap':bad[2]['gap_claim_indices']=[0,2]
+                elif kind=='duplicate':bad[2]['gap_claim_indices']=[2,2]
+                elif kind=='bool':bad[2]['gap_claim_indices']=[True]
+                elif kind=='out_of_range':bad[2]['gap_claim_indices']=[3]
+                elif kind=='supported_gap':bad[0]['gap_claim_indices']=[2]
+                elif kind=='unassigned':bad[2]['gap_claim_indices']=[]
+                else:bad[2]['gap_claim_indices']='2'
+                with self.assertRaises(ValueError):validate_answer_parts(bad,claims,self.question)
+        output['answer_parts'][2]['claims'][0]['supports']['C-02@1']='A fabricated missing prerequisite.'
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization(self.question,self.evidence,'9'*32,lambda _:None)
+        self.assertEqual(len(self.transport.calls),1)
+
+    def test_typed_wire_requires_known_resolution_and_nonempty_answer(self):
+        original=self.typed_gap_output()
+        for resolution in ('supported','unknown',True,None):
+            bad=copy.deepcopy(original);bad['answer_parts'][0]['resolution']=resolution
+            with self.assertRaises(ValueError):self.model.unpack_output(bad)
+        bad=copy.deepcopy(original);bad['answer_parts'][0]['claims']=[]
+        claims=self.model.parse_output(bad,self.evidence)
+        with self.assertRaises(ValueError):self.model.validated_metadata(self.question,bad,claims)
