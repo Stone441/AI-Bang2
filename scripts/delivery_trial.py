@@ -2,6 +2,8 @@
 
 No candidate source edits. Adds local admission limits around existing query;
 original identity/authorization/model/audit code and shared USD20 ledger remain.
+Legacy Admission uses conservative global ledger deltas: another grant can
+consume its apparent allowance. Use attributed_allowance only after checked migration.
 """
 import json,os,threading,fcntl
 from brain.budget import TrialAdmissionPaused
