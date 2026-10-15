@@ -48,6 +48,9 @@ assert.equal(nodes(get('answer')).find(e=>e.className==='answer-guide').hidden,t
 ctx.answer.answer_status='evidence_only';vm.runInContext('renderAnswer(answer)',ctx);
 assert.ok(nodes(get('answer')).some(e=>e.textContent==='Source answer was blocked'));
 assert.ok(!nodes(get('answer')).some(e=>e.className==='answer-guide'),'Failed review has no answer topic guide');
+assert.equal(nodes(get('answer')).filter(e=>e.tagName==='section').length,0,'Rejected historical output cannot become answer prose');
+assert.ok(nodes(get('answer')).some(e=>e.textContent==='Other checked evidence'),'Checked evidence remains available for inspection');
+delete ctx.answer.answer_status;
 ctx.answer.claim_format='grounded_synthesis_v1';vm.runInContext('renderAnswer(answer)',ctx);
 assert.equal(nodes(get('answer')).filter(e=>e.tagName==='section').length,4,'Synthesis claims keep individual supports');
 ctx.answer={unavailable:true,message:'Unavailable'};vm.runInContext('renderAnswer(answer)',ctx);

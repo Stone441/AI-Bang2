@@ -1,4 +1,10 @@
-# Final delivery runbook · 13 October 2026
+# Final delivery runbook
+
+Current closeout instructions (15 October): [candidate report and exact migration/switch boundary](reviews/2026-10-15-closeout/REPORT.md). Use an immutable code checkout with `--state-root <existing-project>` and an explicitly migrated `--attributed-grant human-team-closeout-20261015`. This reuses the approved original index, configuration, account registry and USD20 ledger; it does not copy or reset runtime state. Never automatically migrate on startup.
+
+The selected human mode remains source-review / none8192 / structured / single / pooled4 / batch history / serial queries. Optional sectioned-synthesis is not the deployed default. Preserve the public-origin setting for the already approved hostname.
+
+The following 13 October snapshots and commands are historical; current-state claims below do not override the closeout report.
 
 Latest role update: all three accounts (engineer/product/partner) are active against the same approved real four-source connection, with additional server-side application ACLs. Their source identity remains eng_b. Current startup fingerprint: `b6f2ffbadef0bfbe28e02207c48980732b0b2364a74f896dcc23f92bbb61ac4c`; current log `.runtime/query-goal-20261013/application-role-final-service.log`. The launch command below is unchanged. Private role registry and policy files stay outside Git. Preserve the human USD1 state on every restart. The pre-role backups are `pre-application-roles-backup` and `pre-application-policy-guard-backup` under the private goal runtime. Old text below records earlier snapshots.
 

@@ -13,3 +13,5 @@ Base: main 57273004105ebf6735ceadc08080bdbc96162ed7. User approved the ordered r
 Ruling: Existing paid/live test authorizations and accepted application-role scope are not reset. Implementation approval does not imply a new budget, scope, upload, push, main merge or competition submission. Prepare concrete release and acceptance inputs before seeking any genuinely missing authorization.
 
 Evidence classes remain separate: static; fixture/mock and loopback HTTP; native API; live model; browser/human. A blocked or unrun class cannot become passed through another class.
+
+Local implementation and regression completed: see VALIDATION.json (757 Python, 14 DOM, 25 groups). Independent review followups fixed global unknown scope, global exhaustion readiness, legacy no-discovery readiness, failure finalization under audit outage, and early question/identity display. Native/live/browser and actual protected migrations remain separate.

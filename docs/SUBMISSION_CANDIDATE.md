@@ -1,6 +1,6 @@
 # ContextLedger · submission candidate
 
-Updated 14 October 2026 for the `pd` development candidate. This is an unsubmitted candidate. Earlier hosted/native measurements describe older builds; no current live availability or new-build native acceptance is asserted. [Previous text](reviews/2026-10-14-pd/prior-round8-submission.md) is retained.
+Updated 15 October 2026 for the local closeout candidate based on GitHub main `5727300`. This is an unsubmitted candidate. See [current closeout status](reviews/2026-10-15-closeout/REPORT.md). Earlier hosted/native measurements describe older builds; no new-build native acceptance is asserted. [Previous text](reviews/2026-10-14-pd/prior-round8-submission.md) is retained.
 
 ## Copy-ready fields
 
@@ -16,7 +16,7 @@ The engineering question connects a confirmed incident cause, a withdrawn hypoth
 
 Python source adapters, a SQLite versioned index and a browser interface form the implementation. Local BM25 and lexical matching retrieve exact source windows, with a bounded bilingual business glossary and authorized source relationships. Server-verified identity and application resource policies narrow candidates; current native access/content checks govern model input and final delivery. Unknown access cannot pass. Saved answers and citation previews are checked again. Shared collection credentials do not represent every employee’s permissions.
 
-The older deployed configuration uses one DeepSeek Flash evidence review and server-reconstructed source passages. The local pd candidate additionally implements an opt-in two-call mode: a draft groups conclusions by subquestion with exact supporting quotations, then a separate review checks support, coverage, insufficiency, material premises and conflicting evidence. Missing or negative review decisions reject the draft. The model cannot invent source URLs or grant permission. These are fallible model checks; the new mode’s live semantic quality, cost and latency have not been evaluated and it has not replaced the hosted configuration.
+The older deployed configuration uses one DeepSeek Flash evidence review and server-reconstructed source passages. The local pd candidate additionally implements an opt-in two-call mode: a draft groups conclusions by subquestion with exact supporting quotations, then a separate review checks support, coverage, insufficiency, material premises and conflicting evidence. Missing or negative review decisions reject the draft. The model cannot invent source URLs or grant permission. These are fallible model checks; the new mode has known live failures in the 15 October baseline trial; the repaired candidate still requires separate live semantic acceptance and it has not replaced the hosted configuration.
 
 Incremental updates and authorization changes remain separate. An isolated, credential-free operator lab makes the sequence visible: read version 1, publish version 2, block old-version access, revoke access, then check a new answer, employee History and citation previews. Only temporary in-memory fixtures change. The lab transcript retains earlier operator observations and is explicitly separate from employee History; these local steps do not establish native update latency.
 
@@ -36,7 +36,7 @@ The prototype demonstrates inspectable, permission-aware enterprise knowledge ac
 | At least three genuine development screenshots | Same manifest | Required originals are absent locally; this lab’s screenshots are not substitutes |
 | Cover image | [PNG](../assets/submission/contextledger-cover.png), 1600×900 | Exact 16:9; existing cover retained |
 | Architecture with trust boundaries | [SVG](../assets/submission/contextledger-architecture.svg), [implementation](IMPLEMENTED_ARCHITECTURE.md) | Includes optional two-call mode and isolated lab; not a native acceptance certificate |
-| GitHub complete source | Repository with pd working changes | Source handoff targets origin/pd; verify the handed-off commit. Deployment and competition submission remain separate actions |
+| GitHub complete source | Repository with local closeout working changes | Source baseline is main 5727300; fixes are on local fix/systematic-closeout-20261015, pending an approved handoff. Deployment and competition submission remain separate actions |
 | Aspire live demonstration | [Seven-minute script](DEMO_CANDIDATE.md), [lab guide](SCENARIO_LAB.md) | Local lab has browser evidence; latest native/model demo remains pending access |
 | Optional video | Script available | No finished video claimed |
 | Optional public link | Earlier hosted deployment is documented historically | Availability and version not checked this round; do not submit an unverified link |

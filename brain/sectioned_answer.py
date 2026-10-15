@@ -58,7 +58,13 @@ class SectionedAnswerReview(EvidenceReview):
             'authority or supersession. Require both sides to be cited when a material conflict '
             'is reported. Missing information is not contradiction, rejection or nonexistence. '
             'When no material premise or conflict applies, the respective check is true. '
-            'Unknown or incomplete assessment must be false.')
+            'Unknown or incomplete assessment must be false. '
+            'For this format, question_covered assesses the ENTIRE answer_parts plus the '
+            'fixed insufficient_notice, not factual claims alone. It is true only when '
+            'every requested part is either correctly supported or correctly marked insufficient '
+            'after examining all evidence. A genuinely unsupported part needs no factual claim. '
+            'An all-insufficient answer can pass only if every insufficiency is justified; '
+            'false insufficiency, missing parts or uncertainty about coverage still requires false.')
         body=json.loads(messages[1]['content']);body['answer_parts']=self.parts;body['insufficient_notice']=INSUFFICIENT_PART
         messages[1]['content']=json.dumps(body,ensure_ascii=False)
         return messages

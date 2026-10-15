@@ -141,6 +141,23 @@ class SectionedAnswer(unittest.TestCase):
         self.assertEqual(answer['answer_status'],'evidence_only');self.assertNotIn('answer_parts',answer)
         self.assertFalse(any(c['text']==self.claims[1]['text'] for c in answer['claims']))
 
+    def test_rejected_insufficiency_does_not_turn_unrelated_sources_into_answer_claims(self):
+        question='What confirmed Q4 revenue did payment-service Atlantis generate?'
+        self.transport.outputs=[{'claims':[], 'answer_parts':[
+            {'question':question,'status':'insufficient','claim_indices':[]}]},
+            {'verdicts':[],'question_covered':False,'parts_supported':True,
+             'premise_handled':True,'conflicts_handled':True}]
+        engine=self.engine(evidence_on_model_rejection=True)
+        answer=engine.query(Actor('eng_b'),question)
+        self.assertEqual(answer['answer_status'],'evidence_only')
+        self.assertEqual(answer['claims'],[])
+        self.assertTrue(answer['evidence'])
+        self.assertNotIn('answer_parts',answer)
+        self.assertEqual(len(self.transport.calls),2)
+        self.assertEqual(engine.safe_history(Actor('eng_b'),answer['request_id']),[answer])
+        self.world.revoked.add(('eng_b',answer['evidence'][0]['resource_id']))
+        self.assertTrue(engine.safe_history(Actor('eng_b'),answer['request_id'])[0]['unavailable'])
+
     def test_revocation_between_draft_and_review_blocks_second_send(self):
         self.transport.after_draft=lambda:self.world.revoked.add(('eng_b','C-02'))
         with self.assertRaises(PermissionError):self.engine().query(Actor('eng_b'),self.question)

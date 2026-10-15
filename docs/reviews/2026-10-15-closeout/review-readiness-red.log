@@ -1,0 +1,21 @@
+test_current_preview_exposes_distinct_times_only_after_authorization (test_source_freshness_status.PreviewFreshness.test_current_preview_exposes_distinct_times_only_after_authorization) ... ok
+test_complete_publication_reports_age_deadline_and_distinct_success_time (test_source_freshness_status.SourceFreshnessStatus.test_complete_publication_reports_age_deadline_and_distinct_success_time) ... ok
+test_dead_or_stopped_worker_cannot_report_current (test_source_freshness_status.SourceFreshnessStatus.test_dead_or_stopped_worker_cannot_report_current) ... ok
+test_expired_failed_and_backlogged_snapshots_are_not_current (test_source_freshness_status.SourceFreshnessStatus.test_expired_failed_and_backlogged_snapshots_are_not_current) ... ok
+test_native_reader_without_background_discovery_can_check_on_query (test_source_freshness_status.SourceFreshnessStatus.test_native_reader_without_background_discovery_can_check_on_query) ... FAIL
+test_other_identity_cannot_obtain_source_timing_metadata (test_source_freshness_status.SourceFreshnessStatus.test_other_identity_cannot_obtain_source_timing_metadata) ... ok
+test_query_readiness_waits_for_configured_sources_without_calling_a_model (test_source_freshness_status.SourceFreshnessStatus.test_query_readiness_waits_for_configured_sources_without_calling_a_model) ... ok
+
+======================================================================
+FAIL: test_native_reader_without_background_discovery_can_check_on_query (test_source_freshness_status.SourceFreshnessStatus.test_native_reader_without_background_discovery_can_check_on_query)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-closeout-20261015/tests/test_source_freshness_status.py", line 53, in test_native_reader_without_background_discovery_can_check_on_query
+    self.assertTrue(runtime_status(self.app,self.actor,None)['query_readiness']['ready'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.030s
+
+FAILED (failures=1)

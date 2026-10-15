@@ -288,12 +288,12 @@ class Engine:
             except ModelOutputRejected:
                 emit('synthesis_failed')
                 if not self.evidence_on_model_rejection:raise
-                # No model draft survives. These are immutable authorized original
-                # passages, not repaired claims or a fabricated successful review.
+                # No rejected draft or unreviewed source dump becomes an answer.
+                # Keep the checked originals in evidence for explicit inspection.
                 evidence_only=True
                 self.audit.append('request_failed',actor.user_id,rid,
                     {'reason':'model_output_rejected','continuation':'current_source_excerpts_only'})
-                draft={'claims':[{'text':e.text,'evidence_ids':[e.evidence_id]} for e in selected]}
+                draft={'claims':[]}
             by_id={e.evidence_id:e for e in selected}
             # Exact extractive support is intentionally strict for this provider.
             claims=[]
@@ -372,7 +372,7 @@ class Engine:
                                 review_status='accepted')
             if evidence_only:
                 response.update(answer_status='evidence_only',synthesis_failure='model_output_unavailable')
-                response['uncertainties']=['Synthesis failed validation. No model draft is shown. These are current authorized source excerpts, not a validated synthesized answer. Latest ordering is not inferred; compare the recorded actions and source scope.']
+                response['uncertainties']=['No validated answer is available from the checked sources. This does not establish that the requested information does not exist. Authorized evidence remains available for inspection; no rejected draft is shown.']
                 self.audit.append('source_excerpts_prepared',actor.user_id,rid,
                     {'synthesis_completed':False,'evidence_ids':[e.evidence_id for e in selected]})
             self.audit.append('response_committed',actor.user_id,rid,{'response':response})

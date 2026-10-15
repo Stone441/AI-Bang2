@@ -1,0 +1,29 @@
+test_exact_identity_scope_and_registry_revocation (test_application_audit.ApplicationAudit.test_exact_identity_scope_and_registry_revocation) ... ok
+test_explicit_auditor_has_no_knowledge_identity (test_application_audit.ApplicationAudit.test_explicit_auditor_has_no_knowledge_identity) ... ok
+test_request_identity_immutable_and_revision_exact (test_application_audit.ApplicationAudit.test_request_identity_immutable_and_revision_exact) ... ok
+test_whole_early_failure_and_zero_evidence_lifecycle_and_snapshot (test_application_audit.ApplicationAudit.test_whole_early_failure_and_zero_evidence_lifecycle_and_snapshot) ... ok
+test_early_request_failure_is_auditable_and_employee_still_denied (test_application_audit_http.ApplicationAuditHTTP.test_early_request_failure_is_auditable_and_employee_still_denied) ... FAIL
+test_scoped_auditor_login_runtime_and_query_denial (test_application_audit_http.ApplicationAuditHTTP.test_scoped_auditor_login_runtime_and_query_denial) ... ERROR
+
+======================================================================
+ERROR: test_scoped_auditor_login_runtime_and_query_denial (test_application_audit_http.ApplicationAuditHTTP.test_scoped_auditor_login_runtime_and_query_denial)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-closeout-20261015/tests/test_application_audit_http.py", line 34, in test_scoped_auditor_login_runtime_and_query_denial
+    self.assertTrue(session['can_audit'])
+                    ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'can_audit'
+
+======================================================================
+FAIL: test_early_request_failure_is_auditable_and_employee_still_denied (test_application_audit_http.ApplicationAuditHTTP.test_early_request_failure_is_auditable_and_employee_still_denied)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-closeout-20261015/tests/test_application_audit_http.py", line 50, in test_early_request_failure_is_auditable_and_employee_still_denied
+    self.assertEqual(status,200)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 403 != 200
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.978s
+
+FAILED (failures=1, errors=1)

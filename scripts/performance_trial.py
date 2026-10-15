@@ -41,6 +41,7 @@ def private_directory(path):
 
 
 def main(argv=None):
+    global PRIVATE
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--reasoning-effort', choices=['none', 'low'], default='low')
     parser.add_argument('--source-transport', choices=['legacy', 'pooled'], default='legacy')
@@ -53,6 +54,8 @@ def main(argv=None):
     parser.add_argument('--human-team-trial', action='store_true', help='Explicit USD1 human-only allowance; no automated acceptance')
     parser.add_argument('--reviewer-accounts', type=Path, help='Private password-account registry; opt-in shared synthetic reviewer identity')
     parser.add_argument('--reviewer-public-origin', help='Exact HTTPS origin behind a local reverse proxy; does not bind publicly')
+    parser.add_argument('--state-root',type=Path,default=ROOT,help='Existing approved project holding private state; code/UI remain in this build')
+    parser.add_argument('--attributed-grant',help='Existing explicitly migrated human grant; never creates or resets an allowance')
     args = parser.parse_args(argv)
     if (args.reviewer_accounts or args.reviewer_public_origin) and not args.human_team_trial:
         parser.error('Reviewer mode requires explicit human trial allowance')
@@ -60,6 +63,10 @@ def main(argv=None):
         parser.error('Public origin requires reviewer accounts')
     if args.human_team_trial and args.query_concurrency != 'serial':
         parser.error('Human team trial requires the selected serial configuration')
+    if args.attributed_grant and not args.human_team_trial:
+        parser.error('Attributed grant requires the approved human team trial')
+    state_root=args.state_root.resolve()
+    PRIVATE=state_root/'.runtime/query-goal-20261013'
     if args.reviewer_accounts:
         args.reviewer_accounts = args.reviewer_accounts.resolve()
     if args.source_concurrency > 1 and args.source_transport != 'pooled':
@@ -67,8 +74,8 @@ def main(argv=None):
     for path in (PRIVATE, PRIVATE/'.runtime'):
         private_directory(path)
     runtime = PRIVATE/'.runtime'
-    original_index = ROOT/'.runtime/delivery-trial-20261011/.runtime/multi-auth017-web.sqlite'
-    for name, target in (('deepseek-budget.sqlite', ROOT/'.runtime/deepseek-budget.sqlite'),
+    original_index = state_root/'.runtime/delivery-trial-20261011/.runtime/multi-auth017-web.sqlite'
+    for name, target in (('deepseek-budget.sqlite', state_root/'.runtime/deepseek-budget.sqlite'),
                          ('multi-auth017-web.sqlite', original_index)):
         if target.is_symlink() or not target.is_file() or target.stat().st_uid != os.getuid():
             raise ValueError('Original owned state required')
@@ -109,7 +116,7 @@ def main(argv=None):
             try:
                 ticket = current.renew_bootstrap_ticket()
                 write_private(PRIVATE/'bootstrap-token', ticket)
-                write_private(ROOT/'.runtime/page-failure-ux-logs/human-bootstrap-token', ticket)
+                write_private(state_root/'.runtime/page-failure-ux-logs/human-bootstrap-token', ticket)
             except OSError:
                 print('Entry renewal unavailable; existing service retained.', flush=True)
         signal.signal(signal.SIGUSR1, renew)
@@ -126,9 +133,16 @@ def main(argv=None):
                 gate_type=ConcurrentPerformanceAdmission;ledger_type=ConcurrentGoalLedger
             if args.human_team_trial:
                 from scripts.team_trial_allowance import TeamTrialAdmission
-                gate = TeamTrialAdmission(query, current.engine.model.ledger,
-                    runtime/'human-team-admission.json',
-                    previous_state_path=runtime/'goal-admission.json', human=True)
+                if args.attributed_grant:
+                    from scripts.attributed_allowance import AttributedAdmission,AttributedGoalLedger
+                    gate=AttributedAdmission(query,current.engine.model.ledger,args.attributed_grant,
+                        policy=TeamTrialAdmission.POLICY,cost_limit=TeamTrialAdmission.COST_LIMIT,max_calls=None)
+                    ledger_type=AttributedGoalLedger
+                    gate.POLICY=TeamTrialAdmission.POLICY
+                else:
+                    gate = TeamTrialAdmission(query, current.engine.model.ledger,
+                        runtime/'human-team-admission.json',
+                        previous_state_path=runtime/'goal-admission.json', human=True)
             else:
                 gate = gate_type(query, current.engine.model.ledger,
                             runtime/'goal-admission.json', plan_sha256=plan_hash)
@@ -159,15 +173,15 @@ def main(argv=None):
                 'proxy_behavior': 'original urllib route; no direct proxy bypass',
             }, indent=2)+'\n')
             # Preserve the user's established local entry helper and file modes.
-            write_private(ROOT/'.runtime/delivery-trial-20261011/entry-server.json', control)
+            write_private(state_root/'.runtime/delivery-trial-20261011/entry-server.json', control)
             return serve(*positional, **keyword)
         server.serve_forever = guarded_serve
         return server
     operator_web.create_server = create
     os.chdir(PRIVATE)
     try:
-        return operator_web.main(['--source', 'multi', '--config', str(ROOT/'.runtime/operator-bundle.json'),
-            '--actor', 'eng_b', '--oauth-client', str(ROOT/'.runtime/drive-oauth-client.json'),
+        return operator_web.main(['--source', 'multi', '--config', str(state_root/'.runtime/operator-bundle.json'),
+            '--actor', 'eng_b', '--oauth-client', str(state_root/'.runtime/drive-oauth-client.json'),
             '--port', '49161', '--live', '--model', 'deepseek', '--credential-store', 'macos-keychain',
             '--answer-style', 'source-review', '--reasoning-effort', args.reasoning_effort,
             '--source-review-input', args.source_review_input,
@@ -187,7 +201,7 @@ if __name__ == '__main__':
             if '#ticket=' in value:
                 ticket = re.search(r'#ticket=([A-Za-z0-9_-]+)', value).group(1)
                 write_private(PRIVATE/'bootstrap-token', ticket)
-                write_private(ROOT/'.runtime/page-failure-ux-logs/human-bootstrap-token', ticket)
+                write_private(PRIVATE.parent/'page-failure-ux-logs/human-bootstrap-token', ticket)
                 value = 'One-time entry prepared privately; use the established local entry.\n'
             return sys.__stdout__.write(value)
         def flush(self):

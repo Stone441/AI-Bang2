@@ -20,7 +20,7 @@ ENDPOINT = 'https://api.deepseek.com/chat/completions'
 MODEL = 'deepseek-flash'
 # Official pricing re-read on this Singapore date; evidence is kept separately.
 # Never advance this date without reviewing the official model/rates.
-PRICE_DATE = date(2026, 10, 13)
+PRICE_DATE = date(2026, 10, 15)
 PRICE_SOURCE = 'https://api-docs.deepseek.com/quick_start/pricing/'
 CONTEXT_TOKENS = 1_048_576
 OUTPUT_TOKENS = 1024
@@ -269,6 +269,10 @@ class DeepSeekEvidenceModel:
                 'Incomplete model review':'review','Claim not fully supported and responsive':'review',
                 'Requested operational evidence omitted':'coverage_omission',
                 'Invalid whole-source selection':'structure','Incomplete source construction':'quote'}
+            categories.update({'Invalid sectioned synthesis output':'sectioned_shape',
+                'Invalid answer parts':'answer_parts_shape','Invalid answer part':'answer_part_fields',
+                'Invalid answer part citations':'answer_part_citations',
+                'Unassigned or repeated answer claim':'answer_part_assignment'})
             diagnostic['validation_failure']=categories.get(str(error),category)
             self.ledger.model_outcome(reservation_id, 'output_rejected')
             record('model_output_rejected')
