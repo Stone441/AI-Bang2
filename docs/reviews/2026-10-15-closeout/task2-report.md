@@ -34,7 +34,7 @@ engine.model.ledger = AttributedGoalLedger(gate)
 engine.query = gate
 ```
 
-Lazy review-model constructors receive the same `BudgetLedger` adapter contract, connection and original receipt/summary methods through `GoalLedger`. Existing timing wrappers remain on the underlying ledger. `gate.public_status()` reports grant-local current costs/counts and unknowns directly from the durable database. A goal and human trial can use separate migrated grant IDs.
+Lazy review-model constructors receive the same `BudgetLedger` adapter contract, connection and original receipt/summary methods through `GoalLedger`. Existing timing wrappers remain on the underlying ledger. `gate.public_status()` reports grant-local current costs/counts and unknowns directly from the durable database. A goal and human trial can use separate migrated grant IDs. Any new prepared/dispatched reservation across the shared ledger beyond the reviewed legacy original_pending_ids stops admission globally; cost/call accounting remains grant-local.
 
 ## Migration boundary and rulings
 
@@ -44,7 +44,7 @@ Ruling: Historical global increments without exact external attribution remain c
 
 Ruling: A new historical unknown remains a permanent migration stop with the original global reservation intact; it cannot be accepted as a new baseline or implicitly refunded. A migration with this condition is reviewable but not usable for further calls. Exact reconciliation must happen before generating/applying a usable migration; applied immutable grants cannot be reset. The original baseline unknown IDs (including the two old unknowns when present in real state) stay reserved globally and are excluded from new-grant unknown stops. No actual historical IDs or costs were guessed in this task.
 
-Ruling: This opt-in gate conservatively serializes unresolved model reservations within a grant: a second reservation pauses while another is prepared/dispatched. Different grants remain independent except for the shared global ceiling/freeze. Cost if wrong: an attributed high-concurrency launcher requires a separate reviewed known-in-flight extension; this adapter currently supports the sequential human launcher. Existing concurrent mode remains explicitly legacy conservative and was not silently changed.
+Ruling: This opt-in gate conservatively serializes unresolved model reservations across the shared ledger: a new reservation pauses while any non-baseline reservation is prepared/dispatched. Grant costs and calls remain independent; the global unknown stop is preserved. Dispatch excludes only its own current prepared reservation from this stop. Cost if wrong: an attributed high-concurrency launcher requires a separate reviewed known-in-flight extension; this adapter currently supports the sequential human launcher. Existing concurrent mode remains explicitly legacy conservative and was not silently changed.
 
 ## Validation
 
@@ -56,3 +56,9 @@ Ruling: This opt-in gate conservatively serializes unresolved model reservations
 - `task2-full.log`: 729 tests passed in 52.815s after combined task2/task3 working-tree validation. This is not native/model/browser/human acceptance.
 
 No historical cost is removed from the global USD20 ledger. No old unknown is settled/cancelled. No actual runtime migration has been performed.
+
+## Review follow-up: preserve global new-unknown stop
+
+Independent review correctly identified that isolating unknown stops by grant weakened the existing human-trial authorization. Added negative regression before fixing: an unknown under grant A must pause grant B, keeping B spent at zero and the global reservation intact; an unowned external prepared/dispatched reservation must also stop every grant. Admission/reservation checks now derive global pending IDs minus only the immutable migration prior's explicit original_pending_ids. They never absorb migration-time in-flight IDs into a new baseline. Dispatch excludes only the currently dispatching own reservation; grant-local money/calls and the unchanged original global USD20 check remain intact.
+
+`task2-global-unknown-red.log` retains the pre-fix failures. `task2-global-unknown-green.log` records the covering 12 attribution tests after the fix. No concurrent cross-grant in-flight support is claimed; root selects the serial launcher.

@@ -54,7 +54,8 @@ class AttributedBudget(unittest.TestCase):
         a, b = self.grant('a'), self.grant('b')
         rid = self.call(a, 40, settle=False)
         with self.assertRaises(TrialAdmissionPaused): self.call(a, 1)
-        self.call(b, 1)
+        with self.assertRaises(TrialAdmissionPaused): self.call(b, 1)
+        self.assertEqual(b.public_status()['settled_usd'], 0)
         self.assertEqual(self.ledger.summary()['pending_requests'], 2)
         self.ledger.settle(rid, 20)
         self.call(a, 80)
@@ -147,3 +148,33 @@ class AttributedBudget(unittest.TestCase):
         a.query = query
         a()
         self.assertEqual(a.public_status()['model_calls_used'], 0)
+
+    def test_external_new_prepared_or_dispatched_unknown_blocks_all_grants(self):
+        gate = self.grant('a')
+        external = self.ledger.reserve(20)
+        self.assertFalse(gate.public_status()['allowed'])
+        with self.assertRaises(TrialAdmissionPaused): self.call(gate, 1)
+        self.ledger.dispatch(external)
+        with self.assertRaises(TrialAdmissionPaused): self.call(gate, 1)
+        self.assertEqual(gate.public_status()['settled_usd'], 0)
+        self.assertEqual(self.ledger.summary()['pending_requests'], 2)
+        self.ledger.settle(external, 20)
+        self.call(gate, 1)
+        self.assertEqual(gate.public_status()['settled_usd'], .000001)
+
+    def test_external_unknown_between_reserve_and_dispatch_pauses_dispatch(self):
+        gate = self.grant('a')
+        def query():
+            guard = AttributedGoalLedger(gate)
+            own = guard.reserve(10)
+            external = self.ledger.reserve(20)
+            with self.assertRaises(TrialAdmissionPaused): guard.dispatch(own)
+            with self.ledger.transaction():
+                state = self.ledger.db.execute('SELECT state FROM reservations WHERE id=?', (own,)).fetchone()[0]
+            self.assertEqual(state, 'prepared')
+            guard.cancel_before_dispatch(own)
+            self.ledger.cancel_before_dispatch(external)
+        gate.query = query
+        gate()
+        self.assertEqual(gate.public_status()['model_calls_used'], 0)
+        self.assertEqual(self.ledger.summary()['pending_requests'], 1)

@@ -15,15 +15,21 @@ def initialize(ledger):
 
 
 def status(db, grant):
-    row = db.execute('SELECT policy,cost_limit,max_calls,frozen_cost,frozen_calls,frozen_unknown FROM allowance_grants WHERE id=?', (grant,)).fetchone()
+    row = db.execute('SELECT policy,cost_limit,max_calls,frozen_cost,frozen_calls,frozen_unknown,migration FROM allowance_grants WHERE id=?', (grant,)).fetchone()
     if row is None: raise ValueError('Explicit checked migration required')
     rows = db.execute('SELECT r.id,r.state,r.reserved,r.actual FROM reservations r JOIN reservation_grants g ON g.reservation_id=r.id WHERE g.grant_id=?', (grant,)).fetchall()
+    # Cost/call ownership is grant-local; the authorization's new-unknown
+    # stop remains global. Only the explicitly reviewed legacy pending IDs
+    # qualify for the retained baseline, never a new migration-time snapshot.
+    original_pending = set(json.loads(row[6])['prior']['original_pending_ids'])
+    global_unknown = {r[0] for r in db.execute(
+        "SELECT id FROM reservations WHERE state IN ('prepared','dispatched')")}-original_pending
     return dict(policy=row[0], cost_limit=row[1], max_calls=row[2],
                 settled=row[3]+sum(r[3] for r in rows if r[1]=='settled'),
                 accounted=row[3]+sum(r[3] if r[1]=='settled' else 0 if r[1]=='cancelled' else r[2] for r in rows),
                 calls=row[4]+sum(r[1] in ('dispatched','settled') for r in rows),
                 prepared=sum(r[1]=='prepared' for r in rows),
-                unknown=json.loads(row[5])+[r[0] for r in rows if r[1] in ('prepared','dispatched')])
+                unknown=sorted(set(json.loads(row[5])) | global_unknown))
 
 
 def check(db, grant, upper):
