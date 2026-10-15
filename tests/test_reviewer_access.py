@@ -54,6 +54,31 @@ class ReviewerAccess(unittest.TestCase):
         if username:self.assertEqual(call('/api/reviewer/login',dict(username=username,password=self.password))[0],200)
         return call
 
+    def test_opt_in_private_timing_reaches_reviewer_http_without_public_endpoint(self):
+        from brain.timing import install
+        directory = Path(self.tmp.name).resolve() / 'timing'
+        self.assertIsNone(self.app.private_timing)
+        recorder = install(self.base, directory)
+        saved = threading.Event()
+        original_save = recorder.save
+        def save(state):
+            original_save(state)
+            saved.set()
+        recorder.save = save
+        try:
+            call = self.client('first')
+            code, answer = call('/api/query', {'question':'payment-service'})
+            self.assertEqual(code, 200)
+            self.assertTrue(saved.wait(2))
+            records = [json.loads(p.read_text()) for p in directory.glob('*.json')]
+            query = next(r for r in records if r['operation'] == 'query')
+            self.assertEqual(query['request_id'], answer['request_id'])
+            self.assertTrue(query['spans'])
+            self.assertNotIn('spans', json.dumps(answer))
+            self.assertEqual(call('/api/timing')[0], 404)
+        finally:
+            recorder.close()
+
     def test_password_role_and_history_isolation_and_audit_attribution(self):
         a,b=self.client('first'),self.client('second')
         status,result=a('/api/query',{'question':'payment-service'})

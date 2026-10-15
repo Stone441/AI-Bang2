@@ -51,3 +51,9 @@
 优先本地诊断：日期缺失的 supported/insufficient 语义契约、严格 citation_ids 的安全诊断粒度、私有执行器的停止条件和外层 timing 安装。不要自动修复非法 JSON、降低审查门槛或显示失败草稿。修复后的新候选需要独立、具体的剩余真实验证计划；本次无付费重试授权。上述质量与安全/阶段测量缺口完成前，Goal 不算完成。
 
 `python3 -m scripts.reviewer_demo` 可启动无凭据 fixture/fake 预览；它不代表真实模型质量。用户已有 51686 预览保持原快照，本轮没有替换。Embedding 不纳入：当前小样本无必要证据漏召回且无已授权/已安装真实 embedding 条件，详见 EMBEDDING.md。
+
+## Revised local candidate after first live run
+
+The follow-up local revision adds a shared requested-value answerability contract to generation and review, safe citation subreason diagnostics without draft text, and opt-in timing propagation through ReviewerApp. No model acceptance criteria or permission gates were weakened. A reusable local acceptance policy now tests the actual evidence_only response shape and stops at the second synthesis failure; the prepared fresh runner imports it and refuses to start without new authorization.
+
+Targeted verification: sectioned18, reviewer HTTP10, restricted timing12, synthesis34, DeepSeek19, acceptance policy3 tests passed (96 total). The HTTP timing test verifies actual recorded query spans and matching response request ID, with no public timing endpoint. These tests do not prove the revised prompt's live behavior or fix the historical JSON output. The original a2be0fd live report above remains unchanged in meaning. RECHECK_PLAN.md defines the separately approvable next real run; the old grant remains closed.

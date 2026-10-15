@@ -578,3 +578,7 @@ Evidence: browser security question immediately following product capability ret
 ## AUTH-SEMANTIC-WORKSPACE-20261015-24-USD1
 
 User approved LIVE_PLAN.md scope: existing four-source synthetic data read-only; three defaults and six paraphrases, false premise and existing conflict; independent automatic grant semantic-workspace-validation-20261015; max 24 DeepSeek calls and USD1 within original USD20 ledger. Preserve historical unknown; stop new unknown; no paid retries, human allowance, native writes, deployment or production restart. Freeze candidate and native oracle before calls.
+
+## ADR-SEMANTIC-WORKSPACE-02 · local fixes from bounded live failures
+
+Evidence: a2be0fd live run had json_syntax and citation_ids rejection, and an accepted Chinese date request classified supported despite missing requested value. Preserve strict rejection; add safe citation subreason only, no rejected draft persistence. Share requested-value versus yes/no answerability instructions between generation and reviewer. Forward opt-in timing recorder through ReviewerApp after missing live spans revealed the adapter gap. Add tested local stopping policy using answer_status and prepare a fresh runner with no authorization file. No additional real call is authorized by this ADR; original grant closed. Revert these local changes to a2be0fd for rollback; production unchanged.

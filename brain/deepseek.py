@@ -58,9 +58,12 @@ class OutputValidationError(ValueError):
         self.detail = detail
         self.claim_index = None
         self.support_index = None
+        self.citation_issue = None
 
     def diagnostic(self):
         result = {'validation_detail': self.detail}
+        if self.citation_issue in ('shape', 'unknown_id', 'duplicate_id', 'support_count'):
+            result['citation_issue'] = self.citation_issue
         for name, bound in (('claim_index', 52), ('support_index', 4)):
             value = getattr(self, name)
             if type(value) is int and 0 <= value < bound:

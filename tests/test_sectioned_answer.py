@@ -256,3 +256,20 @@ class SectionedAnswer(unittest.TestCase):
             self.assertEqual(diagnostic.get('claim_index'),0)
             self.assertNotIn('PRIVATE',json.dumps(diagnostic))
             self.assertEqual(len(self.transport.calls),1)
+
+    def test_citation_failure_subreasons_are_fixed_and_never_include_ids(self):
+        from brain.synthesis import validate_claim
+        from brain.deepseek import OutputValidationError
+        cases = [('shape', 42, []),
+                 ('unknown_id', ['PRIVATE-98765@1'], []),
+                 ('duplicate_id', ['J-02@1', 'J-02@1'], []),
+                 ('support_count', ['J-02@1'], [])]
+        for expected, ids, supports in cases:
+            with self.subTest(expected=expected):
+                claim = dict(text='Done', evidence_ids=ids, supports=supports)
+                with self.assertRaises(OutputValidationError) as caught:
+                    validate_claim(claim, self.evidence)
+                diagnostic = caught.exception.diagnostic()
+                self.assertEqual(diagnostic['validation_detail'], 'citation_ids')
+                self.assertEqual(diagnostic['citation_issue'], expected)
+                self.assertNotIn('PRIVATE', json.dumps(diagnostic))

@@ -28,11 +28,19 @@ def validate_claim(claim, evidence):
     if len(claim['text']) > 600:
         raise OutputValidationError('Invalid grounded claim', 'claim_text_length')
     ids, supports = claim['evidence_ids'], claim['supports']
-    if (not isinstance(ids, list) or not 1 <= len(ids) <= 4
-            or any(not isinstance(i, str) or i not in by_id for i in ids)
-            or len(set(ids)) != len(ids) or not isinstance(supports, list)
-            or len(supports) != len(ids)):
-        raise OutputValidationError('Invalid grounded citation', 'citation_ids')
+    issue = None
+    if not isinstance(ids, list) or not 1 <= len(ids) <= 4 or any(not isinstance(i, str) for i in ids):
+        issue = 'shape'
+    elif any(i not in by_id for i in ids):
+        issue = 'unknown_id'
+    elif len(set(ids)) != len(ids):
+        issue = 'duplicate_id'
+    elif not isinstance(supports, list) or len(supports) != len(ids):
+        issue = 'support_count'
+    if issue:
+        error = OutputValidationError('Invalid grounded citation', 'citation_ids')
+        error.citation_issue = issue
+        raise error
     supported = []
     for index, support in enumerate(supports):
         if (not isinstance(support, dict) or set(support) != {'evidence_id', 'quote'}

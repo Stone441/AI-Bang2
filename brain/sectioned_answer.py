@@ -9,6 +9,16 @@ REASONING_CHECKS = ('parts_supported', 'premise_handled', 'conflicts_handled')
 INSUFFICIENT_PART = 'The provided evidence is insufficient to answer this part. This does not establish that the event or information does not exist.'
 
 
+ANSWERABILITY_CONTRACT = (
+    ' Classify each part by whether the requested value or decision is established, not merely '
+    'whether a true sentence can be written about the topic. A request for a specific date, '
+    'amount or other value is insufficient when that value is unconfirmed or absent, even '
+    'when evidence explicitly says it is unconfirmed. Keep other answerable parts supported. '
+    'In contrast, an explicit yes/no question asking whether something is confirmed or approved '
+    'can be fully supported by an evidenced negative answer. Do not mark all negative answers '
+    'insufficient. Apply this equally across languages and paraphrases. ')
+
+
 def validate_answer_parts(parts, claims, question):
     if not isinstance(parts,list) or not 1<=len(parts)<=6 or not isinstance(question,str):
         raise ValueError('Invalid answer parts')
@@ -36,6 +46,7 @@ class SectionedAnswerReview(EvidenceReview):
 
     def messages(self,question,evidence):
         messages=super().messages(question,evidence)
+        messages[0]['content'] += ANSWERABILITY_CONTRACT
         messages[0]['content'] += (
             ' Also return three extra boolean fields: "parts_supported", "premise_handled", '
             'and "conflicts_handled". All must be true for acceptance. The answer_parts are part of the draft: verify that they faithfully divide the ENTIRE '
@@ -93,6 +104,7 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
 
     def messages(self,question,evidence):
         messages=super().messages(question,evidence)
+        messages[0]['content'] += ANSWERABILITY_CONTRACT
         messages[0]['content'] += (
             ' Lead each supported part with its direct business answer, then only the reasons and '
             'limitations needed to interpret it. Integrate complementary evidence into a single '
