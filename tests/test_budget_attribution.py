@@ -178,3 +178,13 @@ class AttributedBudget(unittest.TestCase):
         gate()
         self.assertEqual(gate.public_status()['model_calls_used'], 0)
         self.assertEqual(self.ledger.summary()['pending_requests'], 1)
+
+    def test_public_status_reports_global_exhaustion_without_own_charge(self):
+        gate = self.grant('a')
+        remaining = self.ledger.summary()['available_micro_usd']
+        rid = self.ledger.reserve(remaining)
+        self.ledger.dispatch(rid)
+        self.ledger.settle(rid, remaining)
+        self.assertEqual(gate.public_status()['reason'], 'global_budget_unavailable')
+        self.assertFalse(gate.public_status()['allowed'])
+        self.assertEqual(gate.public_status()['settled_usd'], 0)

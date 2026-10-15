@@ -22,7 +22,9 @@ class AttributedAdmission:
         with self.ledger.transaction():
             value = status(self.ledger.db, self.grant_id)
             blocked = self.ledger.db.execute('SELECT blocked FROM budget WHERE id=1').fetchone()[0]
-        reason = ('usage_unconfirmed' if value['unknown'] or blocked else
+            globally_unavailable = blocked or self.ledger._used() >= self.ledger.limit
+        reason = ('usage_unconfirmed' if value['unknown'] else
+                  'global_budget_unavailable' if globally_unavailable else
                   'cost_limit' if value['accounted'] >= value['cost_limit'] else
                   'model_call_limit' if value['max_calls'] is not None and value['calls'] >= value['max_calls'] else None)
         return dict(allowed=reason is None, reason=reason, human_unlimited=value['max_calls'] is None,
