@@ -582,3 +582,11 @@ User approved LIVE_PLAN.md scope: existing four-source synthetic data read-only;
 ## ADR-SEMANTIC-WORKSPACE-02 · local fixes from bounded live failures
 
 Evidence: a2be0fd live run had json_syntax and citation_ids rejection, and an accepted Chinese date request classified supported despite missing requested value. Preserve strict rejection; add safe citation subreason only, no rejected draft persistence. Share requested-value versus yes/no answerability instructions between generation and reviewer. Forward opt-in timing recorder through ReviewerApp after missing live spans revealed the adapter gap. Add tested local stopping policy using answer_status and prepare a fresh runner with no authorization file. No additional real call is authorized by this ADR; original grant closed. Revert these local changes to a2be0fd for rollback; production unchanged.
+
+## AUTH-SEMANTIC-RECHECK-20261015-24-USD1
+
+User explicitly approved RECHECK_PLAN.md: revised candidate 4c83129, same synthetic four-source read-only corpus, 11 frozen questions once including deliberate re-evaluation of 7 previously attempted questions; new independent semantic-workspace-recheck-20261015 grant, max24 actual DeepSeek calls / USD1 within shared USD20 ledger. No human allowance, automatic per-case retries or production switch. Stop at second synthesis failure; preserve original unknown and stop new unknown. Old grant remains closed. Approval recorded after concrete local fixes, 96 targeted tests and frozen proposal; full suite then verified 768 tests in55.217s.
+
+## ADR-SEMANTIC-WORKSPACE-03 · observed single-part EOF failures
+
+4c83129 recheck: full multi-part default accepted; both one-part paraphrases invalid at EOF despite finish_reason=stop and313/316 output tokens under8192. Core request has json_object, valid example and no stop sequence; no local content stripping found. No JSON repair or validator relaxation. Add an explicit generated single-part JSON example and full-root closure instruction as a bounded prompt hypothesis. Local18 sectioned tests pass, live effectiveness unverified. Close second grant at4 calls/USD0.005753 with no new unknown. Any further model dispatch requires a separately approved concrete plan, not reuse of remaining allowance.

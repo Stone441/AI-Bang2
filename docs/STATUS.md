@@ -571,3 +571,7 @@ v2增加生成问题覆盖提示、严格question_covered boolean复核、ID与q
 ### 2026-10-15 semantic workspace bounded live result
 
 Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conservative; 2 generation failures, 1 partial-category mismatch. No new unknown, human allowance unchanged, no production switch. Grant run closed after delayed manual stop (private runner wrong status field corrected). Remaining quality/safety/timing checks not complete; Goal in_progress. See docs/reviews/2026-10-15-semantic-workspace/REPORT.md.
+
+### Semantic revised run stopped correctly
+
+4c83129: 3 questions/4 calls/USD0.005753, first accepted then two EOF JSON failures. Automatic stop worked, no new unknown/human usage. Current native history/preview isolation and ordinary audit denial verified; real disjoint timing spans captured. New single-part syntax prompt hypothesis locally tested, not live verified. See semantic-workspace REPORT.md; full Goal remains in_progress, no production change.

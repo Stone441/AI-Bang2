@@ -100,7 +100,17 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
         'substring","status":"insufficient","claims":[]}]}. '
         'Place each claim inside the ONE part it answers. Do not output top-level '
         'claims, claim_indices or evidence_ids; the server derives those from '
-        'part membership and supports. Use exactly text and supports in each claim.')
+        'part membership and supports. Use exactly text and supports in each claim. '
+        'Even for ONE question part, retain the root object and answer_parts array. '
+        'Single-part JSON example: ' + json.dumps({'answer_parts':[
+            {'question':'exact original question', 'status':'supported', 'claims':[
+                {'text':'concise conclusion', 'supports':[
+                    {'evidence_id':'supplied ID', 'quote':'exact contiguous passage'}]}]}]},
+            separators=(',', ':')) + '. '
+        'Finish the entire root JSON object, including every enclosing array and object; '
+        'do not stop after closing the final support, claim, or part. '
+        'The examples illustrate syntax only; all actual conclusions and quotations must '
+        'come from the supplied evidence.')
 
     def messages(self,question,evidence):
         messages=super().messages(question,evidence)

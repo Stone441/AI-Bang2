@@ -1,4 +1,4 @@
-# Revised-candidate real validation · awaiting fresh authorization
+# Revised-candidate real validation · approved 2026-10-15
 
 The first grant is closed, with 7 committed questions / 12 calls / USD0.016174. Its no-retry rule remains in force. This proposal is a separate evaluation of the revised candidate, not reuse of its unused balance.
 
@@ -20,3 +20,5 @@ Freeze revised commit, native source versions/text/hashes and current role restr
 Collect real phase spans through outer reviewer HTTP app; generation and review transport are sequential labeled call ordinals, check all nested timings for overlap. Compare complete claims and citations to current originals, separately assess requested values/limitations/categories. Perform same-session history/preview, cross-session denial and normal-user audit denial with zero model calls. Native mutation/revocation remains excluded; local regression/browser fixture covers that boundary.
 
 Stop on new unknown, frozen-source drift, source readiness failure, budget/call capacity, HTTP failure, or second synthesis failure. Save results before stopping; finally closes server, joins in-flight request processing and records exact ledger/audit result. No finish claim based solely on model acceptance or green unit tests.
+
+User explicitly approved: 批准新范围真实验收. Frozen code 4c8312987b5ff65714199846fc4a31d265718620. Full local regression 768 tests passed in55.217s; report log retains warnings and intentional negative-fixture output.

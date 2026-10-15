@@ -1,0 +1,146 @@
+{
+  "candidate_commit": "4c8312987b5ff65714199846fc4a31d265718620",
+  "grant": {
+    "policy": "AUTH-SEMANTIC-RECHECK-20261015-24-USD1",
+    "cost_limit": 1000000,
+    "max_calls": 24,
+    "settled": 5753,
+    "accounted": 5753,
+    "calls": 4,
+    "prepared": 0,
+    "unknown": []
+  },
+  "human_unchanged": true,
+  "original_pending_count": 2,
+  "rows": [
+    {
+      "id": "release-readiness-0",
+      "request_id": "9f1f8f8041044deb83c0da24995ed97e",
+      "http_seconds": 18.027720249956474,
+      "calls": 2,
+      "status": "accepted",
+      "parts": [
+        {
+          "question": "Is PAY-102 complete",
+          "status": "supported",
+          "claim_indices": [
+            0
+          ]
+        },
+        {
+          "question": "can we offer payment-retry to all customers today?",
+          "status": "supported",
+          "claim_indices": [
+            1
+          ]
+        }
+      ],
+      "claims": [
+        "PAY-102's code fix is Done, but that code completion does not approve general customer release.",
+        "No. Payment-retry is available only to the controlled pilot; general availability (GA) is not approved and no general release date is confirmed."
+      ],
+      "exact_quote_checks": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "id": "release-readiness-1",
+      "request_id": "72b2f4d947db481e81450eb65c451cad",
+      "http_seconds": 14.947307375026867,
+      "calls": 1,
+      "status": "evidence_only",
+      "parts": [],
+      "claims": [],
+      "exact_quote_checks": []
+    },
+    {
+      "id": "release-readiness-2",
+      "request_id": "d35ce8647871409aa22eec37332a9115",
+      "http_seconds": 12.785063249990344,
+      "calls": 1,
+      "status": "evidence_only",
+      "parts": [],
+      "claims": [],
+      "exact_quote_checks": []
+    }
+  ],
+  "diagnostics": [
+    {
+      "finish_reason": "stop",
+      "response_id_sha256": "55366f70b05d564542fbee1d9b53c43f2300344597dea3ac5d16d588bfe6b008",
+      "returned_model": "deepseek-flash",
+      "usage": {
+        "completion_tokens": 316,
+        "prompt_tokens": 3793,
+        "total_tokens": 4109
+      },
+      "validation_detail": "json_syntax",
+      "validation_failure": "json",
+      "visible_output_characters": 1296
+    },
+    {
+      "finish_reason": "stop",
+      "response_id_sha256": "2ec270e8ccac13a85865e56786bb0f1942f74e261074f310c455bee1451a6dcf",
+      "returned_model": "deepseek-flash",
+      "usage": {
+        "completion_tokens": 313,
+        "prompt_tokens": 3797,
+        "total_tokens": 4110
+      },
+      "validation_detail": "json_syntax",
+      "validation_failure": "json",
+      "visible_output_characters": 989
+    }
+  ],
+  "isolation": {
+    "own_history_http": 200,
+    "cross_history_http": 403,
+    "own_preview_http": 200,
+    "cross_preview_http": 403,
+    "engineer_blair_audit_denied": 403,
+    "product_morgan_audit_denied": 403,
+    "partner_jordan_audit_denied": 403
+  },
+  "timings": [
+    {
+      "request_id": "d35ce8647871409aa22eec37332a9115",
+      "complete": true,
+      "http_scope_seconds": 12.782760916976258,
+      "exclusive_seconds": {
+        "generation": 2.3019329579547048,
+        "review": 0,
+        "source_authorization": 10.437973125022836,
+        "retrieval": 0.015916707925498486,
+        "other": 0.026938126073218882
+      }
+    },
+    {
+      "request_id": "72b2f4d947db481e81450eb65c451cad",
+      "complete": true,
+      "http_scope_seconds": 14.945130249951035,
+      "exclusive_seconds": {
+        "generation": 2.1193279590224847,
+        "review": 0,
+        "source_authorization": 12.78287295694463,
+        "retrieval": 0.015617665951140225,
+        "other": 0.02731166803278029
+      }
+    },
+    {
+      "request_id": "9f1f8f8041044deb83c0da24995ed97e",
+      "complete": true,
+      "http_scope_seconds": 18.02522016700823,
+      "exclusive_seconds": {
+        "generation": 1.9653545829933137,
+        "review": 0.9939161669462919,
+        "source_authorization": 15.004342207917944,
+        "retrieval": 0.01790654193609953,
+        "other": 0.04370066721457988
+      }
+    }
+  ],
+  "timing_method": "Partition request-wall interval at measured span boundaries. Overlap precedence generation/review, source_authorization, retrieval, other; no nested/native span summation. Other includes HTTP/setup/commit/wait. Not browser render time or SLA.",
+  "outcome": "Stopped by AcceptanceRun at second output failure. Remaining8 questions not dispatched."
+}
