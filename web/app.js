@@ -183,6 +183,10 @@ function originalLink(e){
 }
 async function preview(id){
   stopWaiting();viewRevision++;const view=viewToken();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();
+  const loading=el('p','Checking current access and loading the exact source passage…','notice');
+  loading.setAttribute('role','status');
+  $('previewBody').replaceChildren(el('h2','Source evidence'),loading);
+  $('preview').showModal();
   $('status').textContent='Checking current access and loading the exact source passage…';
   try{
     const e=await api('/api/evidence/'+encodeURIComponent(id));if(!currentView(view))return;
@@ -192,7 +196,7 @@ async function preview(id){
       el('p','Access and version checked: '+sourceTime(e.checked_at),'muted'));
     const link=originalLink(e);body.append(link||el('p','Original platform link unavailable for this source.','muted'));
     body.append(diagnostics('Source diagnostics',el('p',e.evidence_id,'muted'),el('pre',JSON.stringify(e.locator,null,2))));
-    $('preview').showModal();$('status').textContent='Current access checked. Exact source passage ready.';
+    $('status').textContent='Current access checked. Exact source passage ready.';
   }catch(e){
     if(!currentView(view))return;$('answer').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();
     if(e.sessionExpired){$('status').textContent=e.message;return;}
@@ -553,6 +557,7 @@ $('auditNav').onclick=()=>{
     }catch(err){if(active(revision)){output.replaceChildren();$('status').textContent='Use the shown inquiry template. '+err.message;}}
   };
 };
+$('preview').oncancel=()=>{viewRevision++;$('previewBody').replaceChildren();};
 $('closePreview').onclick=()=>{viewRevision++;$('previewBody').replaceChildren();$('preview').close();};
 async function boot(){
   try{
