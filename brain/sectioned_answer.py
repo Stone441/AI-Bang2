@@ -94,6 +94,16 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
     def messages(self,question,evidence):
         messages=super().messages(question,evidence)
         messages[0]['content'] += (
+            ' Lead each supported part with its direct business answer, then only the reasons and '
+            'limitations needed to interpret it. Integrate complementary evidence into a single '
+            'natural conclusion when their combination supports it; do not recite one paragraph '
+            'per source or require all four sources. Do not repeat the same conclusion in multiple '
+            'claims. A citation combination must support the entire conclusion, not just share '
+            'its topic. Distinguish recorded facts from deductions: explicitly label a deduction '
+            'as an inference and preserve its uncertainty. Do not turn a plausible inference '
+            'into an approval, causal fact or recorded decision. Only report recommendations '
+            'explicitly supported by the evidence, labelled as recommendations, never as completed '
+            'actions or requirements. Do not invent next steps as enterprise facts. '
             ' Use 1–6 parts, retaining the original wording, subject and every requested subquestion. '
             'Use at most four concise factual claims TOTAL across all parts. '
             'Each supported part needs at least one claim; multiple claims can belong to one part. '

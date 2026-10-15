@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-15 ADR-SEMANTIC-WORKSPACE-01：采用用户本轮 goal-objective.md 明确方向，在 0d5be30 独立候选复用 sectioned-synthesis 与原生前端，移除常驻侧栏、顶部 Workspace/Recent answers、英文业务题卡、原文折叠及响应式引用抽屉。保留独立问答、严格 JSON/独立复审/全部授权及版本边界。普通本地可逆实现、文档、测试、隔离预览已授权；不新增源写、scope、付费服务、生产重启切换、push/merge 或上传提交。历史一次性 grant 结束及人工额度不可转用；真实验证前核当前 AUTH/readiness/账本。Embedding 首轮投入上限两小时本地诊断与可行性准备，只有真实可重复收益且无安全回归才纳入默认；无 provider/下载等授权则记录条件缺口。候选不改生产，可直接弃用独立 worktree 回退。
+
 2026-10-15 AUTH-MAIN-CLOSEOUT：用户明确“先合并到main”，授权本轮修复、测试与非秘密报告通过PR推送并合并到GitHub main，之后继续前端／项目亮点／候选题问答／开发细节。执行前fetch核对远端、干净源码验证及新增历史blob凭据扫描；保留原main脏证据、私有运行态及队友工作。此授权不包含生产切换、源端写入、上传私有证据或比赛提交。
 
 2026-10-15 ADR-CLOSEOUT-05：10cc970单次四源诊断生成/审查均通过，当前四源原文均amber、引用正确，2调用/USD0.003454，新unknown0。当前JSON语法与重复键均合法，原json故障未复现，不将单次成功视为根因修复或稳定性证明；无证据不修改解析规则，不花剩余6次重复挑成功。本轮只记录真实通过与开放风险，不改业务代码、不部署，77定向离线通过。
@@ -572,3 +574,7 @@ Evidence: browser security question immediately following product capability ret
 ### ADR-040 · Independent questions and no answer downloads (2026-10-06)
 
 用户指出主界面独立问答外观与自动history_id依赖不一致，且无需求依据的下载扩大不可撤回副本范围，并明确批准纠正。选择独立问答：前端移除historyId/New question，HTTP拒绝history_id，Engine不查询旧run/补充依赖（旧本地harness参数仅兼容忽略）。删除Export answer/Blob生成/GET export路由，登录后直接请求返回404。保留历史、引用、逐模型阶段授权和原生撤权测试；旧导出断言替换为端点关闭断言，不再因测试需要提供下载。已合法保存的副本无法远程回收。覆盖ADR-024导出UI及ADR-039新问题按钮；如未来引入聊天或导出须作为明确产品变更，而非验收便利。无schema迁移/新scope/费用。运行中Python旧进程须重启；静态页面刷新只更新前端。
+
+## AUTH-SEMANTIC-WORKSPACE-20261015-24-USD1
+
+User approved LIVE_PLAN.md scope: existing four-source synthetic data read-only; three defaults and six paraphrases, false premise and existing conflict; independent automatic grant semantic-workspace-validation-20261015; max 24 DeepSeek calls and USD1 within original USD20 ledger. Preserve historical unknown; stop new unknown; no paid retries, human allowance, native writes, deployment or production restart. Freeze candidate and native oracle before calls.

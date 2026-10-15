@@ -1,5 +1,14 @@
 # Backlog · 2026-10-05
 
+2026-10-15 DEV-SEMANTIC-WORKSPACE 验证增量：763Python/55.443秒、14DOM通过；Chrome手机390×844历史重开/全屏引用实际观察，27次fixture原题/改写角色检索无员工必需证据缺失（非答案语义通过）。Embedding当前无已装运行库/新provider授权，暂不接入。真实综合质量、全错误态浏览器及最终候选冻结仍in_progress，未部署。
+
+2026-10-15 DEV-SEMANTIC-WORKSPACE 第一增量：顶部导航/业务题卡/紧凑四源摘要/引用抽屉已实现，14DOM、17sectioned及1HTTP包装通过；Chrome fixture 题卡不提交、实际问答、抽屉原文/Escape验证。冻结三题+六改写 oracle，九次fixture角色检索留档。真实综合质量、移动端、安全完整回归及 embedding 尚未完成，Goal保持in_progress。见 [候选报告](reviews/2026-10-15-semantic-workspace/REPORT.md)。
+
+| Task | Status | Next / acceptance |
+|---|---|---|
+| DEV-SEMANTIC-WORKSPACE | in_progress | 复用 sectioned-synthesis；冻结充分/部分/不足业务 oracle，完成顶部导航/引用抽屉/全部失败状态，分模式验证安全与答案质量；不自动发布 |
+| DEV-SEMANTIC-RETRIEVAL | not_started | 先测现有召回与阶段时间；最多两小时本地实验准备，无新增 provider/download/依赖/费用授权则记录条件缺口，前三项继续 |
+
 2026-10-15 主线集成：用户明确要求先合并main，之后继续前端、项目亮点、候选题问答及开发细节。本轮成果作为下一轮开发基线，不是正式封版。基准origin/main5727300，发布分支release/closeout-main-20261015；干净候选763项55.045s、14DOM、25组离线检查通过，运行代码哈希一致，发布前扫描常见密钥及已知本机项目凭据。真实验证、JSON开放风险、G1/G2分列保留；不切换线上。实际PR/合并SHA以GitHub记录为准。[合并验证](reviews/2026-10-15-main-closeout-merge/REPORT.md)。
 
 2026-10-15 四源题继续排查：用户明确额度充分，建立独立8调用/USD1诊断grant（原USD20全局不变）。固定10cc970四源题本次生成/独立审查/Agent当前原文对照通过，2调用/USD0.003454/25.648s，新unknown0，人工9次/4064不变。生成及审查JSON均合法无重复字段，上次json故障未复现、根因风险仍开放，不以一次成功关闭或降级。未改业务代码/解析，77定向离线通过，未切换生产或push。[中文继续排查报告](reviews/2026-10-15-sectioned-live/json-investigation/REPORT.md)。

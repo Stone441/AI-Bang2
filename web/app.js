@@ -8,7 +8,7 @@ const viewToken=()=>({revision:viewRevision,session});
 const currentView=token=>token.revision===viewRevision&&token.session===session;
 let pendingQuery=null,waitTimer=null,runtimeTimer=null,runtimeSequence=0,runtimeApplied=0,resumeOnRuntime=false,resumeInputValue='',admissionPaused=false,admissionInfo=null;
 const clockNow=()=>typeof performance!=='undefined'?performance.now():Date.now();
-function stopRuntime(){runtimeApplied=++runtimeSequence;if(runtimeTimer!==null&&typeof clearInterval!=='undefined')clearInterval(runtimeTimer);runtimeTimer=null;$('runtime').hidden=true;$('runtimeModel').textContent='';$('runtimeDetails').textContent='';$('runtimeSources').replaceChildren();}
+function stopRuntime(){runtimeApplied=++runtimeSequence;if(runtimeTimer!==null&&typeof clearInterval!=='undefined')clearInterval(runtimeTimer);runtimeTimer=null;$('runtime').hidden=true;$('runtimeModel').textContent='';$('runtimeDetails').textContent='';$('runtimeSources').replaceChildren();runtimeSourceDetails.clear();runtimeSourceKeys='';}
 function stopWaiting(){if(waitTimer!==null&&typeof clearInterval!=='undefined')clearInterval(waitTimer);waitTimer=null;pendingQuery=null;$('question').readOnly=false;$('runningQuestion').textContent='';$('queryForm').setAttribute('aria-busy','false');$('progress').hidden=true;}
 function savedQuestion(){try{return JSON.parse(sessionStorage.getItem('brain.pending.'+session.csrf)||'null');}catch(_){return null;}}
 function saveQuestion(requestId=null,question=null){try{question=question??pendingQuery?.question??savedQuestion()?.question;if(question!==null&&question!==undefined)sessionStorage.setItem('brain.pending.'+session.csrf,JSON.stringify({question,requestId}));}catch(_){}}
@@ -100,6 +100,8 @@ function sourceSnapshotText(source){
   if(source.last_check_result==='backlog')return 'Sync incomplete · latest content cannot be confirmed';
   return 'Snapshot needs a new check · latest content cannot be confirmed';
 }
+const runtimeSourceDetails=new Map();
+let runtimeSourceKeys='';
 async function refreshRuntime(){
   if(!session)return;const owner=session,queryAtPoll=pendingQuery,sequence=++runtimeSequence;
   try{const r=await api('/api/runtime');if(session!==owner||sequence<runtimeApplied)return;runtimeApplied=sequence;
@@ -112,13 +114,25 @@ async function refreshRuntime(){
     sourcesPaused=r.query_readiness?.code==='source_unconfirmed';
     $('runtimeDetails').textContent=r.model+' · '+r.mode+(modelPaused?' · Model paused: operator price review required. Saved answers remain available.':sourcesPaused?' · Waiting for current source checks. This page checks readiness automatically; no question is resubmitted.':'');
     updateAsk();
-    const list=$('runtimeSources');list.replaceChildren();
-    for(const source of r.sources){const card=el('div',undefined,'runtime-source');
-      card.append(el('strong',source.source),el('span',source.configured?'Configured · '+source.mode:'Not configured'),
-        el('span',sourceCheckText(source)),el('span',sourceSnapshotText(source)));
-      if(source.mode!=='fixture'&&source.last_check_result!=='complete'&&source.last_successful_check_at)card.append(el('span','Last complete sync: '+sourceTime(source.last_successful_check_at)));
-      if(source.mode!=='fixture'&&Number.isFinite(source.next_check_in_seconds))card.append(el('span','Next check due in '+Math.ceil(source.next_check_in_seconds)+' s','muted'));
-      card.append(el('span',source.used_in_answer?'Cited in the last completed answer':'Not recorded as used in the last completed answer','muted'));list.append(card);}
+    const list=$('runtimeSources'),sourceKeys=JSON.stringify(r.sources.map(source=>source.source));
+    if(sourceKeys!==runtimeSourceKeys){list.replaceChildren();runtimeSourceDetails.clear();runtimeSourceKeys=sourceKeys;}
+    for(const source of r.sources){
+      let nodes=runtimeSourceDetails.get(source.source);
+      if(!nodes){
+        const card=el('details',undefined,'runtime-source'),summary=el('summary'),title=el('strong'),state=el('span');
+        const fields=Array.from({length:6},()=>el('span'));
+        summary.append(title,state);card.append(summary,...fields);list.append(card);
+        nodes={card,title,state,fields};runtimeSourceDetails.set(source.source,nodes);
+      }
+      // Keep disclosure and focused summary nodes stable across readiness polling.
+      nodes.title.textContent=source.source;
+      nodes.state.textContent=!source.configured?'Not configured':source.mode==='fixture'?'Synthetic':source.checking?'Checking':source.snapshot_status==='current'?'Current snapshot':'Check needed';
+      const values=[source.configured?'Configured · '+source.mode:'Not configured',sourceCheckText(source),sourceSnapshotText(source),
+        source.mode!=='fixture'&&source.last_check_result!=='complete'&&source.last_successful_check_at?'Last complete sync: '+sourceTime(source.last_successful_check_at):'',
+        source.mode!=='fixture'&&Number.isFinite(source.next_check_in_seconds)?'Next check due in '+Math.ceil(source.next_check_in_seconds)+' s':'',
+        source.used_in_answer?'Cited in the last completed answer':'Not recorded as used in the last completed answer'];
+      nodes.fields.forEach((field,index)=>{field.textContent=values[index];field.hidden=!values[index];});
+    }
     if((!r.run||['completed','evidence_only'].includes(r.run.status)&&!savedQuestion()&&answerReference())&&resumeOnRuntime&&$('workspace').hidden===false){
       resumeOnRuntime=false;const reference=answerReference(),view=viewToken();
       if(reference&&$('question').value===resumeInputValue){
@@ -144,10 +158,10 @@ if(location.hash)history.replaceState(null,'',location.pathname+location.search)
 $('loginForm').querySelector('button').disabled=true;
 const versionLabel=e=>e.locator?.content_sha256?'Content snapshot '+e.locator.content_sha256.slice(0,12):'Version '+e.version;
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
-function expiredSession(){forgetQuestion();$('question').value='';stopWaiting();stopRuntime();session=null;admissionPaused=false;admissionInfo=null;$('trialStatus').hidden=true;admissionPaused=false;$('trialStatus').hidden=true;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();$('identity').textContent='Not signed in';$('auditNav').hidden=true;$('sourcesNav').hidden=true;show('login');const error=Error(health?.auth_kind==='reviewer'?'This session ended. Sign in with your demo account.':health?.auth_kind==='operator'?'This session ended. Open the latest one-time link from the running operator terminal.':'This session ended. Sign in again.');error.sessionExpired=true;$('status').textContent=error.message;return error;}
+function expiredSession(){forgetQuestion();$('question').value='';stopWaiting();stopRuntime();session=null;admissionPaused=false;admissionInfo=null;$('trialStatus').hidden=true;admissionPaused=false;$('trialStatus').hidden=true;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();$('identity').textContent='Not signed in';$('userMenuLabel').textContent='Account';$('auditNav').hidden=true;$('sourcesNav').hidden=true;show('login');const error=Error(health?.auth_kind==='reviewer'?'This session ended. Sign in with your demo account.':health?.auth_kind==='operator'?'This session ended. Open the latest one-time link from the running operator terminal.':'This session ended. Sign in again.');error.sessionExpired=true;$('status').textContent=error.message;return error;}
 async function api(path,data){const requestSession=session;const options={credentials:'same-origin',headers:{}};if(data!==undefined){options.method='POST';options.headers['Content-Type']='application/json';options.headers['X-CSRF-Token']=session?.csrf||'';options.body=JSON.stringify(data);}const response=await fetch(path,options);const result=await response.json();if(!response.ok){if(requestSession!==session)throw Error('Stale response discarded');if(response.status===403&&session&&path!=='/api/session'){const current=await fetch('/api/session',{credentials:'same-origin'});if(current.status===403)throw expiredSession();}const error=Error(result.error||'Request unavailable. Ask again or contact the operator if it persists.');error.status=response.status;error.code=result.code;error.requestId=result.request_id;error.run=result.run;throw error;}return result;}
-function show(name){resumeOnRuntime=false;stopWaiting();viewRevision++;updateAsk();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();for(const id of ['login','workspace','other'])$(id).hidden=id!==name;$('status').textContent='';}
-function identity(){const box=$('identity');box.replaceChildren(el('span',health?.auth_kind==='reviewer'?(session.display_name||session.actor.split(':')[1])+' · '+({engineer:'Engineer',eng_b:'Engineer',product:'Product & Operations',product_ops:'Product & Operations',partner:'External Partner',contractor:'External Partner',auditor:'Scoped Auditor'}[session.demo_role]||'Demo account'):session.actor));const logout=el('button',['operator','reviewer'].includes(health?.auth_kind)?'Sign out':'Switch demo identity');logout.onclick=async()=>{forgetQuestion();$('question').value='';stopWaiting();stopRuntime();viewRevision++;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();await api('/api/logout',{});session=null;admissionPaused=false;admissionInfo=null;$('trialStatus').hidden=true;$('answer').replaceChildren();$('other').replaceChildren();$('auditNav').hidden=true;$('sourcesNav').hidden=true;box.textContent='Not signed in';show('login');};box.append(logout);$('auditNav').hidden=!(session.can_audit||session.actor==='auditor');$('sourcesNav').hidden=session.actor!=='auditor';show('workspace');const saved=savedQuestion();$('question').value=saved?.question||'';armResume();refreshRuntime();if(runtimeTimer===null&&typeof setInterval!=='undefined')runtimeTimer=setInterval(refreshRuntime,1500);if(session.demo_role==='auditor')$('auditNav').onclick();}
+function show(name){for(const id of ['workspaceNav','historyNav','auditNav','sourcesNav']){const active=(name==='workspace'&&id==='workspaceNav');$(id).className=active?'nav active':'nav';$(id).setAttribute('aria-current',active?'page':'false');}resumeOnRuntime=false;stopWaiting();viewRevision++;updateAsk();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();for(const id of ['login','workspace','other'])$(id).hidden=id!==name;$('status').textContent='';}
+function identity(){$('userMenuLabel').textContent=session.display_name||'Your account';const box=$('identity');box.replaceChildren(el('span',health?.auth_kind==='reviewer'?(session.display_name||session.actor.split(':')[1])+' · '+({engineer:'Engineer',eng_b:'Engineer',product:'Product & Operations',product_ops:'Product & Operations',partner:'External Partner',contractor:'External Partner',auditor:'Scoped Auditor'}[session.demo_role]||'Demo account'):session.actor));const logout=el('button',['operator','reviewer'].includes(health?.auth_kind)?'Sign out':'Switch demo identity');logout.onclick=async()=>{forgetQuestion();$('question').value='';stopWaiting();stopRuntime();viewRevision++;$('answer').replaceChildren();$('other').replaceChildren();$('previewBody').replaceChildren();if($('preview').open)$('preview').close();await api('/api/logout',{});session=null;admissionPaused=false;admissionInfo=null;$('trialStatus').hidden=true;$('answer').replaceChildren();$('other').replaceChildren();$('auditNav').hidden=true;$('sourcesNav').hidden=true;box.textContent='Not signed in';$('userMenuLabel').textContent='Account';show('login');};box.append(logout);$('auditNav').hidden=!(session.can_audit||session.actor==='auditor');$('sourcesNav').hidden=session.actor!=='auditor';show('workspace');const saved=savedQuestion();$('question').value=saved?.question||'';armResume();refreshRuntime();if(runtimeTimer===null&&typeof setInterval!=='undefined')runtimeTimer=setInterval(refreshRuntime,1500);if(session.demo_role==='auditor')$('auditNav').onclick();}
 function diagnostics(label,...content){const box=el('details',undefined,'diagnostics');box.append(el('summary',label),...content);return box;}
 function originalLink(e){
   // Only a fresh, authorized preview supplies this URL; never claims/model text.
@@ -229,11 +243,20 @@ function answerTopics(question,groups){
   return topics.filter(([,requested])=>requested.test(question||'')).map(([label,,matches])=>({label,
     groups:groups.filter(group=>matches.test(group.searchText))}));
 }
+function answerOutcome(answer){
+  if(answer.unavailable)return 'Unavailable';
+  if(answer.answer_status==='evidence_only')return 'Generation or review failed';
+  if(answer.answer_kind==='sectioned_synthesis'&&answer.review_status==='accepted'&&Array.isArray(answer.answer_parts)){
+    const supported=answer.answer_parts.filter(part=>part.status==='supported').length;
+    return !supported?'Insufficient evidence':supported<answer.answer_parts.length?'Partial answer':'Answered';
+  }
+  return 'Saved result';
+}
 function renderAnswer(answer,target=$('answer')){
   target.replaceChildren();if(answer.unavailable){target.append(el('p',answer.message,'notice'));return;}
   if(answer.answer_status==='evidence_only'){const failure=el('div',undefined,'error-panel');failure.append(el('h2',answer.answer_kind==='reviewed_excerpts'?'Source answer was blocked':'Synthesis was blocked'),el('p','The model output did not pass validation. The original source passages below were checked for current access and version. They are not a validated summary; latest ordering is not inferred.'));target.append(failure);}
   const grid=el('div',undefined,'receipt'),main=el('div',undefined,'panel'),side=el('aside',undefined,'panel');
-  const head=el('div',undefined,'receipt-head');head.append(el('h2',answer.answer_kind==='reviewed_excerpts'?(answer.review_status==='accepted'&&answer.model_review?.called===true?'Reviewed source answer':'Source evidence'):answer.claim_format==='grounded_synthesis_v1'?'Evidence-backed answer':'Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);
+  const head=el('div',undefined,'receipt-head');head.append(el('h2',answer.answer_status==='evidence_only'?'Checked sources':answerOutcome(answer)==='Insufficient evidence'?'Insufficient evidence':answer.answer_kind==='reviewed_excerpts'?(answer.review_status==='accepted'&&answer.model_review?.called===true?'Reviewed source answer':'Source evidence'):answer.claim_format==='grounded_synthesis_v1'?'Evidence-backed answer':'Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);
   main.append(el('h3',answer.question||'Question not recorded for this older answer.'));
   const date=typeof answer.answered_at==='string'?new Date(answer.answered_at):null;
   main.append(el('p',date&&!Number.isNaN(date.getTime())?'Answered '+date.toLocaleString():'Generation time not recorded for this older answer.','muted'));
@@ -243,7 +266,9 @@ function renderAnswer(answer,target=$('answer')){
   const parts=answer.answer_kind==='sectioned_synthesis'&&answer.claim_format==='grounded_synthesis_v1'
     &&answer.review_status==='accepted'&&answer.answer_status!=='evidence_only'?answer.answer_parts:null;
   if(parts){
-    main.append(el('p','Each part is answered separately. Expand its supporting quotes to check the conclusion.','muted'));
+    main.append(el('p',answerOutcome(answer),'answer-outcome'));
+    if(answer.claims.length)main.append(el('p','Each part is answered separately. Expand its supporting quotes to check the conclusion.','muted'));
+    if(parts.some(part=>part.status==='insufficient'))main.append(el('p','For unanswered parts, try a more specific scope or ask the relevant team to provide an accessible, current record.','muted'));
     for(const part of parts){
       const block=el('section',undefined,'answer-section');block.append(el('h3',part.question));
       if(part.status==='insufficient')block.append(el('p',insufficientPartText,'notice'));
@@ -275,7 +300,7 @@ function renderAnswer(answer,target=$('answer')){
     }
     const block=el('div',undefined,'claim');block.append(el('p',c.text));
     if(c.supports?.length&&answer.answer_kind!=='reviewed_excerpts'){const quotes=el('details');quotes.append(el('summary','Exact supporting quotes'));for(const support of c.supports)quotes.append(el('p',support.quote),el('p',byId.get(support.evidence_id)?.title||'Source reference','muted'));block.append(quotes);}
-    section.append(block);
+    if(excerpts){const original=el('details');original.append(el('summary','Original passage'),block);section.append(original);}else section.append(block);
     if(excerpts)groups[groups.length-1].searchText+='\n'+c.text;
     const next=answer.claims[index+1];
     if(!excerpts||!next||JSON.stringify(next.evidence_ids)!==ids){
@@ -300,7 +325,7 @@ function renderAnswer(answer,target=$('answer')){
   }else guide.hidden=true;
   for(const u of answer.uncertainties)main.append(el('p',u,'notice'));
   const debug=diagnostics('Answer diagnostics',el('p','Receipt '+answer.request_id,'muted'));renderModelUsage(answer,debug);main.append(debug);
-  side.append(el('h3','Key references'));
+  side.append(el('h3',answer.claims.length&&answer.answer_status!=='evidence_only'?'Key references':'Checked evidence'));
   if(answer.evidence.length)side.append(el('p','Source edit time is when the content changed. Index time is when this local version was stored.','muted'));
   const citedIds=new Set(answer.answer_status==='evidence_only'?[]:answer.claims.flatMap(c=>c.evidence_ids));
   const otherEvidence=diagnostics('Other checked evidence');let hasOtherEvidence=false;
@@ -334,19 +359,19 @@ $('queryForm').onsubmit=async e=>{
 for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{if(pendingQuery)return;$('question').value=b.dataset.question;$('question').focus();};
 $('workspaceNav').onclick=()=>{$('answer').replaceChildren();$('other').replaceChildren();show(session?'workspace':'login');if(session)armResume();};
 $('historyNav').onclick=async()=>{
-  if(!session)return;$('answer').replaceChildren();show('other');const view=viewToken();
+  if(!session)return;$('answer').replaceChildren();show('other');$('historyNav').className='nav active';$('historyNav').setAttribute('aria-current','page');const view=viewToken();
   const heading=el('h1','Recent answers'),message=el('p','Loading your saved questions…','lede');$('other').replaceChildren(heading,message);
   try{
     const result=await api('/api/history/recent');if(!currentView(view))return;
-    message.textContent=result.history.length?'Select an answer. Current source access and versions are checked before its contents are shown.':'No answers yet.';
+    message.textContent=result.history.length?'Historical answers, not a conversation. Current access and versions are checked before each answer opens.':'No answers yet.';
     for(const summary of result.history){
       const item=el('div',undefined,'history-item'),open=el('button',summary.question||'Saved question','history-open'),body=el('div');
-      const date=new Date(summary.answered_at);item.append(open,el('p',Number.isNaN(date.getTime())?'Saved answer':date.toLocaleString(),'muted'),body);$('other').append(item);
+      const date=new Date(summary.answered_at),savedState=el('p',(Number.isNaN(date.getTime())?'Saved answer':date.toLocaleString())+' · Historical result · Access not checked','muted');item.append(open,savedState,body);$('other').append(item);
       open.onclick=async()=>{
         if(open.disabled||!currentView(view))return;open.disabled=true;body.replaceChildren(el('p','Checking current access and versions for this answer…'));
         try{const saved=await api('/api/history?request_id='+encodeURIComponent(summary.request_id));if(!currentView(view))return;
-          const answer=saved.history.find(a=>a.request_id===summary.request_id);if(!answer)throw Error('This saved answer is unavailable.');renderAnswer(answer,body);rememberAnswer(answer);
-        }catch(err){if(currentView(view))body.replaceChildren(el('p',err.message,'notice'));}
+          const answer=saved.history.find(a=>a.request_id===summary.request_id);if(!answer)throw Error('This saved answer is unavailable.');renderAnswer(answer,body);savedState.textContent=(Number.isNaN(date.getTime())?'Saved answer':date.toLocaleString())+' · Historical result · '+answerOutcome(answer);rememberAnswer(answer);
+        }catch(err){if(currentView(view)){body.replaceChildren(el('p',err.message,'notice'));savedState.textContent='Historical result · Current access could not be confirmed';}}
         finally{if(currentView(view))open.disabled=false;}
       };
     }
@@ -541,6 +566,6 @@ async function boot(){
     try{session=await api('/api/session');}
     catch(err){if(err.status===403&&bootstrapTicket&&health.auth_kind==='operator')session=await api(health.login_path,{ticket:bootstrapTicket});else throw err;}
     identity();
-  }catch(err){show('login');if(health?.auth_kind==='reviewer'&&err.status===403){$('status').textContent='Sign in with your demo account. Sessions expire after 1 hour.';return;}$('status').textContent=['operator','reviewer'].includes(health?.auth_kind)&&err.status===403?(bootstrapTicket?'This one-time operator link has expired or was already used. Ask the operator to refresh the entry, then reopen the launch command.':'No active operator session. Sessions expire after 1 hour. Ask the operator to refresh the entry, then reopen the launch command. Saved answers remain stored.'): 'Could not connect to the local service. Refresh to reconnect; no new question was submitted.';}
+  }catch(err){show('login');if(health?.auth_kind==='demo'&&err.status===403){$('status').textContent='Choose a demo identity to enter the synthetic workspace.';return;}if(health?.auth_kind==='reviewer'&&err.status===403){$('status').textContent='Sign in with your demo account. Sessions expire after 1 hour.';return;}$('status').textContent=['operator','reviewer'].includes(health?.auth_kind)&&err.status===403?(bootstrapTicket?'This one-time operator link has expired or was already used. Ask the operator to refresh the entry, then reopen the launch command.':'No active operator session. Sessions expire after 1 hour. Ask the operator to refresh the entry, then reopen the launch command. Saved answers remain stored.'): 'Could not connect to the local service. Refresh to reconnect; no new question was submitted.';}
 }
 boot();

@@ -27,6 +27,10 @@ nodes(sections[0]).find(e=>e.tagName==='button').onclick();assert.equal(ctx.open
 ctx.answer.answer_status='evidence_only';vm.runInContext('renderAnswer(answer)',ctx);
 assert.doesNotMatch(text(get('answer')),/Each part is answered separately/);
 assert.ok(!nodes(get('answer')).some(e=>e.tagName==='h3'&&e.textContent==='when is GA'),'Failed output does not retain per-part conclusions');
+ctx.answer.answer_status=undefined;ctx.answer.claims=[];ctx.answer.answer_parts=[{question:ctx.answer.question,status:'insufficient',claim_indices:[]}];
+vm.runInContext('renderAnswer(answer)',ctx);
+assert.match(text(get('answer')),/Insufficient evidence/);
+assert.doesNotMatch(text(get('answer')),/Evidence-backed answer|Expand its supporting quotes|Key references/);
 ctx.answer={unavailable:true,message:'Unavailable'};vm.runInContext('renderAnswer(answer)',ctx);
 assert.doesNotMatch(text(get('answer')),/general release|GA|Fix status/);
 console.log('PASS: concise per-part conclusions, exact quotes, scoped insufficient notices, citation actions, mock labels and revoked/failed cleanup');
