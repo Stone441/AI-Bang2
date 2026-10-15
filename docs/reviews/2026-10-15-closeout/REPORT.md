@@ -1,5 +1,7 @@
 # Systematic closeout · 15 October 2026
 
+**Current execution:** user approved the final switch/trial; deployment and bounded live results are now recorded in [authorized live report](../2026-10-15-closeout-live/REPORT.md). Code f2f0633 is deployed; 10 calls / USD0.011808 / new unknown 0, human usage unchanged. Two optional sectioned generation cases remain quality failures. The no-switch/no-call statements below are the earlier implementation-stage snapshot.
+
 Base: GitHub main `57273004105ebf6735ceadc08080bdbc96162ed7`. Fixes: local branch `fix/systematic-closeout-20261015`, sibling worktree `AI-Bang2-closeout-20261015`. Original main checkout, dirty evidence, private credentials and running 49161 service are retained. No push, main merge, source write or paid call performed in this closeout.
 
 ## Ordered changes and evidence

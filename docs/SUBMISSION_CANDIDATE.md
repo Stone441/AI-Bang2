@@ -1,5 +1,9 @@
 # ContextLedger · submission candidate
 
+2026-10-15 当前运行已切换到本地修复代码 `f2f0633`，同一公网入口；最新[真实验收与剩余缺陷](reviews/2026-10-15-closeout-live/REPORT.md)优先于下方历史状态。自动复验10次/USD0.011808，人工额度未占用、旧unknown保留。两项可选分题生成仍失败，不能宣称全部通过；未push/main合并或比赛提交。
+
+
+
 Updated 15 October 2026 for the local closeout candidate based on GitHub main `5727300`. This is an unsubmitted candidate. See [current closeout status](reviews/2026-10-15-closeout/REPORT.md). Earlier hosted/native measurements describe older builds; no new-build native acceptance is asserted. [Previous text](reviews/2026-10-14-pd/prior-round8-submission.md) is retained.
 
 ## Copy-ready fields

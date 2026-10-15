@@ -1,5 +1,9 @@
 # Backlog · 2026-10-05
 
+2026-10-15 授权切换及真实验收完成：498239e已迁移/部署；Chrome实际导航发现公开静态GET被跨站检查拒绝，最小修复f2f0633已回归758项53.851s并切换同一49161/域名。浏览器实际看到LIVE API DEMO密码登录页；非真人/完整浏览器验收。独立自动额度10调用/USD0.011808、新unknown0，人工3213microUSD/8调用不变，两旧unknown648808保留。根因/状态/中文前提及sectioned不足有实际通过；sectioned冲突assignment及四值claim仍质量失败且未付费重跑。三个账号+审计员HTTP/精确审计scope/跨账号History及preview拒绝通过；原始证据私有，无源写/push/merge/上传/比赛提交。入口reviews/2026-10-15-closeout-live/REPORT.md。
+
+
+
 2026-10-15 系统收尾本地候选：基准main5727300，独立fix/systematic-closeout-20261015。修复慢请求全局阻塞、精确grant归属且保留全局new unknown停止、拒绝答案不再堆原文claims、价格/来源预就绪、前端启动快照、限定应用审计员和早失败问题追溯；独立审查发现的旧native就绪/登记与审计双故障回归已修复。757完整53.443s、14DOM、25统一组及真实fixture HTTP通过；不是native/live model/browser真人验收。原main脏证据、49161后端、账本与账号未替换。真实迁移和发布待最后具体执行；自动复验不能使用人工USD1。详情reviews/2026-10-15-closeout/REPORT.md及VALIDATION.json。
 
 

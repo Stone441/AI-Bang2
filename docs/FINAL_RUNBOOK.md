@@ -1,5 +1,9 @@
 # Final delivery runbook
 
+2026-10-15 当前运行已切换到本地修复代码 `f2f0633`，同一公网入口；最新[真实验收与剩余缺陷](reviews/2026-10-15-closeout-live/REPORT.md)优先于下方历史状态。自动复验10次/USD0.011808，人工额度未占用、旧unknown保留。两项可选分题生成仍失败，不能宣称全部通过；未push/main合并或比赛提交。
+
+
+
 Current closeout instructions (15 October): [candidate report and exact migration/switch boundary](reviews/2026-10-15-closeout/REPORT.md). Use an immutable code checkout with `--state-root <existing-project>` and an explicitly migrated `--attributed-grant human-team-closeout-20261015`. This reuses the approved original index, configuration, account registry and USD20 ledger; it does not copy or reset runtime state. Never automatically migrate on startup.
 
 The selected human mode remains source-review / none8192 / structured / single / pooled4 / batch history / serial queries. Optional sectioned-synthesis is not the deployed default. Preserve the public-origin setting for the already approved hostname.
