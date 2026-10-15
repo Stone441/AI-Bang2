@@ -16,7 +16,11 @@ ANSWERABILITY_CONTRACT = (
     'when evidence explicitly says it is unconfirmed. Keep other answerable parts supported. '
     'In contrast, an explicit yes/no question asking whether something is confirmed or approved '
     'can be fully supported by an evidenced negative answer. Do not mark all negative answers '
-    'insufficient. Apply this equally across languages and paraphrases. ')
+    'insufficient. A documented same-scope conflict can be answered with supported claims '
+    'explaining BOTH sides and why no decision can be confirmed; this does not establish '
+    'either disputed side as true. Correct a false premise using supported claims, keeping '
+    'any separately requested unavailable value in its own empty-claims part when the '
+    'original wording permits that partition. Apply equally across languages and paraphrases. ')
 
 
 def validate_answer_parts(parts, claims, question):
@@ -93,24 +97,25 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
     name='deepseek-flash-grounded-synthesis-by-part-v2'
     answer_kind='sectioned_synthesis'
     output_instructions = (
-        'Return JSON only: {"answer_parts":[{"question":"exact contiguous substring '
-        'of the original question","status":"supported","claims":[{"text":'
-        '"concise factual conclusion","supports":[{"evidence_id":"supplied ID",'
-        '"quote":"exact contiguous passage"}]}]},{"question":"another exact '
-        'substring","status":"insufficient","claims":[]}]}. '
-        'Place each claim inside the ONE part it answers. Do not output top-level '
-        'claims, claim_indices or evidence_ids; the server derives those from '
-        'part membership and supports. Use exactly text and supports in each claim. '
-        'Even for ONE question part, retain the root object and answer_parts array. '
+        'Return JSON only. Use exactly question and claims in each answer part; use exactly '
+        'text and supports in each claim. supports is an object mapping each unique supplied '
+        'evidence ID to ONE exact contiguous quote. Do not repeat an ID key. If two passages '
+        'from one source are necessary, choose one encompassing contiguous quote within the '
+        'limit or separate the conclusions; never concatenate or rewrite quotations. '
+        'Do not output status, claim_indices, evidence_ids or top-level claims. The server '
+        'derives status from whether a part has claims, and derives indices/IDs from membership. '
+        'A part with no adequate evidence must have claims:[]. '
         'Single-part JSON example: ' + json.dumps({'answer_parts':[
-            {'question':'exact original question', 'status':'supported', 'claims':[
-                {'text':'concise conclusion', 'supports':[
-                    {'evidence_id':'supplied ID', 'quote':'exact contiguous passage'}]}]}]},
+            {'question':'exact original question', 'claims':[
+                {'text':'concise conclusion', 'supports':{'supplied ID':'exact contiguous passage'}}]}]},
             separators=(',', ':')) + '. '
-        'Finish the entire root JSON object, including every enclosing array and object; '
-        'do not stop after closing the final support, claim, or part. '
-        'The examples illustrate syntax only; all actual conclusions and quotations must '
-        'come from the supplied evidence.')
+        'Mixed-answer JSON example: ' + json.dumps({'answer_parts':[
+            {'question':'exact answerable substring', 'claims':[
+                {'text':'concise conclusion', 'supports':{'supplied ID':'exact contiguous passage'}}]},
+            {'question':'exact unsupported substring','claims':[]}]},separators=(',', ':')) + '. '
+        'Retain the root object and answer_parts array even for one part. Finish the entire '
+        'root object; do not stop after the last support, claim or part. Examples illustrate '
+        'syntax only; actual conclusions and quotations must come from supplied evidence.')
 
     def messages(self,question,evidence):
         messages=super().messages(question,evidence)
@@ -134,7 +139,7 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
             'must occur in its own exact support quotes, not just source_context or the question. '
             'Choose a longer contiguous quote including the identifier and fact if necessary, '
             'within the 1200-character limit; do not add an unsupported identifier. '
-            'For unsupported parts, use status insufficient and claims:[] inside that part; the application displays a '
+            'For unsupported parts, use claims:[] inside that part; the server marks it insufficient and displays a '
             'fixed scoped notice. Do not invent a date, approval, rejection or universal conclusion. '
             'If nothing is supported, return only insufficient parts, each with claims:[]. '
             'Before drafting, examine the question for a material assumed assertion and compare ALL '
@@ -167,7 +172,7 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
             raise ValueError('Invalid answer parts')
         claims=[];flattened=[]
         for part in parts:
-            if (not isinstance(part,dict) or set(part)!={'question','status','claims'}
+            if (not isinstance(part,dict) or set(part) not in ({'question','status','claims'},{'question','claims'})
                     or not isinstance(part['claims'],list)):
                 raise ValueError('Invalid answer part')
             start=len(claims)
@@ -179,6 +184,10 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
                     error.claim_index=len(claims)
                     raise error
                 supports=claim['supports']
+                if 'status' not in part:
+                    if not isinstance(supports,dict) or not 1<=len(supports)<=4 or any(not isinstance(k,str) or not isinstance(v,str) for k,v in supports.items()):
+                        raise OutputValidationError('Invalid grounded citation','support_shape')
+                    supports=[{'evidence_id':key,'quote':value} for key,value in supports.items()]
                 if (not isinstance(supports,list) or not 1<=len(supports)<=4
                         or any(not isinstance(s,dict) or set(s)!={'evidence_id','quote'}
                                for s in supports)):
@@ -187,7 +196,7 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
                     raise error
                 claims.append({'text':claim['text'],
                     'evidence_ids':[s['evidence_id'] for s in supports], 'supports':supports})
-            flattened.append({'question':part['question'],'status':part['status'],
+            flattened.append({'question':part['question'],'status':part['status'] if 'status' in part else ('supported' if part['claims'] else 'insufficient'),
                 'claim_indices':list(range(start,len(claims)))})
         return {'claims':claims,'answer_parts':flattened}
 

@@ -273,3 +273,51 @@ class SectionedAnswer(unittest.TestCase):
                 self.assertEqual(diagnostic['validation_detail'], 'citation_ids')
                 self.assertEqual(diagnostic['citation_issue'], expected)
                 self.assertNotIn('PRIVATE', json.dumps(diagnostic))
+
+    def compact_output(self):
+        return {'answer_parts':[{'question':p['question'], 'claims':[
+            {'text':self.claims[i]['text'], 'supports':{
+                s['evidence_id']:s['quote'] for s in self.claims[i]['supports']}}
+            for i in p['claim_indices']]} for p in self.parts]}
+
+    def test_compact_wire_derives_same_canonical_claims_and_reviewed_partitions(self):
+        self.transport.outputs[0]=self.compact_output()
+        answer=self.model.generate_with_authorization(self.question,self.evidence,'4'*32,lambda _:None)
+        self.assertEqual(answer['claims'],self.claims)
+        self.assertEqual(answer['answer_parts'],self.parts)
+        review=json.loads(self.transport.calls[1]['messages'][1]['content'])
+        self.assertEqual(review['claims'],self.claims)
+        self.assertEqual(review['answer_parts'],self.parts)
+        self.assertEqual(len(self.transport.calls),2)
+
+    def test_compact_wire_never_repairs_duplicate_json_evidence_keys(self):
+        self.transport.outputs[0]=self.compact_output()
+        original=self.transport._send
+        def duplicate(request):
+            code,response=original(request)
+            message=response['choices'][0]['message']
+            key=json.dumps('J-02@1')+':'
+            extra=key+json.dumps(self.claims[0]['supports'][0]['quote'])+','
+            message['content']=message['content'].replace(key,extra+key,1)
+            return code,response
+        self.transport._send=duplicate
+        events=[]
+        with self.assertRaises(ModelUnavailable):
+            self.model.generate_with_authorization(self.question,self.evidence,'5'*32,lambda _:None,
+                observe=lambda event,payload:events.append((event,payload)))
+        self.assertEqual(len(self.transport.calls),1)
+        self.assertEqual(events[-1][1]['diagnostic']['validation_detail'],'json_duplicate_field')
+
+    def test_compact_wire_bad_ids_quotes_and_mixed_status_fail_before_review(self):
+        for kind in ('unknown','quote','nonstring','extra','legacy_status'):
+            with self.subTest(kind=kind):
+                output=self.compact_output();part=output['answer_parts'][0];claim=part['claims'][0]
+                if kind=='unknown':claim['supports']={'restricted@1':'never supplied quotation'}
+                elif kind=='quote':claim['supports']['J-02@1']='Invented approval for every customer.'
+                elif kind=='nonstring':claim['supports']['J-02@1']=['wrong type']
+                elif kind=='extra':claim['evidence_ids']=['J-02@1']
+                else:part['status']='insufficient'
+                self.transport.outputs[0]=output;self.transport.calls.clear()
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate_with_authorization(self.question,self.evidence,'6'*32,lambda _:None)
+                self.assertEqual(len(self.transport.calls),1)
