@@ -549,3 +549,11 @@ rechecks current evidence before delivery and on History reads. The older
 `grounded_synthesis_v1` contract still requires distinct generation/review receipts.
 UI usage and audit must not duplicate or infer a generation call. Live quality
 of this opt-in candidate is not established by local or old-path results.
+
+### 分题生成内部契约修复候选 · 2026-10-15
+
+本轮拟将分题模型的生成传输格式改为仅含 `answer_parts` 的对象：每个分题包含原问题的连续子串 `question`、`status` 和内嵌 `claims`；每条内嵌断言仅含 `text` 与 `supports`。每个支持仍包含真实 `evidence_id` 和原文连续引文 `quote`。服务端按分题顺序展平，派生 `evidence_ids` 和零起始 `claim_indices`，不依赖模型重复填写两个对应列表。外部回答、历史、审计、前端和独立审查仍使用原有展平契约。旧生成格式仍严格校验后兼容，不混合两种格式。
+
+总断言最多四条，分题一至六个；支持型分题至少一条断言，信息不足型不得携带断言。600 字符断言、每条一至四个唯一引用、12–1200 字符精确引文、业务标识引文支持和时间断言规则保持不变。格式规范化不能补写事实、猜测引用、修改引文、自动重试模型或跳过独立审查／当前权限复核。
+
+失败诊断可新增固定枚举的字段原因和有界断言／支持索引，不记录任意字段名、业务标识、被拒文本、引文或异常原文。本契约修复不代表已修复先前真实模型的全部语义问题，须另行验证。

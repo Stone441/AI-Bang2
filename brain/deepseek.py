@@ -45,6 +45,29 @@ class ModelInputRejected(ModelUnavailable):
     """Provider input failed before budget reservation or network dispatch."""
 
 
+class OutputValidationError(ValueError):
+    """Only fixed local reasons and bounded positions may enter diagnostics."""
+    details = frozenset(('claim_shape', 'claim_text_length', 'citation_ids',
+        'support_shape', 'quote_length', 'quote_mismatch', 'quote_coverage',
+        'identifier_quote', 'temporal_quote'))
+
+    def __init__(self, message, detail):
+        super().__init__(message)
+        if detail not in self.details:
+            raise ValueError('Unknown output validation reason')
+        self.detail = detail
+        self.claim_index = None
+        self.support_index = None
+
+    def diagnostic(self):
+        result = {'validation_detail': self.detail}
+        for name, bound in (('claim_index', 52), ('support_index', 4)):
+            value = getattr(self, name)
+            if type(value) is int and 0 <= value < bound:
+                result[name] = value
+        return result
+
+
 class PriceReviewRequired(ModelUnavailable, ValueError):
     """An operator action is required; retrying the question cannot fix it."""
 
@@ -274,6 +297,8 @@ class DeepSeekEvidenceModel:
                 'Invalid answer part citations':'answer_part_citations',
                 'Unassigned or repeated answer claim':'answer_part_assignment'})
             diagnostic['validation_failure']=categories.get(str(error),category)
+            if isinstance(error, OutputValidationError):
+                diagnostic.update(error.diagnostic())
             self.ledger.model_outcome(reservation_id, 'output_rejected')
             record('model_output_rejected')
             raise ModelOutputRejected('Model output could not be supported by current evidence') from None
