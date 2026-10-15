@@ -68,7 +68,49 @@ class ReviewAccounts:
                     or not re.fullmatch(r'[0-9a-f]{64}', row.get('password_hash', ''))
                     or not re.fullmatch(r'[0-9a-f]{16}', row.get('revision', ''))):
                 raise ValueError('Invalid account registry or unmapped source identity')
+        auditors = body.get('application_auditors', {})
+        if not isinstance(auditors, dict):
+            raise ValueError('Invalid application auditors')
+        for key, row in auditors.items():
+            if (not isinstance(key, str) or not re.fullmatch(r'[a-z0-9_-]{1,48}', key)
+                    or not isinstance(row, dict)
+                    or set(row)-{'active','expires','revision','salt','password_hash','viewer_ids','resource_scope','login_name','display_name'}
+                    or type(row.get('active')) is not bool or type(row.get('expires')) not in (int,float)
+                    or not re.fullmatch(r'[0-9a-f]{32}', row.get('salt',''))
+                    or not re.fullmatch(r'[0-9a-f]{64}', row.get('password_hash',''))
+                    or not re.fullmatch(r'[0-9a-f]{16}', row.get('revision',''))
+                    or row.get('resource_scope') != 'payment-service'
+                    or not isinstance(row.get('viewer_ids'), list) or not row['viewer_ids']
+                    or any(not isinstance(v,str) or not re.fullmatch(r'reviewer:[a-z0-9_-]{1,48}:[0-9a-f]{16}',v)
+                           for v in row['viewer_ids'])):
+                raise ValueError('Exact application audit scope required')
+            login = row.get('login_name', key)
+            display = row.get('display_name', login)
+            if (not isinstance(login,str) or not re.fullmatch(r'[a-z0-9_-]{1,48}',login)
+                    or login in login_names or not isinstance(display,str)
+                    or not 1 <= len(display) <= 80 or not display.isprintable()):
+                raise ValueError('Unique auditor login required')
+            login_names.add(login)
         return body
+
+    def auditor_row(self, actor):
+        if actor.tenant != 'reviewer-demo' or not actor.user_id.startswith('application-auditor:'):
+            raise PermissionError('Unavailable')
+        try:
+            _, key, revision = actor.user_id.split(':')
+            row = self.read().get('application_auditors', {}).get(key)
+        except (OSError, ValueError, KeyError):
+            raise PermissionError('Unavailable') from None
+        if not row or not row['active'] or time.time() >= row['expires'] or row['revision'] != revision:
+            raise PermissionError('Unavailable')
+        return row
+
+    def is_auditor(self, actor):
+        try:
+            self.auditor_row(actor)
+            return True
+        except PermissionError:
+            return False
 
     def row(self, actor):
         if actor.tenant != 'reviewer-demo' or not actor.user_id.startswith('reviewer:'):
@@ -83,17 +125,23 @@ class ReviewAccounts:
         return row
 
     def validate(self, actor):
-        self.row(actor)
+        if actor.user_id.startswith('application-auditor:'):
+            self.auditor_row(actor)
+        else:
+            self.row(actor)
 
     def source_actor(self, actor):
         return Actor(self.row(actor)['source_actor'], self.tenant)
 
     def demo_role(self, actor):
+        if actor.user_id.startswith('application-auditor:'):
+            self.auditor_row(actor)
+            return 'auditor'
         row = self.row(actor)
         return row.get('demo_role', row['source_actor'])
 
     def display_name(self, actor):
-        row = self.row(actor)
+        row = self.auditor_row(actor) if actor.user_id.startswith('application-auditor:') else self.row(actor)
         return row.get('display_name', row.get('login_name', actor.user_id.split(':')[1]))
 
     def access_scope(self, actor):
@@ -131,14 +179,15 @@ class ReviewAccounts:
                 raise PermissionError('Unavailable')
             self.failures['*'] = recent
             body = self.read()
-            key, row = next(((key, row) for key, row in body['accounts'].items()
-                             if row.get('login_name', key) == data['username']), (None, None))
+            principals = [('reviewer',k,r) for k,r in body['accounts'].items()] + [('application-auditor',k,r) for k,r in body.get('application_auditors',{}).items()]
+            kind, key, row = next(((kind, key, row) for kind, key, row in principals
+                             if row.get('login_name', key) == data['username']), (None, None, None))
             digest = self.derive(data['password'], row['salt'] if row else '0'*32)
             valid = secrets.compare_digest(digest, row['password_hash'] if row else '0'*64)
             if not row or not valid or not row['active'] or time.time() >= row['expires']:
                 self.failures['*'].append(now)
                 raise PermissionError('Unavailable')
-            actor = Actor('reviewer:'+key+':'+row['revision'], 'reviewer-demo')
+            actor = Actor(kind+':'+key+':'+row['revision'], 'reviewer-demo')
             self.validate(actor)
             return actor
 
@@ -153,19 +202,11 @@ class ReviewerQuery:
 
     def __call__(self, actor, question, *, request_id, progress=None):
         e = self.engine
-        e.registry.validate(actor)
+        e.register_request(actor, request_id)
         source_actor = e.registry.source_actor(actor)
-        with e.store.transaction() as db:
-            db.execute('INSERT INTO reviewer_requests VALUES(?,?)', (request_id, actor.user_id))
         scope = e.registry.access_scope(actor)
         if scope and scope.source_actor != source_actor.user_id:
             raise PermissionError('Application access changed')
-        e.audit.append('reviewer_query', actor.user_id, request_id,
-                       {'effective_source_actor': source_actor.user_id,
-                        'effective_source_tenant': source_actor.tenant,
-                        'purpose': 'shared-synthetic-review',
-                        'application_role': scope.role if scope else None,
-                        'application_policy_digest':scope.policy_digest if scope else None})
         from .application_access import bind_access
         with bind_access(scope):
             result = e.original.query(source_actor, question, request_id=request_id, progress=progress)
@@ -187,6 +228,23 @@ class ReviewerEngine:
             db.execute('CREATE TABLE IF NOT EXISTS reviewer_evidence(viewer TEXT NOT NULL, evidence_id TEXT NOT NULL, PRIMARY KEY(viewer,evidence_id))')
         self.query = ReviewerQuery(self)
 
+    def register_request(self, actor, request_id):
+        # Establish ownership before readiness/model admission can fail. No client actor accepted.
+        source = self.registry.source_actor(actor)
+        scope = self.registry.access_scope(actor)
+        with self.store.transaction() as db:
+            row = db.execute('SELECT viewer FROM reviewer_requests WHERE request_id=?',(request_id,)).fetchone()
+            if row:
+                if row[0] != actor.user_id:
+                    raise PermissionError('Unavailable')
+                return
+            db.execute('INSERT INTO reviewer_requests VALUES(?,?)',(request_id,actor.user_id))
+            self.audit.append_in_transaction(db,'reviewer_query',actor.user_id,request_id,
+                {'effective_source_actor':source.user_id,'effective_source_tenant':source.tenant,
+                 'purpose':'shared-synthetic-review','resource_scope':'payment-service',
+                 'application_role':scope.role if scope else None,
+                 'application_policy_digest':scope.policy_digest if scope else None})
+
     @property
     def mode(self):
         return self.original.mode
@@ -196,7 +254,7 @@ class ReviewerEngine:
         return self.original.model
 
     def owned_ids(self, actor):
-        self.registry.validate(actor)
+        self.registry.row(actor)
         with self.store.lock:
             return {r[0] for r in self.store.db.execute(
                 'SELECT request_id FROM reviewer_requests WHERE viewer=?', (actor.user_id,))}
@@ -220,7 +278,7 @@ class ReviewerEngine:
         return results
 
     def evidence(self, actor, evidence_id):
-        self.registry.validate(actor)
+        self.registry.row(actor)
         with self.store.lock:
             row = self.store.db.execute('SELECT 1 FROM reviewer_evidence WHERE viewer=? AND evidence_id=?',
                                         (actor.user_id, evidence_id)).fetchone()
@@ -258,7 +316,7 @@ class ReviewerApp:
     def authenticate(self, data):
         actor = self.registry.authenticate(data)
         self.audit.append('reviewer_session', actor.user_id, 'login',
-                          {'effective_source_actor': self.registry.source_actor(actor).user_id, 'purpose': 'shared-synthetic-review'})
+                          {'effective_source_actor': None if self.can_audit(actor) else self.registry.source_actor(actor).user_id, 'purpose': 'shared-synthetic-review'})
         return actor
 
     def session(self, token):
@@ -268,3 +326,22 @@ class ReviewerApp:
 
     def refresh(self):
         self.original.refresh()
+
+    def can_audit(self, actor):
+        return self.registry.is_auditor(actor)
+
+    def session_details(self, actor):
+        self.registry.validate(actor)
+        result = {'demo_role':self.registry.demo_role(actor),
+                  'display_name':self.registry.display_name(actor),'can_audit':self.can_audit(actor)}
+        if result['can_audit']:
+            row = self.registry.auditor_row(actor)
+            result.update(audit_viewer_ids=sorted(set(row['viewer_ids'])),audit_resource_scope=row['resource_scope'])
+        return result
+
+    def register_request(self, actor, request_id):
+        self.engine.register_request(actor, request_id)
+
+    def audit_inquire(self, actor, filters):
+        from .application_audit import inquire
+        return inquire(self, actor, filters)
