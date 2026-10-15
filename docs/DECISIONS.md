@@ -622,3 +622,7 @@ Local reversible implementation only. No new provider, dependency, native write 
 User rejected the old-UI test handoff and requires latest implementation for testing. Deliver an isolated loopback latest v3 candidate with existing real synthetic four-source readers, existing reviewer accounts and existing human-team-closeout-20261015 grant. Do not reuse closed automatic grants, submit automated model queries, reset shared ledger or switch public production. The existing double-click entry is redirected only after startup fingerprint and served static resource verification. No silent old-version fallback.
 
 DeepSeek official pricing https://api-docs.deepseek.com/quick_start/pricing/ checked on 2026-10-16: flash peak cache-miss input USD0.30/M, output USD1.20/M unchanged. Update PRICE_DATE to today; keep fail-closed day check, no pinned fake today. Targeted DeepSeek and sectioned tests46 pass. Latest-candidate human_trial runner stores its own index/audit and shares existing original budget only.
+
+## AUTH-SEMANTIC-FINAL-V3-20261016
+
+User “继续收尾，不用考虑费用…” authorizes continuing the concrete final recheck after local gap-scope correction. Use an independent automatic grant, operational max24 calls/USD1, original global USD20 and unknown unchanged, existing four-source synthetic read-only scope. Human allowance is not automated test funding. One frozen11-case run, no retry; any failure stops, each next dispatch requires independent business assessment. No production switch or source writes. See FINAL_RECHECK_PLAN.md.

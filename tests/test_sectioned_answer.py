@@ -409,3 +409,17 @@ class SectionedAnswer(unittest.TestCase):
         bad=copy.deepcopy(original);bad['answer_parts'][0]['claims']=[]
         claims=self.model.parse_output(bad,self.evidence)
         with self.assertRaises(ValueError):self.model.validated_metadata(self.question,bad,claims)
+
+    def test_gap_absence_requires_explicit_evidence_in_both_stage_contracts(self):
+        from brain.sectioned_answer import SectionedAnswerReview
+        generator=self.model.messages(self.question,self.evidence)[0]['content']
+        reviewer=SectionedAnswerReview('synthetic-not-a-key',self.ledger,synthetic_only=True,
+            today=PRICE_DATE,claims=self.claims,parts=self.parts).messages(self.question,self.evidence)[0]['content']
+        for prompt in (generator,reviewer):
+            self.assertIn('Do not infer absence from silence',prompt)
+            self.assertIn('exceeds its quoted scope',prompt)
+        self.typed_gap_output()
+        self.transport.outputs[1]['part_verdicts'][2]['gap_explanation_supported']=False
+        answer=self.engine(evidence_on_model_rejection=True).query(Actor('eng_b'),self.question)
+        self.assertEqual(answer['answer_status'],'evidence_only')
+        self.assertNotIn('answer_parts',answer)

@@ -20,7 +20,15 @@ ANSWERABILITY_CONTRACT = (
     'explaining BOTH sides and why no decision can be confirmed; this does not establish '
     'either disputed side as true. Correct a false premise using supported claims, keeping '
     'any separately requested unavailable value in its own unavailable part when the '
-    'original wording permits that partition. Apply equally across languages and paraphrases. ')
+    'original wording permits that partition. Apply equally across languages and paraphrases. '
+    'A cited gap explanation requires a passage that explicitly establishes that specific '
+    'gap or unconfirmed state. A passage discussing a different topic is not evidence that '
+    'the requested information is absent from accessible records. Do not infer absence from '
+    'silence, from search coverage, or from an incident/release summary that merely omits a '
+    'requested amount. When no passage explicitly establishes the gap, use an unavailable '
+    'part with claims:[]; the server insufficiency notice communicates the limit without '
+    'inventing a factual absence claim. Reviewers must reject any gap claim that exceeds '
+    'its quoted scope, even if the insufficiency category itself is correct. ')
 
 
 def validate_answer_parts(parts, claims, question):
