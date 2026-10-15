@@ -567,3 +567,7 @@ v2增加生成问题覆盖提示、严格question_covered boolean复核、ID与q
 第二轮综合旧导出已在单独明确批准后完成：原生2→1，旧v2 Export answer显示unavailable、Downloads对应文件0→0，清除正文/quote/双回执但eng_b会话仍有效；恢复同一U0C66B76TE3后Members2，重新鉴权历史可用，实际合法导出8146字节/sha256 fb25805d8032ca7216cb28faa6664af5e3f06846c030bd28f211e23264fa025c 与保存答案完全一致。证据second-cycle-verification.json；两轮原生权限均恢复，无额外模型调用，初始v2问答1296microUSD上界（非账单）。综合引用/history/export撤权verified live subset；其余完整矩阵、内容增量更新及G1/G2仍pending。283回归源码无变更，沿用97ea3ac；用户8094新版保留，无需再重启/填凭据。下一P0四源内容更新/删除真实矩阵，P1合法导出后更清晰的页面反馈及质量/延迟。
 
 2026-10-06 用户重启8100后真实新版浏览器两问验证通过：发布C-02有证据，接着安全独立问为空/拒答；两个按钮均不存在，SQLite两次request_started独立标记/history_id=null，负问无evidence_used。evidence/runs/independent-query/live-verification.json。live旧export自动导航被Chrome ERR_BLOCKED_BY_CLIENT阻止，未绕过；端点404为fixture/mock实际HTTP验证，不冒称本次native浏览器端点已测。8094仍旧进程未更新。
+
+### 2026-10-15 semantic workspace bounded live result
+
+Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conservative; 2 generation failures, 1 partial-category mismatch. No new unknown, human allowance unchanged, no production switch. Grant run closed after delayed manual stop (private runner wrong status field corrected). Remaining quality/safety/timing checks not complete; Goal in_progress. See docs/reviews/2026-10-15-semantic-workspace/REPORT.md.

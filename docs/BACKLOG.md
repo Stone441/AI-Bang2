@@ -377,3 +377,7 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-06 统一候选fix/review-integrated-candidate：331bd28 clean archive357方法17.406s/五fixture/2Node/HTTP实际通过；此前323cb93的356记录保留。R5修复现有入口/历史/诊断而无新功能；真实只读Agent复核，browser新49161批准后仍saved site denial，正常设置入口未暴露。R2再次8 native readonly/fake checks有效，不冒称创建到回答SLA。R3六自然问题/无证据/长文真正模型小集保留前后失败，通用hyphen拆分和quoted-ID guard修复；六自然题原子事实覆盖，但多余背景与长文review拒答仍partial，用户已明确批准两项质量延期，冻结不称通过。原账本48usage逐笔只读核对、保守增28194microUSD，不清预算。集成证据review-integrated-20261006，fixed code/source hash/进程加载模式分列；G1/G2未运行。下一浏览器实际许可/质量处置/团队集中观察，目标保持active而非假称完整交付。
 
 2026-10-06 用户明确回复“批准明确延期并交团队验收”：long named-event/similar-event final answer rejection及非必答背景作为固定331bd28已知质量缺口，原失败/诊断/费用保留，不放宽review，不批准G1/G2或发布提交。browser保存拒绝是独立未解除工具条件；其它固定候选开发与状态准备已收敛。
+
+### 2026-10-15 semantic workspace bounded live result
+
+Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conservative; 2 generation failures, 1 partial-category mismatch. No new unknown, human allowance unchanged, no production switch. Grant run closed after delayed manual stop (private runner wrong status field corrected). Remaining quality/safety/timing checks not complete; Goal in_progress. See docs/reviews/2026-10-15-semantic-workspace/REPORT.md.
