@@ -16,6 +16,8 @@ import time
 from .contracts import Actor
 from .server import App
 
+_QUESTION_UNSET = object()
+
 
 class ReviewAccounts:
     def __init__(self, path, tenant, allowed_roles):
@@ -202,7 +204,7 @@ class ReviewerQuery:
 
     def __call__(self, actor, question, *, request_id, progress=None):
         e = self.engine
-        e.register_request(actor, request_id)
+        e.register_request(actor, request_id, question=question)
         source_actor = e.registry.source_actor(actor)
         scope = e.registry.access_scope(actor)
         if scope and scope.source_actor != source_actor.user_id:
@@ -228,8 +230,10 @@ class ReviewerEngine:
             db.execute('CREATE TABLE IF NOT EXISTS reviewer_evidence(viewer TEXT NOT NULL, evidence_id TEXT NOT NULL, PRIMARY KEY(viewer,evidence_id))')
         self.query = ReviewerQuery(self)
 
-    def register_request(self, actor, request_id):
+    def register_request(self, actor, request_id, *, question=_QUESTION_UNSET):
         # Establish ownership before readiness/model admission can fail. No client actor accepted.
+        if question is not _QUESTION_UNSET and (not isinstance(question,str) or len(question)>4000):
+            raise ValueError('Invalid question')
         source = self.registry.source_actor(actor)
         scope = self.registry.access_scope(actor)
         with self.store.transaction() as db:
@@ -243,7 +247,8 @@ class ReviewerEngine:
                 {'effective_source_actor':source.user_id,'effective_source_tenant':source.tenant,
                  'purpose':'shared-synthetic-review','resource_scope':'payment-service',
                  'application_role':scope.role if scope else None,
-                 'application_policy_digest':scope.policy_digest if scope else None})
+                 'application_policy_digest':scope.policy_digest if scope else None,
+                 **({'query':question} if question is not _QUESTION_UNSET else {})})
 
     @property
     def mode(self):
@@ -339,8 +344,8 @@ class ReviewerApp:
             result.update(audit_viewer_ids=sorted(set(row['viewer_ids'])),audit_resource_scope=row['resource_scope'])
         return result
 
-    def register_request(self, actor, request_id):
-        self.engine.register_request(actor, request_id)
+    def register_request(self, actor, request_id, *, question=_QUESTION_UNSET):
+        self.engine.register_request(actor, request_id, question=question)
 
     def audit_inquire(self, actor, filters):
         from .application_audit import inquire

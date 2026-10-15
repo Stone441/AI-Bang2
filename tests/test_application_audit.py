@@ -122,3 +122,30 @@ class ApplicationAudit(unittest.TestCase):
             with self.assertRaises((ValueError,PermissionError)):self.app.audit_inquire(self.actor,{})
             self.body['application_auditors']['inspector']=original
         self.save()
+
+    def test_early_identity_anchor_retains_exact_question_and_is_immutable(self):
+        question='  Original question about payment-service?\nSecond line.  '
+        self.app.register_request(self.v,'early-question',question=question)
+        self.app.register_request(self.v,'early-question',question='replacement must not change audit')
+        self.base.audit.append('request_failed',self.viewer,'early-question',{'reason':'refresh failed'})
+        events=self.app.audit_inquire(self.actor,{})['events']
+        anchors=[e for e in events if e['event_type']=='reviewer_query']
+        self.assertEqual(len(anchors),1)
+        self.assertEqual(anchors[0]['payload']['query'],question)
+        self.assertEqual(event_hash(anchors[0]),anchors[0]['hash'])
+        self.assertEqual({e['event_type'] for e in events},{'reviewer_query','request_failed'})
+        self.assertNotIn('replacement must not change audit',json.dumps(events))
+
+    def test_invalid_early_question_never_creates_ownership(self):
+        for index,question in enumerate((None,42,'x'*4001)):
+            with self.assertRaises(ValueError):
+                self.app.register_request(self.v,'invalid-'+str(index),question=question)
+        self.assertEqual(self.base.store.db.execute('SELECT count(*) FROM reviewer_requests').fetchone()[0],0)
+
+    def test_direct_query_fallback_records_submitted_question(self):
+        question='Who owns payment-service?'
+        self.app.engine.query(self.v,question,request_id='direct-query')
+        anchors=[e for e in self.base.audit.export() if e['event_type']=='reviewer_query'
+                 and e['request_id']=='direct-query']
+        self.assertEqual(len(anchors),1)
+        self.assertEqual(anchors[0]['payload']['query'],question)
