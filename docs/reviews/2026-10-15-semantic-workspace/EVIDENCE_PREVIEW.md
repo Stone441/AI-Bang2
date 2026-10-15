@@ -1,0 +1,7 @@
+# Evidence preview feedback · 2026-10-16
+
+User observed 2–3 seconds before the D-02 drawer appeared. Inspection confirmed preview() awaited the source endpoint before showModal(). The revised UI opens an empty loading drawer synchronously, then fills only current-authorized source data. It never renders answer-cached source text while permission/version checking. Escape/close invalidates the view token so a delayed response cannot repopulate or reopen the drawer. Existing denial handling clears prior answers/source content.
+
+15 frontend suites pass, including a deferred-network test that asserts open before response, absence of unverified content, Escape cancellation, successful fill and denied cleanup. Real Chrome on current human source history: clicked D-02.txt, observed loading drawer immediately, then observed exact original text and current access/version timestamp. No model query submitted. This establishes interaction feedback, not lower backend source latency or an SLA. No auth/freshness check was removed or cached.
+
+Current immutable runtime fa88f2f, local URL http://127.0.0.1:55858/. Original double-click shortcut has been verified against this instance's process, backend fingerprint and served app.js hash. Existing history was copied by SQLite backup into the new isolated candidate; previous instance/records retained to avoid interrupting any user request. Human model grant shared unchanged. Existing browser tabs at54251 still show the earlier version; reopen the shortcut or use the new URL. Public hosted service untouched.
