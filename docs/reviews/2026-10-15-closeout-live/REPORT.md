@@ -1,62 +1,62 @@
-# Authorized switch and bounded live acceptance · 2026-10-15
+# 授权切换、真实模型验收与剩余问题 · 2026-10-15
 
-**The owned service has been switched and the authorized trial completed. This is not an all-scenarios quality pass:** two optional sectioned-synthesis cases still fail generation validation. No paid answer was retried. Source-review remains the deployed default.
+**现有服务已完成切换，本轮获授权的验收已执行完毕。当前尚未达到全部场景质量通过：**可选分题合成模式（`sectioned-synthesis`）仍有两个案例未通过生成校验。已产生费用的回答均未重试。线上默认模式仍为来源审查（`source-review`）。
 
-## Version and deployment
+## 版本与部署
 
-The user explicitly approved the prepared human grant migration, same-host 49161 switch, exact three-demo-account auditor scope, and a separate maximum of 12 DeepSeek calls / USD0.50. The older 36-call authorization was not combined with this allowance.
+用户已明确批准：按准备好的精确计划迁移人工额度账本、切换现有主机的 49161 服务、启用仅覆盖三个演示账号的审计员，以及独立的最多 12 次 DeepSeek 调用／USD0.50 自动验收额度。此前的 36 次调用授权未与本轮额度叠加。
 
-- Native/model trial candidate: `498239ea54a09a45c9e90ed0ef57c524428b84d5`, immutable release, startup source `77f7fbbe7a2ff4a553988267bfe815ba0eabcde74c88a3d2ee7463ce35084442`.
-- Final deployed code: `f2f0633e524ea266b2ea8f23187dd2c716399a3a`. Its only runtime change after that trial is the public-static-navigation gate fix; it does not change models, prompts, retrieval, source authorization or accounting. Startup source `c161d77f8274edb5e3f336e15c980bf20ff3f9cbad9c3fe0bdd28f1ce3622c81`, loaded at `2026-10-15T09:35:42.268926+00:00`.
-- Same existing hostname: https://contextledger.hellokyleshi.com . Existing Cloudflare Tunnel retained. No new service, DNS, scope, source write or cloud purchase.
-- Backup through SQLite backup API plus exact private config/state copies, integrity checks and manifest preceded the switch. Original PID/listener, absence of active connections, idle admission locks and exact prepared config hashes were checked.
-- LaunchAgent runs the immutable release directory with explicit original `--state-root`; fixed code/UI and original durable state are separate. No hot reload claim.
+- 真实源 API／真实模型验收候选：`498239ea54a09a45c9e90ed0ef57c524428b84d5`，采用不可变发布目录；启动源码指纹为 `77f7fbbe7a2ff4a553988267bfe815ba0eabcde74c88a3d2ee7463ce35084442`。
+- 最终部署代码：`f2f0633e524ea266b2ea8f23187dd2c716399a3a`。相较验收候选，唯一运行逻辑变更是公开静态页面的导航检查修复，模型、提示词、检索、源权限和计费逻辑均未改变。启动源码指纹为 `c161d77f8274edb5e3f336e15c980bf20ff3f9cbad9c3fe0bdd28f1ce3622c81`，加载时间为 `2026-10-15T09:35:42.268926+00:00`。
+- 沿用原域名：https://contextledger.hellokyleshi.com 。保留现有 Cloudflare Tunnel；未新增服务、DNS、权限范围、源端写入或云资源购买。
+- 切换前已通过 SQLite 备份 API 备份数据库，并精确复制私有配置和状态文件，完成完整性检查及清单记录。同时核对原进程 PID／监听端口、无活动连接、请求准入锁空闲，以及准备好的配置文件哈希。
+- LaunchAgent 从不可变发布目录启动，并显式指定原项目的 `--state-root`。修复后的代码／界面与原有持久状态分开管理；本次不属于热更新。
 
-The original `main` checkout remains at 5727300 with its prior dirty evidence intact. Fixes and reports are committed locally on `fix/systematic-closeout-20261015`; no push, protected-main merge or competition submission was performed.
+原 `main` 工作目录仍停留在 `5727300`，既有未提交证据完整保留。修复与报告仅在本地分支 `fix/systematic-closeout-20261015` 提交；未推送、合并受保护主线或提交比赛。
 
-## Accounting, old unknowns and identity
+## 费用、旧未决调用与身份范围
 
-The exact reviewed human migration plan was applied without changing the original human JSON bytes. Seventeen earlier team-live settlements were excluded only from the human grant using their exact original receipt IDs and evidence digest; all original global charges remain. Human historical settlement is **3,213 micro-USD / 8 calls**, unchanged throughout this automatic trial. The two original dispatched unknown reservations, totaling 648,808 micro-USD, remain. No baseline or ledger was reset.
+已执行审阅过的精确人工额度迁移计划，原人工额度 JSON 文件字节未变。此前团队真实验收的 17 笔结算，仅依据精确原始回执 ID 和证据摘要从人工额度中排除；全局账本中的原费用全部保留。人工额度的历史结算为 **3,213 微美元／8 次调用**，本轮自动验收期间未发生变化。两笔原有已发出但结算状态不明的预留（`unknown`）仍保留，合计 648,808 微美元。未重置基线或账本。1 微美元等于 USD0.000001。
 
-Separate grant `closeout-live-20261015-12`: **10 actual calls / USD0.011808 conservative settlement**, against 12 calls / USD0.50. New unknown **0**. Global ledger settled 1,345,936 micro-USD; accounted including the two old reservations 1,994,744 micro-USD, within the original USD20 ceiling. These are conservative internal estimates and validated usage receipts, not a supplier invoice. The remaining allowance was not spent on repeated failed answers.
+独立额度 `closeout-live-20261015-12` 实际消耗 **10 次调用／保守结算 USD0.011808**，授权上限为 12 次／USD0.50。新增 `unknown` 为 **0**。全局账本已结算 1,345,936 微美元，加上两笔旧预留后的已占用金额为 1,994,744 微美元，未超出原 USD20 上限。这些数字来自内部保守估算及已校验用量回执，不等同于供应商账单。剩余额度未用于重复失败回答。
 
-The new optional `closeout_auditor` has no native source identity and cannot query knowledge. It is restricted to exact existing revisions of the three approved fictional application accounts and payment-service. Existing employee passwords/revisions were copied unchanged into a separate private candidate registry; no original account registry was overwritten. Its new login card remains local at `.runtime/closeout-20261015/auditor-login-card.txt`, outside Git. Do not send or upload it without separate authorization.
+新增的可选审计员 `closeout_auditor` 不具备源平台原生身份，不能进行知识问答；其范围严格限定为三个已批准虚构应用账号的现有精确修订版本，以及 `payment-service`。既有员工账号的密码和修订版本原样复制至独立私有候选注册表，未覆盖原账号注册表。新增登录卡仅保存在本地 `.runtime/closeout-20261015/auditor-login-card.txt`，不进入 Git；未经另行授权不得发送或上传。
 
-## Actual checks and semantic review
+## 实际检查与语义核对
 
-All cases used the existing approved real four-source synthetic data and a separate loopback HTTP service with an isolated index/audit store. The same approved shared budget ledger was used through the independent grant. Source readiness was checked before each question. No source was modified. Author-written expected answers were frozen before execution; the judgments below are Agent comparisons against actual source text, not human or blind evaluation.
+所有案例均通过真实 API 读取既有、已授权的四源合成测试数据，使用独立的本机回环 HTTP 服务及隔离的索引／审计存储。模型费用通过独立额度计入同一已批准的共享预算账本。每次提问前均检查源就绪状态，未修改任何源数据。执行前已冻结预期答案；下列语义判断由 Agent 对照实际源文本完成，不属于真人评估或盲测。
 
-| Case / mode | Actual calls / conservative USD | Actual result |
+| 案例／模式 | 实际调用次数／保守费用（USD） | 实际结果 |
 |---|---:|---|
-| Incident cause and withdrawn cache hypothesis / source-review | 1 / 0.000843 | Accepted; Slack withdrawal and Drive final retry/timeout cause present. 13.913s |
-| Done fix, protective work, release approval / source-review | 1 / 0.000794 | Accepted; PAY-102 Done, PAY-103 In Progress, no inference of release approval. 9.220s |
-| Chinese assumed GA release / sectioned | 2 / 0.002910 | Accepted; explicitly corrects GA premise, pilot only, no confirmed date. 23.547s |
-| Missing synthetic project revenue / source-review | 1 / 0.001105 | Review rejects coverage. Zero claims, explicit failed-answer/insufficiency wording, evidence gallery only. Presentation repaired; not a validated answer. 23.088s |
-| Same missing revenue / sectioned | 2 / 0.002886 | Accepted with one genuinely insufficient part and zero claims; no invented revenue/nonexistence conclusion. 28.076s |
-| Same-scope SG-GATE conflict / sectioned | 1 / 0.001230 | Generation rejected: `answer_part_assignment`. No review call or draft displayed. **Quality failure.** 11.167s |
-| Four current probe values / sectioned | 1 / 0.001872 | Generation rejected: `claim`. Authorized current raw evidence from all four expected objects contains amber; no validated per-part answer. **Quality failure.** 19.891s |
-| Partner question claiming admin authority / source-review | 1 / 0.000168 | Only authorized C-02 capability evidence; coverage rejects and zero answer claims. Scope protection passed; requested engineering answer not delivered. 3.637s |
+| 事故根因与已撤回的缓存假说／来源审查 | 1／0.000843 | 通过；包含 Slack 中撤回假说的证据，以及 Drive 中最终重试配置／超时根因。13.913 秒 |
+| 已完成修复、防护工作与发布批准／来源审查 | 1／0.000794 | 通过；正确区分 PAY-102 的 Done（已完成）和 PAY-103 的 In Progress（进行中），未推断已获发布批准。9.220 秒 |
+| 中文问题预设已正式发布（GA）／分题合成 | 2／0.002910 | 通过；明确纠正 GA 前提，仅为受控试点，没有已确认的正式发布日期。23.547 秒 |
+| 缺少合成项目收入信息／来源审查 | 1／0.001105 | 审查以覆盖不足拒绝回答。断言数量为零，明确提示回答失败／信息不足，仅展示证据列表。展示问题已修复，但不计为通过验证的答案。23.088 秒 |
+| 同一收入信息不足问题／分题合成 | 2／0.002886 | 通过；一个分题正确标记为信息不足，断言数量为零，未编造收入或资料不存在的结论。28.076 秒 |
+| 同一权限范围内的 SG-GATE 冲突／分题合成 | 1／0.001230 | 生成校验拒绝：`answer_part_assignment`。未调用审查模型，未展示草稿。**质量失败。**11.167 秒 |
+| 四源当前探针值／分题合成 | 1／0.001872 | 生成校验拒绝：`claim`。四个预期对象的当前已授权原始证据均包含 `amber`，但未形成通过验证的逐题答案。**质量失败。**19.891 秒 |
+| 合作伙伴在问题中自称管理员／来源审查 | 1／0.000168 | 仅返回获授权的 C-02 能力证据；覆盖审查拒绝，答案断言数量为零。权限范围保护通过，但未交付所请求的工程答案。3.637 秒 |
 
-The latest Drive native version observed was 11 (earlier trial reported 10), with current amber content; no cause for that external version change is inferred. Jira/Slack fingerprints are compared for identity/change, not numeric ordering. The table's timings are complete HTTP returns, not browser render time, p95 or SLA.
+本轮观察到 Drive 最新原生版本为 11，当前内容为 `amber`；此前验收记录为版本 10。本报告不推断该外部版本变化的原因。Jira／Slack 指纹仅用于比对身份及变化，不按数值大小判断先后。表中耗时为完整 HTTP 请求返回时间，不代表浏览器渲染时间、p95 或 SLA。
 
-Five initial submissions were **zero-call** failures: the isolated driver mistakenly used source-review-only `single` dispatch for sectioned synthesis, then immediately encountered the existing request cooldown. These original failures were retained. The driver was corrected to use each mode's valid dispatch configuration and pacing; only those uncharged questions were subsequently executed. None of the charged successes or failures was repeated. An initial deployment-check tuple-unpacking error was also a zero-model diagnostic; it did not alter accounts or budget.
+最初五次提交均为**零模型调用失败**：隔离测试驱动错误地为分题合成配置了仅适用于来源审查的 `single` 调度方式，随后连续请求又触发现有冷却限制。原失败记录均保留。修正测试驱动的模式调度和请求间隔后，仅重新执行这些尚未计费的问题；任何已计费的成功或失败回答均未重复。初始部署检查还出现过一次元组解包错误，同样没有模型调用，也未改变账号或预算。
 
-Real HTTP history/preview checks returned own-history 200 / own-preview 200, cross-account history 403 / preview 403, and ordinary-account audit denial 403. After the final switch, engineer/product/partner/auditor logins were 200 with Secure cookies; auditor scoped events returned 200, auditor knowledge query 403, and all four sources were complete/current. The scoped online audit was exercised using actual saved requests; this is distinct from signing an offline export and not proof of human reading or independent checkpoint custody.
+实际 HTTP 历史／预览检查结果：本人历史 200、本人预览 200；跨账号历史 403、跨账号预览 403；普通账号审计访问 403。最终切换后，工程、产品、合作伙伴和审计员账号登录均返回 200，Cookie 带有 Secure 属性；审计员限定范围内的事件查询返回 200，知识问答返回 403；四个源均为 `complete/current`（检查完整／快照当前）。线上限定范围审计已使用实际保存的请求记录进行检查；这不等同于离线导出签名，也不能证明真人阅读或独立检查点保管。
 
-## Public browser and regression
+## 公网浏览器检查与回归
 
-Automated command-line HTTPS requests were blocked by Cloudflare 1010/403. No Cloudflare policy, browser warning or security setting was bypassed or disabled.
+命令行自动 HTTPS 请求被 Cloudflare 以 1010／403 拦截。本轮未绕过或关闭 Cloudflare 策略、浏览器警告或安全设置。
 
-Actual Chrome navigation separately found an application bug: its overbroad cross-site gate also denied anonymous public HTML. It was reproduced with explicit cross-site request headers. The fix allows only the three immutable anonymous GET assets, still after exact Host validation; every API and every POST retains Origin/fetch-site/session/CSRF protections. Independent review found no permission regression. Red, green and full logs are retained here.
+实际 Chrome 导航另行发现应用缺陷：跨站检查范围过宽，连匿名公开 HTML 页面也被拒绝。已用明确的跨站请求头复现。修复仅在精确 Host 校验之后放行三个固定、不可变的匿名 GET 静态资源；所有 API 及所有 POST 仍保留 Origin、fetch-site、会话和 CSRF 保护。独立审查未发现权限回归。本目录保留失败复现、修复验证和完整回归日志。
 
-The repaired deployed page was opened in Chrome and visibly reached **LIVE API DEMO**, with the actual username/password login form and application-role boundary text. Thus the public login page and its initial health/API boot were observed. Authenticated browser question/history/audit interaction and human G1/G2 were not performed and are not replaced by HTTP or DOM checks.
+修复后的线上页面已在 Chrome 实际打开，可见 **LIVE API DEMO** 标识、用户名／密码登录表单及应用角色权限边界说明。因此，公开登录页及其初始健康检查／API 启动已实际观察。**尚未执行登录后的浏览器问答、历史和审计交互，也未完成人类关口 G1／G2；HTTP 或 DOM 检查不能替代这些验收。**
 
-Post-navigation full local regression: **758 Python tests / 53.851s / OK**. The preceding core candidate had 757 Python, 14 DOM suites, 25 offline groups and the real fixture HTTP wrapper passing. The navigation-only change additionally passed its new header test and the original nine HTTP tests. Native/model results belong to 498239e; the final static-navigation change was validated locally and in the actual deployed browser without extra model calls.
+导航修复后的本地完整回归：**758 项 Python 测试／53.851 秒／全部通过**。此前核心候选已通过 757 项 Python 测试、14 个 DOM 套件、25 组离线演练，以及通过真实 HTTP 服务执行的 fixture（固定测试数据）封装测试。导航补丁另通过新增请求头测试及原有九项 HTTP 测试。真实源 API／真实模型结果归属 `498239e`；最终静态导航补丁通过本地测试及实际线上浏览器验证，未额外调用模型。
 
-## Remaining defects and next action
+## 剩余缺陷与下一步
 
-P1 remains for optional sectioned conflict/four-value generation. The new bounded diagnostic distinguishes assignment from claim failure, but the full rejected draft was deliberately not saved; exact bad indices/claim fields cannot be reconstructed. Preserve these request/audit/receipt hashes, then improve bounded field diagnostics and add faithful offline regressions before proposing any narrowly justified paid revalidation. Do not loosen quote, part mapping, review or authorization gates and do not automatically spend remaining calls to seek a successful answer.
+**P1：可选分题合成模式的冲突处理与四源当前值生成仍失败。**新增的受限诊断已能区分分题归属错误（`answer_part_assignment`）与断言错误（`claim`），但出于既定证据保存边界，完整被拒草稿未保存，因此无法还原具体错误索引或断言字段。下一步应保留本轮请求、审计和回执哈希，补充有限字段诊断及忠实复现的离线回归，再提出范围明确、理由充分的付费复验。不得放宽引文、分题映射、审查或鉴权校验，也不得自动花费剩余调用次数来筛选成功答案。
 
-Default source-review missing-information behavior is now a clear safe failure rather than a large irrelevant prose dump; it remains a quality limitation. The accepted application-role scope is retained. Four-source independent employee identities, three untested native revocation paths, generation-time native revoke, long-duration stability, semantic malicious-source injection resistance, independent checkpoint custody and human acceptance remain distinct limits.
+默认来源审查模式在信息缺失时，现在能够明确、安全地失败，避免展示大量无关断言；但这仍属于回答质量限制。当前已接受的应用角色权限范围保持不变。四源独立员工身份、尚未验证的三条原生撤权路径、生成期间原生撤权、长时间运行稳定性、对恶意源文本注入的语义抵抗能力、独立检查点保管及真人验收，均是需要分别验证的事项。
 
-Raw answers, questions, receipts, native resources, audit databases, scripts and backups remain private under the evidence root listed in `EVIDENCE_MANIFEST.json`; only non-secret summary/hash indexes are committed. Existing CodeBuddy proof originals were not recreated or uploaded.
+原始答案、问题、回执、源端原始资料、审计数据库、脚本及备份，均保留在 `EVIDENCE_MANIFEST.json` 列出的私有证据根目录；本地 Git 仅提交不含秘密的摘要和哈希索引。未重新制作或上传既有 CodeBuddy 贡献证据原件。
