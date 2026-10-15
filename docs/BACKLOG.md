@@ -405,3 +405,8 @@ Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conserva
 ### 2026-10-16 当前候选交付一致性核验
 
 2ef8d74 全量 Python 回归783项通过（55.985秒），独立 git archive 的 fixture/fake 启动、UI文件哈希、导航卡片与正常关闭通过；无真实调用。已重写完成审计当前表和部署/试用版本说明，修正旧端口/旧候选描述。现用fa88f2f入口进程及后端/UI指纹核对通过，未重启。真实模型11题质量验收仍不完整，未宣称完成。证据：reviews/2026-10-15-semantic-workspace/partition-full-regression.log、candidate-partition-smoke.json。
+
+
+### 2026-10-16 完整审查格式示例
+
+发现分题审查继承的开头JSON示例缺少后文要求的4个字段，已改为完整7字段示例；基础审查提示与所有接受/拒绝规则不变。84项相关测试通过，未进行真实调用，不能据此解释历史失败。见 reviews/2026-10-15-semantic-workspace/REVIEW_SCHEMA.md。

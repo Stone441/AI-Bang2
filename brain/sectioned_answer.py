@@ -64,6 +64,19 @@ def validate_answer_parts(parts, claims, question):
 
 
 class SectionedAnswerReview(EvidenceReview):
+    output_instructions = (
+        'Review support and coverage independently. Return one JSON object with exactly '
+        'question_covered, filtered_answer_complete, verdicts, parts_supported, premise_handled, '
+        'conflicts_handled and part_verdicts. Complete format example: '
+        + json.dumps({'question_covered':True,'filtered_answer_complete':True,
+            'verdicts':[{'index':0,'supported':True,'responsive':True}],
+            'parts_supported':True,'premise_handled':True,'conflicts_handled':True,
+            'part_verdicts':[{'index':0,'requested_information_provided':True,
+                'gap_explanation_supported':True}]},separators=(',', ':'))
+        + '. This illustrates format, not the actual decision. Assess every boolean independently. '
+        'Return exactly one verdict per claim and one part_verdict per answer part in order; '
+        'use verdicts:[] when there are no claims, while still assessing every answer part. ')
+
     def __init__(self,*args,parts,**kwargs):
         super().__init__(*args,**kwargs);self.parts=parts
 
@@ -71,7 +84,7 @@ class SectionedAnswerReview(EvidenceReview):
         messages=super().messages(question,evidence)
         messages[0]['content'] += ANSWERABILITY_CONTRACT
         messages[0]['content'] += (
-            ' Also return three extra boolean fields: "parts_supported", "premise_handled", '
+            ' The three reasoning boolean fields are: "parts_supported", "premise_handled", '
             'and "conflicts_handled". All must be true for acceptance. The answer_parts are part of the draft: verify that they faithfully divide the ENTIRE '
             'question without omitting a requested part, changing its subject, or turning its premise '
             'into a fact. Every claim must directly answer its owning part or explain its specific '
@@ -101,7 +114,7 @@ class SectionedAnswerReview(EvidenceReview):
             'An all-insufficient answer can pass only if every insufficiency is justified; '
             'false insufficiency, missing parts or uncertainty about coverage still requires false.')
         messages[0]['content'] += (
-            ' Additionally return part_verdicts, one object per part in order, with exactly '
+            ' Return part_verdicts, one object per part in order, with exactly '
             'index (integer), requested_information_provided (boolean), and gap_explanation_supported '
             '(boolean). Independently determine requested_information_provided from the actual '
             'question and ALL evidence, not from draft status or whether a claim is true. '

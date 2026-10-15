@@ -31,6 +31,18 @@ class SectionedAnswer(unittest.TestCase):
             self.assertIn(detail,str(diagnostic))
             self.assertNotIn('PRIVATE',str(diagnostic))
 
+    def test_review_example_contains_complete_required_wire_schema(self):
+        from brain.sectioned_answer import SectionedAnswerReview
+        from brain.synthesis import EvidenceReview
+        text=SectionedAnswerReview.output_instructions
+        example=json.JSONDecoder().raw_decode(text[text.index('{'):])[0]
+        self.assertEqual(set(example),{'question_covered','filtered_answer_complete','verdicts',
+            'parts_supported','premise_handled','conflicts_handled','part_verdicts'})
+        self.assertEqual(set(example['part_verdicts'][0]),
+            {'index','requested_information_provided','gap_explanation_supported'})
+        self.assertNotIn('part_verdicts',EvidenceReview.output_instructions)
+        self.assertIn('verdicts:[]',text)
+
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
         self.ledger=BudgetLedger(str(Path(self.tmp.name)/'budget.sqlite'));self.addCleanup(self.ledger.close)
