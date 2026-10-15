@@ -8,13 +8,13 @@ On 2026-10-15 the existing local49161 health endpoint, using its configured Host
 
 Candidate uses sectioned-synthesis with a separate review, direct conclusions and per-part gaps, instead of the deployed source-review default. The UI is top navigation/three cards/collapsed passages/right drawer/mobile full panel. Runtime selection remains an operator setting; choosing the mode alone is not acceptance.
 
-Current local runtime candidate: `11818ea6cf8488c80ca891d5b8944d076d148322`; latest live-tested runtime: `b21f953` (business gate failed). Current v3 includes separate gap explanation indices and mandatory independent per-part completeness verdicts. Preserve v3 audit/index separately on rollback; older renderers/validators do not understand gap-bearing records.
+Current local code candidate: `2ef8d74`; latest real diagnostic runtime: `eb91828` (default partial failed generation field validation). Current human UI runtime: `fa88f2f` on55858, verified via the checked launcher; see LATEST_TRIAL.md. Current code includes separate gap explanation indices, mandatory independent per-part completeness verdicts and granular rejection diagnostics. Preserve v3 audit/index separately on rollback; older renderers/validators do not understand gap-bearing records.
 
-Clean archive verification: `.runtime/reviewable-11818ea/release`, archive SHA256 `8e9b26bacc115550303aa990de6122f680e5ad27c8f9c26611067c12bbf561be`; 3862 tracked files, no private runtime/credentials copied. Independent fixture/fake startup, health, top navigation/cards and graceful shutdown verified; see candidate-smoke.json. This is not a real sectioned-model pass.
+Clean archive verification of2ef8d74: see candidate-partition-smoke.json for archive SHA256, startup fingerprint and asset hash match. Independent fixture/fake startup, health, top navigation/cards and graceful shutdown checked. No private runtime/credentials copied and no real calls made. Earlier11818ea artifact evidence remains historical in candidate-smoke.json.
 
 ## Preview
 
-From candidate worktree: `python3 -m scripts.reviewer_demo`. It prints a loopback URL; fake extractive model, no charges. This command tests navigation and fixture access, not the v3 generated answer protocol. For repeatable local protocol checks run `PYTHONPATH=tests python3 -m unittest test_sectioned_answer`; the checked browser mock screenshot is value-gap-mock.png. Candidate user's existing preview51686 remains a prior startup snapshot, not automatically refreshed. Never silently restart a user test or production to hot-reload an edit.
+From the candidate worktree: `python3 -m scripts.reviewer_demo`. It prints a loopback URL using fixture sources and a fake extractive model. This checks navigation and fixture access, not the real generated answer protocol. For local protocol checks: `PYTHONPATH=tests python3 -m unittest test_sectioned_answer`. The existing human entry remains separately verified and is not automatically refreshed when worktree code changes. No old UI is substituted when the entry fails validation.
 
 ## Deployment (not authorized or executed)
 

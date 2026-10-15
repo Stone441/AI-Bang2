@@ -400,3 +400,8 @@ Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conserva
 ## 2026-10-16 定向诊断后续
 
 默认部分题一次真实诊断：合法 JSON 在生成分题字段校验处拒绝，1 次调用，无新 unknown，人工额度不变；未复现上一轮审查失败。已补固定枚举细分诊断及原文分题格式说明，55 项回归通过；真实效果未验证，现用试用页保持运行。详见 [TARGETED_DIAGNOSTIC.md](reviews/2026-10-15-semantic-workspace/TARGETED_DIAGNOSTIC.md)。
+
+
+### 2026-10-16 当前候选交付一致性核验
+
+2ef8d74 全量 Python 回归783项通过（55.985秒），独立 git archive 的 fixture/fake 启动、UI文件哈希、导航卡片与正常关闭通过；无真实调用。已重写完成审计当前表和部署/试用版本说明，修正旧端口/旧候选描述。现用fa88f2f入口进程及后端/UI指纹核对通过，未重启。真实模型11题质量验收仍不完整，未宣称完成。证据：reviews/2026-10-15-semantic-workspace/partition-full-regression.log、candidate-partition-smoke.json。
