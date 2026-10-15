@@ -85,11 +85,15 @@ def check_price_review(today=None):
             'then restart the reviewed build. Preserve the existing USD20 budget ledger.')
 
 
+class DuplicateJsonField(ValueError):
+    """A fixed parser category; never retain the untrusted duplicate key."""
+
+
 def unique_object(pairs):
     result = {}
     for key, value in pairs:
         if key in result:
-            raise ValueError('Duplicate JSON field')
+            raise DuplicateJsonField('Duplicate JSON field')
         result[key] = value
     return result
 
@@ -297,6 +301,11 @@ class DeepSeekEvidenceModel:
                 'Invalid answer part citations':'answer_part_citations',
                 'Unassigned or repeated answer claim':'answer_part_assignment'})
             diagnostic['validation_failure']=categories.get(str(error),category)
+            if category == 'json':
+                if isinstance(error, json.JSONDecodeError):
+                    diagnostic['validation_detail'] = 'json_syntax'
+                elif isinstance(error, DuplicateJsonField):
+                    diagnostic['validation_detail'] = 'json_duplicate_field'
             if isinstance(error, OutputValidationError):
                 diagnostic.update(error.diagnostic())
             self.ledger.model_outcome(reservation_id, 'output_rejected')
