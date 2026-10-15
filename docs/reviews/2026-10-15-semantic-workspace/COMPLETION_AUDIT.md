@@ -1,6 +1,6 @@
 # Goal completion audit · evidence required, not presumed
 
-Scope: full goal-objective.md (original attachment), local reviewable/runnable/reversible candidate; no publication requirement. Current local runtime candidate: 11818ea. Latest real-model candidate: b21f953 (failed business gate). Status: incomplete; no active paid grant.
+Scope: full goal-objective.md (original attachment), local reviewable/runnable/reversible candidate; no publication requirement. Current local runtime candidate: 11818ea. Latest real-model candidate: b21f953 (failed business gate). Status: incomplete; no active automated paid grant. Human trial observations below now supersede earlier v3-not-run wording.
 
 | Requirement | Authoritative evidence | Current finding |
 |---|---|---|
@@ -44,3 +44,13 @@ Requested-value completeness remains failed, despite model review acceptance. Fu
 2026-10-15 DEV-SEMANTIC-WORKSPACE 本地 v3：显式区分 requested information 与带引用缺口说明，所有生成格式必须通过逐题独立完整性复审，分歧拒绝而不修复。780项Python/59.217秒、14DOM通过；最后提示调整33项通过。Chrome mock验证Partial answer、缺口引用及重新鉴权历史；非真实模型质量。四轮grant继续关闭，无新付费/源写/部署。详见 reviews/2026-10-15-semantic-workspace/VALUE_COMPLETENESS.md。
 
 The representation defect is locally addressed; latest real quality still failed at b21f953. Semantic correctness/reliability of v3 remains unverified. Goal is not complete.
+
+## 2026-10-16 human trial evidence
+
+User feedback: "整体是OK的" followed by evidence-drawer delay report; after immediate-loading delivery, user confirmed "可以了". This confirms that interaction fix and broad usability feedback, not blanket safety/G1/G2 or all business truth.
+
+Read-only review of existing two human-trial SQLite stores found five distinct user-submitted v3 answers: three release-readiness instances, one default partial and one default compensation. Cross-store copies deduplicated by request ID. No new query or paid automatic call was made. See human-results-20261016.json. All18 quote strings occur exactly in their saved authorized response evidence; no fresh native-source claim is made by this post-hoc check.
+
+Default partial correctly has supported ticket statuses and an insufficient date part with cited gap explanation. Three release answers preserve code completion versus approval and pilot/GA limits. Compensation is correctly insufficient and invents no amount, but its statement that the accessible evidence records no compensation amount is broader than the two topic quotations can independently establish. This semantic support/scope concern remains open; reviewer accepted is not sufficient to close it. The scoped server insufficiency notice is not itself evidence that information does not exist.
+
+This replaces the outdated assertion that v3 has no real-model observations: it now has these human-generated observations. It does not establish v3 robustness across the six rewrites, false premise and conflict, or complete all11 current-version cases. Previous automated grants remain closed; this feedback does not authorize new paid automation. Goal remains incomplete. Current runtime fa88f2f retains the verified immediate evidence drawer; documentation-only follow-ups do not change it.

@@ -4,6 +4,16 @@
 
 最新实测候选运行代码 `b21f953ef060d0a8d37f49aa2244a3085eb6c95c`，分支 `feat/semantic-workspace-20261015`，基准 `0d5be3096cfcbf09b267fe6b54853b1fac2e67af`。本报告为该候选的后续证据。没有 push、merge、生产重启或切换。生产仍是独立旧版本；部署与回退见 DEPLOYMENT_AND_DEMO.md。
 
+## 2026-10-16 human trial evidence
+
+User feedback: "整体是OK的" followed by evidence-drawer delay report; after immediate-loading delivery, user confirmed "可以了". This confirms that interaction fix and broad usability feedback, not blanket safety/G1/G2 or all business truth.
+
+Read-only review of existing two human-trial SQLite stores found five distinct user-submitted v3 answers: three release-readiness instances, one default partial and one default compensation. Cross-store copies deduplicated by request ID. No new query or paid automatic call was made. See human-results-20261016.json. All18 quote strings occur exactly in their saved authorized response evidence; no fresh native-source claim is made by this post-hoc check.
+
+Default partial correctly has supported ticket statuses and an insufficient date part with cited gap explanation. Three release answers preserve code completion versus approval and pilot/GA limits. Compensation is correctly insufficient and invents no amount, but its statement that the accessible evidence records no compensation amount is broader than the two topic quotations can independently establish. This semantic support/scope concern remains open; reviewer accepted is not sufficient to close it. The scoped server insufficiency notice is not itself evidence that information does not exist.
+
+This replaces the outdated assertion that v3 has no real-model observations: it now has these human-generated observations. It does not establish v3 robustness across the six rewrites, false premise and conflict, or complete all11 current-version cases. Previous automated grants remain closed; this feedback does not authorize new paid automation. Goal remains incomplete. Current runtime fa88f2f retains the verified immediate evidence drawer; documentation-only follow-ups do not change it.
+
 ## Latest local follow-up · requested-information contract v3
 
 Current local runtime commit `11818ea6cf8488c80ca891d5b8944d076d148322`. Clean Git archive startup and graceful shutdown passed in fixture/fake mode; see candidate-smoke.json. Local implementation separates cited gap explanations from supplied answers and requires explicit independent per-part completeness review for every generation shape, including legacy inputs. The UI and reauthorized history retain Partial answer even with a cited explanation of the missing date. See [VALUE_COMPLETENESS.md](VALUE_COMPLETENESS.md) for protocol, test evidence, browser scope, limitations and rollback. **This is not a new live pass**; the fourth run below remains the latest real result. No paid loop or production switch.

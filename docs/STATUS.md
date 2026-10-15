@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-16 人工试用：用户确认整体体验及证据抽屉修复可用。只读核对5份去重v3实际答案，三默认类别正确，本次部分题缺口保留；18段引文与保存证据精确匹配。赔偿题缺失断言的引用范围仍需注意；不是全11题或G1/G2通过。自动grant继续关闭，无追加付费调用。见 human-results-20261016.json / REPORT.md。
+
 2026-10-15 候选交付核对：11818ea 干净Git归档独立启动/health/UI/正常退出通过（fixture_fake_model，不代表综合质量）。审计表已更新当前版本；v3真实质量仍未验证，四轮grant全部关闭，不复用、不自动开启付费循环。见 candidate-smoke.json 与 COMPLETION_AUDIT.md。
 
 2026-10-15 DEV-SEMANTIC-WORKSPACE 本地 v3：显式区分 requested information 与带引用缺口说明，所有生成格式必须通过逐题独立完整性复审，分歧拒绝而不修复。780项Python/59.217秒、14DOM通过；最后提示调整33项通过。Chrome mock验证Partial answer、缺口引用及重新鉴权历史；非真实模型质量。四轮grant继续关闭，无新付费/源写/部署。详见 reviews/2026-10-15-semantic-workspace/VALUE_COMPLETENESS.md。
