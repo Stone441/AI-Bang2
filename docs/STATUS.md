@@ -589,3 +589,8 @@ Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conserva
 ### Semantic syntax-first result ·2026-10-15
 
 250c3c8: all11 attempted once,9 accepted,2 rejected (duplicate citation ID / answer-part citation contract).20 calls/USD0.026639 conservative, no new unknown or human allowance use.17 exact quote/version checks against native originals; real browser history/failure/partial/native citation/Escape observed. Display-only null counter/native mode labels fixed locally, three related frontend suites passed. Candidate still not fully accepted; next local protocol simplification must preserve strict canonical review and needs its own future live validation. See semantic-workspace REPORT.md.
+
+
+## 2026-10-16 定向诊断后续
+
+默认部分题一次真实诊断：合法 JSON 在生成分题字段校验处拒绝，1 次调用，无新 unknown，人工额度不变；未复现上一轮审查失败。已补固定枚举细分诊断及原文分题格式说明，55 项回归通过；真实效果未验证，现用试用页保持运行。详见 [TARGETED_DIAGNOSTIC.md](reviews/2026-10-15-semantic-workspace/TARGETED_DIAGNOSTIC.md)。

@@ -16,6 +16,21 @@ from test_synthesis import SequentialTransport
 
 
 class SectionedAnswer(unittest.TestCase):
+    def test_partition_diagnostics_preserve_exact_substring_boundary(self):
+        from brain.deepseek import OutputValidationError
+        valid={'question':'PAY-102','status':'supported','claim_indices':[0]}
+        self.assertEqual(validate_answer_parts([valid],[{}],'Status of PAY-102?'),[valid])
+        for changed,detail in [
+            ({**valid,'question':'PRIVATE fabricated question'},'part_question_not_substring'),
+            ({**valid,'question':''},'part_question_shape'),
+            ({**valid,'extra':'PRIVATE'},'part_metadata_shape'),
+            ({**valid,'status':'PRIVATE'},'part_status_or_indices')]:
+            with self.assertRaises(OutputValidationError) as caught:
+                validate_answer_parts([changed],[{}],'Status of PAY-102?')
+            diagnostic=caught.exception.diagnostic()
+            self.assertIn(detail,str(diagnostic))
+            self.assertNotIn('PRIVATE',str(diagnostic))
+
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
         self.ledger=BudgetLedger(str(Path(self.tmp.name)/'budget.sqlite'));self.addCleanup(self.ledger.close)

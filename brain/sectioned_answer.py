@@ -37,12 +37,17 @@ def validate_answer_parts(parts, claims, question):
     assigned=[];questions=set()
     for part in parts:
         if (not isinstance(part,dict) or set(part) not in ({'question','status','claim_indices'},
-                    {'question','status','claim_indices','gap_claim_indices'})
-                or not isinstance(part['question'],str) or not part['question'].strip()
-                or len(part['question'])>4000 or part['question'] not in question
-                or part['question'] in questions or part['status'] not in ('supported','insufficient')
-                or not isinstance(part['claim_indices'],list)):
-            raise ValueError('Invalid answer part')
+                    {'question','status','claim_indices','gap_claim_indices'})):
+            raise OutputValidationError('Invalid answer part','part_metadata_shape')
+        if (not isinstance(part['question'],str) or not part['question'].strip()
+                or len(part['question'])>4000):
+            raise OutputValidationError('Invalid answer part','part_question_shape')
+        if part['question'] not in question:
+            raise OutputValidationError('Invalid answer part','part_question_not_substring')
+        if part['question'] in questions:
+            raise OutputValidationError('Invalid answer part','part_question_repeated')
+        if part['status'] not in ('supported','insufficient') or not isinstance(part['claim_indices'],list):
+            raise OutputValidationError('Invalid answer part','part_status_or_indices')
         indices=part['claim_indices']
         if (any(type(i) is not int or not 0<=i<len(claims) for i in indices)
                 or (part['status']=='supported')!=bool(indices)):
@@ -183,6 +188,9 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
             'explicitly supported by the evidence, labelled as recommendations, never as completed '
             'actions or requirements. Do not invent next steps as enterprise facts. '
             ' Use 1–6 parts, retaining the original wording, subject and every requested subquestion. '
+            'Every part question must be an exact contiguous substring copied from the original question, '
+            'including capitalization and punctuation. Do not rewrite it into a standalone question, '
+            'add an implied subject, or append a question mark absent from that substring. '
             'Use at most four concise factual claims TOTAL across all parts. '
             'Each supported part needs at least one claim; multiple claims can belong to one part. '
             'Each full claim needs exact quotes preserving all necessary qualifications. '
@@ -227,10 +235,10 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
         for part in parts:
             if (not isinstance(part,dict) or set(part) not in ({'question','status','claims'},{'question','claims'},{'question','resolution','claims'})
                     or not isinstance(part['claims'],list)):
-                raise ValueError('Invalid answer part')
+                raise OutputValidationError('Invalid answer part','part_wire_shape')
             typed='resolution' in part
             if typed and part['resolution'] not in ('answered','unavailable'):
-                raise ValueError('Invalid answer part')
+                raise OutputValidationError('Invalid answer part','part_resolution')
             start=len(claims)
             if start+len(part['claims'])>4:
                 raise ValueError('Invalid synthesis output')

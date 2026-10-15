@@ -121,3 +121,8 @@ A further local prompt candidate now includes a mechanically generated valid SIN
 ## Compact-wire local candidate (not yet live)
 
 ADR-04 implemented: model emits {question,claims} per part and supports as exact-ID-to-exact-quote object; server derives canonical status/indices/ID arrays, then runs unchanged canonical grounding and independent semantic review. No JSON repair/deduplication. Legacy explicit-status responses remain strict. Duplicate raw JSON evidence keys, unknown IDs, invented quotes, wrong types and mixed legacy fields are rejected in tests before review; valid compact output produces identical canonical claims/parts and review input. Complete771-test suite passed54.747s (warnings/intentional negative test output retained). COMPACT_WIRE_PLAN.md is prepared but not authorized; previous live counts still refer to previous frozen candidates. This is further local progress, not achieved real-quality acceptance.
+
+
+## 最新定向诊断（2026-10-16）
+
+见 [TARGETED_DIAGNOSTIC.md](TARGETED_DIAGNOSTIC.md)：默认部分题生成阶段字段校验失败，1 次调用，未进入审查。后续改进仅通过本地回归，未声称真实质量通过。

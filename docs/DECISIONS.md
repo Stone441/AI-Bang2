@@ -630,3 +630,8 @@ User “继续收尾，不用考虑费用…” authorizes continuing the concre
 ## 2026-10-16 · final v3 recheck outcome and diagnostic boundary
 
 95198aa compensation passes, partial independent review fails; stop after2 cases/4 calls/5868 microUSD, no retries/new unknown/human change. Newgrant closed. Preserve strict validator and all truth assertions. Rejection JSON valid but old safe metadata lacks sectioned verdict reasons; do not infer missing fields or semantic disagreement as established cause. Add fixed diagnostic enums only, preserving exact accept/reject rules;54 targeted tests. No raw drafts/IDs enter added diagnostics. Human UI remains fa88f2f, latest acceptance result is not a release pass.
+
+
+## 2026-10-16 定向诊断后续
+
+默认部分题一次真实诊断：合法 JSON 在生成分题字段校验处拒绝，1 次调用，无新 unknown，人工额度不变；未复现上一轮审查失败。已补固定枚举细分诊断及原文分题格式说明，55 项回归通过；真实效果未验证，现用试用页保持运行。详见 [TARGETED_DIAGNOSTIC.md](reviews/2026-10-15-semantic-workspace/TARGETED_DIAGNOSTIC.md)。

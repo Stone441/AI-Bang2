@@ -50,7 +50,9 @@ class OutputValidationError(ValueError):
     details = frozenset(('claim_shape', 'claim_text_length', 'citation_ids',
         'support_shape', 'quote_length', 'quote_mismatch', 'quote_coverage',
         'identifier_quote', 'temporal_quote', 'part_review_reasoning', 'part_review_shape',
-        'part_review_completeness', 'part_review_gap_support'))
+        'part_review_completeness', 'part_review_gap_support',
+        'part_metadata_shape', 'part_question_shape', 'part_question_not_substring',
+        'part_question_repeated', 'part_status_or_indices', 'part_wire_shape', 'part_resolution'))
 
     def __init__(self, message, detail):
         super().__init__(message)
