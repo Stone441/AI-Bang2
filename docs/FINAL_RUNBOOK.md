@@ -1,5 +1,7 @@
 # Final delivery runbook
 
+2026-10-15 主线集成说明：本轮收尾修复将作为下一轮开发基线合并main，后续继续完善前端、项目亮点、候选题问答与开发细节，不作正式封版。当前业务代码与10cc970一致；冲突题和四源题分别已有真实通过记录，JSON故障根因仍开放，线上仍独立运行f2f0633。[主线合并验证](reviews/2026-10-15-main-closeout-merge/REPORT.md)及[最新真实记录](reviews/2026-10-15-sectioned-live/json-investigation/REPORT.md)优先于下方历史说明。
+
 2026-10-15 当前运行已切换到本地修复代码 `f2f0633`，同一公网入口；最新[真实验收与剩余缺陷](reviews/2026-10-15-closeout-live/REPORT.md)优先于下方历史状态。自动复验10次/USD0.011808，人工额度未占用、旧unknown保留。两项可选分题生成仍失败，不能宣称全部通过；未push/main合并或比赛提交。
 
 
