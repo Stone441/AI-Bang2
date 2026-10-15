@@ -4,6 +4,16 @@
 
 最新实测候选运行代码 `b21f953ef060d0a8d37f49aa2244a3085eb6c95c`，分支 `feat/semantic-workspace-20261015`，基准 `0d5be3096cfcbf09b267fe6b54853b1fac2e67af`。本报告为该候选的后续证据。没有 push、merge、生产重启或切换。生产仍是独立旧版本；部署与回退见 DEPLOYMENT_AND_DEMO.md。
 
+## Latest authorized recheck · 2026-10-16 · stopped
+
+Frozen candidate `95198aa5f4c050e334832e28dfc6807e12428553` clarifies both stages: factual gap explanations require explicit quoted support; omission from a topic paragraph does not prove absence. 781 Python tests/55.003s and15 DOM suites passed before the live run. Four-source preflight waited complete/current and directly froze25 originals.
+
+New user-authorized `semantic-final-v3-20261016` grant: max24 calls/USD1 operational bound, shared original USD20 ledger, no human allowance use, no retry. Compensation default passed: one insufficient part, empty claims, no invented amount or unsupported absence citation. After independent agent assessment, default partial ran and failed independent review. Its JSON was syntactically valid with no duplicate fields; three claim verdicts and global question coverage were true, but sectioned review still rejected. Saved diagnostics do not establish which reasoning/part-verdict condition failed. No raw draft was saved or shown. Nine remaining cases were not dispatched. The runner stopped and closed normally, with no in-flight third question.
+
+Actual4 calls / USD0.005868 conservative, no new unknown, human grant unchanged, old2 pending retained. No source writes/public deployment. Native own history/preview200, cross-user403 and ordinary audit403 passed.243-event local chain validates; not independently signed. See final-v3-results.json for exact measured disjoint phases and safe diagnostics. Compensation HTTP13.762s, partial15.004s; auth/source checks11.699s/12.030s, generation transport0.758s/1.571s, review transport1.231s/1.345s, retrieval excluding nested authorization0.023s/0.009s. These two samples establish no SLA/p95.
+
+Local follow-up adds only fixed safe diagnostic enums distinguishing reasoning gate, part-review shape, completeness mismatch and gap-support rejection.54 targeted tests passed. Acceptance conditions are unchanged; no new live call to chase the diagnosis. This instrumentation cannot retroactively explain the discarded output. Current human UI remains fa88f2f and is not silently replaced by a failed candidate. Goal remains incomplete: no claim that all11 or current v3 reliability passed. The fresh grant is now closed; no automatic paid loop.
+
 ## 2026-10-16 human trial evidence
 
 User feedback: "整体是OK的" followed by evidence-drawer delay report; after immediate-loading delivery, user confirmed "可以了". This confirms that interaction fix and broad usability feedback, not blanket safety/G1/G2 or all business truth.

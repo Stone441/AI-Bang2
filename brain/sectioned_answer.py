@@ -120,18 +120,20 @@ class SectionedAnswerReview(EvidenceReview):
 
     def parse_output(self,output,evidence):
         if not isinstance(output,dict) or any(output.get(k) is not True for k in REASONING_CHECKS):
-            raise ValueError('Incomplete model review')
+            raise OutputValidationError('Incomplete model review','part_review_reasoning')
         excluded=set(REASONING_CHECKS)
         verdicts=output.get('part_verdicts')
         if not isinstance(verdicts,list) or len(verdicts)!=len(self.parts):
-            raise ValueError('Incomplete model review')
+            raise OutputValidationError('Incomplete model review','part_review_shape')
         for index,(part,verdict) in enumerate(zip(self.parts,verdicts)):
             if (not isinstance(verdict,dict) or set(verdict)!={'index','requested_information_provided','gap_explanation_supported'}
                     or type(verdict['index']) is not int or verdict['index']!=index
-                    or type(verdict['requested_information_provided']) is not bool
-                    or verdict['requested_information_provided']!=(part['status']=='supported')
-                    or verdict['gap_explanation_supported'] is not True):
-                raise ValueError('Incomplete model review')
+                    or type(verdict['requested_information_provided']) is not bool):
+                raise OutputValidationError('Incomplete model review','part_review_shape')
+            if verdict['requested_information_provided']!=(part['status']=='supported'):
+                raise OutputValidationError('Incomplete model review','part_review_completeness')
+            if verdict['gap_explanation_supported'] is not True:
+                raise OutputValidationError('Incomplete model review','part_review_gap_support')
         excluded.add('part_verdicts')
         claims=super().parse_output({k:v for k,v in output.items() if k not in excluded},evidence)
         if claims!=self.claims:

@@ -626,3 +626,7 @@ DeepSeek official pricing https://api-docs.deepseek.com/quick_start/pricing/ che
 ## AUTH-SEMANTIC-FINAL-V3-20261016
 
 User “继续收尾，不用考虑费用…” authorizes continuing the concrete final recheck after local gap-scope correction. Use an independent automatic grant, operational max24 calls/USD1, original global USD20 and unknown unchanged, existing four-source synthetic read-only scope. Human allowance is not automated test funding. One frozen11-case run, no retry; any failure stops, each next dispatch requires independent business assessment. No production switch or source writes. See FINAL_RECHECK_PLAN.md.
+
+## 2026-10-16 · final v3 recheck outcome and diagnostic boundary
+
+95198aa compensation passes, partial independent review fails; stop after2 cases/4 calls/5868 microUSD, no retries/new unknown/human change. Newgrant closed. Preserve strict validator and all truth assertions. Rejection JSON valid but old safe metadata lacks sectioned verdict reasons; do not infer missing fields or semantic disagreement as established cause. Add fixed diagnostic enums only, preserving exact accept/reject rules;54 targeted tests. No raw drafts/IDs enter added diagnostics. Human UI remains fa88f2f, latest acceptance result is not a release pass.

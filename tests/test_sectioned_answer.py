@@ -423,3 +423,20 @@ class SectionedAnswer(unittest.TestCase):
         answer=self.engine(evidence_on_model_rejection=True).query(Actor('eng_b'),self.question)
         self.assertEqual(answer['answer_status'],'evidence_only')
         self.assertNotIn('answer_parts',answer)
+
+    def test_part_review_failure_diagnostics_are_fixed_and_do_not_store_rejected_text(self):
+        original=copy.deepcopy(self.transport.outputs[1])
+        for detail in ('part_review_reasoning','part_review_shape','part_review_completeness','part_review_gap_support'):
+            with self.subTest(detail=detail):
+                review=copy.deepcopy(original)
+                if detail=='part_review_reasoning':review['parts_supported']='PRIVATE-BAD-TEXT'
+                elif detail=='part_review_shape':review['part_verdicts'][0]['index']='PRIVATE-BAD-TEXT'
+                elif detail=='part_review_completeness':review['part_verdicts'][0]['requested_information_provided']=False
+                else:review['part_verdicts'][0]['gap_explanation_supported']='PRIVATE-BAD-TEXT'
+                self.transport.outputs[1]=review;self.transport.calls.clear();events=[]
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate_with_authorization(self.question,self.evidence,'a'*32,lambda _:None,
+                        observe=lambda event,payload:events.append((event,payload)))
+                diagnostic=events[-1][1]['diagnostic']
+                self.assertEqual(diagnostic['validation_detail'],detail)
+                self.assertNotIn('PRIVATE',json.dumps(diagnostic))

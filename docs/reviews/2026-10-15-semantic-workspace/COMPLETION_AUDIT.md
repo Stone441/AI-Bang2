@@ -1,6 +1,6 @@
 # Goal completion audit · evidence required, not presumed
 
-Scope: full goal-objective.md (original attachment), local reviewable/runnable/reversible candidate; no publication requirement. Current local runtime candidate: 11818ea. Latest real-model candidate: b21f953 (failed business gate). Status: incomplete; no active automated paid grant. Human trial observations below now supersede earlier v3-not-run wording.
+Scope: full goal-objective.md (original attachment), local reviewable/runnable/reversible candidate; no publication requirement. Latest tested candidate: 95198aa (second-case review failure). Human trial runtime: fa88f2f. Status: incomplete; no active automated paid grant. Human trial observations below now supersede earlier v3-not-run wording.
 
 | Requirement | Authoritative evidence | Current finding |
 |---|---|---|
@@ -54,3 +54,13 @@ Read-only review of existing two human-trial SQLite stores found five distinct u
 Default partial correctly has supported ticket statuses and an insufficient date part with cited gap explanation. Three release answers preserve code completion versus approval and pilot/GA limits. Compensation is correctly insufficient and invents no amount, but its statement that the accessible evidence records no compensation amount is broader than the two topic quotations can independently establish. This semantic support/scope concern remains open; reviewer accepted is not sufficient to close it. The scoped server insufficiency notice is not itself evidence that information does not exist.
 
 This replaces the outdated assertion that v3 has no real-model observations: it now has these human-generated observations. It does not establish v3 robustness across the six rewrites, false premise and conflict, or complete all11 current-version cases. Previous automated grants remain closed; this feedback does not authorize new paid automation. Goal remains incomplete. Current runtime fa88f2f retains the verified immediate evidence drawer; documentation-only follow-ups do not change it.
+
+## Latest authorized recheck · 2026-10-16 · stopped
+
+Frozen candidate `95198aa5f4c050e334832e28dfc6807e12428553` clarifies both stages: factual gap explanations require explicit quoted support; omission from a topic paragraph does not prove absence. 781 Python tests/55.003s and15 DOM suites passed before the live run. Four-source preflight waited complete/current and directly froze25 originals.
+
+New user-authorized `semantic-final-v3-20261016` grant: max24 calls/USD1 operational bound, shared original USD20 ledger, no human allowance use, no retry. Compensation default passed: one insufficient part, empty claims, no invented amount or unsupported absence citation. After independent agent assessment, default partial ran and failed independent review. Its JSON was syntactically valid with no duplicate fields; three claim verdicts and global question coverage were true, but sectioned review still rejected. Saved diagnostics do not establish which reasoning/part-verdict condition failed. No raw draft was saved or shown. Nine remaining cases were not dispatched. The runner stopped and closed normally, with no in-flight third question.
+
+Actual4 calls / USD0.005868 conservative, no new unknown, human grant unchanged, old2 pending retained. No source writes/public deployment. Native own history/preview200, cross-user403 and ordinary audit403 passed.243-event local chain validates; not independently signed. See final-v3-results.json for exact measured disjoint phases and safe diagnostics. Compensation HTTP13.762s, partial15.004s; auth/source checks11.699s/12.030s, generation transport0.758s/1.571s, review transport1.231s/1.345s, retrieval excluding nested authorization0.023s/0.009s. These two samples establish no SLA/p95.
+
+Local follow-up adds only fixed safe diagnostic enums distinguishing reasoning gate, part-review shape, completeness mismatch and gap-support rejection.54 targeted tests passed. Acceptance conditions are unchanged; no new live call to chase the diagnosis. This instrumentation cannot retroactively explain the discarded output. Current human UI remains fa88f2f and is not silently replaced by a failed candidate. Goal remains incomplete: no claim that all11 or current v3 reliability passed. The fresh grant is now closed; no automatic paid loop.

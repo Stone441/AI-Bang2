@@ -5,3 +5,7 @@ User explicitly instructed continuation and authorized API spending after the co
 First clarify the gap-explanation contract: lack of a requested amount in topic quotes is not positive evidence of its absence. Both generator/reviewer must require explicit quoted evidence for a factual gap explanation; otherwise use the existing empty unavailable part and scoped server notice. This is a semantic instruction refinement, not proof of model correctness; no relaxed validator or automatic output rewrite.
 
 Order: compensation default (known citation-scope concern), default partial, conflict, then other8. After EACH result the runner waits for a separate agent source/oracle assessment file bound to case/request; only passing it can dispatch next. Model accepted alone cannot advance. Each successful answer's quotes are checked against saved authorized evidence and frozen native originals when available; claims and completeness manually checked. Retain actual response, receipts, timing, failures. Finish with zero-query native isolation and browser history checks. Stop rather than loop on failure.
+
+## Closed result
+
+Compensation passed, default partial rejected at review;9 not run.4 calls/5868 microUSD, no new unknown, human unchanged. No retry or delayed third dispatch. Details in final-v3-results.json and REPORT.md.
