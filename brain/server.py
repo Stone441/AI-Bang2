@@ -115,6 +115,10 @@ def create_server(app, port=0, *, public_origin=None):
             expected=({urlparse(public_origin).netloc} if public_origin else {f'127.0.0.1:{self.server.server_port}',f'localhost:{self.server.server_port}'})
             if self.headers.get('Host') not in expected:
                 raise PermissionError('Unavailable')
+            # Anonymous immutable assets must be reachable from an external link.
+            # This exception never applies to API reads, credentials or POSTs.
+            if self.command=='GET' and urlparse(self.path).path in ('/','/app.js','/style.css'):
+                return
             origin=self.headers.get('Origin')
             if origin and origin not in ({public_origin} if public_origin else {'http://'+host for host in expected}):
                 raise PermissionError('Unavailable')
