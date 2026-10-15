@@ -8,9 +8,13 @@ On 2026-10-15 the existing local49161 health endpoint, using its configured Host
 
 Candidate uses sectioned-synthesis with a separate review, direct conclusions and per-part gaps, instead of the deployed source-review default. The UI is top navigation/three cards/collapsed passages/right drawer/mobile full panel. Runtime selection remains an operator setting; choosing the mode alone is not acceptance.
 
+Current local runtime candidate: `11818ea6cf8488c80ca891d5b8944d076d148322`; latest live-tested runtime: `b21f953` (business gate failed). Current v3 includes separate gap explanation indices and mandatory independent per-part completeness verdicts. Preserve v3 audit/index separately on rollback; older renderers/validators do not understand gap-bearing records.
+
+Clean archive verification: `.runtime/reviewable-11818ea/release`, archive SHA256 `8e9b26bacc115550303aa990de6122f680e5ad27c8f9c26611067c12bbf561be`; 3862 tracked files, no private runtime/credentials copied. Independent fixture/fake startup, health, top navigation/cards and graceful shutdown verified; see candidate-smoke.json. This is not a real sectioned-model pass.
+
 ## Preview
 
-From candidate worktree: `python3 -m scripts.reviewer_demo`. It prints a loopback URL; fake extractive model, no charges. Candidate user's existing preview51686 remains a prior startup snapshot, not automatically refreshed. Never silently restart a user test or production to hot-reload an edit.
+From candidate worktree: `python3 -m scripts.reviewer_demo`. It prints a loopback URL; fake extractive model, no charges. This command tests navigation and fixture access, not the v3 generated answer protocol. For repeatable local protocol checks run `PYTHONPATH=tests python3 -m unittest test_sectioned_answer`; the checked browser mock screenshot is value-gap-mock.png. Candidate user's existing preview51686 remains a prior startup snapshot, not automatically refreshed. Never silently restart a user test or production to hot-reload an edit.
 
 ## Deployment (not authorized or executed)
 

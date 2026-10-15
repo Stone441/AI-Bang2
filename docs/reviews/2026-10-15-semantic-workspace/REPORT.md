@@ -6,11 +6,11 @@
 
 ## Latest local follow-up · requested-information contract v3
 
-Local implementation separates cited gap explanations from supplied answers and requires explicit independent per-part completeness review for every generation shape, including legacy inputs. The UI and reauthorized history retain Partial answer even with a cited explanation of the missing date. See [VALUE_COMPLETENESS.md](VALUE_COMPLETENESS.md) for protocol, test evidence, browser scope, limitations and rollback. **This is not a new live pass**; the fourth run below remains the latest real result. No paid loop or production switch.
+Current local runtime commit `11818ea6cf8488c80ca891d5b8944d076d148322`. Clean Git archive startup and graceful shutdown passed in fixture/fake mode; see candidate-smoke.json. Local implementation separates cited gap explanations from supplied answers and requires explicit independent per-part completeness review for every generation shape, including legacy inputs. The UI and reauthorized history retain Partial answer even with a cited explanation of the missing date. See [VALUE_COMPLETENESS.md](VALUE_COMPLETENESS.md) for protocol, test evidence, browser scope, limitations and rollback. **This is not a new live pass**; the fourth run below remains the latest real result. No paid loop or production switch.
 
 ## Latest outcome · fourth authorized run (compact wire)
 
-Frozen candidate `b21f953ef060d0a8d37f49aa2244a3085eb6c95c`: **business acceptance failed**. The default partial question returned correct facts but classified the requested, unavailable general-release date as `supported`. Independent model review accepted it; that is not a business pass. The compact representation derives status from nonempty claims, which cannot distinguish a grounded explanation of missing information from actually supplying the requested value. This remains an unresolved product contract issue; no question-string mapping or relaxed oracle was introduced.
+Frozen candidate `b21f953ef060d0a8d37f49aa2244a3085eb6c95c`: **business acceptance failed**. The default partial question returned correct facts but classified the requested, unavailable general-release date as `supported`. Independent model review accepted it; that is not a business pass. The compact representation derives status from nonempty claims, which cannot distinguish a grounded explanation of missing information from actually supplying the requested value. This was the failed v2 product contract; v3 addresses representation locally but actual model classification remains unverified; no question-string mapping or relaxed oracle was introduced.
 
 The conflict answer preserved both same-scope records and their unresolved disagreement. A third release-readiness answer completed in flight and correctly distinguished PAY-102 Done from release approval. All 13 supporting quotes and versions across these three audit-committed answers match the directly frozen native originals. See [compact-wire-results.json](compact-wire-results.json). Only two client response files completed; the third answer was recovered from the audit after shutdown.
 
@@ -18,7 +18,7 @@ The conflict answer preserved both same-scope records and their unresolved disag
 
 Local orchestration now requires an explicit independent assessment with an evidence reference before every next dispatch. A failed assessment terminates the run, and missing/mismatched assessment fails closed. Six focused stopping-policy tests passed. Historical frozen runners are preserved and closed; they must not be reused. This prevents unreviewed advance in future callers of the updated policy, but does not fix answer classification or prove real model quality. The runtime candidate's previous 771-test regression remains separate from this six-test orchestration check. No production change or new browser claim.
 
-Next local design decision: represent requested-value completeness separately from factual support, with a strict contract and independent reviewer checks. Any implementation remains unverified until a differently authorized evaluation; do not repeat prompt/paid cycles or declare this Goal complete.
+Follow-up implemented locally in v3: requested-value completeness separate from factual support, with strict independent reviewer checks. Actual model quality remains unverified until a differently authorized evaluation; do not repeat prompt/paid cycles or declare this Goal complete.
 
 ## Historical outcome · third authorized run
 
