@@ -53,3 +53,33 @@ class RequestBody(unittest.TestCase):
             self.assertIn(b'408', reply.split(b'\r\n')[0])
         finally:
             slow.close()
+
+    def test_dripping_bytes_cannot_extend_total_body_deadline(self):
+        self.server.body_timeout = .2
+        slow = socket.create_connection(self.server.server_address, timeout=1)
+        stop = threading.Event()
+        def drip():
+            while not stop.wait(.04):
+                try: slow.sendall(b' ')
+                except OSError: return
+        try:
+            slow.sendall((f'POST /api/demo/login HTTP/1.1\r\nHost: 127.0.0.1:{self.server.server_port}\r\n'
+                          'Content-Type: application/json\r\nContent-Length: 120\r\n\r\n{').encode())
+            sender = threading.Thread(target=drip, daemon=True); sender.start()
+            started = time.monotonic()
+            reply = slow.recv(4096)
+            self.assertIn(b'408', reply.split(b'\r\n')[0])
+            self.assertLess(time.monotonic() - started, .8)
+        finally:
+            stop.set(); slow.close(); sender.join(1)
+
+    def test_deep_json_returns_safe_client_error(self):
+        client = http.client.HTTPConnection(*self.server.server_address, timeout=1)
+        try:
+            client.request('POST', '/api/demo/login', '['*2000+'0'+']'*2000,
+                           {'Content-Type':'application/json'})
+            response = client.getresponse()
+            self.assertEqual(response.status, 400)
+            self.assertEqual(json.loads(response.read()), {'error':'Invalid request'})
+        finally:
+            client.close()
