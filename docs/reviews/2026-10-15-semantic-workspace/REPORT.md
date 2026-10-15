@@ -4,6 +4,18 @@
 
 候选运行代码 `a2be0fd7057bac91f2be7e4c12a7b76162c092aa`，分支 `feat/semantic-workspace-20261015`，基准 `0d5be3096cfcbf09b267fe6b54853b1fac2e67af`。本报告为该候选的后续证据。没有 push、merge、生产重启或切换。生产仍是独立旧版本；部署与回退见 DEPLOYMENT_AND_DEMO.md。
 
+## Latest outcome · third authorized run
+
+Frozen backend250c3c8 completed all11 cases once:9 accepted and manually checked,2 rejected (default partial question duplicate citation ID; conflict question answer-part citation contract).20 calls/USD0.026639 conservative; no new unknown, human allowance unchanged, old2 unknown retained. Across the three separately approved runs:36 calls/USD0.048566 conservative. No production switch. **The local candidate is not fully accepted; Goal remains incomplete.**
+
+See syntax-gate-results.json for actual claims/statuses/phase timings.17 supporting quote/version checks match directly frozen current originals. Three release forms, two partial paraphrases, three insufficient-compensation forms and false-premise correction are supported by this run. Default partial and conflict remain failures. The latter rejection category proves a status/claim-index contract failure, not its exact rejected text; raw drafts were not persisted.
+
+Real Chrome authenticated history opening rendered the safe rejected-output state and a successful partial answer; native PAY-103 preview showed current original and access/version timestamp. Escape restored citation-button focus. Screenshots live-rejected-history.png and live-native-citation.png. No additional query was submitted by browser. Mobile observation remains the earlier labelled fixture/mock test. Native same/cross history/preview and ordinary audit denial passed again.
+
+Browser found bounded-grant null/null display and custom native_api mode label. Local frontend now uses available model-call counts when submission counters are absent, and recognizes native_api as native source mode. frontend_runtime (including exact null-counter regression), frontend_closeout, frontend_source_freshness passed. These display-only changes are after the250c3c8 live snapshot; model/prompt/backend unchanged.
+
+Next substantive local work: reduce redundant generated status and citation-list fields while preserving canonical strict JSON/duplicate-field/quote/review checks; do not deduplicate or repair rejected outputs. Further live validation is not authorized by leftover grant balance. The syntax-first grant is closed.
+
 ## 实现与本地验证
 
 顶部 Workspace / Recent answers、用户菜单、输入优先、三张业务卡、可展开四源摘要、桌面引用抽屉/手机全屏、默认折叠原文、真实阶段等待、历史重新鉴权和失败状态已实现。建议题仅填入，不提交。复用 sectioned-synthesis，仅加强直接回答及跨源整合提示，未放宽 JSON、精确引用、独立复审或权限检查。

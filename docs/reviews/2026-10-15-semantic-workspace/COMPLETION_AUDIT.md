@@ -30,3 +30,5 @@ Scope: full goal-objective.md (original attachment), local reviewable/runnable/r
 Completion remains unproven until the pending quality/safety/timing items have actual evidence. A green test count, an accepted model review, or a prepared plan alone cannot close these rows.
 
 Second-run update: native isolation and actual phase timings now have direct evidence in recheck-results.json. Quality remains failed: both paraphrases invalid JSON. Eight second-run cases not dispatched. Live browser rendering not observed (service correctly closed on failure). Further single-part prompt hypothesis is unverified; no completion claim.
+
+Third-run update: all11 attempted,9 accepted; current original support quotes verified17 times. False premise corrected, both partial paraphrases classified correctly, all three compensation forms insufficient. Default partial and conflict failed and still prevent full quality acceptance. Real native browser history/partial/failure/citation/Escape now observed. Three paid grants closed. No completion declaration.

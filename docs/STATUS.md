@@ -575,3 +575,7 @@ Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conserva
 ### Semantic revised run stopped correctly
 
 4c83129: 3 questions/4 calls/USD0.005753, first accepted then two EOF JSON failures. Automatic stop worked, no new unknown/human usage. Current native history/preview isolation and ordinary audit denial verified; real disjoint timing spans captured. New single-part syntax prompt hypothesis locally tested, not live verified. See semantic-workspace REPORT.md; full Goal remains in_progress, no production change.
+
+### Semantic syntax-first result ·2026-10-15
+
+250c3c8: all11 attempted once,9 accepted,2 rejected (duplicate citation ID / answer-part citation contract).20 calls/USD0.026639 conservative, no new unknown or human allowance use.17 exact quote/version checks against native originals; real browser history/failure/partial/native citation/Escape observed. Display-only null counter/native mode labels fixed locally, three related frontend suites passed. Candidate still not fully accepted; next local protocol simplification must preserve strict canonical review and needs its own future live validation. See semantic-workspace REPORT.md.

@@ -19,8 +19,12 @@ function armResume(){resumeOnRuntime=true;resumeInputValue=$('question').value;}
 function updateAsk(){ $('ask').disabled=Boolean(pendingQuery)||admissionPaused||modelPaused||sourcesPaused||session?.demo_role==='auditor'; }
 function renderAdmission(admission){
   if(admission!==undefined){admissionInfo=admission;admissionPaused=Boolean(admission&&!admission.allowed);}const notice=$('trialStatus');notice.hidden=!admission&&!admissionPaused;
-  if(admission?.human_unlimited){notice.textContent=(admissionPaused?'Human queries paused. ':'Human queries have no count limit. ')+admission.attempts_used+' submissions recorded. '+(typeof admission.settlement_remaining_usd==='number'?'Trial budget: $'+admission.settlement_remaining_usd.toFixed(4)+' remaining of $'+admission.settlement_limit_usd.toFixed(2)+' (before pending reservations). ':'')+(admissionPaused?'No new model call will be made. Saved answers remain available.':'Cost and unconfirmed-usage protections remain active.');}
-  else if(admission)notice.textContent=(admissionPaused?'Trial queries paused. ':'Trial query attempts: ')+admission.attempts_used+'/'+admission.attempts_limit+' used. '+(admissionPaused?'No new model call will be made. Saved answers remain available.':admission.attempts_remaining+' remaining.');
+  if(admission?.human_unlimited){notice.textContent=(admissionPaused?'Human queries paused. ':'Human queries have no count limit. ')+(Number.isFinite(admission.attempts_used)?admission.attempts_used+' submissions recorded. ':Number.isFinite(admission.model_calls_used)?admission.model_calls_used+' model calls recorded. ':'')+(typeof admission.settlement_remaining_usd==='number'?'Trial budget: $'+admission.settlement_remaining_usd.toFixed(4)+' remaining of $'+admission.settlement_limit_usd.toFixed(2)+' (before pending reservations). ':'')+(admissionPaused?'No new model call will be made. Saved answers remain available.':'Cost and unconfirmed-usage protections remain active.');}
+  else if(admission){
+    const count=Number.isFinite(admission.attempts_used)&&Number.isFinite(admission.attempts_limit)?admission.attempts_used+'/'+admission.attempts_limit+' query attempts used. ':Number.isFinite(admission.model_calls_used)?admission.model_calls_used+' model calls recorded. ':'';
+    const remaining=Number.isFinite(admission.attempts_remaining)?admission.attempts_remaining+' query attempts remaining. ':'';
+    notice.textContent=(admissionPaused?'Trial queries paused. ':'Trial allowance: ')+count+(admissionPaused?'No new model call will be made. Saved answers remain available.':remaining+'Cost and unconfirmed-usage protections remain active.');
+  }
   updateAsk();
 }
 function renderQueryError(err){
@@ -106,7 +110,7 @@ async function refreshRuntime(){
   if(!session)return;const owner=session,queryAtPoll=pendingQuery,sequence=++runtimeSequence;
   try{const r=await api('/api/runtime');if(session!==owner||sequence<runtimeApplied)return;runtimeApplied=sequence;
     $('runtime').hidden=false;renderAdmission(r.query_admission);
-    const sourceMode=r.mode.includes('fixture')?'Synthetic fixture sources':r.mode.includes('mock_http')?'Mock source APIs':r.mode.includes('live_api')?'Native source APIs':'Source mode unconfirmed';
+    const sourceMode=r.mode.includes('fixture')?'Synthetic fixture sources':r.mode.includes('mock_http')?'Mock source APIs':(r.mode.includes('live_api')||r.mode.includes('native_api'))?'Native source APIs':'Source mode unconfirmed';
     const modelName=r.mode.includes('mock_model')?'Mock model outputs':r.model.startsWith('deepseek-flash')?'DeepSeek Flash':r.model==='fake-extractive-v1'?'Fake extractive model':r.model;
     const answerMode=r.model.includes('reviewed-excerpts')?'Reviewed verbatim sources':r.model.includes('grounded-synthesis')?'Reviewed synthesis':r.model==='fake-extractive-v1'?'Synthetic excerpts':'Source excerpts';
     $('runtimeModel').textContent=modelName+' · '+sourceMode+' · '+answerMode;

@@ -590,3 +590,7 @@ User explicitly approved RECHECK_PLAN.md: revised candidate 4c83129, same synthe
 ## ADR-SEMANTIC-WORKSPACE-03 · observed single-part EOF failures
 
 4c83129 recheck: full multi-part default accepted; both one-part paraphrases invalid at EOF despite finish_reason=stop and313/316 output tokens under8192. Core request has json_object, valid example and no stop sequence; no local content stripping found. No JSON repair or validator relaxation. Add an explicit generated single-part JSON example and full-root closure instruction as a bounded prompt hypothesis. Local18 sectioned tests pass, live effectiveness unverified. Close second grant at4 calls/USD0.005753 with no new unknown. Any further model dispatch requires a separately approved concrete plan, not reuse of remaining allowance.
+
+## AUTH-SEMANTIC-SYNTAX-GATE-20261015-24-USD1
+
+User explicitly approved SYNTAX_GATE_PLAN.md for frozen250c3c8: new independent syntax-first grant, existing four-source synthetic corpus read-only, max24 calls/USD1 within original20 ledger. First English/Chinese single-part paraphrases; either failure stops immediately. Only if both accepted continue remaining9 frozen questions once. No paid retries, no human allowance, no native write, no deployment. Preserve original unknown/new unknown stop. If format gate fails, no further similar automatic paid rounds. Prior grants stay closed.

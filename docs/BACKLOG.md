@@ -381,3 +381,7 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 ### 2026-10-15 semantic workspace bounded live result
 
 Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conservative; 2 generation failures, 1 partial-category mismatch. No new unknown, human allowance unchanged, no production switch. Grant run closed after delayed manual stop (private runner wrong status field corrected). Remaining quality/safety/timing checks not complete; Goal in_progress. See docs/reviews/2026-10-15-semantic-workspace/REPORT.md.
+
+### Semantic syntax-first result ·2026-10-15
+
+250c3c8: all11 attempted once,9 accepted,2 rejected (duplicate citation ID / answer-part citation contract).20 calls/USD0.026639 conservative, no new unknown or human allowance use.17 exact quote/version checks against native originals; real browser history/failure/partial/native citation/Escape observed. Display-only null counter/native mode labels fixed locally, three related frontend suites passed. Candidate still not fully accepted; next local protocol simplification must preserve strict canonical review and needs its own future live validation. See semantic-workspace REPORT.md.
