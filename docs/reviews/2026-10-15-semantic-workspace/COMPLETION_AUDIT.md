@@ -32,3 +32,9 @@ Completion remains unproven until the pending quality/safety/timing items have a
 Second-run update: native isolation and actual phase timings now have direct evidence in recheck-results.json. Quality remains failed: both paraphrases invalid JSON. Eight second-run cases not dispatched. Live browser rendering not observed (service correctly closed on failure). Further single-part prompt hypothesis is unverified; no completion claim.
 
 Third-run update: all11 attempted,9 accepted; current original support quotes verified17 times. False premise corrected, both partial paraphrases classified correctly, all three compensation forms insufficient. Default partial and conflict failed and still prevent full quality acceptance. Real native browser history/partial/failure/citation/Escape now observed. Three paid grants closed. No completion declaration.
+
+## Fourth-run correction
+
+2026-10-15 DEV-SEMANTIC-WORKSPACE 最新第四轮：b21f953 真实默认部分题业务分类失败（无日期却 supported），冲突及在途发布题原文对照通过；3份审计答案/2份客户端结果，6调用/USD0.008552，13项引用/版本核对通过。业务停止门未等待独立核验，已记录延迟派发偏差；本地加入逐题独立评估门，6项策略测试通过。新unknown0、人工不变、grant已关闭，四轮累计42调用/USD0.057118。不再自动付费循环，不切线上，Goal未完成。详见 reviews/2026-10-15-semantic-workspace/REPORT.md。
+
+Requested-value completeness remains failed, despite model review acceptance. Full candidate acceptance and Goal completion remain open.

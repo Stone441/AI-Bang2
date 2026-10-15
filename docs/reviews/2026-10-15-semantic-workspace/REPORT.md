@@ -2,9 +2,21 @@
 
 状态：**in_progress / live quality acceptance failed**。可运行本地候选，尚未达到 Goal 全部交付标准。
 
-候选运行代码 `a2be0fd7057bac91f2be7e4c12a7b76162c092aa`，分支 `feat/semantic-workspace-20261015`，基准 `0d5be3096cfcbf09b267fe6b54853b1fac2e67af`。本报告为该候选的后续证据。没有 push、merge、生产重启或切换。生产仍是独立旧版本；部署与回退见 DEPLOYMENT_AND_DEMO.md。
+最新实测候选运行代码 `b21f953ef060d0a8d37f49aa2244a3085eb6c95c`，分支 `feat/semantic-workspace-20261015`，基准 `0d5be3096cfcbf09b267fe6b54853b1fac2e67af`。本报告为该候选的后续证据。没有 push、merge、生产重启或切换。生产仍是独立旧版本；部署与回退见 DEPLOYMENT_AND_DEMO.md。
 
-## Latest outcome · third authorized run
+## Latest outcome · fourth authorized run (compact wire)
+
+Frozen candidate `b21f953ef060d0a8d37f49aa2244a3085eb6c95c`: **business acceptance failed**. The default partial question returned correct facts but classified the requested, unavailable general-release date as `supported`. Independent model review accepted it; that is not a business pass. The compact representation derives status from nonempty claims, which cannot distinguish a grounded explanation of missing information from actually supplying the requested value. This remains an unresolved product contract issue; no question-string mapping or relaxed oracle was introduced.
+
+The conflict answer preserved both same-scope records and their unresolved disagreement. A third release-readiness answer completed in flight and correctly distinguished PAY-102 Done from release approval. All 13 supporting quotes and versions across these three audit-committed answers match the directly frozen native originals. See [compact-wire-results.json](compact-wire-results.json). Only two client response files completed; the third answer was recovered from the audit after shutdown.
+
+**Stop deviation:** the runner advanced on model acceptance before independent business inspection. Thus conflict completed and the third question was already in flight when the first answer's category failure was identified and the process interrupted. This did not satisfy the intended immediate business gate. No retries occurred. The grant is closed, six calls / USD0.008552 conservative, zero new unknown, human allowance unchanged, old two unknown preserved. Four separately approved runs total 42 calls / USD0.057118 conservative; these are ledger estimates, not vendor invoices. No further paid loop will start under this authorization.
+
+Local orchestration now requires an explicit independent assessment with an evidence reference before every next dispatch. A failed assessment terminates the run, and missing/mismatched assessment fails closed. Six focused stopping-policy tests passed. Historical frozen runners are preserved and closed; they must not be reused. This prevents unreviewed advance in future callers of the updated policy, but does not fix answer classification or prove real model quality. The runtime candidate's previous 771-test regression remains separate from this six-test orchestration check. No production change or new browser claim.
+
+Next local design decision: represent requested-value completeness separately from factual support, with a strict contract and independent reviewer checks. Any implementation remains unverified until a differently authorized evaluation; do not repeat prompt/paid cycles or declare this Goal complete.
+
+## Historical outcome · third authorized run
 
 Frozen backend250c3c8 completed all11 cases once:9 accepted and manually checked,2 rejected (default partial question duplicate citation ID; conflict question answer-part citation contract).20 calls/USD0.026639 conservative; no new unknown, human allowance unchanged, old2 unknown retained. Across the three separately approved runs:36 calls/USD0.048566 conservative. No production switch. **The local candidate is not fully accepted; Goal remains incomplete.**
 
