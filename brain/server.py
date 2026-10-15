@@ -65,6 +65,36 @@ def create_server(app, port=0, *, public_origin=None):
             raise ValueError("An exact HTTPS public origin is required")
     secure_cookie="; Secure" if public_origin else ""
     class Handler(BaseHTTPRequestHandler):
+        timeout = 10  # Bound idle headers and blocked response writes as well.
+
+        def read_body(self):
+            self.gate()
+            length = int(self.headers.get('Content-Length', '0'))
+            if not 0 < length <= 12000:
+                raise ValueError('Invalid request size')
+            if self.headers.get('Transfer-Encoding'):
+                raise ValueError('Unsupported transfer encoding')
+            if self.headers.get('Content-Type', '').split(';')[0] != 'application/json':
+                raise ValueError('JSON required')
+            deadline = time.monotonic() + self.server.body_timeout
+            raw = bytearray()
+            try:
+                while len(raw) < length:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        raise TimeoutError('Body deadline')
+                    self.connection.settimeout(remaining)
+                    chunk = self.rfile.read1(length - len(raw))
+                    if not chunk:
+                        raise ValueError('Incomplete body')
+                    raw.extend(chunk)
+            finally:
+                self.connection.settimeout(self.timeout)
+            body = json.loads(raw)
+            if not isinstance(body, dict):
+                raise ValueError('Object required')
+            return body
+
         def log_message(self, format, *args):
             pass  # Avoid questions, cookies and raw payloads in generic logs.
 
@@ -153,13 +183,7 @@ def create_server(app, port=0, *, public_origin=None):
                 path=unquote(urlparse(self.path).path)
                 if path not in ("/api/query", "/api/runtime", "/api/history/recent", "/api/session", "/api/logout", "/api/health", "/", "/app.js", "/style.css"):app.refresh()
                 path=unquote(urlparse(self.path).path)
-                data={}
-                if method=='POST':
-                    length=int(self.headers.get('Content-Length','0'))
-                    if not 0<length<=12000: raise ValueError('Invalid request size')
-                    if self.headers.get('Content-Type','').split(';')[0]!='application/json': raise ValueError('JSON required')
-                    data=json.loads(self.rfile.read(length))
-                    if not isinstance(data,dict): raise ValueError('Object required')
+                data=self.body_data if method=='POST' else {}
                 if method=='GET' and path in ('/','/app.js','/style.css'):
                     filename={'/':'index.html','/app.js':'app.js','/style.css':'style.css'}[path]
                     mime={'/':'text/html; charset=utf-8','/app.js':'text/javascript; charset=utf-8','/style.css':'text/css; charset=utf-8'}[path]
@@ -249,6 +273,15 @@ def create_server(app, port=0, *, public_origin=None):
                 with acquire(app.store.lock):self.dispatch('GET')
         def do_POST(self):
             app=self.server.application
+            # Client I/O must finish before taking a shared business/store lock.
+            try:
+                self.body_data = self.read_body()
+            except TimeoutError:
+                return self.send(408, {'error':'Request body timed out'})
+            except PermissionError:
+                return self.send(403, {'error':'Unavailable'})
+            except (ValueError, TypeError):
+                return self.send(400, {'error':'Invalid request'})
             if urlparse(self.path).path=='/api/logout':return self.dispatch('POST')
             # Admit one query per session before waiting on the query lock.
             if urlparse(self.path).path=='/api/query':
@@ -267,6 +300,7 @@ def create_server(app, port=0, *, public_origin=None):
             with acquire(getattr(app,'request_lock',app.store.lock)):
                 with acquire(app.store.lock):self.dispatch('POST')
     server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
+    server.body_timeout=5
     server.application=app
     if app is not None:
         app.session_runs=SessionRuns();app.admission_lock=threading.Lock();app.active_queries=set()
