@@ -364,9 +364,10 @@ class GroundedSynthesis(unittest.TestCase):
             self.assertEqual(answer['answer_status'],'evidence_only')
             self.assertNotIn('review_status',answer)
             self.assertNotIn('UNSUPPORTED DRAFT',str(answer))
-            self.assertTrue(answer['claims'])
-            originals={e['evidence_id']:e['text'] for e in answer['evidence']}
-            for claim in answer['claims']:self.assertEqual(claim['text'],originals[claim['evidence_ids'][0]])
+            self.assertEqual(answer['claims'],[])
+            self.assertTrue(answer['evidence'])
+            for evidence in answer['evidence']:
+                self.assertEqual(evidence['text'],world.resources[evidence['resource_id']]['text'])
             self.assertEqual(len(self.transport.calls),1)
             self.assertTrue(any(e['event_type']=='request_failed' for e in audit.export()))
             self.assertEqual(engine.safe_history(Actor('eng_b'),answer['request_id'])[0]['answer_status'],'evidence_only')

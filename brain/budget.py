@@ -51,7 +51,7 @@ class BudgetLedger:
     def _used(self):
         return self.db.execute("SELECT COALESCE(SUM(CASE WHEN state='settled' THEN actual WHEN state='cancelled' THEN 0 ELSE reserved END),0) FROM reservations").fetchone()[0]
 
-    def reserve(self, upper_bound, *, query_id=None, model=None, admission_check=None):
+    def reserve(self, upper_bound, *, query_id=None, model=None, admission_check=None, grant_id=None):
         if type(upper_bound) is not int or upper_bound <= 0:
             raise ValueError('Positive integer upper bound required')
         if ((query_id is None) != (model is None) or
@@ -62,10 +62,15 @@ class BudgetLedger:
         with self.transaction():
             if admission_check is not None:
                 admission_check(self.db)
+            if grant_id is not None:
+                from brain.budget_attribution import check
+                check(self.db, grant_id, upper_bound)
             if self.db.execute('SELECT blocked FROM budget WHERE id=1').fetchone()[0] or self._used() + upper_bound > self.limit:
                 raise BudgetExceeded('Pilot budget unavailable')
             request_id = uuid.uuid4().hex
             self.db.execute('INSERT INTO reservations VALUES(?,?,?,NULL)', (request_id, upper_bound, 'prepared'))
+            if grant_id is not None:
+                self.db.execute('INSERT INTO reservation_grants VALUES(?,?)', (request_id, grant_id))
             if query_id is not None:
                 self.db.execute('INSERT INTO model_calls VALUES(?,?,?,NULL,NULL,NULL,?)',
                                 (request_id, query_id, model, 'pending'))

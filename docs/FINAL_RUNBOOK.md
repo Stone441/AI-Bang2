@@ -1,4 +1,16 @@
-# Final delivery runbook · 13 October 2026
+# Final delivery runbook
+
+2026-10-15 主线集成说明：本轮收尾修复将作为下一轮开发基线合并main，后续继续完善前端、项目亮点、候选题问答与开发细节，不作正式封版。当前业务代码与10cc970一致；冲突题和四源题分别已有真实通过记录，JSON故障根因仍开放，线上仍独立运行f2f0633。[主线合并验证](reviews/2026-10-15-main-closeout-merge/REPORT.md)及[最新真实记录](reviews/2026-10-15-sectioned-live/json-investigation/REPORT.md)优先于下方历史说明。
+
+2026-10-15 当前运行已切换到本地修复代码 `f2f0633`，同一公网入口；最新[真实验收与剩余缺陷](reviews/2026-10-15-closeout-live/REPORT.md)优先于下方历史状态。自动复验10次/USD0.011808，人工额度未占用、旧unknown保留。两项可选分题生成仍失败，不能宣称全部通过；未push/main合并或比赛提交。
+
+
+
+Current closeout instructions (15 October): [candidate report and exact migration/switch boundary](reviews/2026-10-15-closeout/REPORT.md). Use an immutable code checkout with `--state-root <existing-project>` and an explicitly migrated `--attributed-grant human-team-closeout-20261015`. This reuses the approved original index, configuration, account registry and USD20 ledger; it does not copy or reset runtime state. Never automatically migrate on startup.
+
+The selected human mode remains source-review / none8192 / structured / single / pooled4 / batch history / serial queries. Optional sectioned-synthesis is not the deployed default. Preserve the public-origin setting for the already approved hostname.
+
+The following 13 October snapshots and commands are historical; current-state claims below do not override the closeout report.
 
 Latest role update: all three accounts (engineer/product/partner) are active against the same approved real four-source connection, with additional server-side application ACLs. Their source identity remains eng_b. Current startup fingerprint: `b6f2ffbadef0bfbe28e02207c48980732b0b2364a74f896dcc23f92bbb61ac4c`; current log `.runtime/query-goal-20261013/application-role-final-service.log`. The launch command below is unchanged. Private role registry and policy files stay outside Git. Preserve the human USD1 state on every restart. The pre-role backups are `pre-application-roles-backup` and `pre-application-policy-guard-backup` under the private goal runtime. Old text below records earlier snapshots.
 

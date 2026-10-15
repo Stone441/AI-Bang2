@@ -1,5 +1,15 @@
 # ContextLedger · 最终交接说明
 
+2026-10-15 主线集成说明：本轮收尾修复将作为下一轮开发基线合并main，后续继续完善前端、项目亮点、候选题问答与开发细节，不作正式封版。当前业务代码与10cc970一致；冲突题和四源题分别已有真实通过记录，JSON故障根因仍开放，线上仍独立运行f2f0633。[主线合并验证](reviews/2026-10-15-main-closeout-merge/REPORT.md)及[最新真实记录](reviews/2026-10-15-sectioned-live/json-investigation/REPORT.md)优先于下方历史说明。
+
+2026-10-15 当前运行已切换到本地修复代码 `f2f0633`，同一公网入口；最新[真实验收与剩余缺陷](reviews/2026-10-15-closeout-live/REPORT.md)优先于下方历史状态。自动复验10次/USD0.011808，人工额度未占用、旧unknown保留。两项可选分题生成仍失败，不能宣称全部通过；未push/main合并或比赛提交。
+
+
+
+2026-10-15 收尾候选：基准 GitHub main `5727300`，修复位于本地 `fix/systematic-closeout-20261015`。当前入口与状态以[收尾报告](reviews/2026-10-15-closeout/REPORT.md)为准。新候选未替换 49161 的旧运行后端，不能把旧公网问答成绩当作本次验收。原生三角色演示边界保持；原账本、账号和两笔旧 unknown 保留。
+
+下列 10 月 13–14 日数据、包和部署记录均为历史，当前候选的验证模式及待办另见收尾报告。
+
 14 October pd local update: the remaining authorized local improvements are complete: isolated fixture lab, eight security probes, scoped audit timeline, bilingual retrieval and optional per-part model mode. See [local guide](SCENARIO_LAB.md) and [current submission candidate](SUBMISSION_CANDIDATE.md). This branch has not replaced the earlier hosted build. The new model mode/native behavior remain unverified; all 15 declared private tool-proof originals are missing locally. Dated deployment/account statements below describe earlier builds, not a fresh availability check.
 
 演示账号代表具体虚构人物：Blair（工程）、Morgan（产品与运营）、Jordan（外部协作方）。权限按账号配置，岗位标签不表示所有同岗位人员拥有相同权限。此次只改登录名和显示名，原密码、内部身份、历史与权限保持不变。
@@ -54,4 +64,4 @@ https://contextledger.hellokyleshi.com
 
 1. 集中观看三个账号的问答、引用、History、退出重登和刷新恢复，再观看源更新、撤权与审计证据，记录真人结果并作出 G1 决定。
 2. 审阅[提交文案](SUBMISSION_CANDIDATE.md)、[演示讲解稿](DEMO_CANDIDATE.md)、[封面](../assets/submission/contextledger-cover.png)、[架构图](../assets/submission/contextledger-architecture.svg)与真实 CodeBuddy 贡献材料，完成 G2。提交描述须区分应用角色和原生连接身份。
-3. 确定托管服务器、域名、费用和开放期限，再批准公网发布、必要凭据迁移、源码推送及最终提交。已准备[部署说明](REVIEWER_DEPLOYMENT.md)；当前没有对外可用 URL，也未上传私密证据。
+3. 确定托管服务器、域名、费用和开放期限，再批准公网发布、必要凭据迁移、源码推送及最终提交。已准备[部署说明](REVIEWER_DEPLOYMENT.md)；该条为上线前历史事项；10 月 13 日部署记录在本页上方，当前可用性与版本须以收尾报告核验，不据此宣称新候选已上线。

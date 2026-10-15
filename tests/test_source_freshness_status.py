@@ -35,8 +35,22 @@ class SourceFreshnessStatus(unittest.TestCase):
     def test_dead_or_stopped_worker_cannot_report_current(self):
         self.worker.thread.is_alive.return_value=False
         self.assertEqual(self.source()['snapshot_status'],'unconfirmed')
+
         self.worker.thread.is_alive.return_value=True;self.worker.stop_event.set()
         self.assertEqual(self.source()['snapshot_status'],'unconfirmed')
+
+    def test_query_readiness_waits_for_configured_sources_without_calling_a_model(self):
+        self.worker.thread.is_alive.return_value=False
+        result=runtime_status(self.app,self.actor,None)
+        self.assertFalse(result['query_readiness']['ready'])
+        self.assertEqual(result['query_readiness']['code'],'source_unconfirmed')
+        self.worker.thread.is_alive.return_value=True
+        result=runtime_status(self.app,self.actor,None)
+        self.assertTrue(result['query_readiness']['ready'])
+
+    def test_native_reader_without_background_discovery_can_check_on_query(self):
+        self.app.world.discovery=None
+        self.assertTrue(runtime_status(self.app,self.actor,None)['query_readiness']['ready'])
 
     def test_expired_failed_and_backlogged_snapshots_are_not_current(self):
         self.worker.published_at['jira']=-21

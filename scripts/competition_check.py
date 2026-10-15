@@ -42,6 +42,12 @@ def run(output):
         ('security-challenges', [sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-p', 'test_security_challenges.py']),
         ('audit-timeline', ['node', 'tests/frontend_audit_timeline.js']),
         ('signed-audit', [sys.executable, '-m', 'scripts.audit_mixed_acceptance', '--output', str(output/'signed-audit')]),
+        ('http-body-deadline', [sys.executable,'-m','unittest','discover','-s','tests','-p','test_request_body.py']),
+        ('budget-attribution', [sys.executable,'-m','unittest','discover','-s','tests','-p','test_budget_attribution.py']),
+        ('grant-migration', [sys.executable,'-m','unittest','discover','-s','tests','-p','test_grant_migration.py']),
+        ('application-audit-http', [sys.executable,'-m','unittest','discover','-s','tests','-p','test_application_audit_http.py']),
+        ('release-static-snapshot', [sys.executable,'-m','unittest','discover','-s','tests','-p','test_static_snapshot.py']),
+        ('closeout-readiness-ui', ['node','tests/frontend_closeout.js']),
     ]
     report['source_hashes'] = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
         for folder in ('brain', 'web', 'scripts', 'tests', 'tools', 'fixtures')

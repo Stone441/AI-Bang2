@@ -1,0 +1,66 @@
+# Task 2 · durable grant attribution
+
+Base: 94852c5. Scope: budget ledger, opt-in attributed allowance, conservative legacy label, new budget regressions. No live ledger, runtime, credentials, model/native calls, launch, restart, push or merge.
+
+## Result and integration
+
+`BudgetLedger.reserve(..., grant_id=...)` checks the grant cost, counted dispatched/settled calls, prepared call slots and original global USD20 ceiling in the same `BEGIN IMMEDIATE` transaction as inserting reservation + ownership. Immutable SQLite tables and update/delete rejection triggers retain policy, migration and reservation ownership. Settled rejected calls count; unresolved dispatched calls reserve their entire global upper bound. Existing APIs and legacy allowance JSON remain unchanged. Legacy allowances are explicitly conservative global-delta accounting; the new mode must be selected deliberately.
+
+Prepare an explicit migration using the actual existing human allowance JSON, without changing that file:
+
+```python
+import hashlib, json
+from scripts.attributed_allowance import (
+    migration_plan, apply_migration, AttributedAdmission, AttributedGoalLedger,
+)
+prior = json.loads(existing_state_path.read_text())
+plan = migration_plan(
+    original_ledger, 'human-team-trial-20261013', prior,
+    external_reservations={
+        # Only exact settled reservation IDs supported by reviewed evidence:
+        # exact_id: {'owner': 'team-live17', 'evidence_sha256': evidence_digest},
+    },
+)
+# Save and review this complete plan before authorizing its runtime application.
+# Digest must be the exact reviewed plan bytes, not a newly generated substitute.
+apply_migration(original_ledger, plan, expected_plan_sha256=reviewed_digest)
+gate = AttributedAdmission(
+    engine.query, original_ledger, 'human-team-trial-20261013',
+    policy=prior['authorization'],
+    cost_limit=prior['settled_stop_threshold_micro_usd'],
+    max_calls=prior['max_model_calls'],
+)
+engine.model.ledger = AttributedGoalLedger(gate)
+engine.query = gate
+```
+
+Lazy review-model constructors receive the same `BudgetLedger` adapter contract, connection and original receipt/summary methods through `GoalLedger`. Existing timing wrappers remain on the underlying ledger. `gate.public_status()` reports grant-local current costs/counts and unknowns directly from the durable database. A goal and human trial can use separate migrated grant IDs. Any new prepared/dispatched reservation across the shared ledger beyond the reviewed legacy original_pending_ids stops admission globally; cost/call accounting remains grant-local.
+
+## Migration boundary and rulings
+
+The exact original prior state is embedded in canonical JSON alongside a complete reservation snapshot, explicit external reservation evidence hashes, frozen historical cost/call deltas, and historical unknown IDs. Applying a plan re-computes all fields and rejects any intervening reservation change, edited frozen totals, mismatched reviewed digest, existing conflicting grant, or policy expansion. Old reservations and source state are never rewritten. Existing blocked global budget stays blocked.
+
+Ruling: Historical global increments without exact external attribution remain conservatively charged to this grant. Explicit reviewed external IDs can be excluded only if settled, not among original pending IDs, and accompanied by a separate owner label and immutable evidence SHA256. Evidence contents and truth require operator review; the module validates identity, shape, snapshot and arithmetic, not the business authenticity of supplied evidence. The plan digest is the final checked input. Cost if wrong: unresolved external costs can conservatively consume the historical grant, or erroneous explicit evidence could misattribute old spend; no automatic inference from questions, timestamps or model data occurs.
+
+Ruling: A new historical unknown remains a permanent migration stop with the original global reservation intact; it cannot be accepted as a new baseline or implicitly refunded. A migration with this condition is reviewable but not usable for further calls. Exact reconciliation must happen before generating/applying a usable migration; applied immutable grants cannot be reset. The original baseline unknown IDs (including the two old unknowns when present in real state) stay reserved globally and are excluded from new-grant unknown stops. No actual historical IDs or costs were guessed in this task.
+
+Ruling: This opt-in gate conservatively serializes unresolved model reservations across the shared ledger: a new reservation pauses while any non-baseline reservation is prepared/dispatched. Grant costs and calls remain independent; the global unknown stop is preserved. Dispatch excludes only its own current prepared reservation from this stop. Cost if wrong: an attributed high-concurrency launcher requires a separate reviewed known-in-flight extension; this adapter currently supports the sequential human launcher. Existing concurrent mode remains explicitly legacy conservative and was not silently changed.
+
+## Validation
+
+- `task2-legacy-reproduction-red.log`: existing legacy API reproduces the attribution bug (one external call incorrectly consumes first grant's call count).
+- `task2-red.log`: new regression suite created first, initially fails because opt-in module does not exist.
+- `task2-targeted.log`: budget suite including 10 new meaningful cases: 17 passed.
+- `task2-allowance.log`: 18 existing allowance/concurrency tests passed.
+- `task2-delivery.log`: 13 existing delivery admission tests passed.
+- `task2-full.log`: 729 tests passed in 52.815s after combined task2/task3 working-tree validation. This is not native/model/browser/human acceptance.
+
+No historical cost is removed from the global USD20 ledger. No old unknown is settled/cancelled. No actual runtime migration has been performed.
+
+## Review follow-up: preserve global new-unknown stop
+
+Independent review correctly identified that isolating unknown stops by grant weakened the existing human-trial authorization. Added negative regression before fixing: an unknown under grant A must pause grant B, keeping B spent at zero and the global reservation intact; an unowned external prepared/dispatched reservation must also stop every grant. Admission/reservation checks now derive global pending IDs minus only the immutable migration prior's explicit original_pending_ids. They never absorb migration-time in-flight IDs into a new baseline. Dispatch excludes only the currently dispatching own reservation; grant-local money/calls and the unchanged original global USD20 check remain intact.
+
+`task2-global-unknown-red.log` retains the pre-fix failures. `task2-global-unknown-green.log` records the covering 12 attribution tests after the fix. No concurrent cross-grant in-flight support is claimed; root selects the serial launcher.
+
+Global-readiness follow-up: `public_status()` now checks original global accounted usage and blocked flag in its existing transaction, without a nested `summary()` transaction. A globally exhausted/frozen ledger reports `global_budget_unavailable` while grant-local spent remains unchanged. `task2-global-readiness-red.log` reproduces the prior misleading allowed status; `task2-global-readiness-green.log` records 13 covering tests passed. Migration embeds a canonical prior JSON object; raw legacy-file byte identity must be checked by the caller before applying a reviewed plan (root CLI owns that boundary).

@@ -1,0 +1,23 @@
+..F.....F..
+======================================================================
+FAIL: test_external_new_prepared_or_dispatched_unknown_blocks_all_grants (test_budget_attribution.AttributedBudget.test_external_new_prepared_or_dispatched_unknown_blocks_all_grants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-closeout-20261015/tests/test_budget_attribution.py", line 155, in test_external_new_prepared_or_dispatched_unknown_blocks_all_grants
+    self.assertFalse(gate.public_status()['allowed'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_new_unknown_stops_own_grant_old_unknown_retained (test_budget_attribution.AttributedBudget.test_new_unknown_stops_own_grant_old_unknown_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-closeout-20261015/tests/test_budget_attribution.py", line 57, in test_new_unknown_stops_own_grant_old_unknown_retained
+    with self.assertRaises(TrialAdmissionPaused): self.call(b, 1)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TrialAdmissionPaused not raised
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.066s
+
+FAILED (failures=2)

@@ -9,7 +9,7 @@ import time
 from brain.reviewer_access import ReviewAccounts
 
 
-def create(path, cards, tenant, mapping, *, days=7, application_roles=None, demo_roles=None, personas=None):
+def create(path, cards, tenant, mapping, *, days=7, application_roles=None, demo_roles=None, personas=None, audit_policy=None):
     path, cards = Path(path), Path(cards)
     if path.exists() or cards.exists() or path.is_symlink() or cards.is_symlink():
         raise ValueError('Use new output paths; existing accounts are never reset')
@@ -30,6 +30,28 @@ def create(path, cards, tenant, mapping, *, days=7, application_roles=None, demo
     body = {'schema': 1, 'purpose': 'shared-synthetic-review',
             'source_tenant': tenant, 'accounts': accounts}
     if application_roles is not None:body['application_roles']=application_roles
+    if audit_policy is not None:
+        import re
+        if not isinstance(audit_policy,dict) or not audit_policy:
+            raise ValueError('Explicit application audit policy required')
+        auditors = {}
+        for username, policy in audit_policy.items():
+            if (not isinstance(username,str) or not re.fullmatch(r'[a-z0-9_-]{1,48}',username)
+                    or username in accounts or username in {r.get('login_name', k) for k,r in accounts.items()}
+                    or not isinstance(policy,dict)
+                    or set(policy)!={'viewer_accounts','resource_scope'}
+                    or policy['resource_scope']!='payment-service'
+                    or not isinstance(policy['viewer_accounts'],list) or not policy['viewer_accounts']
+                    or any(not isinstance(v,str) or v not in accounts for v in policy['viewer_accounts'])):
+                raise ValueError('Exact viewer accounts and payment-service audit scope required')
+            password, salt = secrets.token_urlsafe(24), secrets.token_hex(16)
+            auditors[username] = {'active':True,'expires':time.time()+days*86400,
+                'revision':secrets.token_hex(8),'salt':salt,'password_hash':ReviewAccounts.derive(password,salt),
+                'resource_scope':'payment-service',
+                'viewer_ids':sorted({'reviewer:'+v+':'+accounts[v]['revision'] for v in policy['viewer_accounts']})}
+            lines.extend([f'Username: {username}',f'Password: {password}',
+                          'Demo role: scoped application auditor', ''])
+        body['application_auditors']=auditors
     for target, value in ((path, json.dumps(body, indent=2)+'\n'),
                           (cards, 'PRIVATE — demo credentials. Do not commit or upload.\n\n'+'\n'.join(lines))):
         target.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
@@ -46,6 +68,7 @@ def main():
     p.add_argument('--tenant', required=True)
     p.add_argument('--account', action='append', required=True, help='username:approved_source_actor')
     p.add_argument('--application-policy', type=Path, help='Trusted JSON: roles and account_roles; exact resource IDs only')
+    p.add_argument('--audit-policy', type=Path, help='Trusted JSON: auditor name -> {viewer_accounts: [new account keys], resource_scope: payment-service}; new registries only')
     args = p.parse_args()
     import re
     mapping = {}
@@ -57,7 +80,8 @@ def main():
     policy=json.loads(args.application_policy.read_text()) if args.application_policy else None
     create(args.output, args.cards, args.tenant, mapping,
            application_roles=policy['roles'] if policy else None,
-           demo_roles=policy['account_roles'] if policy else None)
+           demo_roles=policy['account_roles'] if policy else None,
+           audit_policy=json.loads(args.audit_policy.read_text()) if args.audit_policy else None)
     print('Private account registry and login cards created. No model/platform calls.')
 
 

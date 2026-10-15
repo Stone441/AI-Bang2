@@ -65,6 +65,36 @@ def create_server(app, port=0, *, public_origin=None):
             raise ValueError("An exact HTTPS public origin is required")
     secure_cookie="; Secure" if public_origin else ""
     class Handler(BaseHTTPRequestHandler):
+        timeout = 10  # Bound idle headers and blocked response writes as well.
+
+        def read_body(self):
+            self.gate()
+            length = int(self.headers.get('Content-Length', '0'))
+            if not 0 < length <= 12000:
+                raise ValueError('Invalid request size')
+            if self.headers.get('Transfer-Encoding'):
+                raise ValueError('Unsupported transfer encoding')
+            if self.headers.get('Content-Type', '').split(';')[0] != 'application/json':
+                raise ValueError('JSON required')
+            deadline = time.monotonic() + self.server.body_timeout
+            raw = bytearray()
+            try:
+                while len(raw) < length:
+                    remaining = deadline - time.monotonic()
+                    if remaining <= 0:
+                        raise TimeoutError('Body deadline')
+                    self.connection.settimeout(remaining)
+                    chunk = self.rfile.read1(length - len(raw))
+                    if not chunk:
+                        raise ValueError('Incomplete body')
+                    raw.extend(chunk)
+            finally:
+                self.connection.settimeout(self.timeout)
+            body = json.loads(raw)
+            if not isinstance(body, dict):
+                raise ValueError('Object required')
+            return body
+
         def log_message(self, format, *args):
             pass  # Avoid questions, cookies and raw payloads in generic logs.
 
@@ -85,6 +115,10 @@ def create_server(app, port=0, *, public_origin=None):
             expected=({urlparse(public_origin).netloc} if public_origin else {f'127.0.0.1:{self.server.server_port}',f'localhost:{self.server.server_port}'})
             if self.headers.get('Host') not in expected:
                 raise PermissionError('Unavailable')
+            # Anonymous immutable assets must be reachable from an external link.
+            # This exception never applies to API reads, credentials or POSTs.
+            if self.command=='GET' and urlparse(self.path).path in ('/','/app.js','/style.css'):
+                return
             origin=self.headers.get('Origin')
             if origin and origin not in ({public_origin} if public_origin else {'http://'+host for host in expected}):
                 raise PermissionError('Unavailable')
@@ -97,6 +131,11 @@ def create_server(app, port=0, *, public_origin=None):
             name=self.server.session_cookie_name
             token=cookie[name].value if name in cookie else ''
             return app.session(token),token
+
+        def session_details(self, app, actor):
+            if hasattr(app,'session_details'):
+                return app.session_details(actor)
+            return {'demo_role':None,'display_name':None,'can_audit':actor.user_id=='auditor'}
 
         @contextmanager
         def query_scope(self, app):
@@ -114,6 +153,7 @@ def create_server(app, port=0, *, public_origin=None):
             try:
                 current,current_token=self.auth()
                 if current_token!=token or current['actor']!=actor:raise PermissionError('Unavailable')
+                if hasattr(app,'register_request'):app.register_request(actor,rid,question=data['question'])
                 app.refresh()
                 result=app.engine.query(actor,data.get('question'),request_id=rid,
                     progress=lambda phase:app.session_runs.phase(token,rid,phase))
@@ -141,6 +181,7 @@ def create_server(app, port=0, *, public_origin=None):
                           'internal_service_unavailable':'The application could not complete this request. Contact the operator before trying again.',
                           'model_price_review_required':'The model needs a price review. Contact the operator; retrying will not resolve this.'}
                 app.session_runs.finish(token,rid,code=code)
+                app.audit.append('request_failed',actor.user_id,rid,{'reason':code,'stage':'http_request'})
                 return self.send(503,{'error':messages[code],'code':code,'request_id':rid,'run':app.session_runs.snapshot(token)})
             app.session_runs.finish(token,rid,result=result)
             app.audit.append('response_dispatch_attempted',actor.user_id,result['request_id'],{'transport':'http','meaning':'server attempted dispatch, not user read'})
@@ -153,17 +194,11 @@ def create_server(app, port=0, *, public_origin=None):
                 path=unquote(urlparse(self.path).path)
                 if path not in ("/api/query", "/api/runtime", "/api/history/recent", "/api/session", "/api/logout", "/api/health", "/", "/app.js", "/style.css"):app.refresh()
                 path=unquote(urlparse(self.path).path)
-                data={}
-                if method=='POST':
-                    length=int(self.headers.get('Content-Length','0'))
-                    if not 0<length<=12000: raise ValueError('Invalid request size')
-                    if self.headers.get('Content-Type','').split(';')[0]!='application/json': raise ValueError('JSON required')
-                    data=json.loads(self.rfile.read(length))
-                    if not isinstance(data,dict): raise ValueError('Object required')
+                data=self.body_data if method=='POST' else {}
                 if method=='GET' and path in ('/','/app.js','/style.css'):
                     filename={'/':'index.html','/app.js':'app.js','/style.css':'style.css'}[path]
                     mime={'/':'text/html; charset=utf-8','/app.js':'text/javascript; charset=utf-8','/style.css':'text/css; charset=utf-8'}[path]
-                    return self.send(200,(WEB/filename).read_bytes(),mime)
+                    return self.send(200,self.server.static_assets[filename],mime)
                 if method=='GET' and path=='/api/health':
                     return self.send(200,{'mode':app.engine.mode,'live_enabled':any(isinstance(r.transport, JsonTransport) for r in getattr(app.world,'readers',{}).values()),
                                           'auth_kind':app.auth_kind,'login_path':app.login_path,
@@ -173,19 +208,24 @@ def create_server(app, port=0, *, public_origin=None):
                     actor=app.authenticate(data)
                     token=secrets.token_urlsafe(32); csrf=secrets.token_urlsafe(32)
                     app.sessions[token]={'actor':actor,'csrf':csrf,'expires':time.monotonic()+3600,'last_query':0}
-                    return self.send(200,{'actor':actor.user_id,'csrf':csrf,'mode':app.engine.mode,'demo_role':app.registry.demo_role(actor) if app.auth_kind=='reviewer' else None,'display_name':app.registry.display_name(actor) if app.auth_kind=='reviewer' else None},cookie=f'{self.server.session_cookie_name}={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=3600{secure_cookie}')
+                    return self.send(200,{'actor':actor.user_id,'csrf':csrf,'mode':app.engine.mode,**self.session_details(app,actor)},cookie=f'{self.server.session_cookie_name}={token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=3600{secure_cookie}')
                 session,token=self.auth(); actor=session['actor']
                 if method=='POST' and not secrets.compare_digest(self.headers.get('X-CSRF-Token',''),session['csrf']):
                     raise PermissionError('Unavailable')
                 if method=='GET' and path=='/api/runtime':
+                    if actor.user_id.startswith('application-auditor:'):
+                        if not app.can_audit(actor):raise PermissionError('Unavailable')
+                        return self.send(200,{'mode':'application_audit','model':'not_applicable','sources':[],
+                            'run':None,'query_admission':None})
                     return self.send(200,runtime_status(app,app.registry.source_actor(actor) if app.auth_kind=='reviewer' else actor,app.session_runs.snapshot(token)))
                 if method=='GET' and path=='/api/session':
-                    return self.send(200,{'actor':actor.user_id,'csrf':session['csrf'],'mode':app.engine.mode,'demo_role':app.registry.demo_role(actor) if app.auth_kind=='reviewer' else None,'display_name':app.registry.display_name(actor) if app.auth_kind=='reviewer' else None})
+                    return self.send(200,{'actor':actor.user_id,'csrf':session['csrf'],'mode':app.engine.mode,**self.session_details(app,actor)})
                 if method=='POST' and path=='/api/logout':
                     app.session_runs.discard(token)
                     del app.sessions[token]
                     return self.send(200,{'ok':True},cookie=f'{self.server.session_cookie_name}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0{secure_cookie}')
                 if method=='POST' and path=='/api/query':
+                    if actor.user_id.startswith('application-auditor:'):raise PermissionError('Unavailable')
                     if set(data)-{'question'}: raise ValueError('Unsupported query fields')
                     if time.monotonic()-session['last_query']<0.1: return self.send(429,{'error':'Please wait briefly before asking again.'})
                     session['last_query']=time.monotonic()
@@ -213,6 +253,7 @@ def create_server(app, port=0, *, public_origin=None):
                     if actor.user_id!='auditor': raise PermissionError('Unavailable')
                     return self.send(200,{'sources':[app.world.adapter(s).capabilities() for s in ('confluence','jira','slack','drive')]})
                 if method=='POST' and path=='/api/audit/events':
+                    if hasattr(app,'audit_inquire'):return self.send(200,app.audit_inquire(actor,data))
                     return self.send(200,app.audit.inquire(actor,data))
                 if method=='POST' and path=='/api/audit/inquire':
                     if actor.user_id!='auditor': raise PermissionError('Unavailable')
@@ -249,6 +290,15 @@ def create_server(app, port=0, *, public_origin=None):
                 with acquire(app.store.lock):self.dispatch('GET')
         def do_POST(self):
             app=self.server.application
+            # Client I/O must finish before taking a shared business/store lock.
+            try:
+                self.body_data = self.read_body()
+            except TimeoutError:
+                return self.send(408, {'error':'Request body timed out'})
+            except PermissionError:
+                return self.send(403, {'error':'Unavailable'})
+            except (ValueError, TypeError):
+                return self.send(400, {'error':'Invalid request'})
             if urlparse(self.path).path=='/api/logout':return self.dispatch('POST')
             # Admit one query per session before waiting on the query lock.
             if urlparse(self.path).path=='/api/query':
@@ -267,6 +317,8 @@ def create_server(app, port=0, *, public_origin=None):
             with acquire(getattr(app,'request_lock',app.store.lock)):
                 with acquire(app.store.lock):self.dispatch('POST')
     server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
+    server.body_timeout=5
+    server.static_assets={name:(WEB/name).read_bytes() for name in ('index.html','app.js','style.css')}
     server.application=app
     if app is not None:
         app.session_runs=SessionRuns();app.admission_lock=threading.Lock();app.active_queries=set()

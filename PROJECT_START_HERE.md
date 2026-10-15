@@ -1,5 +1,7 @@
 # 从这里开始：AI-Bang2项目交接包
 
+2026-10-15 最新开发入口：[STATUS](docs/STATUS.md)、[主线集成验证](docs/reviews/2026-10-15-main-closeout-merge/REPORT.md)、[最新真实模型记录](docs/reviews/2026-10-15-sectioned-live/json-investigation/REPORT.md)。本轮合并用于继续开发，不代表正式封版或线上切换；前端、项目亮点、候选题问答与开发细节后续继续完善。
+
 2026-10-14 pd本地改进最新入口：[演示台及验证边界](docs/SCENARIO_LAB.md)、[STATUS](docs/STATUS.md)、[当前提交候选](docs/SUBMISSION_CANDIDATE.md)。714项回归/19组离线验收通过；新模型与原生环境待验，15个工具证明私有原件待队友提供。2026-10-15已授权将优化提交并推送到origin/pd，验收以交接commit为准；分支发布不等于线上实例已更新。
 
 当前为已实现可运行原型；固定旧候选331bd28及证据保留。2026-10-07业务增强见[执行入口](docs/iterations/2026-10-07-business-validation/README.md)、[STATUS](docs/STATUS.md)与[DECISIONS](docs/DECISIONS.md)。下方初始Phase 0为历史交接，不代表当前空仓。

@@ -45,13 +45,20 @@ class Audit:
         if event_type not in EVENT_TYPES:
             raise ValueError('event type')
         with self.store.transaction() as db:
-            row=db.execute('SELECT seq,body FROM audit ORDER BY seq DESC LIMIT 1').fetchone()
-            event={'schema_version':1,'seq':row[0]+1 if row else 1,
-                   'previous_hash':json.loads(row[1])['hash'] if row else ZERO,
-                   'event_type':event_type,'actor':actor,'request_id':request_id,'timestamp':now(),'payload':payload}
-            event['hash']=event_hash(event)
-            db.execute('INSERT INTO audit VALUES(?,?)',(event['seq'],canonical(event)))
-            return event
+            return self.append_in_transaction(db,event_type,actor,request_id,payload)
+
+    def append_in_transaction(self, db, event_type, actor, request_id, payload):
+        if self.fail:
+            raise RuntimeError('audit unavailable')
+        if event_type not in EVENT_TYPES:
+            raise ValueError('event type')
+        row=db.execute('SELECT seq,body FROM audit ORDER BY seq DESC LIMIT 1').fetchone()
+        event={'schema_version':1,'seq':row[0]+1 if row else 1,
+               'previous_hash':json.loads(row[1])['hash'] if row else ZERO,
+               'event_type':event_type,'actor':actor,'request_id':request_id,'timestamp':now(),'payload':payload}
+        event['hash']=event_hash(event)
+        db.execute('INSERT INTO audit VALUES(?,?)',(event['seq'],canonical(event)))
+        return event
 
     def export(self):
         with self.store.lock:

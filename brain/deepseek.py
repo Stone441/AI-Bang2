@@ -20,7 +20,7 @@ ENDPOINT = 'https://api.deepseek.com/chat/completions'
 MODEL = 'deepseek-flash'
 # Official pricing re-read on this Singapore date; evidence is kept separately.
 # Never advance this date without reviewing the official model/rates.
-PRICE_DATE = date(2026, 10, 13)
+PRICE_DATE = date(2026, 10, 15)
 PRICE_SOURCE = 'https://api-docs.deepseek.com/quick_start/pricing/'
 CONTEXT_TOKENS = 1_048_576
 OUTPUT_TOKENS = 1024
@@ -45,6 +45,29 @@ class ModelInputRejected(ModelUnavailable):
     """Provider input failed before budget reservation or network dispatch."""
 
 
+class OutputValidationError(ValueError):
+    """Only fixed local reasons and bounded positions may enter diagnostics."""
+    details = frozenset(('claim_shape', 'claim_text_length', 'citation_ids',
+        'support_shape', 'quote_length', 'quote_mismatch', 'quote_coverage',
+        'identifier_quote', 'temporal_quote'))
+
+    def __init__(self, message, detail):
+        super().__init__(message)
+        if detail not in self.details:
+            raise ValueError('Unknown output validation reason')
+        self.detail = detail
+        self.claim_index = None
+        self.support_index = None
+
+    def diagnostic(self):
+        result = {'validation_detail': self.detail}
+        for name, bound in (('claim_index', 52), ('support_index', 4)):
+            value = getattr(self, name)
+            if type(value) is int and 0 <= value < bound:
+                result[name] = value
+        return result
+
+
 class PriceReviewRequired(ModelUnavailable, ValueError):
     """An operator action is required; retrying the question cannot fix it."""
 
@@ -62,11 +85,15 @@ def check_price_review(today=None):
             'then restart the reviewed build. Preserve the existing USD20 budget ledger.')
 
 
+class DuplicateJsonField(ValueError):
+    """A fixed parser category; never retain the untrusted duplicate key."""
+
+
 def unique_object(pairs):
     result = {}
     for key, value in pairs:
         if key in result:
-            raise ValueError('Duplicate JSON field')
+            raise DuplicateJsonField('Duplicate JSON field')
         result[key] = value
     return result
 
@@ -269,7 +296,18 @@ class DeepSeekEvidenceModel:
                 'Incomplete model review':'review','Claim not fully supported and responsive':'review',
                 'Requested operational evidence omitted':'coverage_omission',
                 'Invalid whole-source selection':'structure','Incomplete source construction':'quote'}
+            categories.update({'Invalid sectioned synthesis output':'sectioned_shape',
+                'Invalid answer parts':'answer_parts_shape','Invalid answer part':'answer_part_fields',
+                'Invalid answer part citations':'answer_part_citations',
+                'Unassigned or repeated answer claim':'answer_part_assignment'})
             diagnostic['validation_failure']=categories.get(str(error),category)
+            if category == 'json':
+                if isinstance(error, json.JSONDecodeError):
+                    diagnostic['validation_detail'] = 'json_syntax'
+                elif isinstance(error, DuplicateJsonField):
+                    diagnostic['validation_detail'] = 'json_duplicate_field'
+            if isinstance(error, OutputValidationError):
+                diagnostic.update(error.diagnostic())
             self.ledger.model_outcome(reservation_id, 'output_rejected')
             record('model_output_rejected')
             raise ModelOutputRejected('Model output could not be supported by current evidence') from None

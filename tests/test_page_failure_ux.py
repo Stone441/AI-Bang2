@@ -406,3 +406,26 @@ class TrialSnapshot(unittest.TestCase):
                 fcntl.flock(lock,fcntl.LOCK_EX);start=time.monotonic();status=first.public_status()
                 self.assertLess(time.monotonic()-start,0.1);self.assertEqual(status['reason'],'attempt_limit')
             self.assertFalse(status['allowed']);self.assertEqual(status['attempts_used'],42);ledger.close()
+
+class JsonFailureDiagnostics(unittest.TestCase):
+    setUp=test_deepseek.DeepSeekBoundary.setUp
+    tearDown=test_deepseek.DeepSeekBoundary.tearDown
+
+    def test_json_syntax_and_duplicate_keys_have_distinct_safe_diagnostics(self):
+        cases=[('{"PRIVATE_DRAFT":', 'json_syntax'),
+               ('{"PRIVATE_FIELD":1,"PRIVATE_FIELD":2}', 'json_duplicate_field')]
+        for content,reason in cases:
+            with self.subTest(reason=reason):
+                self.transport.response['choices'][0]['message']['content']=content
+                events=[]
+                from brain.deepseek import ModelUnavailable
+                with self.assertRaises(ModelUnavailable):
+                    self.model.generate('Question',[self.evidence],request_id='a'*32,
+                        observe=lambda event,data:events.append((event,data)))
+                self.assertEqual(events[-1][0],'model_output_rejected')
+                diagnostic=events[-1][1]['diagnostic']
+                self.assertEqual(diagnostic['validation_failure'],'json')
+                self.assertEqual(diagnostic.get('validation_detail'),reason)
+                self.assertNotIn('PRIVATE',json.dumps(events))
+                self.assertEqual(events[-1][1]['receipt']['state'],'settled')
+                self.assertEqual(self.ledger.summary()['pending_requests'],0)
