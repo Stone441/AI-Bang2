@@ -352,7 +352,7 @@ function renderAnswer(answer,target=$('answer')){
   grid.append(main,side);target.append(grid);
 }
 
-$('loginForm').onsubmit=async e=>{e.preventDefault();try{let credentials;if(health?.auth_kind==='reviewer')credentials={username:$('reviewerUsername').value,password:$('reviewerPassword').value};else if(health?.auth_kind==='demo')credentials={user:$('user').value};else throw Error('Open the one-time link from the operator terminal.');session=await api(health.login_path,credentials);$('reviewerPassword').value='';identity();}catch(err){$('reviewerPassword').value='';$('status').textContent=health?.auth_kind==='reviewer'?'Sign-in unavailable. Check your credentials or contact the team.':err.message;}};
+$('loginForm').onsubmit=async e=>{e.preventDefault();try{let credentials;if(health?.auth_kind==='reviewer')credentials={username:$('reviewerUsername').value,password:$('reviewerPassword').value};else if(health?.auth_kind==='demo')credentials={user:$('user').value};else throw Error('Open the one-time link from the operator terminal.');session=await api(health.login_path,credentials);$('reviewerPassword').value='';identity();if(!$('workspace').hidden)$('workspace').scrollIntoView?.({behavior:'instant',block:'start'});}catch(err){$('reviewerPassword').value='';$('status').textContent=health?.auth_kind==='reviewer'?'Sign-in unavailable. Check your credentials or contact the team.':err.message;}};
 $('queryForm').onsubmit=async e=>{
   e.preventDefault();if(pendingQuery||admissionPaused)return;
   const priorSaved=savedQuestion(),submittedQuestion=$('question').value;
