@@ -1,12 +1,12 @@
 import copy
 import unittest
-from test_sectioned_answer import SectionedAnswer
+import test_sectioned_answer
 from brain.contracts import Actor
 from scripts.quote_scope_probe import install_probe
 
 class QuoteScopeProbe(unittest.TestCase):
     def setUp(self):
-        self.fixture=SectionedAnswer();self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
+        self.fixture=test_sectioned_answer.SectionedAnswer();self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
         f=self.fixture
         self.case={'source_resource_id':f.evidence[0].resource_id,'source_version':f.evidence[0].version,
             'claim':copy.deepcopy(f.claims[0]),'parts':[{'question':f.question,'status':'supported','claim_indices':[0],'gap_claim_indices':[]}]}
@@ -27,3 +27,21 @@ class QuoteScopeProbe(unittest.TestCase):
         answer=engine.query(Actor('eng_b'),f.question)
         self.assertEqual(len(f.transport.calls),1);self.assertEqual(answer['claims'],[])
         self.assertEqual(answer['answer_status'],'evidence_only')
+
+    def test_changed_or_missing_source_stops_before_review(self):
+        f=self.fixture
+        for field,value in [('source_version',-1),('source_resource_id','missing')]:
+            case={**self.case,field:value};engine=f.engine();probe=install_probe(engine,f.model,case)
+            stages=[]
+            with self.assertRaisesRegex(RuntimeError,'unavailable or changed'):
+                probe.generate_with_provenance(f.question,f.evidence,'a'*32,None,stages.append)
+            self.assertEqual(stages,[]);self.assertEqual(f.transport.calls,[])
+
+    def test_review_authorization_denial_stops_before_transport(self):
+        f=self.fixture;engine=f.engine();probe=install_probe(engine,f.model,self.case);stages=[]
+        def deny(phase):
+            stages.append(phase)
+            raise PermissionError('revoked')
+        with self.assertRaises(PermissionError):
+            probe.generate_with_provenance(f.question,f.evidence,'b'*32,None,deny)
+        self.assertEqual(stages,['review_dispatch']);self.assertEqual(f.transport.calls,[])
