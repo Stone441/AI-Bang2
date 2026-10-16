@@ -23,7 +23,9 @@ const ctx=vm.createContext({document:{getElementById:get,createElement:()=>new E
  const sent=JSON.parse(requests.find(r=>r[0]==='/api/reviewer/login')[1]);
  assert.deepEqual(sent,{username:'engineer_blair',password:'fixture-password'});
  await vm.runInContext('refreshRuntime()',ctx);
- assert.match(get('trialStatus').textContent,/\$0.9800 remaining/);assert.equal(get('ask').disabled,false);
+ assert.equal(get('trialStatus').hidden,true);assert.equal(get('trialStatus').textContent,'');assert.equal(get('ask').disabled,false);
+ vm.runInContext('renderAdmission({allowed:false,human_unlimited:true})',ctx);assert.equal(get('trialStatus').hidden,false);assert.match(get('trialStatus').textContent,/temporarily unavailable/);assert.equal(get('ask').disabled,true);
+ vm.runInContext('renderAdmission({allowed:true,human_unlimited:true})',ctx);assert.equal(get('trialStatus').hidden,true);assert.equal(get('ask').disabled,false);
  assert.ok(!requests.some(r=>r[0]==='/api/query'));
  console.log('PASS: password form, server role label, cleared secret, explicit fixture mode, unlimited human count with budget; no automatic query');
 })().catch(e=>{console.error(e);process.exitCode=1;});

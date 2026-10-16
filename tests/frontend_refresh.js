@@ -78,7 +78,7 @@ const watchdog=setTimeout(()=>{console.error('FAIL: refresh test did not finish'
  storage.clear();const paused=page();let posts=0;
  const stopped={...run('failed').run,error_code:'trial_admission_paused',question:'REJECTED ORIGINAL QUESTION',phase:'queued',phases:['queued'],elapsed_seconds:0.02};
  paused.ctx.fetch=async path=>{if(path!=='/api/runtime')posts++;return response({...run('failed'),run:stopped,query_admission:{allowed:false,reason:'attempt_limit',attempts_used:93,attempts_limit:93,attempts_remaining:0}});};
- vm.runInContext('armResume()',paused.ctx);await vm.runInContext('refreshRuntime()',paused.ctx);assert.equal(paused.get('question').value,stopped.question);assert.equal(paused.get('ask').disabled,true);assert.equal(paused.get('progress').hidden,true);assert.ok(paused.get('trialStatus').textContent.includes('93/93'));
+ vm.runInContext('armResume()',paused.ctx);await vm.runInContext('refreshRuntime()',paused.ctx);assert.equal(paused.get('question').value,stopped.question);assert.equal(paused.get('ask').disabled,true);assert.equal(paused.get('progress').hidden,true);assert.ok(paused.get('trialStatus').textContent.includes('temporarily unavailable'));
  const text=e=>[e.textContent,...e.children.map(text)].join(' ');assert.ok(text(paused.get('answer')).includes('Stopped before retrieval'));assert.ok(text(paused.get('answer')).includes(stopped.request_id));await paused.get('queryForm').onsubmit({preventDefault(){}});assert.equal(posts,0);
  paused.ctx.fetch=async()=>response({...run('failed'),run:stopped});await vm.runInContext('refreshRuntime()',paused.ctx);assert.equal(paused.get('ask').disabled,true);
  // Same JS realm expiry/logout clears the old user's question before another login.
