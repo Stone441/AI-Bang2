@@ -1,5 +1,7 @@
 # 从这里开始：AI-Bang2项目交接包
 
+2026-10-16 当前发布：[PR#13](https://github.com/Stone441/AI-Bang2/pull/13)已合并，869f407代码/UI已上线。最新入口：[FINAL_HANDOFF](docs/FINAL_HANDOFF.md)、[发布验收](docs/reviews/2026-10-16-release/REPORT.md)、[CodeBuddy贡献](docs/CODEBUDDY_CONTRIBUTION.md)。下方未发布状态均为历史快照。
+
 2026-10-16 当前唯一交付入口：[FINAL_HANDOFF](docs/FINAL_HANDOFF.md)、[仓库收口报告](docs/reviews/2026-10-16-final-check/REPORT.md)。本地收口完成，源码与人工试用版本分列；以下旧开发入口为历史记录。未推送/合并/比赛提交，完整语义验收未通过。
 
 2026-10-15 最新开发入口：[STATUS](docs/STATUS.md)、[主线集成验证](docs/reviews/2026-10-15-main-closeout-merge/REPORT.md)、[最新真实模型记录](docs/reviews/2026-10-15-sectioned-live/json-investigation/REPORT.md)。本轮合并用于继续开发，不代表正式封版或线上切换；前端、项目亮点、候选题问答与开发细节后续继续完善。

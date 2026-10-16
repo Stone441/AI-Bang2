@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-16 ADR-RELEASE-RESULT：按AUTH-PUBLISH-HOSTED完成PR#13和869f407部署；原公网source-review配置保留，私有fa88f2f未切换。采用账号/静态指纹/无费用上游检查及Chrome公网登录页观察，明确Cloudflare1010导致CLI公网验收受限。赛事提交及私有证明上传未执行。
+
 2026-10-16 AUTH-PUBLISH-HOSTED：用户明确要求推送合并、更新现有网页链接版本，并整理CodeBuddy描述。批准本候选经PR发布合并及同域名/现有账号/原状态与账本的版本切换；文案以真实贡献为准，保留原历史和证明，不新开scope、账户、模型费用或提交比赛。线上保留已有source-review配置，更新代码/UI，不默认启用未完整验收的实验模式。
 
 2026-10-16 AUTH-FINAL-RECONCILIATION：用户“好的，去完成收口吧”授权完成本地可逆归档、文档统一、核验和独立分支本地提交。候选继承37578c4，应用代码保持2b79036；历史证据按原版本保留，旧脏工作区不reset/stash/删除。本次不授权push/merge、服务切换、新付费验证或比赛提交。
