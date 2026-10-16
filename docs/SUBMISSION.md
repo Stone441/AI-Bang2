@@ -24,6 +24,7 @@ The result is an inspectable enterprise-knowledge prototype with explicit trust 
 
 ## Reviewer resources
 
+- [Project demonstration video (7m 32s, English narration and captions)](https://youtu.be/BULowhVNfU8)
 - [Hosted demonstration](https://contextledger.hellokyleshi.com)
 - [Complete source repository](https://github.com/Stone441/AI-Bang2)
 - [Cover image, 1600×900](../assets/submission/contextledger-cover.png)
@@ -32,4 +33,4 @@ The result is an inspectable enterprise-knowledge prototype with explicit trust 
 - [CodeBuddy contribution](CODEBUDDY_CONTRIBUTION.md)
 - [Validation and limitations](VALIDATION.md)
 
-The original CodeBuddy conversation and at least three genuine development screenshots are separate competition attachments retained locally for reviewed disclosure. No video file or invented video URL is supplied. This document does not attest that a competition form has been submitted.
+The original CodeBuddy conversation and at least three genuine development screenshots are separate competition attachments retained locally for reviewed disclosure. The video distinguishes a live question using native APIs and synthetic business data from controlled fixture scenarios. This document does not attest that a competition form has been submitted.
