@@ -1,5 +1,22 @@
 # Goal completion audit · evidence required, not presumed
 
+## 当前结论 · 2026-10-16 提交冻结后
+
+原目标 **未完成**。用户最新指示为结束诊断循环、收尾后提交；以下历史“下一步诊断”不再是当前执行计划。不得因为提交包准备完成而将原目标标记完成，也不再自动申请或启动付费复验。
+
+- 冻结源码：`2b79036cdd620f6810758a9951bc1675499882b3`；收尾文档提交：`e0a549d`。独立工作目录及可回退归档已交付，源码包独立解压后800项离线测试通过，54.847秒。详见 [最终收尾报告](../2026-10-16-submission-closeout/REPORT.md) 与 PACKAGE_MANIFEST.json。
+- 人工试用：`fa88f2f`，入口已核对进程/后端指纹/静态版本；不冒充冻结源码中的实验后端。用户已确认界面及证据抽屉可用。
+- 三类默认题、六改写、冲突与错误前提的当前版本真实完整验收：**不通过/未完成**。最新完整轮首题引文审查拒绝，其余10题未运行；不能用旧轮成功、离线断言或已知对照2/2替代。
+- 关键事实引文的全面支持性：**未证明**。被拒草稿未保留，无法独立判定该次拒绝是否正确；不将模型审查false当作真值。
+- 当前版本完整浏览器状态矩阵：**未完成统一验收**。历史浏览器、DOM和真人证据仍按各自版本与模式有效，不合并声称当前实验后端全通过。
+- 权限/版本/历史/引用/审计：保留现有离线及明确标注的真实角色检查证据，不能扩大为完整原生员工身份或所有原生撤权场景通过。
+- Embedding：已有有界评估及未接入理由；未获真实比较条件，未声称语义收益。按目标第五节，此项条件不足不阻塞其他交付。
+- 分阶段耗时、失败记录、真实工具贡献、状态与部署/回退材料已保留；没有稳定p95/SLA或赛事提交完成的主张。
+
+前一目标轮属于**进展**：生成并验证实际交付包、提交记录。当前不具备完成原质量目标的证据；剩余真实质量核验需要新的有效执行范围，且用户已要求停止循环。结束的grant、人工额度和历史unknown均不得改变。外部发布及赛事提交仍是另行团队操作，不能替代本目标的质量验收。
+
+以下为历史审计（按原日期/版本解释，不作为最新状态）：
+
 Scope: the full original goal-objective.md; completion is **not proved**. Current code2ef8d74, last real diagnostic eb91828, human runtimefa88f2f. All automated grants are closed. The table below replaces stale baseline claims; dated historical notes follow.
 
 | Requirement | Authoritative evidence | Current finding |
