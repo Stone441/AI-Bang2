@@ -105,8 +105,8 @@ def main(argv=None):
     parser.add_argument('--discovery-auth017',action='store_true',help='Opt-in eng_b discovery in AUTH-017 fixed four containers; default off')
     parser.add_argument('--oauth-client', help='Private Google desktop JSON, Drive or multi; browser consent instead of hidden Drive token')
     parser.add_argument('--model', choices=['fake', 'deepseek'], default='fake', help='Explicit approved synthetic-only DeepSeek evidence selection')
-    parser.add_argument('--answer-style', choices=['excerpts','synthesis','sectioned-synthesis','reviewed-excerpts','source-review'], default='excerpts',
-                        help='Synthesis uses two budgeted calls and exact grounding plus model review')
+    parser.add_argument('--answer-style', choices=['excerpts','synthesis','sectioned-synthesis','isolated-sectioned-synthesis','reviewed-excerpts','source-review'], default='excerpts',
+                        help='Synthesis uses two calls; isolated-sectioned-synthesis uses 2 plus one per claim (maximum 6), separately budgeted')
     parser.add_argument('--source-review-input', choices=['legacy','compact','covered','whole','structured','explained'], default='legacy',
                         help='Opt-in lossless source grouping for source-review only')
     parser.add_argument('--source-review-dispatch', choices=['legacy','single'], default='legacy',
@@ -129,13 +129,13 @@ def main(argv=None):
         print('not_run: compact source input requires DeepSeek source-review; no credentials or platform calls performed.')
         return 2
     if (args.reasoning_effort!='none' or args.output_tokens!=1024) and (
-            args.model!='deepseek' or args.answer_style not in ('synthesis','sectioned-synthesis','reviewed-excerpts','source-review')):
+            args.model!='deepseek' or args.answer_style not in ('synthesis','sectioned-synthesis','isolated-sectioned-synthesis','reviewed-excerpts','source-review')):
         print('not_run: reasoning/output overrides require DeepSeek synthesis; no credentials or platform calls performed.')
         return 2
     if args.discovery_auth017 and (args.source!='multi' or args.actor!='eng_b'):
         print('not_run: AUTH-017 discovery requires multi-source eng_b; no credentials or platform calls performed.')
         return 2
-    if args.answer_style in ('synthesis','sectioned-synthesis','reviewed-excerpts','source-review') and args.model!='deepseek':
+    if args.answer_style in ('synthesis','sectioned-synthesis','isolated-sectioned-synthesis','reviewed-excerpts','source-review') and args.model!='deepseek':
         print('not_run: synthesis requires DeepSeek; no credentials or platform calls performed.')
         return 2
     if not args.live:
@@ -226,10 +226,11 @@ def main(argv=None):
                 with warnings.catch_warnings():
                     warnings.simplefilter('error', getpass.GetPassWarning)
                     key = getpass.getpass('DeepSeek API key (hidden): ').strip()
-            if args.answer_style in ('synthesis','sectioned-synthesis','reviewed-excerpts','source-review'):
+            if args.answer_style in ('synthesis','sectioned-synthesis','isolated-sectioned-synthesis','reviewed-excerpts','source-review'):
                 from .synthesis import DeepSeekSynthesisModel,DeepSeekReviewedExcerptsModel,DeepSeekReviewAllSourcesModel
                 from .sectioned_answer import DeepSeekSectionedSynthesisModel
-                cls={'synthesis':DeepSeekSynthesisModel,'sectioned-synthesis':DeepSeekSectionedSynthesisModel,
+                from .isolated_quote_review import DeepSeekIsolatedSectionedModel
+                cls={'synthesis':DeepSeekSynthesisModel,'sectioned-synthesis':DeepSeekSectionedSynthesisModel,'isolated-sectioned-synthesis':DeepSeekIsolatedSectionedModel,
                      'reviewed-excerpts':DeepSeekReviewedExcerptsModel,'source-review':DeepSeekReviewAllSourcesModel}[args.answer_style]
                 if args.source_review_input == 'compact':
                     from .synthesis import DeepSeekCompactSourceReviewModel
@@ -256,7 +257,7 @@ def main(argv=None):
             app.engine.model = model
             app.engine.source_review_dispatch = args.source_review_dispatch
             app.engine.mode = app.engine.mode.removesuffix('_fake_model') + '_live_model_selection'
-            if args.answer_style in ('synthesis','sectioned-synthesis'):
+            if args.answer_style in ('synthesis','sectioned-synthesis','isolated-sectioned-synthesis'):
                 app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_synthesis'
             elif args.answer_style=='source-review':
                 app.engine.mode=app.engine.mode.removesuffix('_live_model_selection')+'_live_model_source_review'
@@ -276,7 +277,7 @@ def main(argv=None):
         server.application = app
         # Fragment never goes in HTTP request logs. The UI removes it before exchange.
         label = 'LIVE MODEL EVIDENCE SELECTION' if args.model == 'deepseek' else 'FAKE MODEL'
-        if args.answer_style in ('synthesis','sectioned-synthesis'): label='LIVE MODEL GROUNDED SYNTHESIS / SEPARATE MODEL REVIEW'
+        if args.answer_style in ('synthesis','sectioned-synthesis','isolated-sectioned-synthesis'): label='LIVE MODEL GROUNDED SYNTHESIS / SEPARATE MODEL REVIEW'
         elif args.answer_style=='source-review':label='CODE SOURCE QUOTES / LIVE MODEL COVERAGE REVIEW'
         elif args.answer_style=='reviewed-excerpts':label='LIVE MODEL VERBATIM SOURCES / SEPARATE MODEL REVIEW'
         print(f'{args.source.title()} LIVE API / {label} / LOCAL OPERATOR (not SSO)', flush=True)

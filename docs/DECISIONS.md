@@ -683,3 +683,9 @@ User “继续收尾，不用考虑费用…” authorizes continuing the concre
 独立核验fail后立即关闭，正例及原11题全部not_run，无重试。诊断适配器没有将结论作为用户答案展示。此结果证明本次提示修订没有排除已知漏检；不证明模型永远不能判断，也不代表其他题失败。下一步不能继续仅追加相似提示并要求付费循环；需要可验证地隔离“引用蕴含”与“全文覆盖/冲突”的不同审查输入，评估调用成本及对跨源综合的影响，或明确保留当前质量限制。不能用确定性关键词匹配代替语义支持、移除原文冲突检查或删除有效验收断言。
 
 证据quote-scope-gate-live-results.json，当前运行试用页未切换。Goal未完成。
+
+## ADR-SEMANTIC-WORKSPACE-07 · isolate per-claim quote review inputs
+
+Real negative gate accepted uncited provenance despite explicit prompting. Introduce opt-in `DeepSeekIsolatedSectionedModel`: one claim+its quotes per isolated review call, followed by unchanged full-source review. Reauthorize each call; reject whole draft on any failure; preserve distinct per-stage receipts. No source/title/question/other-claim context enters the quote-only payload. Cross-source combinations remain supported within one claim.
+
+Tradeoff:2–6 calls/question,22–66 for11 questions; prior24-call grant is insufficient to promise full coverage and remains closed. Default runtime and human preview unchanged. Rollback selects existing sectioned backend while retaining ledger/audit. Local input isolation tests do not prove model semantic accuracy. See reviews/2026-10-15-semantic-workspace/ISOLATED_QUOTE_REVIEW.md.

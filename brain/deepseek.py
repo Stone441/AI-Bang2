@@ -51,6 +51,7 @@ class OutputValidationError(ValueError):
         'support_shape', 'quote_length', 'quote_mismatch', 'quote_coverage',
         'identifier_quote', 'temporal_quote', 'part_review_reasoning', 'part_review_shape',
         'part_review_completeness', 'part_review_gap_support',
+        'quote_review_shape', 'quote_review_unsupported',
         'part_metadata_shape', 'part_question_shape', 'part_question_not_substring',
         'part_question_repeated', 'part_status_or_indices', 'part_wire_shape', 'part_resolution'))
 
@@ -275,6 +276,8 @@ class DeepSeekEvidenceModel:
             output = json.loads(content, object_pairs_hook=unique_object)
             category='structure'
             if stage=='review' and isinstance(output,dict):
+                if 'quote_supported' in output:
+                    diagnostic['review_quote_supported']=output['quote_supported'] if type(output['quote_supported']) is bool else None
                 diagnostic['review_question_covered']=output.get('question_covered') if type(output.get('question_covered')) is bool else None
                 diagnostic['review_filtered_answer_complete']=output.get('filtered_answer_complete') if type(output.get('filtered_answer_complete')) is bool else None
                 if 'selection_safe' in output or 'selected' in output:

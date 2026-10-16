@@ -221,6 +221,7 @@ function renderModelUsage(answer,target){
   if(receipt?.called===false){target.append(el('p','No external model request was sent.','muted'));return;}
   if(receipt?.called!==true){target.append(el('p','Model usage was not recorded for this answer.','muted'));return;}
   const receipts=[receipt];
+  for(const item of answer.model_quote_reviews||[]){if(item?.called===true)receipts.push(item);}
   if(answer.model_review?.called===true&&answer.model_review!==receipt)receipts.push(answer.model_review);
   for(const [index,item] of receipts.entries()){
     const details=el('details',undefined,'model-usage');

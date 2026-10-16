@@ -1,0 +1,31 @@
+.E....E.
+======================================================================
+ERROR: test_empty_claims_skip_quote_calls_but_keep_whole_source_review (test_isolated_quote_review.IsolatedQuoteTests.test_empty_claims_skip_quote_calls_but_keep_whole_source_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/tests/test_isolated_quote_review.py", line 116, in test_empty_claims_skip_quote_calls_but_keep_whole_source_review
+    answer=f.engine().query(Actor('eng_b'),f.question)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/brain/engine.py", line 142, in query
+    return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/brain/engine.py", line 353, in _query
+    raise ValueError('Unexpected answer parts')
+ValueError: Unexpected answer parts
+
+======================================================================
+ERROR: test_receipts_survive_engine_and_reject_missing_or_duplicate (test_isolated_quote_review.IsolatedQuoteTests.test_receipts_survive_engine_and_reject_missing_or_duplicate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/tests/test_isolated_quote_review.py", line 94, in test_receipts_survive_engine_and_reject_missing_or_duplicate
+    answer=f.engine().query(Actor('eng_b'),f.question)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/brain/engine.py", line 142, in query
+    return self._query(actor,question,history_id,rid=rid,emit=emit,observe=observe,attempt=attempt)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/brain/engine.py", line 353, in _query
+    raise ValueError('Unexpected answer parts')
+ValueError: Unexpected answer parts
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.062s
+
+FAILED (errors=2)
