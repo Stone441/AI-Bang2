@@ -367,7 +367,7 @@ $('queryForm').onsubmit=async e=>{
   finally{if(currentView(view)){stopWaiting();updateAsk();refreshRuntime();}}
 
 };
-for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{if(pendingQuery)return;$('question').value=b.dataset.question;$('question').focus();$('queryForm').scrollIntoView?.({behavior:'instant',block:'center'});$('suggestionStatus').textContent='Example added to the question box. Edit it if you like, then select Ask question.';for(const card of document.querySelectorAll('[data-question]'))card.setAttribute('aria-pressed',String(card===b));};
+for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{if(pendingQuery)return;viewRevision++;resumeOnRuntime=false;$('answer').replaceChildren();$('question').value=b.dataset.question;$('question').focus();$('queryForm').scrollIntoView?.({behavior:'instant',block:'center'});$('suggestionStatus').textContent='Example added to the question box. Edit it if you like, then select Ask question.';for(const card of document.querySelectorAll('[data-question]'))card.setAttribute('aria-pressed',String(card===b));};
 $('workspaceNav').onclick=()=>{requestedHistory=false;$('answer').replaceChildren();$('other').replaceChildren();show(session?'workspace':'login');if(session)armResume();};
 $('historyNav').onclick=async()=>{
   if(!session){requestedHistory=true;show('login');$('status').textContent='Sign in to view your recent answers.';return;}$('answer').replaceChildren();show('other');$('historyNav').className='nav active';$('historyNav').setAttribute('aria-current','page');const view=viewToken();
