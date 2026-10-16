@@ -1,6 +1,6 @@
 # Two-call isolated entailment diagnostic
 
-Prepared, not authorized or executed. Frozen candidate868fef9, including the isolated input backend and diagnostic adapter; hashes in isolated-probe-prepared.json.15 focused fixture/mock orchestration tests passed. The frozen runner exits2 before credential/model/ledger access without authorization.
+Approved and completed on2026-10-16: both known-pair judgments passed;2 calls/USD0.000159. Grant closed. See ISOLATED_PROBE_LIVE.md. Frozen candidate868fef9, including the isolated input backend and diagnostic adapter; hashes in isolated-probe-prepared.json.15 focused fixture/mock orchestration tests passed. The frozen runner exits2 before credential/model/ledger access without authorization.
 
 Request a fresh independent grant: maximum2 DeepSeek calls/USD1 accounting cap, existing synthetic four-source containers read-only, originalUSD20 ledger and oldpending retained, no human allowance or service switch. This authorizes only the two-case diagnostic, not the full11-question acceptance.
 
