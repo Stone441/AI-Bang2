@@ -1,0 +1,124 @@
+{
+  "candidate_commit": "3f17ec6d1bc96a957ec21d4cfc1a8df3729c7db4",
+  "case": {
+    "question": "Which final postmortem lists PAY-102 and PAY-103 as follow-ups?",
+    "parts": [
+      {
+        "question": "Which final postmortem lists PAY-102 and PAY-103 as follow-ups?",
+        "status": "supported",
+        "claim_indices": [
+          0
+        ],
+        "gap_claim_indices": []
+      }
+    ],
+    "source_resource_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+    "source_version": 6,
+    "id": "short_quote_scope",
+    "claim": {
+      "text": "PAY-102 and PAY-103 are follow-ups from the final payment-service postmortem.",
+      "evidence_ids": [
+        "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6"
+      ],
+      "supports": [
+        {
+          "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+          "quote": "Follow-ups: PAY-102 and PAY-103."
+        }
+      ]
+    },
+    "expected_supported": false,
+    "expected_responsive": true
+  },
+  "http_status": 200,
+  "request_id": "d88ff1de428048ca8ed78c5e5eecc205",
+  "elapsed_seconds": 8.575170499971136,
+  "actual_model_calls": 1,
+  "accounted_micro_usd": 782,
+  "new_unknown": 0,
+  "human_unchanged": true,
+  "model_events": [
+    {
+      "event": "model_output_accepted",
+      "diagnostic": {
+        "finish_reason": "stop",
+        "response_id_sha256": "37d79552e6230a45294469e7891d0f1a5c0a4cf3862b2cab84a3a22f3758b995",
+        "returned_model": "deepseek-flash",
+        "review_filtered_answer_complete": true,
+        "review_question_covered": true,
+        "review_verdicts": [
+          {
+            "index": 0,
+            "responsive": true,
+            "supported": true
+          }
+        ],
+        "usage": {
+          "completion_tokens": 87,
+          "prompt_tokens": 2257,
+          "total_tokens": 2344
+        },
+        "validation_failure": null,
+        "visible_output_characters": 289
+      }
+    }
+  ],
+  "structure": {
+    "transport_number": 1,
+    "raw_content_saved": false,
+    "json_syntax_valid": true,
+    "duplicate_schema_fields": [],
+    "top_level_type": "dict",
+    "review_flags": {
+      "parts_supported": true,
+      "premise_handled": true,
+      "conflicts_handled": true
+    },
+    "part_verdicts": [
+      {
+        "index": 0,
+        "requested_information_provided": true,
+        "gap_explanation_supported": true
+      }
+    ]
+  },
+  "independent_assessment": {
+    "request_id": "d88ff1de428048ca8ed78c5e5eecc205",
+    "result_sha256": "0a6f0e923c52bd166a14a62b706a9bd2faa988702ea3150b8a7afe8fbc3fe828",
+    "passed": false,
+    "assessor": "Codex independent source/oracle inspection",
+    "reason": "Negative quote-scope gate failed: valid JSON and model_output_accepted, explicit supported=true/responsive=true. Selected quote only lists PAY-102/PAY-103; claim adds final payment-service postmortem provenance from outside quote. Updated prompt did not prevent this known review miss; no further calls."
+  },
+  "closed": {
+    "status": "closed_no_automatic_reuse",
+    "calls": 1,
+    "accounted_micro_usd": 782,
+    "completed_cases": 1
+  },
+  "remaining": "positive gate and11 original questions not_run",
+  "no_user_draft": true,
+  "global_budget_after": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 2087149,
+    "settled_micro_usd": 1438341,
+    "available_micro_usd": 17912851,
+    "pending_requests": 2,
+    "blocked_for_review": false
+  },
+  "audit_chain": {
+    "valid": true,
+    "events": 107,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "isolation": {
+    "own_history_http": 200,
+    "cross_history_http": 403,
+    "own_preview_http": 200,
+    "cross_preview_http": 403,
+    "engineer_blair_audit_denied": 403,
+    "product_morgan_audit_denied": 403,
+    "partner_jordan_audit_denied": 403
+  }
+}
