@@ -18,7 +18,7 @@ Prompts ask DeepSeek Flash to organize supported conclusions by subquestion, quo
 
 Audit records retain identity, question, resource decisions, evidence, model receipts and final outcome. CodeBuddy made a documented implementation contribution to an offline hash-chain and Ed25519 checkpoint verifier. Local verification is not independently managed production audit custody. An isolated fixture lab demonstrates content updates, version invalidation, revocation and audit inspection without modifying live sources.
 
-The isolated-review implementation passed 798 local Python tests at its implementation checkpoint, with later focused adapter tests recorded separately. These are implementation tests, not an answer-accuracy score. Four native source integrations and scoped access checks have live evidence; failure records remain visible. No production SSO, comprehensive employee permission matrix, prompt-injection immunity, stable latency SLA, customer adoption or quantified ROI is claimed. Embeddings were not added: a small 27-case lexical retrieval study did not demonstrate a necessary-evidence gap, and no genuine embedding comparison was completed.
+The frozen application code passed 800 offline Python tests in an independent clean working directory; historical reports retain their original versions and failures. These are implementation tests, not an answer-accuracy score. Four native source integrations and scoped access checks have live evidence; failure records remain visible. No production SSO, comprehensive employee permission matrix, prompt-injection immunity, stable latency SLA, customer adoption or quantified ROI is claimed. Embeddings were not added: a small 27-case lexical retrieval study did not demonstrate a necessary-evidence gap, and no genuine embedding comparison was completed.
 
 The result is an inspectable enterprise-knowledge prototype with explicit trust boundaries, useful source access and a reproducible record of both progress and remaining limitations.
 
@@ -26,9 +26,9 @@ The result is an inspectable enterprise-knowledge prototype with explicit trust 
 
 - Cover: [1600×900 PNG](../assets/submission/contextledger-cover.png), exact16:9.
 - Architecture: [SVG](../assets/submission/contextledger-architecture.svg), including trust boundaries and experimental path.
-- Source: local frozen source ZIP identified in [closeout report](reviews/2026-10-16-submission-closeout/REPORT.md). Existing repository: https://github.com/Stone441/AI-Bang2 . Latest candidate commits are **not yet published there**.
+- Source: reconciled local source ZIP identified in [final reconciliation](reviews/2026-10-16-final-check/REPORT.md). Existing repository: https://github.com/Stone441/AI-Bang2 . Latest candidate commits are **not yet published there**.
 - Genuine CodeBuddy proof: all15 originals were found in the main working directory and SHA256-verified on16October; a private local upload bundle is prepared. It includes conversation history and7 genuine process screenshots. It is not uploaded or included in the source ZIP.
-- Demo: [final walkthrough](reviews/2026-10-16-submission-closeout/DEMO.md). Existing user trial remains its frozen delivered UX; the experimental backend is not silently enabled.
+- Demo: [version-aware walkthrough](reviews/2026-10-16-final-check/DEMO.md). Existing user trial remains its frozen delivered UX; the experimental backend is not silently enabled.
 - Optional5–8 minute video: not produced. Do not enter an invented video URL.
 - External/public URL: only use a verified existing service after team review; local127.0.0.1 is not an external demo link.
 

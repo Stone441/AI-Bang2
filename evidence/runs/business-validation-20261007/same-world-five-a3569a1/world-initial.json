@@ -1,0 +1,1447 @@
+{
+  "users": {
+    "eng_a": {
+      "groups": [
+        "engineering",
+        "staff"
+      ],
+      "channels": [
+        "incident",
+        "release",
+        "external"
+      ]
+    },
+    "eng_b": {
+      "groups": [
+        "engineering",
+        "staff"
+      ],
+      "channels": [
+        "release"
+      ]
+    },
+    "product_ops": {
+      "groups": [
+        "product",
+        "staff"
+      ],
+      "channels": [
+        "release"
+      ]
+    },
+    "contractor": {
+      "groups": [
+        "external"
+      ],
+      "channels": [
+        "external"
+      ]
+    },
+    "security": {
+      "groups": [
+        "engineering",
+        "security",
+        "staff"
+      ],
+      "channels": [
+        "incident",
+        "release"
+      ]
+    },
+    "auditor": {
+      "groups": [],
+      "channels": []
+    }
+  },
+  "resources": [
+    {
+      "id": "C-01",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-C-01",
+      "parent": "eng",
+      "version": 1,
+      "title": "Payment-service runbook",
+      "text": "Runbook v1: inspect the payment-service timeout budget and follow the approved failover procedure.",
+      "locator": {
+        "section": "Failover procedure",
+        "paragraph": 1
+      },
+      "links": [
+        "J-01",
+        "D-01"
+      ],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "engineering"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-01"
+    },
+    {
+      "id": "C-02",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-C-02",
+      "parent": "capability",
+      "version": 1,
+      "title": "Payment-retry capability",
+      "text": "Payment-retry is available only to the controlled pilot. General availability (GA) is not approved. No general release date is confirmed.",
+      "locator": {
+        "section": "Supported rollout",
+        "paragraph": 1
+      },
+      "links": [
+        "D-02"
+      ],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff",
+          "external"
+        ],
+        "page_groups": [
+          "staff",
+          "external"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-02"
+    },
+    {
+      "id": "C-03",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-C-03",
+      "parent": "sec",
+      "version": 1,
+      "title": "Q3 security incident report",
+      "text": "Restricted security investigation. CANARY_SEC_7Q9.",
+      "locator": {
+        "section": "Restricted findings",
+        "paragraph": 1
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/C-03"
+    },
+    {
+      "id": "J-01",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-01",
+      "parent": "eng",
+      "version": 1,
+      "title": "PAY-101 Payment-service incident",
+      "text": "PAY-101 tracks the payment-service incident. See the final postmortem and the current runbook.",
+      "locator": {
+        "field": "description"
+      },
+      "links": [
+        "S-01",
+        "C-01",
+        "D-01"
+      ],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "engineering"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-01"
+    },
+    {
+      "id": "J-02",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-02",
+      "parent": "staff",
+      "version": 1,
+      "title": "PAY-102 Retry configuration fix",
+      "text": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "locator": {
+        "field": "status and description"
+      },
+      "links": [
+        "J-01",
+        "D-02"
+      ],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-02"
+    },
+    {
+      "id": "J-03",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-03",
+      "parent": "staff",
+      "version": 1,
+      "title": "PAY-103 Protective measures",
+      "text": "PAY-103 protective measures: In Progress. Owner: Maya.",
+      "locator": {
+        "field": "status and assignee"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-03"
+    },
+    {
+      "id": "S-01",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-S-01",
+      "parent": "incident",
+      "version": 1,
+      "title": "Private incident discussion",
+      "text": "Payment-service incident thread: 09:00 cache invalidation was an early hypothesis. 09:15 the cache hypothesis was withdrawn. 10:00 the final postmortem confirmed retry configuration and timeout budget mismatch. CANARY_THREAD_4K2.",
+      "locator": {
+        "channel": "incident",
+        "thread": "1790816400.000001",
+        "messages": [
+          "1790816400.000001",
+          "1790817300.000001",
+          "1790820000.000001"
+        ]
+      },
+      "links": [
+        "D-01"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/S-01"
+    },
+    {
+      "id": "S-02",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-S-02",
+      "parent": "release",
+      "version": 1,
+      "title": "Release coordination",
+      "text": "Payment-retry remains a controlled pilot. No GA date is confirmed; use the capability page and release approval.",
+      "locator": {
+        "channel": "release",
+        "thread": "1790823600.000001"
+      },
+      "links": [
+        "C-02",
+        "D-02"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "release",
+        "private": true,
+        "members": [
+          "eng_a",
+          "eng_b",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/S-02"
+    },
+    {
+      "id": "S-03",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-S-03",
+      "parent": "external",
+      "version": 1,
+      "title": "External collaboration",
+      "text": "External partners can consult the shared payment-retry capability page for pilot limits. This collaboration channel contains partner onboarding guidance.",
+      "locator": {
+        "channel": "external",
+        "thread": "1790827200.000001"
+      },
+      "links": [
+        "C-02"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "external",
+        "private": true,
+        "members": [
+          "eng_a",
+          "contractor"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/S-03"
+    },
+    {
+      "id": "D-01",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-D-01",
+      "parent": "eng",
+      "version": 1,
+      "title": "Final payment-service postmortem",
+      "text": "Final root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103.",
+      "locator": {
+        "section": "Confirmed root cause",
+        "paragraph": 1
+      },
+      "links": [
+        "J-02",
+        "J-03"
+      ],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "engineering"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/D-01"
+    },
+    {
+      "id": "D-02",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-D-02",
+      "parent": "staff",
+      "version": 1,
+      "title": "Payment-retry release approval",
+      "text": "Release decision: controlled pilot approved. General availability (GA) not approved. PAY-102 Done is not customer release approval.",
+      "locator": {
+        "section": "Approval decision",
+        "paragraph": 1
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/D-02"
+    },
+    {
+      "id": "D-03",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-D-03",
+      "parent": "staff",
+      "version": 1,
+      "title": "Operations readiness",
+      "text": "Describe payment-retry only within the approved pilot scope. Unconfirmed items: general availability date and expansion beyond pilot customers.",
+      "locator": {
+        "section": "Customer communication",
+        "paragraph": 1
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/D-03"
+    },
+    {
+      "id": "J-01-comment-sec",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-J-01-comment-sec",
+      "parent": "J-01",
+      "version": 1,
+      "title": "PAY-101 restricted comment",
+      "text": "Security-only follow-up. CANARY_COMMENT_8P3.",
+      "locator": {
+        "comment_id": "comment-security-1"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "security"
+        ],
+        "comment_groups": [
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-01T09:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/J-01-comment-sec"
+    },
+    {
+      "id": "BV-01",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-01",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Token rotation decision",
+      "text": "[SYNTHETIC]\nRotation uses overlapping signing keys; sessions remain valid for fifteen minutes.",
+      "locator": {
+        "section": "Token rotation decision"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-01"
+    },
+    {
+      "id": "BV-02",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-02",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Migration blocker",
+      "text": "[SYNTHETIC]\nAUTH-204 is Blocked because mobile clients cannot refresh expired tokens. Owner: Lena.",
+      "locator": {
+        "section": "Migration blocker"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-02"
+    },
+    {
+      "id": "BV-03",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-03",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Rejected design thread",
+      "text": "[SYNTHETIC]\n09:00 authentication signing design: shared-secret proposal under consideration.",
+      "locator": {
+        "channel": "synthetic-auth",
+        "root": "BV-03",
+        "message": "BV-03"
+      },
+      "links": [
+        "BV-18"
+      ],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-03"
+    },
+    {
+      "id": "BV-04",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-04",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Cutover scope",
+      "text": "[SYNTHETIC]\nEnterprise SSO cutover applies to internal employees only; contractors remain on the legacy gateway.",
+      "locator": {
+        "section": "Cutover scope"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-04"
+    },
+    {
+      "id": "BV-05",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-05",
+      "parent": "bv",
+      "version": 1,
+      "title": "authentication / Future policy",
+      "text": "[SYNTHETIC]\nBeginning 2026-11-01, service tokens expire after thirty minutes; before that date they expire after sixty minutes.",
+      "locator": {
+        "section": "Future policy"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-05"
+    },
+    {
+      "id": "BV-06",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-06",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / SGD account eligibility",
+      "text": "[SYNTHETIC]\nThe Atlas connector supports Singapore business SGD accounts, not personal accounts.\n\nAtlas account eligibility\nAccount\tScope\n\n Singapore business SGD \t Pilot supported \n\n Personal SGD \t Not supported \n",
+      "locator": {
+        "section": "SGD account eligibility"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-06",
+      "test_source_html": "<h2>Atlas account eligibility</h2><table><tr><th>Account</th><th>Scope</th></tr><tr><td><p>Singapore business SGD</p></td><td><p>Pilot supported</p></td></tr><tr><td><p>Personal SGD</p></td><td><p>Not supported</p></td></tr></table>"
+    },
+    {
+      "id": "BV-07",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-07",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / USD exception",
+      "text": "[SYNTHETIC]\nSingapore business USD accounts require a separate connector approval; SGD approval does not include USD.",
+      "locator": {
+        "section": "USD exception"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-07"
+    },
+    {
+      "id": "BV-08",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-08",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / Partner channel rule",
+      "text": "[SYNTHETIC]\nPartner-led onboarding requires manual verification; direct onboarding supports automated verification.",
+      "locator": {
+        "section": "Partner channel rule"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-08"
+    },
+    {
+      "id": "BV-09",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-09",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / Launch ticket",
+      "text": "[SYNTHETIC]\nINT-210 implementation is Done; commercial launch remains Pending approval. Owner: Noor.",
+      "locator": {
+        "section": "Launch ticket"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-09"
+    },
+    {
+      "id": "BV-10",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-10",
+      "parent": "bv",
+      "version": 1,
+      "title": "integration / Scope confirmation",
+      "text": "[SYNTHETIC]\nAtlas approval covers the Singapore pilot only. Malaysia expansion has no confirmed approval date.",
+      "locator": {
+        "section": "Scope confirmation"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-10"
+    },
+    {
+      "id": "BV-11",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-11",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Database design rationale",
+      "text": "[SYNTHETIC]\n# Retired webhook rehearsal\nDNS was a historical webhook hypothesis.\nArchived migration rehearsal entry 0: batch 0, checksum 0; no current decision recorded.\nArchived migration rehearsal entry 1: batch 17, checksum 31; no current decision recorded.\nArchived migration rehearsal entry 2: batch 34, checksum 62; no current decision recorded.\nArchived migration rehearsal entry 3: batch 51, checksum 93; no current decision recorded.\nArchived migration rehearsal entry 4: batch 68, checksum 124; no current decision recorded.\nArchived migration rehearsal entry 5: batch 85, checksum 155; no current decision recorded.\nArchived migration rehearsal entry 6: batch 102, checksum 186; no current decision recorded.\nArchived migration rehearsal entry 7: batch 119, checksum 217; no current decision recorded.\nArchived migration rehearsal entry 8: batch 136, checksum 248; no current decision recorded.\nArchived migration rehearsal entry 9: batch 153, checksum 279; no current decision recorded.\nArchived migration rehearsal entry 10: batch 170, checksum 310; no current decision recorded.\nArchived migration rehearsal entry 11: batch 187, checksum 341; no current decision recorded.\nArchived migration rehearsal entry 12: batch 204, checksum 372; no current decision recorded.\nArchived migration rehearsal entry 13: batch 221, checksum 403; no current decision recorded.\nArchived migration rehearsal entry 14: batch 238, checksum 434; no current decision recorded.\nArchived migration rehearsal entry 15: batch 255, checksum 465; no current decision recorded.\nArchived migration rehearsal entry 16: batch 272, checksum 496; no current decision recorded.\nArchived migration rehearsal entry 17: batch 289, checksum 527; no current decision recorded.\nArchived migration rehearsal entry 18: batch 306, checksum 558; no current decision recorded.\nArchived migration rehearsal entry 19: batch 323, checksum 589; no current decision recorded.\nArchived migration rehearsal entry 20: batch 340, checksum 620; no current decision recorded.\nArchived migration rehearsal entry 21: batch 357, checksum 651; no current decision recorded.\nArchived migration rehearsal entry 22: batch 374, checksum 682; no current decision recorded.\nArchived migration rehearsal entry 23: batch 391, checksum 713; no current decision recorded.\nArchived migration rehearsal entry 24: batch 408, checksum 744; no current decision recorded.\nArchived migration rehearsal entry 25: batch 425, checksum 775; no current decision recorded.\nArchived migration rehearsal entry 26: batch 442, checksum 806; no current decision recorded.\nArchived migration rehearsal entry 27: batch 459, checksum 837; no current decision recorded.\nArchived migration rehearsal entry 28: batch 476, checksum 868; no current decision recorded.\nArchived migration rehearsal entry 29: batch 493, checksum 899; no current decision recorded.\nArchived migration rehearsal entry 30: batch 510, checksum 930; no current decision recorded.\nArchived migration rehearsal entry 31: batch 527, checksum 961; no current decision recorded.\nArchived migration rehearsal entry 32: batch 544, checksum 992; no current decision recorded.\nArchived migration rehearsal entry 33: batch 561, checksum 1023; no current decision recorded.\nArchived migration rehearsal entry 34: batch 578, checksum 1054; no current decision recorded.\nArchived migration rehearsal entry 35: batch 595, checksum 1085; no current decision recorded.\nArchived migration rehearsal entry 36: batch 612, checksum 1116; no current decision recorded.\nArchived migration rehearsal entry 37: batch 629, checksum 1147; no current decision recorded.\nArchived migration rehearsal entry 38: batch 646, checksum 1178; no current decision recorded.\nArchived migration rehearsal entry 39: batch 663, checksum 1209; no current decision recorded.\nArchived migration rehearsal entry 40: batch 680, checksum 1240; no current decision recorded.\nArchived migration rehearsal entry 41: batch 697, checksum 1271; no current decision recorded.\nArchived migration rehearsal entry 42: batch 714, checksum 1302; no current decision recorded.\nArchived migration rehearsal entry 43: batch 731, checksum 1333; no current decision recorded.\nArchived migration rehearsal entry 44: batch 748, checksum 1364; no current decision recorded.\nArchived migration rehearsal entry 45: batch 765, checksum 1395; no current decision recorded.\nArchived migration rehearsal entry 46: batch 782, checksum 1426; no current decision recorded.\nArchived migration rehearsal entry 47: batch 799, checksum 1457; no current decision recorded.\nArchived migration rehearsal entry 48: batch 816, checksum 1488; no current decision recorded.\nArchived migration rehearsal entry 49: batch 833, checksum 1519; no current decision recorded.\nArchived migration rehearsal entry 50: batch 850, checksum 1550; no current decision recorded.\nArchived migration rehearsal entry 51: batch 867, checksum 1581; no current decision recorded.\nArchived migration rehearsal entry 52: batch 884, checksum 1612; no current decision recorded.\nArchived migration rehearsal entry 53: batch 901, checksum 1643; no current decision recorded.\nArchived migration rehearsal entry 54: batch 918, checksum 1674; no current decision recorded.\nArchived migration rehearsal entry 55: batch 935, checksum 1705; no current decision recorded.\nArchived migration rehearsal entry 56: batch 952, checksum 1736; no current decision recorded.\nArchived migration rehearsal entry 57: batch 969, checksum 1767; no current decision recorded.\nArchived migration rehearsal entry 58: batch 986, checksum 1798; no current decision recorded.\nArchived migration rehearsal entry 59: batch 1003, checksum 1829; no current decision recorded.\nArchived migration rehearsal entry 60: batch 1020, checksum 1860; no current decision recorded.\nArchived migration rehearsal entry 61: batch 1037, checksum 1891; no current decision recorded.\nArchived migration rehearsal entry 62: batch 1054, checksum 1922; no current decision recorded.\nArchived migration rehearsal entry 63: batch 1071, checksum 1953; no current decision recorded.\nArchived migration rehearsal entry 64: batch 1088, checksum 1984; no current decision recorded.\nArchived migration rehearsal entry 65: batch 1105, checksum 2015; no current decision recorded.\nArchived migration rehearsal entry 66: batch 1122, checksum 2046; no current decision recorded.\nArchived migration rehearsal entry 67: batch 1139, checksum 2077; no current decision recorded.\nArchived migration rehearsal entry 68: batch 1156, checksum 2108; no current decision recorded.\nArchived migration rehearsal entry 69: batch 1173, checksum 2139; no current decision recorded.\nArchived migration rehearsal entry 70: batch 1190, checksum 2170; no current decision recorded.\nArchived migration rehearsal entry 71: batch 1207, checksum 2201; no current decision recorded.\nArchived migration rehearsal entry 72: batch 1224, checksum 2232; no current decision recorded.\nArchived migration rehearsal entry 73: batch 1241, checksum 2263; no current decision recorded.\nArchived migration rehearsal entry 74: batch 1258, checksum 2294; no current decision recorded.\nArchived migration rehearsal entry 75: batch 1275, checksum 2325; no current decision recorded.\nArchived migration rehearsal entry 76: batch 1292, checksum 2356; no current decision recorded.\nArchived migration rehearsal entry 77: batch 1309, checksum 2387; no current decision recorded.\nArchived migration rehearsal entry 78: batch 1326, checksum 2418; no current decision recorded.\nArchived migration rehearsal entry 79: batch 1343, checksum 2449; no current decision recorded.\nArchived migration rehearsal entry 80: batch 1360, checksum 2480; no current decision recorded.\nArchived migration rehearsal entry 81: batch 1377, checksum 2511; no current decision recorded.\nArchived migration rehearsal entry 82: batch 1394, checksum 2542; no current decision recorded.\nArchived migration rehearsal entry 83: batch 1411, checksum 2573; no current decision recorded.\nArchived migration rehearsal entry 84: batch 1428, checksum 2604; no current decision recorded.\nArchived migration rehearsal entry 85: batch 1445, checksum 2635; no current decision recorded.\nArchived migration rehearsal entry 86: batch 1462, checksum 2666; no current decision recorded.\nArchived migration rehearsal entry 87: batch 1479, checksum 2697; no current decision recorded.\nArchived migration rehearsal entry 88: batch 1496, checksum 2728; no current decision recorded.\nArchived migration rehearsal entry 89: batch 1513, checksum 2759; no current decision recorded.\nArchived migration rehearsal entry 90: batch 1530, checksum 2790; no current decision recorded.\nArchived migration rehearsal entry 91: batch 1547, checksum 2821; no current decision recorded.\nArchived migration rehearsal entry 92: batch 1564, checksum 2852; no current decision recorded.\nArchived migration rehearsal entry 93: batch 1581, checksum 2883; no current decision recorded.\nArchived migration rehearsal entry 94: batch 1598, checksum 2914; no current decision recorded.\nArchived migration rehearsal entry 95: batch 1615, checksum 2945; no current decision recorded.\nArchived migration rehearsal entry 96: batch 1632, checksum 2976; no current decision recorded.\nArchived migration rehearsal entry 97: batch 1649, checksum 3007; no current decision recorded.\nArchived migration rehearsal entry 98: batch 1666, checksum 3038; no current decision recorded.\nArchived migration rehearsal entry 99: batch 1683, checksum 3069; no current decision recorded.\nArchived migration rehearsal entry 100: batch 1700, checksum 3100; no current decision recorded.\nArchived migration rehearsal entry 101: batch 1717, checksum 3131; no current decision recorded.\nArchived migration rehearsal entry 102: batch 1734, checksum 3162; no current decision recorded.\nArchived migration rehearsal entry 103: batch 1751, checksum 3193; no current decision recorded.\nArchived migration rehearsal entry 104: batch 1768, checksum 3224; no current decision recorded.\nArchived migration rehearsal entry 105: batch 1785, checksum 3255; no current decision recorded.\nArchived migration rehearsal entry 106: batch 1802, checksum 3286; no current decision recorded.\nArchived migration rehearsal entry 107: batch 1819, checksum 3317; no current decision recorded.\nArchived migration rehearsal entry 108: batch 1836, checksum 3348; no current decision recorded.\nArchived migration rehearsal entry 109: batch 1853, checksum 3379; no current decision recorded.\nArchived migration rehearsal entry 110: batch 1870, checksum 3410; no current decision recorded.\nArchived migration rehearsal entry 111: batch 1887, checksum 3441; no current decision recorded.\nArchived migration rehearsal entry 112: batch 1904, checksum 3472; no current decision recorded.\nArchived migration rehearsal entry 113: batch 1921, checksum 3503; no current decision recorded.\nArchived migration rehearsal entry 114: batch 1938, checksum 3534; no current decision recorded.\nArchived migration rehearsal entry 115: batch 1955, checksum 3565; no current decision recorded.\nArchived migration rehearsal entry 116: batch 1972, checksum 3596; no current decision recorded.\nArchived migration rehearsal entry 117: batch 1989, checksum 3627; no current decision recorded.\nArchived migration rehearsal entry 118: batch 2006, checksum 3658; no current decision recorded.\nArchived migration rehearsal entry 119: batch 2023, checksum 3689; no current decision recorded.\nArchived migration rehearsal entry 120: batch 2040, checksum 3720; no current decision recorded.\nArchived migration rehearsal entry 121: batch 2057, checksum 3751; no current decision recorded.\nArchived migration rehearsal entry 122: batch 2074, checksum 3782; no current decision recorded.\nArchived migration rehearsal entry 123: batch 2091, checksum 3813; no current decision recorded.\nArchived migration rehearsal entry 124: batch 2108, checksum 3844; no current decision recorded.\nArchived migration rehearsal entry 125: batch 2125, checksum 3875; no current decision recorded.\nArchived migration rehearsal entry 126: batch 2142, checksum 3906; no current decision recorded.\nArchived migration rehearsal entry 127: batch 2159, checksum 3937; no current decision recorded.\nArchived migration rehearsal entry 128: batch 2176, checksum 3968; no current decision recorded.\nArchived migration rehearsal entry 129: batch 2193, checksum 3999; no current decision recorded.\nArchived migration rehearsal entry 130: batch 2210, checksum 4030; no current decision recorded.\nArchived migration rehearsal entry 131: batch 2227, checksum 4061; no current decision recorded.\nArchived migration rehearsal entry 132: batch 2244, checksum 4092; no current decision recorded.\nArchived migration rehearsal entry 133: batch 2261, checksum 4123; no current decision recorded.\nArchived migration rehearsal entry 134: batch 2278, checksum 4154; no current decision recorded.\nArchived migration rehearsal entry 135: batch 2295, checksum 4185; no current decision recorded.\nArchived migration rehearsal entry 136: batch 2312, checksum 4216; no current decision recorded.\nArchived migration rehearsal entry 137: batch 2329, checksum 4247; no current decision recorded.\nArchived migration rehearsal entry 138: batch 2346, checksum 4278; no current decision recorded.\nArchived migration rehearsal entry 139: batch 2363, checksum 4309; no current decision recorded.\nArchived migration rehearsal entry 140: batch 2380, checksum 4340; no current decision recorded.\nArchived migration rehearsal entry 141: batch 2397, checksum 4371; no current decision recorded.\nArchived migration rehearsal entry 142: batch 2414, checksum 4402; no current decision recorded.\nArchived migration rehearsal entry 143: batch 2431, checksum 4433; no current decision recorded.\nArchived migration rehearsal entry 144: batch 2448, checksum 4464; no current decision recorded.\nArchived migration rehearsal entry 145: batch 2465, checksum 4495; no current decision recorded.\nArchived migration rehearsal entry 146: batch 2482, checksum 4526; no current decision recorded.\nArchived migration rehearsal entry 147: batch 2499, checksum 4557; no current decision recorded.\nArchived migration rehearsal entry 148: batch 2516, checksum 4588; no current decision recorded.\nArchived migration rehearsal entry 149: batch 2533, checksum 4619; no current decision recorded.\nArchived migration rehearsal entry 150: batch 2550, checksum 4650; no current decision recorded.\nArchived migration rehearsal entry 151: batch 2567, checksum 4681; no current decision recorded.\nArchived migration rehearsal entry 152: batch 2584, checksum 4712; no current decision recorded.\nArchived migration rehearsal entry 153: batch 2601, checksum 4743; no current decision recorded.\nArchived migration rehearsal entry 154: batch 2618, checksum 4774; no current decision recorded.\nArchived migration rehearsal entry 155: batch 2635, checksum 4805; no current decision recorded.\nArchived migration rehearsal entry 156: batch 2652, checksum 4836; no current decision recorded.\nArchived migration rehearsal entry 157: batch 2669, checksum 4867; no current decision recorded.\nArchived migration rehearsal entry 158: batch 2686, checksum 4898; no current decision recorded.\nArchived migration rehearsal entry 159: batch 2703, checksum 4929; no current decision recorded.\nArchived migration rehearsal entry 160: batch 2720, checksum 4960; no current decision recorded.\nArchived migration rehearsal entry 161: batch 2737, checksum 4991; no current decision recorded.\nArchived migration rehearsal entry 162: batch 2754, checksum 5022; no current decision recorded.\nArchived migration rehearsal entry 163: batch 2771, checksum 5053; no current decision recorded.\nArchived migration rehearsal entry 164: batch 2788, checksum 5084; no current decision recorded.\nArchived migration rehearsal entry 165: batch 2805, checksum 5115; no current decision recorded.\nArchived migration rehearsal entry 166: batch 2822, checksum 5146; no current decision recorded.\nArchived migration rehearsal entry 167: batch 2839, checksum 5177; no current decision recorded.\nArchived migration rehearsal entry 168: batch 2856, checksum 5208; no current decision recorded.\nArchived migration rehearsal entry 169: batch 2873, checksum 5239; no current decision recorded.\nArchived migration rehearsal entry 170: batch 2890, checksum 5270; no current decision recorded.\nArchived migration rehearsal entry 171: batch 2907, checksum 5301; no current decision recorded.\nArchived migration rehearsal entry 172: batch 2924, checksum 5332; no current decision recorded.\nArchived migration rehearsal entry 173: batch 2941, checksum 5363; no current decision recorded.\nArchived migration rehearsal entry 174: batch 2958, checksum 5394; no current decision recorded.\nArchived migration rehearsal entry 175: batch 2975, checksum 5425; no current decision recorded.\nArchived migration rehearsal entry 176: batch 2992, checksum 5456; no current decision recorded.\nArchived migration rehearsal entry 177: batch 3009, checksum 5487; no current decision recorded.\nArchived migration rehearsal entry 178: batch 3026, checksum 5518; no current decision recorded.\nArchived migration rehearsal entry 179: batch 3043, checksum 5549; no current decision recorded.\n# Current ledger migration decision\nLedger migration chose a shadow table to allow rollback without blocking existing writes.",
+      "locator": {
+        "section": "Database design rationale"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-11"
+    },
+    {
+      "id": "BV-12",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-12",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Cutover ticket",
+      "text": "[SYNTHETIC]\nMIG-301 is In Progress. Owner: Chen. The remaining blocker is unmatched settlement totals.",
+      "locator": {
+        "section": "Cutover ticket"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-12"
+    },
+    {
+      "id": "BV-13",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-13",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Rollback signal",
+      "text": "[SYNTHETIC]\nRoll back the ledger migration if settlement differences exceed five basis points.",
+      "locator": {
+        "section": "Rollback signal"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-13"
+    },
+    {
+      "id": "BV-14",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-14",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Past rehearsal",
+      "text": "[SYNTHETIC]\nThe September rehearsal used a ten-basis-point threshold; it is superseded by the October five-basis-point rule.",
+      "locator": {
+        "section": "Past rehearsal"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-14"
+    },
+    {
+      "id": "BV-15",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-15",
+      "parent": "bv",
+      "version": 1,
+      "title": "migration / Unapproved alternative",
+      "text": "[SYNTHETIC]\nDual-region active writes were proposed but not approved; the accepted migration uses one writer.",
+      "locator": {
+        "section": "Unapproved alternative"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-15"
+    },
+    {
+      "id": "BV-16",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-16",
+      "parent": "bv",
+      "version": 1,
+      "title": "webhook / Webhook incident cause",
+      "text": "[SYNTHETIC]\nThe webhook backlog came from an exhausted worker pool, not DNS resolution.",
+      "locator": {
+        "section": "Webhook incident cause"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-16"
+    },
+    {
+      "id": "BV-17",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-17",
+      "parent": "bv",
+      "version": 1,
+      "title": "webhook / Webhook fix status",
+      "text": "[SYNTHETIC]\nHOOK-410 worker expansion is Done. HOOK-411 load shedding is In Progress. Owner: Ravi.",
+      "locator": {
+        "section": "Webhook fix status"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-17"
+    },
+    {
+      "id": "BV-18",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-18",
+      "parent": "BV-03",
+      "version": 1,
+      "title": "Authentication signing design reply",
+      "text": "[SYNTHETIC]\n10:00 authentication signing reply: The shared-secret proposal was withdrawn. Per-client asymmetric signing was accepted.",
+      "locator": {
+        "channel": "synthetic-auth",
+        "root": "BV-03",
+        "message": "BV-18"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-18"
+    },
+    {
+      "id": "BV-19",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-19",
+      "parent": "bv",
+      "version": 1,
+      "title": "webhook / Current response procedure",
+      "text": "[SYNTHETIC]\nFor webhook backlog, pause noncritical jobs before adding workers; do not retry every webhook.",
+      "locator": {
+        "section": "Current response procedure"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-19"
+    },
+    {
+      "id": "BV-20",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-20",
+      "parent": "bv",
+      "version": 1,
+      "title": "webhook / External commitment",
+      "text": "[SYNTHETIC]\nWebhook latency targets apply to the pilot only; no general customer latency guarantee is approved.",
+      "locator": {
+        "section": "External commitment"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-20"
+    },
+    {
+      "id": "BV-21",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-21",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Ownership decision",
+      "text": "[SYNTHETIC]\nMina owns reconciliation exceptions; the platform team owns ingestion failures.",
+      "locator": {
+        "section": "Ownership decision"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-21"
+    },
+    {
+      "id": "BV-22",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-22",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Batch deadline",
+      "text": "[SYNTHETIC]\nFor Singapore weekday batches the deadline is 18:00 SGT; weekend batches have no same-day deadline.",
+      "locator": {
+        "section": "Batch deadline"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-22"
+    },
+    {
+      "id": "BV-23",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-23",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Missing input",
+      "text": "[SYNTHETIC]\nA batch with missing bank files must remain Pending, not be marked reconciled.",
+      "locator": {
+        "section": "Missing input"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-23"
+    },
+    {
+      "id": "BV-24",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-24",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Pilot blocker",
+      "text": "[SYNTHETIC]\nREC-502 is Blocked by an unsigned bank-file agreement. Owner: Mina.",
+      "locator": {
+        "section": "Pilot blocker"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-24"
+    },
+    {
+      "id": "BV-25",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-25",
+      "parent": "bv",
+      "version": 1,
+      "title": "reconciliation / Old operating note",
+      "text": "[SYNTHETIC]\nThe old 17:00 deadline applies only to the retired September pilot, not current weekday batches.",
+      "locator": {
+        "section": "Old operating note"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-25"
+    },
+    {
+      "id": "BV-26",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-26",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Partner channel membership",
+      "text": "[SYNTHETIC]\nThe private partner-escalation channel is available to eng_a but not eng_b despite their shared engineering role.",
+      "locator": {
+        "section": "Partner channel membership"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-26"
+    },
+    {
+      "id": "BV-27",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-27",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Security comment",
+      "text": "[SYNTHETIC]\nCANARY_BV_RESTRICTED: security-only authentication investigation; no general employee disclosure.",
+      "locator": {
+        "section": "Security comment"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-27"
+    },
+    {
+      "id": "BV-28",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-28",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Approved public guidance",
+      "text": "[SYNTHETIC]\nPartner users may read approved integration eligibility guidance; incident details are not public guidance.",
+      "locator": {
+        "section": "Approved public guidance"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-28"
+    },
+    {
+      "id": "BV-29",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-29",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Offboarding rule",
+      "text": "[SYNTHETIC]\nRemoval from a source channel prevents future citation and history access; previously saved copies cannot be recalled.",
+      "locator": {
+        "section": "Offboarding rule"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-29"
+    },
+    {
+      "id": "BV-30",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-30",
+      "parent": "bv",
+      "version": 1,
+      "title": "access / Unknown authority",
+      "text": "[SYNTHETIC]\nWhen current source access cannot be verified, do not treat a prior allow decision as current permission.",
+      "locator": {
+        "section": "Unknown authority"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-30"
+    },
+    {
+      "id": "BV-31",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-31",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Settlement scope",
+      "text": "[SYNTHETIC]\nSame-day settlement is approved for Singapore SGD pilot accounts; MYR accounts are outside this scope.",
+      "locator": {
+        "section": "Settlement scope"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-31"
+    },
+    {
+      "id": "BV-32",
+      "tenant": "synthetic-demo",
+      "source": "drive",
+      "workspace": "demo-drive",
+      "native_id": "synthetic-BV-32",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Future settlement schedule",
+      "text": "[SYNTHETIC]\nThe proposed November hourly schedule is not approved. Current settlement is daily.",
+      "locator": {
+        "section": "Future settlement schedule"
+      },
+      "links": [],
+      "policy": {
+        "kind": "drive",
+        "direct_users": [],
+        "inherited_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/drive/BV-32"
+    },
+    {
+      "id": "BV-33",
+      "tenant": "synthetic-demo",
+      "source": "confluence",
+      "workspace": "demo-confluence",
+      "native_id": "synthetic-BV-33",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Settlement dependency",
+      "text": "[SYNTHETIC]\nSET-610 is In Progress because bank confirmation is missing. Owner: Eva.",
+      "locator": {
+        "section": "Settlement dependency"
+      },
+      "links": [],
+      "policy": {
+        "kind": "confluence",
+        "space_groups": [
+          "staff"
+        ],
+        "page_groups": [
+          "staff"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/confluence/BV-33"
+    },
+    {
+      "id": "BV-34",
+      "tenant": "synthetic-demo",
+      "source": "jira",
+      "workspace": "demo-jira",
+      "native_id": "synthetic-BV-34",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Contradictory proposal",
+      "text": "[SYNTHETIC]\nAn unsigned draft says MYR settlement is available; it is a proposal, not the approved operating rule.",
+      "locator": {
+        "section": "Contradictory proposal"
+      },
+      "links": [],
+      "policy": {
+        "kind": "jira",
+        "project_groups": [
+          "staff"
+        ],
+        "issue_groups": [
+          "staff"
+        ],
+        "comment_groups": null
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/jira/BV-34"
+    },
+    {
+      "id": "BV-35",
+      "tenant": "synthetic-demo",
+      "source": "slack",
+      "workspace": "demo-slack",
+      "native_id": "synthetic-BV-35",
+      "parent": "bv",
+      "version": 1,
+      "title": "settlement / Escalation guidance",
+      "text": "[SYNTHETIC]\nIf bank confirmation is absent, ask Eva for status; do not promise a completed settlement.",
+      "locator": {
+        "section": "Escalation guidance"
+      },
+      "links": [],
+      "policy": {
+        "kind": "slack",
+        "channel": "incident",
+        "private": true,
+        "members": [
+          "eng_a",
+          "product_ops",
+          "security"
+        ]
+      },
+      "policy_version": 1,
+      "active": true,
+      "source_updated_at": "2026-10-07T12:00:00+08:00",
+      "source_url": "fixture://synthetic-demo/slack/BV-35"
+    }
+  ]
+}

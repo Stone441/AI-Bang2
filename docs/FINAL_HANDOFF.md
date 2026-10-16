@@ -1,22 +1,22 @@
-# ContextLedger · 提交前收尾 · 2026-10-16
+# ContextLedger · 唯一交付入口 · 2026-10-16
 
-**停止新增功能、诊断和付费试验，冻结当前原型与提交材料。** 这是附已知限制的提交候选，不是完整语义Goal验收通过。
+本地仓库与资料收口完成，后续从 **AI-Bang2-submission-final-20261016 / chore/submission-final-check-20261016** 继续。完整结果见[收口报告](reviews/2026-10-16-final-check/REPORT.md)。
 
-唯一收尾入口：[收尾报告与包清单](reviews/2026-10-16-submission-closeout/REPORT.md)。旧交接版本保留在同目录prior-FINAL_HANDOFF.md，不再用旧文档中的版本、端口、测试数或“工具原件缺失”描述当前状态。
+应用代码冻结为2b79036；本分支在37578c4基础上只补历史证据与文档。最终源码ZIP对应的精确提交、文件哈希和检查结果位于本目录artifacts/submission-final-20261016/MANIFEST.json。旧semantic包保留，不再作为完整资料包入口。
 
-- 当前源码候选包含最新UI、四源只读集成、分题综合及显式选择的隔离引文审查；冻结commit见包清单。
-- 当前用户试用仍为fa88f2f，已核对入口进程、后端指纹和app.js；包含用户确认的即时证据抽屉。它不是最新实验后端。
-- 最新隔离引文模式：已知短/完整引文真实对照2/2通过；完整11题首题发生引文审查拒绝，其余10题未运行。未解决问题如实披露，不再自动开启下一轮付费试验。
-- 三个应用角色不等于三个完整原生员工身份。G1/G2没有被自动标记通过。
-- 原全局USD20账本、旧unknown及人工专属额度保留，关闭grant不复用。当前试用服务未重启/切换。
+## 交付内容
 
-## 已整理的提交材料
+- [英文提交文案](SUBMISSION_CANDIDATE.md)、[演示说明](reviews/2026-10-16-final-check/DEMO.md)、[架构图](../assets/submission/contextledger-architecture.svg)、[封面](../assets/submission/contextledger-cover.png)。
+- 本地artifacts/submission-final-20261016：新源码ZIP、文案、封面、架构、演示及私有CodeBuddy证明包。证明包不在Git中；未授权公开对话原件。
+- [PR草稿](reviews/2026-10-16-final-check/PR_DRAFT.md)，尚未推送或创建PR。
+- 历史真实验收三报告已补入reviews/2026-10-15-team-live；14份补录文件来源/哈希见最终检查ARCHIVED_FILES.json。
 
-[英文可复制文案](SUBMISSION_CANDIDATE.md)、[演示步骤](reviews/2026-10-16-submission-closeout/DEMO.md)、封面、最新架构图、冻结源码包、私有CodeBuddy真实证明包。15份真实工具原件已在主目录找到并与原manifest逐一核对，不再要求队友重复提供已存在文件。
+## 运行与能力边界
 
-## 团队最后操作
+人工试用仍为fa88f2f，保留用户确认的UI；最新隔离引文实验未切入。原main目录的“打开试用页面.command”为本机适配，指向semantic私有运行态；源码中的普通启动器不承担此功能。全新检出可用 `python3 -m scripts.reviewer_demo` 启动无凭据fixture/fake预览；这不证明真实模型质量。
 
-1. 看收尾报告并确认接受明确披露的原型质量限制；用当前试用页及fixture实验室完成最终观看/签核。
-2. 将冻结源码候选通过正常PR流程发布到赛事填写的GitHub版本，保持队友改动；随后使用已核对的材料上传并提交。当前尚未push/merge或外部上传，也未冒充赛事已提交。
+800项离线测试通过；完整11题真实语义验收首题拒绝、其余10题未运行。四源原生接入、应用角色控制、独立员工身份矩阵、真人G1/G2分别计证，不混称全通过。停止付费诊断和新增功能。
 
-材料准备不需要再发起模型试验。可选视频缺失不写成已完成；可选公网链接不能填本地URL。真正的最终提交按钮由团队在核对内容后执行。
+## 下一步
+
+确认披露限制后，发布本候选到GitHub，再进行最终材料审核与赛事提交。当前远程main仍为0d5be30。本地提交不是push/merge，材料准备不是G2通过或比赛提交。
