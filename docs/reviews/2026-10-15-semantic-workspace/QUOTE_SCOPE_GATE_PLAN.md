@@ -1,0 +1,11 @@
+# Proposed quote-scope discrimination gate
+
+Status: prepared only; no new authorization, grant or calls. Candidate4adbece; freeze exact runtime and current originals before any dispatch. All previous grants remain closed.
+
+Scope: same existing four-source synthetic corpus read-only, same approved DeepSeek provider, independent automatic grant maximum24 calls/USD1 on original USD20 ledger. Preserve old pending/unknown and human allowance; no source writes, new providers, deployment or user trial changes.
+
+First perform two reviewer-only calls, once each, using quote-scope-review-cases.json. Both ask the SAME provenance question, carry the SAME claim and full current source, and differ only in selected contiguous quote. This isolates quote completeness without confounding responsiveness. Short quote must be judged unsupported; full quote must be supported and responsive. The negative is expected to be rejected by normal runtime validation: a transport/JSON/schema error does not count as a correct negative. Inspect the explicit claim verdict and all review flags, not just request failure. No draft is shown to a user. Before each review dispatch recheck the authorized native source/current version and use the original model-input permission boundary.
+
+If either judgment is wrong/unknown or source version changes, close immediately, no retry. Only after both pass independent source assessment run all original11 frozen acceptance questions once, default partial first; each uses generation+review and independent manual business/quote assessment before advancing.2 reviewer calls+22 acceptance calls=24 maximum. Any acceptance or accounting failure stops; no automatic follow-on grant. No new unknown may be folded into baseline. Browser/history/citation observation only after successful completion, without extra model calls.
+
+These two calibration cases are authored from known failure and are not blind evaluation or a substitute for the11 questions. Their purpose is to decide whether the specific reviewer defect remains before spending calls on the full suite. Provider acceptance alone is never semantic acceptance. Report actuals and not_run explicitly.
