@@ -1,0 +1,19 @@
+....................E..................................
+======================================================================
+ERROR: test_partition_diagnostics_preserve_exact_substring_boundary (test_sectioned_answer.SectionedAnswer.test_partition_diagnostics_preserve_exact_substring_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/tests/test_sectioned_answer.py", line 29, in test_partition_diagnostics_preserve_exact_substring_boundary
+    validate_answer_parts([changed],[{}],'Status of PAY-102?')
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/brain/sectioned_answer.py", line 46, in validate_answer_parts
+    raise OutputValidationError('Invalid answer part','part_question_not_substring')
+          ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/brain/deepseek.py", line 58, in __init__
+    raise ValueError('Unknown output validation reason')
+ValueError: Unknown output validation reason
+
+----------------------------------------------------------------------
+Ran 55 tests in 0.886s
+
+FAILED (errors=1)

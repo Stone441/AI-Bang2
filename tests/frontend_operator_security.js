@@ -58,6 +58,9 @@ function seed(){for(const id of ['answer','other','previewBody'])get(id).append(
   assert.match(visibleText(get('answer')),/GA is not approved/);
   assert.match(visibleText(get('answer')),/Evidence review usage receipt/);
   assert.match(visibleText(get('answer')),/US\$0\.000045/);
+  vm.runInContext("renderAnswer({model:'isolated-test',claims:[],evidence:[],uncertainties:[],model_call:{called:true,prompt_tokens:100,completion_tokens:20,total_tokens:120,accounted_upper_micro_usd:54},model_quote_reviews:[{called:true,prompt_tokens:80,completion_tokens:10,total_tokens:90,accounted_upper_micro_usd:30}],model_review:{called:true,prompt_tokens:110,completion_tokens:10,total_tokens:120,accounted_upper_micro_usd:45}})",context);
+  assert.equal((visibleText(get('answer')).match(/Conservative cost estimate/g)||[]).length,3);
+  assert.match(visibleText(get('answer')),/80 input \+ 10 output = 90 tokens/);
   vm.runInContext("renderAnswer({request_id:'revoked',unavailable:true,message:'No longer available'})",context);
   assert.doesNotMatch(visibleText(get('answer')),/GA is not approved|review usage|Pilot only/);
   assert.doesNotMatch(visibleText(get('answer')),/Export answer/);

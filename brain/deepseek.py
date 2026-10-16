@@ -20,7 +20,7 @@ ENDPOINT = 'https://api.deepseek.com/chat/completions'
 MODEL = 'deepseek-flash'
 # Official pricing re-read on this Singapore date; evidence is kept separately.
 # Never advance this date without reviewing the official model/rates.
-PRICE_DATE = date(2026, 10, 15)
+PRICE_DATE = date(2026, 10, 16)
 PRICE_SOURCE = 'https://api-docs.deepseek.com/quick_start/pricing/'
 CONTEXT_TOKENS = 1_048_576
 OUTPUT_TOKENS = 1024
@@ -49,7 +49,11 @@ class OutputValidationError(ValueError):
     """Only fixed local reasons and bounded positions may enter diagnostics."""
     details = frozenset(('claim_shape', 'claim_text_length', 'citation_ids',
         'support_shape', 'quote_length', 'quote_mismatch', 'quote_coverage',
-        'identifier_quote', 'temporal_quote'))
+        'identifier_quote', 'temporal_quote', 'part_review_reasoning', 'part_review_shape',
+        'part_review_completeness', 'part_review_gap_support',
+        'quote_review_shape', 'quote_review_unsupported',
+        'part_metadata_shape', 'part_question_shape', 'part_question_not_substring',
+        'part_question_repeated', 'part_status_or_indices', 'part_wire_shape', 'part_resolution'))
 
     def __init__(self, message, detail):
         super().__init__(message)
@@ -58,9 +62,12 @@ class OutputValidationError(ValueError):
         self.detail = detail
         self.claim_index = None
         self.support_index = None
+        self.citation_issue = None
 
     def diagnostic(self):
         result = {'validation_detail': self.detail}
+        if self.citation_issue in ('shape', 'unknown_id', 'duplicate_id', 'support_count'):
+            result['citation_issue'] = self.citation_issue
         for name, bound in (('claim_index', 52), ('support_index', 4)):
             value = getattr(self, name)
             if type(value) is int and 0 <= value < bound:
@@ -269,6 +276,8 @@ class DeepSeekEvidenceModel:
             output = json.loads(content, object_pairs_hook=unique_object)
             category='structure'
             if stage=='review' and isinstance(output,dict):
+                if 'quote_supported' in output:
+                    diagnostic['review_quote_supported']=output['quote_supported'] if type(output['quote_supported']) is bool else None
                 diagnostic['review_question_covered']=output.get('question_covered') if type(output.get('question_covered')) is bool else None
                 diagnostic['review_filtered_answer_complete']=output.get('filtered_answer_complete') if type(output.get('filtered_answer_complete')) is bool else None
                 if 'selection_safe' in output or 'selected' in output:

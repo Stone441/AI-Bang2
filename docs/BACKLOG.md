@@ -1,5 +1,28 @@
 # Backlog · 2026-10-05
 
+2026-10-16 仓库与资料本地收口 verified：补录team-live及历史fixture证据，统一候选/人工试用/远端版本与交付入口。剩余为GitHub发布、团队G1/G2和实际表单提交；不恢复诊断或收费循环。
+
+2026-10-16 收尾任务完成：本地提交包与800项干净归档验证。剩余仅团队最终签核、正常PR发布及赛事上传提交；完整语义质量保留已知限制，不再自动诊断。 见 [提交收尾报告](reviews/2026-10-16-submission-closeout/REPORT.md)。
+
+2026-10-16 最新真实复验95198aa：赔偿默认题通过，默认部分题独立复审拒绝（JSON合法，具体分题条件无法从旧诊断还原）；按规则立即停止，剩余9题未发。4调用/USD0.005868，无新unknown/人工增量，授权关闭。781全量/15DOM通过；后续安全诊断细分54定向通过，未复跑模型、未更换用户已确认页面。Goal仍未完成。见 final-v3-results.json / REPORT.md。
+
+2026-10-16 人工试用：用户确认整体体验及证据抽屉修复可用。只读核对5份去重v3实际答案，三默认类别正确，本次部分题缺口保留；18段引文与保存证据精确匹配。赔偿题缺失断言的引用范围仍需注意；不是全11题或G1/G2通过。自动grant继续关闭，无追加付费调用。见 human-results-20261016.json / REPORT.md。
+
+2026-10-15 候选交付核对：11818ea 干净Git归档独立启动/health/UI/正常退出通过（fixture_fake_model，不代表综合质量）。审计表已更新当前版本；v3真实质量仍未验证，四轮grant全部关闭，不复用、不自动开启付费循环。见 candidate-smoke.json 与 COMPLETION_AUDIT.md。
+
+2026-10-15 DEV-SEMANTIC-WORKSPACE 本地 v3：显式区分 requested information 与带引用缺口说明，所有生成格式必须通过逐题独立完整性复审，分歧拒绝而不修复。780项Python/59.217秒、14DOM通过；最后提示调整33项通过。Chrome mock验证Partial answer、缺口引用及重新鉴权历史；非真实模型质量。四轮grant继续关闭，无新付费/源写/部署。详见 reviews/2026-10-15-semantic-workspace/VALUE_COMPLETENESS.md。
+
+2026-10-15 DEV-SEMANTIC-WORKSPACE 最新第四轮：b21f953 真实默认部分题业务分类失败（无日期却 supported），冲突及在途发布题原文对照通过；3份审计答案/2份客户端结果，6调用/USD0.008552，13项引用/版本核对通过。业务停止门未等待独立核验，已记录延迟派发偏差；本地加入逐题独立评估门，6项策略测试通过。新unknown0、人工不变、grant已关闭，四轮累计42调用/USD0.057118。不再自动付费循环，不切线上，Goal未完成。详见 reviews/2026-10-15-semantic-workspace/REPORT.md。
+
+2026-10-15 DEV-SEMANTIC-WORKSPACE 验证增量：763Python/55.443秒、14DOM通过；Chrome手机390×844历史重开/全屏引用实际观察，27次fixture原题/改写角色检索无员工必需证据缺失（非答案语义通过）。Embedding当前无已装运行库/新provider授权，暂不接入。真实综合质量、全错误态浏览器及最终候选冻结仍in_progress，未部署。
+
+2026-10-15 DEV-SEMANTIC-WORKSPACE 第一增量：顶部导航/业务题卡/紧凑四源摘要/引用抽屉已实现，14DOM、17sectioned及1HTTP包装通过；Chrome fixture 题卡不提交、实际问答、抽屉原文/Escape验证。冻结三题+六改写 oracle，九次fixture角色检索留档。真实综合质量、移动端、安全完整回归及 embedding 尚未完成，Goal保持in_progress。见 [候选报告](reviews/2026-10-15-semantic-workspace/REPORT.md)。
+
+| Task | Status | Next / acceptance |
+|---|---|---|
+| DEV-SEMANTIC-WORKSPACE | in_progress | 复用 sectioned-synthesis；冻结充分/部分/不足业务 oracle，完成顶部导航/引用抽屉/全部失败状态，分模式验证安全与答案质量；不自动发布 |
+| DEV-SEMANTIC-RETRIEVAL | not_started | 先测现有召回与阶段时间；最多两小时本地实验准备，无新增 provider/download/依赖/费用授权则记录条件缺口，前三项继续 |
+
 2026-10-15 主线集成：用户明确要求先合并main，之后继续前端、项目亮点、候选题问答及开发细节。本轮成果作为下一轮开发基线，不是正式封版。基准origin/main5727300，发布分支release/closeout-main-20261015；干净候选763项55.045s、14DOM、25组离线检查通过，运行代码哈希一致，发布前扫描常见密钥及已知本机项目凭据。真实验证、JSON开放风险、G1/G2分列保留；不切换线上。实际PR/合并SHA以GitHub记录为准。[合并验证](reviews/2026-10-15-main-closeout-merge/REPORT.md)。
 
 2026-10-15 四源题继续排查：用户明确额度充分，建立独立8调用/USD1诊断grant（原USD20全局不变）。固定10cc970四源题本次生成/独立审查/Agent当前原文对照通过，2调用/USD0.003454/25.648s，新unknown0，人工9次/4064不变。生成及审查JSON均合法无重复字段，上次json故障未复现、根因风险仍开放，不以一次成功关闭或降级。未改业务代码/解析，77定向离线通过，未切换生产或push。[中文继续排查报告](reviews/2026-10-15-sectioned-live/json-investigation/REPORT.md)。
@@ -368,3 +391,91 @@ DEV-12-LIFECYCLE live increment：AUTH-015完成CF content revision1→2→3恢�
 2026-10-06 统一候选fix/review-integrated-candidate：331bd28 clean archive357方法17.406s/五fixture/2Node/HTTP实际通过；此前323cb93的356记录保留。R5修复现有入口/历史/诊断而无新功能；真实只读Agent复核，browser新49161批准后仍saved site denial，正常设置入口未暴露。R2再次8 native readonly/fake checks有效，不冒称创建到回答SLA。R3六自然问题/无证据/长文真正模型小集保留前后失败，通用hyphen拆分和quoted-ID guard修复；六自然题原子事实覆盖，但多余背景与长文review拒答仍partial，用户已明确批准两项质量延期，冻结不称通过。原账本48usage逐笔只读核对、保守增28194microUSD，不清预算。集成证据review-integrated-20261006，fixed code/source hash/进程加载模式分列；G1/G2未运行。下一浏览器实际许可/质量处置/团队集中观察，目标保持active而非假称完整交付。
 
 2026-10-06 用户明确回复“批准明确延期并交团队验收”：long named-event/similar-event final answer rejection及非必答背景作为固定331bd28已知质量缺口，原失败/诊断/费用保留，不放宽review，不批准G1/G2或发布提交。browser保存拒绝是独立未解除工具条件；其它固定候选开发与状态准备已收敛。
+
+### 2026-10-15 semantic workspace bounded live result
+
+Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conservative; 2 generation failures, 1 partial-category mismatch. No new unknown, human allowance unchanged, no production switch. Grant run closed after delayed manual stop (private runner wrong status field corrected). Remaining quality/safety/timing checks not complete; Goal in_progress. See docs/reviews/2026-10-15-semantic-workspace/REPORT.md.
+
+### Semantic syntax-first result ·2026-10-15
+
+250c3c8: all11 attempted once,9 accepted,2 rejected (duplicate citation ID / answer-part citation contract).20 calls/USD0.026639 conservative, no new unknown or human allowance use.17 exact quote/version checks against native originals; real browser history/failure/partial/native citation/Escape observed. Display-only null counter/native mode labels fixed locally, three related frontend suites passed. Candidate still not fully accepted; next local protocol simplification must preserve strict canonical review and needs its own future live validation. See semantic-workspace REPORT.md.
+
+
+## 2026-10-16 定向诊断后续
+
+默认部分题一次真实诊断：合法 JSON 在生成分题字段校验处拒绝，1 次调用，无新 unknown，人工额度不变；未复现上一轮审查失败。已补固定枚举细分诊断及原文分题格式说明，55 项回归通过；真实效果未验证，现用试用页保持运行。详见 [TARGETED_DIAGNOSTIC.md](reviews/2026-10-15-semantic-workspace/TARGETED_DIAGNOSTIC.md)。
+
+
+### 2026-10-16 当前候选交付一致性核验
+
+2ef8d74 全量 Python 回归783项通过（55.985秒），独立 git archive 的 fixture/fake 启动、UI文件哈希、导航卡片与正常关闭通过；无真实调用。已重写完成审计当前表和部署/试用版本说明，修正旧端口/旧候选描述。现用fa88f2f入口进程及后端/UI指纹核对通过，未重启。真实模型11题质量验收仍不完整，未宣称完成。证据：reviews/2026-10-15-semantic-workspace/partition-full-regression.log、candidate-partition-smoke.json。
+
+
+### 2026-10-16 完整审查格式示例
+
+发现分题审查继承的开头JSON示例缺少后文要求的4个字段，已改为完整7字段示例；基础审查提示与所有接受/拒绝规则不变。84项相关测试通过，未进行真实调用，不能据此解释历史失败。见 reviews/2026-10-15-semantic-workspace/REVIEW_SCHEMA.md。
+
+
+## 2026-10-16 审查格式候选真实验收：独立核验未通过
+
+用户明确批准后执行冻结候选dd99b3b，独立grant semantic-review-schema-20261016（24调用/USD1上限），原四源合成资料只读。默认部分题仅一次：HTTP200/11.394秒，2调用/USD0.003260估算，无新unknown、人工额度未变，原2个pending保留。生成及模型审查accepted；PAY-102 Done、PAY-103 In Progress和日期insufficient均正确。
+
+独立业务核验失败：第2条claim额外说明两工单来自“final payment-service postmortem”，唯一引文为“Follow-ups: PAY-102 and PAY-103.”。完整源文档含此背景，因此不称其凭空编造；但所选引文未支持完整的final/payment-service/postmortem限定，且该背景并非回答状态/日期所必需。模型将其判为supported/responsive并不替代独立验收。保留全部3条claim与5条引文检查，未删除有问题的claim制造通过。
+
+评估门收到fail后结束，剩余10题not_run，无重试/后续grant/切换。运行进程正常退出0，CLOSED记录2调用。本人历史/引用200、跨用户403、三普通角色audit403；137事件本地链有效，无独立签名证明。浏览器本轮not_run，现用试用页不变。
+
+互不重叠阶段：鉴权/源检查8.248秒，生成传输2.050秒，审查传输1.042秒，检索（排除嵌套鉴权）0.014秒，其他0.038秒。单样本不支持p95/SLA。
+
+结果改变下一步判断：该次分题格式、完整审查schema及requested-value分类已通过，但完整引用支持及审查语义可靠性仍有缺口；不能再把问题单纯归因于JSON结构。后续修复应针对实际语义反例，不能放宽规则、直接丢弃claim、无限重复付费或把模型accepted当作通过。详见review-schema-live-results.json。Goal未完成。
+
+
+### 2026-10-16 引文支持边界修订
+
+根据dd99b3b真实漏检，明确区分所选引文完整支持与全原文冲突/覆盖检查，保留3个对照语义案例；85项相关测试通过。不改变接受规则、不丢弃claim、不增加真实调用，效果未真实验证。详见 reviews/2026-10-15-semantic-workspace/QUOTE_SCOPE.md。
+
+
+## 2026-10-16 引文对照验收：执行器错误，零模型调用
+
+收到用户明确批准后创建独立semantic-quote-gate-20261016 grant并冻结4adbece。第一项short_quote_scope返回HTTP503，0.012秒、0模型调用、0费用、无新增unknown、人工额度未变。原因是Codex新增诊断适配器误选single执行路径，触发既有模型类型允许列表，在检索和模型调用前拒绝。此为验收脚本缺陷，不能当作语义拒绝或模型失败。
+
+已按任一失败即停止规则关闭本轮，未重试；第二项和原11题均not_run。线下精确复现该ValueError，随后提取scripts/quote_scope_probe.py，通过install_probe选择既有legacy鉴权路径，不修改single允许列表。3项fixture/mock测试验证错误路径零调用、正确路径仅一次审查且不展示诊断草稿、负面审查结论保留拒绝。修订适配器未在真实环境重跑。证据quote-gate-driver-results.json和quote-gate-driver-tests.log。
+
+真实引用支持/审查可靠性仍未验证；本地修复不等于实际质量通过。现用试用页、知识源和生产配置未改动。后续不得复用本轮已关闭grant。
+
+
+## 2026-10-16 修正执行器后的真实引文对照：负例漏检
+
+明确批准后，以冻结3f17ec6执行新独立semantic-quote-gate-fixed-20261016 grant。第一项short_quote_scope一次HTTP200，8.575秒，1次审查调用，USD0.000782账本估算，无新unknown、人工额度未变；原USD20账本和旧pending保留。
+
+模型返回合法无重复字段JSON，三个reasoning标志和part verdict全部true，claim verdict明确supported=true、responsive=true，审查被接受。负例只有“Follow-ups: PAY-102 and PAY-103.”短引文，却声称来自final payment-service postmortem；模型仍从完整原文补足所选引文未包含的限定。相同出处问题使该结论本身responsive，本次失败明确在引用支持粒度，不依赖上一轮“无关背景”的判定。
+
+独立核验fail后立即关闭，正例及原11题全部not_run，无重试。诊断适配器没有将结论作为用户答案展示。此结果证明本次提示修订没有排除已知漏检；不证明模型永远不能判断，也不代表其他题失败。下一步不能继续仅追加相似提示并要求付费循环；需要可验证地隔离“引用蕴含”与“全文覆盖/冲突”的不同审查输入，评估调用成本及对跨源综合的影响，或明确保留当前质量限制。不能用确定性关键词匹配代替语义支持、移除原文冲突检查或删除有效验收断言。
+
+证据quote-scope-gate-live-results.json，当前运行试用页未切换。Goal未完成。
+
+
+## 2026-10-16 独立引文审查候选（仅离线验证）
+
+实现可显式启用的isolated-sectioned-synthesis：每条结论仅用其选定引文单独审查，然后保留全部原文的覆盖/冲突/分题审查；各阶段重新鉴权，任一失败拒绝整份草稿、不重试。引文审查输入不含问题、标题、完整原文及其他结论。引擎校验每条结论独立且已结算的审查凭证，审计/历史/UI保留新增调用账单。
+
+798项Python回归/55.804秒和相关前端测试通过；真实模型效果尚未验证。每题有证据时2–6调用，11题最多66调用，不能复用已结束的24次grant或把原范围静默扩大。现有默认/人工试用页不切换，本轮无新增模型调用。详见reviews/2026-10-15-semantic-workspace/ISOLATED_QUOTE_REVIEW.md及ADR-SEMANTIC-WORKSPACE-07。Goal仍未完成。
+
+
+## 2026-10-16 隔离引文真实诊断：已知对照2/2通过
+
+用户批准的独立semantic-isolated-probe-20261016 grant仅限2次诊断，冻结868fef9。短引文明确quote_supported=false、quote_review_unsupported，完整引文明确quote_supported=true且审查accepted；均合法JSON、finish stop，各一次调用。逐项对照当前已授权原文、版本和连续引文，均符合预设真值。短引文不包含final/payment-service/postmortem出处，完整引文包含出处及两个工单；结论相同。两次均没有作为产品答案展示。
+
+2调用，USD0.000159账本估算，无新unknown，人工额度未变，原USD20账本和旧pending保留；grant已正常关闭，无重试/后续调用。HTTP耗时8.286/10.022秒，其中审查传输0.667/0.738秒，鉴权7.556/9.243秒；阶段不重叠，非SLA/p95。详见isolated-probe-live-results.json。
+
+这组结果支持继续评估输入隔离，不能证明通用语义可靠性。案例来自已知失败、非盲测、每项仅一次；尚未验证完整v4生成→逐claim审查→全文审查流程的11题真实质量，亦不代表现用试用页已升级或Goal完成。本次授权不含全套验收，原11题明确not_run。下一项应是有独立明确上限的完整v4验收及更广泛引用反例；不能复用本次已关闭grant或静默扩大旧24调用范围。
+
+
+## 2026-10-16 完整v4验收：首题引文审查拒绝，按规则关闭
+
+用户批准最多66调用/USD1后建立新独立semantic-isolated-full-20261016 grant，冻结5ff40c6。原默认部分题一次HTTP200，15.548秒；生成格式有效，claim_index0的隔离引文审查true，claim_index1明确quote_supported=false/quote_review_unsupported。没有进入全文审查，产品返回evidence_only、claims为空；其余10题not_run。进程正常退出0，grant已关闭，无重试。
+
+3次调用（生成+2次单claim审查），USD0.001872账本估算，无新unknown、人工额度未变，原USD20账本及旧pending保留。鉴权11.273秒、生成传输2.304秒、两次引文审查传输合计1.888秒、检索排除鉴权0.018秒、其他0.062秒，单样本无SLA/p95结论。native history/citation/audit角色检查见isolated-full-live-results.json；浏览器本轮not_run。
+
+实际证据只证明新增隔离审查在真实生成流程中触发并阻止草稿展示，不证明第2条结论一定错误：拒绝草稿未保存，不能还原其精确结论/引文，也不能仅凭210输入token等相似性断言是先前的postmortem出处问题。不得把模型false当作独立真值或将该题记为通过。完整11题质量目标仍未达标，现用试用页未切换。
+
+下一步应先补足隔离、默认关闭的诊断证据：在明确的合成诊断范围内绑定实际claim/quote与当前原文版本，使人工能判断是真拦截还是误拒；不应在缺少失败内容时继续猜测修改提示或自动发起付费重测。历史结果、关闭grant和全局账本不得改写。

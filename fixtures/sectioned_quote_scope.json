@@ -1,0 +1,66 @@
+{
+  "purpose": "Semantic review regression corpus; expected values are human oracle, not model results. Derived from real failure; not blind held-out data.",
+  "source_run": "review-schema-live-results.json",
+  "cases": [
+    {
+      "id": "real_short_quote_background",
+      "question": "What is the status of PAY-102 and PAY-103, and what is the confirmed payment-retry general release date?",
+      "claim": {
+        "text": "PAY-102 and PAY-103 are follow-ups from the final payment-service postmortem.",
+        "evidence_ids": [
+          "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+            "quote": "Follow-ups: PAY-102 and PAY-103."
+          }
+        ]
+      },
+      "source_text": "[SYNTHETIC D-01] Final payment-service postmortem\n\nFollow-ups: PAY-102 and PAY-103.",
+      "expected_supported": false,
+      "expected_responsive": false,
+      "reason": "Full document contains provenance but selected quote does not; provenance unsolicited."
+    },
+    {
+      "id": "requested_provenance_full_quote",
+      "question": "Which final postmortem lists PAY-102 and PAY-103 as follow-ups?",
+      "claim": {
+        "text": "PAY-102 and PAY-103 are follow-ups from the final payment-service postmortem.",
+        "evidence_ids": [
+          "doc@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "doc@1",
+            "quote": "Final payment-service postmortem. Follow-ups: PAY-102 and PAY-103."
+          }
+        ]
+      },
+      "source_text": "[SYNTHETIC] Final payment-service postmortem. Follow-ups: PAY-102 and PAY-103.",
+      "expected_supported": true,
+      "expected_responsive": true,
+      "reason": "Provenance expressly requested and established by contiguous quote."
+    },
+    {
+      "id": "status_quote_hidden_limitation",
+      "question": "Can we release broadly now?",
+      "claim": {
+        "text": "The release is approved for all customers.",
+        "evidence_ids": [
+          "doc@1"
+        ],
+        "supports": [
+          {
+            "evidence_id": "doc@1",
+            "quote": "The release is approved."
+          }
+        ]
+      },
+      "source_text": "[SYNTHETIC] The release is approved. This approval applies only to the controlled pilot, not general availability.",
+      "expected_supported": false,
+      "expected_responsive": true,
+      "reason": "Reading quoted text alone must not hide scope limitation elsewhere."
+    }
+  ]
+}

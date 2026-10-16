@@ -1,0 +1,17 @@
+# Compact model-wire validation · approved 2026-10-15
+
+This is a concrete representation change, not another JSON-repair attempt or repetition of the old prompt. ADR-SEMANTIC-WORKSPACE-04 explains it. The model emits part question/claims and a unique-ID-to-exact-quote map. Server derives redundant status/index/ID fields, then applies the same canonical validators and independent semantic reviewer. Duplicate JSON keys, unknown IDs, invented quotations and inconsistent legacy formats remain rejected. No rejected output is deduplicated, repaired or shown. Public/history API unchanged.
+
+Local tests cover full canonical equivalence through separate review, duplicate raw JSON evidence-key rejection before review, unknown ID/quote/type/extra-field rejection, and unchanged legacy status rejection. The previous full11 run remains9 accepted/2 failed; those failures are not reclassified as passed.
+
+Proposed new independent grant semantic-compact-wire-20261015, max24 DeepSeek calls /USD1 conservative within original shared USD20 ledger. Existing four-source synthetic data read-only; preserve old unknown and human allowance. No external writes/new scopes/providers/downloads/upload/publication/production switch.
+
+Same frozen11 cases once against the new candidate. Start with default delivery-planning and SG-GATE conflict (the two current failures). Either initial case failing stops immediately; no paid retry or prompt changes in this run. If both accepted, run the other9 unique cases once. Later second synthesis failure/new unknown/source drift/HTTP failure/budget capacity stops. Planned22 calls,24 ceiling headroom. Freeze commit/current source versions and text/role mapping; wait all four complete/current.
+
+Record actual answer/quote/business completeness, safely coded diagnostics, receipts, private measured timing, native isolation and a read-only browser history window with generation disabled after cases. No performance/quality claim from local tests alone. Previous grants remain closed and cannot fund this run. If the initial two fail, end automated live iterations and report unresolved quality; do not start another paid loop without a different explicit user direction.
+
+User explicitly approved this scope. Frozen b21f953ef060d0a8d37f49aa2244a3085eb6c95c; no other grant reused.
+
+## Closed outcome
+
+Business gate failed on the first partial question. Six calls/8552 microUSD and three audit-committed answers due delayed independent assessment; see REPORT.md. No reuse or further paid loop.

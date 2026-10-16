@@ -1,4 +1,4 @@
-# AI-Bang2
+# ContextLedger — The Internal Brain
 
 ## Try it / 组员与评委快速体验
 
@@ -28,8 +28,12 @@ make verify                # execute five scenario subsets and write evidence
 make test-report           # machine-readable actual test report
 ```
 
-No runtime credentials, outbound model requests, or paid services are used. Select one of six synthetic identities in the local UI. Answers are dynamic source excerpts from an explicitly **fake extractive model**, not live LLM synthesis. Four fixture adapters are not four live integrations.
+The local demo commands above use no runtime credentials, outbound model requests or paid services. Select one of six synthetic identities in the local UI. Answers are dynamic source excerpts from an explicitly **fake extractive model**, not live LLM synthesis. Four fixture adapters are not four live integrations.
 
-[Run and demo guide](docs/RUNBOOK.md) · [Actual architecture](docs/IMPLEMENTED_ARCHITECTURE.md) · [CodeBuddy task](docs/CODEBUDDY_TASK.md) · [Acceptance coverage](docs/ACCEPTANCE_STATUS.md)
+[Run and demo guide](docs/RUNBOOK.md) · [Actual architecture](docs/IMPLEMENTED_ARCHITECTURE.md) · [CodeBuddy contribution](docs/CODEBUDDY_CONTRIBUTION.md) · [Acceptance coverage](docs/ACCEPTANCE_STATUS.md)
 
-Do not expose this server publicly. Production authentication, live source permissions, runtime models, independent signed audit checkpoints and G1/G2 remain incomplete. No remote push or deployment has been performed.
+The credential-free fixture server is loopback-only. The hosted trial uses password-based application roles and current source checks. Full semantic acceptance, independent employee identity coverage and production-grade audit custody remain incomplete; see the handoff for exact evidence and limits.
+
+## Development tools
+
+Tencent CodeBuddy implemented the independent audit-chain / Ed25519 checkpoint verifier and twenty component tests. Team review and Codex-assisted integration and application development complement that contribution. [Implementation, commits and genuine evidence](docs/CODEBUDDY_CONTRIBUTION.md) describe the actual scope; this is a multi-tool project.

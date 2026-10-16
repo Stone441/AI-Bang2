@@ -318,6 +318,12 @@ class ReviewerApp:
         self.admission_lock = threading.Lock()
         self.active_queries = set()
 
+    @property
+    def private_timing(self):
+        # The HTTP adapter shares only the explicitly enabled private recorder.
+        # Dynamic lookup supports installation before or after this wrapper.
+        return getattr(self.original, 'private_timing', None)
+
     def authenticate(self, data):
         actor = self.registry.authenticate(data)
         self.audit.append('reviewer_session', actor.user_id, 'login',

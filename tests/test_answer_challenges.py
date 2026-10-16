@@ -33,6 +33,10 @@ class AnswerChallenges(unittest.TestCase):
                 transport=SequentialTransport(draft,[{'index':i,'supported':True,'responsive':True}
                     for i in range(len(draft['claims']))])
                 transport.outputs[1].update({k:True for k in REASONING_CHECKS})
+                # Authored protocol fixture, not an independent semantic assessment.
+                transport.outputs[1]['part_verdicts']=[{'index':i,
+                    'requested_information_provided':p['status']=='supported',
+                    'gap_explanation_supported':True} for i,p in enumerate(draft['answer_parts'])]
                 model=DeepSeekSectionedSynthesisModel('synthetic-not-a-key',setup.ledger,
                     synthetic_only=True,transport=transport,today=setup.model._today())
                 result=model.generate_with_authorization(case['question'],evidence,'a'*32,lambda _:None)

@@ -1,5 +1,7 @@
 # 从这里开始：AI-Bang2项目交接包
 
+2026-10-16 当前唯一交付入口：[FINAL_HANDOFF](docs/FINAL_HANDOFF.md)、[仓库收口报告](docs/reviews/2026-10-16-final-check/REPORT.md)。本地收口完成，源码与人工试用版本分列；以下旧开发入口为历史记录。未推送/合并/比赛提交，完整语义验收未通过。
+
 2026-10-15 最新开发入口：[STATUS](docs/STATUS.md)、[主线集成验证](docs/reviews/2026-10-15-main-closeout-merge/REPORT.md)、[最新真实模型记录](docs/reviews/2026-10-15-sectioned-live/json-investigation/REPORT.md)。本轮合并用于继续开发，不代表正式封版或线上切换；前端、项目亮点、候选题问答与开发细节后续继续完善。
 
 2026-10-14 pd本地改进最新入口：[演示台及验证边界](docs/SCENARIO_LAB.md)、[STATUS](docs/STATUS.md)、[当前提交候选](docs/SUBMISSION_CANDIDATE.md)。714项回归/19组离线验收通过；新模型与原生环境待验，15个工具证明私有原件待队友提供。2026-10-15已授权将优化提交并推送到origin/pd，验收以交接commit为准；分支发布不等于线上实例已更新。
@@ -23,7 +25,7 @@
 | [docs/01_OFFICIAL_BRIEF.md](docs/01_OFFICIAL_BRIEF.md) | 官方要求汇编、100分表、时间冲突、材料/额度/条款、待澄清事项 | Codex及至少一名规则负责人 |
 | [docs/02_PRODUCT_STRATEGY.md](docs/02_PRODUCT_STRATEGY.md) | 推荐产品、两类用户、差异化、范围、ROI、演示故事 | 全员、Codex |
 | [docs/03_ARCHITECTURE.md](docs/03_ARCHITECTURE.md) | 信任边界、数据/授权/检索/更新/引用/审计与API契约 | Codex；成员重点审查关键取舍 |
-| [docs/04_DELIVERY_PLAYBOOK.md](docs/04_DELIVERY_PLAYBOOK.md) | 阶段、DEV任务、三关口、Git协作、CodeBuddy/WorkBuddy可复制任务、提交核查 | 全员、Codex |
+| [docs/04_DELIVERY_PLAYBOOK.md](docs/04_DELIVERY_PLAYBOOK.md) | 阶段、DEV任务、三关口、Git协作、工具贡献与协作记录、提交核查 | 全员、Codex |
 | [docs/05_ACCEPTANCE_TESTS.md](docs/05_ACCEPTANCE_TESTS.md) | 12个合成对象、六用户权限矩阵、五worked examples、51案例 | Codex、验收成员 |
 
 追溯附件：[手册41页英文文本](docs/sources/HANDBOOK_TEXT_ARCHIVE.md)、[Kickoff完整转写](docs/sources/KICKOFF_TRANSCRIPT.md)。手册图像中的关键提交表和评分表已整合到01；纯视觉素材/二维码不在文字归档中复制。

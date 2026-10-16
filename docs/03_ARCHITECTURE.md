@@ -557,3 +557,14 @@ of this opt-in candidate is not established by local or old-path results.
 总断言最多四条，分题一至六个；支持型分题至少一条断言，信息不足型不得携带断言。600 字符断言、每条一至四个唯一引用、12–1200 字符精确引文、业务标识引文支持和时间断言规则保持不变。格式规范化不能补写事实、猜测引用、修改引文、自动重试模型或跳过独立审查／当前权限复核。
 
 失败诊断可新增固定枚举的字段原因和有界断言／支持索引，不记录任意字段名、业务标识、被拒文本、引文或异常原文。本契约修复不代表已修复先前真实模型的全部语义问题，须另行验证。
+
+
+### 2026-10-15 · 分题 v3：请求信息与缺口依据分离
+
+真实 b21f953 默认部分题暴露：`claims` 非空只能证明存在有依据的陈述，不能证明请求的日期已提供。v3 生成传输为 `{answer_parts:[{question,resolution,claims}]}`，`resolution` 严格限定 `answered` / `unavailable`；断言仍为 `{text,supports:{evidence_id:quote}}`，禁止重复键、非法字段与伪造引文。
+
+服务端把 answered 的断言派生为 `status:supported, claim_indices:[...]`；unavailable 派生为 `status:insufficient, claim_indices:[], gap_claim_indices:[...]`。`gap_claim_indices` 是对缺口本身的有引用说明，不是已提供的答案，可以为空。所有断言必须恰好归属一个分题的答案或缺口，不能复用、漏分配或把 gap 放入 supported 分题。旧三字段公共分题记录保留严格验证；未带 gap 字段的 insufficient 仍禁止 claim_indices。不得自动纠正生成器的错误分类。
+
+所有生成格式（包括旧兼容格式）都必须通过独立复审新增的 `part_verdicts`：每题按序含 `index`、布尔 `requested_information_provided`、布尔 `gap_explanation_supported`。信息已提供的判断须与生成分类一致；每项 gap 支持须为 true；缺字段、未知、重复、错序、额外字段、类型错误或分歧拒绝整份草稿。原全局分题/前提/冲突检查与逐断言支持/相关性检查全部保留。日期未知的陈述不提供日期；有依据的否定可以回答是非题；冲突调和题可以通过同时保留双方和未决状态来回答。
+
+前端用 status 决定 Answered / Partial answer / Insufficient evidence，额外渲染缺口说明和引用；历史/审计保持同一结构。所有 gap 断言继续走原精确引文、权限、版本、历史与引用访问校验。此变更仅本地验证，不能据此声称模型业务分类已经可靠。

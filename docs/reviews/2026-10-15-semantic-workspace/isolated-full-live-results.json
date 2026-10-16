@@ -1,0 +1,127 @@
+{
+  "candidate_commit": "5ff40c648b5017931f048ab25e9b76d68568b610",
+  "mode": "live four native APIs / real isolated synthesis candidate",
+  "case": {
+    "id": "delivery-planning-0",
+    "question": "What is the status of PAY-102 and PAY-103, and what is the confirmed payment-retry general release date?",
+    "expected": "PAY-102 Done; PAY-103 In Progress; No confirmed general release date",
+    "http_status": 200,
+    "elapsed_seconds": 15.5482445419766,
+    "actual_model_calls": 3,
+    "accounted_micro_usd": 1872,
+    "new_unknown_count": 0
+  },
+  "request_id": "9470e5d6dd344ac4971a0f6ee86d2363",
+  "answer_status": "evidence_only",
+  "claims": [],
+  "model_stages": [
+    {
+      "event": "model_output_accepted",
+      "stage": "answer",
+      "review_kind": null,
+      "claim_index": null,
+      "diagnostic": {
+        "finish_reason": "stop",
+        "response_id_sha256": "24e59aa0464ba0e620a5c3a24f868f7a74a4f49c6c516ed344ffc0c5a929b264",
+        "returned_model": "deepseek-flash",
+        "usage": {
+          "completion_tokens": 320,
+          "prompt_tokens": 4440,
+          "total_tokens": 4760
+        },
+        "validation_failure": null,
+        "visible_output_characters": 1211
+      }
+    },
+    {
+      "event": "model_output_accepted",
+      "stage": "review",
+      "review_kind": "isolated_quote",
+      "claim_index": 0,
+      "diagnostic": {
+        "finish_reason": "stop",
+        "response_id_sha256": "dd284c6c80f5f38e8943cc3c426f847f00f005dee241f00e1454acaa8b107b13",
+        "returned_model": "deepseek-flash",
+        "review_filtered_answer_complete": null,
+        "review_question_covered": null,
+        "review_quote_supported": true,
+        "usage": {
+          "completion_tokens": 7,
+          "prompt_tokens": 249,
+          "total_tokens": 256
+        },
+        "validation_failure": null,
+        "visible_output_characters": 24
+      }
+    },
+    {
+      "event": "model_output_rejected",
+      "stage": "review",
+      "review_kind": "isolated_quote",
+      "claim_index": 1,
+      "diagnostic": {
+        "finish_reason": "stop",
+        "response_id_sha256": "2e68a99dab52421c2a374b11d02b1645db7f8d00a6b55fa36ab78c70a3b8441a",
+        "returned_model": "deepseek-flash",
+        "review_filtered_answer_complete": null,
+        "review_question_covered": null,
+        "review_quote_supported": false,
+        "usage": {
+          "completion_tokens": 7,
+          "prompt_tokens": 210,
+          "total_tokens": 217
+        },
+        "validation_detail": "quote_review_unsupported",
+        "validation_failure": "review",
+        "visible_output_characters": 25
+      }
+    }
+  ],
+  "disjoint_seconds": {
+    "generation_transport": 2.30414954200387,
+    "quote_review_transport": 1.887673791963607,
+    "authorization": 11.27342616696842,
+    "retrieval_excluding_authorization": 0.018381623784080148,
+    "other": 0.062176208244636655
+  },
+  "closed": {
+    "status": "closed_no_automatic_reuse",
+    "calls": 3,
+    "accounted_micro_usd": 1872,
+    "completed_cases": 1
+  },
+  "human_unchanged": true,
+  "global_budget_after": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 2089180,
+    "settled_micro_usd": 1440372,
+    "available_micro_usd": 17910820,
+    "pending_requests": 2,
+    "blocked_for_review": false
+  },
+  "chain": {
+    "valid": true,
+    "events": 162,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "isolation": {
+    "own_history_http": 200,
+    "cross_history_http": 403,
+    "own_preview_http": 200,
+    "cross_preview_http": 403,
+    "engineer_blair_audit_denied": 403,
+    "product_morgan_audit_denied": 403,
+    "partner_jordan_audit_denied": 403
+  },
+  "remaining_cases": "10 not_run; stopped at first generation/quote-review failure",
+  "full_source_review": "not_run after second claim quote review rejected",
+  "browser": "not_run; runner stopped",
+  "limitations": [
+    "Rejected draft was not saved or shown; exact claim/quote and correctness of rejection cannot be independently reconstructed.",
+    "Do not infer it was the same provenance claim merely from token count or earlier outputs.",
+    "This proves fail-closed orchestration, not business acceptance or entailment accuracy.",
+    "Single sample and interval-partition timing are not SLA/p95."
+  ]
+}

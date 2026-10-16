@@ -1,0 +1,67 @@
+{
+  "mode": "prepared oracle only, no model results",
+  "source": "actual dd99b3b source/claim; same provenance question in both cases isolates selected quote scope",
+  "not_blind": true,
+  "cases": [
+    {
+      "question": "Which final postmortem lists PAY-102 and PAY-103 as follow-ups?",
+      "parts": [
+        {
+          "question": "Which final postmortem lists PAY-102 and PAY-103 as follow-ups?",
+          "status": "supported",
+          "claim_indices": [
+            0
+          ],
+          "gap_claim_indices": []
+        }
+      ],
+      "source_resource_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+      "source_version": 6,
+      "id": "short_quote_scope",
+      "claim": {
+        "text": "PAY-102 and PAY-103 are follow-ups from the final payment-service postmortem.",
+        "evidence_ids": [
+          "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+            "quote": "Follow-ups: PAY-102 and PAY-103."
+          }
+        ]
+      },
+      "expected_supported": false,
+      "expected_responsive": true
+    },
+    {
+      "question": "Which final postmortem lists PAY-102 and PAY-103 as follow-ups?",
+      "parts": [
+        {
+          "question": "Which final postmortem lists PAY-102 and PAY-103 as follow-ups?",
+          "status": "supported",
+          "claim_indices": [
+            0
+          ],
+          "gap_claim_indices": []
+        }
+      ],
+      "source_resource_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+      "source_version": 6,
+      "id": "full_quote_scope",
+      "claim": {
+        "text": "PAY-102 and PAY-103 are follow-ups from the final payment-service postmortem.",
+        "evidence_ids": [
+          "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6"
+        ],
+        "supports": [
+          {
+            "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+            "quote": "[SYNTHETIC D-01] Final payment-service postmortem\n\nFinal root cause: retry configuration mismatched the timeout budget, causing a backlog of duplicate requests. Confirmed at 10:00 +08:00. Follow-ups: PAY-102 and PAY-103."
+          }
+        ]
+      },
+      "expected_supported": true,
+      "expected_responsive": true
+    }
+  ]
+}

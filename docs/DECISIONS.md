@@ -1,5 +1,13 @@
 # Decisions / ADR
 
+2026-10-16 AUTH-PUBLISH-HOSTED：用户明确要求推送合并、更新现有网页链接版本，并整理CodeBuddy描述。批准本候选经PR发布合并及同域名/现有账号/原状态与账本的版本切换；文案以真实贡献为准，保留原历史和证明，不新开scope、账户、模型费用或提交比赛。线上保留已有source-review配置，更新代码/UI，不默认启用未完整验收的实验模式。
+
+2026-10-16 AUTH-FINAL-RECONCILIATION：用户“好的，去完成收口吧”授权完成本地可逆归档、文档统一、核验和独立分支本地提交。候选继承37578c4，应用代码保持2b79036；历史证据按原版本保留，旧脏工作区不reset/stash/删除。本次不授权push/merge、服务切换、新付费验证或比赛提交。
+
+2026-10-16 AUTH-SUBMISSION-CLOSEOUT：按用户“别绕圈子了，收尾吧”冻结当前原型，结束新增功能和付费试验循环，以诚实披露限制完成提交准备；本次不等于原语义目标或G1/G2通过，不自动推送/上传/代提交。 见 [提交收尾报告](reviews/2026-10-16-submission-closeout/REPORT.md)。
+
+2026-10-15 ADR-SEMANTIC-WORKSPACE-01：采用用户本轮 goal-objective.md 明确方向，在 0d5be30 独立候选复用 sectioned-synthesis 与原生前端，移除常驻侧栏、顶部 Workspace/Recent answers、英文业务题卡、原文折叠及响应式引用抽屉。保留独立问答、严格 JSON/独立复审/全部授权及版本边界。普通本地可逆实现、文档、测试、隔离预览已授权；不新增源写、scope、付费服务、生产重启切换、push/merge 或上传提交。历史一次性 grant 结束及人工额度不可转用；真实验证前核当前 AUTH/readiness/账本。Embedding 首轮投入上限两小时本地诊断与可行性准备，只有真实可重复收益且无安全回归才纳入默认；无 provider/下载等授权则记录条件缺口。候选不改生产，可直接弃用独立 worktree 回退。
+
 2026-10-15 AUTH-MAIN-CLOSEOUT：用户明确“先合并到main”，授权本轮修复、测试与非秘密报告通过PR推送并合并到GitHub main，之后继续前端／项目亮点／候选题问答／开发细节。执行前fetch核对远端、干净源码验证及新增历史blob凭据扫描；保留原main脏证据、私有运行态及队友工作。此授权不包含生产切换、源端写入、上传私有证据或比赛提交。
 
 2026-10-15 ADR-CLOSEOUT-05：10cc970单次四源诊断生成/审查均通过，当前四源原文均amber、引用正确，2调用/USD0.003454，新unknown0。当前JSON语法与重复键均合法，原json故障未复现，不将单次成功视为根因修复或稳定性证明；无证据不修改解析规则，不花剩余6次重复挑成功。本轮只记录真实通过与开放风险，不改业务代码、不部署，77定向离线通过。
@@ -572,3 +580,138 @@ Evidence: browser security question immediately following product capability ret
 ### ADR-040 · Independent questions and no answer downloads (2026-10-06)
 
 用户指出主界面独立问答外观与自动history_id依赖不一致，且无需求依据的下载扩大不可撤回副本范围，并明确批准纠正。选择独立问答：前端移除historyId/New question，HTTP拒绝history_id，Engine不查询旧run/补充依赖（旧本地harness参数仅兼容忽略）。删除Export answer/Blob生成/GET export路由，登录后直接请求返回404。保留历史、引用、逐模型阶段授权和原生撤权测试；旧导出断言替换为端点关闭断言，不再因测试需要提供下载。已合法保存的副本无法远程回收。覆盖ADR-024导出UI及ADR-039新问题按钮；如未来引入聊天或导出须作为明确产品变更，而非验收便利。无schema迁移/新scope/费用。运行中Python旧进程须重启；静态页面刷新只更新前端。
+
+## AUTH-SEMANTIC-WORKSPACE-20261015-24-USD1
+
+User approved LIVE_PLAN.md scope: existing four-source synthetic data read-only; three defaults and six paraphrases, false premise and existing conflict; independent automatic grant semantic-workspace-validation-20261015; max 24 DeepSeek calls and USD1 within original USD20 ledger. Preserve historical unknown; stop new unknown; no paid retries, human allowance, native writes, deployment or production restart. Freeze candidate and native oracle before calls.
+
+## ADR-SEMANTIC-WORKSPACE-02 · local fixes from bounded live failures
+
+Evidence: a2be0fd live run had json_syntax and citation_ids rejection, and an accepted Chinese date request classified supported despite missing requested value. Preserve strict rejection; add safe citation subreason only, no rejected draft persistence. Share requested-value versus yes/no answerability instructions between generation and reviewer. Forward opt-in timing recorder through ReviewerApp after missing live spans revealed the adapter gap. Add tested local stopping policy using answer_status and prepare a fresh runner with no authorization file. No additional real call is authorized by this ADR; original grant closed. Revert these local changes to a2be0fd for rollback; production unchanged.
+
+## AUTH-SEMANTIC-RECHECK-20261015-24-USD1
+
+User explicitly approved RECHECK_PLAN.md: revised candidate 4c83129, same synthetic four-source read-only corpus, 11 frozen questions once including deliberate re-evaluation of 7 previously attempted questions; new independent semantic-workspace-recheck-20261015 grant, max24 actual DeepSeek calls / USD1 within shared USD20 ledger. No human allowance, automatic per-case retries or production switch. Stop at second synthesis failure; preserve original unknown and stop new unknown. Old grant remains closed. Approval recorded after concrete local fixes, 96 targeted tests and frozen proposal; full suite then verified 768 tests in55.217s.
+
+## ADR-SEMANTIC-WORKSPACE-03 · observed single-part EOF failures
+
+4c83129 recheck: full multi-part default accepted; both one-part paraphrases invalid at EOF despite finish_reason=stop and313/316 output tokens under8192. Core request has json_object, valid example and no stop sequence; no local content stripping found. No JSON repair or validator relaxation. Add an explicit generated single-part JSON example and full-root closure instruction as a bounded prompt hypothesis. Local18 sectioned tests pass, live effectiveness unverified. Close second grant at4 calls/USD0.005753 with no new unknown. Any further model dispatch requires a separately approved concrete plan, not reuse of remaining allowance.
+
+## AUTH-SEMANTIC-SYNTAX-GATE-20261015-24-USD1
+
+User explicitly approved SYNTAX_GATE_PLAN.md for frozen250c3c8: new independent syntax-first grant, existing four-source synthetic corpus read-only, max24 calls/USD1 within original20 ledger. First English/Chinese single-part paraphrases; either failure stops immediately. Only if both accepted continue remaining9 frozen questions once. No paid retries, no human allowance, no native write, no deployment. Preserve original unknown/new unknown stop. If format gate fails, no further similar automatic paid rounds. Prior grants stay closed.
+
+## ADR-SEMANTIC-WORKSPACE-04 · compact model wire, unchanged canonical safety contract
+
+Evidence:250c3c8 completed11 questions; default partial failed duplicate_id and conflict failed answer_part_citations. The old wire asks the model to repeat status deterministically implied by claims and repeat evidence IDs as list entries, creating avoidable consistency errors. New model wire: part={question,claims}; claim={text,supports:{exact_evidence_id:exact_quote}}. Server derives supported/insufficient from claim presence and derives canonical support arrays/IDs/claim indices before existing validators and separate semantic review. No deduplication, JSON repair or untrusted-ID mapping. JSON duplicate keys still rejected before canonicalization. Unknown IDs, invented quotes, extra fields and mixed legacy status fail. Existing legacy forms stay strict and retain their explicit status; contradictory legacy status is never silently repaired. Public/history contracts unchanged. Separate reviewer still decides factual support, part coverage, genuine insufficiency, premise and conflicts; derivation is structural, not business acceptance.
+
+Offline equivalence and negative-boundary regressions pass (sectioned21/synthesis34); no actual model calls for new wire yet. New live run needs a separately approved plan. Roll back this model-wire revision to93d5475 while preserving old failed evidence and ledger. This does not change production or authorization stages.
+
+## AUTH-SEMANTIC-COMPACT-WIRE-20261015-24-USD1
+
+User explicitly approved COMPACT_WIRE_PLAN.md for frozenb21f953: new independent semantic-compact-wire-20261015 grant, existing four-source synthetic data read-only, max24 DeepSeek calls/USD1 within shared original20 ledger. First default partial question and SG-GATE conflict; either failure ends run immediately. If both accepted, remaining9 frozen questions once. No per-case retry, no human allowance, no source write/scope expansion/production switch. Preserve original unknown, stop new unknown. Previous grants closed. If initial gate fails, no further paid loop without different explicit user direction.
+
+## ADR-SEMANTIC-WORKSPACE-05 · independent business gate / closed grant
+
+Compact-wire live run b21f953 demonstrated that correct grounded negative facts do not establish completeness for a requested unavailable date. Preserve failure and oracle; do not infer business acceptance from reviewer `accepted`. Six calls/8552 microUSD, three audit-committed answers (third in flight), human unchanged, no new unknown. The intended first-case business stop was delayed by orchestration; recorded rather than retroactively claimed compliant. AUTH-SEMANTIC-COMPACT-WIRE-20261015-24-USD1 is closed and cannot be reused.
+
+AcceptanceRun now blocks the next case until independently assessed with an evidence reference; failed assessment ends the run. Six focused tests passed. No new model calls, production switch or altered runtime security semantics. Requested-value/support contract redesign is local follow-up, not a proven fix. No further similar paid loop under the current approval.
+
+## ADR-SEMANTIC-WORKSPACE-06 · requested information separate from gap support
+
+Evidence: b21f953 fourth live run correctly said no release date was confirmed but marked the requested date supported. Claims being true is not equivalent to supplying the requested information. v3 adds explicit answered/unavailable resolution; unavailable claims become separate gap_claim_indices, never answer indices. Mandatory independent part_verdicts compare requested-information completeness with the draft, including old generation forms. Disagreement rejects rather than repairs. The strict canonical partition, quote validators, global reasoning and claim review remain; frontend/history/audit display gap claims without upgrading status. See docs/03_ARCHITECTURE.md and VALUE_COMPLETENESS.md.
+
+Local reversible implementation only. No new provider, dependency, native write or paid call. Extra review fields carry an unmeasured generation-reliability cost; model semantic agreement remains fallible. Prior grants stay closed. Rollback parent64266a0 has known quality failure, so rollback is not proof of acceptance. Persist separate candidate index/audit for any future version rollback.
+
+## 2026-10-16 · latest human trial entry
+
+User rejected the old-UI test handoff and requires latest implementation for testing. Deliver an isolated loopback latest v3 candidate with existing real synthetic four-source readers, existing reviewer accounts and existing human-team-closeout-20261015 grant. Do not reuse closed automatic grants, submit automated model queries, reset shared ledger or switch public production. The existing double-click entry is redirected only after startup fingerprint and served static resource verification. No silent old-version fallback.
+
+DeepSeek official pricing https://api-docs.deepseek.com/quick_start/pricing/ checked on 2026-10-16: flash peak cache-miss input USD0.30/M, output USD1.20/M unchanged. Update PRICE_DATE to today; keep fail-closed day check, no pinned fake today. Targeted DeepSeek and sectioned tests46 pass. Latest-candidate human_trial runner stores its own index/audit and shares existing original budget only.
+
+## AUTH-SEMANTIC-FINAL-V3-20261016
+
+User “继续收尾，不用考虑费用…” authorizes continuing the concrete final recheck after local gap-scope correction. Use an independent automatic grant, operational max24 calls/USD1, original global USD20 and unknown unchanged, existing four-source synthetic read-only scope. Human allowance is not automated test funding. One frozen11-case run, no retry; any failure stops, each next dispatch requires independent business assessment. No production switch or source writes. See FINAL_RECHECK_PLAN.md.
+
+## 2026-10-16 · final v3 recheck outcome and diagnostic boundary
+
+95198aa compensation passes, partial independent review fails; stop after2 cases/4 calls/5868 microUSD, no retries/new unknown/human change. Newgrant closed. Preserve strict validator and all truth assertions. Rejection JSON valid but old safe metadata lacks sectioned verdict reasons; do not infer missing fields or semantic disagreement as established cause. Add fixed diagnostic enums only, preserving exact accept/reject rules;54 targeted tests. No raw drafts/IDs enter added diagnostics. Human UI remains fa88f2f, latest acceptance result is not a release pass.
+
+
+## 2026-10-16 定向诊断后续
+
+默认部分题一次真实诊断：合法 JSON 在生成分题字段校验处拒绝，1 次调用，无新 unknown，人工额度不变；未复现上一轮审查失败。已补固定枚举细分诊断及原文分题格式说明，55 项回归通过；真实效果未验证，现用试用页保持运行。详见 [TARGETED_DIAGNOSTIC.md](reviews/2026-10-15-semantic-workspace/TARGETED_DIAGNOSTIC.md)。
+
+
+### 2026-10-16 当前候选交付一致性核验
+
+2ef8d74 全量 Python 回归783项通过（55.985秒），独立 git archive 的 fixture/fake 启动、UI文件哈希、导航卡片与正常关闭通过；无真实调用。已重写完成审计当前表和部署/试用版本说明，修正旧端口/旧候选描述。现用fa88f2f入口进程及后端/UI指纹核对通过，未重启。真实模型11题质量验收仍不完整，未宣称完成。证据：reviews/2026-10-15-semantic-workspace/partition-full-regression.log、candidate-partition-smoke.json。
+
+
+### 2026-10-16 完整审查格式示例
+
+发现分题审查继承的开头JSON示例缺少后文要求的4个字段，已改为完整7字段示例；基础审查提示与所有接受/拒绝规则不变。84项相关测试通过，未进行真实调用，不能据此解释历史失败。见 reviews/2026-10-15-semantic-workspace/REVIEW_SCHEMA.md。
+
+
+## 2026-10-16 审查格式候选真实验收：独立核验未通过
+
+用户明确批准后执行冻结候选dd99b3b，独立grant semantic-review-schema-20261016（24调用/USD1上限），原四源合成资料只读。默认部分题仅一次：HTTP200/11.394秒，2调用/USD0.003260估算，无新unknown、人工额度未变，原2个pending保留。生成及模型审查accepted；PAY-102 Done、PAY-103 In Progress和日期insufficient均正确。
+
+独立业务核验失败：第2条claim额外说明两工单来自“final payment-service postmortem”，唯一引文为“Follow-ups: PAY-102 and PAY-103.”。完整源文档含此背景，因此不称其凭空编造；但所选引文未支持完整的final/payment-service/postmortem限定，且该背景并非回答状态/日期所必需。模型将其判为supported/responsive并不替代独立验收。保留全部3条claim与5条引文检查，未删除有问题的claim制造通过。
+
+评估门收到fail后结束，剩余10题not_run，无重试/后续grant/切换。运行进程正常退出0，CLOSED记录2调用。本人历史/引用200、跨用户403、三普通角色audit403；137事件本地链有效，无独立签名证明。浏览器本轮not_run，现用试用页不变。
+
+互不重叠阶段：鉴权/源检查8.248秒，生成传输2.050秒，审查传输1.042秒，检索（排除嵌套鉴权）0.014秒，其他0.038秒。单样本不支持p95/SLA。
+
+结果改变下一步判断：该次分题格式、完整审查schema及requested-value分类已通过，但完整引用支持及审查语义可靠性仍有缺口；不能再把问题单纯归因于JSON结构。后续修复应针对实际语义反例，不能放宽规则、直接丢弃claim、无限重复付费或把模型accepted当作通过。详见review-schema-live-results.json。Goal未完成。
+
+
+### 2026-10-16 引文支持边界修订
+
+根据dd99b3b真实漏检，明确区分所选引文完整支持与全原文冲突/覆盖检查，保留3个对照语义案例；85项相关测试通过。不改变接受规则、不丢弃claim、不增加真实调用，效果未真实验证。详见 reviews/2026-10-15-semantic-workspace/QUOTE_SCOPE.md。
+
+
+## 2026-10-16 引文对照验收：执行器错误，零模型调用
+
+收到用户明确批准后创建独立semantic-quote-gate-20261016 grant并冻结4adbece。第一项short_quote_scope返回HTTP503，0.012秒、0模型调用、0费用、无新增unknown、人工额度未变。原因是Codex新增诊断适配器误选single执行路径，触发既有模型类型允许列表，在检索和模型调用前拒绝。此为验收脚本缺陷，不能当作语义拒绝或模型失败。
+
+已按任一失败即停止规则关闭本轮，未重试；第二项和原11题均not_run。线下精确复现该ValueError，随后提取scripts/quote_scope_probe.py，通过install_probe选择既有legacy鉴权路径，不修改single允许列表。3项fixture/mock测试验证错误路径零调用、正确路径仅一次审查且不展示诊断草稿、负面审查结论保留拒绝。修订适配器未在真实环境重跑。证据quote-gate-driver-results.json和quote-gate-driver-tests.log。
+
+真实引用支持/审查可靠性仍未验证；本地修复不等于实际质量通过。现用试用页、知识源和生产配置未改动。后续不得复用本轮已关闭grant。
+
+
+## 2026-10-16 修正执行器后的真实引文对照：负例漏检
+
+明确批准后，以冻结3f17ec6执行新独立semantic-quote-gate-fixed-20261016 grant。第一项short_quote_scope一次HTTP200，8.575秒，1次审查调用，USD0.000782账本估算，无新unknown、人工额度未变；原USD20账本和旧pending保留。
+
+模型返回合法无重复字段JSON，三个reasoning标志和part verdict全部true，claim verdict明确supported=true、responsive=true，审查被接受。负例只有“Follow-ups: PAY-102 and PAY-103.”短引文，却声称来自final payment-service postmortem；模型仍从完整原文补足所选引文未包含的限定。相同出处问题使该结论本身responsive，本次失败明确在引用支持粒度，不依赖上一轮“无关背景”的判定。
+
+独立核验fail后立即关闭，正例及原11题全部not_run，无重试。诊断适配器没有将结论作为用户答案展示。此结果证明本次提示修订没有排除已知漏检；不证明模型永远不能判断，也不代表其他题失败。下一步不能继续仅追加相似提示并要求付费循环；需要可验证地隔离“引用蕴含”与“全文覆盖/冲突”的不同审查输入，评估调用成本及对跨源综合的影响，或明确保留当前质量限制。不能用确定性关键词匹配代替语义支持、移除原文冲突检查或删除有效验收断言。
+
+证据quote-scope-gate-live-results.json，当前运行试用页未切换。Goal未完成。
+
+## ADR-SEMANTIC-WORKSPACE-07 · isolate per-claim quote review inputs
+
+Real negative gate accepted uncited provenance despite explicit prompting. Introduce opt-in `DeepSeekIsolatedSectionedModel`: one claim+its quotes per isolated review call, followed by unchanged full-source review. Reauthorize each call; reject whole draft on any failure; preserve distinct per-stage receipts. No source/title/question/other-claim context enters the quote-only payload. Cross-source combinations remain supported within one claim.
+
+Tradeoff:2–6 calls/question,22–66 for11 questions; prior24-call grant is insufficient to promise full coverage and remains closed. Default runtime and human preview unchanged. Rollback selects existing sectioned backend while retaining ledger/audit. Local input isolation tests do not prove model semantic accuracy. See reviews/2026-10-15-semantic-workspace/ISOLATED_QUOTE_REVIEW.md.
+
+
+## 2026-10-16 隔离引文真实诊断：已知对照2/2通过
+
+用户批准的独立semantic-isolated-probe-20261016 grant仅限2次诊断，冻结868fef9。短引文明确quote_supported=false、quote_review_unsupported，完整引文明确quote_supported=true且审查accepted；均合法JSON、finish stop，各一次调用。逐项对照当前已授权原文、版本和连续引文，均符合预设真值。短引文不包含final/payment-service/postmortem出处，完整引文包含出处及两个工单；结论相同。两次均没有作为产品答案展示。
+
+2调用，USD0.000159账本估算，无新unknown，人工额度未变，原USD20账本和旧pending保留；grant已正常关闭，无重试/后续调用。HTTP耗时8.286/10.022秒，其中审查传输0.667/0.738秒，鉴权7.556/9.243秒；阶段不重叠，非SLA/p95。详见isolated-probe-live-results.json。
+
+这组结果支持继续评估输入隔离，不能证明通用语义可靠性。案例来自已知失败、非盲测、每项仅一次；尚未验证完整v4生成→逐claim审查→全文审查流程的11题真实质量，亦不代表现用试用页已升级或Goal完成。本次授权不含全套验收，原11题明确not_run。下一项应是有独立明确上限的完整v4验收及更广泛引用反例；不能复用本次已关闭grant或静默扩大旧24调用范围。
+
+
+## 2026-10-16 完整v4验收：首题引文审查拒绝，按规则关闭
+
+用户批准最多66调用/USD1后建立新独立semantic-isolated-full-20261016 grant，冻结5ff40c6。原默认部分题一次HTTP200，15.548秒；生成格式有效，claim_index0的隔离引文审查true，claim_index1明确quote_supported=false/quote_review_unsupported。没有进入全文审查，产品返回evidence_only、claims为空；其余10题not_run。进程正常退出0，grant已关闭，无重试。
+
+3次调用（生成+2次单claim审查），USD0.001872账本估算，无新unknown、人工额度未变，原USD20账本及旧pending保留。鉴权11.273秒、生成传输2.304秒、两次引文审查传输合计1.888秒、检索排除鉴权0.018秒、其他0.062秒，单样本无SLA/p95结论。native history/citation/audit角色检查见isolated-full-live-results.json；浏览器本轮not_run。
+
+实际证据只证明新增隔离审查在真实生成流程中触发并阻止草稿展示，不证明第2条结论一定错误：拒绝草稿未保存，不能还原其精确结论/引文，也不能仅凭210输入token等相似性断言是先前的postmortem出处问题。不得把模型false当作独立真值或将该题记为通过。完整11题质量目标仍未达标，现用试用页未切换。
+
+下一步应先补足隔离、默认关闭的诊断证据：在明确的合成诊断范围内绑定实际claim/quote与当前原文版本，使人工能判断是真拦截还是误拒；不应在缺少失败内容时继续猜测修改提示或自动发起付费重测。历史结果、关闭grant和全局账本不得改写。

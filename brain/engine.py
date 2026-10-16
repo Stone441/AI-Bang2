@@ -328,6 +328,18 @@ class Engine:
                     raise ValueError('Model review must be a separate request')
                 generation.update(claim_format='grounded_synthesis_v1',model_review=review_receipt,
                                   review_status='accepted')
+                if getattr(self.model,'requires_quote_reviews',False):
+                    raw=draft.get('model_quote_reviews')
+                    if not isinstance(raw,list) or len(raw)!=len(claims):
+                        raise ValueError('Missing isolated quote reviews')
+                    quote_receipts=[public_receipt(r,rid) for r in raw]
+                    if any(r.get('called') is not True for r in quote_receipts):
+                        raise ValueError('Missing isolated quote review call')
+                    reservations=[generation['model_call']['reservation_id'],review_receipt['reservation_id']]
+                    reservations.extend(r['reservation_id'] for r in quote_receipts)
+                    if len(set(reservations))!=len(reservations):
+                        raise ValueError('Quote reviews must be separate requests')
+                    generation['model_quote_reviews']=quote_receipts
             elif source_review:
                 if 'model_call' in draft:raise ValueError('Source review has no generation call')
                 if any(c['text']!=c['supports'][0]['quote'] or len(c['supports'])!=1 for c in claims):
@@ -337,7 +349,8 @@ class Engine:
             answer_parts=None
             if 'answer_parts' in draft:
                 from .sectioned_answer import DeepSeekSectionedSynthesisModel, validate_answer_parts
-                if type(self.model) is not DeepSeekSectionedSynthesisModel or not synthesis:
+                from .isolated_quote_review import DeepSeekIsolatedSectionedModel
+                if type(self.model) not in (DeepSeekSectionedSynthesisModel,DeepSeekIsolatedSectionedModel) or not synthesis:
                     raise ValueError('Unexpected answer parts')
                 answer_parts=validate_answer_parts(draft['answer_parts'],claims,question)
                 generation['answer_parts']=answer_parts
@@ -367,6 +380,7 @@ class Engine:
             elif not claims and getattr(self.model,'claim_format',None)=='grounded_synthesis_v1':
                 response['uncertainties'].append('If you mean a particular event or policy, name it and its scope so I can check the relevant evidence.')
             if 'model_call' in generation: response['model_call']=generation['model_call']
+            if 'model_quote_reviews' in generation:response['model_quote_reviews']=generation['model_quote_reviews']
             if reviewed:
                 response.update(claim_format=generation['claim_format'],model_review=review_receipt,
                                 review_status='accepted')
