@@ -1,3 +1,5 @@
+2026-10-16 AUTH-PUBLIC-DEMO-IDENTITIES：用户明确选择公开三个现有账号密码、共享历史和额度，随后明确要求审计员也公开。按此授权在现有网站登录页提供四身份凭据/填入入口；README仅链接，不把凭据提交Git。保留既有权限/到期/预算和审计范围，启动核验身份与口令，不扩展源scope。
+
 2026-10-16 AUTH-HOSTED-SEMANTIC：用户明确要求“切换”。将现有公网入口切为sectioned-synthesis，保留账号、权限、原人工grant及预算，不启动自动付费验收；不启用isolated-sectioned实验。语义回答仍受独立审查，失败不能冒充成功。
 
 # Decisions / ADR

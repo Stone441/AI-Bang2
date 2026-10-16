@@ -1,3 +1,5 @@
+2026-10-16 演示引导：英文赛事/Team AI Bang2、紧凑成员邮箱布局、业务背景、四个已授权共享身份入口、查询自动定位和实际阶段时间线。凭据通过显式启用的运行接口提供，不入Git；模型/预算/源权限不变。见[记录](reviews/2026-10-16-demo-onboarding/REPORT.md)。
+
 2026-10-16 首页/首问体验优化：明确新加坡腾讯云黑客松，加入Aspire挑战背景及官方品牌标识；移除首字母头像和次要跳转。输入框/示例填入/反馈/展开控件优化；正常状态隐藏费用计数，暂停仍阻止提交。见[记录](reviews/2026-10-16-query-polish/REPORT.md)。
 
 2026-10-16 品牌与团队页：用户确认队名AI Bang2；更新简约矢量标识、比赛/NTU/成员资料与官网专业链接。Introduction/Workspace/Recent answers统一导航和深色视觉；浏览器完成本地fixture登录、查询、历史重开及390px手机检查。详见[记录](reviews/2026-10-16-brand-refresh/REPORT.md)。线上保留sectioned-synthesis及既有权限/人工额度。
