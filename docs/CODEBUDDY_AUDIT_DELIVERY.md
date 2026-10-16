@@ -2,9 +2,7 @@
 
 2026-10-11 local review bundle prepared at `.runtime/delivery-package-20261011/private-team-review/codebuddy-originals-review-20261011.zip` (private0600/parent0700). Includes three unchanged original process screenshots (01-task-start,04-code-writing,07-final-validation), original conversation-history ZIP, original patch and manifest. All15 original artifact hashes and selected ZIP members verified; no new tool contribution or external disclosure approval is claimed. Team must inspect original contents before upload. Index: [private package provenance](../evidence/runs/first-question-diagnostic-20261011/private-tool-review-package.json).
 
-状态：实现完成，测试全部真实运行通过（结果见下）。由 CodeBuddy 在独立 worktree
-`.runtime/codebuddy-dev09`、分支 `codebuddy/dev-09-audit-verifier` 实现；基准
-commit `81df3ef`。未提交、未推送，diff 留待集成人审查。
+状态：CodeBuddy 原始实现提交 `4165ee6` 已经审查并通过 `8cd5088` 集成。基准为 `81df3ef`；下列20项组件测试和52项当时全仓测试是原交付的历史结果，当前候选验证另见最终收口报告。实际贡献、辅助审查与证明见 [贡献记录](CODEBUDDY_CONTRIBUTION.md)。
 
 ## 修改范围（仅任务允许路径）
 
@@ -104,10 +102,9 @@ stdin，不用 `dgst -sha256`），符合 OpenSSL 3.6 `pkeyutl` 手册对一次�
   JSON `true`（Python `bool`，且 `True == 1`）被显式拒绝。
 - A-02（真实数据库角色分离）不在本任务范围，另行实施。
 
-## 集成人须知
+## 维护与集成记录
 
-- 审查 diff：`git -C .runtime/codebuddy-dev09 diff` / `git status`（相对基准
-  `81df3ef`，仅上述三个路径）。
+- 原始实现差异可通过 `git show 4165ee6` 复核；2026-10-16已确认六个实现/测试文件与候选逐字节一致，不需要重新合并旧工作区。
 - 生产化保留策略：checkpoint 生成节奏（如每 N 条或每批次）、检查点与公钥的
   独立保管位置、密钥轮换流程（当前验证器绑定单一公钥，轮换需外部决策）。
 - 工具使用证据（对话记录、≥3 张截图：契约确认、实现/调试、运行验证）由团队

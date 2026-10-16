@@ -57,7 +57,7 @@ G0确认范围、源接入、模型与预算；G1在人实际观看安全核心�
 
 每任务独立分支/工作目录；不让Codex与CodeBuddy同时写同一文件。公共schema变更先更新契约和测试。交接包含任务ID、基准commit、范围、禁止修改路径、验收ID、已授权资源和产物要求。
 
-从DEV-05等任务开始预留真实CodeBuddy实现贡献；保留真实对话及至少3张过程截图，另有conversation history。不能声称Codex能自动调用本地CodeBuddy；无可用工具连接时给人准确任务包。
+CodeBuddy已完成DEV-09离线审计验证器及测试，贡献与集成证据见docs/CODEBUDDY_CONTRIBUTION.md。保留真实对话、过程截图及conversation history；后续工具贡献按实际提交记录，不追溯改写作者归属。仅在确有工具连接时执行对应工具任务，不声称不存在的调用能力。
 
 ## Validation and durable state
 

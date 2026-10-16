@@ -25,7 +25,7 @@
 | [docs/01_OFFICIAL_BRIEF.md](docs/01_OFFICIAL_BRIEF.md) | 官方要求汇编、100分表、时间冲突、材料/额度/条款、待澄清事项 | Codex及至少一名规则负责人 |
 | [docs/02_PRODUCT_STRATEGY.md](docs/02_PRODUCT_STRATEGY.md) | 推荐产品、两类用户、差异化、范围、ROI、演示故事 | 全员、Codex |
 | [docs/03_ARCHITECTURE.md](docs/03_ARCHITECTURE.md) | 信任边界、数据/授权/检索/更新/引用/审计与API契约 | Codex；成员重点审查关键取舍 |
-| [docs/04_DELIVERY_PLAYBOOK.md](docs/04_DELIVERY_PLAYBOOK.md) | 阶段、DEV任务、三关口、Git协作、CodeBuddy/WorkBuddy可复制任务、提交核查 | 全员、Codex |
+| [docs/04_DELIVERY_PLAYBOOK.md](docs/04_DELIVERY_PLAYBOOK.md) | 阶段、DEV任务、三关口、Git协作、工具贡献与协作记录、提交核查 | 全员、Codex |
 | [docs/05_ACCEPTANCE_TESTS.md](docs/05_ACCEPTANCE_TESTS.md) | 12个合成对象、六用户权限矩阵、五worked examples、51案例 | Codex、验收成员 |
 
 追溯附件：[手册41页英文文本](docs/sources/HANDBOOK_TEXT_ARCHIVE.md)、[Kickoff完整转写](docs/sources/KICKOFF_TRANSCRIPT.md)。手册图像中的关键提交表和评分表已整合到01；纯视觉素材/二维码不在文字归档中复制。

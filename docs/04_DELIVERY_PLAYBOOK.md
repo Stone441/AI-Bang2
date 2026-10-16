@@ -1,3 +1,14 @@
+# Delivery and development workflow
+
+Current delivery state: [final handoff](FINAL_HANDOFF.md). Tool contribution: [CodeBuddy audit component](CODEBUDDY_CONTRIBUTION.md). The component was implemented and integrated; the planning examples below are historical, not pending tasks or claims of additional tool use.
+
+The team used multiple AI-assisted tools, with separate implementation, review and integration responsibilities. Work attribution is based on actual commits and original evidence. CodeBuddy delivered the independent audit verifier and its tests; team/Codex review and integration are recorded separately. WorkBuddy suggestions in the initial plan are not completed-contribution claims.
+
+Current workflow retains server-side identity and source authorization, separate fixture/native/model evidence, independent worktrees, and explicit authority for external publication, runtime changes and final competition submission. Original task assignments and safeguards are preserved below for traceability.
+
+<details>
+<summary>Historical delivery plan and original task examples (September–October 2026)</summary>
+
 # 交付路线、三人协作与编码Agent执行手册
 
 2026-10-07本轮BV业务增强候选固定0bc90ae，按EXECUTION_BRIEF5.3证据收尾；完整技术/人类/G1/G2不因此完成。现有材料title/7-word介绍/描述/16:9封面/真实CodeBuddy证据已本地核对，私密材料未上传；原服务和平台共享未变。后续外部动作仍按各自具体授权。
@@ -237,3 +248,5 @@ Phase 0应提供`.env.example`占位变量，真实密钥留在被忽略的本�
 | 诚信与风险 | 全部 | 不写零风险、已认证、已被Aspire采用、未实测效率数字 |
 
 最终生成“提交版本说明”：commit、部署版本、模型/配置、源接入状态、测试日期、结果摘要、未完成限制、材料链接。人完成G2后再提交；提交后保存回执。即使继续开发，也保留已经提交版本的可复现状态。
+
+</details>
