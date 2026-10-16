@@ -142,62 +142,45 @@ class DeepSeekBoundary(unittest.TestCase):
             with self.assertRaises(ModelUnavailable): self.model.generate('Question', [self.evidence])
             self.transport.response = response
 
-    def test_price_date_and_approval_guard(self):
-        for kwargs in ({'synthetic_only': False, 'today': PRICE_DATE}, {'synthetic_only': True, 'today': PRICE_DATE + timedelta(days=1)},
-                       {'synthetic_only': True, 'today': PRICE_DATE - timedelta(days=1)}):
-            with self.assertRaises(ValueError): DeepSeekEvidenceModel('synthetic-not-a-key', self.ledger, **kwargs)
+    def test_synthetic_approval_is_still_required(self):
+        with self.assertRaises(ValueError):
+            DeepSeekEvidenceModel('synthetic-not-a-key', self.ledger, synthetic_only=False)
 
-    def test_cross_midnight_request_blocked_before_budget_or_network(self):
-        from brain.deepseek import PriceReviewRequired
-        # The runtime clock advances; no production override/date rollback.
+    def test_future_startup_and_midnight_request_do_not_expire(self):
         with patch('brain.deepseek.datetime') as clock:
-            clock.now.return_value.date.return_value = PRICE_DATE
+            clock.now.return_value.date.return_value = PRICE_DATE + timedelta(days=365)
             model = DeepSeekEvidenceModel('synthetic-not-a-key', self.ledger,
                                           synthetic_only=True, transport=self.transport)
-            clock.now.return_value.date.return_value = PRICE_DATE + timedelta(days=1)
-            with self.assertRaises(PriceReviewRequired) as caught:
-                model.generate('Question', [self.evidence])
-        self.assertIn('Preserve the existing USD20', str(caught.exception))
-        self.assertEqual(self.transport.calls, [])
-        self.assertEqual(self.ledger.summary()['accounted_micro_usd'], 0)
-        self.assertEqual(self.ledger.db.execute('SELECT COUNT(*) FROM model_calls').fetchone()[0], 0)
+            clock.now.return_value.date.return_value = PRICE_DATE + timedelta(days=366)
+            model.generate('Question', [self.evidence])
+        self.assertEqual(len(self.transport.calls), 1)
+        self.assertEqual(self.ledger.summary()['settled_micro_usd'], cost_upper(100, 20))
 
-    def test_reviewed_restart_keeps_existing_budget_and_allows_mock_request(self):
-        from brain.deepseek import check_price_review, PriceReviewRequired
+    def test_future_restart_preserves_existing_unknown_reservation(self):
         existing = self.ledger.reserve(1234, query_id='a' * 32, model='deepseek-flash')
         self.ledger.dispatch(existing)
-        next_day = PRICE_DATE + timedelta(days=1)
-        with patch('brain.deepseek.datetime') as clock:
-            clock.now.return_value.date.return_value = next_day
-            with self.assertRaises(PriceReviewRequired): check_price_review()
-            # Simulates a documented re-review of the same rates, then startup.
-            with patch('brain.deepseek.PRICE_DATE', next_day):
-                check_price_review()
-                model = DeepSeekEvidenceModel('synthetic-not-a-key', self.ledger,
-                                              synthetic_only=True, transport=self.transport)
-                model.generate('Question', [self.evidence])
+        model = DeepSeekEvidenceModel('synthetic-not-a-key', self.ledger,
+            synthetic_only=True, transport=self.transport, today=PRICE_DATE + timedelta(days=365))
+        model.generate('Question', [self.evidence])
         self.assertEqual(len(self.transport.calls), 1)
         self.assertEqual(self.ledger.summary()['accounted_micro_usd'], 1234 + cost_upper(100, 20))
         self.assertEqual(self.ledger.summary()['pending_requests'], 1)
 
-    def test_expired_startup_stops_before_listener_credentials_and_source_calls(self):
+    def test_future_operator_startup_reaches_listener_without_price_review(self):
         from brain.operator_web import main
         output = io.StringIO()
         with patch('brain.deepseek.datetime') as clock, contextlib.redirect_stdout(output), \
-             patch('brain.operator_web.create_server') as server, \
+             patch('brain.operator_web.create_server', side_effect=OSError('bind sentinel')) as server, \
              patch('scripts.confluence_probe.load_reader') as reader:
-            clock.now.return_value.date.return_value = PRICE_DATE + timedelta(days=1)
+            clock.now.return_value.date.return_value = PRICE_DATE + timedelta(days=365)
             self.assertEqual(main(['--config', 'missing', '--model', 'deepseek', '--live']), 2)
-        server.assert_not_called(); reader.assert_not_called()
-        self.assertIn('model_price_review_required', output.getvalue())
-        self.assertIn('USD20 ledger', output.getvalue())
+        server.assert_called_once(); reader.assert_not_called()
+        self.assertNotIn('model_price_review_required', output.getvalue())
 
-    def test_operator_price_guard_precedes_credentials_and_no_live_is_no_send(self):
+    def test_operator_without_live_approval_does_not_start(self):
         from brain.operator_web import main
-        with contextlib.redirect_stdout(io.StringIO()), patch('brain.operator_web.create_server') as server, \
-             patch('brain.deepseek.check_price_review', side_effect=ValueError('stale')):
+        with contextlib.redirect_stdout(io.StringIO()), patch('brain.operator_web.create_server') as server:
             self.assertEqual(main(['--config', 'missing', '--model', 'deepseek']), 2)
-            self.assertEqual(main(['--config', 'missing', '--model', 'deepseek', '--live']), 2)
             server.assert_not_called()
 
     def test_web_worker_thread_can_use_durable_budget(self):

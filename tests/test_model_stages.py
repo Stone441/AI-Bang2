@@ -8,7 +8,7 @@ from pathlib import Path
 from brain.audit import Audit, verify_chain
 from brain.budget import BudgetLedger
 from brain.contracts import Actor
-from brain.deepseek import DeepSeekEvidenceModel, ModelUnavailable, PRICE_DATE, PriceReviewRequired
+from brain.deepseek import DeepSeekEvidenceModel, ModelUnavailable, PRICE_DATE
 from brain.engine import Engine
 from brain.sources import FixtureWorld
 from brain.store import Store
@@ -46,7 +46,6 @@ class ModelStages(unittest.TestCase):
         self.failure=case
         cls=DeepSeekSynthesisModel if case=='review' else DeepSeekEvidenceModel
         model=cls('synthetic-not-a-key',self.ledger,synthetic_only=True,transport=self.transport,today=PRICE_DATE)
-        if case=='price':model._today=lambda:PRICE_DATE+timedelta(days=1)
         if case=='guard':
             for r in self.world.resources.values():r['text']=r['text'].replace('[SYNTHETIC] ','')
             self.store.db.close();self.store=Store();self.store.initialize(self.world);self.audit=Audit(self.store)
@@ -64,9 +63,9 @@ class ModelStages(unittest.TestCase):
                 'events':events,'answer':answer,'budget':self.ledger.summary(),
                 'receipts':[self.ledger.model_receipt(r[0]) for r in self.ledger.db.execute('select reservation_id from model_calls')]}
 
-    def test_price_guard_and_budget_failure_have_prepared_input_but_no_send(self):
+    def test_input_guard_and_budget_failure_have_prepared_input_but_no_send(self):
         # Each case has its own stores/ledger; no resetting the real runtime ledger.
-        for case,reason in [('price','model_price_review_required'),('guard','model_input_rejected'),('budget','model_budget_unavailable')]:
+        for case,reason in [('guard','model_input_rejected'),('budget','model_budget_unavailable')]:
             with self.subTest(case=case):
                 harness=ModelStages();harness.setUp()
                 try:
@@ -115,7 +114,7 @@ class ModelStages(unittest.TestCase):
         self.assertEqual(result['budget']['pending_requests'],0)
         self.assertIsNone(result['answer'])
 
-    def test_http_return_attempt_only_after_success_and_never_on_price_failure(self):
+    def test_http_request_after_midnight_still_returns_an_answer(self):
         import threading
         import test_http
         from brain.server import App, create_server
@@ -136,8 +135,7 @@ class ModelStages(unittest.TestCase):
             model._today=lambda:PRICE_DATE+timedelta(days=1)
             for session in app.sessions.values():session['last_query']=0
             status,error=request('/api/query',{'question':'payment-service incident'})
-            self.assertEqual(status,503);self.assertEqual(error['code'],'model_price_review_required')
-            self.assertEqual(len(self.calls),1)
-            self.assertEqual(len([e for e in self.audit.export() if e['event_type']=='response_dispatch_attempted']),1)
-            self.assertEqual(self.audit.export()[-1]['event_type'],'request_failed')
+            self.assertEqual(status,200)
+            self.assertEqual(len(self.calls),2)
+            self.assertEqual(len([e for e in self.audit.export() if e['event_type']=='response_dispatch_attempted']),2)
         finally:self.server.shutdown();self.server.server_close();thread.join()

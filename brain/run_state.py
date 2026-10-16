@@ -90,11 +90,8 @@ def runtime_status(app, actor, run):
     admission=getattr(app.engine.query,'public_status',None)
     readiness={'ready':True,'code':None}
     if app.engine.model.name.startswith('deepseek-'):
-        from .deepseek import check_price_review, PriceReviewRequired, PRICE_DATE
-        try:check_price_review()
-        except PriceReviewRequired:
-            readiness={'ready':False,'code':'model_price_review_required'}
-        readiness['price_review_date_sgt']=PRICE_DATE.isoformat()
+        from .deepseek import PRICE_DATE
+        readiness['price_reference_date_sgt']=PRICE_DATE.isoformat()
     query_readiness=dict(readiness)
     if discovery is not None and query_readiness['ready'] and any(s['configured'] and s['mode']!='fixture'
             and s['snapshot_status']!='current' for s in sources):
