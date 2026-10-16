@@ -3,10 +3,10 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 class Element{constructor(){this.children=[];this.hidden=false;this.open=false;this.value='';this.textContent='';this.attributes={};}replaceChildren(...c){this.children=c;this.textContent='';}append(...c){this.children.push(...c);}querySelector(){return new Element();}setAttribute(k,v){this.attributes[k]=v;}focus(){}close(){this.open=false;}}
 const storage=new Map(),response=body=>({ok:true,status:200,json:async()=>body});
 let paid=0;
-function page(){const elements=new Map(),get=id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);};let now=1000;
- const ctx=vm.createContext({document:{getElementById:get,createElement:()=>new Element(),querySelectorAll:()=>[]},location:{hash:'',pathname:'/',search:''},history:{replaceState(){}},URLSearchParams,URL,Date,performance:{now:()=>now},setInterval:()=>1,clearInterval(){},sessionStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},fetch:()=>new Promise(()=>{})});
+function page(){const elements=new Map(),get=id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);};let now=1000;const example=new Element();example.dataset={question:'NEW EXAMPLE'};
+ const ctx=vm.createContext({document:{getElementById:get,createElement:()=>new Element(),querySelectorAll:selector=>selector==='[data-question]'?[example]:[]},location:{hash:'',pathname:'/',search:''},history:{replaceState(){}},URLSearchParams,URL,Date,performance:{now:()=>now},setInterval:()=>1,clearInterval(){},sessionStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},fetch:()=>new Promise(()=>{})});
  vm.runInContext(fs.readFileSync('web/app.js','utf8'),ctx);vm.runInContext("session={actor:'eng_b',csrf:'same-session'};health={auth_kind:'operator'};show('workspace')",ctx);
- return {ctx,get,tick:()=>{now+=2000;}};}
+ return {ctx,get,example,tick:()=>{now+=2000;}};}
 const run=(status='running',id='a'.repeat(32))=>({mode:'mock_http',model:'fake-extractive-v1',sources:[],run:{request_id:id,status,phase:'review',elapsed_seconds:42,error_code:status==='failed'?'model_output_unavailable':null}});
 const answer={request_id:'a'.repeat(32),question:'ORIGINAL QUESTION',claims:[],evidence:[],uncertainties:[],model:'fake-extractive-v1'};
 const watchdog=setTimeout(()=>{console.error('FAIL: refresh test did not finish');process.exitCode=1;},3000);
@@ -74,6 +74,13 @@ const watchdog=setTimeout(()=>{console.error('FAIL: refresh test did not finish'
  // An answer selected from History can be restored without a live run or a model call.
  storage.set('brain.answer.same-session',JSON.stringify({requestId:answer.request_id,question:answer.question}));const selection=page();let reads=0;
  selection.ctx.fetch=async path=>path==='/api/runtime'?response({...run(),run:null}):(reads++,response({history:[answer]}));vm.runInContext('armResume()',selection.ctx);await vm.runInContext('refreshRuntime()',selection.ctx);assert.equal(reads,1);assert.equal(selection.get('question').value,answer.question);assert.equal(selection.get('answer').children.length,1);assert.equal(paid,1);
+ // Choosing even the same example cancels a delayed saved-answer restoration.
+ const choose=page();let releaseSaved;
+ choose.ctx.fetch=async path=>path==='/api/runtime'?response({...run(),run:null}):new Promise(resolve=>releaseSaved=resolve);
+ vm.runInContext('armResume()',choose.ctx);const restoring=vm.runInContext('refreshRuntime()',choose.ctx);
+ await new Promise(resolve=>setImmediate(resolve));choose.example.dataset.question=answer.question;choose.example.onclick();
+ releaseSaved(response({history:[answer]}));await restoring;
+ assert.equal(choose.get('question').value,answer.question);assert.equal(choose.get('answer').children.length,0);assert.equal(paid,1);
  // A rejected exhausted trial restores failure, original question, stopped stage and disabled Ask.
  storage.clear();const paused=page();let posts=0;
  const stopped={...run('failed').run,error_code:'trial_admission_paused',question:'REJECTED ORIGINAL QUESTION',phase:'queued',phases:['queued'],elapsed_seconds:0.02};
