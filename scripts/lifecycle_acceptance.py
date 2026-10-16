@@ -102,4 +102,4 @@ def run(output):
 
 
 if __name__ == '__main__':
-    raise SystemExit(not run(Path('evidence/runs/lifecycle-local')))
+    raise SystemExit(not run(Path('.runtime/validation/lifecycle-local')))

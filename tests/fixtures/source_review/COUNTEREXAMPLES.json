@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "1649e301959b7eea7303fdda9ba0ee58a578d19e",
+  "mode": "offline_recorded_evidence_replay",
+  "boundary": "Original files are referenced and hashed, never rewritten. Parser acceptance does not prove business correctness or current native access.",
+  "cases": [
+    {
+      "case": "v1_rejected",
+      "required_resource_id": "confluence:98564",
+      "meaning": "coverage rejected; source continuation is not an answer success",
+      "files": {
+        "response": {
+          "path": "tests/fixtures/source_review/v1_rejected/response.json",
+          "sha256": "d41ccf4647bee796f7f95b69411220eee5a0a21e325a9a8f18a58bbf822c9621",
+          "original_path": "evidence/runs/first-question-diagnostic-20261011/response.json"
+        },
+        "result": {
+          "path": "tests/fixtures/source_review/v1_rejected/result.json",
+          "sha256": "9c4f0f9d1d5fd68c19e4951512807113fd59f9eeb2a8c7e6d8cfcffb76357ea5",
+          "original_path": "evidence/runs/first-question-diagnostic-20261011/result.json"
+        },
+        "audit": {
+          "path": "tests/fixtures/source_review/v1_rejected/audit.json",
+          "sha256": "c2e6ba41d27f4ebc801f09af65d1001296429ea7da48d32d0202e41f1e161ff1",
+          "original_path": "evidence/runs/first-question-diagnostic-20261011/audit.json"
+        }
+      }
+    },
+    {
+      "case": "v2_false_acceptance",
+      "required_resource_id": "confluence:98564",
+      "meaning": "accepted but required C01 action absent; business failure",
+      "files": {
+        "response": {
+          "path": "tests/fixtures/source_review/v2_false_acceptance/v2-ready-response.json",
+          "sha256": "7e4947783a73f236c1199d7b5f29c4f95c43c8483577fddae4d0a8ca1036280e",
+          "original_path": "evidence/runs/first-question-diagnostic-20261011/v2-ready-response.json"
+        },
+        "result": {
+          "path": "tests/fixtures/source_review/v2_false_acceptance/v2-ready-result.json",
+          "sha256": "2a092a8520632919ea5ed181604f6d25eed9fa5a461798cab713c8342bb9e833",
+          "original_path": "evidence/runs/first-question-diagnostic-20261011/v2-ready-result.json"
+        },
+        "audit": {
+          "path": "tests/fixtures/source_review/v2_false_acceptance/v2-ready-audit.json",
+          "sha256": "7ef40d8fa15a37ceedaccc5f42c8c8b600b1bb478283b512524595438d0a4bb4",
+          "original_path": "evidence/runs/first-question-diagnostic-20261011/v2-ready-audit.json"
+        }
+      }
+    },
+    {
+      "case": "low_single_success",
+      "required_resource_id": "confluence:98564",
+      "meaning": "required C01 action retained once; no stability estimate",
+      "files": {
+        "response": {
+          "path": "tests/fixtures/source_review/low_single_success/low-response.json",
+          "sha256": "c29edf5e4863f30e052416be8d99d2950192b740381670f8bf02a0810d9b8e99",
+          "original_path": "evidence/runs/first-question-diagnostic-20261011/low-response.json"
+        },
+        "result": {
+          "path": "tests/fixtures/source_review/low_single_success/low-result.json",
+          "sha256": "7f2320d6e2dcf4f464362eeea1157f6e397e04b78c78ab3ea157810ac6cff78a",
+          "original_path": "evidence/runs/first-question-diagnostic-20261011/low-result.json"
+        },
+        "audit": {
+          "path": "tests/fixtures/source_review/low_single_success/low-audit.json",
+          "sha256": "64e1e50c0c83307369fd37351888cb39699c32b45e8799ff0c117533622e920f",
+          "original_path": "evidence/runs/first-question-diagnostic-20261011/low-audit.json"
+        }
+      }
+    }
+  ]
+}

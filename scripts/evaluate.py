@@ -89,7 +89,7 @@ def run(output):
         report={'started_at':started,'finished_at':now(),'mode':MODE,'model':engine.model.name,'python':platform.python_version(),
                 'commit':revision(),'source_hashes':tracked,
                 'worktree_dirty':dirty(),
-                'scenarios':scenarios,'live_api':'not_run','live_model':'not_run','human_G1':'not_run','codebuddy':'verified_local_delivery_separate_from_scenario_run','codebuddy_evidence_index':'evidence/tool-usage/README.md'}
+                'scenarios':scenarios,'live_api':'not_run','live_model':'not_run','human_G1':'not_run','codebuddy':'verified_local_delivery_separate_from_scenario_run','codebuddy_evidence_index':'docs/CODEBUDDY_CONTRIBUTION.md'}
         output.mkdir(parents=True,exist_ok=True)
         (output/'scenarios.json').write_text(json.dumps(report,indent=2)+'\n')
         (output/'audit.json').write_text(json.dumps(audit.export(),indent=2)+'\n')
@@ -97,4 +97,4 @@ def run(output):
     print(json.dumps({'mode':MODE,'scenarios':[{k:s[k] for k in ['id','status']} for s in scenarios],'report':str(output/'scenarios.json')},indent=2))
     return report
 
-if __name__=='__main__':run(Path('evidence/runs/local-latest'))
+if __name__=='__main__':run(Path('.runtime/validation/local-latest'))

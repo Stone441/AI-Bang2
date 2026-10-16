@@ -15,7 +15,7 @@ import test_source_review as setup_tests
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REVIEW = ROOT / 'docs/reviews/2026-10-13-source-review-dispatch'
+REVIEW = ROOT / 'tests/fixtures/source_review'
 
 
 class DispatchContract(unittest.TestCase):

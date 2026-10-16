@@ -1,69 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-labelledby="title desc">
-<title id="title">ContextLedger prototype architecture and trust boundaries</title><desc id="desc">Four source adapters feed a versioned index. Server identity, current source checks and exact evidence validation guard either reviewed excerpts or optional per-claim isolated quote checks plus full-source synthesis review. Scoped audit and an isolated fixture lab remain separate.</desc>
-<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#557364"/></marker></defs>
-<rect width="1600" height="1040" fill="#f6f7f3"/>
-<g font-family="Arial, sans-serif" fill="#20322e">
-<text x="55" y="65" font-size="36" font-weight="700">ContextLedger · evidence, access and accountability</text>
-<text x="55" y="100" font-size="20">16 October 2026 · prototype candidate · full semantic acceptance incomplete</text>
-<rect x="400" y="135" width="600" height="710" rx="12" fill="#edf2eb" stroke="#708b7b"/>
-<text x="425" y="165" font-size="17">Application trust boundary: prompts and documents cannot grant access</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1060" viewBox="0 0 1600 1060" role="img" aria-labelledby="title desc">
+<title id="title">ContextLedger architecture and trust boundaries</title>
+<desc id="desc">The browser and four external knowledge sources connect to a local application boundary containing verified sessions, a versioned index, retrieval and current access checks, validated answers and scoped audit. DeepSeek is a separate external model endpoint. The offline checkpoint verifier and isolated fixture lab are distinct tools.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#376357"/></marker></defs>
+<rect width="1600" height="1060" fill="#f6f8f5"/>
+<g font-family="Arial, sans-serif" fill="#20342e">
+<text x="50" y="65" font-size="38" font-weight="700">ContextLedger system architecture</text>
+<text x="50" y="105" font-size="21" fill="#52665e">Read-only sources · current access · reviewed answers · scoped audit</text>
+<rect x="400" y="150" width="750" height="710" rx="16" fill="#e9f0e9" stroke="#6b8b77" stroke-width="2"/>
+<text x="430" y="186" font-size="19" font-weight="700">LOCAL APPLICATION TRUST BOUNDARY</text>
+<rect x="50" y="220" width="300" height="110" rx="9" fill="#fff" stroke="#789181"/>
+<text x="70" y="255" font-size="23" font-weight="700">Browser</text>
+<text x="70" y="286" font-size="18">Untrusted requests and prompts</text>
+<text x="70" y="311" font-size="18">Cannot grant identity or access</text>
+<rect x="50" y="430" width="300" height="185" rx="9" fill="#fff" stroke="#789181"/>
+<text x="70" y="465" font-size="23" font-weight="700">Knowledge sources</text>
+<text x="70" y="500" font-size="20">Confluence · Jira · Slack</text>
+<text x="70" y="529" font-size="20">Google Drive</text>
+<text x="70" y="568" font-size="18">Read-only scoped adapters</text>
+<text x="70" y="595" font-size="18">Collection access ≠ user access</text>
+<rect x="430" y="220" width="310" height="110" rx="9" fill="#fff" stroke="#789181"/>
+<text x="448" y="256" font-size="22" font-weight="700">Verified server session</text>
+<text x="448" y="287" font-size="18">Application identity + policy</text>
+<text x="448" y="312" font-size="18">Native source identity mapping</text>
+<rect x="790" y="220" width="320" height="110" rx="9" fill="#fff" stroke="#789181"/>
+<text x="808" y="256" font-size="22" font-weight="700">Versioned SQLite index</text>
+<text x="808" y="287" font-size="18">Incremental content publication</text>
+<text x="808" y="312" font-size="18">Source IDs, versions, exact text</text>
+<rect x="430" y="430" width="680" height="125" rx="9" fill="#fff" stroke="#789181"/>
+<text x="448" y="465" font-size="23" font-weight="700">Bounded retrieval + current source checks</text>
+<text x="448" y="501" font-size="19">Local policy prefilter → lexical/BM25 evidence windows</text>
+<text x="448" y="532" font-size="19">Native access and version recheck before model dispatch</text>
+<rect x="1200" y="430" width="350" height="175" rx="9" fill="#fff" stroke="#789181"/>
+<text x="1220" y="466" font-size="23" font-weight="700">External model endpoint</text>
+<text x="1220" y="503" font-size="20">DeepSeek Flash</text>
+<text x="1220" y="539" font-size="18">Subquestion synthesis + review</text>
+<text x="1220" y="566" font-size="18">Permitted synthetic evidence only</text>
+<text x="1220" y="591" font-size="18">No authority to grant access</text>
+<rect x="430" y="650" width="440" height="125" rx="9" fill="#fff" stroke="#789181"/>
+<text x="448" y="686" font-size="23" font-weight="700">Validated answer and evidence</text>
+<text x="448" y="721" font-size="18">Exact quote checks + final access checks</text>
+<text x="448" y="750" font-size="18">History and previews reauthorize</text>
+<rect x="910" y="650" width="200" height="125" rx="9" fill="#fff" stroke="#789181"/>
+<text x="928" y="686" font-size="22" font-weight="700">Scoped audit</text>
+<text x="928" y="720" font-size="17">Identity · decisions</text>
+<text x="928" y="748" font-size="17">Usage · outcome</text>
+<text x="430" y="823" font-size="18">Unknown access cannot pass. Model review can make mistakes.</text>
+<path d="M350 275H430" fill="none" stroke="#376357" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M350 525H380V205H950V220" fill="none" stroke="#376357" stroke-width="2" marker-end="url(#arrow)"/>
 
-<rect x="50" y="190" width="300" height="125" rx="7" fill="white" stroke="#708b7b"/>
-<text x="68" y="220" font-size="21" font-weight="700">Four source adapters</text>
-<text x="68" y="248" font-size="17">Confluence · Jira · Slack · Drive</text>
-<text x="68" y="272" font-size="17">Read-only / approved test data</text>
-<text x="68" y="296" font-size="17">Collection access ≠ user access</text>
-<rect x="50" y="375" width="300" height="105" rx="7" fill="white" stroke="#708b7b"/>
-<text x="68" y="405" font-size="21" font-weight="700">Incremental publication</text>
-<text x="68" y="433" font-size="17">Content / ACL tracked separately</text>
-<text x="68" y="457" font-size="17">Publish complete source versions</text>
-<rect x="50" y="540" width="300" height="105" rx="7" fill="white" stroke="#708b7b"/>
-<text x="68" y="570" font-size="21" font-weight="700">SQLite versioned index</text>
-<text x="68" y="598" font-size="17">Local policy prefilter</text>
-<text x="68" y="622" font-size="17">Exact text / source IDs</text>
-<rect x="425" y="190" width="550" height="95" rx="7" fill="white" stroke="#708b7b"/>
-<text x="443" y="220" font-size="21" font-weight="700">Browser + verified server identity</text>
-<text x="443" y="248" font-size="17">Source identity ∩ application resource policy</text>
-<rect x="425" y="325" width="550" height="100" rx="7" fill="white" stroke="#708b7b"/>
-<text x="443" y="355" font-size="21" font-weight="700">Local retrieval</text>
-<text x="443" y="383" font-size="17">BM25 · bounded bilingual glossary · exact windows</text>
-<text x="443" y="407" font-size="17">One-hop source links require current seed access</text>
-<rect x="425" y="465" width="550" height="95" rx="7" fill="white" stroke="#708b7b"/>
-<text x="443" y="495" font-size="21" font-weight="700">Current source access + version checks</text>
-<text x="443" y="523" font-size="17">Unknown access cannot pass; no model authority</text>
-<rect x="425" y="600" width="550" height="105" rx="7" fill="white" stroke="#708b7b"/>
-<text x="443" y="630" font-size="21" font-weight="700">Model paths (explicit selection)</text>
-<text x="443" y="658" font-size="17">Existing path: reviewed exact source passages</text>
-<text x="443" y="682" font-size="17">Optional: draft + isolated quotes + full-source review</text>
-<rect x="425" y="745" width="550" height="75" rx="7" fill="white" stroke="#708b7b"/>
-<text x="443" y="775" font-size="21" font-weight="700">Exact support + final access checks</text>
-<text x="443" y="803" font-size="17">Answer, History and previews reauthorize</text>
-<rect x="1060" y="250" width="490" height="110" rx="7" fill="white" stroke="#708b7b"/>
-<text x="1078" y="280" font-size="21" font-weight="700">Append audit records</text>
-<text x="1078" y="308" font-size="17">Identity · query · evidence · authorization · outcome</text>
-<text x="1078" y="332" font-size="17">Preparation / sends / usage / storage remain distinct</text>
-<rect x="1060" y="410" width="490" height="105" rx="7" fill="white" stroke="#708b7b"/>
-<text x="1078" y="440" font-size="21" font-weight="700">Scoped audit explorer</text>
-<text x="1078" y="468" font-size="17">Request grouping + observed stage timeline</text>
-<text x="1078" y="492" font-size="17">Raw events retained; missing stages not invented</text>
-<rect x="1060" y="565" width="490" height="110" rx="7" fill="white" stroke="#708b7b"/>
-<text x="1078" y="595" font-size="21" font-weight="700">CodeBuddy checkpoint verifier</text>
-<text x="1078" y="623" font-size="17">Offline hash-chain + Ed25519 verification</text>
-<text x="1078" y="647" font-size="17">Local custody ≠ independent production custody</text>
-<path d="M200 315 V375" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M200 480 V540" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M350 592 H375 V375 H425" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M700 285 V325" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M700 425 V465" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M700 560 V600" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M700 705 V745" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M975 512 H1020 V305 H1060" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M975 785 H1035 V330 H1060" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M1305 360 V410" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<path d="M1305 515 V565" fill="none" stroke="#557364" stroke-width="2" marker-end="url(#arrow)"/>
-<text x="1070" y="740" font-size="18">Native update latency, live-model semantics and</text><text x="1070" y="766" font-size="18">independent employee identities remain separate checks.</text>
-<rect x="50" y="880" width="1500" height="110" rx="9" fill="#e6ece6" stroke="#708b7b" stroke-dasharray="7 5"/>
-<text x="75" y="916" font-size="23" font-weight="700">Separate operator scenario lab · loopback only</text>
-<text x="75" y="948" font-size="19">Own in-memory fixtures + SQLite → read → publish version → revoke → inspect audit. Fixed controls; no path to live sources.</text>
-<text x="75" y="976" font-size="17">Fake extractive model. Retained operator observations are not employee History. No model fees, native SLA or general security proof.</text>
+<path d="M585 330V430" fill="none" stroke="#376357" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M950 330V430" fill="none" stroke="#376357" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1110 475H1200" fill="none" stroke="#376357" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1200 575H1168V625H650V650" fill="none" stroke="#376357" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1010 555V650" fill="none" stroke="#376357" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M870 712H910" fill="none" stroke="#376357" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="50" y="915" width="700" height="105" rx="9" fill="#fff" stroke="#789181"/>
+<text x="70" y="950" font-size="22" font-weight="700">CodeBuddy offline checkpoint verifier</text>
+<text x="70" y="981" font-size="18">Hash chain + Ed25519 · separately trusted checkpoint/public key</text>
+<text x="70" y="1006" font-size="17">Local key custody is not independent production custody.</text>
+<rect x="800" y="915" width="750" height="105" rx="9" fill="#fff" stroke="#789181" stroke-dasharray="7 5"/>
+<text x="820" y="950" font-size="22" font-weight="700">Separate fixture scenario lab</text>
+<text x="820" y="981" font-size="18">In-memory fixtures + fake model · version/revocation/audit controls</text>
+<text x="820" y="1006" font-size="17">Loopback only; no path to modify connected live sources.</text>
 </g></svg>

@@ -1,125 +1,52 @@
-# 实际实现与信任边界 · 2026-10-04
+# Architecture and design tradeoffs
 
+ContextLedger is a Python and SQLite knowledge prototype with a browser interface. It combines read-only source adapters, local retrieval, current access checks, reviewed answers and scoped audit records.
 
-## pd implementation update · 14 October 2026
+![ContextLedger system architecture and trust boundaries](../assets/submission/contextledger-architecture.png)
 
-The local pd branch includes bounded bilingual lexical matching, exact evidence grouping and an opt-in sectioned-synthesis model path. The old hosted/native build has not been switched or revalidated. [Current SVG](../assets/submission/contextledger-architecture.svg) and [prior SVG](reviews/2026-10-14-pd/prior-round8-architecture.svg) distinguish current code from historical measurements.
+[Download the vector diagram](../assets/submission/contextledger-architecture.svg).
 
-```mermaid
-flowchart LR
-  Sources[Four read-only source adapters] --> Sync[Incremental version publication]
-  Sync --> Index[(SQLite text / versions / local policy)]
-  UI[Browser / verified server session] --> Retrieval[Prefilter / BM25 / bounded bilingual glossary]
-  Index --> Retrieval
-  Retrieval --> Gate[Current source access and version checks]
-  Gate --> Choice{Explicit model mode}
-  Choice --> Existing[Existing reviewed source passages]
-  Choice --> Draft[Optional per-part synthesis draft]
-  Draft --> Recheck[Current access check before review]
-  Recheck --> Review[Support / coverage / premise / conflict review]
-  Existing --> Final[Exact support and final current access checks]
-  Review --> Final
-  Final --> Answer[Answer / safe History / preview]
-  Gate & Final & Review --> Audit[(Structured audit events)]
-  Audit --> Explorer[Scoped request timeline / original events]
-  Audit --> Verify[Offline signed-checkpoint verifier]
-  Lab[Separate loopback operator lab] --> Own[Own memory fixtures / fake model / Engine]
-```
+## Request and data flow
 
-The lab has no route in the employee server and no live source/configuration input. Fixed local fixture actions simulate publication and revocation; they do not establish native background freshness. Its retained operator transcript is explicitly different from employee History. The scoped audit timeline displays only loaded events and retains mixed decisions; preparation, delivery attempts and reading remain distinct. All labels are rendered as text, not HTML. Source credentials, identity authority and current access stay outside model control.
+1. **Establish identity.** The server validates the session and obtains the application identity. In the hosted demonstration, each shared identity has a resource policy intersected with the team connection's native access. Client fields and model output cannot grant permissions.
+2. **Maintain source versions.** Read-only adapters collect approved synthetic material from Confluence, Jira, Slack and Google Drive. Incremental discovery publishes complete versions to the local index; content changes and access changes are handled separately.
+3. **Retrieve bounded evidence.** Local lexical/BM25 ranking, a bounded bilingual glossary and exact text windows select candidates after a policy prefilter. Evidence keeps its source ID, version, locator and original text.
+4. **Verify current access.** Native source permission and version checks run before evidence is supplied to a model. Denied, unknown or inconsistent access cannot be treated as permission. A bounded pre-model version recovery can refresh changed evidence; it does not permit post-generation retries against different content.
+5. **Generate and review.** The hosted `sectioned-synthesis` path asks the model for conclusions by subquestion, exact supporting quotes, qualifications and explicit gaps. Strict structural and quote checks and a separate model review assess the draft. A rejected draft is not released as a successful synthesized answer; evidence-only output remains visibly distinct.
+6. **Deliver and retain.** Final access checks guard the answer. Historical answers and source previews are reauthorized. The audit stream records identity, question, resource decisions, evidence, model attempts, usage and outcome.
 
-Local tests cover these behaviors; fake/scripted outputs do not establish semantic prompt-injection resistance or actual answer quality. Real platform update/revocation propagation, the optional model mode and independent identity/key custody remain unverified. Dated sections below describe earlier implementations and are retained for traceability.
+## Trust boundaries
 
-13 October demo account update: engineer, product and partner are server-authenticated application personas. Their explicit resource policies are intersected with the team connection's current native permissions. All three can use the live-source demo; this does not demonstrate three independent native employee identities. The live model and original permission/version checks remain unchanged. See [reviewer access](REVIEWER_ACCESS.md).
+| Boundary | Enforced distinction |
+|---|---|
+| Browser → server | A verified session determines identity; prompts, roles in request text and client user IDs do not grant access. |
+| Index → native sources | An indexed copy or service-account read does not establish an employee's current permission. |
+| Evidence → model | Retrieved text is untrusted data. The model cannot authorize resources, execute audit SQL or choose arbitrary source URLs. |
+| Draft → answer | Syntax and exact-quote checks are deterministic; semantic model review is fallible. Current access remains a server decision. |
+| User → audit | Audit queries use restricted structured conditions and explicit actor/resource scope. |
+| Application → host | The tunnel routes inbound traffic; it does not isolate the process from files available to its operating-system account. |
 
-13 October selected final build: structured whole-passage selection, one DeepSeek Flash review, none reasoning/8192, pooled native reads up to four, batch History, serial queries with pre-lock session queue state. Experimental isolated3 and explained premise reviewer are disabled. Current configuration and measured limits: [FINAL_RUNBOOK](FINAL_RUNBOOK.md) and [FINAL_VALIDATION](reviews/2026-10-13-final-delivery/FINAL_VALIDATION.json). Dated configurations below remain historical.
+The isolated scenario lab has its own in-memory fixtures and fixed controls. It is separate from the employee-facing server and has no route to modify live sources.
 
-2026-10-13 whole-v1 opt-in已实现：模型选择完整段落别名＋语义安全/覆盖，服务器精确全文/引文及遗漏校验，单审查权限阶段不变。原生三题6.39–8.84秒，完整3秒未达；冻结12开发案例暴露归档窗口冗长断句，质量未完成。详见query-goal/WHOLE_SOURCE_CONTRACT.md。
+## Why these choices
 
-2026-10-13 opt-in AUTH036：每源read支持1/2/4并发，连接池匹配上限；History batch按资源/版本作本次原生检查并保留窗口/引文验证，默认serial可回退。真实同Q2历史9.392→1.968秒、25HTTP不变，非新问答3秒。见query-goal/FOUR_READS_HISTORY.md。
+| Choice | Benefit | Tradeoff |
+|---|---|---|
+| Python standard library and SQLite | Straightforward local reproduction and inspectable state. | A single-host prototype; production isolation and scaling are separate work. |
+| Bounded lexical/BM25 retrieval | Exact source windows and simple diagnostics for a small prepared corpus. | Limited vocabulary and corpus coverage; no demonstrated embedding advantage or general semantic retrieval guarantee. |
+| Read-only adapters with current checks | Limits source mutations and avoids relying on stale local allows. | Native API availability and supported resource types constrain answers. |
+| Generation plus separate review | Adds an explicit check for scope, gaps, false premises and conflicting evidence. | Adds latency and cost; review can miss mistakes or reject useful drafts. |
+| Hash chain plus signed checkpoints | Detects changes to records covered by a separately trusted checkpoint. | Local key/checkpoint custody is not independent production protection; uncovered tails remain unanchored. |
+| Shared synthetic demo identities | Lets reviewers compare application access without provisioning enterprise accounts. | Shared history and allowance; not employee SSO or proof of every native ACL case. |
 
-2026-10-13 opt-in候选补充：compact/covered源审查输入与single派发（代码白名单，构造后完整review_dispatch）已实现；旧双调用及默认legacy不变。真实候选Q1/Q2为54.732/40.595秒，完整3秒未达；详见docs/reviews/2026-10-13-query-goal/SINGLE_REVIEW_CONTRACT.md与README.md。
+An additional isolated-quotation review path exists as an experiment and is **off in the hosted demonstration**. It has not passed full end-to-end acceptance. [Validation](VALIDATION.md) and [Security](SECURITY.md) describe the scope without treating test results as production guarantees.
 
-## Current delivery candidate · 2026-10-11
+## Implementation map
 
-2026-10-13 local diagnostic increment (trial not updated): optional operator `--timing-dir` records bounded private request/lock/native-lane/model/ledger spans, default off, no product endpoint or source/model payload logging. Permissions, versions, audit and budgets are unchanged. 12 dedicated and 502 final local tests passed; real latency improvement/native trial loading not_run. Current implementation and failure records: [restricted timing](reviews/2026-10-13-restricted-timing/README.md).
-
-[Standalone 16:9 architecture diagram](../assets/submission/contextledger-architecture.svg), ready for material/video use.
-
-Current trial uses source-review v2 and same DeepSeek Flash low reasoning/cap8192 for its single support/coverage/scope review. Server code constructs exact contiguous quotes preserving every byte of retrieved authorized evidence; one authentic model_review receipt and final native checks protect reviewed_source_v1. There is no generation call. Filtering still requires complete independent remaining coverage and retains whole evidence windows. Current original Q1, original Q2 and pilot/GA scope each returned supported source answers once; Q1 includes the runbook measures and explicit unknown ordering. 485 local tests passed after failed-run restoration fix. Disabled-thinking v2 accepted an incomplete Q1, and prior v1/selector failures remain genuine failures; low review is a bounded quality fallback, not a stability claim. Older review, selector and free-form synthesis remain rollbacks. Browser/human G1 and G2 are incomplete.
-
-Independent questions; native eng_b four-source synthetic pilot; SQLite version-bound windows with lexical ranking (no embeddings). AUTH017 background polling publishes source updates; worker failure/stale completeness blocks native synthesis. No business-source writes. In this delivery instance only, a known-usage output rejection can continue to unchanged authorized source excerpts after final native checks, with explicit synthesis-failed/evidence-only status; no rejected draft or fake review receipt is released. Session identity is verified on the server, not supplied by prompts. Source/context bytes remain untrusted.
-
-```mermaid
-flowchart LR
- U[Loopback UI / server session] --> R[Local version-bound retrieval]
- W[Native readonly background polling] --> R
- R --> A[Current native access and content checks]
- A --> Q[Code quotes all retrieved authorized evidence]
- Q --> P[Current native review dispatch checks]
- P --> V[One DeepSeek Flash support and coverage review / low fallback 8192]
- V --> F[Retained claims / final native checks]
- F --> O[Answer / saved History]
- O --> C[Preview and History current checks]
- A & Q & V & F --> L[Structured scoped audit]
- L --> S[CodeBuddy independent signed-checkpoint verifier]
-```
-
-Trust boundaries: browser cannot grant identity or source access; collection access is not employee access; review cannot bypass server authorization or exact evidence validation. Review may filter supported irrelevant background only with explicit independent/completeness approval; unsupported/unknown or missing scope blocks. Model review can err. Audit/checkpoint/key custody remains local, not independent production protection. Sources and provider are separate external endpoints; only approved synthetic bytes leave the host. UI reports configuration and observed checks, never a fabricated connection percentage. History/preview reauthorize; past lawful screenshots and already-dispatched model bytes cannot be retracted.
-
-Earlier dated sections below retain historical implementation/evidence, including superseded export and query-triggered-refresh descriptions; current code and STATUS govern present operation.
-
-2026-10-07当前应用3ceb625（synthesis-v6，温度0）；2a039aa仅新增context篡改负测试，brain字节相同。两阶段现传原资源title/locator与text分开，不能充当quote/权限；标题/定位篡改在reserve前拒绝。3ceb clean archive388/同48世界五fixture/语法及两Node通过；2a039aa clean archive389回归通过。完整24开发题只读逐项核为22核心事实正确返回＋2正确空答，零运行异常；business12独立quote失败与business16跨事件误归本轮未重现，单次成功非稳定修复。business03未明确说明rejection无证据、business32两条无关背景仍open，整体完整性/相关性未通过，非AUTH019延期。eng_b两道本版本native＋真实模型正确，28窗口出现次数/四阶段allow/6claims/4usage；耗时含preview121.928/130.040秒，非SLA。开发诊断4题/core24/native2费用上界4137/22146/5100microUSD，原账本settled226368/pending0；共享起点含并发reservation不得用accounted差归成本。当前core全签名/native七边界与分页本地核验，非独立custody或人阅读。证据见source-context-v6-full-readonly-review、source-context-v6-native-readonly-review及candidate-source-context-v6-fingerprint。旧失败/保留题不改或重跑；Goal active。browser saved site denial blocked，49161停止，8094/8100未动，human/ROI/G1/G2/推送发布not_run。
-
-2026-10-07当前实现2a73bd0：actor预过滤后在CPU计算binary-TF BM25，最多16基础候选、12授权link种子与8扩展、24精确窗口；本地SQLite保存资源/版本、证据、回答及审计，不是向量数据库，无embedding/语义检索/专门重排。关联cutoff只修复fixture已有source-authored links；native四源正文关系尚未解析。synthesis-v4独立draft/review使用既有DeepSeek flash，整答gate不变，通用区分审批/撤回和问题范围。AUTH-017 bounded worker异步发布、选中资料各阶段native复查；unknown/version changed停止完整结论。48同世界五fixture与380回归通过；完整native/质量与人审并未通过。
-
-本文件描述代码当前事实；03 仍为完整产品目标，不据本地原型降低目标。
-
-2026-10-06 当前实现覆盖：fixture独立authority及四源native delegated reader并存；AUTH-017 opt-in固定容器轮询发现新增、已知对象逐次当前读取，失败不推进完整checkpoint。身份/权限/原文版本均服务端取得。词法检索保留标识符及普通英文连字符词拆分，精确重叠窗口经R3A已批准全文/版本/切片关系允许合成出口；无embedding/外部向量组件或共享answer cache。选词/extractive与opt-in synthesis-v3分模式，draft/review均重鉴权并使用原USD20账本；明确准备/意图/尝试/有效usage/输出/HTTP交付尝试。签名验证是操作员离线副本的既有CodeBuddy CLI，不是生产独立custody。
-
-English UI为独立问答；history只在依赖重鉴权后显示，新增服务端问题/生成时间、旧记录不推断缺失字段。preview重查后才给HTTPS原平台入口，fixture://不伪造URL，诊断折叠；迟到响应/退出清空保留。普通答案下载与history_id HTTP依赖均按ADR-040移除。下方此前仅fixture/尚未授权/仅memory等历史陈述由本段及最新AUTH/STATUS覆盖；外部服务开放/G1/G2尚未验收。
-
-```mermaid
-flowchart LR
-  UI[English web UI] --> HTTP[Loopback HTTP / opaque session / CSRF]
-  HTTP --> Query[Lexical exact windows + authorized one-hop links]
-  Query --> ACL[Current fixture or native authority / version check]
-  Index[(SQLite current versions / local policy snapshot)] --> Query
-  Source[Independent synthetic source.json] --> ACL
-  Native[Approved Confluence / Jira / Slack / Drive native readers] --> ACL
-  Native --> Discovery[AUTH-017 opt-in fixed-container discovery]
-  Discovery --> Sync
-  Source --> Sync[Request-driven incremental jobs]
-  Sync --> Index
-  ACL --> Model[Fake / live selection / opt-in synthesis + review]
-  Model --> Guard[Exact citation support + current access/version recheck]
-  Guard --> Audit[(SQLite append audit chain)]
-  Audit --> UI
-  HTTP --> History[History / preview current access recheck]
-  HTTP --> Inquiry[Scoped structured audit inquiry]
-  Inquiry --> Audit
-  Audit -. offline export .-> Signature[CodeBuddy Ed25519 checkpoint CLI / verifier]
-```
-
-模块：`sources.py` 平台差异 fixture policy + 当前权威；`store.py` 事务存储；`ingestion.py` 幂等/重试/版本切换/删除；`engine.py` 检索、授权、provider 和引用；`audit.py` 事件链与精确分页；`audit_query.py` 有限自然语言模板；`server.py` 身份和 HTTP；`web/` 原生英文 UI。
-
-应用角色与源权限分开。demo 身份选择只在显式 loopback synthetic 模式可用，不能作为真实登录。客户端 role/user_id/tenant 不被业务 API 接受。source.json 由本机演示操作者修改，产品 HTTP 端点没有源写入接口。
-
-索引 ACL 与源权威分离；过期索引不授予访问。已授权 seeds 可一跳扩展原文链接，但每个目标独立检查。当前 evidence ID `resource@version`，定位来自 fixture 原文；链接是 fixture://，不伪造源平台链接。fake provider 仅摘录动态检索内容，不做事实题目硬编码。严格逐条原文支持校验不等于真实模型的语义推理评估。
-
-历史和导出按回答证据依赖重查；任一依赖失效时整条旧回答不再提供。不读取旧版本正文。已展示给浏览器的内容无法远程收回；已发模型的字节也不能逆转。返回前复核只控制后续响应。
-
-当前索引无 embedding；只有对象级文本检索。内容变化只发布变化对象，ACL 变化不重建正文。同步是在下一请求前处理本地持久事件，没有真实后台源 polling/webhook；不宣称达成真实 5 分钟/30 分钟新鲜度。当前受限单进程演示按请求串行化，未验证企业并发规模。
-
-审计正文保存在受保护本地 SQLite，合成资料未加密。SQL authorizer + trigger 测试限制应用连接修改日志，但同账号仍可直接改文件，A-02 独立 DB role 未实现。hash chain 只能检测链一致性；测试外部保存 head 可检查其覆盖区，离线Ed25519 checkpoint由真实CodeBuddy实现并经20项测试；该CLI不等于生产独立保管或在线签名，集成结果见CODEBUDDY_AUDIT_DELIVERY。
-
-生产升级须完成：批准的运行时模型/provider、安全 SSO 与平台用户映射、四源实时授权/内容同步、受支持生产 HTTP 栈、独立 DB 角色与审计保护、签名检查点、部署及 G1/G2。真实 LLM 的 prompt injection、幻觉和外部出口尚未测。
-
-
-## 委托API与操作员网页 · 2026-10-05
-
-`delegated_query.py`共用Engine/Store/Audit，Confluence/Jira reader保留各自current-user、原生访问和ID白名单。查询前清空员工快照，只将本次允许内容进入候选；证据模型前与返回前、历史/导出/预览重查；跨源某一source未知不会把其旧索引送模型。Jira评论独立resource，普通issue字段请求不含comments/attachments；locator保存完整内容指纹，版本与权限revision分开。按对象事务发布/完整payload比对，非后台同步。
-
-`operator_web.py`重用loopback HTTP与English web UI：隐藏TTY API凭据→服务器验证映射身份→one-use 10min ticket→opaque session/CSRF。token只在进程，bootstrap fragment立即从地址删除，默认fixture登录路径在此入口不可用。产品query不接受role/user_id/tenant；审计role不会因为token或prompt变为auditor。仅本机操作员，非OAuth/SSO，不公开监听。没有跨用户答案缓存。
-
-Confluence CLI真实API+fake model query/撤权已验收子集；网页/Jira为mock源及真实loopback HTTP测试，视觉与真实浏览器API链路未运行。Jira seed KAN-4的原生Done已UI读回；其他实际能力仍按SOURCE_CAPABILITIES/STATUS记录。签名CLI属于独立离线验收，不将本轮live审计18事件链当已签名。
+- `brain/engine.py`, `brain/retrieval.py`: evidence selection, authorization phases and answer handling.
+- `brain/ingestion.py`, `brain/discovery.py`: incremental version publication and bounded source discovery.
+- `brain/confluence.py`, `brain/jira.py`, `brain/slack.py`, `brain/drive.py`: source-specific access and content readers.
+- `brain/deepseek.py`, `brain/synthesis.py`: bounded model transport, strict parsing and review paths.
+- `brain/reviewer_access.py`, `brain/server.py`: verified sessions, application policy and HTTP boundary.
+- `brain/audit.py`, `brain/audit_query.py`, `tools/audit_verifier/`: scoped events, queries and independent verification.
+- `web/`: workspace, historical answers, evidence previews and audit interface.
