@@ -36,4 +36,4 @@ The credential-free fixture server is loopback-only. The hosted trial uses passw
 
 ## Development tools
 
-Tencent CodeBuddy implemented the independent audit-chain / Ed25519 checkpoint verifier and twenty component tests. Team review and Codex-assisted integration and application development complement that contribution. [Implementation, commits and genuine evidence](docs/CODEBUDDY_CONTRIBUTION.md) describe the actual scope; this is a multi-tool project.
+Tencent CodeBuddy implemented the independent audit-chain / Ed25519 checkpoint verifier and twenty component tests. [Implementation, commits and genuine evidence](docs/CODEBUDDY_CONTRIBUTION.md) describe the delivered scope.
