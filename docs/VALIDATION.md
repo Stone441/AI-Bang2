@@ -4,7 +4,7 @@ Verification distinguishes local implementation checks, native source observatio
 
 ## Reproducible checks
 
-The application baseline before repository preparation passed **806 Python tests** and **15 standalone frontend suites** in a clean source extraction on 16 October 2026. The full Python suite includes the frontend HTTP lifecycle wrapper. The prepared tree also passed all 806 Python tests (58.544 seconds) and all 15 standalone frontend suites after the repository dependencies were relocated. No test methods were removed.
+The prepared source archive passed **806 Python tests**, **15 standalone frontend suites**, and **25 offline rehearsal groups** on 16 October 2026. The full Python suite includes the frontend HTTP lifecycle wrapper. The documented credential-free password demo also started, served its health endpoint and page, and stopped normally. All of these checks used synthetic fixtures or mocks, with no live model calls.
 
 The repository contains all existing test methods. Historical parser counterexamples needed by regression tests are kept as small hashed fixtures under `tests/fixtures/source_review/`; an old admission-gate implementation needed by two tests lives under `tests/support/`. These are test inputs, not claims that old runs certify the current release. New results are generated locally and are not committed as raw log directories.
 

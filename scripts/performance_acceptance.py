@@ -78,6 +78,7 @@ def freeze():
     value={'candidate':CANDIDATE,'configuration':EXPECTED,'files':file_hashes(),
            'runtime_version':control['runtime_version'],'plan_sha256':hashlib.sha256(PLAN.read_bytes()).hexdigest(),
            'fixture_cases':selected,'boundary':'Known authored development cases, not blind; fixture API is simulated. Native/browser acceptance separate; three-second target unproven.'}
+    MANIFEST.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
     MANIFEST.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({'candidate_frozen':True,'fixture_cases':len(selected),'model_calls':0}))
 
