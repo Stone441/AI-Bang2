@@ -1,0 +1,22 @@
+.....................E...............................................................
+======================================================================
+ERROR: test_quote_scope_review_keeps_both_selected_quotes_and_full_evidence (test_sectioned_answer.SectionedAnswer.test_quote_scope_review_keeps_both_selected_quotes_and_full_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/tests/test_sectioned_answer.py", line 48, in test_quote_scope_review_keeps_both_selected_quotes_and_full_evidence
+    reviewer=SectionedAnswerReview('test-key',self.ledger,synthetic_only=True,
+        claims=self.claims,parts=self.parts,today=PRICE_DATE)
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/brain/sectioned_answer.py", line 96, in __init__
+    super().__init__(*args,**kwargs);self.parts=parts
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/brain/synthesis.py", line 141, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/kyle/Projects/TencentHackthon202609/AI-Bang2-semantic-20261015/brain/deepseek.py", line 161, in __init__
+    raise ValueError('Invalid model credential')
+ValueError: Invalid model credential
+
+----------------------------------------------------------------------
+Ran 85 tests in 1.480s
+
+FAILED (errors=1)

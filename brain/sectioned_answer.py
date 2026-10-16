@@ -31,6 +31,21 @@ ANSWERABILITY_CONTRACT = (
     'its quoted scope, even if the insufficiency category itself is correct. ')
 
 
+QUOTE_SUPPORT_CONTRACT = (
+    ' Keep two evidence checks separate. For each claim supported verdict, the union of '
+    'that claim’s exact supports[].quote strings must establish its FULL factual meaning, '
+    'including entity, document/event provenance, final/draft state and scope. A fact being '
+    'present elsewhere in the full source is not sufficient support from the selected quote. '
+    'Do not fill a quotation gap from source titles, source_context, other claims, uncited '
+    'passages or background knowledge. For coverage, false premises, contradictions and '
+    'missing qualifications, still examine ALL supplied source text: a complete-looking '
+    'quote must not conceal a limitation elsewhere. These checks are both required. '
+    'Judge responsiveness separately. A true statement about which document lists an item '
+    'is not automatically needed to answer that item’s status or requested date. Include '
+    'provenance only if requested or needed to disambiguate the answer or explain a material '
+    'limitation/conflict. Do not add background just to show another source. ')
+
+
 def validate_answer_parts(parts, claims, question):
     if not isinstance(parts,list) or not 1<=len(parts)<=6 or not isinstance(question,str):
         raise ValueError('Invalid answer parts')
@@ -82,7 +97,7 @@ class SectionedAnswerReview(EvidenceReview):
 
     def messages(self,question,evidence):
         messages=super().messages(question,evidence)
-        messages[0]['content'] += ANSWERABILITY_CONTRACT
+        messages[0]['content'] += ANSWERABILITY_CONTRACT + QUOTE_SUPPORT_CONTRACT
         messages[0]['content'] += (
             ' The three reasoning boolean fields are: "parts_supported", "premise_handled", '
             'and "conflicts_handled". All must be true for acceptance. The answer_parts are part of the draft: verify that they faithfully divide the ENTIRE '
@@ -188,7 +203,7 @@ class DeepSeekSectionedSynthesisModel(DeepSeekSynthesisModel):
 
     def messages(self,question,evidence):
         messages=super().messages(question,evidence)
-        messages[0]['content'] += ANSWERABILITY_CONTRACT
+        messages[0]['content'] += ANSWERABILITY_CONTRACT + QUOTE_SUPPORT_CONTRACT
         messages[0]['content'] += (
             ' Lead each supported part with its direct business answer, then only the reasons and '
             'limitations needed to interpret it. Integrate complementary evidence into a single '

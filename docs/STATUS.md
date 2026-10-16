@@ -617,3 +617,8 @@ Candidate a2be0fd: 7 committed questions / 12 model calls / USD0.016174 conserva
 互不重叠阶段：鉴权/源检查8.248秒，生成传输2.050秒，审查传输1.042秒，检索（排除嵌套鉴权）0.014秒，其他0.038秒。单样本不支持p95/SLA。
 
 结果改变下一步判断：该次分题格式、完整审查schema及requested-value分类已通过，但完整引用支持及审查语义可靠性仍有缺口；不能再把问题单纯归因于JSON结构。后续修复应针对实际语义反例，不能放宽规则、直接丢弃claim、无限重复付费或把模型accepted当作通过。详见review-schema-live-results.json。Goal未完成。
+
+
+### 2026-10-16 引文支持边界修订
+
+根据dd99b3b真实漏检，明确区分所选引文完整支持与全原文冲突/覆盖检查，保留3个对照语义案例；85项相关测试通过。不改变接受规则、不丢弃claim、不增加真实调用，效果未真实验证。详见 reviews/2026-10-15-semantic-workspace/QUOTE_SCOPE.md。

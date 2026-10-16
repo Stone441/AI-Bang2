@@ -43,6 +43,24 @@ class SectionedAnswer(unittest.TestCase):
         self.assertNotIn('part_verdicts',EvidenceReview.output_instructions)
         self.assertIn('verdicts:[]',text)
 
+    def test_quote_scope_review_keeps_both_selected_quotes_and_full_evidence(self):
+        from brain.sectioned_answer import SectionedAnswerReview, QUOTE_SUPPORT_CONTRACT
+        reviewer=SectionedAnswerReview('synthetic-not-a-key',self.ledger,synthetic_only=True,transport=self.transport,
+            claims=self.claims,parts=self.parts,today=PRICE_DATE)
+        messages=reviewer.messages(self.question,self.evidence)
+        body=json.loads(messages[1]['content'])
+        self.assertEqual(body['claims'],self.claims)
+        self.assertEqual(len(body['evidence']),len(self.evidence))
+        for actual,original in zip(body['evidence'],self.evidence):
+            self.assertEqual(actual['text'],original.text)
+        self.assertIn(QUOTE_SUPPORT_CONTRACT,messages[0]['content'])
+        self.assertIn(QUOTE_SUPPORT_CONTRACT,self.model.messages(self.question,self.evidence)[0]['content'])
+        for field in ('supported','responsive'):
+            rejected=copy.deepcopy(self.transport.outputs[1])
+            rejected['verdicts'][0][field]=False
+            with self.assertRaises(ValueError):reviewer.parse_output(rejected,self.evidence)
+        self.assertEqual(reviewer.parse_output(self.transport.outputs[1],self.evidence),self.claims)
+
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
         self.ledger=BudgetLedger(str(Path(self.tmp.name)/'budget.sqlite'));self.addCleanup(self.ledger.close)
