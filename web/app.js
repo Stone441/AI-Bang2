@@ -73,6 +73,8 @@ const phaseLabels={queued:'Waiting to start',retrieval:'Retrieving evidence',aut
 function renderStages(run){
   const labelsForRun={...phaseLabels,generation:health?.mode?.endsWith('_live_model_source_review')?'Preparing source passages':phaseLabels.generation};
   $('progressPhase').textContent=(run.status==='completed'?'Completed: ':run.status==='failed'?'Stopped: ':run.status==='evidence_only'?'Synthesis blocked; source checks finished: ':'Current stage: ')+(labelsForRun[run.phase]||'Working');
+  const descriptions={queued:'Your question is queued. You do not need to submit it again.',retrieval:'Finding relevant passages across your connected knowledge sources.',authorization:'Confirming which evidence you can access right now.',refreshing:'Reading updated source content before continuing.',generation:'Connecting the evidence into a clear, grounded answer.',review:'Checking the answer against its supporting evidence.',final_checks:'Rechecking permissions and source versions before delivery.'};
+  $('phaseDescription').textContent=descriptions[run.phase]||'Waiting for the next update from the service.';
   const stages=$('progressSteps');stages.replaceChildren();
   const observed=new Set(run.phases||[run.phase]);
   for(const phase of ['retrieval','authorization','generation','review','final_checks']){
@@ -151,6 +153,8 @@ function startWaiting(view,elapsed=0,resumed=false){
   const started=clockNow()-elapsed*1000;pendingQuery={view,started,requestId:null,resumed,question:$('question').value};$('progress').hidden=false;$('progressPhase').textContent='Submitting question';$('progressSteps').replaceChildren();
   $('question').readOnly=true;$('runningQuestion').textContent=pendingQuery.question;
   $('queryForm').setAttribute('aria-busy','true');
+  $('phaseDescription').textContent='Connecting your question to the right evidence.';
+  $('progress').scrollIntoView?.({behavior:'instant',block:'start'});
   const tick=()=>{if(pendingQuery&&currentView(view))$('elapsed').textContent=((clockNow()-started)/1000).toFixed(1)+' s elapsed';};tick();
   if(typeof setInterval!=='undefined')waitTimer=setInterval(tick,100);
 }
@@ -557,6 +561,18 @@ $('auditNav').onclick=()=>{
 };
 $('preview').oncancel=()=>{viewRevision++;$('previewBody').replaceChildren();};
 $('closePreview').onclick=()=>{viewRevision++;$('previewBody').replaceChildren();$('preview').close();};
+async function loadDemoAccounts(){
+  try{const result=await api('/api/demo-accounts');if(!Array.isArray(result.accounts)||!result.accounts.length)return;
+    const cards=$('demoAccountCards');cards.replaceChildren();
+    for(const account of result.accounts){
+      const card=el('div',undefined,'demo-account-card'),button=el('button','Use '+account.label,'demo-account-select');button.type='button';
+      button.onclick=()=>{$('reviewerUsername').value=account.username;$('reviewerPassword').value=account.password;$('reviewerUsername').focus();$('status').textContent=account.label+' credentials filled. Select Enter workspace to sign in.';};
+      const details=el('details');details.append(el('summary','View credentials'),el('p','Username: '+account.username),el('p','Password: '+account.password));
+      card.append(button,details);cards.append(card);
+    }
+    $('publicDemoAccess').hidden=false;$('privateDemoAccess').hidden=true;$('loginNote').textContent='Shared synthetic demo identities. Select a role above or enter the displayed credentials. Sessions expire after one hour.';
+  }catch(_){/* Existing private sign-in remains available. */}
+}
 async function boot(){
   const landing=document.body&&document.getElementById('landing');
   if(landing){const open=new URLSearchParams(location.search).get('workspace')==='1'||Boolean(bootstrapTicket);document.body.classList.toggle('landing-active',!open);landing.hidden=open;if(!open)return;}
@@ -573,6 +589,7 @@ async function boot(){
     if(health.auth_kind==='reviewer'){$('modeBadge').textContent=health.mode.startsWith('fixture')?'SYNTHETIC / FAKE MODEL':'LIVE API DEMO';$('reviewerCredentials').hidden=false;$('loginForm').querySelector('button').hidden=false;$('loginForm').querySelector('button').disabled=false;$('modeDescription').textContent=health.identity_boundary==='application_demo_roles_intersect_native_connection'?'Real source connections · Synthetic resources · Application role permissions within the team connection’s native access':'Synthetic demo resources · Access checked under the signed-in demo role';$('modeFooter').textContent='Fictional demo people · individually configured access · not employee SSO';$('loginNote').textContent='Use the demo username and password provided by the team. Each account represents a fictional person with individually configured access; job titles do not define access for all employees.';}
     }else if(health.auth_kind==='demo'){$('loginForm').querySelector('button').disabled=false;}
     else{throw Error('Unsupported authentication mode.');}
+    if(health.auth_kind==='reviewer')await loadDemoAccounts();
     try{session=await api('/api/session');}
     catch(err){if(err.status===403&&bootstrapTicket&&health.auth_kind==='operator')session=await api(health.login_path,{ticket:bootstrapTicket});else throw err;}
     identity();

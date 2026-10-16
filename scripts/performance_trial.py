@@ -43,6 +43,7 @@ def private_directory(path):
 def main(argv=None):
     global PRIVATE
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--public-demo-accounts', type=Path, help='Explicitly authorized public credentials for four explicitly authorized demo identities')
     parser.add_argument('--answer-style', choices=['source-review', 'sectioned-synthesis'], default='source-review')
     parser.add_argument('--reasoning-effort', choices=['none', 'low'], default='low')
     parser.add_argument('--source-transport', choices=['legacy', 'pooled'], default='legacy')
@@ -109,9 +110,15 @@ def main(argv=None):
                 rollbacks.append(install(self.world.readers, maximum=max(2, args.source_concurrency)))
                 self.world.read_concurrency = args.source_concurrency
         operator_web.OperatorApp = PooledApp
+    public_accounts = None
+    if args.public_demo_accounts:
+        from scripts.public_demo_access import load_public_accounts
+        if not args.reviewer_accounts:
+            parser.error('Public demo accounts require reviewer mode')
+        public_accounts = load_public_accounts(args.public_demo_accounts, args.reviewer_accounts)
     original_create = operator_web.create_server
     def create(app, port):
-        server = original_create(app, port, public_origin=args.reviewer_public_origin)
+        server = original_create(app, port, public_origin=args.reviewer_public_origin, public_demo_accounts=public_accounts)
         serve = server.serve_forever
         def renew(_signal, _frame):
             current = server.application

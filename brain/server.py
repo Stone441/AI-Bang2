@@ -57,7 +57,7 @@ class App:
         return value
 
 
-def create_server(app, port=0, *, public_origin=None):
+def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None):
     if public_origin is not None:
         parsed=urlparse(public_origin)
         if (parsed.scheme!="https" or not parsed.hostname or parsed.username or parsed.password
@@ -192,13 +192,15 @@ def create_server(app, port=0, *, public_origin=None):
             try:
                 self.gate()
                 path=unquote(urlparse(self.path).path)
-                if path not in ("/api/query", "/api/runtime", "/api/history/recent", "/api/session", "/api/logout", "/api/health", "/", "/app.js", "/style.css", "/ntu-logo.png", "/aspire-logo.svg", "/tencent-cloud-logo.svg"):app.refresh()
+                if path not in ("/api/query", "/api/runtime", "/api/history/recent", "/api/session", "/api/logout", "/api/health", "/api/demo-accounts", "/", "/app.js", "/style.css", "/ntu-logo.png", "/aspire-logo.svg", "/tencent-cloud-logo.svg"):app.refresh()
                 path=unquote(urlparse(self.path).path)
                 data=self.body_data if method=='POST' else {}
                 if method=='GET' and path in ('/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg'):
                     filename={'/':'index.html','/app.js':'app.js','/style.css':'style.css','/ntu-logo.png':'ntu-logo.png','/aspire-logo.svg':'aspire-logo.svg','/tencent-cloud-logo.svg':'tencent-cloud-logo.svg'}[path]
                     mime={'/':'text/html; charset=utf-8','/app.js':'text/javascript; charset=utf-8','/style.css':'text/css; charset=utf-8','/ntu-logo.png':'image/png','/aspire-logo.svg':'image/svg+xml','/tencent-cloud-logo.svg':'image/svg+xml'}[path]
                     return self.send(200,self.server.static_assets[filename],mime)
+                if method=='GET' and path=='/api/demo-accounts':
+                    return self.send(200,{'accounts':public_demo_accounts or []})
                 if method=='GET' and path=='/api/health':
                     return self.send(200,{'mode':app.engine.mode,'live_enabled':any(isinstance(r.transport, JsonTransport) for r in getattr(app.world,'readers',{}).values()),
                                           'auth_kind':app.auth_kind,'login_path':app.login_path,
@@ -284,7 +286,7 @@ def create_server(app, port=0, *, public_origin=None):
 
         def _get(self):
             app=self.server.application
-            if urlparse(self.path).path in ('/api/runtime','/api/history/recent','/api/session','/api/health','/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg'):
+            if urlparse(self.path).path in ('/api/runtime','/api/history/recent','/api/session','/api/health','/api/demo-accounts','/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg'):
                 return self.dispatch('GET')
             with acquire(getattr(app,'request_lock',app.store.lock)):
                 with acquire(app.store.lock):self.dispatch('GET')

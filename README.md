@@ -37,3 +37,7 @@ The credential-free fixture server is loopback-only. The hosted trial uses passw
 ## Development tools
 
 Tencent CodeBuddy implemented the independent audit-chain / Ed25519 checkpoint verifier and twenty component tests. [Implementation, commits and genuine evidence](docs/CODEBUDDY_CONTRIBUTION.md) describe the delivered scope.
+
+### Try the shared demo identities
+
+Open the [demo sign-in page](https://contextledger.hellokyleshi.com/?workspace=1) and choose Engineering, Product & Operations, External Partner, or Audit reviewer. Select a card to fill the credentials, then sign in. The page always provides the current demo access details. These shared identities use synthetic demonstration resources; history and the trial allowance are shared, and the auditor can inspect the three demo accounts. Do not enter personal or confidential information.
