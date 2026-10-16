@@ -1,3 +1,5 @@
+2026-10-16 AUTH-HOSTED-SEMANTIC：用户明确要求“切换”。将现有公网入口切为sectioned-synthesis，保留账号、权限、原人工grant及预算，不启动自动付费验收；不启用isolated-sectioned实验。语义回答仍受独立审查，失败不能冒充成功。
+
 # Decisions / ADR
 
 2026-10-16 ADR-RELEASE-RESULT：按AUTH-PUBLISH-HOSTED完成PR#13和869f407部署；原公网source-review配置保留，私有fa88f2f未切换。采用账号/静态指纹/无费用上游检查及Chrome公网登录页观察，明确Cloudflare1010导致CLI公网验收受限。赛事提交及私有证明上传未执行。

@@ -43,6 +43,7 @@ def private_directory(path):
 def main(argv=None):
     global PRIVATE
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--answer-style', choices=['source-review', 'sectioned-synthesis'], default='source-review')
     parser.add_argument('--reasoning-effort', choices=['none', 'low'], default='low')
     parser.add_argument('--source-transport', choices=['legacy', 'pooled'], default='legacy')
     parser.add_argument('--source-concurrency', type=int, choices=[1, 2, 4], default=1)
@@ -65,6 +66,9 @@ def main(argv=None):
         parser.error('Human team trial requires the selected serial configuration')
     if args.attributed_grant and not args.human_team_trial:
         parser.error('Attributed grant requires the approved human team trial')
+    if args.answer_style == 'sectioned-synthesis':
+        args.source_review_input = 'legacy'
+        args.source_review_dispatch = 'legacy'
     state_root=args.state_root.resolve()
     PRIVATE=state_root/'.runtime/query-goal-20261013'
     if args.reviewer_accounts:
@@ -157,6 +161,7 @@ def main(argv=None):
                                   'runtime_version': operator_web.runtime_version()}, indent=2)+'\n'
             write_private(PRIVATE/'entry-server.json', control)
             write_private(PRIVATE/'runtime-configuration.json', json.dumps({
+                'answer_style': args.answer_style,
                 'source_transport': args.source_transport,
                 'source_concurrency': args.source_concurrency,
                 'reasoning_effort': args.reasoning_effort,
@@ -183,7 +188,7 @@ def main(argv=None):
         return operator_web.main(['--source', 'multi', '--config', str(state_root/'.runtime/operator-bundle.json'),
             '--actor', 'eng_b', '--oauth-client', str(state_root/'.runtime/drive-oauth-client.json'),
             '--port', '49161', '--live', '--model', 'deepseek', '--credential-store', 'macos-keychain',
-            '--answer-style', 'source-review', '--reasoning-effort', args.reasoning_effort,
+            '--answer-style', args.answer_style, '--reasoning-effort', args.reasoning_effort,
             '--source-review-input', args.source_review_input,
             '--source-review-dispatch', args.source_review_dispatch,
             '--history-read-mode', args.history_read_mode,
