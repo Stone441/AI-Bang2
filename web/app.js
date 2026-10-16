@@ -1,4 +1,5 @@
 'use strict';
+const sourceName=value=>({confluence:'Confluence',jira:'Jira',slack:'Slack',drive:'Google Drive'}[value]||value);
 const $=id=>document.getElementById(id);
 const insufficientPartText='The provided evidence is insufficient to answer this part. This does not establish that the event or information does not exist.';
 let session=null,health=null,viewRevision=0;
@@ -128,7 +129,7 @@ async function refreshRuntime(){
         nodes={card,title,state,fields};runtimeSourceDetails.set(source.source,nodes);
       }
       // Keep disclosure and focused summary nodes stable across readiness polling.
-      nodes.title.textContent=source.source;
+      nodes.title.textContent=sourceName(source.source);
       nodes.state.textContent=!source.configured?'Not configured':source.mode==='fixture'?'Synthetic':source.checking?'Checking':source.snapshot_status==='current'?'Current snapshot':'Check needed';
       const values=[source.configured?'Configured · '+source.mode:'Not configured',sourceCheckText(source),sourceSnapshotText(source),
         source.mode!=='fixture'&&source.last_check_result!=='complete'&&source.last_successful_check_at?'Last complete sync: '+sourceTime(source.last_successful_check_at):'',
@@ -178,7 +179,7 @@ function originalLink(e){
       ||(e.source==='slack'&&(host==='app.slack.com'||host.endsWith('.slack.com')))
       ||(e.source==='drive'&&(host==='drive.google.com'||host==='docs.google.com'));
     if(url.protocol!=='https:'||url.username||url.password||url.port||!allowed)return null;
-    const link=el('a','Open original in '+e.source);link.href=url.href;
+    const link=el('a','Open original in '+sourceName(e.source));link.href=url.href;
     link.target='_blank';link.rel='noopener noreferrer';return link;
   }catch(_){return null;}
 }
@@ -265,9 +266,9 @@ function answerOutcome(answer){
 function renderAnswer(answer,target=$('answer')){
   target.replaceChildren();if(answer.unavailable){target.append(el('p',answer.message,'notice'));return;}
   if(answer.answer_status==='evidence_only'){const failure=el('div',undefined,'error-panel');failure.append(el('h2',answer.answer_kind==='reviewed_excerpts'?'Source answer was blocked':'Synthesis was blocked'),el('p','The model output did not pass validation. The original source passages below were checked for current access and version. They are not a validated summary; latest ordering is not inferred.'));target.append(failure);}
-  const grid=el('div',undefined,'receipt'),main=el('div',undefined,'panel'),side=el('aside',undefined,'panel');
+  const grid=el('div',undefined,'receipt'),main=el('div',undefined,'panel answer-main'),side=el('details',undefined,'panel answer-references');
   const head=el('div',undefined,'receipt-head');head.append(el('h2',answer.answer_status==='evidence_only'?'Checked sources':answerOutcome(answer)==='Insufficient evidence'?'Insufficient evidence':answer.answer_kind==='reviewed_excerpts'?(answer.review_status==='accepted'&&answer.model_review?.called===true?'Reviewed source answer':'Source evidence'):answer.claim_format==='grounded_synthesis_v1'?'Evidence-backed answer':'Evidence-backed excerpts'),el('span',modelLabel(answer),'tag'));main.append(head);
-  main.append(el('h3',answer.question||'Question not recorded for this older answer.'));
+  main.append(el('h3',answer.question||'Question not recorded for this older answer.','answer-question'));
   const date=typeof answer.answered_at==='string'?new Date(answer.answered_at):null;
   main.append(el('p',date&&!Number.isNaN(date.getTime())?'Answered '+date.toLocaleString():'Generation time not recorded for this older answer.','muted'));
   const guide=el('nav',undefined,'answer-guide');guide.setAttribute('aria-label','Find evidence by question');
@@ -277,16 +278,15 @@ function renderAnswer(answer,target=$('answer')){
     &&answer.review_status==='accepted'&&answer.answer_status!=='evidence_only'?answer.answer_parts:null;
   if(parts){
     main.append(el('p',answerOutcome(answer),'answer-outcome'));
-    if(answer.claims.length)main.append(el('p','Each part is answered separately. Expand its supporting quotes to check the conclusion.','muted'));
     if(parts.some(part=>part.status==='insufficient'))main.append(el('p','For unanswered parts, try a more specific scope or ask the relevant team to provide an accessible, current record.','muted'));
     for(const part of parts){
       const block=el('section',undefined,'answer-section');block.append(el('h3',part.question));
       if(part.status==='insufficient')block.append(el('p',insufficientPartText,'notice'));
       for(const index of [...part.claim_indices,...(part.gap_claim_indices||[])]){
-        const c=answer.claims[index];block.append(el('p',c.text));
-        const quotes=el('details');quotes.append(el('summary','Exact supporting quotes'));
+        const c=answer.claims[index];block.append(el('p',c.text,'answer-conclusion'));
+        const quotes=el('details',undefined,'answer-support');quotes.append(el('summary','Exact supporting quotes'));
         for(const support of c.supports)quotes.append(el('p',support.quote));block.append(quotes);
-        for(const id of c.evidence_ids){const link=el('button',byId.get(id)?.title||'Check source passage','citation');link.onclick=()=>preview(id);block.append(link);}
+        for(const id of c.evidence_ids){const link=el('button',byId.get(id)?.title||'Check source passage','citation');link.onclick=()=>preview(id);quotes.append(link);}
       }
       main.append(block);
     }
@@ -302,7 +302,7 @@ function renderAnswer(answer,target=$('answer')){
       if(excerpts){
         const sources=c.evidence_ids.map(id=>byId.get(id)).filter(Boolean);
         section.append(el('h3',[...new Set(sources.map(e=>e.title))].join(' · ')||'Source passage'));
-        section.append(el('p',[...new Set(sources.map(e=>e.source))].join(' · '),'source-name'));
+        section.append(el('p',[...new Set(sources.map(e=>sourceName(e.source)))].join(' · '),'source-name'));
         groups.push({section,title:sources.map(e=>e.title).join(' · ')||'Source passage',searchText:sources.map(e=>e.title).join('\n')});
         section.setAttribute('tabindex','-1');
       }
@@ -333,14 +333,14 @@ function renderAnswer(answer,target=$('answer')){
       }else guide.append(el('p',topic.label+': no matching passage identified here. This does not establish the answer.','notice'));
     }
   }else guide.hidden=true;
-  for(const u of answer.uncertainties)main.append(el('p',u,'notice'));
+  for(const u of answer.uncertainties)main.append(el('p',u,u.startsWith('Synthesized from current authorized evidence;')?'answer-method-note':'notice'));
   const debug=diagnostics('Answer diagnostics',el('p','Receipt '+answer.request_id,'muted'));renderModelUsage(answer,debug);main.append(debug);
-  side.append(el('h3',answer.claims.length&&answer.answer_status!=='evidence_only'?'Key references':'Checked evidence'));
+  side.append(el('summary',answer.claims.length&&answer.answer_status!=='evidence_only'?'Key references':'Checked evidence'));
   if(answer.evidence.length)side.append(el('p','Source edit time is when the content changed. Index time is when this local version was stored.','muted'));
   const citedIds=new Set(answer.answer_status==='evidence_only'?[]:answer.claims.flatMap(c=>c.evidence_ids));
   const otherEvidence=diagnostics('Other checked evidence');let hasOtherEvidence=false;
   for(const e of answer.evidence){
-    const card=el('div',undefined,'source-card');card.append(el('span',e.source,'source-name'));
+    const card=el('div',undefined,'source-card');card.append(el('span',sourceName(e.source),'source-name'));
     const b=el('button',e.title);b.onclick=()=>preview(e.evidence_id);
     card.append(b,el('p',versionLabel(e)),el('p','Source last edited: '+sourceTime(e.source_updated_at)),
       el('p','Indexed locally: '+sourceTime(e.indexed_at)),
@@ -348,6 +348,7 @@ function renderAnswer(answer,target=$('answer')){
     if(citedIds.has(e.evidence_id))side.append(card);else{otherEvidence.append(card);hasOtherEvidence=true;}
   }
   if(hasOtherEvidence)side.append(otherEvidence);
+  if(answer.answer_status==='evidence_only'||!answer.claims.length)side.open=true;
   if(!answer.evidence.length)side.append(el('p','No supporting evidence is available for this answer.'));
   grid.append(main,side);target.append(grid);
 }
@@ -366,7 +367,7 @@ $('queryForm').onsubmit=async e=>{
   finally{if(currentView(view)){stopWaiting();updateAsk();refreshRuntime();}}
 
 };
-for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{if(pendingQuery)return;$('question').value=b.dataset.question;$('question').focus();$('suggestionStatus').textContent='Example added to the question box. Edit it if you like, then select Ask question.';for(const card of document.querySelectorAll('[data-question]'))card.setAttribute('aria-pressed',String(card===b));};
+for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{if(pendingQuery)return;$('question').value=b.dataset.question;$('question').focus();$('queryForm').scrollIntoView?.({behavior:'instant',block:'center'});$('suggestionStatus').textContent='Example added to the question box. Edit it if you like, then select Ask question.';for(const card of document.querySelectorAll('[data-question]'))card.setAttribute('aria-pressed',String(card===b));};
 $('workspaceNav').onclick=()=>{requestedHistory=false;$('answer').replaceChildren();$('other').replaceChildren();show(session?'workspace':'login');if(session)armResume();};
 $('historyNav').onclick=async()=>{
   if(!session){requestedHistory=true;show('login');$('status').textContent='Sign in to view your recent answers.';return;}$('answer').replaceChildren();show('other');$('historyNav').className='nav active';$('historyNav').setAttribute('aria-current','page');const view=viewToken();
@@ -387,7 +388,7 @@ $('historyNav').onclick=async()=>{
     }
   }catch(err){if(currentView(view)){message.textContent=err.message;message.className='notice';}}
 };
-$('sourcesNav').onclick=async()=>{show('other');const view=viewToken();$('other').replaceChildren(el('h1','Source coverage'),el('p','Current source status for this running instance. Fixture and native checks are reported separately.','lede'));try{const r=await api('/api/sources/status');if(!currentView(view))return;for(const s of r.sources){const card=el('div',undefined,'panel');card.append(el('h2',s.source),el('p','Status: '+s.status),el('p','Live: '+s.live),el('p',s.authority));$('other').append(card);}}catch(e){if(!currentView(view))return;$('status').textContent=e.message;}};
+$('sourcesNav').onclick=async()=>{show('other');const view=viewToken();$('other').replaceChildren(el('h1','Source coverage'),el('p','Current source status for this running instance. Fixture and native checks are reported separately.','lede'));try{const r=await api('/api/sources/status');if(!currentView(view))return;for(const s of r.sources){const card=el('div',undefined,'panel');card.append(el('h2',sourceName(s.source)),el('p','Status: '+s.status),el('p','Live: '+s.live),el('p',s.authority));$('other').append(card);}}catch(e){if(!currentView(view))return;$('status').textContent=e.message;}};
 function auditEvent(row){
   const labels={request_started:'Question',candidate_evaluated:'Retrieval candidate',authorization_decided:'Authorization decision',evidence_used:'Model evidence',generation_completed:'Generation and citations',response_committed:'Stored answer',response_dispatch_attempted:'Delivery attempt',request_failed:'Request stopped',audit_inquiry:'Audit inquiry',source_changed:'Source change'};
   const item=el('details',undefined,'history-item');
