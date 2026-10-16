@@ -1,3 +1,5 @@
+2026-10-16 公网已切换sectioned-synthesis，部署8525f5e；本地上游health确认live_model_synthesis，实际配置source_review_input/dispatch均legacy，账号/权限/人工预算保持。32项分题语义测试与10项账号测试通过；未发起付费模型问答，完整语义验收不因此通过。
+
 # Current status
 
 2026-10-16 发布上线 verified：PR#13合并869f407，现有公网链接已切换对应代码/UI；三账号上游认证/拒绝路径通过，Chrome看到新版登录页，四源快照current，账号/账本/grant不变且新增模型调用0。保留source-review模式，不开启实验；公网CLI被Cloudflare1010拒绝，真人G1/G2未代签。见[发布报告](reviews/2026-10-16-release/REPORT.md)。
