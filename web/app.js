@@ -19,17 +19,13 @@ function rememberAnswer(answer){if(answer.unavailable)return;try{sessionStorage.
 function armResume(){resumeOnRuntime=true;resumeInputValue=$('question').value;}
 function updateAsk(){ $('ask').disabled=Boolean(pendingQuery)||admissionPaused||modelPaused||sourcesPaused||session?.demo_role==='auditor'; }
 function renderAdmission(admission){
-  if(admission!==undefined){admissionInfo=admission;admissionPaused=Boolean(admission&&!admission.allowed);}const notice=$('trialStatus');notice.hidden=!admission&&!admissionPaused;
-  if(admission?.human_unlimited){notice.textContent=(admissionPaused?'Human queries paused. ':'Human queries have no count limit. ')+(Number.isFinite(admission.attempts_used)?admission.attempts_used+' submissions recorded. ':Number.isFinite(admission.model_calls_used)?admission.model_calls_used+' model calls recorded. ':'')+(typeof admission.settlement_remaining_usd==='number'?'Trial budget: $'+admission.settlement_remaining_usd.toFixed(4)+' remaining of $'+admission.settlement_limit_usd.toFixed(2)+' (before pending reservations). ':'')+(admissionPaused?'No new model call will be made. Saved answers remain available.':'Cost and unconfirmed-usage protections remain active.');}
-  else if(admission){
-    const count=Number.isFinite(admission.attempts_used)&&Number.isFinite(admission.attempts_limit)?admission.attempts_used+'/'+admission.attempts_limit+' query attempts used. ':Number.isFinite(admission.model_calls_used)?admission.model_calls_used+' model calls recorded. ':'';
-    const remaining=Number.isFinite(admission.attempts_remaining)?admission.attempts_remaining+' query attempts remaining. ':'';
-    notice.textContent=(admissionPaused?'Trial queries paused. ':'Trial allowance: ')+count+(admissionPaused?'No new model call will be made. Saved answers remain available.':remaining+'Cost and unconfirmed-usage protections remain active.');
-  }
+  if(admission!==undefined){admissionInfo=admission;admissionPaused=Boolean(admission&&!admission.allowed);}
+  const notice=$('trialStatus');notice.hidden=!admissionPaused;
+  notice.textContent=admissionPaused?'New questions are temporarily unavailable. You can still view recent answers. Please contact the demo team to resume access.':'';
   updateAsk();
 }
 function renderQueryError(err){
-  if(err.code==='trial_admission_paused'){admissionPaused=true;$('trialStatus').hidden=false;$('trialStatus').textContent='Trial queries paused at an approved cost, unconfirmed-usage or trial limit. No new model call was made. Saved answers remain available.';if(admissionInfo)renderAdmission({...admissionInfo,allowed:false});}
+  if(err.code==='trial_admission_paused'){admissionPaused=true;$('trialStatus').hidden=false;$('trialStatus').textContent='New questions are temporarily unavailable. Your question was not submitted to the model. You can still view recent answers. Please contact the demo team.';if(admissionInfo)renderAdmission({...admissionInfo,allowed:false});}
   $('answer').replaceChildren();const panel=el('div',undefined,'error-panel');
   panel.append(el('h2',err.code==='source_refreshing'?'Sources are changing':err.code==='model_output_unavailable'?'Answer did not pass validation':'Question could not be completed'),el('p',err.message));
   panel.append(el('h3',err.run?.question||$('question').value));
@@ -366,7 +362,7 @@ $('queryForm').onsubmit=async e=>{
   finally{if(currentView(view)){stopWaiting();updateAsk();refreshRuntime();}}
 
 };
-for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{if(pendingQuery)return;$('question').value=b.dataset.question;$('question').focus();};
+for(const b of document.querySelectorAll('[data-question]'))b.onclick=()=>{if(pendingQuery)return;$('question').value=b.dataset.question;$('question').focus();$('suggestionStatus').textContent='Example added to the question box. Edit it if you like, then select Ask question.';for(const card of document.querySelectorAll('[data-question]'))card.setAttribute('aria-pressed',String(card===b));};
 $('workspaceNav').onclick=()=>{requestedHistory=false;$('answer').replaceChildren();$('other').replaceChildren();show(session?'workspace':'login');if(session)armResume();};
 $('historyNav').onclick=async()=>{
   if(!session){requestedHistory=true;show('login');$('status').textContent='Sign in to view your recent answers.';return;}$('answer').replaceChildren();show('other');$('historyNav').className='nav active';$('historyNav').setAttribute('aria-current','page');const view=viewToken();

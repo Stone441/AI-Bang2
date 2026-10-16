@@ -147,3 +147,45 @@ button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible,s
   #landing .lp-event-tag{font-size:8px;line-height:1.8;letter-spacing:.7px}
   #loginForm{padding:20px}.topbar .brand-symbol{width:28px;height:28px}
 }
+
+/* Product context and clearer first-query affordances. */
+#landing .lp-event-tag{font-size:12px;letter-spacing:.8px;color:#b0c5d5;line-height:1.8}
+.lp-challenge-copy{max-width:700px;color:#a6b8cc;font-size:16px;line-height:1.8}
+.lp-partners{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:34px;max-width:760px}
+.lp-partner-logo{display:flex;align-items:center;justify-content:center;height:100px;margin:14px 0;background:#fff;border-radius:10px;padding:24px}
+.lp-partner-logo img{max-width:210px;max-height:42px;width:100%;height:auto;object-fit:contain}
+#landing .lp-partners p,#landing .lp-challenge-note{font-size:12px;color:#91a8bd;line-height:1.7}
+#landing .lp-challenge-note{margin-top:26px}
+.lp-members article{border-top:2px solid #5f9d90;padding:30px 26px}
+#queryForm{padding:25px;background:#101c2a;border-color:#406071}
+#queryForm label{font-size:16px;font-weight:600;color:#e4eff6}
+#queryForm .question-help{font-size:12px;line-height:1.7;color:#a4b8cc;margin:0 0 16px}
+#question{display:block;min-height:145px;padding:20px;border:1px solid #668395;border-radius:10px;background:#080f1b;caret-color:#b1f5de;cursor:text;transition:border-color .15s,box-shadow .15s}
+#question::placeholder{color:#b4c6d6;font-size:17px}
+#question:hover{border-color:#9cb9c6}
+#question:focus{border-color:#b1f5de;outline:2px solid #b1f5de;outline-offset:3px;box-shadow:0 0 0 6px #b1f5de0b}
+.compose-footer{margin-top:18px;padding-top:0;border:0}
+.examples-heading{margin:30px 0 14px;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.examples-heading h2{font-size:16px;margin:0;letter-spacing:0}
+.examples-heading p{font-size:12px;color:#9fb3c8;margin:0;line-height:1.7}
+.suggestions{margin-top:0}
+.suggestions .example-action{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:auto;padding-top:13px;border-top:1px solid #2b4253;color:#b1f5de;letter-spacing:0;font-size:12px;font-weight:600}
+.suggestions .example-action b{font-size:17px;font-weight:400}
+.suggestions button[aria-pressed="true"]{border-color:#9adac4;background:#132d2d}
+.suggestion-hint{min-height:20px}
+/* Disclosures keep keyboard/native semantics without repetitive triangle markers. */
+summary{list-style:none;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary::marker{content:""}
+.user-menu>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #314557}
+.user-menu>summary::after{content:"⋯";font-size:19px;line-height:10px;color:#b1f5de}
+.user-menu[open]>summary{border-color:#91cbbb}
+.runtime-source>summary{position:relative;padding-right:20px}
+.runtime-source>summary strong::after{content:none}
+.runtime-source>summary::after{content:"+";position:absolute;right:0;top:2px;color:#a4bccc;font-size:16px;font-weight:400}
+.runtime-source[open]>summary::after{content:"−"}
+.diagnostics>summary{display:inline-block;font-size:11px;color:#9cb4c9;text-decoration:underline;text-underline-offset:4px}
+.panel details>summary{padding:8px 0;color:#b1d7d0}
+.panel details>summary::after{content:" +";padding-left:8px;color:#9bb9bd}
+.panel details[open]>summary::after{content:" −"}
+@media(max-width:700px){.lp-partners{grid-template-columns:1fr;gap:24px}.lp-partner-logo{max-width:320px}#landing .lp-event-tag{font-size:10px;max-width:310px}.examples-heading{gap:8px}#queryForm{padding:18px}#question{padding:16px;min-height:160px}}
