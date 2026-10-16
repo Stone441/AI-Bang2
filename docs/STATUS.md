@@ -1,3 +1,5 @@
+2026-10-16 产品展示首页：根链接展示英文产品介绍，?workspace=1进入原登录/查询；保留sectioned-synthesis。桌面与390px手机浏览器检查通过，无横向溢出；CTA进入账号登录。前端登录/分题渲染回归通过，无新增模型调用。
+
 2026-10-16 公网已切换sectioned-synthesis，部署8525f5e；本地上游health确认live_model_synthesis，实际配置source_review_input/dispatch均legacy，账号/权限/人工预算保持。32项分题语义测试与10项账号测试通过；未发起付费模型问答，完整语义验收不因此通过。
 
 # Current status
