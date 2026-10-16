@@ -10,7 +10,7 @@ Tencent CodeBuddy implemented the independent audit-chain verifier, Ed25519 chec
 - `tools/audit_verifier/verify.py`: checkpoint/public-key verification, covered range and unanchored-tail reporting.
 - `tests/codebuddy/`: twenty tests covering valid records, modification, deletion, replacement, signatures, wrong keys and strict input types.
 
-Original CodeBuddy commit: [`4165ee6`](https://github.com/Stone441/AI-Bang2/commit/4165ee6bf981d8c02740f99c1186b9bd7f3ea141). Integration commit: [`8cd5088`](https://github.com/Stone441/AI-Bang2/commit/8cd5088cf244bf96cedf293ae68b1d3eb5cfe2ee). The work was produced with the real Tencent CodeBuddy VS Code extension, version 4.12.38765564. The original implementation and test files retain their authorship and bytes.
+Original CodeBuddy commit: `4165ee6` (retained in the local development archive). Published integration commit: [`8cd5088`](https://github.com/Stone441/AI-Bang2/commit/8cd5088cf244bf96cedf293ae68b1d3eb5cfe2ee). The work was produced with the real Tencent CodeBuddy VS Code extension, version 4.12.38765564. The original implementation and test files retain their authorship and bytes.
 
 CodeBuddy received the existing audit contract and a bounded task to implement an independent verifier, checkpoint CLI and adversarial tests. Review identified key-type and strict-integer issues; CodeBuddy corrected them and expanded the tests. The team reran the component and integration checks.
 
