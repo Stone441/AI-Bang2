@@ -162,7 +162,7 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
                 raise PermissionError('Unavailable')
             # Anonymous immutable assets must be reachable from an external link.
             # This exception never applies to API reads, credentials or POSTs.
-            if self.command=='GET' and urlparse(self.path).path in ('/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg'):
+            if self.command=='GET' and urlparse(self.path).path in ('/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg','/confluence-logo.svg','/jira-logo.svg','/slack-logo.svg','/google-drive-logo.png'):
                 return
             origin=self.headers.get('Origin')
             if origin and origin not in ({public_origin} if public_origin else {'http://'+host for host in expected}):
@@ -238,9 +238,9 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
                 self.gate()
                 path=unquote(urlparse(self.path).path)
                 data=self.body_data if method=='POST' else {}
-                if method=='GET' and path in ('/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg'):
-                    filename={'/':'index.html','/app.js':'app.js','/style.css':'style.css','/ntu-logo.png':'ntu-logo.png','/aspire-logo.svg':'aspire-logo.svg','/tencent-cloud-logo.svg':'tencent-cloud-logo.svg'}[path]
-                    mime={'/':'text/html; charset=utf-8','/app.js':'text/javascript; charset=utf-8','/style.css':'text/css; charset=utf-8','/ntu-logo.png':'image/png','/aspire-logo.svg':'image/svg+xml','/tencent-cloud-logo.svg':'image/svg+xml'}[path]
+                if method=='GET' and path in ('/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg','/confluence-logo.svg','/jira-logo.svg','/slack-logo.svg','/google-drive-logo.png'):
+                    filename={'/':'index.html','/app.js':'app.js','/style.css':'style.css','/ntu-logo.png':'ntu-logo.png','/aspire-logo.svg':'aspire-logo.svg','/tencent-cloud-logo.svg':'tencent-cloud-logo.svg','/confluence-logo.svg':'confluence-logo.svg','/jira-logo.svg':'jira-logo.svg','/slack-logo.svg':'slack-logo.svg','/google-drive-logo.png':'google-drive-logo.png'}[path]
+                    mime={'/':'text/html; charset=utf-8','/app.js':'text/javascript; charset=utf-8','/style.css':'text/css; charset=utf-8','/ntu-logo.png':'image/png','/aspire-logo.svg':'image/svg+xml','/tencent-cloud-logo.svg':'image/svg+xml','/confluence-logo.svg':'image/svg+xml','/jira-logo.svg':'image/svg+xml','/slack-logo.svg':'image/svg+xml','/google-drive-logo.png':'image/png'}[path]
                     return self.send(200,self.server.static_assets[filename],mime)
                 if method=='GET' and path=='/api/demo-accounts':
                     return self.send(200,{'accounts':public_demo_accounts or []})
@@ -338,7 +338,7 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
 
         def _get(self):
             app=self.server.application
-            if urlparse(self.path).path in ('/api/runtime','/api/history/recent','/api/session','/api/health','/api/demo-accounts','/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg'):
+            if urlparse(self.path).path in ('/api/runtime','/api/history/recent','/api/session','/api/health','/api/demo-accounts','/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg','/confluence-logo.svg','/jira-logo.svg','/slack-logo.svg','/google-drive-logo.png'):
                 return self.dispatch('GET')
             with acquire(getattr(app,'request_lock',app.store.lock)):
                 with acquire(app.store.lock):self.dispatch('GET')
@@ -375,7 +375,7 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
                 with acquire(app.store.lock):self.dispatch('POST')
     server=BoundedHTTPServer(('127.0.0.1',port),Handler)
     server.body_timeout=5
-    server.static_assets={name:(WEB/name).read_bytes() for name in ('index.html','app.js','style.css','ntu-logo.png','aspire-logo.svg','tencent-cloud-logo.svg')}
+    server.static_assets={name:(WEB/name).read_bytes() for name in ('index.html','app.js','style.css','ntu-logo.png','aspire-logo.svg','tencent-cloud-logo.svg','confluence-logo.svg','jira-logo.svg','slack-logo.svg','google-drive-logo.png')}
     server.application=app
     if app is not None:
         app.session_runs=SessionRuns();app.admission_lock=threading.Lock();app.active_queries=set()
