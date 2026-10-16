@@ -4,6 +4,7 @@ import json
 import secrets
 import time
 import threading
+from collections import deque
 from contextlib import contextmanager
 from .run_state import SessionRuns, runtime_status
 from http.cookies import SimpleCookie
@@ -21,6 +22,46 @@ from .deepseek import PriceReviewRequired
 from .timing import acquire, request_scope, bind_request, http_status
 
 WEB=Path(__file__).resolve().parents[1]/'web'
+
+
+class BoundedHTTPServer(ThreadingHTTPServer):
+    """Reject excess connections before creating threads (including slow headers)."""
+    daemon_threads = True
+    block_on_close = False
+    request_queue_size = 16
+
+    def __init__(self, *args, **kwargs):
+        self.connection_slots = threading.BoundedSemaphore(32)
+        self.login_attempts = deque()
+        self.login_lock = threading.Lock()
+        super().__init__(*args, **kwargs)
+
+    def process_request(self, request, client_address):
+        if not self.connection_slots.acquire(blocking=False):
+            self.shutdown_request(request)
+            return
+        try:
+            super().process_request(request, client_address)
+        except BaseException:
+            self.connection_slots.release()
+            raise
+
+    def process_request_thread(self, request, client_address):
+        try:
+            super().process_request_thread(request, client_address)
+        finally:
+            self.connection_slots.release()
+
+    def admit_login(self):
+        # Global bound: never trust forwarded IPs and do not grow an IP-keyed map.
+        with self.login_lock:
+            now = time.monotonic()
+            while self.login_attempts and self.login_attempts[0] <= now - 60:
+                self.login_attempts.popleft()
+            if len(self.login_attempts) >= 30:
+                return False
+            self.login_attempts.append(now)
+            return True
 
 
 class App:
@@ -66,6 +107,8 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
     secure_cookie="; Secure" if public_origin else ""
     class Handler(BaseHTTPRequestHandler):
         timeout = 10  # Bound idle headers and blocked response writes as well.
+        server_version = 'ContextLedger'
+        sys_version = ''
 
         def read_body(self):
             self.gate()
@@ -107,6 +150,8 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
             self.send_header('Cache-Control','no-store')
             self.send_header('X-Content-Type-Options','nosniff')
             self.send_header('Referrer-Policy','no-referrer')
+            self.send_header('Permissions-Policy','camera=(), microphone=(), geolocation=()')
+            if public_origin:self.send_header('Strict-Transport-Security','max-age=31536000')
             self.send_header('Content-Security-Policy',"default-src 'self'; connect-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'")
             if cookie: self.send_header('Set-Cookie',cookie)
             self.end_headers(); self.wfile.write(raw)
@@ -192,8 +237,6 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
             try:
                 self.gate()
                 path=unquote(urlparse(self.path).path)
-                if path not in ("/api/query", "/api/runtime", "/api/history/recent", "/api/session", "/api/logout", "/api/health", "/api/demo-accounts", "/", "/app.js", "/style.css", "/ntu-logo.png", "/aspire-logo.svg", "/tencent-cloud-logo.svg"):app.refresh()
-                path=unquote(urlparse(self.path).path)
                 data=self.body_data if method=='POST' else {}
                 if method=='GET' and path in ('/','/app.js','/style.css','/ntu-logo.png','/aspire-logo.svg','/tencent-cloud-logo.svg'):
                     filename={'/':'index.html','/app.js':'app.js','/style.css':'style.css','/ntu-logo.png':'ntu-logo.png','/aspire-logo.svg':'aspire-logo.svg','/tencent-cloud-logo.svg':'tencent-cloud-logo.svg'}[path]
@@ -207,6 +250,11 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
                                           'identity_boundary': 'application_demo_roles_intersect_native_connection' if app.auth_kind=='reviewer' and 'application_roles' in app.registry.read() else None,
                                           'runtime_version':runtime_version()})
                 if method=='POST' and path==app.login_path:
+                    for expired in [key for key,value in list(app.sessions.items()) if value['expires'] < time.monotonic()]:
+                        app.sessions.pop(expired, None)
+                        app.session_runs.discard(expired)
+                    if len(app.sessions) >= 128:
+                        return self.send(429,{'error':'Demo sign-in capacity reached. Please try later.'})
                     actor=app.authenticate(data)
                     token=secrets.token_urlsafe(32); csrf=secrets.token_urlsafe(32)
                     app.sessions[token]={'actor':actor,'csrf':csrf,'expires':time.monotonic()+3600,'last_query':0}
@@ -214,6 +262,10 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
                 session,token=self.auth(); actor=session['actor']
                 if method=='POST' and not secrets.compare_digest(self.headers.get('X-CSRF-Token',''),session['csrf']):
                     raise PermissionError('Unavailable')
+                # Only authenticated, known read routes may refresh source state.
+                if ((method=='GET' and (path.startswith('/api/evidence/') or path=='/api/history'))
+                        or (method=='POST' and path in ('/api/audit/events','/api/audit/inquire'))):
+                    app.refresh()
                 if method=='GET' and path=='/api/runtime':
                     if actor.user_id.startswith('application-auditor:'):
                         if not app.can_audit(actor):raise PermissionError('Unavailable')
@@ -302,6 +354,8 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
             except (ValueError, TypeError):
                 return self.send(400, {'error':'Invalid request'})
             if urlparse(self.path).path=='/api/logout':return self.dispatch('POST')
+            if urlparse(self.path).path==app.login_path and not self.server.admit_login():
+                return self.send(429,{'error':'Too many sign-in attempts. Please wait a minute.'})
             # Admit one query per session before waiting on the query lock.
             if urlparse(self.path).path=='/api/query':
                 try:
@@ -310,6 +364,7 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
                 with request_scope(app,'query'):
                     with app.admission_lock:
                         if token in app.active_queries:return self.send(409,{'error':'A question is already running.','code':'query_busy'})
+                        if len(app.active_queries)>=4:return self.send(429,{'error':'The demo is busy. Please try again shortly.'})
                         app.active_queries.add(token)
                     try:
                         self.dispatch('POST')
@@ -318,7 +373,7 @@ def create_server(app, port=0, *, public_origin=None, public_demo_accounts=None)
                 return
             with acquire(getattr(app,'request_lock',app.store.lock)):
                 with acquire(app.store.lock):self.dispatch('POST')
-    server=ThreadingHTTPServer(('127.0.0.1',port),Handler)
+    server=BoundedHTTPServer(('127.0.0.1',port),Handler)
     server.body_timeout=5
     server.static_assets={name:(WEB/name).read_bytes() for name in ('index.html','app.js','style.css','ntu-logo.png','aspire-logo.svg','tencent-cloud-logo.svg')}
     server.application=app
