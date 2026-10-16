@@ -139,3 +139,12 @@ ADR-04 implemented: model emits {question,claims} per part and supports as exact
 互不重叠阶段：鉴权/源检查8.248秒，生成传输2.050秒，审查传输1.042秒，检索（排除嵌套鉴权）0.014秒，其他0.038秒。单样本不支持p95/SLA。
 
 结果改变下一步判断：该次分题格式、完整审查schema及requested-value分类已通过，但完整引用支持及审查语义可靠性仍有缺口；不能再把问题单纯归因于JSON结构。后续修复应针对实际语义反例，不能放宽规则、直接丢弃claim、无限重复付费或把模型accepted当作通过。详见review-schema-live-results.json。Goal未完成。
+
+
+## 2026-10-16 引文对照验收：执行器错误，零模型调用
+
+收到用户明确批准后创建独立semantic-quote-gate-20261016 grant并冻结4adbece。第一项short_quote_scope返回HTTP503，0.012秒、0模型调用、0费用、无新增unknown、人工额度未变。原因是Codex新增诊断适配器误选single执行路径，触发既有模型类型允许列表，在检索和模型调用前拒绝。此为验收脚本缺陷，不能当作语义拒绝或模型失败。
+
+已按任一失败即停止规则关闭本轮，未重试；第二项和原11题均not_run。线下精确复现该ValueError，随后提取scripts/quote_scope_probe.py，通过install_probe选择既有legacy鉴权路径，不修改single允许列表。3项fixture/mock测试验证错误路径零调用、正确路径仅一次审查且不展示诊断草稿、负面审查结论保留拒绝。修订适配器未在真实环境重跑。证据quote-gate-driver-results.json和quote-gate-driver-tests.log。
+
+真实引用支持/审查可靠性仍未验证；本地修复不等于实际质量通过。现用试用页、知识源和生产配置未改动。后续不得复用本轮已关闭grant。

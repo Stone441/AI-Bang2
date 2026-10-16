@@ -1,6 +1,6 @@
 # Proposed quote-scope discrimination gate
 
-Status: prepared only; no new authorization, grant or calls. Candidate4adbece; freeze exact runtime and current originals before any dispatch. All previous grants remain closed.
+Status: approved and executed; closed at first gate due to local adapter dispatch error before any model call.0 calls/USD0; see QUOTE_GATE_DRIVER.md. Candidate4adbece; freeze exact runtime and current originals before any dispatch. All previous grants remain closed.
 
 Scope: same existing four-source synthetic corpus read-only, same approved DeepSeek provider, independent automatic grant maximum24 calls/USD1 on original USD20 ledger. Preserve old pending/unknown and human allowance; no source writes, new providers, deployment or user trial changes.
 
