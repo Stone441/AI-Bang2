@@ -9,4 +9,4 @@ Use the frozen current human trial via 打开试用页面.command. Do not enable
 5. **Update/revoke and audit (1–2 minutes).** Run `python3 -m scripts.scenario_lab` separately. Label it fixture/fake; demonstrate its fixed publish/version/revoke sequence and audit. Do not present it as a native-platform write or measured native latency.
 6. **Architecture and honest finish.** Show the architecture diagram and genuine CodeBuddy evidence. State the latest isolated quote pair passed, but the full end-to-end run stopped at first-question review rejection. No production SLA or full semantic acceptance claim. This is a prototype ready for evaluation with disclosed limitations.
 
-This is a suggested7-minute flow, not a finished video or a confirmed official live-presentation time requirement. A recorded optional video would need actual capture and final review; none is claimed here.
+This is a suggested 7-minute flow, not a finished video or a confirmed official live-presentation time requirement. A recorded optional video would need actual capture and final review; none is claimed here.

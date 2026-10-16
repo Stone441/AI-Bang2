@@ -1,5 +1,7 @@
 # Decisions / ADR
 
+2026-10-16 AUTH-SUBMISSION-CLOSEOUT：按用户“别绕圈子了，收尾吧”冻结当前原型，结束新增功能和付费试验循环，以诚实披露限制完成提交准备；本次不等于原语义目标或G1/G2通过，不自动推送/上传/代提交。 见 [提交收尾报告](reviews/2026-10-16-submission-closeout/REPORT.md)。
+
 2026-10-15 ADR-SEMANTIC-WORKSPACE-01：采用用户本轮 goal-objective.md 明确方向，在 0d5be30 独立候选复用 sectioned-synthesis 与原生前端，移除常驻侧栏、顶部 Workspace/Recent answers、英文业务题卡、原文折叠及响应式引用抽屉。保留独立问答、严格 JSON/独立复审/全部授权及版本边界。普通本地可逆实现、文档、测试、隔离预览已授权；不新增源写、scope、付费服务、生产重启切换、push/merge 或上传提交。历史一次性 grant 结束及人工额度不可转用；真实验证前核当前 AUTH/readiness/账本。Embedding 首轮投入上限两小时本地诊断与可行性准备，只有真实可重复收益且无安全回归才纳入默认；无 provider/下载等授权则记录条件缺口。候选不改生产，可直接弃用独立 worktree 回退。
 
 2026-10-15 AUTH-MAIN-CLOSEOUT：用户明确“先合并到main”，授权本轮修复、测试与非秘密报告通过PR推送并合并到GitHub main，之后继续前端／项目亮点／候选题问答／开发细节。执行前fetch核对远端、干净源码验证及新增历史blob凭据扫描；保留原main脏证据、私有运行态及队友工作。此授权不包含生产切换、源端写入、上传私有证据或比赛提交。
