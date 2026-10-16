@@ -11,7 +11,7 @@ class StaticSnapshot(unittest.TestCase):
     def test_disk_update_cannot_mix_new_frontend_with_loaded_backend(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
-            for name in ('index.html','app.js','style.css'):(root/name).write_bytes(b'original paired build')
+            for name in ('index.html','app.js','style.css','ntu-logo.png','aspire-logo.svg','tencent-cloud-logo.svg'):(root/name).write_bytes(b'original paired build')
             app=App()
             with patch('brain.server.WEB',root):server=create_server(app)
             worker=threading.Thread(target=server.serve_forever,daemon=True);worker.start()

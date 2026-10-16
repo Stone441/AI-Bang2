@@ -35,3 +35,7 @@ Primary references: [Python HTTP server limitations](https://docs.python.org/3.1
 - No paid model call, source mutation, new account permission or live attack/load test.
 
 Local Chrome also verified example-before-input order, click-to-fill/focus/scroll without submission and the copyright footer.
+
+Clean archive 44c7621: 806 Python tests ran in 57.882 s; 805 passed and the static-snapshot fixture failed because it only supplied the original three assets, omitting the three subsequently added logos. The fixture now supplies all six allowlisted assets; the immutable loaded-JavaScript assertion is unchanged. The corrected case passed separately. All 15 standalone frontend tests passed in the clean archive. Existing test ResourceWarnings were observed; this is not a leak-free certification. Candidate diff scan found no common credential patterns or known public-demo passwords.
+
+Tunnel configuration was read without printing credentials: one public hostname maps to loopback port 49161, followed by a catch-all HTTP 404. It does not expose arbitrary host ports or filesystem paths through that configuration.
