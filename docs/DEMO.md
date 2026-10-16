@@ -6,6 +6,8 @@
 
 Open **https://contextledger.hellokyleshi.com**, enter Workspace and select a shared demonstration identity. The hosted demonstration uses native source APIs, synthetic business data and reviewed model synthesis. It depends on the hosting Mac and current operator readiness.
 
+If the website cannot be opened during evaluation, the hosting Mac may be asleep or offline, or its local service or tunnel may be stopped. Please [contact Team AI Bang2 (shuyi013@e.ntu.edu.sg)](mailto:shuyi013@e.ntu.edu.sg?subject=ContextLedger%20demo%20access) to arrange a test session. The [demonstration video](https://youtu.be/BULowhVNfU8) provides an alternative walkthrough.
+
 For a credential-free reproduction, follow [Quick start](QUICKSTART.md). That mode and the separate scenario lab use fixtures and a fake model. Historical results remain historical even when reopening them checks access again.
 
 ## Five challenge scenarios

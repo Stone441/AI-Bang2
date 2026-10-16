@@ -22,7 +22,7 @@ Shared demo credentials are intentionally available on the sign-in page. They ar
 
 The model cannot authorize sources or return trusted URLs. Exact-quote and structural checks reject malformed support, and a separate model review assesses semantic coverage. Review may still be wrong. Full semantic reliability and prompt-injection immunity are not claimed.
 
-Live model calls require approved data and budget. The implementation reserves usage, records receipts and preserves uncertain consumption for review. Existing automatic trial allowances must not be reused as permission for another paid run. The daily model-price check stops calls when its reviewed date is stale; the service requires an operator to verify rates and load a reviewed build. This can affect demonstration availability after the review date.
+Live model calls require approved data and budget. The implementation reserves usage, records receipts and preserves uncertain consumption for review. Existing automatic trial allowances must not be reused as permission for another paid run. The configured model rates and their reference date support local cost estimates; that date does not expire access or stop the service. Actual provider charges may differ from these estimates.
 
 ## Audit boundary
 
