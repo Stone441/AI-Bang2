@@ -234,7 +234,7 @@ if __name__=='__main__':
    if '#ticket=' in value:
     token=re.search(r'#ticket=([A-Za-z0-9_-]+)',value).group(1)
     target=token_dir/'human-bootstrap-token';target.write_text(token);target.chmod(0o600)
-    value='One-time entry prepared privately; use 打开试用页面.command.\n'
+    value='One-time entry prepared privately; use the local entry helper.\n'
    return sys.__stdout__.write(value)
   def flush(self):return sys.__stdout__.flush()
  sys.stdout=SafeOutput()

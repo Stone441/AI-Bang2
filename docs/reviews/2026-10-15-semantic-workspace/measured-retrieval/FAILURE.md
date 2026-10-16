@@ -1,1 +1,0 @@
-First attempt stopped before any query: macOS temporary /var path contains a symlink; PrivateTiming correctly refused it. The runner now passes the canonical resolved temporary directory, retaining all directory ownership and mode checks. No live call or safety rule change.

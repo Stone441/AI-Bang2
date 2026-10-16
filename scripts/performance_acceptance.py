@@ -18,7 +18,7 @@ from scripts.local_entry import renew
 from scripts.performance_allowance import PerformanceAdmission, GoalLedger
 from scripts.performance_trial import ROOT, PRIVATE, PLAN, private_directory, write_private
 
-MANIFEST = ROOT/'docs/reviews/2026-10-13-query-goal/CANDIDATE_WHOLE_V1.json'
+MANIFEST = ROOT/'.runtime/validation/CANDIDATE_WHOLE_V1.json'
 EXPECTED = {'source_transport':'pooled','source_concurrency':4,'reasoning_effort':'none',
             'source_review_input':'whole','source_review_dispatch':'single','history_read_mode':'batch'}
 CANDIDATE = 'whole-v1'
@@ -30,7 +30,7 @@ def select_candidate(candidate):
     if candidate not in ('whole-v1','structured-v2'):raise ValueError('Unknown candidate')
     CANDIDATE=candidate
     structured=candidate=='structured-v2'
-    MANIFEST=ROOT/'docs/reviews/2026-10-13-query-goal'/('CANDIDATE_STRUCTURED_V2.json' if structured else 'CANDIDATE_WHOLE_V1.json')
+    MANIFEST=ROOT/'.runtime/validation'/('CANDIDATE_STRUCTURED_V2.json' if structured else 'CANDIDATE_WHOLE_V1.json')
     MODEL=DeepSeekStructuredSourceReviewModel if structured else DeepSeekWholeSourceReviewModel
     EXPECTED={'source_transport':'pooled','source_concurrency':4,'reasoning_effort':'none',
               'source_review_input':'structured' if structured else 'whole',

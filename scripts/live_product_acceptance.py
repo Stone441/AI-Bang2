@@ -116,7 +116,7 @@ def run(output):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--live', action='store_true', help='Explicit approved live pilot opt-in')
-    parser.add_argument('--output', type=Path, default=Path('evidence/runs/live-product'))
+    parser.add_argument('--output', type=Path, default=Path('.runtime/validation/live-product'))
     args = parser.parse_args()
     if not args.live: parser.error('--live required; only run within the approved pilot')
     raise SystemExit(0 if run(args.output) else 1)

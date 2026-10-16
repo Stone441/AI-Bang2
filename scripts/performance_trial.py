@@ -18,7 +18,7 @@ from scripts.performance_allowance import PerformanceAdmission, GoalLedger
 
 ROOT = Path(__file__).resolve().parents[1]
 PRIVATE = ROOT/'.runtime/query-goal-20261013'
-PLAN = ROOT/'docs/reviews/2026-10-13-query-goal/PLAN.json'
+PLAN = ROOT/'config/trial-policy.json'
 
 
 def write_private(path, value):

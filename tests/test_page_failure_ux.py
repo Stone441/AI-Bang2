@@ -369,7 +369,7 @@ class TrialSnapshot(unittest.TestCase):
         import importlib.util,tempfile
         from pathlib import Path
         from brain.budget import BudgetLedger,TrialAdmissionPaused
-        spec=importlib.util.spec_from_file_location('trial_launch',Path('evidence/runs/page-failure-ux-20261008/launch.py'))
+        spec=importlib.util.spec_from_file_location('trial_launch',Path('tests/support/legacy_admission.py'))
         launch=importlib.util.module_from_spec(spec);spec.loader.exec_module(launch)
         with tempfile.TemporaryDirectory() as folder:
             ledger=BudgetLedger(Path(folder)/'budget.sqlite');entered=threading.Event();release=threading.Event();calls=[]
@@ -395,7 +395,7 @@ class TrialSnapshot(unittest.TestCase):
         import importlib.util,tempfile,fcntl
         from pathlib import Path
         from brain.budget import BudgetLedger
-        spec=importlib.util.spec_from_file_location('trial_external',Path('evidence/runs/page-failure-ux-20261008/launch.py'))
+        spec=importlib.util.spec_from_file_location('trial_external',Path('tests/support/legacy_admission.py'))
         launch=importlib.util.module_from_spec(spec);spec.loader.exec_module(launch)
         with tempfile.TemporaryDirectory() as folder:
             ledger=BudgetLedger(Path(folder)/'budget.sqlite');path=Path(folder)/'admission.json'

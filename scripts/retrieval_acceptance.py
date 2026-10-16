@@ -11,7 +11,7 @@ from brain.store import Store
 from scripts.build_metadata import revision
 
 
-def run(output=Path('evidence/runs/retrieval-local')):
+def run(output=Path('.runtime/validation/retrieval-local')):
     if output.exists():
         raise FileExistsError('Preserve old retrieval evidence; choose --output <new-directory>')
     world = FixtureWorld()
@@ -58,5 +58,5 @@ def run(output=Path('evidence/runs/retrieval-local')):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, default=Path('evidence/runs/retrieval-local'))
+    parser.add_argument('--output', type=Path, default=Path('.runtime/validation/retrieval-local'))
     run(parser.parse_args().output)
