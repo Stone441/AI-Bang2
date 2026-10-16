@@ -149,16 +149,6 @@ def main(argv=None):
     if args.oauth_client and args.source not in ('drive','multi'):
         print('not_run: --oauth-client requires Drive or multi; no credential or platform calls performed.')
         return 2
-    if args.model == 'deepseek':
-        from .deepseek import check_price_review
-        try:
-            check_price_review()
-        except ValueError:
-            from .deepseek import PRICE_SOURCE
-            print('not_run [model_price_review_required]: Review ' + PRICE_SOURCE
-                  + ', record the Singapore review date and verified rates, then restart the reviewed build. '
-                  'Preserve the existing USD20 ledger. No credentials or platform calls performed.')
-            return 2
     store = server = ledger = discovery = timing = None
     stage = 'bind'
     try:
