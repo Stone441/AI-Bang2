@@ -1,6 +1,6 @@
 # Full isolated-review candidate acceptance
 
-Prepared only. Frozen commit5ff40c6 contains the f828530 isolated-review backend and868fef9 diagnostic adapter; subsequent changes through5ff40c6 are evidence. Hashes and unchanged original11-question/oracle check: isolated-full-prepared.json. Frozen runner exits2 before credentials/source/ledger access without new authorization.
+Approved and executed on2026-10-16; stopped and closed at first question after second isolated quote review rejected.3 calls/USD0.001872; remaining10 not_run. See ISOLATED_FULL_LIVE.md. Frozen commit5ff40c6 contains the f828530 isolated-review backend and868fef9 diagnostic adapter; subsequent changes through5ff40c6 are evidence. Hashes and unchanged original11-question/oracle check: isolated-full-prepared.json. Frozen runner exits2 before credentials/source/ledger access without new authorization.
 
 ## Requested independent scope
 
