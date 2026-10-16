@@ -33,4 +33,6 @@ The result is an inspectable enterprise-knowledge prototype with explicit trust 
 - [CodeBuddy contribution](CODEBUDDY_CONTRIBUTION.md)
 - [Validation and limitations](VALIDATION.md)
 
+**Availability:** The hosted demo runs on a team member's Mac and may be unavailable while that computer is asleep or offline. If the website cannot be opened during evaluation, [contact Team AI Bang2 (shuyi013@e.ntu.edu.sg)](mailto:shuyi013@e.ntu.edu.sg?subject=ContextLedger%20demo%20access) to arrange access, or watch the video above.
+
 The original CodeBuddy conversation and at least three genuine development screenshots are separate competition attachments retained locally for reviewed disclosure. The video distinguishes a live question using native APIs and synthetic business data from controlled fixture scenarios. This document does not attest that a competition form has been submitted.

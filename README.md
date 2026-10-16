@@ -12,7 +12,9 @@ Built by **Team AI Bang2** for the **Tencent Cloud AI CAN DO IT Hackathon Singap
 
 **[Open the hosted demo](https://contextledger.hellokyleshi.com)** → Workspace → choose a demo perspective → sign in.
 
-Engineering, Product & Operations, External Partner and Audit reviewer have different configured access. The sign-in page supplies the shared demo credentials. Questions, saved answers and the trial allowance are shared; use fictional information only. The demo uses synthetic payment-service materials in real Confluence, Jira, Slack and Google Drive. It is hosted on a team member's Mac, so availability depends on that computer and its tunnel staying online.
+> **Demo availability:** The prototype currently runs on a team member's Mac. The website may be temporarily unavailable if the Mac is asleep or offline, or its local service or tunnel is stopped. If you cannot open it during evaluation, please [contact Team AI Bang2 (shuyi013@e.ntu.edu.sg)](mailto:shuyi013@e.ntu.edu.sg?subject=ContextLedger%20demo%20access) to arrange a test session. In the meantime, [watch the demonstration video](https://youtu.be/BULowhVNfU8) or use the credential-free local demo below.
+
+Engineering, Product & Operations, External Partner and Audit reviewer have different configured access. The sign-in page supplies the shared demo credentials. Questions, saved answers and the trial allowance are shared; use fictional information only. The demo uses synthetic payment-service materials in real Confluence, Jira, Slack and Google Drive.
 
 Start with: **“Is PAY-102 complete, and can we offer payment-retry to all customers today?”** Inspect the answer's exact supporting quotes and open a source preview to check its context and version. Completing a code fix is distinct from approving a general release.
 
