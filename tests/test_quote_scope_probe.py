@@ -45,3 +45,24 @@ class QuoteScopeProbe(unittest.TestCase):
         with self.assertRaises(PermissionError):
             probe.generate_with_provenance(f.question,f.evidence,'b'*32,None,deny)
         self.assertEqual(stages,['review_dispatch']);self.assertEqual(f.transport.calls,[])
+
+    def test_isolated_adapter_routes_real_engine_call_without_full_source_payload(self):
+        import json
+        f=self.fixture;f.transport.outputs=[{'quote_supported':True}]
+        engine=f.engine();install_probe(engine,f.model,self.case,isolated=True)
+        answer=engine.query(Actor('eng_b'),f.question)
+        self.assertEqual(len(f.transport.calls),1);self.assertEqual(answer['claims'],[])
+        body=json.loads(f.transport.calls[0]['messages'][1]['content'])
+        self.assertEqual(set(body),{'claim','quotations'})
+        self.assertEqual(body['quotations'],[self.case['claim']['supports'][0]['quote']])
+
+    def test_isolated_negative_adapter_retains_explicit_rejection_diagnostic(self):
+        f=self.fixture;f.transport.outputs=[{'quote_supported':False}]
+        engine=f.engine(evidence_on_model_rejection=True)
+        install_probe(engine,f.model,self.case,isolated=True)
+        answer=engine.query(Actor('eng_b'),f.question)
+        self.assertEqual(len(f.transport.calls),1)
+        self.assertEqual(answer['answer_status'],'evidence_only')
+        rejected=next(e for e in engine.audit.export() if e['event_type']=='model_output_rejected')
+        self.assertIs(rejected['payload']['diagnostic']['review_quote_supported'],False)
+        self.assertEqual(rejected['payload']['diagnostic']['validation_detail'],'quote_review_unsupported')
