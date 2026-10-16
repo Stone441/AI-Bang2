@@ -1,5 +1,10 @@
 # 真实四源评审入口：部署准备与发布步骤
 
+2026-10-16 当前发布：869f407已上线 https://contextledger.hellokyleshi.com ，保持原source-review配置、账号及账本。最新结果以[发布报告](reviews/2026-10-16-release/REPORT.md)与[FINAL_HANDOFF](FINAL_HANDOFF.md)为准。下文是旧部署时间线，不是再次切换指令。
+
+<details>
+<summary>历史部署记录与命令</summary>
+
 2026-10-15 主线集成说明：本轮收尾修复将作为下一轮开发基线合并main，后续继续完善前端、项目亮点、候选题问答与开发细节，不作正式封版。当前业务代码与10cc970一致；冲突题和四源题分别已有真实通过记录，JSON故障根因仍开放，线上仍独立运行f2f0633。[主线合并验证](reviews/2026-10-15-main-closeout-merge/REPORT.md)及[最新真实记录](reviews/2026-10-15-sectioned-live/json-investigation/REPORT.md)优先于下方历史说明。
 
 2026-10-15 当前运行已切换到本地修复代码 `f2f0633`，同一公网入口；最新[真实验收与剩余缺陷](reviews/2026-10-15-closeout-live/REPORT.md)优先于下方历史状态。自动复验10次/USD0.011808，人工额度未占用、旧unknown保留。两项可选分题生成仍失败，不能宣称全部通过；未push/main合并或比赛提交。
@@ -86,3 +91,5 @@ Caddy 官方说明支持此反向代理语法，并可在满足域名解析和�
 > We have used CodeBuddy substantively during development and retained the required evidence. Does this satisfy the mandatory Tencent Cloud product requirement, without additional ADP/TRTC integration or Tencent Cloud hosting?
 
 三个培训短链接本次工具无法打开，没有据此确认免费额度、模型可用性或账号权益。
+
+</details>

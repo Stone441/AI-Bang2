@@ -1,5 +1,7 @@
 # Current status
 
+2026-10-16 发布上线 verified：PR#13合并869f407，现有公网链接已切换对应代码/UI；三账号上游认证/拒绝路径通过，Chrome看到新版登录页，四源快照current，账号/账本/grant不变且新增模型调用0。保留source-review模式，不开启实验；公网CLI被Cloudflare1010拒绝，真人G1/G2未代签。见[发布报告](reviews/2026-10-16-release/REPORT.md)。
+
 2026-10-16 本地收口 verified：14份历史证据原字节归档，8个worktree及全部分支完成去向核对，唯一交付入口FINAL_HANDOFF。应用代码仍2b79036，本轮只增文档/证据；800项离线55.553s通过，完整语义验收及G1/G2不通过声明保持。原工作区改动保留，无推送/合并/部署/上传/比赛提交。见[收口报告](reviews/2026-10-16-final-check/REPORT.md)。
 
 2026-10-16 最终检查 in_progress：8个worktree及本地分支归属已核对；发现原team-live三份报告未进候选，本检查工作区补录原件。800项离线55.553s通过，新增255历史blob常见密钥扫描无命中；不代表完整语义验收、隐私批准或提交就绪。暂停填表/上传，未填写、未推送。见 [最终检查](reviews/2026-10-16-final-check/REPORT.md)。

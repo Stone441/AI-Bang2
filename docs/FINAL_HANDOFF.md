@@ -1,22 +1,20 @@
-# ContextLedger · 唯一交付入口 · 2026-10-16
+# ContextLedger · 当前发布与提交入口 · 2026-10-16
 
-本地仓库与资料收口完成，后续从 **AI-Bang2-submission-final-20261016 / chore/submission-final-check-20261016** 继续。完整结果见[收口报告](reviews/2026-10-16-final-check/REPORT.md)。
+应用已通过 [PR #13](https://github.com/Stone441/AI-Bang2/pull/13) 合并，发布commit **869f407**。现有网页 **https://contextledger.hellokyleshi.com** 已切换到该commit的代码/UI。后续文档提交仅补发布证据，不更换应用字节。
 
-应用代码冻结为2b79036；本分支在37578c4基础上只补历史证据与文档。最终源码ZIP对应的精确提交、文件哈希和检查结果位于本目录artifacts/submission-final-20261016/MANIFEST.json。旧semantic包保留，不再作为完整资料包入口。
+完整结果：[发布与部署报告](reviews/2026-10-16-release/REPORT.md)；此前资料归档：[本地收口报告](reviews/2026-10-16-final-check/REPORT.md)。
 
-## 交付内容
+## 提交材料
 
-- [英文提交文案](SUBMISSION_CANDIDATE.md)、[演示说明](reviews/2026-10-16-final-check/DEMO.md)、[架构图](../assets/submission/contextledger-architecture.svg)、[封面](../assets/submission/contextledger-cover.png)。
-- 本地artifacts/submission-final-20261016：新源码ZIP、文案、封面、架构、演示及私有CodeBuddy证明包。证明包不在Git中；未授权公开对话原件。
-- [PR草稿](reviews/2026-10-16-final-check/PR_DRAFT.md)，尚未推送或创建PR。
-- 历史真实验收三报告已补入reviews/2026-10-15-team-live；14份补录文件来源/哈希见最终检查ARCHIVED_FILES.json。
+- [英文文案](SUBMISSION_CANDIDATE.md)、[架构图](../assets/submission/contextledger-architecture.svg)、[封面](../assets/submission/contextledger-cover.png)、[CodeBuddy实际贡献](CODEBUDDY_CONTRIBUTION.md)。
+- 私有CodeBuddy原始对话、7张过程截图及补丁仍单独保管，不在Git；尚未上传赛事。
+- 四源真实验收和历史fixture证据已归档，保留各自原版本和失败，不能用历史测试给新版本背书。
+- 原本地收口85d22ea资料包保留为历史快照；当前源码以GitHub main及发布报告为准，发布后的新包在本检查工作区artifacts/published-20261016。
 
-## 运行与能力边界
+## 使用与边界
 
-人工试用仍为fa88f2f，保留用户确认的UI；最新隔离引文实验未切入。原main目录的“打开试用页面.command”为本机适配，指向semantic私有运行态；源码中的普通启动器不承担此功能。全新检出可用 `python3 -m scripts.reviewer_demo` 启动无凭据fixture/fake预览；这不证明真实模型质量。
+公网使用已有密码账号，source-review模式，账户/权限/预算不变。完整语义验收仍未通过，隔离引文实验未默认上线；fa88f2f本机人工试用仍为独立实例。浏览器公网新版登录页已实际检查；三账号API安全检查通过本机反向代理上游，不冒称公网全流程或真人G1/G2。
 
-800项离线测试通过；完整11题真实语义验收首题拒绝、其余10题未运行。四源原生接入、应用角色控制、独立员工身份矩阵、真人G1/G2分别计证，不混称全通过。停止付费诊断和新增功能。
+无凭据复现：`python3 -m scripts.reviewer_demo`，仅fixture/fake模式。原main目录“打开试用页面.command”仍指向私有人工试用；远程组员请使用上面的公网链接。
 
-## 下一步
-
-确认披露限制后，发布本候选到GitHub，再进行最终材料审核与赛事提交。当前远程main仍为0d5be30。本地提交不是push/merge，材料准备不是G2通过或比赛提交。
+下一步是团队核对最终文案与私有证明上传范围，完成赛事签核及提交。推送合并和网页升级已完成，不需要重复批准；比赛提交尚未执行。

@@ -14,7 +14,7 @@ The interface provides three business entry points: release readiness, delivery 
 
 Python read-only adapters feed a versioned SQLite index. Local lexical/BM25 retrieval, exact windows and a bounded bilingual glossary select evidence. Server-verified sessions and application policy narrow access; native permission and version checks run before model input and final delivery. Unknown permission does not pass. Saved answers and source previews are checked again. Shared collection credentials are not represented as independent employee identities.
 
-Prompts ask DeepSeek Flash to organize supported conclusions by subquestion, quote exact passages and preserve scope, uncertainty, false premises and unresolved conflicts. Strict output validation and a separate full-source review reject unsupported drafts. An experimental additional path reviews each claim using only its selected quotations, then retains the full-source review. In a real two-case diagnostic it rejected an incomplete quote and accepted the complete quote. Its subsequent end-to-end acceptance run stopped on the first question when another claim was rejected; the remaining ten questions were not run. Reliable semantic synthesis across the full test set is therefore not claimed.
+The hosted trial uses a model-reviewed source-passage mode. In the optional synthesis mode, prompts ask DeepSeek Flash to organize supported conclusions by subquestion, quote exact passages and preserve scope, uncertainty, false premises and unresolved conflicts. Strict output validation and a separate full-source review reject unsupported drafts. An experimental additional path reviews each claim using only its selected quotations, then retains the full-source review. In a real two-case diagnostic it rejected an incomplete quote and accepted the complete quote. Its subsequent end-to-end acceptance run stopped on the first question when another claim was rejected; the remaining ten questions were not run. Reliable semantic synthesis across the full test set is therefore not claimed.
 
 Audit records retain identity, question, resource decisions, evidence, model receipts and final outcome. CodeBuddy made a documented implementation contribution to an offline hash-chain and Ed25519 checkpoint verifier. Local verification is not independently managed production audit custody. An isolated fixture lab demonstrates content updates, version invalidation, revocation and audit inspection without modifying live sources.
 
@@ -26,10 +26,10 @@ The result is an inspectable enterprise-knowledge prototype with explicit trust 
 
 - Cover: [1600×900 PNG](../assets/submission/contextledger-cover.png), exact16:9.
 - Architecture: [SVG](../assets/submission/contextledger-architecture.svg), including trust boundaries and experimental path.
-- Source: reconciled local source ZIP identified in [final reconciliation](reviews/2026-10-16-final-check/REPORT.md). Existing repository: https://github.com/Stone441/AI-Bang2 . Latest candidate commits are **not yet published there**.
+- Source: published application and deployment identified in [release report](reviews/2026-10-16-release/REPORT.md). Published repository: https://github.com/Stone441/AI-Bang2 . Application release869f407 was merged through PR#13; subsequent documentation records the deployment.
 - Genuine CodeBuddy proof: all15 originals were found in the main working directory and SHA256-verified on16October; a private local upload bundle is prepared. It includes conversation history and7 genuine process screenshots. It is not uploaded or included in the source ZIP.
 - Demo: [version-aware walkthrough](reviews/2026-10-16-final-check/DEMO.md). Existing user trial remains its frozen delivered UX; the experimental backend is not silently enabled.
 - Optional5–8 minute video: not produced. Do not enter an invented video URL.
-- External/public URL: only use a verified existing service after team review; local127.0.0.1 is not an external demo link.
+- External/public URL: https://contextledger.hellokyleshi.com — password-protected synthetic trial, updated16October; Chrome login page checked.
 
-Official source remains [01 section8](01_OFFICIAL_BRIEF.md). Final team sign-off and external source publication/upload/submission remain separate from preparing these materials.
+Official source remains [01 section8](01_OFFICIAL_BRIEF.md). Source publication and the hosted update are complete. Final team sign-off, private-proof upload and competition submission remain pending.
