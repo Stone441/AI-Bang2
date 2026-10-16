@@ -6,6 +6,8 @@ Built by **Team AI Bang2** for the **Tencent Cloud AI CAN DO IT Hackathon Singap
 
 ![ContextLedger connects four knowledge sources to authorized, checkable answers](assets/submission/contextledger-cover.png)
 
+**[Watch the project demonstration (7m 32s)](https://youtu.be/BULowhVNfU8)** — English narration and captions, with a live question and clearly labelled fixture scenarios.
+
 ## Try ContextLedger
 
 **[Open the hosted demo](https://contextledger.hellokyleshi.com)** → Workspace → choose a demo perspective → sign in.

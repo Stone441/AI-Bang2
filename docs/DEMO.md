@@ -1,5 +1,7 @@
 # Demonstration guide
 
+**[Watch the project demonstration (7m 32s)](https://youtu.be/BULowhVNfU8)** with English narration and captions. The video distinguishes a live question using native APIs and synthetic business data from controlled fixture scenarios.
+
 ## Entry and mode
 
 Open **https://contextledger.hellokyleshi.com**, enter Workspace and select a shared demonstration identity. The hosted demonstration uses native source APIs, synthetic business data and reviewed model synthesis. It depends on the hosting Mac and current operator readiness.
@@ -22,4 +24,4 @@ The fixture lab starts with `python3 -m scripts.scenario_lab`. It has its own in
 
 Expand exact supporting quotes, then open a source preview to verify the passage and version. Use Recent answers to reopen an existing result; that operation rechecks access but does not generate a new answer. An evidence-only or rejected result is not a successful synthesized answer, and a supported historical example does not establish general answer accuracy.
 
-No demo video is bundled. The submission description and [validation scope](VALIDATION.md) disclose remaining semantic and deployment limitations.
+The [submission description](SUBMISSION.md) and [validation scope](VALIDATION.md) disclose remaining semantic and deployment limitations.
