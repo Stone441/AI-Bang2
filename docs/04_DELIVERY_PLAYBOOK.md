@@ -2,7 +2,7 @@
 
 Current delivery state: [final handoff](FINAL_HANDOFF.md). Tool contribution: [CodeBuddy audit component](CODEBUDDY_CONTRIBUTION.md). The component was implemented and integrated; the planning examples below are historical, not pending tasks or claims of additional tool use.
 
-The team used multiple AI-assisted tools, with separate implementation, review and integration responsibilities. Work attribution is based on actual commits and original evidence. CodeBuddy delivered the independent audit verifier and its tests; team/Codex review and integration are recorded separately. WorkBuddy suggestions in the initial plan are not completed-contribution claims.
+CodeBuddy delivered the independent audit verifier and its tests. The completed contribution is documented with implementation commits, validation results and original evidence.
 
 Current workflow retains server-side identity and source authorization, separate fixture/native/model evidence, independent worktrees, and explicit authority for external publication, runtime changes and final competition submission. Original task assignments and safeguards are preserved below for traceability.
 

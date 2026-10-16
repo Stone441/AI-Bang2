@@ -1,6 +1,6 @@
 # CodeBuddy contribution: independently verifiable audit records
 
-ContextLedger was developed with multiple AI-assisted tools and team review. Tencent CodeBuddy implemented the offline audit checkpoint and verification component; Codex supported integration, independent testing and other application development. This page describes the delivered component rather than the original task plan.
+Tencent CodeBuddy implemented ContextLedger’s offline audit checkpoint and verification component. The component provides independently runnable integrity checks and targeted tests, with traceable implementation and validation evidence.
 
 ## What CodeBuddy implemented
 
@@ -15,7 +15,7 @@ These capabilities make audit integrity inspectable: a self-consistent rewritten
 
 The implementation was produced in the real Tencent CodeBuddy VS Code extension (4.12.38765564) on 4 October 2026. Original contribution commit: `4165ee6`; integration commit: `8cd5088`. The six implementation/test files were compared byte-for-byte against the submission candidate on 16 October and remain present unchanged. The original twenty-test run and the then-current 52-test integration run are historical results; the current application has a separate 800-test offline regression record.
 
-Team review and Codex-assisted checks contributed command corrections, key-type review, independent reruns and integration. Tool attribution follows the actual artifacts; CodeBuddy is not described as the sole author of the full application. WorkBuddy is not claimed as an implementation contributor.
+The component underwent command checks, key-type review, independent test reruns and integration review.
 
 ## Evidence
 
