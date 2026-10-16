@@ -1,0 +1,163 @@
+{
+  "candidate_commit": "dd99b3ba647042e3142d87dd1408c33163873daf",
+  "mode": "four native APIs / real model / independent source assessment",
+  "result": {
+    "id": "delivery-planning-0",
+    "question": "What is the status of PAY-102 and PAY-103, and what is the confirmed payment-retry general release date?",
+    "expected": "PAY-102 Done; PAY-103 In Progress; No confirmed general release date",
+    "http_status": 200,
+    "elapsed_seconds": 11.394264000002295,
+    "actual_model_calls": 2,
+    "accounted_micro_usd": 3260,
+    "new_unknown_count": 0
+  },
+  "request_id": "df44cd84dd954e0e916029b842d8d8a9",
+  "parts": [
+    {
+      "question": "What is the status of PAY-102 and PAY-103",
+      "status": "supported",
+      "claim_indices": [
+        0,
+        1
+      ],
+      "gap_claim_indices": []
+    },
+    {
+      "question": "what is the confirmed payment-retry general release date?",
+      "status": "insufficient",
+      "claim_indices": [],
+      "gap_claim_indices": [
+        2
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "text": "PAY-102's code fix is Done, while PAY-103's protective measures are In Progress and remain open.",
+      "evidence_ids": [
+        "jira:10013@336836842918391821",
+        "jira:10014@110363006380417182"
+      ],
+      "supports": [
+        {
+          "evidence_id": "jira:10013@336836842918391821",
+          "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release."
+        },
+        {
+          "evidence_id": "jira:10014@110363006380417182",
+          "quote": "Payment-service incident follow-up PAY-103 protective measures: In Progress. Scenario owner: Maya (fictional).\nThis follow-up remains open."
+        }
+      ]
+    },
+    {
+      "text": "PAY-102 and PAY-103 are follow-ups from the final payment-service postmortem.",
+      "evidence_ids": [
+        "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6"
+      ],
+      "supports": [
+        {
+          "evidence_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c@6",
+          "quote": "Follow-ups: PAY-102 and PAY-103."
+        }
+      ]
+    },
+    {
+      "text": "No general release date is confirmed; general availability is not approved and the GA date is unconfirmed.",
+      "evidence_ids": [
+        "confluence:164283@1",
+        "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6"
+      ],
+      "supports": [
+        {
+          "evidence_id": "confluence:164283@1",
+          "quote": "General availability (GA) is not approved. No general release date is confirmed."
+        },
+        {
+          "evidence_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg@6",
+          "quote": "Unconfirmed items: general availability date and expansion beyond pilot customers."
+        }
+      ]
+    }
+  ],
+  "quote_checks": [
+    {
+      "claim_index": 0,
+      "resource_id": "jira:10013",
+      "quote": "PAY-102 code fix: Done. Code completion does not approve general customer release.",
+      "saved_exact": true
+    },
+    {
+      "claim_index": 0,
+      "resource_id": "jira:10014",
+      "quote": "Payment-service incident follow-up PAY-103 protective measures: In Progress. Scenario owner: Maya (fictional).\nThis follow-up remains open.",
+      "saved_exact": true
+    },
+    {
+      "claim_index": 1,
+      "resource_id": "drive:10ThLNkw17J6V9hm3Rg6BiJr2IUL3Ht1c",
+      "quote": "Follow-ups: PAY-102 and PAY-103.",
+      "saved_exact": true
+    },
+    {
+      "claim_index": 2,
+      "resource_id": "confluence:164283",
+      "quote": "General availability (GA) is not approved. No general release date is confirmed.",
+      "saved_exact": true
+    },
+    {
+      "claim_index": 2,
+      "resource_id": "drive:1brO8N_1TxAX6NCB3PVH2y_I5emqeguAg",
+      "quote": "Unconfirmed items: general availability date and expansion beyond pilot customers.",
+      "saved_exact": true
+    }
+  ],
+  "assessment": {
+    "request_id": "df44cd84dd954e0e916029b842d8d8a9",
+    "result_sha256": "c1fe0830a0120b1f4ae738544ede4c067e2798b47f8372ebc1e8c1dab6e2896f",
+    "passed": false,
+    "assessor": "Codex independent source/oracle inspection",
+    "reason": "Ticket status and unavailable date category are correct. Claim1 adds unsolicited final payment-service postmortem provenance; its sole quoted Follow-ups sentence does not establish final/payment-service/postmortem context. Full source contains the fact but exact support is incomplete and the background is not necessary to answer ticket status/date. Model acceptance does not override independent quote and responsiveness assessment."
+  },
+  "disjoint_seconds": {
+    "generation_transport": 2.050301125040278,
+    "review_transport": 1.042182750068605,
+    "authorization": 8.24838612624444,
+    "retrieval_excluding_authorization": 0.013941125012934208,
+    "other": 0.03762754052877426
+  },
+  "timing_method": "interval partition priority model transport > authorization > retrieval > other; one server query sample, not SLA/p95",
+  "isolation": {
+    "own_history_http": 200,
+    "cross_history_http": 403,
+    "own_preview_http": 200,
+    "cross_preview_http": 403,
+    "engineer_blair_audit_denied": 403,
+    "product_morgan_audit_denied": 403,
+    "partner_jordan_audit_denied": 403
+  },
+  "audit_chain": {
+    "valid": true,
+    "events": 137,
+    "anchored_through": 0,
+    "signature_verified": false,
+    "boundary": "local chain only; independent signed checkpoint pending"
+  },
+  "human_unchanged": true,
+  "global_budget_after": {
+    "ceiling_micro_usd": 20000000,
+    "accounted_micro_usd": 2086367,
+    "settled_micro_usd": 1437559,
+    "available_micro_usd": 17913633,
+    "pending_requests": 2,
+    "blocked_for_review": false
+  },
+  "closed": {
+    "status": "closed_no_automatic_reuse",
+    "calls": 2,
+    "accounted_micro_usd": 3260,
+    "completed_cases": 1
+  },
+  "remaining_cases": "10 not_run after independent quality failure",
+  "browser": "not_run; runner closed per stop rule",
+  "limitation": "Exact quote inclusion does not establish full entailment. Claim1 provenance is present in full source but absent from its selected quote; unnecessary background also violates requested responsiveness."
+}

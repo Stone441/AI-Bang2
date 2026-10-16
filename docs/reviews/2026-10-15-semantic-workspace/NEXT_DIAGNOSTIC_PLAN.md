@@ -1,6 +1,6 @@
 # Proposed finite diagnostic acceptance
 
-Status: prepared, no authorization recorded, no calls made.
+Status: user approved and executed on2026-10-16; closed after first-question independent semantic failure.2 calls, no retry; remaining10 not_run. See REVIEW_SCHEMA_LIVE.md.
 
 Candidate frozen: `dd99b3ba647042e3142d87dd1408c33163873daf`. Prepared runner and archive fingerprints are in review-schema-prepared.json. The unauthorised invocation exited2 before source/model imports, credentials or ledger access; no grant or acceptance run directory was created.
 Use the same four existing synthetic sources read-only and the same frozen11 questions/oracles, existing DeepSeek provider and original USD20 ledger. Create a fresh independent automatic grant with max24calls/USD1; preserve historical pending/unknown and all human allowance. No source writes, deployment, new provider or user trial replacement.
