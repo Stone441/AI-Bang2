@@ -561,6 +561,9 @@ $('auditNav').onclick=()=>{
 $('preview').oncancel=()=>{viewRevision++;$('previewBody').replaceChildren();};
 $('closePreview').onclick=()=>{viewRevision++;$('previewBody').replaceChildren();$('preview').close();};
 async function boot(){
+  const landing=document.body&&document.getElementById('landing');
+  if(landing){const open=new URLSearchParams(location.search).get('workspace')==='1'||Boolean(bootstrapTicket);document.body.classList.toggle('landing-active',!open);landing.hidden=open;if(!open)return;}
+
   try{
     health=await api('/api/health');
     if(['operator','reviewer'].includes(health.auth_kind)){
